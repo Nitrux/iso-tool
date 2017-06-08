@@ -16,22 +16,18 @@ gpg_key=
 
 # - - - MESSAGES
 
-_mf() {
+_fail() {
 	echo -e "\033[38;5;1m $@ \n"
 }
 
-_ms() {
-	echo -e "\033[38;5;5m $@ \n"
-}
-
-_mn() {
+_echo() {
 	echo -e "\033[38;5;1m $0"
 }
 
 # - - - FILESYSTEM CLEANUP
 
 _cleanup() {
-	_mn " - - - Cleanup..."
+	_echo " - - - Cleanup..."
 
 	if [[ -d "rootfs/boot" ]]; then
 		find "rootfs/boot" -type f -name '*.img' -delete
@@ -55,13 +51,13 @@ _cleanup() {
 		find "rootfs/var/tmp" -mindepth 1 -delete
 	fi
 	find "rootfs/" \( -name "*.pacnew" -o -name "*.pacsave" -o -name "*.pacorig" \) -delete
-	_msg_info "Done!"
+	_echo "Done!"
 }
 
 # - - - CREATE AN ISO IMAGE
 
 _mkiso() {
-	_mn "Creating ISO image..."
+	_echo "Creating ISO image..."
 	xorriso -as mkisofs \
 		-iso-level 3 \
 		-full-iso9660-filenames \
@@ -75,18 +71,18 @@ _mkiso() {
 		-isohybrid-mbr ${work_dir}/iso/isolinux/isohdpfx.bin \
 		-output "${img_name}" \
 		"rootfs/"
-	_ms "Done! | $(ls -sh ${img_name})"
+	_echo "Done! | $(ls -sh ${img_name})"
 }
 
 # - - - CREATE AN SQUASHFS IMAGE
 
 _mksfs() {
-	_mn " - - - Creating SquashFS..."
-	[[ mksquashfs "./rootfs" "iso/rootfs.sfs" -noappend -comp "$comp" -no-progress ]] && {
+	_echo " - - - Creating SquashFS..."
+	[[ mksquashfs "./rootfs" "iso/rootfs.sfs" -noappend -comp "$comp" ]] && {
 		_ms "Done!"
 		_mkiso
 	} || {
-		_mf "Failed!"
+		_fail "Failed!"
 	}
 }
 
