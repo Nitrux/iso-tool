@@ -1,73 +1,100 @@
-#!/bin/bash
+#! /bin/bash
 
 set -e -u
 
-iso_name=nxos
-iso_label="nxos"
-iso_version=1
-install_dir=nxos
-arch=$(uname -m)
-work_dir=work
-out_dir=out
+export LANG=C
+export LC_ALL=C
 
-script_path=$(readlink -f ${0%/*})
+app_name=${0##*/}
+pacman_conf="/etc/pacman.conf"
+export iso_label="NXOS"
+img_name="nxos.iso"
+publisher="Luis Lavaire <https://www.github.com/luis-lavaire>"
+application="nxos installer"
+comp="xz"
+gpg_key=
 
-# Base installation (nxos)
-make_basefs() {
-	mkarchiso -v -w "${work_dir}" -D "${install_dir}" init
+# - - - MESSAGES
+
+_mf() {
+	echo -e "\033[38;5;1m $@ \n"
 }
 
-# Copy mkinitcpio archiso hooks and build initramfs (nxos)
-make_setup_mkinitcpio() {
-	mkdir -p ${work_dir}/etc/initcpio/hooks
-	mkdir -p ${work_dir}/etc/initcpio/install
-	cp /usr/lib/initcpio/hooks/archiso ${work_dir}/etc/initcpio/hooks
-	cp /usr/lib/initcpio/install/archiso ${work_dir}/etc/initcpio/install
-	cp ${script_path}/mkinitcpio.conf ${work_dir}/etc/mkinitcpio-archiso.conf
-	mkarchiso -v -w "${work_dir}" -D "${install_dir}" -r 'mkinitcpio -c /etc/mkinitcpio-archiso.conf -k /boot/vmlinuz-linux -g /boot/nxos.img' run
+_ms() {
+	echo -e "\033[38;5;5m $@ \n"
 }
 
-# Prepare ${install_dir}/boot/
-make_boot() {
-	mkdir -p ${work_dir}/iso/${install_dir}/boot
-	cp ${work_dir}/boot/nxos.img ${work_dir}/iso/${install_dir}/boot/nxos.img
-	cp ${work_dir}/boot/vmlinuz-linux ${work_dir}/iso/${install_dir}/boot/vmlinuz
+_mn() {
+	echo -e "\033[38;5;1m $0"
 }
 
-# Prepare /${install_dir}/boot/syslinux
-make_syslinux() {
-	mkdir -p ${work_dir}/iso/${install_dir}/boot/syslinux
-	sed "s|%ARCHISO_LABEL%|${iso_label}|g;
-		 s|%INSTALL_DIR%|${install_dir}|g;
-		 s|%ARCH%|${arch}|g" ${script_path}/syslinux/syslinux.cfg > ${work_dir}/iso/boot/syslinux/syslinux.cfg
-	cp ${work_dir}/usr/lib/syslinux/bios/ldlinux.c32 ${work_dir}/iso/boot/syslinux/
-	cp ${work_dir}/usr/lib/syslinux/bios/menu.c32 ${work_dir}/iso/boot/syslinux/
-	cp ${work_dir}/usr/lib/syslinux/bios/libutil.c32 ${work_dir}/iso/boot/syslinux/
+# - - - FILESYSTEM CLEANUP
+
+_cleanup() {
+	_mn " - - - Cleanup..."
+
+	if [[ -d "rootfs/boot" ]]; then
+		find "rootfs/boot" -type f -name '*.img' -delete
+	fi
+	if [[ -d "rootfs/boot" ]]; then
+		find "rootfs/boot" -type f -name 'vmlinuz*' -delete
+	fi
+	if [[ -d "rootfs/var/lib/pacman" ]]; then
+		find "rootfs/var/lib/pacman" -maxdepth 1 -type f -delete
+	fi
+	if [[ -d "rootfs/var/lib/pacman/sync" ]]; then
+		find "rootfs/var/lib/pacman/sync" -delete
+	fi
+	if [[ -d "rootfs/var/cache/pacman/pkg" ]]; then
+		find "rootfs/var/cache/pacman/pkg" -type f -delete
+	fi
+	if [[ -d "rootfs/var/log" ]]; then
+		find "rootfs/var/log" -type f -delete
+	fi
+	if [[ -d "rootfs/var/tmp" ]]; then
+		find "rootfs/var/tmp" -mindepth 1 -delete
+	fi
+	find "rootfs/" \( -name "*.pacnew" -o -name "*.pacsave" -o -name "*.pacorig" \) -delete
+	_msg_info "Done!"
 }
 
-# Prepare /isolinux
-make_isolinux() {
-	mkdir -p ${work_dir}/iso/isolinux
-	sed "s|%INSTALL_DIR%|${install_dir}|g" ${script_path}/isolinux/isolinux.cfg > ${work_dir}/iso/isolinux/isolinux.cfg
-	cp ${work_dir}/usr/lib/syslinux/bios/isolinux.bin ${work_dir}/iso/isolinux/
-	cp ${work_dir}/usr/lib/syslinux/bios/isohdpfx.bin ${work_dir}/iso/isolinux/
-	cp ${work_dir}/usr/lib/syslinux/bios/ldlinux.c32 ${work_dir}/iso/isolinux/
+# - - - CREATE AN ISO IMAGE
+
+_mkiso() {
+	_mn "Creating ISO image..."
+	xorriso -as mkisofs \
+		-iso-level 3 \
+		-full-iso9660-filenames \
+		-volid "${iso_label}" \
+		-appid "${application}" \
+		-publisher "${publisher}" \
+		-preparer "" \
+		-eltorito-boot isolinux/isolinux.bin \
+		-eltorito-catalog isolinux/boot.cat \
+		-no-emul-boot -boot-load-size 4 -boot-info-table \
+		-isohybrid-mbr ${work_dir}/iso/isolinux/isohdpfx.bin \
+		-output "${img_name}" \
+		"rootfs/"
+	_ms "Done! | $(ls -sh ${img_name})"
 }
 
-# Build nxos filesystem image
-make_prepare() {
-	mkarchiso -v -w "${work_dir}" -D "${install_dir}" prepare
+# - - - CREATE AN SQUASHFS IMAGE
+
+_mksfs() {
+	_mn " - - - Creating SquashFS..."
+	[[ mksquashfs "./rootfs" "iso/rootfs.sfs" -noappend -comp "$comp" -no-progress ]] && {
+		_ms "Done!"
+		_mkiso
+	} || {
+		_mf "Failed!"
+	}
 }
 
-# Build ISO
-make_iso() {
-	mkarchiso -v -w "${work_dir}" -D "${install_dir}" -L "${iso_label}" -o "${out_dir}" iso "${iso_name}.iso"
-}
+# - - - MAIN
 
-make_basefs
-#make_setup_mkinitcpio
-#make_boot
-#make_syslinux
-#make_isolinux
-#make_prepare
-#make_iso
+for cmd in "$@"; do
+	case "$cmd" in 
+		clean)	_cleanup;;
+		pack)	_mksfs;;
+	esac
+done
