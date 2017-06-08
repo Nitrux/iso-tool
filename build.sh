@@ -10,19 +10,15 @@ pacman_conf="/etc/pacman.conf"
 export iso_label="NXOS"
 img_name="nxos.iso"
 publisher="Luis Lavaire <https://www.github.com/luis-lavaire>"
-application="nxos installer"
+application="nxos live"
 comp="xz"
 gpg_key=
 
 # - - - MESSAGES
 
-_fail() {
-	echo -e "\033[38;5;1m $@ \n"
-}
+_fail() { echo -e "\n - - \033[38;5;1m $@ \n"; }
 
-_echo() {
-	echo -e "\033[38;5;1m $0"
-}
+_echo() { echo -e "\n - - \033[38;5;5m $@ \n"; }
 
 # - - - FILESYSTEM CLEANUP
 
@@ -79,7 +75,7 @@ _mkiso() {
 _mksfs() {
 	_echo " - - - Creating SquashFS..."
 	[[ mksquashfs "./rootfs" "iso/rootfs.sfs" -noappend -comp "$comp" ]] && {
-		_ms "Done!"
+		_echo "Done!"
 		_mkiso
 	} || {
 		_fail "Failed!"
