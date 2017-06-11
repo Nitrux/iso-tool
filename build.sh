@@ -11,20 +11,17 @@ export iso_label="NXOS"
 img_name="nxos.iso"
 publisher="Luis Lavaire <https://www.github.com/luis-lavaire>"
 application="nxos live"
-comp="xz"
-gpg_key=
 
 # - - - MESSAGES
 
-_fail() { echo -e "\n - - \033[38;5;1m $@ \n"; }
+_fail() { echo -e "-\033[38;5;1m $@ \033[38;0;1m"; }
 
-_echo() { echo -e "\n - - \033[38;5;5m $@ \n"; }
+_echo() { echo -e "-\033[38;5;5m $@ \033[38;0;1m"; }
 
 # - - - FILESYSTEM CLEANUP
 
 _cleanup() {
 	_echo " - - - Cleanup..."
-
 	if [[ -d "rootfs/boot" ]]; then
 		find "rootfs/boot" -type f -name '*.img' -delete
 	fi
@@ -60,33 +57,29 @@ _mkiso() {
 		-volid "${iso_label}" \
 		-appid "${application}" \
 		-publisher "${publisher}" \
-		-preparer "" \
-		-eltorito-boot isolinux/isolinux.bin \
-		-eltorito-catalog isolinux/boot.cat \
+		-preparer "Luis Lavaire" \
+		-eltorito-boot "isolinux/isolinux.bin" \
+		-eltorito-catalog "isolinux/boot.cat" \
 		-no-emul-boot -boot-load-size 4 -boot-info-table \
 		-isohybrid-mbr ${work_dir}/iso/isolinux/isohdpfx.bin \
 		-output "${img_name}" \
-		"rootfs/"
+		"iso/rootfs.sfs"
 	_echo "Done! | $(ls -sh ${img_name})"
 }
 
 # - - - CREATE AN SQUASHFS IMAGE
 
-_mksfs() {
+_mkimg() {
 	_echo " - - - Creating SquashFS..."
-	[[ mksquashfs "./rootfs" "iso/rootfs.sfs" -noappend -comp "$comp" ]] && {
+	if [[ mksquashfs "./rootfs" "iso/rootfs.sfs" -noappend -comp xz ]]; then
 		_echo "Done!"
 		_mkiso
-	} || {
-		_fail "Failed!"
-	}
+	else
+		_fail "Failed to generate an squash file system!"
+	fi
 }
 
 # - - - MAIN
 
-for cmd in "$@"; do
-	case "$cmd" in 
-		clean)	_cleanup;;
-		pack)	_mksfs;;
-	esac
-done
+_cleanup
+_mkimg
