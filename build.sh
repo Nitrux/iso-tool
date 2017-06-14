@@ -14,9 +14,9 @@ application="nxos live"
 
 # - - - MESSAGES
 
-_fail() { echo -e "-\033[38;5;1m $@ \033[38;0;1m"; }
+_fail() { echo -e "\033[38;5;1m $@ \033[38;0;1m"; }
 
-_echo() { echo -e "-\033[38;5;5m $@ \033[38;0;1m"; }
+_echo() { echo -e "\033[38;5;5m $@ \033[38;0;1m"; }
 
 # - - - FILESYSTEM CLEANUP
 
