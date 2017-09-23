@@ -94,12 +94,18 @@ mkdir -p dev/     \
          usr/bin  \
          usr/sbin
 
+cp "$wdir"/sources/busybox bin/
+
 printf \
 "#!/bin/sh
-dmesg -n 1
+
+dmesg -n 0
+
 mount -t devtmpfs none /dev
-mount -t proc none /proc
-mount -t sysfs none /sys
+mount -t proc     none /proc
+mount -t sysfs    none /sys
+
+/bin/busybox --install -s
 
 init || setsid cttyhack /bin/sh
 " > init
@@ -130,10 +136,10 @@ out "INSTALLING SYSLINUX"
 
 cd "$wdir"/iso/boot
 
-cp "$wdir"/sources/syslinux-${syslinux}/bios/core/isolinux.bin ./isolinux/
-cp "$wdir"/sources/syslinux-${syslinux}/bios/com32/elflink/ldlinux/ldlinux.c32 ./isolinux/
+cp "$wdir"/sources/syslinux-${syslinux}/bios/core/isolinux.bin isolinux/
+cp "$wdir"/sources/syslinux-${syslinux}/bios/com32/elflink/ldlinux/ldlinux.c32 isolinux/
 
-echo 'default /boot/vmlinuz initrd=/boot/initramfs.gz' > ./isolinux/isolinux.cfg
+echo 'default /boot/vmlinuz initrd=/boot/initramfs.gz' > isolinux/isolinux.cfg
 
 
 
@@ -141,18 +147,20 @@ echo 'default /boot/vmlinuz initrd=/boot/initramfs.gz' > ./isolinux/isolinux.cfg
 
 out "GENERATING THE .ISO FILE"
 
-xorriso -as mkisofs                        \
-    -iso-level 3                           \
-    -full-iso9660-filenames                \
-    -volid "$iso_label"                    \
-    -publisher "Nitrux S.A"                \
-    -eltorito-boot isolinux/isolinux.bin   \
-    -eltorito-catalog isolinux/boot.cat    \
-    -no-emul-boot                          \
-    -boot-load-size 4                      \
-    -boot-info-table                       \
-    -isohybrid-mbr isolinux/isohdpfx.bin   \
-    -output "$iso_name" "$wdir"/iso/
+cd "$wdir"
+
+xorriso -as mkisofs                                 \
+    -iso-level 3                                    \
+    -full-iso9660-filenames                         \
+    -volid "$iso_label"                             \
+    -publisher "Nitrux S.A"                         \
+    -eltorito-boot iso/boot/isolinux/isolinux.bin   \
+    -eltorito-catalog iso/boot/isolinux/boot.cat    \
+    -no-emul-boot                                   \
+    -boot-load-size 4                               \
+    -boot-info-table                                \
+    -isohybrid-mbr isolinux/isohdpfx.bin            \
+    -output output/"$iso_name" "$wdir"/iso/
 
 # - - - DONE
 
