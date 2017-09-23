@@ -36,14 +36,19 @@ err () { printf "$r \n FATAL $@ - - - \n\n $n"; }
 # - - - CREATE SOME DIRECTORIES
 
 mkdir -p \
-    sources            \
-    output             \
-    iso                \
-    iso/boot           \
-    iso/boot/isolinux  \
-    initramfs          \
-    initramfs/rootfs   \
-    initramfs/layer
+    sources                \
+    output                 \
+    iso                    \
+    iso/boot               \
+    iso/boot/isolinux      \
+    initramfs              \
+    initramfs/rootfs       \
+    initramfs/rootfs/bin   \
+    initramfs/rootfs/sys   \
+    initramfs/rootfs/dev   \
+    initramfs/rootfs/proc  \
+    initramfs/rootfs/var   \
+    initramfs/rootfs/tmp
 
 
 
@@ -84,8 +89,9 @@ out "BUILDING BUSYBOX"
 
 out "GENERATING THE INITRAMFS"
 
-cd _install
-rm -f linuxrc
+cd "$$wdir"/initramfs/rootfs
+#cd _install
+#rm -f linuxrc
 
 mkdir dev proc sys
 
