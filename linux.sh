@@ -42,13 +42,7 @@ mkdir -p \
     iso/boot               \
     iso/boot/isolinux      \
     initramfs              \
-    initramfs/rootfs       \
-    initramfs/rootfs/bin   \
-    initramfs/rootfs/sys   \
-    initramfs/rootfs/dev   \
-    initramfs/rootfs/proc  \
-    initramfs/rootfs/var   \
-    initramfs/rootfs/tmp
+    initramfs/rootfs
 
 
 
@@ -83,8 +77,6 @@ out "BUILDING BUSYBOX"
 
 
 
-
-
 # - - - CREATE THE INITRAMFS DIRECTORY TREE
 
 out "GENERATING THE INITRAMFS"
@@ -93,7 +85,14 @@ cd "$$wdir"/initramfs/rootfs
 #cd _install
 #rm -f linuxrc
 
-mkdir dev proc sys
+mkdir -p dev/     \
+         proc/    \
+         sys/     \
+         bin/     \
+         sbin/    \
+         usr/     \
+         usr/bin  \
+         usr/sbin
 
 printf \
 "#!/bin/sh
