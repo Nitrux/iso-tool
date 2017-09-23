@@ -1,0 +1,8 @@
+tmp/
+iso/
+layer/
+output/
+sources/
+initramfs/
+
+tree
