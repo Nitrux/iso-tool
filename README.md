@@ -2,7 +2,7 @@
 
 `mkiso` is a command that generates a minimal linux
 OS with customized features.
-It creates a ISO image that can be written directly
+It creates an ISO image that can be written directly
 to a USB stick or hard drive.
 
 Don't run it without reading it. You'll have to
