@@ -52,17 +52,17 @@ out "DOWNLOADING SOURCES"
 
 cd sources
 
-wget --no-clobber --show-progress -q \
-    http://kernel.org/pub/linux/kernel/v4.x/linux-${linux}.tar.xz && \
-    { out "EXTRACTING KERNEL"; tar -xf linux-*.tar.xz; }
+#wget --no-clobber --show-progress -q \
+#    http://kernel.org/pub/linux/kernel/v4.x/linux-${linux}.tar.xz && \
+#    { out "EXTRACTING KERNEL"; tar -xf linux-*.tar.xz; }
 
-wget --no-clobber --show-progress -q \
-    https://busybox.net/downloads/binaries/1.26.2-defconfig-multiarch/busybox-x86_64 \
-    -O busybox
+#wget --no-clobber --show-progress -q \
+#    https://busybox.net/downloads/binaries/1.26.2-defconfig-multiarch/busybox-x86_64 \
+#    -O busybox
 
-wget --no-clobber --show-progress -q \
-    http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-${syslinux}.tar.xz && \
-    { out "EXTRACTING SYSLINUX"; tar -xf syslinux-*.tar.xz; }
+#wget --no-clobber --show-progress -q \
+#    http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-${syslinux}.tar.xz && \
+#    { out "EXTRACTING SYSLINUX"; tar -xf syslinux-*.tar.xz; }
 
 
 
@@ -81,7 +81,7 @@ out "BUILDING BUSYBOX"
 
 out "GENERATING THE INITRAMFS"
 
-cd "$$wdir"/initramfs/rootfs
+cd "$wdir"/initramfs/rootfs
 #cd _install
 #rm -f linuxrc
 
@@ -125,7 +125,7 @@ find . | cpio -R root:root -H newc -o | gzip > "$wdir"/iso/boot/initramfs.gz
 out "BUILDING THE KERNEL"
 
 cd "$wdir"/sources/linux-${linux}/
-make mrproper defconfig menuconfig bzImage
+#make mrproper defconfig menuconfig bzImage
 cp arch/x86/boot/bzImage "$wdir"/iso/boot/vmlinuz
 
 
@@ -136,10 +136,14 @@ out "INSTALLING SYSLINUX"
 
 cd "$wdir"/iso/boot
 
+cp "$wdir"/sources/syslinux-${syslinux}/bios/mbr/isohdpfx.bin isolinux/
 cp "$wdir"/sources/syslinux-${syslinux}/bios/core/isolinux.bin isolinux/
 cp "$wdir"/sources/syslinux-${syslinux}/bios/com32/elflink/ldlinux/ldlinux.c32 isolinux/
 
-echo 'default /boot/vmlinuz initrd=/boot/initramfs.gz' > isolinux/isolinux.cfg
+printf \
+"default /boot/vmlinuz
+initrd=/boot/initramfs.gz
+" > isolinux/isolinux.cfg
 
 
 
@@ -154,12 +158,12 @@ xorriso -as mkisofs                                 \
     -full-iso9660-filenames                         \
     -volid "$iso_label"                             \
     -publisher "Nitrux S.A"                         \
-    -eltorito-boot iso/boot/isolinux/isolinux.bin   \
-    -eltorito-catalog iso/boot/isolinux/boot.cat    \
+    -eltorito-boot boot/isolinux/isolinux.bin       \
+    -eltorito-catalog boot/isolinux/boot.cat        \
     -no-emul-boot                                   \
     -boot-load-size 4                               \
     -boot-info-table                                \
-    -isohybrid-mbr isolinux/isohdpfx.bin            \
+    -isohybrid-mbr iso/boot/isolinux/isohdpfx.bin   \
     -output output/"$iso_name" "$wdir"/iso/
 
 # - - - DONE
