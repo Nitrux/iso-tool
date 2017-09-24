@@ -3,11 +3,6 @@ iso/*
 layer/*
 output/*
 sources/*
-initramfs/rootfs/bin/*
-initramfs/rootfs/dev/*
-initramfs/rootfs/sys/*
-initramfs/rootfs/proc/*
-initramfs/rootfs/usr/bin/*
-initramfs/rootfs/usr/sbin/*
+initramfs/*
 
 tree
