@@ -36,12 +36,12 @@ err () { printf "$r \n FATAL $@ - - - \n\n $n"; }
 # - - - CREATE SOME DIRECTORIES
 
 mkdir -p \
-    sources                \
-    output                 \
-    iso                    \
-    iso/boot               \
-    iso/boot/isolinux      \
-    initramfs              \
+    sources           \
+    output            \
+    iso               \
+    iso/boot          \
+    iso/boot/isolinux \
+    initramfs         \
     initramfs/rootfs
 
 
@@ -85,16 +85,17 @@ cd "$wdir"/initramfs/rootfs
 #cd _install
 #rm -f linuxrc
 
-mkdir -p dev/     \
-         proc/    \
-         sys/     \
-         bin/     \
-         sbin/    \
-         usr/     \
-         usr/bin  \
+mkdir -p dev/    \
+         proc/   \
+         sys/    \
+         bin/    \
+         sbin/   \
+         usr/    \
+         usr/bin \
          usr/sbin
 
 cp "$wdir"/sources/busybox bin/
+chmod +x bin/busybox
 
 printf \
 "#!/bin/sh
@@ -107,7 +108,7 @@ mount -t sysfs    none /sys
 
 /bin/busybox --install -s
 
-init || setsid cttyhack /bin/sh
+setsid cttyhack /bin/sh
 " > init
 
 chmod +x init
@@ -140,10 +141,7 @@ cp "$wdir"/sources/syslinux-${syslinux}/bios/mbr/isohdpfx.bin isolinux/
 cp "$wdir"/sources/syslinux-${syslinux}/bios/core/isolinux.bin isolinux/
 cp "$wdir"/sources/syslinux-${syslinux}/bios/com32/elflink/ldlinux/ldlinux.c32 isolinux/
 
-printf \
-"default /boot/vmlinuz
-initrd=/boot/initramfs.gz
-" > isolinux/isolinux.cfg
+printf "default /boot/vmlinuz initrd=/boot/initramfs.gz\n" > isolinux/isolinux.cfg
 
 
 
@@ -153,18 +151,18 @@ out "GENERATING THE .ISO FILE"
 
 cd "$wdir"
 
-xorriso -as mkisofs                                 \
-    -iso-level 3                                    \
-    -full-iso9660-filenames                         \
-    -volid "$iso_label"                             \
-    -publisher "Nitrux S.A"                         \
-    -eltorito-boot boot/isolinux/isolinux.bin       \
-    -eltorito-catalog boot/isolinux/boot.cat        \
-    -no-emul-boot                                   \
-    -boot-load-size 4                               \
-    -boot-info-table                                \
-    -isohybrid-mbr iso/boot/isolinux/isohdpfx.bin   \
-    -output output/"$iso_name" "$wdir"/iso/
+xorriso -as mkisofs iso/                         \
+    -output output/"$iso_name"                   \
+    -iso-level 3                                 \
+    -no-emul-boot                                \
+    -boot-load-size 4                            \
+    -boot-info-table                             \
+    -volid "$iso_label"                          \
+    -full-iso9660-filenames                      \
+    -publisher "Nitrux S.A"                      \
+    -eltorito-catalog boot/isolinux/boot.cat     \
+    -eltorito-boot boot/isolinux/isolinux.bin    \
+    -isohybrid-mbr iso/boot/isolinux/isohdpfx.bin
 
 # - - - DONE
 
