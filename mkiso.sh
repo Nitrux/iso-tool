@@ -89,13 +89,16 @@ mkdir -p dev/    \
          proc/   \
          sys/    \
          bin/    \
-         sbin/   \
-         usr/    \
-         usr/bin \
-         usr/sbin
+         usr/
+
+ln -s bin/ sbin/
+ln -s bin/ usr/bin/
+ln -s bin/ usr/sbin/
 
 cp "$wdir"/sources/busybox bin/
 chmod +x bin/busybox
+
+/bin/busybox --install -s bin/
 
 printf \
 "#!/bin/sh
@@ -106,9 +109,7 @@ mount -t devtmpfs none /dev
 mount -t proc     none /proc
 mount -t sysfs    none /sys
 
-/bin/busybox --install -s
-
-setsid cttyhack /bin/sh
+exec /bin/sh
 " > init
 
 chmod +x init
@@ -141,7 +142,7 @@ cp "$wdir"/sources/syslinux-${syslinux}/bios/mbr/isohdpfx.bin isolinux/
 cp "$wdir"/sources/syslinux-${syslinux}/bios/core/isolinux.bin isolinux/
 cp "$wdir"/sources/syslinux-${syslinux}/bios/com32/elflink/ldlinux/ldlinux.c32 isolinux/
 
-printf "default /boot/vmlinuz initrd=/boot/initramfs.gz\n" > isolinux/isolinux.cfg
+printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > isolinux/isolinux.cfg
 
 
 
