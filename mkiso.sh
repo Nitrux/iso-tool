@@ -21,7 +21,7 @@ wdir="$PWD"
 # - - - GRAB INFO FROM INSTALLED SYSTEM VERSIONS
 
 linux=`uname -r | grep -Eo '[0-9]\.[0-9]*\.[0-9]*'`
-#busybox=`busybox | grep -Eo '[0-9]\.[0-9]*\.[0-9]*'`
+busybox=`busybox | grep -Eo '[0-9]\.[0-9]*\.[0-9]*'`
 syslinux=`syslinux -v 2>&1 | grep -Eo '[0-9]\.[0-9]*'`
 
 
@@ -56,9 +56,9 @@ cd sources
 #    http://kernel.org/pub/linux/kernel/v4.x/linux-${linux}.tar.xz && \
 #    { out "EXTRACTING KERNEL"; tar -xf linux-*.tar.xz; }
 
-#wget --no-clobber --show-progress -q \
-#    https://busybox.net/downloads/binaries/1.26.2-defconfig-multiarch/busybox-x86_64 \
-#    -O busybox
+wget --no-clobber --show-progress -q \
+    https://busybox.net/downloads/binaries/1.26.2-defconfig-multiarch/busybox-x86_64 \
+    -O busybox
 
 #wget --no-clobber --show-progress -q \
 #    http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-${syslinux}.tar.xz && \
@@ -85,31 +85,33 @@ cd "$wdir"/initramfs/rootfs
 #cd _install
 #rm -f linuxrc
 
-mkdir -p dev/    \
-         proc/   \
-         sys/    \
-         bin/    \
-         usr/
+mkdir -p dev/     \
+         proc/    \
+         sys/     \
+         bin/     \
+         sbin/     \
+         usr/bin  \
+         usr/sbin
 
-ln -s bin/ sbin/
-ln -s bin/ usr/bin/
-ln -s bin/ usr/sbin/
-
-cp "$wdir"/sources/busybox bin/
-chmod +x bin/busybox
-
-/bin/busybox --install -s bin/
+cp "$wdir"/sources/busybox usr/bin/busybox
+chmod +x usr/bin/busybox
 
 printf \
-"#!/bin/sh
+"#! /bin/sh
 
-dmesg -n 0
+mount -t proc     none /proc -o nosuid,noexec,nodev
+mount -t sysfs    none /sys  -o nosuid,noexec,nodev
+mount -t devtmpfs none /dev  -o mode=0755,nosuid
 
-mount -t devtmpfs none /dev
-mount -t proc     none /proc
-mount -t sysfs    none /sys
+if [ -e /sys/firmware/efi ]; then
+    mount -t efivarfs efivarfs /sys/firmware/efi/efivars -o nosuid,nodev,noexec
+fi
 
-exec /bin/sh
+busybox --install -s
+
+export PS1=' -- '
+
+setsid cttyhack /bin/sh
 " > init
 
 chmod +x init
