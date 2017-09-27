@@ -20,9 +20,9 @@ wdir="$PWD"
 
 # - - - GRAB INFO FROM INSTALLED SYSTEM VERSIONS
 
-linux=`uname -r | grep -Eo '[0-9]\.[0-9]*\.[0-9]*'`
-busybox=`busybox | grep -Eo '[0-9]\.[0-9]*\.[0-9]*'`
-syslinux=`syslinux -v 2>&1 | grep -Eo '[0-9]\.[0-9]*'`
+linux=$(uname -r | grep -Eo '[0-9]\.[0-9]*\.[0-9]*')
+busybox=$(busybox | grep -Eo '[0-9]\.[0-9]*\.[0-9]*')
+syslinux=$(syslinux -v 2>&1 | grep -Eo '[0-9]\.[0-9]*')
 
 
 
@@ -46,6 +46,7 @@ mkdir -p \
     initramfs/rootfs
 
 ln -s iso/system filesystem/
+
 
 
 # - - - DOWNLOAD SOURCES
