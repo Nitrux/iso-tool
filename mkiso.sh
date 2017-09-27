@@ -41,9 +41,11 @@ mkdir -p \
     iso               \
     iso/boot          \
     iso/boot/isolinux \
+    iso/system        \
     initramfs         \
     initramfs/rootfs
 
+ln -s iso/system filesystem/
 
 
 # - - - DOWNLOAD SOURCES
@@ -96,23 +98,7 @@ mkdir -p dev/     \
 cp "$wdir"/sources/busybox usr/bin/busybox
 chmod +x usr/bin/busybox
 
-printf \
-"#! /bin/sh
-
-mount -t proc     none /proc -o nosuid,noexec,nodev
-mount -t sysfs    none /sys  -o nosuid,noexec,nodev
-mount -t devtmpfs none /dev  -o mode=0755,nosuid
-
-if [ -e /sys/firmware/efi ]; then
-    mount -t efivarfs efivarfs /sys/firmware/efi/efivars -o nosuid,nodev,noexec
-fi
-
-busybox --install -s
-
-export PS1=' -- '
-
-setsid cttyhack /bin/sh
-" > init
+cp "$wdir"/initramfs/init .
 
 chmod +x init
 
