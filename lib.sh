@@ -15,7 +15,7 @@ err () { printf "$r \n FATAL $@ - - - \n\n $n"; }
 
 # - - - CREATE THE DIRECTORY LAYOUT.
 
-make_layout () {
+make_dir_layout () {
     mkdir -p \
         sources                   \
         output                    \
