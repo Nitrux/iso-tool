@@ -1,0 +1,115 @@
+#! /bin/sh
+
+/bin/busybox --install -s
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+
+# - - - KERNEL, SHUT UP..!
+
+dmesg -n 1
+
+printf "\e[34m
+
+##   ## ##   ##  #####   #####
+###  ##  ## ##  ### ### ###  ##
+#### ##   ###   ##   ##  ###
+## ####   ###   ##   ##    ###
+##  ###  ## ##  ### ### ##  ###
+##   ## ##   ##  #####   #####  \e[36mv0.1.1-\e[31mBETA
+
+"
+
+
+# - - - MOUNT BASIC FILESYSTEMS.
+
+mkdir -p /dev/pts
+
+mount -t devtmpfs none /dev
+mount -t proc     none /proc
+mount -t sysfs    none /sys
+mount -t tmpfs    none /tmp -o mode=1777
+mount -t devpts   none /dev/pts
+
+if [ -e /sys/firmware/efi ]; then
+	mount -t efivarfs efivarfs /sys/firmware/efi/efivars -o nosuid,nodev,noexec
+fi
+
+
+# - - - FROM HERE IT'S SAFE TO INSERT CODE.
+
+# - - - USEFUL FUNCTIONS.
+
+say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
+err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
+
+handle_fatal_error () {
+	err "UNABLE TO SWITCH TO THE REAL ROOT"
+	err "A COMMAND LINE HAS BEEN STARTED. GOOD LUCK. :("
+	exec setsid cttyhack sh
+}
+
+
+# - - - LOAD MODULES (DRIVERS).
+
+find /sys -name modalias -exec cat \{\} + |
+awk '
+   { aliases[$0] = 1 }
+   END {
+	  for (alias in aliases) {
+		 print alias
+	  }
+   }
+' > modaliases.lst
+
+mdev -s
+
+[ -e /proc/sys/kernel/hotplug ] && echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+while read -r modalias; do
+   modprobe ${modalias} 2 >/dev/null
+done < modaliases.lst
+
+
+# - - - FIND THE ROOT FILESYSTEM.
+
+disk=$(blkid -L "ROOTFILESYSTEM")
+if [[ -z "$disk" ]]; then handle_fatal_error; fi
+
+
+# - - - CREATE NEEDED DIRECTORIES FOR AN OVERLAY MOUNT.
+
+mkdir -p \
+	mnt/             \
+	overlay/lower/   \
+	overlay/upper/   \
+	overlay/workdir/ \
+	overlay/newroot/
+
+
+# - - - MOUNT THE ROOT FLESYSTEM AS AN OVERLAYFS.
+
+mount "$disk" mnt/
+mount -o ro mnt/rootfs.sfs overlay/lower/ || handle_fatal_error
+mount -o rw mnt/fake-disk  overlay/upper/ || handle_fatal_error
+
+
+ld=overlay/lower ud=overlay/upper wd=overlay/workdir
+
+mount -t overlay -o lowerdir=$ld,upperdir=$ud,workdir=$wd none overlay/newroot
+
+say 'MOUNTED `rootfs.sfs`'
+
+
+# - - - IT'S TIME TO SWITCH ROOT. 
+
+say "SWITCHING TO REAL ROOT"
+
+mount -o move /sys  overlay/upper/sys &&
+mount -o move /dev  overlay/upper/dev &&
+mount -o move /proc overlay/upperproc &&
+exec switch_root overlayfs/newroot ${init} $(get_init_args ${cmdline})
+
+
+# - - - IF THE FOLLOWING GETS EXECUTED, THAT MEANS A REALLY NASTY ERROR OCCURED.
+
+handle_fatal_error
