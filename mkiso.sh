@@ -20,8 +20,8 @@ clean () {
 # - - - DOWNLOAD THE NECESSARY SOURCE FILES.
 
 get_source () {
-	wget --no-clobber --show-progress -c -q "$1" 2> /dev/null && \
-		{ say "EXTRACTING ${1//\/}"; tar -xf -C build/sources "$(basename $1)"; } || \
+	wget --no-clobber --show-progress -c -q -O build/sources/"$(basename $1)" "$1" 2> /dev/null && \
+		{ say "EXTRACTING $(basename $1)"; tar -xf -C build/sources "$(basename $1)"; } || \
 		{ err "ERROR DOWNLOADING $1"; }
 }
 
