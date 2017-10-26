@@ -1,5 +1,7 @@
 #! /bin/sh
 
+set -e
+
 # - - - MESSAGE FORMATTING FUNCTIONS.
 
 say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
@@ -20,19 +22,21 @@ clean () {
 # - - - DOWNLOAD THE NECESSARY SOURCE FILES.
 
 get_source () {
-	wget --no-clobber --show-progress -c -q -O build/sources/"$(basename $1)" "$1" 2> /dev/null && \
+	say "DOWNLOADING $(basename $1)..."
+
+	wget -c -q --show-progress -O build/sources/"$(basename $1)" "$1" && \
 		{ say "EXTRACTING $(basename $1)"; tar -xf -C build/sources "$(basename $1)"; } || \
 		{ err "ERROR DOWNLOADING $1"; }
 }
 
-# - - - LETS DO SOME MAGIC
+# - - - LETS DO SOME MAGIC.
 
-source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND" && exit; }
+source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND"; exit; }
 
 
 # - - - CREATE THE DIRECTORY LAYOUT.
 
-[[ $(tr [:upper:] [:lower:] <<< "$1") == "clean"]] && clean
+[[ "$( tr [:upper:] [:lower:] <<< $1)" == "clean" ]] && clean
 
 mkdir -p \
 	rootfs             \
