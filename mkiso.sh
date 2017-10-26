@@ -23,10 +23,10 @@ clean () {
 
 get_source () {
 	say "DOWNLOADING $(basename $1)..."
-
-	wget --no-clobber -c -q --show-progress -O build/sources/"$2.tar.xz" "$1" && \
-		{ say "EXTRACTING $(basename $1)"; tar -C build/sources -xf "$(basename $1)"; } || \
-		{ err "ERROR DOWNLOADING $1"; }
+	wget --no-clobber -c -q --show-progress -O build/sources/"$2.tar.xz" "$1" && {
+		say "EXTRACTING $(basename $1)"
+		tar -C build/sources -xf "$(basename $1)"
+	}
 }
 
 # - - - LETS DO SOME MAGIC.
@@ -65,7 +65,7 @@ else
 	make -C build/sources/kernel defconfig menuconfig bzImage
 fi
 
-cp build/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
+cp build/sources/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
 
 
 # - - - INSTALL SYSLINUX.
