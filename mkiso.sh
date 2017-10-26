@@ -17,24 +17,6 @@ clean () {
 }
 
 
-# - - - CREATE THE DIRECTORY LAYOUT.
-
-layout () {
-	mkdir -p \
-		rootfs             \
-		build/sources      \
-		build/configs      \
-		iso/boot/isolinux  \
-		initramfs/dev      \
-		initramfs/sys      \
-		initramfs/bin      \
-		initramfs/sbin     \
-		initramfs/proc     \
-		initramfs/usr/bin  \
-		initramfs/usr/sbin
-}
-
-
 # - - - DOWNLOAD THE NECESSARY SOURCE FILES.
 
 get_source () {
@@ -49,6 +31,22 @@ get_source () {
 # - - - LETS DO SOME MAGIC
 
 source config
+
+
+# - - - CREATE THE DIRECTORY LAYOUT.
+
+mkdir -p \
+	rootfs             \
+	build/sources      \
+	build/configs      \
+	iso/boot/isolinux  \
+	initramfs/dev      \
+	initramfs/sys      \
+	initramfs/bin      \
+	initramfs/sbin     \
+	initramfs/proc     \
+	initramfs/usr/bin  \
+	initramfs/usr/sbin
 
 
 # - - - BUILD THE KERNEL
