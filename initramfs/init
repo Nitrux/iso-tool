@@ -42,8 +42,8 @@ fi
 say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
 err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
 
-handle_fatal_error () {
-	err "UNABLE TO SWITCH TO THE REAL ROOT"
+panic () {
+	err "ERROR ENCOUNTERED. CAN'T CONTINUE: $1"
 	err "A COMMAND LINE HAS BEEN STARTED. GOOD LUCK. :("
 	exec setsid cttyhack sh
 }
@@ -73,7 +73,9 @@ done < modaliases.lst
 # - - - FIND THE ROOT FILESYSTEM.
 
 disk=$(blkid -L "ROOTFILESYSTEM")
-if [[ -z "$disk" ]]; then handle_fatal_error; fi
+if [[ -z "$disk" ]]; then
+	panic "NO ROOT FILESYSTEM FOUND"
+fi
 
 
 # - - - CREATE NEEDED DIRECTORIES FOR AN OVERLAY MOUNT.
@@ -89,8 +91,8 @@ mkdir -p \
 # - - - MOUNT THE ROOT FLESYSTEM AS AN OVERLAYFS.
 
 mount "$disk" mnt/
-mount -o ro mnt/rootfs.sfs overlay/lower/ || handle_fatal_error
-mount -o rw mnt/fake-disk  overlay/upper/ || handle_fatal_error
+mount -o ro mnt/rootfs.sfs overlay/lower/
+mount -o rw mnt/fake-disk.img  overlay/upper/
 
 
 ld=overlay/lower ud=overlay/upper wd=overlay/workdir
@@ -112,4 +114,4 @@ exec switch_root overlayfs/newroot ${init} $(get_init_args ${cmdline})
 
 # - - - IF THE FOLLOWING GETS EXECUTED, THAT MEANS A REALLY NASTY ERROR OCCURED.
 
-handle_fatal_error
+panic "UNABLE TO SWITCH TO REAL ROOT"

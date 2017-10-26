@@ -93,6 +93,12 @@ find initramfs | cpio -R root:root -H newc -o | gzip > iso/boot/initramfs.gz
 mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
 
 
+# - - - CREATE A WRITEABLE FILESYSTEM (PSEUDO-ROOT).
+
+dd if=/dev/zero of=fake-disk.img bs=1024 count=0 seek=$[1024*100]
+mkfs -t ext4 fake-disk.img
+
+
 # - - - CREATE THE ISO FILE.
 
 xorriso -as mkisofs iso/                           \
