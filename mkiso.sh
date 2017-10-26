@@ -30,7 +30,7 @@ get_source () {
 
 # - - - LETS DO SOME MAGIC
 
-source config
+source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND" && exit; }
 
 
 # - - - CREATE THE DIRECTORY LAYOUT.
