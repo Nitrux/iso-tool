@@ -32,7 +32,7 @@ source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND" && exit; }
 
 # - - - CREATE THE DIRECTORY LAYOUT.
 
-[ $(tr [:upper:] [:lower:] <<< "$1") == "clean" ] && clean
+[[ $(tr [:upper:] [:lower:] <<< "$1") == "clean"]] && clean
 
 mkdir -p \
 	rootfs             \
