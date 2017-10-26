@@ -24,8 +24,8 @@ clean () {
 get_source () {
 	say "DOWNLOADING $(basename $1)..."
 
-	wget -c -q --show-progress -O build/sources/"$(basename $1)" "$1" && \
-		{ say "EXTRACTING $(basename $1)"; tar -xf -C build/sources "$(basename $1)"; } || \
+	wget --no-clobber -c -q --show-progress -O build/sources/"$2.tar.xz" "$1" && \
+		{ say "EXTRACTING $(basename $1)"; tar -C build/sources -xf "$(basename $1)"; } || \
 		{ err "ERROR DOWNLOADING $1"; }
 }
 
@@ -55,14 +55,14 @@ mkdir -p \
 # - - - BUILD THE KERNEL IF IT'S NEEDED.
 
 if [[ ! -f build/kernel/arch/x86/boot/bzImage ]]; then
-	get_source $kernel_url
+	get_source $kernel_url kernel
 fi
 
-if [[ -f build/configs/kernel.config -a "$use_old_kernel_config" == "yes" ]]; then
+if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
 	cp build/configs/kernel.config build/sources/kernel/.config
-	yes "" | make -C build/kernel/ oldconfig bzImage
+	yes "" | make -C build/sources/kernel/ oldconfig bzImage
 else
-	make -C build/kernel defconfig menuconfig bzImage
+	make -C build/sources/kernel defconfig menuconfig bzImage
 fi
 
 cp build/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
@@ -70,14 +70,14 @@ cp build/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
 
 # - - - INSTALL SYSLINUX.
 
-if [[ ! -d build/sources/syslinux* ]];then
-	get_source $syslinux_url
+if [[ ! -d build/sources/bootloader ]];then
+	get_source $syslinux_url bootloader
 fi
 
-cp build/sources/syslinux-*/bios/mbr/isohdpfx.bin \
-		build/sources/syslinux-*/bios/core/isolinux.bin \
-		build/sources/syslinux-*/bios/com32/elflink/ldlinux/ldlinux.c32 \
-		iso/bootisolinux/
+cp build/sources/bootloader/bios/mbr/isohdpfx.bin \
+		build/sources/bootloader/bios/core/isolinux.bin \
+		build/sources/bootloader/bios/com32/elflink/ldlinux/ldlinux.c32 \
+		iso/boot/isolinux/
 
 printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
 
