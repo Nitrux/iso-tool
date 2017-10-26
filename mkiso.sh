@@ -20,9 +20,6 @@ clean () {
 # - - - DOWNLOAD THE NECESSARY SOURCE FILES.
 
 get_source () {
-
-	# $1: Download URL.
-
 	wget --no-clobber --show-progress -c -q "$1" 2> /dev/null && \
 		{ say "EXTRACTING ${1//\/}"; tar -xf -C build/sources "$(basename $1)"; } || \
 		{ err "ERROR DOWNLOADING $1"; }
@@ -34,6 +31,8 @@ source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND" && exit; }
 
 
 # - - - CREATE THE DIRECTORY LAYOUT.
+
+[ $(tr [:upper:] [:lower:] <<< "$1") == "clean" ] && clean
 
 mkdir -p \
 	rootfs             \
