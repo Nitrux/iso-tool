@@ -6,7 +6,7 @@ say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
 err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
 
 
-# - - - CLEAN THE WORKSPACE AND START FROM SCRATCH
+# - - - CLEAN THE WORKSPACE AND START FROM SCRATCH.
 
 clean () {
 	rm -rf \
@@ -48,7 +48,7 @@ mkdir -p \
 	initramfs/usr/sbin
 
 
-# - - - BUILD THE KERNEL
+# - - - BUILD THE KERNEL IF IT'S NEEDED.
 
 if [[ ! -f build/kernel/arch/x86/boot/bzImage ]]; then
 	get_source $kernel_url
@@ -64,7 +64,7 @@ fi
 cp build/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
 
 
-# - - - INSTALL SYSLINUX
+# - - - INSTALL SYSLINUX.
 
 if [[ ! -d build/sources/syslinux* ]];then
 	get_source $syslinux_url
@@ -84,7 +84,7 @@ chmod +x initramfs/init
 find initramfs | cpio -R root:root -H newc -o | gzip > iso/boot/initramfs.gz
 
 
-# - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`
+# - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
 mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
 
