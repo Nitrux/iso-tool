@@ -1,11 +1,11 @@
 #! /bin/sh
 
-set -e
+# set -ex
 
 # - - - MESSAGE FORMATTING FUNCTIONS.
 
-say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
-err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
+say () { printf "\n\n\e[32m  # # # $@ \e[0m\n\n"; }
+err () { printf "\n\n\e[31m  # # # $@ \e[0m\n\n"; }
 
 
 # - - - CLEAN THE WORKSPACE AND START FROM SCRATCH.
@@ -54,15 +54,15 @@ mkdir -p \
 
 # - - - BUILD THE KERNEL IF IT'S NEEDED.
 
-if [[ ! -f build/kernel/arch/x86/boot/bzImage ]]; then
+if [[ ! -f build/sources/kernel/arch/x86/boot/bzImage ]]; then
 	get_source $kernel_url kernel
-fi
 
-if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
-	cp build/configs/kernel.config build/sources/kernel/.config
-	yes "" | make -C build/sources/kernel/ oldconfig bzImage
-else
-	make -C build/sources/kernel defconfig menuconfig bzImage
+	if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
+		cp build/configs/kernel.config build/sources/kernel/.config
+		yes "" | make -C build/sources/kernel/ oldconfig bzImage
+	else
+		make -C build/sources/kernel defconfig menuconfig bzImage
+	fi
 fi
 
 cp build/sources/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
