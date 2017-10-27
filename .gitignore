@@ -2,3 +2,5 @@ tmp/*
 iso/*
 rootfs/*
 build/*
+
+os.iso

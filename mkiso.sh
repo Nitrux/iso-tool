@@ -1,7 +1,5 @@
 #! /bin/sh
 
-# set -ex
-
 # - - - MESSAGE FORMATTING FUNCTIONS.
 
 say () { printf "\n\n\e[32m  # # # $@ \e[0m\n\n"; }
@@ -23,7 +21,7 @@ clean () {
 
 get_source () {
 	say "DOWNLOADING $(basename $1)..."
-	wget --no-clobber -c -q --show-progress -O build/sources/"$2.tar.xz" "$1" && {
+	wget --no-clobber -c -q --show-progress "$1" && {
 		say "EXTRACTING $(basename $1)"
 		tar -C build/sources -xf "$(basename $1)"
 	}
@@ -54,29 +52,34 @@ mkdir -p \
 
 # - - - BUILD THE KERNEL IF IT'S NEEDED.
 
-if [[ ! -f build/sources/kernel/arch/x86/boot/bzImage ]]; then
-	get_source $kernel_url kernel
+linux=$(basename $kernel_url)
+
+if [[ ! -f build/sources/${linux//.tar*/}/arch/x86/boot/bzImage ]]; then
+	get_source $linux
 
 	if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
-		cp build/configs/kernel.config build/sources/kernel/.config
-		yes "" | make -C build/sources/kernel/ oldconfig bzImage
+		cp build/configs/kernel.config build/sources/${linux//.tar*/}/.config
+		yes "" | make -C build/sources/${linux//.tar*/}/ oldconfig bzImage
 	else
-		make -C build/sources/kernel defconfig menuconfig bzImage
+		make -C build/sources/${linux//.tar*/} defconfig menuconfig bzImage
+		cp build/sources/${linux//.tar*/}/.config build/configs/kernel.config
 	fi
 fi
 
-cp build/sources/kernel/arch/x86/boot/bzImage iso/boot/vmlinuz
+cp build/sources/${linux//.tar*/}/arch/x86/boot/bzImage iso/boot/vmlinuz
 
 
 # - - - INSTALL SYSLINUX.
 
-if [[ ! -d build/sources/bootloader ]];then
-	get_source $syslinux_url bootloader
+syslinux=$(basename $syslinux_url)
+
+if [[ ! -d build/sources/${syslinux//.tar*/} ]];then
+	get_source $syslinux
 fi
 
-cp build/sources/bootloader/bios/mbr/isohdpfx.bin \
-		build/sources/bootloader/bios/core/isolinux.bin \
-		build/sources/bootloader/bios/com32/elflink/ldlinux/ldlinux.c32 \
+cp build/sources/${syslinux//.tar*/}/bios/mbr/isohdpfx.bin \
+		build/sources/${syslinux//.tar*/}/bios/core/isolinux.bin \
+		build/sources/${syslinux//.tar*/}/bios/com32/elflink/ldlinux/ldlinux.c32 \
 		iso/boot/isolinux/
 
 printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
@@ -90,7 +93,7 @@ find initramfs | cpio -R root:root -H newc -o | gzip > iso/boot/initramfs.gz
 
 # - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
-mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
+sudo mksquashfs rootfs iso/rootfs.sfs -noappend -no-progress -comp xz
 
 
 # - - - CREATE A WRITEABLE FILESYSTEM (PSEUDO-ROOT).
