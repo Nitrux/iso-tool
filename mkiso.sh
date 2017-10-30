@@ -55,7 +55,7 @@ mkdir -p \
 linux=$(basename $kernel_url)
 
 if [[ ! -f build/sources/${linux//.tar*/}/arch/x86/boot/bzImage ]]; then
-	get_source $linux
+	get_source $kernel_url
 
 	if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
 		cp build/configs/kernel.config build/sources/${linux//.tar*/}/.config
@@ -74,7 +74,7 @@ cp build/sources/${linux//.tar*/}/arch/x86/boot/bzImage iso/boot/vmlinuz
 syslinux=$(basename $syslinux_url)
 
 if [[ ! -d build/sources/${syslinux//.tar*/} ]];then
-	get_source $syslinux
+	get_source $syslinux_url
 fi
 
 cp build/sources/${syslinux//.tar*/}/bios/mbr/isohdpfx.bin \
@@ -84,6 +84,12 @@ cp build/sources/${syslinux//.tar*/}/bios/mbr/isohdpfx.bin \
 
 printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
 
+mkdir iso/boot/isolinux/efi/boot
+printf "
+echo -off
+echo NXOS is starting...
+\\vmlinuz initrd=\\initramfs.gz
+" > iso/boot/isolinux/efi/boot/startup.nsh
 
 # - - - CREATE THE INITRAMFS FILE.
 
@@ -94,7 +100,9 @@ cd ..
 
 # - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
-sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
+if [[ ! -f iso/rootfs.sfs ]]; then
+	sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
+fi
 
 
 # - - - CREATE A WRITEABLE FILESYSTEM (PSEUDO-ROOT).
