@@ -88,18 +88,19 @@ printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/iso
 # - - - CREATE THE INITRAMFS FILE.
 
 chmod +x initramfs/init
-find initramfs | cpio -R root:root -H newc -o | gzip > iso/boot/initramfs.gz
-
+cd initramfs
+find . | cpio -R root:root -H newc -o | gzip > iso/boot/initramfs.gz
+cd ..
 
 # - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
-sudo mksquashfs rootfs iso/rootfs.sfs -noappend -no-progress -comp xz
+sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
 
 
 # - - - CREATE A WRITEABLE FILESYSTEM (PSEUDO-ROOT).
 
-dd if=/dev/zero of=fake-disk.img bs=1024 count=0 seek=$[1024*100]
-mkfs -t ext4 fake-disk.img
+dd if=/dev/zero of=iso/fake-disk.img bs=1024 count=0 seek=$[1024*100]
+mkfs -t ext4 iso/fake-disk.img
 
 
 # - - - CREATE THE ISO FILE.

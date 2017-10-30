@@ -54,7 +54,7 @@
 |│   |    │   └─|
 |│   |    │   └─`--- ldlinux.c32
 |    |
-|    `--- nomad.sfs
+|    `--- rootfs.sfs
 |
 |
 `--- rootfs/

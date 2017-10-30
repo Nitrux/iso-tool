@@ -1,6 +1,7 @@
 #! /bin/sh
 
-/bin/busybox --install -s
+/bin/busybox --install -s /
+
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
 
@@ -37,7 +38,7 @@ fi
 
 # - - - FROM HERE IT'S SAFE TO INSERT CODE.
 
-# - - - USEFUL FUNCTIONS.
+# - - - *.
 
 say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
 err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
@@ -109,7 +110,7 @@ say "SWITCHING TO REAL ROOT"
 mount -o move /sys  overlay/upper/sys &&
 mount -o move /dev  overlay/upper/dev &&
 mount -o move /proc overlay/upperproc &&
-exec switch_root overlayfs/newroot ${init} $(get_init_args ${cmdline})
+exec switch_root overlayfs/newroot /sbin/init
 
 
 # - - - IF THE FOLLOWING GETS EXECUTED, THAT MEANS A REALLY NASTY ERROR OCCURED.
