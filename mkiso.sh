@@ -34,7 +34,7 @@ source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND"; exit; }
 
 # - - - CREATE THE DIRECTORY LAYOUT.
 
-[[ "$( tr [:upper:] [:lower:] <<< $1)" == "clean" ]] && clean
+[[ "$(tr [:upper:] [:lower:] <<< $1)" == "clean" ]] && clean
 
 mkdir -p \
 	rootfs             \
@@ -85,11 +85,11 @@ cp build/sources/${syslinux//.tar*/}/bios/mbr/isohdpfx.bin \
 printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
 
 mkdir iso/boot/isolinux/efi/boot
+
 printf "
 echo -off
 echo NXOS is starting...
-\\vmlinuz initrd=\\initramfs.gz
-" > iso/boot/isolinux/efi/boot/startup.nsh
+\\vmlinuz initrd=\\initramfs.gz" > iso/boot/isolinux/efi/boot/startup.nsh
 
 # - - - CREATE THE INITRAMFS FILE.
 
@@ -107,7 +107,7 @@ fi
 
 # - - - CREATE A WRITEABLE FILESYSTEM (PSEUDO-ROOT).
 
-dd if=/dev/zero of=iso/fake-disk.img bs=1024 count=0 seek=$[1024*100]
+dd if=/dev/zero of=fake-disk.img bs=4096 count=102400
 mkfs -t ext4 iso/fake-disk.img
 
 
