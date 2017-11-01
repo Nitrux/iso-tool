@@ -1,6 +1,6 @@
 #! /bin/sh
 
-/bin/busybox --install -s /
+/usr/bin/busybox --install -s /
 
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
@@ -44,7 +44,6 @@ say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
 err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
 
 panic () {
-	err "ERROR ENCOUNTERED. CAN'T CONTINUE: $1"
 	err "A COMMAND LINE HAS BEEN STARTED. GOOD LUCK. :("
 	exec setsid cttyhack sh
 }
@@ -79,38 +78,35 @@ if [[ -z "$disk" ]]; then
 fi
 
 
-# - - - CREATE NEEDED DIRECTORIES FOR AN OVERLAY MOUNT.
-
-mkdir -p \
-	mnt/             \
-	overlay/lower/   \
-	overlay/upper/   \
-	overlay/workdir/ \
-	overlay/newroot/
-
-
 # - - - MOUNT THE ROOT FLESYSTEM AS AN OVERLAYFS.
 
 mount "$disk" mnt/
-mount -o ro mnt/rootfs.sfs overlay/lower/
-mount -o rw mnt/fake-disk.img  overlay/upper/
 
+mkdir -p \
+	/overlay       \
+	/overlay/lower \
+	/overlay/upper \
+	/overlay/work
 
-ld=overlay/lower ud=overlay/upper wd=overlay/workdir
+mount -o ro mnt/rootfs.sfs /overlay/lower/
+mount -t tmpfs -o mode=1777 none overlay/upper
 
-mount -t overlay -o lowerdir=$ld,upperdir=$ud,workdir=$wd none overlay/newroot
+ld=/overlay/lower ud=/overlay/upper wd=/overlay/workdir
 
-say 'MOUNTED `rootfs.sfs`'
+mount -t overlay -o lowerdir="$ld",upperdir="$ud",workdir="$wd" none /overlay/upper
+
+say 'MOUNTED `rootfs.sfs` at `/overlay/lower`'
 
 
 # - - - IT'S TIME TO SWITCH ROOT. 
 
 say "SWITCHING TO REAL ROOT"
 
-mount -o move /sys  overlay/upper/sys &&
-mount -o move /dev  overlay/upper/dev &&
-mount -o move /proc overlay/upperproc &&
-exec switch_root overlayfs/newroot /sbin/init
+mount -o move /sys  /overlay/upper/sys &&
+mount -o move /dev  /overlay/upper/dev &&
+mount -o move /tmp  /overlay/upper/tmp &&
+mount -o move /proc /overlay/upper/proc &&
+exec switch_root /overlay/upper /sbin/init
 
 
 # - - - IF THE FOLLOWING GETS EXECUTED, THAT MEANS A REALLY NASTY ERROR OCCURED.

@@ -20,10 +20,10 @@ clean () {
 # - - - DOWNLOAD THE NECESSARY SOURCE FILES.
 
 get_source () {
-	say "DOWNLOADING $(basename $1)..."
-	wget --no-clobber -c -q --show-progress "$1" && {
-		say "EXTRACTING $(basename $1)"
-		tar -C build/sources -xf "$(basename $1)"
+	say "DOWNLOADING ${1##*/}..."
+	wget --no-clobber -c -q --show-progress "$1" -O "build/sources/${1##*/}" && {
+		say "EXTRACTING ${1##*/}"
+		tar -C build/sources -xf "build/sources/${1##*/}"
 	}
 }
 
@@ -52,44 +52,45 @@ mkdir -p \
 
 # - - - BUILD THE KERNEL IF IT'S NEEDED.
 
-linux=$(basename $kernel_url)
+linux=${kernel_url##*/}
 
-if [[ ! -f build/sources/${linux//.tar*/}/arch/x86/boot/bzImage ]]; then
+if [[ ! -f build/sources/${linux//.tar*}/arch/x86/boot/bzImage ]]; then
 	get_source $kernel_url
 
 	if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
-		cp build/configs/kernel.config build/sources/${linux//.tar*/}/.config
-		yes "" | make -C build/sources/${linux//.tar*/}/ oldconfig bzImage
+		cp build/configs/kernel.config build/sources/${linux//.tar*}/.config
+		yes "" | make -C build/sources/${linux//.tar*}/ oldconfig bzImage
 	else
-		make -C build/sources/${linux//.tar*/} defconfig menuconfig bzImage
-		cp build/sources/${linux//.tar*/}/.config build/configs/kernel.config
+		make -C build/sources/${linux//.tar*} defconfig menuconfig bzImage
+		cp build/sources/${linux//.tar*}/.config build/configs/kernel.config
 	fi
 fi
 
-cp build/sources/${linux//.tar*/}/arch/x86/boot/bzImage iso/boot/vmlinuz
+cp build/sources/${linux//.tar*}/arch/x86/boot/bzImage iso/boot/vmlinuz
 
 
 # - - - INSTALL SYSLINUX.
 
-syslinux=$(basename $syslinux_url)
+syslinux=${syslinux_url##*/}
 
-if [[ ! -d build/sources/${syslinux//.tar*/} ]];then
+if [[ ! -d build/sources/${syslinux//.tar*} ]];then
 	get_source $syslinux_url
 fi
 
-cp build/sources/${syslinux//.tar*/}/bios/mbr/isohdpfx.bin \
-		build/sources/${syslinux//.tar*/}/bios/core/isolinux.bin \
-		build/sources/${syslinux//.tar*/}/bios/com32/elflink/ldlinux/ldlinux.c32 \
+cp build/sources/${syslinux//.tar*}/bios/mbr/isohdpfx.bin \
+		build/sources/${syslinux//.tar*}/bios/core/isolinux.bin \
+		build/sources/${syslinux//.tar*}/bios/com32/elflink/ldlinux/ldlinux.c32 \
 		iso/boot/isolinux/
 
 printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
 
 mkdir iso/boot/isolinux/efi/boot
 
-printf "
+cat << EOF > iso/boot/isolinux/efi/boot/startup.nsh
 echo -off
 echo NXOS is starting...
-\\vmlinuz initrd=\\initramfs.gz" > iso/boot/isolinux/efi/boot/startup.nsh
+\\vmlinuz initrd=\\initramfs.gz
+EOF
 
 # - - - CREATE THE INITRAMFS FILE.
 
@@ -103,12 +104,6 @@ cd ..
 if [[ ! -f iso/rootfs.sfs ]]; then
 	sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
 fi
-
-
-# - - - CREATE A WRITEABLE FILESYSTEM (PSEUDO-ROOT).
-
-dd if=/dev/zero of=fake-disk.img bs=4096 count=102400
-mkfs -t ext4 iso/fake-disk.img
 
 
 # - - - CREATE THE ISO FILE.
