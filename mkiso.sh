@@ -40,6 +40,7 @@ mkdir -p \
 	rootfs             \
 	build/sources      \
 	build/configs      \
+	iso/boot/efi/boot  \
 	iso/boot/isolinux  \
 	initramfs/dev      \
 	initramfs/sys      \
@@ -121,4 +122,4 @@ xorriso -as mkisofs iso/                           \
 	-eltorito-boot boot/isolinux/isolinux.bin      \
 	-isohybrid-mbr iso/boot/isolinux/isohdpfx.bin
 
-say "WE'RE DONE, DUDE. YOUR LINUX WAS SAVED AS `os.iso`"
+say 'WE ARE DONE, DUDE. YOUR LINUX WAS SAVED AS `os.iso`'
