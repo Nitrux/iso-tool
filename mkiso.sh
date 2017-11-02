@@ -37,17 +37,16 @@ source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND"; exit; }
 [[ "$(tr [:upper:] [:lower:] <<< $1)" == "clean" ]] && clean
 
 mkdir -p \
-	rootfs             \
-	build/sources      \
-	build/configs      \
-	iso/boot/efi/boot  \
-	iso/boot/isolinux  \
-	initramfs/dev      \
-	initramfs/sys      \
-	initramfs/bin      \
-	initramfs/sbin     \
-	initramfs/proc     \
-	initramfs/usr/bin  \
+	rootfs                     \
+	build/sources              \
+	build/configs              \
+	iso/boot/isolinux/efi/boot \
+	initramfs/dev              \
+	initramfs/sys              \
+	initramfs/bin              \
+	initramfs/sbin             \
+	initramfs/proc             \
+	initramfs/usr/bin          \
 	initramfs/usr/sbin
 
 
@@ -85,8 +84,6 @@ cp build/sources/${syslinux//.tar*}/bios/mbr/isohdpfx.bin \
 
 printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
 
-mkdir iso/boot/isolinux/efi/boot
-
 cat << EOF > iso/boot/isolinux/efi/boot/startup.nsh
 echo -off
 echo NXOS is starting...
@@ -95,10 +92,11 @@ EOF
 
 # - - - CREATE THE INITRAMFS FILE.
 
-chmod +x initramfs/init
+chmod +x initramfs/{init,usr/bin/busybox}
 cd initramfs
-find . | cpio -R root:root -H newc -o | gzip > iso/boot/initramfs.gz
+find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs.gz
 cd ..
+
 
 # - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
@@ -122,4 +120,4 @@ xorriso -as mkisofs iso/                           \
 	-eltorito-boot boot/isolinux/isolinux.bin      \
 	-isohybrid-mbr iso/boot/isolinux/isohdpfx.bin
 
-say 'WE ARE DONE, DUDE. YOUR LINUX WAS SAVED AS `os.iso`'
+say 'BUILD FINISHED. YOUR LINUX WAS SAVED AS `os.iso`'
