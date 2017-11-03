@@ -82,7 +82,7 @@ cp build/sources/${syslinux//.tar*}/bios/mbr/isohdpfx.bin \
 		build/sources/${syslinux//.tar*}/bios/com32/elflink/ldlinux/ldlinux.c32 \
 		iso/boot/isolinux/
 
-printf "default /boot/vmlinuz initrd=/boot/initramfs.gz" > iso/boot/isolinux/isolinux.cfg
+printf "default /boot/vmlinuz initrd=/boot/initramfs.gz quiet" > iso/boot/isolinux/isolinux.cfg
 
 cat << EOF > iso/boot/isolinux/efi/boot/startup.nsh
 echo -off
