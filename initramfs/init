@@ -37,10 +37,11 @@ fi
 
 # - - - *.
 
-say () { printf "\n\n\n\e[32m  # # # $@ \e[0m\n\n"; }
-err () { printf "\n\n\n\e[31m  # # # $@ \e[0m\n\n"; }
+say () { printf "\n\e[32m  # # # $@ \e[0m\n"; }
+err () { printf "\n\e[31m  # # # $@ \e[0m\n"; }
 
 panic () {
+	err "$@"
 	err "A COMMAND LINE HAS BEEN STARTED. GOOD LUCK. :("
 	exec setsid cttyhack sh
 }
@@ -70,6 +71,7 @@ done < modaliases.lst
 # - - - FIND THE ROOT FILESYSTEM.
 
 disk=$(blkid -L "ROOTFILESYSTEM")
+
 if [[ -z "$disk" ]]; then
 	panic "NO ROOT FILESYSTEM FOUND"
 fi
@@ -86,7 +88,7 @@ mkdir -p \
 	/overlay/work
 
 mount -o ro mnt/rootfs.sfs /overlay/lower/
-mount -t tmpfs -o mode=1777 none overlay/upper
+mount -t tmpfs -o size=20%,mode=1777 none overlay/upper
 
 ld=/overlay/lower ud=/overlay/upper wd=/overlay/workdir
 
