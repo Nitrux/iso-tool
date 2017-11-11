@@ -1,5 +1,8 @@
 `mkiso` FILE STRUCTURE.
 
+This is how the workspace looks like.
+I try to keep it very minimal and clear.
+
 .->>> ./ <<<
 |
 |--- build/

@@ -49,6 +49,8 @@ mkdir -p \
 	initramfs/dev              \
 	initramfs/sys              \
 	initramfs/bin              \
+	initramfs/lib/modules      \
+	initramfs/lib/firmware     \
 	initramfs/sbin             \
 	initramfs/proc             \
 	initramfs/usr/bin          \
@@ -62,13 +64,15 @@ linux=${kernel_url##*/}
 if [[ ! -f build/sources/${linux//.tar*}/arch/x86/boot/bzImage ]]; then
 	get_source $kernel_url
 
-	if [[ -f build/configs/kernel.config && "$use_old_kernel_config" == "yes" ]]; then
-		cp build/configs/kernel.config build/sources/${linux//.tar*}/.config
-		yes "" | make -C build/sources/${linux//.tar*}/ oldconfig bzImage
-	else
-		make -C build/sources/${linux//.tar*} defconfig menuconfig bzImage
-		cp build/sources/${linux//.tar*}/.config build/configs/kernel.config
-	fi
+	make -C build/sources/${linux//.tar*} \
+		defconfig                                              \
+		menuconfig                                             \
+		modules                                                \
+		modules_install INSTALL_MOD_PATH="../../../initramfs/" \
+		firmware_install                                       \
+		bzImage
+
+	cp build/sources/${linux//.tar*}/.config build/configs/kernel.config
 fi
 
 cp build/sources/${linux//.tar*}/arch/x86/boot/bzImage iso/boot/vmlinuz
