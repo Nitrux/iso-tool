@@ -64,12 +64,12 @@ linux=${kernel_url##*/}
 if [[ ! -f build/sources/${linux//.tar*}/arch/x86/boot/bzImage ]]; then
 	get_source $kernel_url
 
-	make -C build/sources/${linux//.tar*} \
-		defconfig                                              \
-		menuconfig                                             \
-		modules                                                \
-		modules_install INSTALL_MOD_PATH="../../../initramfs/" \
-		firmware_install                                       \
+	make -C build/sources/${linux//.tar*} INSTALL_MOD_PATH="../../../initramfs/" \
+		defconfig        \
+		menuconfig       \
+		modules          \
+		modules_install  \
+		firmware_install \
 		bzImage
 
 	cp build/sources/${linux//.tar*}/.config build/configs/kernel.config
