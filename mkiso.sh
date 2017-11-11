@@ -27,6 +27,7 @@ get_source () {
 	}
 }
 
+
 # - - - LETS DO SOME MAGIC.
 
 source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND"; exit; }
@@ -34,7 +35,11 @@ source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND"; exit; }
 
 # - - - CREATE THE DIRECTORY LAYOUT.
 
-[[ "$(tr [:upper:] [:lower:] <<< $1)" == "clean" ]] && clean
+if [[ "$(tr [:upper:] [:lower:] <<< $1)" == "clean" ]]; then
+	clean
+	say "DONE CLEANING WORKSPACE"
+	exit
+fi
 
 mkdir -p \
 	rootfs                     \
@@ -89,6 +94,7 @@ echo -off
 echo NXOS is starting...
 \\vmlinuz initrd=\\initramfs.gz
 EOF
+
 
 # - - - CREATE THE INITRAMFS FILE.
 

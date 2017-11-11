@@ -1,5 +1,7 @@
-kernel_url="$(http://kernel.org/pub/linux/kernel/v4.x/linux-$(uname -r | grep -Eo '[0-9]\.[0-9]*\.[0-9]*').tar.xz)"
+kernel_version="$(uname -r | grep -Eo '[0-9]\.[0-9]*\.[0-9]*').tar.xz)"
 
-syslinux_url="http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz"
+kernel_url="$(https://kernel.org/pub/linux/kernel/v4.x/linux-${kernel_version}"
+
+syslinux_url="https://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz"
 
 use_old_kernel_config=no
