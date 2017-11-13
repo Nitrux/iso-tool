@@ -21,12 +21,12 @@ printf "\e[34m
 
 # - - - MOUNT BASIC FILESYSTEMS.
 
-mount -t devtmpfs none /dev
-mount -t proc     none /proc
-mount -t sysfs    none /sys
+mount -t devtmpfs -o size=5M none /dev
+mount -t proc   none /proc
+mount -t sysfs  none /sys
 
 mkdir -p /dev/pts
-mount -t devpts   none /dev/pts
+mount -t devpts none /dev/pts
 
 if [ -e /sys/firmware/efi ]; then
 	mount -t efivarfs efivarfs /sys/firmware/efi/efivars -o nosuid,nodev,noexec
@@ -70,16 +70,22 @@ done < modaliases.lst
 
 # - - - FIND THE ROOT FILESYSTEM.
 
-disk=$(blkid -L "ROOTFILESYSTEM")
+say "TRYING TO MOUNT DATA PARTITION..."
 
-if [[ -z "$disk" ]]; then
-	panic "NO ROOT FILESYSTEM FOUND"
-fi
+# wait up to five seconds to mount the data partition.
+
+for attempt in 1 2 3 4 5; do
+	sleep 1
+	disk=$(findfs LABEL="ROOTFILESYSTEM")
+
+	if mount "$disk" /mnt/; then
+		say 'MOUNTED DATA PARTITION ON `/mnt/`'
+		break
+	fi
+done
 
 
 # - - - MOUNT THE ROOT FLESYSTEM AS AN OVERLAYFS.
-
-mount "$disk" mnt/
 
 mkdir -p \
 	/overlay       \
@@ -87,14 +93,13 @@ mkdir -p \
 	/overlay/upper \
 	/overlay/work
 
-mount -o ro mnt/rootfs.sfs /overlay/lower/
-mount -t tmpfs -o size=20%,mode=1777 none overlay/upper
+mount -o ro /mnt/rootfs.sfs /overlay/lower/ && say "MOUNTED /overlay/lower"
+
+mount -t tmpfs -o size=20%,mode=1777 none /overlay/upper && say "MOUNTED /overlay/upper"
 
 ld=/overlay/lower ud=/overlay/upper wd=/overlay/workdir
 
 mount -t overlay -o lowerdir="$ld",upperdir="$ud",workdir="$wd" none /overlay/upper
-
-say 'MOUNTED `rootfs.sfs` at `/overlay/lower`'
 
 
 # - - - STOP MDEV.
@@ -108,6 +113,7 @@ while pids=$(pidof mdev); do
 	sleep 0.1
 done
 
+
 # - - - IT'S TIME TO SWITCH ROOT. 
 
 say "SWITCHING TO REAL ROOT"
@@ -115,7 +121,8 @@ say "SWITCHING TO REAL ROOT"
 mount -o move /sys  /overlay/upper/sys &&
 mount -o move /dev  /overlay/upper/dev &&
 mount -o move /tmp  /overlay/upper/tmp &&
-mount -o move /proc /overlay/upper/proc &&
+mount -o move /proc /overlay/upper/proc
+
 exec switch_root /overlay/upper /sbin/init
 
 
