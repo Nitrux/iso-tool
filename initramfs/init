@@ -97,6 +97,17 @@ mount -t overlay -o lowerdir="$ld",upperdir="$ud",workdir="$wd" none /overlay/up
 say 'MOUNTED `rootfs.sfs` at `/overlay/lower`'
 
 
+# - - - STOP MDEV.
+
+# Remove the kernel hotplug handler.
+[ -e /proc/sys/kernel/hotplug ] && echo > /proc/sys/kernel/hotplug
+
+# Wait until all mdev processes have quit.
+while pids=$(pidof mdev); do
+	kill -TERM ${pids} 2> /dev/null
+	sleep 0.1
+done
+
 # - - - IT'S TIME TO SWITCH ROOT. 
 
 say "SWITCHING TO REAL ROOT"
