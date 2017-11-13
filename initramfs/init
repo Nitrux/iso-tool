@@ -64,7 +64,7 @@ mdev -s
 [ -e /proc/sys/kernel/hotplug ] && echo /sbin/mdev > /proc/sys/kernel/hotplug
 
 while read -r modalias; do
-   modprobe ${modalias} 2 >/dev/null
+   modprobe ${modalias} 2> /dev/null
 done < modaliases.lst
 
 
