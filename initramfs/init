@@ -78,7 +78,7 @@ for attempt in 1 2 3 4 5; do
 	sleep 1
 	disk=$(findfs LABEL="ROOTFILESYSTEM")
 
-	if mount "$disk" /mnt/; then
+	if mount -t iso9660 "$disk" /mnt/; then
 		say 'MOUNTED DATA PARTITION ON `/mnt/`'
 		break
 	fi
