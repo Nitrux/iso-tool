@@ -1,131 +1,73 @@
 #! /bin/sh
 
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+# - - - Create the basic workspace.
 
+/bin/busybox mkdir -p /proc /sys /dev /bin /sbin /usr/bin /usr/sbin /newroot
 
-# - - - KERNEL, SHUT UP..!
+/bin/busybox --install -s
+
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+# - - - Hide kernel messages.
 
 dmesg -n 1
 
-printf "\e[34m
+printf 
 
-##   ## ##   ##  #####   #####
-###  ##  ## ##  ### ### ###  ##
-#### ##   ###   ##   ##  ###
-## ####   ###   ##   ##    ###
-##  ###  ## ##  ### ### ##  ###
-##   ## ##   ##  #####   #####  \e[36mv0.1.1-\e[31mBETA \e[0m
+# - - - Mount basic filesystems.
 
-"
-
-
-# - - - MOUNT BASIC FILESYSTEMS.
-
-mount -t devtmpfs -o size=5M none /dev
-mount -t proc   none /proc
-mount -t sysfs  none /sys
+mount -t devtmpfs -o exec,nosuid,mode=0755,size=2M none /dev
+mount -t proc -o noexec,nosuid,nodev  none /proc
+mount -t sysfs -o noexec,nosuid,nodev none /sys
 
 mkdir -p /dev/pts
 mount -t devpts none /dev/pts
 
-if [ -e /sys/firmware/efi ]; then
-	mount -t efivarfs efivarfs /sys/firmware/efi/efivars -o nosuid,nodev,noexec
-fi
+mkdir -p /dev/shm
+mount -t tmpfs -o nodev,nosuid,noexec none /dev/shm
 
+# - - - Helper functions.
 
-# - - - FROM HERE IT'S SAFE TO INSERT CODE.
+say () { echo -e "\e[32m  $@ \e[0m"; }
+say () { echo -e "\e[31m# $@ \e[0m"; }
 
-# - - - *.
+panic () { err "$@"; setsid cttyhack sh; }
 
-say () { printf "\n\e[32m  # # # $@ \e[0m\n"; }
-err () { printf "\n\e[31m  # # # $@ \e[0m\n"; }
+# - - - Find the root filesystem.
 
-panic () {
-	err "$@"
-	err "A COMMAND LINE HAS BEEN STARTED. GOOD LUCK. :("
-	exec setsid cttyhack sh
-}
+say "Trying to mount the data partition..."
 
-
-# - - - LOAD MODULES (DRIVERS).
-
-find /sys -name modalias -exec cat \{\} + |
-awk '
-   { aliases[$0] = 1 }
-   END {
-	  for (alias in aliases) {
-		 print alias
-	  }
-   }
-' > modaliases.lst
-
-mdev -s
-
-[ -e /proc/sys/kernel/hotplug ] && echo /sbin/mdev > /proc/sys/kernel/hotplug
-
-while read -r modalias; do
-   modprobe ${modalias} 2> /dev/null
-done < modaliases.lst
-
-
-# - - - FIND THE ROOT FILESYSTEM.
-
-say "TRYING TO MOUNT DATA PARTITION..."
-
-# wait up to five seconds to mount the data partition.
+mkdir -p /iso /sfs
 
 for attempt in 1 2 3 4 5; do
 	sleep 1
 	disk=$(findfs LABEL="ROOTFILESYSTEM")
 
-	if mount -t iso9660 "$disk" /mnt/; then
-		say 'MOUNTED DATA PARTITION ON `/mnt/`'
+	if mount -t iso9660 "$disk" /iso; then
+		mount /iso/rootfs.sfs /sfs
 		break
 	fi
 done
 
+# - - - Mount the root filesystem as an overlay filesystem.
 
-# - - - MOUNT THE ROOT FLESYSTEM AS AN OVERLAYFS.
+mkdir -p /media/root-ro /media/root-rw $sysroot/media/root-ro $sysroot/media/root-rw
+mount -o ro /mnt/rootfs.sfs /media/root-ro
+mount -t tmpfs root-tmpfs /media/root-rw
+mkdir -p /media/root-rw/work /media/root-rw/root
+mount -t overlay -o lowerdir=/media/root-ro,upperdir=/media/root-rw/root,workdir=/media/root-rw/work overlayfs $sysroot
 
-mkdir -p \
-	/overlay       \
-	/overlay/lower \
-	/overlay/upper \
-	/overlay/work
+# - - - It's time to switch to `/newroot`.
 
-mount -o ro /mnt/rootfs.sfs /overlay/lower/ && say "MOUNTED /overlay/lower"
-
-mount -t tmpfs -o size=20%,mode=1777 none /overlay/upper && say "MOUNTED /overlay/upper"
-
-ld=/overlay/lower ud=/overlay/upper wd=/overlay/workdir
-
-mount -t overlay -o lowerdir="$ld",upperdir="$ud",workdir="$wd" none /overlay/upper
-
-
-# - - - STOP MDEV.
-
-# Remove the kernel hotplug handler.
-[ -e /proc/sys/kernel/hotplug ] && echo > /proc/sys/kernel/hotplug
-
-# Wait until all mdev processes have quit.
-while pids=$(pidof mdev); do
-	kill -TERM ${pids} 2> /dev/null
-	sleep 0.1
+cat /proc/mounts | while read DEV DIR TYPE OPTS; do
+	if [ "$DIR" != "/" -a "$DIR" != "/newroot" -a -d "$DIR" ]; then
+		mkdir -p /newroot/$DIR
+		mount -o move $DIR /newroot/$DIR
+	fi
 done
 
+sync
 
-# - - - IT'S TIME TO SWITCH ROOT. 
+exec /bin/busybox switch_root /newroot /sbin/init
 
-say "SWITCHING TO REAL ROOT"
-
-mount -o move /sys  /overlay/upper/sys &&
-mount -o move /dev  /overlay/upper/dev &&
-mount -o move /tmp  /overlay/upper/tmp &&
-mount -o move /proc /overlay/upper/proc
-
-exec switch_root /overlay/upper /sbin/init
-
-
-# - - - IF THE FOLLOWING GETS EXECUTED, THAT MEANS A REALLY NASTY ERROR OCCURED.
-
-panic "UNABLE TO SWITCH TO REAL ROOT"
+panic "Unable to switch root."

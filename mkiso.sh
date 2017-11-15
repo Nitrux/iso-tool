@@ -2,8 +2,8 @@
 
 # - - - MESSAGE FORMATTING FUNCTIONS.
 
-say () { printf "\n\n\e[32m  # # # $@ \e[0m\n\n"; }
-err () { printf "\n\n\e[31m  # # # $@ \e[0m\n\n"; }
+say () { echo -e "\e[32m  $@ \e[0m"; }
+say () { echo -e "\e[31m# $@ \e[0m"; }
 
 
 # - - - CLEAN THE WORKSPACE AND START FROM SCRATCH.
@@ -111,7 +111,7 @@ cd ..
 # - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
 if [[ ! -f iso/rootfs.sfs ]]; then
-	sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -no-progress -comp xz
+	sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -comp xz
 fi
 
 
