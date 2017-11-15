@@ -102,7 +102,7 @@ EOF
 
 # - - - CREATE THE INITRAMFS FILE.
 
-chmod +x initramfs/{init,usr/bin/busybox}
+chmod +x initramfs/{init,bin/busybox}
 cd initramfs
 find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs.gz
 cd ..

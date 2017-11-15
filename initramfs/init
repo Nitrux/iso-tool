@@ -2,7 +2,7 @@
 
 # - - - Create the basic workspace.
 
-/bin/busybox mkdir -p /proc /sys /dev /bin /sbin /usr/bin /usr/sbin /newroot
+/bin/busybox mkdir -p /proc /sys /dev /bin /sbin /usr/bin /usr/sbin /iso
 
 /bin/busybox --install -s
 
@@ -37,25 +37,31 @@ panic () { err "$@"; setsid cttyhack sh; }
 
 say "Trying to mount the data partition..."
 
-mkdir -p /iso /sfs
-
 for attempt in 1 2 3 4 5; do
 	sleep 1
 	disk=$(findfs LABEL="ROOTFILESYSTEM")
-
-	if mount -t iso9660 "$disk" /iso; then
-		mount /iso/rootfs.sfs /sfs
-		break
-	fi
+	[ mount -t iso9660 "$disk" /iso ] && break
 done
 
 # - - - Mount the root filesystem as an overlay filesystem.
 
-mkdir -p /media/root-ro /media/root-rw $sysroot/media/root-ro $sysroot/media/root-rw
-mount -o ro /mnt/rootfs.sfs /media/root-ro
+say "Mounting the root filesystem as an overlay filesystem"
+
+mkdir -p \
+	/media/root-ro \
+	/media/root-rw \
+	/newroot/media/root-ro \
+	/newroot/media/root-rw
+
+mount -t squashfs -o ro /iso/rootfs.sfs /media/root-ro
+
 mount -t tmpfs root-tmpfs /media/root-rw
-mkdir -p /media/root-rw/work /media/root-rw/root
-mount -t overlay -o lowerdir=/media/root-ro,upperdir=/media/root-rw/root,workdir=/media/root-rw/work overlayfs $sysroot
+
+mkdir -p \
+	/media/root-rw/work \
+	/media/root-rw/root
+
+mount -t overlay -o lowerdir=/media/root-ro,upperdir=/media/root-rw/root,workdir=/media/root-rw/work none /newroot
 
 # - - - It's time to switch to `/newroot`.
 
