@@ -37,7 +37,7 @@ say "Trying to mount the data partition..."
 
 for attempt in 1 2 3 4 5; do
 	disk=$(findfs LABEL="ROOTFILESYSTEM")
-	mount -t iso9660 "$disk" /iso && break || sleep 1
+	[ "$disk" ] && mount -t iso9660 "$disk" /iso && break || sleep 1
 done
 
 # - - - Mount the root filesystem as an overlay filesystem.
