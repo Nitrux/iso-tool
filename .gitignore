@@ -1,6 +1,6 @@
 tmp/*
 iso/*
-rootfs/*
+rootfs/??*
 build/sources/*
 
 os.iso
