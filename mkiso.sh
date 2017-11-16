@@ -5,7 +5,6 @@
 say () { echo -e "\e[32m  $@ \e[0m"; }
 say () { echo -e "\e[31m# $@ \e[0m"; }
 
-
 # - - - CLEAN THE WORKSPACE AND START FROM SCRATCH.
 
 clean () {
@@ -15,7 +14,6 @@ clean () {
 		build/*     \
 		initramfs/*
 }
-
 
 # - - - DOWNLOAD THE NECESSARY SOURCE FILES.
 
@@ -27,11 +25,9 @@ get_source () {
 	}
 }
 
-
 # - - - LETS DO SOME MAGIC.
 
 source config || { say "CAN'T CONTINUE. NO CONFIG FILE FOUND"; exit; }
-
 
 # - - - CREATE THE DIRECTORY LAYOUT.
 
@@ -56,7 +52,6 @@ mkdir -p \
 	initramfs/usr/bin          \
 	initramfs/usr/sbin
 
-
 # - - - BUILD THE KERNEL IF IT'S NEEDED.
 
 linux=${kernel_url##*/}
@@ -76,7 +71,6 @@ if [[ ! -f build/sources/${linux//.tar*}/arch/x86/boot/bzImage ]]; then
 fi
 
 cp build/sources/${linux//.tar*}/arch/x86/boot/bzImage iso/boot/vmlinuz
-
 
 # - - - INSTALL SYSLINUX.
 
@@ -99,7 +93,6 @@ echo NXOS is starting...
 \\vmlinuz initrd=\\initramfs.gz
 EOF
 
-
 # - - - CREATE THE INITRAMFS FILE.
 
 chmod +x initramfs/{init,bin/busybox}
@@ -107,13 +100,11 @@ cd initramfs
 find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs.gz
 cd ..
 
-
 # - - - CREATE A SQUASH FILESYSTEM WITH THE CONTENT OF `rootfs/`.
 
 if [[ ! -f iso/rootfs.sfs ]]; then
 	sudo mksquashfs rootfs/ iso/rootfs.sfs -noappend -comp xz
 fi
-
 
 # - - - CREATE THE ISO FILE.
 
