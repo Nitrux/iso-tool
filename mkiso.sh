@@ -3,7 +3,7 @@
 # - - - MESSAGE FORMATTING FUNCTIONS.
 
 say () { echo -e "\e[32m  $@ \e[0m"; }
-say () { echo -e "\e[31m# $@ \e[0m"; }
+err () { echo -e "\e[31m# $@ \e[0m"; }
 
 # - - - CLEAN THE WORKSPACE AND START FROM SCRATCH.
 
@@ -122,3 +122,5 @@ xorriso -as mkisofs iso/                           \
 	-isohybrid-mbr iso/boot/isolinux/isohdpfx.bin
 
 say 'BUILD FINISHED. YOUR LINUX WAS SAVED AS `os.iso`'
+
+ls -sh os.iso
