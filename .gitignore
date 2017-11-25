@@ -1,6 +1,5 @@
-tmp/*
 iso/*
-rootfs/??*
-build/sources/*
 
-os.iso
+build/*
+
+! build/.config
