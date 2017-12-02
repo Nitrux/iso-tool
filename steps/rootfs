@@ -1,0 +1,11 @@
+#! /bin/sh
+
+# This script should handle the creation of the root filesystem.
+# For now it will not be doing so much, just compressing the
+# contents of such filesystem.
+
+# - - - Create a squash filesytem with the contents of `build/rootfs`.
+
+if [[ ! -f build/iso/rootfs ]]; then
+	sudo mksquashfs build/rootfs/ build/iso/rootfs -noappend -comp xz
+fi

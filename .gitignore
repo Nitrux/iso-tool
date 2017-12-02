@@ -1,5 +1,10 @@
-iso/*
+build/*iso
+build/iso/*
+build/rootfs/*
+build/sources/*
+build/initramfs/*
 
-build/*
-
-! build/.config
+! build/initramfs/etc
+! build/initramfs/init
+! build/initramfs/bin/sh
+! build/initramfs/bin/busybox
