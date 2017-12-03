@@ -45,7 +45,7 @@ esac
 chmod +x build/initramfs/init
 chmod +x build/initramfs/bin/busybox
 
-ln -fs /bin/busybox build/initramfs/bin/sh
+ln -sf /bin/busybox build/initramfs/bin/sh
 
 
 # - - - Pack the initramfs.

@@ -3,7 +3,6 @@
 # - - - Prepare the directories for the modules.
 
 mkdir -p build/initramfs/lib/modules/$kernel_version
-[ "$(uname -m)" == "x86_64" ] && mkdir -p build/initramfs/lib64/modules/$kernel_version
 
 
 # - - - Compile the kernel and its modules.

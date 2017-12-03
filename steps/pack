@@ -17,10 +17,10 @@ cp build/sources/$source_dir/bios/core/isolinux.bin \
 	build/sources/$source_dir/bios/com32/elflink/ldlinux/ldlinux.c32 \
 	build/iso/boot/isolinux/
 
-cmdline="default /boot/linux initrd=/boot/initramfs.gz splash root=$ROOTLABEL"
+cmdline="default /boot/linux initrd=/boot/initramfs.gz root=$iso_label rootdelay=5 quiet"
 echo $cmdline > build/iso/boot/isolinux/isolinux.cfg
 
-cmdline="\boot\linux initrd=\boot\initramfs.gz splash root=$ROOTLABEL"
+cmdline="/boot/linux initrd=/boot/initramfs.gz splash root=$iso_label"
 echo $cmdline > build/iso/boot/efi/startup.nsh
 
 
@@ -32,7 +32,7 @@ xorriso -as mkisofs build/iso/    \
 	-no-emul-boot                 \
 	-boot-load-size 4             \
 	-boot-info-table              \
-	-volid $ROOTLABEL             \
+	-volid $iso_label             \
 	-full-iso9660-filenames       \
 	-c boot/isolinux/boot.cat     \
 	-b boot/isolinux/isolinux.bin
