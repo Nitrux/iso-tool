@@ -10,14 +10,19 @@ in three steps:
 - Initial RAM disk generation (this compiles busybox).
 - Userspace filesystem construction and compression.
 
+Each step is managed by a script in `steps/`
+
 #### Kernel compilation.
 
 ---
 
-`mkiso` will download the kernel as specified in `build/.config`
-You will be in charge of setting the kernel version you
-want to build, modifying the `KERNEL_VERSION` variable.
-It will take care of the rest.
+`mkiso` will download the kernel as specified in
+`steps/.config`. This file has documentation inside, so
+you know what to do with each setting.
+There you can tweak things like kernel version, if
+busybox will be downloaded as a precompiled binary or
+source files will be downloaded, syslinux version and
+how many `make` jobs will be running at build time.
 
 #### Initial RAM disk.
 

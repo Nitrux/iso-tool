@@ -17,10 +17,10 @@ cp build/sources/$source_dir/bios/core/isolinux.bin \
 	build/sources/$source_dir/bios/com32/elflink/ldlinux/ldlinux.c32 \
 	build/iso/boot/isolinux/
 
-cmdline="default /boot/linux initrd=/boot/initramfs.gz root=$iso_label rootdelay=5 quiet"
+cmdline="default /boot/linux initrd=/boot/initramfs.gz root=LABEL=$iso_label rootdelay=5 quiet"
 echo $cmdline > build/iso/boot/isolinux/isolinux.cfg
 
-cmdline="/boot/linux initrd=/boot/initramfs.gz splash root=$iso_label"
+cmdline="/boot/linux initrd=/boot/initramfs.gz splash root=LABEL=$iso_label rootdelay=5 quiet"
 echo $cmdline > build/iso/boot/efi/startup.nsh
 
 

@@ -1,6 +1,6 @@
 #! /bin/sh
 
-# - - - Prepare the directories for the modules.
+# - - - Prepare the directory for the modules.
 
 mkdir -p build/initramfs/lib/modules/$kernel_version
 
@@ -13,36 +13,20 @@ source_dir=${file//.tar*}
 if [[ ! -f build/sources/$source_dir/arch/x86/boot/bzImage ]]; then
 	get-file $kernel_url
 
-	make -j $jobs -C build/sources/$source_dir defconfig
-
-	sed -i '
-s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"localhost\"/
-s/.*CONFIG_OVERLAY_FS.*/CONFIG_OVERLAY_FS=y/
-s/.*\\(CONFIG_KERNEL_.*\\)=y/\\#\\ \\1 is not set/
-s/.*CONFIG_KERNEL_XZ.*/CONFIG_KERNEL_XZ=y/
-s/.*CONFIG_FB_VESA.*/CONFIG_FB_VESA=y/
-s/.*CONFIG_LOGO_LINUX_CLUT224.*/# CONFIG_LOGO_LINUX_CLUT224 is not set/
-s/^CONFIG_DEBUG_KERNEL.*/# CONFIG_DEBUG_KERNEL is not set/
-s/.*CONFIG_EFI_STUB.*/CONFIG_EFI_STUB=y/
-' build/sources/$source_dir/.config
-
-	if [ $(uname -m) == "x86_64" ] ; then
-		echo "CONFIG_EFI_MIXED=y" >> build/sources/$source_dir/.config
+	if [ -f build/configs/kernel.config ]; then
+		cp build/configs/kernel.config build/sources/$source_dir/.config
+	else
+		make -j $jobs -C build/sources/$source_dir defconfig
 	fi
 
-	echo "
-CONFIG_APPLE_PROPERTIES=n
-CONFIG_RESET_ATTACK_MITIGATION=y
-CONFIG_OVERLAY_FS_REDIRECT_DIR=y
-CONFIG_OVERLAY_FS_INDEX=y" >> build/sources/$source_dir/.config
-
-	make -j $jobs \
+	make -j $jobs menuconfig \
 		-C build/sources/$source_dir \
 		INSTALL_MOD_PATH=$WD/build/initramfs \
 		modules          \
 		modules_install  \
-		firmware_install \
 		bzImage
+
+	cp build/configs/kernel.config build/sources/$source_dir/.config
 fi
 
 mkdir -p build/iso/boot

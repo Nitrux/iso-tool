@@ -29,18 +29,7 @@ mkdir -p \
 file=${busybox_url##*/}
 source_dir=${file//.tar*}
 
-if [ ! -f build/initramfs/bin/busybox ]; then
-	get-file $busybox_url
-fi
-
-case $file in
-	*tar.??*)
-		make -C build/sources/$source_dir/ defconfig busybox
-		cp build/sources/$source_dir/busybox
-	;;
-
-	*) cp build/sources/$file build/initramfs/bin/busybox ;;
-esac
+[ ! -f build/initramfs/bin/busybox ] && get-file $busybox_url
 
 chmod +x build/initramfs/init
 chmod +x build/initramfs/bin/busybox

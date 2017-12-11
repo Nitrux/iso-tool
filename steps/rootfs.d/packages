@@ -1,0 +1,26 @@
+# Nitrux.
+luv-icon-theme-git
+
+
+# Plasma.
+plasma
+latte-dock
+
+# Gtk.
+gtk3
+gtk2
+
+
+# Xorg.
+xorg
+xorg-xinit
+xorg-drivers
+
+
+# Base.
+base
+base-devel
+
+
+# Miscelaneous.
+fuse
