@@ -17,7 +17,7 @@ Each step is managed by a script in `steps/`
 ---
 
 `mkiso` will download the kernel as specified in
-`steps/.config`. This file has documentation inside, so
+`steps/config`. This file has documentation inside, so
 you know what to do with each setting.
 There you can tweak things like kernel version, if
 busybox will be downloaded as a precompiled binary or
@@ -44,7 +44,9 @@ initialization (daemon startup, login management, etc.)
 
 This is the biggest part, but not exactly the worst.
 Here, `mkiso` will generate a compressed filesystem
-(squashfs) with the contents of `build/rootfilesystem`.
+(squashfs) with the contents of `build/rootfs`.
 Those contents can be automatically generated or the
-directory can be populated by hand. **This is left to
-the user**.
+directory can be populated manually. The best way to
+do this is by adding scripts in `steps/rootfs.d/`.
+Those scripts, then, have to be called in a correct
+order from `steps/rootfs`.

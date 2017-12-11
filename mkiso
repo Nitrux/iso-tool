@@ -13,7 +13,7 @@ WD=`pwd`
 
 # - - - Know how and what to build.
 
-. steps/.config || { say "Can't continue. No config file found."; exit; }
+. steps/config || { say "Can't continue. No config file found."; exit; }
 
 
 
