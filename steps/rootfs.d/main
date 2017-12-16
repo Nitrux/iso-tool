@@ -1,0 +1,25 @@
+#! /bin/sh
+
+# This is the main file used to populate the root filesystem.
+
+here=steps/rootfs.d
+
+packages=$(grep -v -e '#' -e '^$' $here/packages)
+
+sudo pacstrap -cdGiM build/rootfs $packages
+
+rm -rf build/rootfs/boot
+rm -rf build/rootfs/etc/arch-release
+
+echo "nitrux" > build/rootfs/etc/hostname
+
+cat << EOF > build/rootfs/etc/os-release
+NAME="NXOS"
+PRETTY_NAME="NXOS"
+ID=nxos
+ANSI_COLOR="0;34"
+HOME_URL="https://www.nxos.org/"
+SUPPORT_URL="https://www.github.com/Nitrux/"
+BUG_REPORT_URL="https://www.github.com/Nitrux/"
+EOF
+

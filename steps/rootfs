@@ -6,7 +6,7 @@
 
 # - - - Create a squash filesytem with the contents of `build/rootfs`.
 
-sudo pacstrap -cdGiM build/rootfs $(cat steps/rootfs.d/packages)
+[ -f steps/rootfs.d/main.sh ] && ./steps/rootfs.d/main
 
 if [[ ! -f build/iso/rootfs ]]; then
 	sudo mksquashfs build/rootfs/ build/iso/rootfs -noappend -comp xz

@@ -34,7 +34,7 @@ mkdir -p \
 # - - - Download and extract the specified file.
 
 get-file () {
-	cd $WD/build/sources
+	cd build/sources
 
 	url=$1
 	file=${url##*/}
