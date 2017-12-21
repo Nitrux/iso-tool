@@ -2,7 +2,7 @@
 
 
 # This script handles the creation of the initial RAM disk.
-# Every component needed for the it to work should be built
+# Every component needed for it to work should be built
 # here: busybox, in this case.
 # Don't mess up with the kernel modules here. The critical
 # ones are compiled into the kernel, and that is done in
