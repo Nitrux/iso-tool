@@ -1,0 +1,11 @@
+language: c
+
+script:
+  - sh ./build.sh
+
+after_success:
+  - sh ./upload.sh
+
+branches:
+  except:
+    - /^(?i:continuous)$/
