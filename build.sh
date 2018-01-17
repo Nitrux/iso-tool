@@ -1,36 +1,20 @@
 #! /bin/sh
 
-# Download the specified file.
-
-get () {
-	if ! wget -q $1 $2; then
-		echo "Unable to fetch '$1'."
-		exit 1
-	fi
-}
-
-# Clone the specified repository.
-
-get () {
-	if ! git clone $1 $2 --depth=1; then
-		echo "Unable to clone '$1'."
-		exit 1
-	fi
-}
-
 # Build.
 
-# TODO:
-# I must add the right URLs for the files.
+wget -q http://archive.ubuntu.com/ubuntu/dists/zesty/main/installer-amd64/current/images/netboot/mini.iso
+wget -q http://repo.nxos.org/dists/nxos/main/binary-amd64/Packages nomad-packages
 
-get http://archive.ubuntu.com/ubuntu/dists/zesty/main/installer-amd64/current/images/netboot/mini.iso
+grep 'Filename: ' nomad-packages > urls.txt
 
-mkdir repos
-
-for repo in $(cat nomad-desktop-files); do
-	clone $repo repos/${repo##*/}
+mkdir newroot
+for package in $(cat urls.txt); do
+	wget -q http://repo.nxos.org/$package 
+	dpkg -x ${package##*/} newroot/
 done
 
 mkdir mnt
 mount mini.iso mnt
+
+mkdir iso
 
