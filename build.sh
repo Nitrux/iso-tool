@@ -11,14 +11,12 @@ sudo mount os.iso mnt
 mkdir extract-cd
 sudo rsync --exclude=/casper/filesystem.squashfs -a mnt extract-cd
 
-#sudo unsquashfs -d edit -n mnt/casper/filesystem.squashfs
-
-ls *
-exit
-
 mkdir lower upper work edit
 sudo mount mnt/casper/filesystem.squashfs lower
 sudo mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
+
+ls *
+exit
 
 mkdir packages
 for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
