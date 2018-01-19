@@ -1,24 +1,24 @@
 #! /bin/sh
 
-wget -q http://archive.ubuntu.com/ubuntu/dists/zesty/main/installer-amd64/current/images/netboot/mini.iso
-wget -q http://repo.nxos.org/dists/nxos/main/binary-amd64/Packages nomad-packages
+wget http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso os.iso
+wget http://repo.nxos.org/dists/nxos/main/binary-amd64/Packages
 
-grep 'Filename: ' nomad-packages > urls.txt
-
-mkdir packages
-for package in $(cat urls.txt); do
-	wget -q http://repo.nxos.org/$package 
-	dpkg -x ${package##*/} packages/
-done
-
-wget -q https://github.com/NXOS/busybox/releases/download/continuous/busybox packages/usr/bin/busybox
-chmod +x busybox
+cat <<< $(grep 'Filename: ' Packages) > Packages
 
 mkdir mnt
-mount mini.iso mnt
+sudo mount os.iso mnt
 
-mkdir upper work iso
+mkdir extract-cd
+sudo rsync --exclude=/casper/filesystem.squashfs -a mnt extract-cd
+sudo unsquashfs mnt/casper/filesystem.squashfs
+mv squashfs-root edit
 
-mount -t overlay -o lowerdir=packages:mnt,upperdir=upper,workdir=work overlay iso
+mkdir packages
+for p in $(cat Packages); do
+	wget http://repo.nxos.org/$p packages/${p##*/}
+	sudo dpkg -x ${p##*/} edit
+done
+
+sudo rm -rf edit/tmp/*
 
 mksquashfs iso rootfs.sfs -comp xz
