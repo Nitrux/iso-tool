@@ -8,7 +8,9 @@ script:
   - sh ./build.sh
 
 after_success:
-  - sh ./upload.sh
+  - sh ./upload.sh > URL
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh -O uploadtool.sh
+  - sh ./uploadtool.sh URL
 
 branches:
   except:
