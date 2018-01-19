@@ -10,13 +10,16 @@ sudo mount os.iso mnt
 
 mkdir extract-cd
 sudo rsync --exclude=/casper/filesystem.squashfs -a mnt extract-cd
-mkdir edit
-sudo unsquashfs -d edit -n mnt/casper/filesystem.squashfs
+
+#sudo unsquashfs -d edit -n mnt/casper/filesystem.squashfs
+mkdir lower upper work edit
+sudo mount mnt/casper/filesystem.squashfs lower
+sudo mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
 
 mkdir packages
 for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
-	wget http://repo.nxos.org/$p packages/${p##*/}
-	sudo dpkg -x ${p##*/} edit
+	wget http://repo.nxos.org/$p -O packages/${p##*/}
+	sudo dpkg -x packages/${p##*/} edit
 done
 
 sudo rm -rf edit/tmp/*
