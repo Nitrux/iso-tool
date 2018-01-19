@@ -10,8 +10,7 @@ sudo mount os.iso mnt
 
 mkdir extract-cd
 sudo rsync --exclude=/casper/filesystem.squashfs -a mnt extract-cd
-sudo unsquashfs mnt/casper/filesystem.squashfs
-mv squashfs-root edit
+sudo unsquashfs -d edit -n mnt/casper/filesystem.squashfs
 
 for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
 	wget http://repo.nxos.org/$p packages/${p##*/}
