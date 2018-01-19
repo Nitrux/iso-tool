@@ -9,14 +9,11 @@ mkdir mnt
 sudo mount os.iso mnt
 
 mkdir extract-cd
-sudo rsync --exclude=/casper/filesystem.squashfs -a mnt extract-cd
+sudo rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
 
 mkdir lower upper work edit
 sudo mount mnt/casper/filesystem.squashfs lower
 sudo mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
-
-ls *
-exit
 
 mkdir packages
 for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
@@ -24,7 +21,7 @@ for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
 	sudo dpkg -x packages/${p##*/} edit
 done
 
-sudo rm -rf edit/tmp/*
+sudo rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot
 
 sudo chmod +w extract-cd/casper/filesystem.manifest
 sudo chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
