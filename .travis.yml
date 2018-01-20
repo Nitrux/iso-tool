@@ -1,14 +1,15 @@
-language: c
-
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq install -y squashfs-tools genisoimage cdrtools
+  - sudo apt-get -qq install -y squashfs-tools genisoimage
 
 script:
-  - sh ./build.sh
+  - sudo ./build.sh
 
 after_success:
-  - sh ./upload.sh
+  - sudo chmod +rw out/*.iso
+  - curl --upload-file out/*.iso https://transfer.sh/nitrux-testing.iso > URL
+  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh -O uploadtool.sh
+  - sh ./uploadtool.sh URL
 
 branches:
   except:

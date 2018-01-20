@@ -1,3 +1,3 @@
 #! /bin/sh
 
-curl --upload-file out/* https://transfer.sh/nitrux-testing.iso
+curl --upload-file out/*.iso https://transfer.sh/nitrux-testing.iso

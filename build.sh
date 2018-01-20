@@ -1,38 +1,34 @@
 #! /bin/sh
 
-mkdir out
+echo "Downloading base system..."
+wget -q http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso -O os.iso
+wget -q http://repo.nxos.org/dists/nxos/main/binary-amd64/Packages
 
-wget http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso -O os.iso
-wget http://repo.nxos.org/dists/nxos/main/binary-amd64/Packages
+mkdir mnt out extract-cd lower upper work edit packages
+mount os.iso mnt
 
-mkdir mnt
-sudo mount os.iso mnt
+rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
 
-mkdir extract-cd
-sudo rsync --exclude=/casper/filesystem.squashfs -a mnt extract-cd
-sudo unsquashfs mnt/casper/filesystem.squashfs
-mv squashfs-root edit
+mount mnt/casper/filesystem.squashfs lower
+mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
 
+echo "Downloading Nomad packages..."
 for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
-	wget http://repo.nxos.org/$p packages/${p##*/}
-	sudo dpkg -x ${p##*/} edit
+	wget -q http://repo.nxos.org/$p -O packages/${p##*/}
+	dpkg -x packages/${p##*/} edit
 done
 
-sudo rm -rf edit/tmp/*
-
-sudo chmod +w extract-cd/casper/filesystem.manifest
-sudo chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
-sudo cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
-sudo sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
-sudo sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
-
-sudo rm extract-cd/casper/filesystem.squashfs
-sudo mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -e edit/boot
-sudo printf $(du -sx --block-size=1 edit | cut -f 1) > extract-cd/casper/filesystem.size
-
+rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot
+chmod +w extract-cd/casper/filesystem.manifest
+chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
+cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
+sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
+sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
+(for c in $(seq 50); do echo $c; sleep 60; done) &
+mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -noappend -no-progress
+printf $(du -sx --block-size=1 edit | cut -f 1) > extract-cd/casper/filesystem.size
 cd extract-cd
-sudo sed -i 's/DISKNAME.*/DISKNAME Nitrux 1.0.8 \"SolarStorm\" - Release amd64/g' README.diskdefines
-sudo rm md5sum.txt
-
-sudo find -type f -print 0 | sudo xargs -0 md5sum | grep -v isolinux/boot.cat | sudo tee md5sum.txt
-sudo mkisofs -D -r -V "Nitrux Live" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../out/Nitrux-1.0.8-SolarStorm.iso .
+sed -i 's/DISKNAME.*/DISKNAME Nitrux 1.0.8 \"SolarStorm\" - Release amd64/g' README.diskdefines
+rm md5sum.txt
+find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
+mkisofs -D -r -V "Nitrux Live" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../out/os.iso .
