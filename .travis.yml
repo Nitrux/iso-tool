@@ -8,7 +8,8 @@ script:
   - sh ./build.sh
 
 after_success:
-  - sh ./upload.sh > URL
+  - sh ./upload.sh > out/URL
+  - rm out/*.iso
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh -O uploadtool.sh
   - sh ./uploadtool.sh URL
 
