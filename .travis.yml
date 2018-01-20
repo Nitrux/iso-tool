@@ -5,7 +5,7 @@ before_install:
   - sudo apt-get -qq install -y squashfs-tools genisoimage
 
 script:
-  - sh ./build.sh
+  - sudo ./build.sh
 
 after_success:
   - sh ./upload.sh > out/URL
