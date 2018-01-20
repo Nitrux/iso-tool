@@ -12,9 +12,6 @@ rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
 mount mnt/casper/filesystem.squashfs lower
 mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
 
-ls extract-cd/casper
-sleep 10
-
 echo "Downloading Nomad packages..."
 for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
 	wget -q http://repo.nxos.org/$p -O packages/${p##*/}
@@ -27,9 +24,8 @@ chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/ca
 cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
 sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
 sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
-rm extract-cd/casper/filesystem.squashfs
-(for c in $(seq 50); do echo $c; sleep +0; done) &
-mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -noappend -noprogress
+(for c in $(seq 50); do echo $c; sleep 60; done) &
+mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 edit | cut -f 1) > extract-cd/casper/filesystem.size
 cd extract-cd
 sed -i 's/DISKNAME.*/DISKNAME Nitrux 1.0.8 \"SolarStorm\" - Release amd64/g' README.diskdefines
