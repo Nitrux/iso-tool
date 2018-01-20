@@ -6,8 +6,9 @@ script:
   - sudo ./build.sh
 
 after_success:
+  - sudo chmod +rw out/*.iso
   - sh curl --upload-file out/*.iso https://transfer.sh/nitrux-testing.iso > URL
-  - rm out/*.iso
+  - sudo rm -rf out/*.iso
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh -O uploadtool.sh
   - sh ./uploadtool.sh URL
 
