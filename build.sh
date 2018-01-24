@@ -16,17 +16,14 @@ mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
 echo "Downloading Nomad packages..."
 
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
-echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
-echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
 
-apt-get -qq -y --allow-unauthenticated update
-
 wget -q http://repo.nxos.org/public.key -O edit/key
-chroot edit/ sudo apt-key add key
+apt-key add edit/key
+chroot edit/ apt-key add key
 
-apt-get -o Dir=edit/ -qq -y --allow-unauthenticated update
-apt-get -o Dir=edit/ -qq -y --allow-unauthenticated install rfkill systemd-sysv librsvg2-dev nxos-desktop
+apt-get -o Dir=edit/ -qq -y update
+apt-get -o Dir=edit/ -qq -y install rfkill systemd-sysv librsvg2-dev nxos-desktop
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
 chmod +w extract-cd/casper/filesystem.manifest
