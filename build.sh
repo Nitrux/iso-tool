@@ -12,11 +12,21 @@ rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
 mount mnt/casper/filesystem.squashfs lower
 mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
 
+# Install the nomad-deskop files.
+
 echo "Downloading Nomad packages..."
-for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
-	wget -q http://repo.nxos.org/$p -O packages/${p##*/}
-	dpkg -x packages/${p##*/} edit
-done
+
+echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
+echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
+
+chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | sudo apt-key add -'
+chroot edit/ apt-get update
+chroot edit/ apt-get install nxos-desktop
+
+#for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
+#	wget -q http://repo.nxos.org/$p -O packages/${p##*/}
+#	dpkg -x packages/${p##*/} edit
+#done
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot
 chmod +w extract-cd/casper/filesystem.manifest
@@ -28,7 +38,18 @@ sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
 mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 edit | cut -f 1) > extract-cd/casper/filesystem.size
 cd extract-cd
-sed -i 's/DISKNAME.*/DISKNAME Nitrux 1.0.8 \"SolarStorm\" - Release amd64/g' README.diskdefines
+sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.8 CONTINUOUS - Release amd64/' README.diskdefines
 rm md5sum.txt
+rm -rf pics/
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
-mkisofs -D -r -V "Nitrux Live" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../out/os.iso .
+
+xorriso -as mkisofs -r -V "Custom Ubuntu Install CD" \
+            -cache-inodes \
+            -J -l -b isolinux/isolinux.bin \
+            -c isolinux/boot.cat -no-emul-boot \
+            -isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
+            -eltorito-alt-boot \
+            -e boot/grub/efi.img \
+            -isohybrid-gpt-basdat \
+            -boot-load-size 4 -boot-info-table \
+            -o ../out/os.iso ./
