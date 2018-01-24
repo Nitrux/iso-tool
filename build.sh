@@ -16,11 +16,15 @@ mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
 echo "Downloading Nomad packages..."
 
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
+echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
+echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
 
-chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | sudo apt-key add -'
-chroot edit/ apt-get update
-chroot edit/ apt-get install nxos-desktop
+wget -q http://repo.nxos.org/public.key -O edit/key
+chroot edit/ sudo apt-key add key
+
+apt-get -o Dir=edit/ update
+apt-get -o Dir=edit/ install nxos-desktop
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
 chmod +w extract-cd/casper/filesystem.manifest
@@ -39,11 +43,11 @@ rm md5sum.txt
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
 
 xorriso -as mkisofs -r -V "Nitrux Live" \
-            -cache-inodes \
-            -J -l -b isolinux/isolinux.bin \
-            -c isolinux/boot.cat -no-emul-boot \
-            -isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
-            -eltorito-alt-boot \
-            -isohybrid-gpt-basdat \
-            -boot-load-size 4 -boot-info-table \
-            -o ../out/os.iso ./
+        -cache-inodes \
+        -J -l -b isolinux/isolinux.bin \
+        -c isolinux/boot.cat -no-emul-boot \
+        -isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
+        -eltorito-alt-boot \
+        -isohybrid-gpt-basdat \
+        -boot-load-size 4 -boot-info-table \
+        -o ../out/os.iso ./
