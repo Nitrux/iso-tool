@@ -15,15 +15,15 @@ echo "Downloading Nomad packages..."
 
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
-echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
-echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 
-wget -q http://repo.nxos.org/public.key -O edit/key
-apt-key add edit/key
-chroot edit/ apt-key add key
+mount -o bind /proc edit/proc
+mount -o bind /sys edit/sys
+mount -o bind /var edit/var
+mount -o bind /dev edit/dev
 
-apt-get -o Dir=edit/ -y update
-apt-get -o Dir=edit/ -y install rfkill systemd-sysv librsvg2-dev nxos-desktop
+chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | apt-key add key'
+chroot edit/ apt-get -y update
+chroot edit/ apt-get -y install nxos-desktop
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
 chmod +w extract-cd/casper/filesystem.manifest
