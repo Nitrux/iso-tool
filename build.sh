@@ -1,9 +1,9 @@
 #! /bin/sh
 
-#(for c in $(seq 50); do echo $c; sleep 60; done) &
+(for c in $(seq 50); do echo $c; sleep 60; done) &
 
 echo "Downloading base system..."
-wget http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso -O os.iso
+wget -q http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso -O os.iso
 
 mkdir mnt out extract-cd lower upper work edit packages
 mount os.iso mnt
