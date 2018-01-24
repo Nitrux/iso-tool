@@ -20,11 +20,13 @@ echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
 
+apt-get -qq -y update
+
 wget -q http://repo.nxos.org/public.key -O edit/key
 chroot edit/ sudo apt-key add key
 
-apt-get -o Dir=edit/ update
-apt-get -o Dir=edit/ install nxos-desktop
+apt-get -o Dir=edit/ -qq -y update
+apt-get -o Dir=edit/ -qq -y install rfkill systemd-sysv librsvg2 nxos-desktop
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
 chmod +w extract-cd/casper/filesystem.manifest
