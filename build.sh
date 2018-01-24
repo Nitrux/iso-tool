@@ -1,7 +1,5 @@
 #! /bin/sh
 
-(for c in $(seq 50); do echo $c; sleep 60; done) &
-
 echo "Downloading base system..."
 wget -q http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso -O os.iso
 
@@ -17,13 +15,15 @@ echo "Downloading Nomad packages..."
 
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
+echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
+echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 
 wget -q http://repo.nxos.org/public.key -O edit/key
 apt-key add edit/key
 chroot edit/ apt-key add key
 
-apt-get -o Dir=edit/ -qq -y update
-apt-get -o Dir=edit/ -qq -y install rfkill systemd-sysv librsvg2-dev nxos-desktop
+apt-get -o Dir=edit/ -y update
+apt-get -o Dir=edit/ -y install rfkill systemd-sysv librsvg2-dev nxos-desktop
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
 chmod +w extract-cd/casper/filesystem.manifest
