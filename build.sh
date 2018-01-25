@@ -16,12 +16,8 @@ echo "Downloading Nomad packages..."
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
 
-mount -o bind /proc edit/proc
-mount -o bind /sys edit/sys
-mount -o bind /var edit/var
-mount -o bind /dev edit/dev
-
 chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | apt-key add key'
+chroot edit/ sh -c 'apt-key list | grep Nitrux'
 chroot edit/ apt-get -y update
 chroot edit/ apt-get -y install nxos-desktop
 
