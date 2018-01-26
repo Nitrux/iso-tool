@@ -15,10 +15,13 @@ echo "Downloading Nomad packages..."
 
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/dev/stable xenial main >> edit/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/user xenial main >> edit/etc/apt/sources.list
 
 cp /etc/resolv.conf edit/etc/
 
 chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | apt-key add -'
+chroot edit/ sh -c 'wget -qO - https://origin.archive.neon.kde.org/public.key | sudo apt-key add -'
 chroot edit/ sh -c 'apt-get -y update'
 chroot edit/ sh -c 'apt-get -y install nxos-desktop'
 
