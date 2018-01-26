@@ -1,7 +1,7 @@
 #! /bin/sh
 
 echo "Downloading base system..."
-wget -q http://cdimage.ubuntu.com/kubuntu/releases/16.04.3/release/kubuntu-16.04-desktop-amd64.iso
+wget -q http://cdimage.ubuntu.com/kubuntu/releases/16.04.3/release/kubuntu-16.04-desktop-amd64.iso -O os.iso
 
 mkdir mnt out extract-cd lower upper work edit packages
 mount os.iso mnt
