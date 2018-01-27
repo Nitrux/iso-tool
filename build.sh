@@ -1,7 +1,7 @@
 #! /bin/sh
 
 echo "Downloading base system..."
-wget -q http://releases.ubuntu.com/16.04/ubuntu-16.04.3-server-amd64.iso -O os.iso
+wget -q https://files.kde.org/neon/images/neon-userltsedition/current/neon-userltsedition-20180117-0018-amd64.iso -O os.iso
 
 mkdir mnt out extract lower upper work edit packages
 mount os.iso mnt
