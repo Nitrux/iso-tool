@@ -1,7 +1,7 @@
 #! /bin/sh
 
 echo "Downloading base system..."
-wget -q http://cdimage.ubuntu.com/kubuntu/releases/16.04.3/release/kubuntu-16.04-desktop-amd64.iso -O os.iso
+wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
 mkdir mnt out extract-cd lower upper work edit packages
 mount os.iso mnt
@@ -24,6 +24,8 @@ chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | apt-key add -'
 chroot edit/ sh -c 'wget -qO - https://origin.archive.neon.kde.org/public.key | sudo apt-key add -'
 chroot edit/ sh -c 'apt-get -y update'
 chroot edit/ sh -c 'apt-get -y install nxos-desktop'
+chroot edit/ sh -c 'apt-get -y autoremove'
+chroot edit/ sh -c 'apt-get -y clean'
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
 chmod +w extract-cd/casper/filesystem.manifest
