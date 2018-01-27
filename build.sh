@@ -1,17 +1,15 @@
 #! /bin/sh
 
 echo "Downloading base system..."
-wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
+wget -q http://releases.ubuntu.com/16.04/ubuntu-16.04.3-server-amd64.iso -O os.iso
 
-mkdir mnt out extract-cd lower upper work edit packages
+mkdir mnt out extract lower upper work edit packages
 mount os.iso mnt
 
-rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
+rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract/
 
-mount mnt/casper/filesystem.squashfs lower
-mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
-
-echo "Downloading Nomad packages..."
+mount mnt/casper/filesystem.squashfs lower/
+mount -t overlay -o lowerdir=lower/,upperdir=upper/,workdir=work/ none edit/
 
 echo deb http://repo.nxos.org nxos main >> edit/etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> edit/etc/apt/sources.list
@@ -28,16 +26,16 @@ chroot edit/ sh -c 'apt-get -y autoremove'
 chroot edit/ sh -c 'apt-get -y clean'
 
 rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot/
-chmod +w extract-cd/casper/filesystem.manifest
-chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
-cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
-sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
-sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
+chmod +w extract/casper/filesystem.manifest
+chroot edit/ dpkg-query -W --showformat='${Package} ${Version}\n' > extract/casper/filesystem.manifest
+cp extract/casper/filesystem.manifest extract/casper/filesystem.manifest-desktop
+sed -i '/ubiquity/d' extract/casper/filesystem.manifest-desktop
+sed -i '/casper/d' extract/casper/filesystem.manifest-desktop
 
-mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -noappend -no-progress
-printf $(du -sx --block-size=1 edit | cut -f 1) > extract-cd/casper/filesystem.size
+mksquashfs edit extract/casper/filesystem.squashfs -comp xz -noappend -no-progress
+printf $(du -sx --block-size=1 edit | cut -f 1) > extract/casper/filesystem.size
 
-cd extract-cd
+cd extract
 sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.8 "NXOS" - Release amd64/' README.diskdefines
 rm md5sum.txt
 
