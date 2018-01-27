@@ -22,6 +22,7 @@ chroot edit/ sh -c 'wget -qO - http://repo.nxos.org/public.key | apt-key add -'
 chroot edit/ sh -c 'wget -qO - https://origin.archive.neon.kde.org/public.key | sudo apt-key add -'
 chroot edit/ sh -c 'apt-get -y update'
 chroot edit/ sh -c 'apt-get -y install nxos-desktop'
+chroot edit/ sh -c 'apt-get -fy'
 chroot edit/ sh -c 'apt-get -y autoremove'
 chroot edit/ sh -c 'apt-get -y clean'
 
