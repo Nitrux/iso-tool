@@ -4,14 +4,14 @@
 
 echo "Downloading base system..."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-echo ""
+echo "Downloading root filesystem"
 wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
 
 # Extract the iso contents.
 
 mkdir iso
-xorriso -osirrox on -indev os.iso -iso / iso/
+xorriso -acl on -xattr on -indev os.iso -osirrox on -extract / iso/
 
 
 # Fill the new filesystem.
@@ -31,7 +31,7 @@ cp /etc/resolv.conf base/etc/
 
 chroot base/ sh -c "apt-get install -y busybox-static"
 chroot base/ sh -c "busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -"
-chroot base/ sh -c "busybox wget -qO - https://origin.archive.neon.kde.org/public.key | apt-key add -"
+chroot base/ sh -c "busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -"
 chroot base/ sh -c "apt-get -y update"
 chroot base/ sh -c "apt-get -y upgrade"
 chroot base/ sh -c "apt-get -y install $PACKAGES"
@@ -60,7 +60,7 @@ rm md5sum.txt
 
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
 
-xorriso -as mkisofs -r -V "Nitrux Live" \
+xorriso -as mkisofs -r -V "Nitrux_Live" \
 	-J -l -b isolinux/isolinux.bin \
 	-c isolinux/boot.cat -no-emul-boot \
 	-isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
