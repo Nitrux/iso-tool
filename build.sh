@@ -51,6 +51,7 @@ sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
 
 # Compress the new filesystem.
 
+echo "Compressing the new filesystem"
 mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 base | cut -f 1) > iso/casper/filesystem.size
 
@@ -63,7 +64,7 @@ find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.
 xorriso -as mkisofs -r -V "Nitrux_Live" \
 	-J -l -b isolinux/isolinux.bin \
 	-c isolinux/boot.cat -no-emul-boot \
-	-isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
+	-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
 	-eltorito-alt-boot \
 	-isohybrid-gpt-basdat \
 	-boot-load-size 4 -boot-info-table \
