@@ -15,6 +15,9 @@ xorriso -osirrox on -indev os.iso -iso / iso/
 
 
 # Fill the new filesystem.
+# Packages for it:
+
+PACKAGES="nxos-desktop"
 
 mkdir base
 tar xf base.tar.gz -C base/
@@ -26,13 +29,14 @@ echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.li
 
 cp /etc/resolv.conf base/etc/
 
-chroot base/ sh -c 'apt-get install -y busybox-static'
-chroot base/ sh -c 'busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -'
-chroot base/ sh -c 'busybox wget -qO - https://origin.archive.neon.kde.org/public.key | sudo apt-key add -'
-chroot base/ sh -c 'apt-get -y update'
-chroot base/ sh -c 'apt-get -y install nxos-desktop'
-chroot base/ sh -c 'apt-get -y autoremove'
-chroot base/ sh -c 'apt-get -y clean'
+chroot base/ sh -c "apt-get install -y busybox-static"
+chroot base/ sh -c "busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -"
+chroot base/ sh -c "busybox wget -qO - https://origin.archive.neon.kde.org/public.key | apt-key add -"
+chroot base/ sh -c "apt-get -y update"
+chroot base/ sh -c "apt-get -y upgrade"
+chroot base/ sh -c "apt-get -y install $PACKAGES"
+chroot base/ sh -c "apt-get -y autoremove"
+chroot base/ sh -c "apt-get -y clean"
 
 
 # Clean things a little.
@@ -57,7 +61,6 @@ rm md5sum.txt
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
 
 xorriso -as mkisofs -r -V "Nitrux Live" \
-	-cache-inodes \
 	-J -l -b isolinux/isolinux.bin \
 	-c isolinux/boot.cat -no-emul-boot \
 	-isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
