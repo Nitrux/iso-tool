@@ -4,6 +4,7 @@
 
 echo "Downloading base system..."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+echo ""
 wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
 
@@ -25,8 +26,9 @@ echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.li
 
 cp /etc/resolv.conf base/etc/
 
-chroot base/ sh -c 'wget -qO - http://repo.nxos.org/public.key | apt-key add -'
-chroot base/ sh -c 'wget -qO - https://origin.archive.neon.kde.org/public.key | sudo apt-key add -'
+chroot base/ sh -c 'apt-get install -y busybox-static'
+chroot base/ sh -c 'busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -'
+chroot base/ sh -c 'busybox wget -qO - https://origin.archive.neon.kde.org/public.key | sudo apt-key add -'
 chroot base/ sh -c 'apt-get -y update'
 chroot base/ sh -c 'apt-get -y install nxos-desktop'
 chroot base/ sh -c 'apt-get -y autoremove'

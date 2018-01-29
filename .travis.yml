@@ -17,3 +17,6 @@ after_success:
 branches:
   except:
     - /^(?i:continuous)$/
+
+notifications:
+  email: false
