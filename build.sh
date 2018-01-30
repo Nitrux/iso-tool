@@ -2,9 +2,9 @@
 
 # Download the base filesystem and the ISO.
 
-echo "Downloading base system..."
+echo "Downloading base system."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-echo "Downloading root filesystem"
+echo "Downloading root filesystem."
 wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
 
@@ -31,9 +31,9 @@ cp /etc/resolv.conf base/etc/
 
 chroot base/ sh -c "
 export HOME=/root
-LANG=en_US.UTF-8
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 apt-get install -y busybox-static
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
