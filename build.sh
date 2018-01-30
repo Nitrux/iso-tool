@@ -1,34 +1,71 @@
 #! /bin/sh
 
+# Download the base filesystem and the ISO.
+
 echo "Downloading base system..."
-wget -q http://cdimage.ubuntu.com/kubuntu/releases/17.10.1/release/kubuntu-17.10.1-desktop-i386.iso -O os.iso
-wget -q http://repo.nxos.org/dists/nxos/main/binary-amd64/Packages
+wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+echo "Downloading root filesystem"
+wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
-mkdir mnt out extract-cd lower upper work edit packages
-mount os.iso mnt
 
-rsync --exclude=/casper/filesystem.squashfs -a mnt/ extract-cd
+# Extract the iso contents.
 
-mount mnt/casper/filesystem.squashfs lower
-mount -t overlay -o lowerdir=lower,upperdir=upper,workdir=work none edit
+mkdir iso
+xorriso -acl on -xattr on -indev os.iso -osirrox on -extract / iso/
 
-echo "Downloading Nomad packages..."
-for p in $(grep -e 'Filename:.*' Packages | sed 's/Filename: //'); do
-	wget -q http://repo.nxos.org/$p -O packages/${p##*/}
-	dpkg -x packages/${p##*/} edit
-done
 
-rm -rf edit/tmp/* edit/vmlinuz edit/initrd.img edit/boot
-chmod +w extract-cd/casper/filesystem.manifest
-chroot edit dpkg-query -W --showformat='${Package} ${Version}\n' > extract-cd/casper/filesystem.manifest
-cp extract-cd/casper/filesystem.manifest extract-cd/casper/filesystem.manifest-desktop
-sed -i '/ubiquity/d' extract-cd/casper/filesystem.manifest-desktop
-sed -i '/casper/d' extract-cd/casper/filesystem.manifest-desktop
-(for c in $(seq 50); do echo $c; sleep 60; done) &
-mksquashfs edit extract-cd/casper/filesystem.squashfs -comp xz -noappend -no-progress
-printf $(du -sx --block-size=1 edit | cut -f 1) > extract-cd/casper/filesystem.size
-cd extract-cd
-sed -i 's/DISKNAME.*/DISKNAME Nitrux 1.0.8 \"SolarStorm\" - Release amd64/g' README.diskdefines
+# Fill the new filesystem.
+# Packages for it:
+
+PACKAGES="nxos-desktop"
+
+mkdir base
+tar xf base.tar.gz -C base/
+
+echo deb http://repo.nxos.org nxos main >> base/etc/apt/sources.list
+echo deb http://repo.nxos.org xenial main >> base/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/dev/stable xenial main >> base/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.list
+
+cp /etc/resolv.conf base/etc/
+
+chroot base/ sh -c "apt-get install -y busybox-static"
+chroot base/ sh -c "busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -"
+chroot base/ sh -c "busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -"
+chroot base/ sh -c "apt-get -y update"
+chroot base/ sh -c "apt-get -y upgrade"
+chroot base/ sh -c "apt-get -y install $PACKAGES"
+chroot base/ sh -c "apt-get -y autoremove"
+chroot base/ sh -c "apt-get -y clean"
+
+
+# Clean things a little.
+
+rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/*
+chmod +w iso/casper/filesystem.manifest
+chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' > iso/casper/filesystem.manifest
+cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
+sed -i '/ubiquity/d' iso/casper/filesystem.manifest-desktop
+sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
+
+
+# Compress the new filesystem.
+
+echo "Compressing the new filesystem"
+mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
+printf $(du -sx --block-size=1 base | cut -f 1) > iso/casper/filesystem.size
+
+cd iso
+sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
 rm md5sum.txt
+
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
-mkisofs -D -r -V "Nitrux Live" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../out/os.iso .
+
+xorriso -as mkisofs -r -V "Nitrux_Live" \
+	-J -l -b isolinux/isolinux.bin \
+	-c isolinux/boot.cat -no-emul-boot \
+	-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin \
+	-eltorito-alt-boot \
+	-isohybrid-gpt-basdat \
+	-boot-load-size 4 -boot-info-table \
+	-o ../nitruxos.iso ./

@@ -1,3 +1,5 @@
 #! /bin/sh
 
-curl --upload-file out/*.iso https://transfer.sh/nitrux-testing.iso
+mega-login $MAIL $PASSWORD
+mega-put --ignore-quota-warn nitruxos.iso 
+mega-logout

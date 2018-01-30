@@ -1,16 +1,22 @@
+sudo: required
+
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq install -y squashfs-tools genisoimage
+  - sudo apt-get -qq install -y squashfs-tools xorriso syslinux-common libc-ares2 libcrypto++9 libmediainfo0 libzen0
+  - wget -q https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb -O mega.deb
+  - sudo dpkg -i mega.deb
+  - sudo apt-get -qq install -f -y
 
 script:
   - sudo ./build.sh
 
 after_success:
   - sudo chmod +rw out/*.iso
-  - curl --upload-file out/*.iso https://transfer.sh/nitrux-testing.iso > URL
-  - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh -O uploadtool.sh
-  - sh ./uploadtool.sh URL
+  - sh ./upload.sh
 
 branches:
   except:
     - /^(?i:continuous)$/
+
+notifications:
+  email: false
