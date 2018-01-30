@@ -56,6 +56,7 @@ rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/ma
 # Compress the new filesystem.
 
 echo "Compressing the new filesystem"
+(sleep 300; echo '\u2022') &
 mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
 
@@ -63,7 +64,7 @@ cd iso
 sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
 rm md5sum.txt && echo "REMOVED OLD md5sum.txt"
 
-find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat | tee md5sum.txt
+find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
 mkisofs -D -r -V "Nitrux_live" \
 	-cache-inodes -J -l \
