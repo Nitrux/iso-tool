@@ -27,9 +27,12 @@ echo deb http://repo.nxos.org xenial main >> base/etc/apt/sources.list
 echo deb http://archive.neon.kde.org/dev/stable xenial main >> base/etc/apt/sources.list
 echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.list
 
+mkdir -p base/var
 cp /etc/resolv.conf base/etc/
 
 chroot base/ sh -c "
+echo en_US.UTF-8 UTF-8 > /etc/locale.gen
+locale-gen
 export HOME=/root
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -66,7 +69,7 @@ rm md5sum.txt && echo "REMOVED OLD md5sum.txt"
 
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
-mkisofs -D -r -V "Nitrux_live" \
+xorriso -as mkisofs -D -r -V "Nitrux_live" \
 	-cache-inodes -J -l \
 	-b isolinux/isolinux.bin \
 	-c isolinux/boot.cat \
