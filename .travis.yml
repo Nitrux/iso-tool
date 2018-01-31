@@ -11,7 +11,7 @@ script:
   - sudo ./build.sh
 
 after_success:
-  - sudo chmod +rw out/*.iso
+  - sudo chmod +r nitruxos.iso
   - sh ./upload.sh
 
 branches:

@@ -31,8 +31,6 @@ mkdir -p base/var
 cp /etc/resolv.conf base/etc/
 
 chroot base/ sh -c "
-echo en_US.UTF-8 UTF-8 > /etc/locale.gen
-locale-gen
 export HOME=/root
 export LANG=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
@@ -43,7 +41,7 @@ busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 apt-get -y install $PACKAGES
 apt-get -y autoremove
-apt-get -y clean"
+apt-get -y clean" 2>&1 | grep -v 'locale:'
 
 
 # Clean things a little.
@@ -59,7 +57,7 @@ rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/ma
 # Compress the new filesystem.
 
 echo "Compressing the new filesystem"
-(sleep 300; echo '\u2022') &
+(sleep 300; echo -e '\u2022') &
 mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
 
