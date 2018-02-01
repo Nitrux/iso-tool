@@ -41,7 +41,9 @@ busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 apt-get -y install $PACKAGES
 apt-get -y autoremove
-apt-get -y clean" 2>&1 | grep -v 'locale:'
+apt-get -y clean
+useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin,sambashare -p '' nitrux
+" 2>&1 | grep -v 'locale:'
 
 
 # Clean things a little.
@@ -51,6 +53,7 @@ chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -nr > i
 cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
 sed -i '/ubiquity/d' iso/casper/filesystem.manifest-desktop
 sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
+# When producing images for use with ostree, delete `base/var/*`.
 rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/machine-id
 
 
@@ -67,13 +70,17 @@ rm md5sum.txt && echo "REMOVED OLD md5sum.txt"
 
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
-xorriso -as mkisofs -D -r -V "Nitrux_live" \
-	-cache-inodes -J -l \
-	-b isolinux/isolinux.bin \
-	-c isolinux/boot.cat \
+xorriso -as mkisofs -V "Nitrux_live" \
+	-J -l -D -r \
 	-no-emul-boot \
-	-boot-load-size 4 \
+	-cache-inodes \
 	-boot-info-table \
+	-boot-load-size 4 \
+	-eltorito-alt-boot \
+	-c isolinux/boot.cat \
+	-isohybrid-gpt-basdat \
+	-b isolinux/isolinux.bin \
+	-isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
 	-o ../nitruxos.iso ./
 
 md5sum ../nitruxos.iso
