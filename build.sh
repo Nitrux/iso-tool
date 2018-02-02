@@ -65,7 +65,6 @@ printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
 
 cd iso
 sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
-rm md5sum.txt && echo "REMOVED OLD md5sum.txt"
 
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
@@ -81,6 +80,3 @@ xorriso -as mkisofs -V "Nitrux_live" \
 	-b isolinux/isolinux.bin \
 	-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin \
 	-o ../nitruxos.iso ./
-
-mkdir release
-md5sum ../nitruxos.iso > release/md5.txt
