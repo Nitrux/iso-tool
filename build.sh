@@ -40,9 +40,8 @@ busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 apt-get -y install $PACKAGES
-apt-get -y autoremove
 apt-get -y clean
-useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin,sambashare -p '' nitrux
+useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
 " 2>&1 | grep -v 'locale:'
 
 
