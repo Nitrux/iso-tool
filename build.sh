@@ -59,7 +59,7 @@ rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/ma
 # Compress the new filesystem.
 
 echo "Compressing the new filesystem"
-(sleep 300; echo -e '\u2022') &
+(sleep 300; printf '\u2022\n') &
 mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
 
@@ -82,4 +82,5 @@ xorriso -as mkisofs -V "Nitrux_live" \
 	-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin \
 	-o ../nitruxos.iso ./
 
-md5sum ../nitruxos.iso
+mkdir release
+md5sum ../nitruxos.iso > release/md5.txt
