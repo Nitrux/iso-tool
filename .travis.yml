@@ -9,7 +9,7 @@ script:
 
 after_success:
   - sudo chmod +rw nitruxos.iso
-  - curl --upload-file nitruxos.iso https://transfer.sh/nitruxos.iso
+  - curl -H "Max-Days: 2" --upload-file nitruxos.iso https://transfer.sh/nitruxos.iso
 
 branches:
   except:

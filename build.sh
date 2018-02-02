@@ -80,7 +80,7 @@ xorriso -as mkisofs -V "Nitrux_live" \
 	-c isolinux/boot.cat \
 	-isohybrid-gpt-basdat \
 	-b isolinux/isolinux.bin \
-	-isohybrid-mbr /usr/lib/syslinux/bios/isohdpfx.bin \
+	-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin \
 	-o ../nitruxos.iso ./
 
 md5sum ../nitruxos.iso
