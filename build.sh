@@ -3,9 +3,9 @@
 # Download the base filesystem and the ISO.
 
 echo "Downloading base system."
-wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+wget http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
 echo "Downloading root filesystem."
-wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
+wget http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
 
 # Extract the iso contents.
@@ -15,9 +15,6 @@ xorriso -acl on -xattr on -indev os.iso -osirrox on -extract / iso/
 
 
 # Fill the new filesystem.
-# Packages for it:
-
-PACKAGES="nxos-desktop"
 
 mkdir base
 tar xf base.tar.gz -C base/
@@ -29,6 +26,9 @@ echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.li
 
 mkdir -p base/var
 cp /etc/resolv.conf base/etc/
+
+# Packages for the new filesystem.
+PACKAGES="nxos-desktop"
 
 chroot base/ sh -c "
 export HOME=/root
