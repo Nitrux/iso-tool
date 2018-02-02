@@ -32,9 +32,8 @@ PACKAGES="nxos-desktop"
 
 chroot base/ sh -c "
 export HOME=/root
-export LANG=en_US.UTF-8
-export LC_CTYPE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
+export LANG=C
+export LC_ALL=C
 apt-get install -y busybox-static
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
