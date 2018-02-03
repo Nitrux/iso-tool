@@ -2,16 +2,13 @@ sudo: required
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq install -y squashfs-tools xorriso syslinux-common libc-ares2 libcrypto++9 libmediainfo0 libzen0
-  - wget -q https://mega.nz/linux/MEGAsync/xUbuntu_14.04/amd64/megacmd-xUbuntu_14.04_amd64.deb -O mega.deb
-  - sudo dpkg -i mega.deb
-  - sudo apt-get -qq install -f -y
+  - sudo apt-get -qq install -y squashfs-tools xorriso syslinux-common
 
 script:
   - sudo ./build.sh
 
 after_success:
-  - sudo chmod +rw out/*.iso
+  - sudo chmod a+rw nitruxos.iso
   - sh ./upload.sh
 
 branches:
