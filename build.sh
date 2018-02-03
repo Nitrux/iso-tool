@@ -24,11 +24,14 @@ echo deb http://repo.nxos.org xenial main >> base/etc/apt/sources.list
 echo deb http://archive.neon.kde.org/dev/stable xenial main >> base/etc/apt/sources.list
 echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.list
 
+rm -rf base/dev/*
 mkdir -p base/var
+
+# Enable networking.
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop"
+PACKAGES="nxos-desktop wireless-tools konsole plymouth"
 
 chroot base/ sh -c "
 export HOME=/root
@@ -51,7 +54,6 @@ chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -nr > i
 cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
 sed -i '/ubiquity/d' iso/casper/filesystem.manifest-desktop
 sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
-# When producing images for use with ostree, delete `base/var/*`.
 rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/machine-id
 
 
