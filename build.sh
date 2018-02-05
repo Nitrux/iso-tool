@@ -31,7 +31,7 @@ mkdir -p base/var
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop"
+PACKAGES="nxos-desktop grub2-common"
 
 chroot base/ sh -c "
 cd /
@@ -45,18 +45,17 @@ apt-get -y update
 apt-get -y -qq install $PACKAGES
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
-userdel -rf ubuntu
-sed -i 's/^GRUB_THEME=.*$//g' /etc/default/grub
+sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-grub
-" 2>&1 | grep -v 'locale:'
+" 2>&1 | grep -v -e 'locale:' -e 'Selecting'
 
 
 # Use the initramfs generated during package installation.
 
-cp $(ls base/boot/initrd | head -n 1) iso/casper/initrd.lz
+cp $(ls base/boot/initrd* | head -n 1) iso/casper/initrd.lz
 
-
+
 # Clean things a little.
 
 chmod +w iso/casper/filesystem.manifest
