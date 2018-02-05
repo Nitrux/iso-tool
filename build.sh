@@ -31,9 +31,10 @@ mkdir -p base/var
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop wireless-tools konsole plymouth"
+PACKAGES="nxos-desktop"
 
 chroot base/ sh -c "
+cd /
 export HOME=/root
 export LANG=C
 export LC_ALL=C
@@ -41,12 +42,21 @@ apt-get install -y busybox-static
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
-apt-get -y install $PACKAGES
+apt-get -y -qq install $PACKAGES
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
+userdel -rf ubuntu
+sed -i 's/^GRUB_THEME=.*$//g' /etc/default/grub
+echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
+update-grub
 " 2>&1 | grep -v 'locale:'
 
 
+# Use the initramfs generated during package installation.
+
+cp $(ls base/boot/initrd | head -n 1) iso/casper/initrd.lz
+
+
 # Clean things a little.
 
 chmod +w iso/casper/filesystem.manifest
@@ -63,6 +73,7 @@ echo "Compressing the new filesystem"
 (sleep 300; printf '\u2022\n') &
 mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
+
 
 cd iso
 sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
