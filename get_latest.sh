@@ -9,4 +9,15 @@ wget $(cat URL) -O nitruxos.iso
 echo "Calculating md5sum..."
 if [ "$(cat md5.txt)" == "$(md5sum nitruxos.iso)" ]; then
 	echo " ==> Successfully downloaded 'nitruxos.iso.'"
+else
+	echo " ==> The file is corrupted or the download failed."
+	echo -n " ==> Do you want to remove the files? [Y/n]"
+	_ANS=Y
+	read _ANS
+
+	if [ $_ANS == Y ]; then
+		rm -rf nitruxos.iso
+	fi
 fi
+
+rm -rf URL md5.txt
