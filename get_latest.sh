@@ -1,7 +1,8 @@
 #! /bin/sh
 
 echo " ==> Finding latest release..."
-wget -q --show-progress https://github.com/luis-lavaire/mkiso/releases/download/continuous/{md5.txt,URL}
+wget -q --show-progress https://github.com/luis-lavaire/mkiso/releases/download/continuous/md5.txt
+wget -q --show-progress https://github.com/luis-lavaire/mkiso/releases/download/continuous/URL
 
 echo " ==> Downloading ISO..."
 wget $(cat URL) -O nitruxos.iso
