@@ -47,19 +47,19 @@ apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
 sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
-update-grub
+echo $(update-initramfs -u | cut -d ' ' -f 3) > /initramfs
 " 2>&1 | grep -v -e 'locale:' -e 'Selecting'
 
 
 # Use the initramfs generated during package installation.
 
-cp $(ls base/boot/initrd* | head -n 1) iso/casper/initrd.lz
+cp edit$(cat base/initramfs) iso/casper/initrd.lz
 
 
 # Clean things a little.
 
 chmod +w iso/casper/filesystem.manifest
-chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -nr > iso/casper/filesystem.manifest
+chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -n > iso/casper/filesystem.manifest
 cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
 sed -i '/ubiquity/d' iso/casper/filesystem.manifest-desktop
 sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
@@ -69,7 +69,7 @@ rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/ma
 # Compress the new filesystem.
 
 echo "Compressing the new filesystem"
-(sleep 300; printf '\u2022\n') &
+(sleep 300; printf '•') &
 mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
 printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
 
