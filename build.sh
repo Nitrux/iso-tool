@@ -1,85 +1,96 @@
 #! /bin/sh
 
-# Download the base filesystem and the ISO.
+# Download the base filesystem.
 
-echo "Downloading base system."
+echo "Downloading base root filesystem."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+
+
+# Prepare the ISO layout.
+
+mkdir -p \
+	iso/casper \
+	iso/boot/syslinux
 
 
 # Fill the new filesystem.
 
-mkdir base
-tar xf base.tar.gz -C base/
+mkdir filesystem/
+tar xf base.tar.gz -C filesystem/
 
-sed -i 's/#.*$//;/^$/d' base/etc/apt/sources.list
-echo deb http://repo.nxos.org nxos main >> base/etc/apt/sources.list
-echo deb http://repo.nxos.org xenial main >> base/etc/apt/sources.list
-echo deb http://archive.neon.kde.org/dev/stable xenial main >> base/etc/apt/sources.list
-echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.list
+sed -i 's/#.*$//;/^$/d' filesystem/etc/apt/sources.list
+echo deb http://repo.nxos.org nxos main >> filesystem/etc/apt/sources.list
+echo deb http://repo.nxos.org xenial main >> filesystem/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/dev/stable xenial main >> filesystem/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/user xenial main >> filesystem/etc/apt/sources.list
 
-rm -rf base/dev/*
+rm -rf filesystem/dev/*
 
 # Enable networking.
-cp /etc/resolv.conf base/etc/
+cp /etc/resolv.conf filesystem/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop grub2-common ubuntu-minimal"
+PACKAGES="nxos-desktop linux-generic linux-headers-generic ubuntu-minimal casper lupin-casper base-files"
 
-chroot base/ sh -c "
+chroot filesystem/ sh -c "
 export LANG=C
 export LC_ALL=C
-apt-get install -y busybox-static
-busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
-busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
+apt-get install -qq -y wget
+wget -qO - http://repo.nxos.org/public.key | apt-key add -
+wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 echo Installing packages to the system...
-apt-get -y -qq install $PACKAGES 2> /dev/null | grep linux-image-generic
+apt-get -y -qq install $PACKAGES > /dev/null 2&>1
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
 systemctl set-default graphical.target
 systemctl enable display-manager
-sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
-echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
-update-initramfs -v -d -k all
-update-initramfs -v -c -k $(ls /lib/modules/)
+KERNEL_VERSION=$(ls -1 /boot/vmlinuz-* | tail -n 1 | sed 's/vmlinuz-//')
+depmod -a $KERNEL_VERSION
+update-initramfs -u -k $KERNEL_VERSION
+find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
+rm /etc/resolv.conf
 "
 
 
-# Use the initramfs generated during package installation.
+# Use an updated initramfs.
 
-ls base/lib/modules/
-ls base/boot/
-exit 1
-cp $(ls base/boot/initrd* | head -n 1) iso/casper/initrd.lz
+KERNEL_VERSION=$(ls -1 filesystem/boot/vmlinuz-* | tail -n 1 | sed 's/vmlinuz-//')
+cp -vp filesystem/boot/vmlinuz-$KERNEL_VERSION iso/casper/vmlinuz
+cp -vp filesystem/boot/initrd.img-$KERNEL_VERSION iso/casper/initrd.img
 
 
 # Clean things a little.
 
-chmod +w iso/casper/filesystem.manifest
-chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -n > iso/casper/filesystem.manifest
-cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
-
-rm -rf base/tmp/* \
-	base/boot/* \
-	base/vmlinuz* \
-	base/initrd.img* \
-	base/var/lib/dbus/machine-id
+rm -rf filesystem/tmp/* \
+	filesystem/boot/* \
+	filesystem/vmlinuz* \
+	filesystem/initrd.img* \
+	filesystem/var/log/* \
+	filesystem/var/lib/dbus/machine-id
 
 
 # Compress the new filesystem.
 
 (sleep 300; echo ' • • • ') &
 echo "Compressing the new filesystem"
-mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
-printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
+mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
+printf $(du -sx --block-size=1 filesystem/ | cut -f 1) > iso/casper/filesystem.size
+
+
+# Create the ISO file.
 
 cd iso
-sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
+cp /usr/lib/ISOLINUX/isolinux.bin \
+	/usr/lib/syslinux/modules/bios/ldlinux.c32 boot/isolinux
+
+echo "default /casper/vmlinuz initrd=/casper/initrd.img boot=casper quiet splash" > boot/isolinux/isolinux.cfg
 
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
+# TODO: support UEFI by default.
 xorriso -as mkisofs -V "Nitrux_live" \
 	-J -l -D -r \
 	-no-emul-boot \

@@ -1,5 +1,8 @@
 #! /bin/sh
 
+mkdir -p latest
+cd latest
+
 echo " ==> Finding latest release..."
 wget -q --show-progress https://github.com/luis-lavaire/mkiso/releases/download/continuous/md5.txt
 wget -q --show-progress https://github.com/luis-lavaire/mkiso/releases/download/continuous/URL
@@ -22,3 +25,5 @@ else
 fi
 
 rm -rf URL md5.txt
+
+echo " ==> Done. The file was saved as latest/nitruxos.iso"
