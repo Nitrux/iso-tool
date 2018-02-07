@@ -11,38 +11,38 @@ wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-ba
 mkdir base
 tar xf base.tar.gz -C base/
 
+sed -i 's/#.*$//;/^$/d' base/etc/apt/sources.list
 echo deb http://repo.nxos.org nxos main >> base/etc/apt/sources.list
 echo deb http://repo.nxos.org xenial main >> base/etc/apt/sources.list
 echo deb http://archive.neon.kde.org/dev/stable xenial main >> base/etc/apt/sources.list
 echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.list
 
 rm -rf base/dev/*
-mkdir -p base/var
 
 # Enable networking.
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop grub2-common wireless-tools wpasupplicant linux-image-generic"
+PACKAGES="nxos-desktop grub2-common wireless-tools wpasupplicant linux-image-generic initramfs-tools"
 
 chroot base/ sh -c "
-export HOME=/root
 export LANG=C
 export LC_ALL=C
 apt-get install -y busybox-static
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
-apt-get -y -qq install $PACKAGES
+echo Installing packages to the system...
+apt-get -y -qq install $PACKAGES > /dev/null 2>&1
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
 sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
-echo UPDATING INITRAMFS
-update-initramfs -c -k all
-" 2>&1 | grep -v -e 'locale:' -e 'Selecting'
+update-initramfs -d -k new
+update-initramfs -u -k all
+"
 
 
 # Use the initramfs generated during package installation.
