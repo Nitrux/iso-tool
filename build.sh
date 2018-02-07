@@ -4,14 +4,6 @@
 
 echo "Downloading base system."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-echo "Downloading root filesystem."
-wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
-
-
-# Extract the iso contents.
-
-mkdir iso
-xorriso -acl on -xattr on -indev os.iso -osirrox on -extract / iso/
 
 
 # Fill the new filesystem.
@@ -31,10 +23,9 @@ mkdir -p base/var
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop grub2-common"
+PACKAGES="nxos-desktop grub2-common wireless-tools wpasupplicant"
 
 chroot base/ sh -c "
-cd /
 export HOME=/root
 export LANG=C
 export LC_ALL=C
@@ -47,13 +38,15 @@ apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
 sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
-echo $(update-initramfs -u | cut -d ' ' -f 3) > /initramfs
+update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
+update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
+update-initramfs -u
 " 2>&1 | grep -v -e 'locale:' -e 'Selecting'
 
 
 # Use the initramfs generated during package installation.
 
-cp edit$(cat base/initramfs) iso/casper/initrd.lz
+cp $(ls -c edit/base/boot/initrd* | head -n 1) iso/casper/initrd.lz
 
 
 # Clean things a little.
@@ -61,18 +54,20 @@ cp edit$(cat base/initramfs) iso/casper/initrd.lz
 chmod +w iso/casper/filesystem.manifest
 chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -n > iso/casper/filesystem.manifest
 cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
-sed -i '/ubiquity/d' iso/casper/filesystem.manifest-desktop
-sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
-rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/machine-id
+
+rm -rf base/tmp/* \
+	base/boot/* \
+	base/vmlinuz* \
+	base/initrd.img* \
+	base/var/lib/dbus/machine-id
 
 
 # Compress the new filesystem.
 
+(sleep 300; echo ' • • • ') &
 echo "Compressing the new filesystem"
-(sleep 300; printf '•') &
-mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
+mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
-
 
 cd iso
 sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
