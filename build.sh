@@ -40,16 +40,17 @@ sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
-update-initramfs -d -k new
-update-initramfs -u -k all
+update-initramfs -d -k all
+update-initramfs -c -k $(ls --color=never base/lib/modules/)
 "
 
 
 # Use the initramfs generated during package installation.
 
+ls base/lib/modules/
 ls base/boot/
 exit 1
-cp $(ls -c base/boot/initrd* | head -n 1) iso/casper/initrd.lz
+cp $(ls base/boot/initrd* | head -n 1) iso/casper/initrd.lz
 
 
 # Clean things a little.
