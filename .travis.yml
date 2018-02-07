@@ -1,5 +1,3 @@
-language: c
-
 sudo: required
 
 before_install:

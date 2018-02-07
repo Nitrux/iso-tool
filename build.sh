@@ -31,7 +31,7 @@ rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop linux-generic linux-headers-generic ubuntu-minimal casper lupin-casper base-files"
+PACKAGES="nxos-desktop ubuntu-minimal casper lupin-casper base-files"
 
 chroot filesystem/ sh -c "
 export LANG=C
@@ -40,13 +40,17 @@ apt-get install -qq -y busybox
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
-echo Installing packages to the system...
 apt-get -y -qq install $PACKAGES
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
 systemctl set-default graphical.target
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
+
+apt-get download linux-generic linux-headers-generic
+dpkg -i *.deb
+rm -rf *.deb
+
 KERNEL_VERSION=$(ls -1 /boot/vmlinuz-* | tail -n 1 | sed 's/vmlinuz-//')
 depmod -a $KERNEL_VERSION
 update-initramfs -u -k $KERNEL_VERSION
