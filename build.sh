@@ -23,7 +23,7 @@ mkdir -p base/var
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop grub2-common wireless-tools wpasupplicant"
+PACKAGES="nxos-desktop grub2-common wireless-tools wpasupplicant linux-image-generic"
 
 chroot base/ sh -c "
 export HOME=/root
@@ -41,7 +41,7 @@ echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
 echo UPDATING INITRAMFS
-update-initramfs -u
+update-initramfs -c -k all
 " 2>&1 | grep -v -e 'locale:' -e 'Selecting'
 
 
