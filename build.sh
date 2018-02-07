@@ -46,7 +46,7 @@ update-initramfs -u
 
 # Use the initramfs generated during package installation.
 
-cp $(ls -c edit/base/boot/initrd* | head -n 1) iso/casper/initrd.lz
+cp $(ls -c base/boot/initrd* | head -n 1) iso/casper/initrd.lz
 
 
 # Clean things a little.
