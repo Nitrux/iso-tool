@@ -4,13 +4,14 @@
 
 echo "Downloading base root filesystem."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
 
 
 # Prepare the ISO layout.
 
 mkdir -p \
 	iso/casper \
-	iso/boot/syslinux
+	iso/boot/isolinux
 
 
 # Fill the new filesystem.
@@ -35,9 +36,9 @@ PACKAGES="nxos-desktop linux-generic linux-headers-generic ubuntu-minimal casper
 chroot filesystem/ sh -c "
 export LANG=C
 export LC_ALL=C
-apt-get install -qq -y wget
-wget -qO - http://repo.nxos.org/public.key | apt-key add -
-wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
+apt-get install -qq -y busybox
+busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
+busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 echo Installing packages to the system...
 apt-get -y -qq install $PACKAGES > /dev/null 2&>1
@@ -82,9 +83,11 @@ printf $(du -sx --block-size=1 filesystem/ | cut -f 1) > iso/casper/filesystem.s
 
 # Create the ISO file.
 
+tar xf syslinux.tar.xz
+
 cd iso
-cp /usr/lib/ISOLINUX/isolinux.bin \
-	/usr/lib/syslinux/modules/bios/ldlinux.c32 boot/isolinux
+cp ../syslinux-6.03/bios/core/isolinux.bin \
+	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 ./boot/isolinux
 
 echo "default /casper/vmlinuz initrd=/casper/initrd.img boot=casper quiet splash" > boot/isolinux/isolinux.cfg
 
@@ -98,8 +101,8 @@ xorriso -as mkisofs -V "Nitrux_live" \
 	-boot-info-table \
 	-boot-load-size 4 \
 	-eltorito-alt-boot \
-	-c isolinux/boot.cat \
+	-c boot/isolinux/boot.cat \
 	-isohybrid-gpt-basdat \
-	-b isolinux/isolinux.bin \
-	-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin \
+	-b boot/isolinux/isolinux.bin \
+	-isohybrid-mbr ../syslinux-6.03/bios/mbr/isohdpfx.bin \
 	-o ../nitruxos.iso ./
