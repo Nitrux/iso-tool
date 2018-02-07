@@ -41,7 +41,7 @@ echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
 update-initramfs -v -d -k all
-update-initramfs -v -c -k $(ls --color=never base/lib/modules/)
+update-initramfs -v -c -k $(ls /lib/modules/)
 "
 
 
