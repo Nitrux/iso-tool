@@ -33,15 +33,15 @@ busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 echo Installing packages to the system...
-apt-get -y -qq install $PACKAGES > /dev/null 2>&1
+apt-get -y -qq install $PACKAGES 2> /dev/null | grep linux-image-generic
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
 sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
-update-initramfs -d -k all
-update-initramfs -c -k $(ls --color=never base/lib/modules/)
+update-initramfs -v -d -k all
+update-initramfs -v -c -k $(ls --color=never base/lib/modules/)
 "
 
 
