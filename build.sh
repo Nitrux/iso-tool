@@ -40,12 +40,15 @@ sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
 update-alternatives --install /usr/share/plymouth/themes/text.plymouth text.plymouth /usr/share/plymouth/themes/nomad-text/nomad-text.plymouth 100
+echo UPDATING INITRAMFS
 update-initramfs -u
 " 2>&1 | grep -v -e 'locale:' -e 'Selecting'
 
 
 # Use the initramfs generated during package installation.
 
+ls base/boot/
+exit 1
 cp $(ls -c base/boot/initrd* | head -n 1) iso/casper/initrd.lz
 
 
