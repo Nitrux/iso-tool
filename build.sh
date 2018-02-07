@@ -23,7 +23,7 @@ rm -rf base/dev/*
 cp /etc/resolv.conf base/etc/
 
 # Packages for the new filesystem.
-PACKAGES="nxos-desktop grub2-common wireless-tools wpasupplicant linux-image-generic initramfs-tools"
+PACKAGES="nxos-desktop grub2-common ubuntu-minimal"
 
 chroot base/ sh -c "
 export LANG=C
@@ -35,7 +35,9 @@ apt-get -y update
 echo Installing packages to the system...
 apt-get -y -qq install $PACKAGES 2> /dev/null | grep linux-image-generic
 apt-get -y clean
-useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
+useradd -m -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
+systemctl set-default graphical.target
+systemctl enable display-manager
 sed 's/^GRUB_THEME=.*$//g' /usr/share/grub/default/grub > /etc/default/grub
 echo GRUB_THEME=\"/usr/share/grub/themes/nomad/theme.txt\" >> /etc/default/grub
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/nomad-logo/nomad-logo.plymouth 100
