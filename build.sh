@@ -10,19 +10,19 @@ mkdir -p \
 
 # Download the kernel.
 
-wget -q https://github.com/luis-lavaire/kernel/releases/download/continuous/linux -O iso/boot/linux
+wget -q https://github.com/luis-lavaire/kernel/releases/download/continuous/linux -O iso/boot/linux && echo "Downloaded kernel."
 
 
 # Build the initramfs. :)
 
-wget -q https://github.com/luis-lavaire/busybox/releases/download/continuous/busybox -O initramfs/bin/busybox
+wget -q https://github.com/luis-lavaire/busybox/releases/download/continuous/busybox -O initramfs/bin/busybox && echo "Downloaded busybox."
 chmod +x initramfs/bin/busybox
 ln -s /bin/busybox initramfs/bin/sh
-wget -q https://raw.githubusercontent.com/nglx/proton/master/init -O initramfs/init
+wget -q https://raw.githubusercontent.com/nglx/proton/master/init -O initramfs/init && echo "Installed init system."
 chmod +x initramfs/init
 (
 	cd initramfs/
-	find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs
+	find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs && echo "Created the initramfs."
 )
 
 
@@ -30,7 +30,6 @@ chmod +x initramfs/init
 
 echo "Downloading base root filesystem."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
 
 tar xf base.tar.gz -C filesystem/
 
@@ -45,6 +44,7 @@ cp /etc/resolv.conf filesystem/etc/
 
 PACKAGES="nxos-desktop ubuntu-minimal base-files sddm"
 
+echo "Installing packages to root."
 chroot filesystem/ sh -c "
 export LANG=C
 export LC_ALL=C
@@ -74,7 +74,7 @@ mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1
 
 # Create the ISO file.
 
-wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
+wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
 tar xf syslinux.tar.xz
 
 cd iso
