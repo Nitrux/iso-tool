@@ -52,7 +52,7 @@ apt-get install -qq -y busybox
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
-apt-get -y -qq install $PACKAGES
+apt-get -y -qq install $PACKAGES > /dev/null 2>&1
 apt-get -y clean
 useradd -m -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
