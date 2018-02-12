@@ -1,7 +1,5 @@
 #! /bin/sh
 
-[ -z "$GITHUB_TOKEN" ] && { echo "GITHUB_TOKEN not set."; exit 1; }
-
 # Prepare the workspace.
 
 mkdir -p \
