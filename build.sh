@@ -1,7 +1,6 @@
 #! /bin/sh
 
-uname -a
-exit 1
+set -e
 
 # Prepare the workspace.
 
@@ -73,6 +72,12 @@ mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1
 
 wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
 tar xf syslinux.tar.xz
+
+
+# Add the kernel and the initramfs to the ISO.
+
+cp filesystem/vmlinuz iso/boot/linux
+cp filesystem/initrd iso/boot/initramfs
 
 cd iso
 cp ../syslinux-6.03/bios/core/isolinux.bin \
