@@ -11,23 +11,6 @@ mkdir -p \
 	iso/boot/isolinux \
 	initramfs/bin
 
-# Download the kernel.
-
-wget -q https://github.com/luis-lavaire/kernel/releases/download/continuous/linux -O iso/boot/linux && echo "Downloaded kernel."
-
-
-# Build the initramfs. :)
-
-wget -q https://github.com/luis-lavaire/busybox/releases/download/continuous/busybox -O initramfs/bin/busybox && echo "Downloaded busybox."
-chmod +x initramfs/bin/busybox
-ln -s /bin/busybox initramfs/bin/sh
-wget -q https://raw.githubusercontent.com/nglx/proton/master/init -O initramfs/init && echo "Installed init system."
-chmod +x initramfs/init
-(
-	cd initramfs/
-	find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs && echo "Created the initramfs."
-)
-
 
 # Build the base filesystem.
 
@@ -45,7 +28,17 @@ echo deb http://archive.neon.kde.org/user xenial main >> filesystem/etc/apt/sour
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
 
-PACKAGES="nxos-desktop ubuntu-minimal base-files sddm"
+
+PACKAGES="
+initramfs-tools
+linux-image-4.13.0-1008-gcp
+linux-image-extra-4.13.0-1008-gcp
+casper
+lupin-casper
+nxos-desktop
+base-files
+sddm
+"
 
 echo "Installing packages to root."
 chroot filesystem/ sh -c "
@@ -57,7 +50,8 @@ busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null 2>&1
 apt-get -y clean
-useradd -m -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
+useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
+update-initramfs
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
 "
@@ -70,7 +64,7 @@ rm -rf filesystem/tmp/* \
 	filesystem/var/lib/dbus/machine-id
 
 
-(sleep 300; echo ' • • • ') &
+(sleep 300; echo ' • ') &
 echo "Compressing the new filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
@@ -84,7 +78,7 @@ cd iso
 cp ../syslinux-6.03/bios/core/isolinux.bin \
 	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux
 
-echo "default /boot/linux initrd=/boot/initramfs casper quiet splash" > boot/isolinux/isolinux.cfg
+echo "default /boot/linux initrd=/boot/initramfs BOOT=casper quiet splash" > boot/isolinux/isolinux.cfg
 
 # TODO: support UEFI by default.
 xorriso -as mkisofs -V "Nitrux_live" \
