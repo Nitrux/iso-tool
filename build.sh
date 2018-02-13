@@ -1,7 +1,5 @@
 #! /bin/sh
 
-# Prepare the workspace.
-
 mkdir -p \
 	filesystem \
 	iso/casper \
@@ -84,7 +82,7 @@ cp ../syslinux-6.03/bios/core/isolinux.bin \
 echo "default /boot/linux initrd=/boot/initramfs casper quiet splash" > boot/isolinux/isolinux.cfg
 
 # TODO: support UEFI by default.
-xorriso -as mkisofs -V "NXOS" \
+xorriso -as mkisofs -V "Nitrux_live" \
 	-J -l -D -r \
 	-no-emul-boot \
 	-cache-inodes \
