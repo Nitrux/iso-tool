@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get -qq install -y squashfs-tools xorriso syslinux-common
 
 script:
-  - exit 1 # sudo ./build.sh
+  - sudo ./build.sh
 
 after_success:
   - sudo chmod a+rw nitruxos.iso
