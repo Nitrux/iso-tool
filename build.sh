@@ -1,72 +1,87 @@
 #! /bin/sh
 
-# Download the base filesystem and the ISO.
+mkdir -p \
+	filesystem \
+	iso/casper \
+	iso/boot/isolinux \
+	initramfs/bin
 
-echo "Downloading base system."
+# Download the kernel.
+
+wget -q https://github.com/luis-lavaire/kernel/releases/download/continuous/linux -O iso/boot/linux && echo "Downloaded kernel."
+
+
+# Build the initramfs. :)
+
+wget -q https://github.com/luis-lavaire/busybox/releases/download/continuous/busybox -O initramfs/bin/busybox && echo "Downloaded busybox."
+chmod +x initramfs/bin/busybox
+ln -s /bin/busybox initramfs/bin/sh
+wget -q https://raw.githubusercontent.com/nglx/proton/master/init -O initramfs/init && echo "Installed init system."
+chmod +x initramfs/init
+(
+	cd initramfs/
+	find . | cpio -R root:root -H newc -o | gzip > ../iso/boot/initramfs && echo "Created the initramfs."
+)
+
+
+# Build the base filesystem.
+
+echo "Downloading base root filesystem."
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-echo "Downloading root filesystem."
-wget -q http://releases.ubuntu.com/16.04.3/ubuntu-16.04.3-desktop-amd64.iso -O os.iso
 
+tar xf base.tar.gz -C filesystem/
 
-# Extract the iso contents.
+sed -i 's/#.*$//;/^$/d' filesystem/etc/apt/sources.list
+echo deb http://repo.nxos.org nxos main >> filesystem/etc/apt/sources.list
+echo deb http://repo.nxos.org xenial main >> filesystem/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/dev/stable xenial main >> filesystem/etc/apt/sources.list
+echo deb http://archive.neon.kde.org/user xenial main >> filesystem/etc/apt/sources.list
 
-mkdir iso
-xorriso -acl on -xattr on -indev os.iso -osirrox on -extract / iso/
+rm -rf filesystem/dev/*
+cp /etc/resolv.conf filesystem/etc/
 
+PACKAGES="nxos-desktop ubuntu-minimal base-files sddm"
 
-# Fill the new filesystem.
-
-mkdir base
-tar xf base.tar.gz -C base/
-
-echo deb http://repo.nxos.org nxos main >> base/etc/apt/sources.list
-echo deb http://repo.nxos.org xenial main >> base/etc/apt/sources.list
-echo deb http://archive.neon.kde.org/dev/stable xenial main >> base/etc/apt/sources.list
-echo deb http://archive.neon.kde.org/user xenial main >> base/etc/apt/sources.list
-
-mkdir -p base/var
-cp /etc/resolv.conf base/etc/
-
-# Packages for the new filesystem.
-PACKAGES="nxos-desktop"
-
-chroot base/ sh -c "
-export HOME=/root
+echo "Installing packages to root."
+chroot filesystem/ sh -c "
 export LANG=C
 export LC_ALL=C
-apt-get install -y busybox-static
+apt-get install -qq -y busybox
 busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
 busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
-apt-get -y install $PACKAGES
+apt-get -y -qq install $PACKAGES > /dev/null 2>&1
 apt-get -y clean
-useradd -m -G sudo,cdrom,adm,dip,plugdev,lpadmin -p '' nitrux
-" 2>&1 | grep -v 'locale:'
+useradd -m -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
+find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
+rm /etc/resolv.conf
+"
+
+rm -rf filesystem/tmp/* \
+	filesystem/boot/* \
+	filesystem/vmlinuz* \
+	filesystem/initrd.img* \
+	filesystem/var/log/* \
+	filesystem/var/lib/dbus/machine-id
 
 
-# Clean things a little.
-
-chmod +w iso/casper/filesystem.manifest
-chroot base/ dpkg-query -W --showformat='${Package} ${Version}\n' | sort -nr > iso/casper/filesystem.manifest
-cp iso/casper/filesystem.manifest iso/casper/filesystem.manifest-desktop
-sed -i '/ubiquity/d' iso/casper/filesystem.manifest-desktop
-sed -i '/casper/d' iso/casper/filesystem.manifest-desktop
-# When producing images for use with ostree, delete `base/var/*`.
-rm -rf base/tmp/* base/vmlinuz* base/initrd.img* base/boot/ base/var/lib/dbus/machine-id
-
-
-# Compress the new filesystem.
-
+(sleep 300; echo ' • • • ') &
 echo "Compressing the new filesystem"
-(sleep 300; printf '\u2022\n') &
-mksquashfs base/ iso/casper/filesystem.squashfs -comp xz -noappend -no-progress
-printf $(du -sx --block-size=1 base/ | cut -f 1) > iso/casper/filesystem.size
+mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
+
+
+# Create the ISO file.
+
+wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
+tar xf syslinux.tar.xz
 
 cd iso
-sed -i 's/#define DISKNAME.*/DISKNAME Nitrux 1.0.9 "NXOS" - Release amd64/' README.diskdefines
+cp ../syslinux-6.03/bios/core/isolinux.bin \
+	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux
 
-find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
+echo "default /boot/linux initrd=/boot/initramfs casper quiet splash" > boot/isolinux/isolinux.cfg
 
+# TODO: support UEFI by default.
 xorriso -as mkisofs -V "Nitrux_live" \
 	-J -l -D -r \
 	-no-emul-boot \
@@ -74,8 +89,8 @@ xorriso -as mkisofs -V "Nitrux_live" \
 	-boot-info-table \
 	-boot-load-size 4 \
 	-eltorito-alt-boot \
-	-c isolinux/boot.cat \
+	-c boot/isolinux/boot.cat \
 	-isohybrid-gpt-basdat \
-	-b isolinux/isolinux.bin \
-	-isohybrid-mbr /usr/lib/syslinux/isohdpfx.bin \
+	-b boot/isolinux/isolinux.bin \
+	-isohybrid-mbr ../syslinux-6.03/bios/mbr/isohdpfx.bin \
 	-o ../nitruxos.iso ./
