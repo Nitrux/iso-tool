@@ -1,5 +1,8 @@
 #! /bin/sh
 
+uname -a
+exit 1
+
 # Prepare the workspace.
 
 mkdir -p \
