@@ -41,7 +41,8 @@ apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null 2>&1
 apt-get -y clean
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
-update-initramfs
+depmod -a $(uname -r)
+update-initramfs -u -k $(uname -r)
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
 "
@@ -54,6 +55,11 @@ rm -rf filesystem/tmp/* \
 	filesystem/var/lib/dbus/machine-id
 
 
+# Add the kernel and the initramfs to the ISO.
+
+cp filesystem/boot/vmlinuz-$(uname -r) iso/boot/linux
+cp filesystem/boot/initrd.img-$(uname -r) iso/boot/initramfs
+
 (sleep 300; echo ' • ') &
 echo "Compressing the new filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
@@ -64,20 +70,14 @@ mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1
 wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
 tar xf syslinux.tar.xz
 
-
-# Add the kernel and the initramfs to the ISO.
-
-cp filesystem/vmlinuz iso/boot/linux
-cp filesystem/initrd iso/boot/initramfs
-
 cd iso
 cp ../syslinux-6.03/bios/core/isolinux.bin \
-	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux
+	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux/
 
 echo "default /boot/linux initrd=/boot/initramfs BOOT=casper quiet splash" > boot/isolinux/isolinux.cfg
 
 # TODO: support UEFI by default.
-xorriso -as mkisofs -V "Nitrux_live" \
+xorriso -as mkisofs -V "NXOS" \
 	-J -l -D -r \
 	-no-emul-boot \
 	-cache-inodes \
