@@ -1,7 +1,5 @@
 #! /bin/sh
 
-set -e
-
 # Prepare the workspace.
 
 mkdir -p \
@@ -96,4 +94,3 @@ xorriso -as mkisofs -V "NXOS" \
 	-b boot/isolinux/isolinux.bin \
 	-isohybrid-mbr ../syslinux-6.03/bios/mbr/isohdpfx.bin \
 	-o ../nitruxos.iso ./
-
