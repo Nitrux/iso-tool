@@ -28,7 +28,7 @@ rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
 
 
-PACKAGES="initramfs-tools linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper nxos-desktop base-files sddm"
+PACKAGES="initramfs-tools linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
 
 echo "Installing packages to root."
 chroot filesystem/ sh -c "
@@ -40,7 +40,7 @@ busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
 apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null 2>&1
 apt-get -y clean
-useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' nitrux
+useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 depmod -a $(uname -r)
 update-initramfs -u -k $(uname -r)
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
