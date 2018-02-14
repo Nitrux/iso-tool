@@ -7,8 +7,7 @@ set -e
 mkdir -p \
 	filesystem \
 	iso/casper \
-	iso/boot/isolinux \
-	initramfs/bin
+	iso/boot/isolinux
 
 
 # Build the base filesystem.
