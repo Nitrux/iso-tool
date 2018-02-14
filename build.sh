@@ -47,7 +47,10 @@ apt-get -y clean
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
+umount /dev
+umount /proc
 "
+
 
 rm -rf filesystem/tmp/* \
 	filesystem/boot/* \
