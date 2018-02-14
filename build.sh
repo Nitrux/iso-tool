@@ -29,7 +29,11 @@ cp /etc/resolv.conf filesystem/etc/
 
 PACKAGES="initramfs-tools initramfs-tools-core linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
 
-mkdir -p filesystem/proc
+mkdir -p \
+	filesystem/dev \
+	filesystem/proc
+
+mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
 
 echo "Installing packages to root."
@@ -43,11 +47,16 @@ apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null
 apt-get -y clean
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
-depmod -a $(uname -r)
-update-initramfs -u -k $(uname -r)
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
+echo
+echo '##############'
+echo
+ls /boot/ 
+echo
+echo '##############'
 "
+exit 1
 
 rm -rf filesystem/tmp/* \
 	filesystem/boot/* \
@@ -94,3 +103,4 @@ xorriso -as mkisofs -V "NXOS" \
 	-b boot/isolinux/isolinux.bin \
 	-isohybrid-mbr ../syslinux-6.03/bios/mbr/isohdpfx.bin \
 	-o ../nitruxos.iso ./
+
