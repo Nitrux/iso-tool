@@ -28,7 +28,7 @@ rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
 
 
-PACKAGES="initramfs-tools linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
+PACKAGES="initramfs-tools initramfs-tools-core linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
 
 echo "Installing packages to root."
 chroot filesystem/ sh -c "
