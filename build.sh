@@ -49,14 +49,7 @@ apt-get -y clean
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
-echo
-echo '##############'
-echo
-ls /boot/ 
-echo
-echo '##############'
 "
-exit 1
 
 rm -rf filesystem/tmp/* \
 	filesystem/boot/* \
