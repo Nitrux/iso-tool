@@ -68,7 +68,6 @@ cp filesystem/boot/initrd.img-$(uname -r) iso/boot/initramfs
 echo "Compressing the new filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
-echo -n $(sudo du -sx --block-size=1 filesystem/ | tail -1 | awk '{print $1}') > iso/casper/filesystem.size
 
 # Create the ISO file.
 
@@ -80,7 +79,8 @@ cp ../syslinux-6.03/bios/core/isolinux.bin \
 	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux/
 
 echo "default /boot/linux initrd=/boot/initramfs BOOT=casper quiet splash" > boot/isolinux/isolinux.cfg
-find -type f -print0 | sudo xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
+echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > iso/casper/filesystem.size
+find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
 
 # TODO: support UEFI by default.
