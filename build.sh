@@ -29,6 +29,9 @@ cp /etc/resolv.conf filesystem/etc/
 
 PACKAGES="initramfs-tools initramfs-tools-core linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
 
+mkdir -p filesystem/proc
+mount -o bind /proc filesystem/proc || exit 1
+
 echo "Installing packages to root."
 chroot filesystem/ sh -c "
 export LANG=C
