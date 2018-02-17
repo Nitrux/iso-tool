@@ -25,6 +25,7 @@ rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
 
 
+echo "Installing packages to root."
 PACKAGES="initramfs-tools initramfs-tools-core linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
 
 mkdir -p \
@@ -34,13 +35,21 @@ mkdir -p \
 mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
 
-echo "Installing packages to root."
 chroot filesystem/ sh -c "
 export LANG=C
 export LC_ALL=C
-apt-get install -qq -y busybox
-busybox wget -qO - http://repo.nxos.org/public.key | apt-key add -
-busybox wget -qO - http://origin.archive.neon.kde.org/public.key | apt-key add -
+
+apt-get update
+apt-get install -y apt-transport-https busybox ca-certificates
+busybox wget https://archive.neon.kde.org/public.key -O neon.key
+echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c
+apt-key add neon.key
+rm neon.key
+busybox wget http://repo.nxos.org/public.key -O nxos.key
+echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c
+apt-key add nxos.key
+rm nxos.key
+
 apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null
 apt-get -y clean
