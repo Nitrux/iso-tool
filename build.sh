@@ -10,8 +10,17 @@ mkdir -p \
 
 # Build the base filesystem.
 
+echo "Downloading base root filesystem."
+wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+tar xf base.tar.gz -C filesystem/
+rm -rf filesystem/dev/*
+cp /etc/resolv.conf filesystem/etc/
+
+
+# Build the base filesystem.
+
 echo "Installing packages to root."
-PACKAGES="nxos-desktop casper lupin-casper"
+PACKAGES="linux-image-generic nxos-desktop casper lupin-casper"
 
 mkdir -p \
 	filesystem/dev \
@@ -20,10 +29,10 @@ mkdir -p \
 mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
 
-debootstrap --components=main \
-	--include=linux-image-generic \
-	--exclude=nano \
-	--arch amd64 xenial filesystem/ http://us.archive.ubuntu.com/ubuntu/
+#debootstrap --components=main \
+#	--include=linux-image-generic \
+#	--exclude=nano \
+#	--arch amd64 xenial filesystem/ http://us.archive.ubuntu.com/ubuntu/
 
 chroot filesystem/ sh -c "
 export LANG=C
