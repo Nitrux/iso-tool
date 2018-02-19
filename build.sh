@@ -15,11 +15,6 @@ wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-ba
 
 tar xf base.tar.gz -C filesystem/
 
-sed -i 's/#.*$//;/^$/d' filesystem/etc/apt/sources.list
-echo deb http://repo.nxos.org nxos main >> filesystem/etc/apt/sources.list
-echo deb http://repo.nxos.org xenial main >> filesystem/etc/apt/sources.list
-echo deb http://archive.neon.kde.org/dev/stable xenial main >> filesystem/etc/apt/sources.list
-echo deb http://archive.neon.kde.org/user xenial main >> filesystem/etc/apt/sources.list
 
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
@@ -42,18 +37,23 @@ export LC_ALL=C
 apt-get update
 apt-get install -y apt-transport-https wget ca-certificates
 
+sed -i 's/#.*$//;/^$/d' filesystem/etc/apt/sources.list
+
 wget https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
 	apt-key add neon.key
+	echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
+	echo deb http://archive.neon.kde.org/user xenial main >> /etc/apt/sources.list
 fi
 rm neon.key
 
 wget http://repo.nxos.org/public.key -O nxos.key
 if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
 	apt-key add nxos.key
+	echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
+	echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 fi
 rm nxos.key
-
 
 apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null
