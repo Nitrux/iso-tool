@@ -21,9 +21,9 @@ mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
 
 debootstrap --components=main \
-        --include=linux-image-generic \
-        --exclude=nano \
-        --arch amd64 xenial filesystem/ http://us.archive.ubuntu.com/ubuntu/
+	--include=linux-image-generic \
+	--exclude=nano \
+	--arch amd64 xenial filesystem/ http://us.archive.ubuntu.com/ubuntu/
 
 chroot filesystem/ sh -c "
 export LANG=C
@@ -50,6 +50,7 @@ if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.ke
 fi
 rm nxos.key
 
+set -x
 apt-get update
 apt-get -qq install $PACKAGES
 apt-get clean
@@ -60,20 +61,12 @@ umount /dev
 umount /proc
 "
 
-rm -rf filesystem/tmp/* \
-	filesystem/boot/* \
-	filesystem/vmlinuz* \
-	filesystem/initrd.img* \
-	filesystem/var/log/* \
-	filesystem/var/lib/dbus/machine-id
 
 
 # Add the kernel and the initramfs to the ISO.
 
 echo "====================="
-ls filesystem
-echo "====================="
-ls filesystem/*
+ls filesystem/boot
 echo "====================="
 exit 1
 
@@ -84,6 +77,15 @@ cp filesystem/initrd.img iso/boot/initramfs
 echo "Compressing the new filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
+
+# Clean the root directory before compressing and packing it.
+
+rm -rf filesystem/tmp/* \
+	filesystem/boot/* \
+	filesystem/vmlinuz* \
+	filesystem/initrd.img* \
+	filesystem/var/log/* \
+	filesystem/var/lib/dbus/machine-id
 
 # Create the ISO file.
 
