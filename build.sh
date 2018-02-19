@@ -10,16 +10,6 @@ mkdir -p \
 
 # Build the base filesystem.
 
-#echo "Downloading base root filesystem."
-#wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-
-#tar xf base.tar.gz -C filesystem/
-
-
-#rm -rf filesystem/dev/*
-#cp /etc/resolv.conf filesystem/etc/
-
-
 echo "Installing packages to root."
 PACKAGES="nxos-desktop casper lupin-casper"
 
@@ -30,7 +20,7 @@ mkdir -p \
 mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
 
-debootstrap --components=main,restricted,universe,multiverse,stable \
+debootstrap --components=main \
         --include=linux-image-generic \
         --exclude=nano \
         --arch amd64 xenial filesystem/ http://us.archive.ubuntu.com/ubuntu/
@@ -70,7 +60,6 @@ umount /dev
 umount /proc
 "
 
-
 rm -rf filesystem/tmp/* \
 	filesystem/boot/* \
 	filesystem/vmlinuz* \
@@ -80,6 +69,13 @@ rm -rf filesystem/tmp/* \
 
 
 # Add the kernel and the initramfs to the ISO.
+
+echo "====================="
+ls filesystem
+echo "====================="
+ls filesystem/*
+echo "====================="
+exit 1
 
 cp filesystem/vmlinuz iso/boot/linux
 cp filesystem/initrd.img iso/boot/initramfs
@@ -112,7 +108,6 @@ xorriso -as mkisofs -V "NXOS" \
 	-boot-load-size 4 \
 	-eltorito-alt-boot \
 	-c boot/isolinux/boot.cat \
-	-isohybrid-gpt-basdat \
 	-b boot/isolinux/isolinux.bin \
 	-isohybrid-mbr ../syslinux-6.03/bios/mbr/isohdpfx.bin \
 	-o ../nitruxos.iso ./
