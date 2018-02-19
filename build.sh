@@ -10,18 +10,18 @@ mkdir -p \
 
 # Build the base filesystem.
 
-echo "Downloading base root filesystem."
-wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+#echo "Downloading base root filesystem."
+#wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
 
-tar xf base.tar.gz -C filesystem/
+#tar xf base.tar.gz -C filesystem/
 
 
-rm -rf filesystem/dev/*
-cp /etc/resolv.conf filesystem/etc/
+#rm -rf filesystem/dev/*
+#cp /etc/resolv.conf filesystem/etc/
 
 
 echo "Installing packages to root."
-PACKAGES="initramfs-tools initramfs-tools-core linux-image-4.13.0-1008-gcp linux-image-extra-4.13.0-1008-gcp casper lupin-casper"
+PACKAGES="nxos-desktop casper lupin-casper"
 
 mkdir -p \
 	filesystem/dev \
@@ -29,6 +29,11 @@ mkdir -p \
 
 mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
+
+debootstrap --verbose --components=main,restricted,universe,multiverse,stable \
+        --include=linux-image-generic \
+        --exclude=nano \
+        --arch amd64 xenial . http://us.archive.ubuntu.com/ubuntu/
 
 chroot filesystem/ sh -c "
 export LANG=C
@@ -76,10 +81,8 @@ rm -rf filesystem/tmp/* \
 
 # Add the kernel and the initramfs to the ISO.
 
-ls filesystem/boot/
-exit 1
-cp filesystem/boot/vmlinuz* iso/boot/linux
-cp filesystem/boot/initrd.img-$(uname -r) iso/boot/initramfs
+cp filesystem/vmlinuz iso/boot/linux
+cp filesystem/initrd.img iso/boot/initramfs
 
 (sleep 300; echo ' • ') &
 echo "Compressing the new filesystem"
