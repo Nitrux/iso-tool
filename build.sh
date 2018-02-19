@@ -5,7 +5,7 @@
 mkdir -p \
 	filesystem \
 	iso/casper \
-	iso/boot/isolinux
+	iso/boot/grub
 
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
 tar xf base.tar.gz -C filesystem/
@@ -79,16 +79,8 @@ rm -rf filesystem/tmp/* \
 echo "Compressing the root filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
-wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O syslinux.tar.xz
-tar xf syslinux.tar.xz
-
-cd iso
-cp /usr/lib/ISOLINUX/isolinux.bin \
-	/usr/lib/syslinux/modules/bios/ldlinux.c32 boot/isolinux/
-
-echo "default /boot/linux initrd=/boot/initramfs BOOT=casper quiet splash" > boot/isolinux/isolinux.cfg
+echo "linux /boot/vmlinuz initrd=/boot/initramfs boot=casper quiet splash" > boot/grub/grub.cfg
 echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
-find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
 # TODO: support for UEFI boot.
 xorriso -as mkisofs -V "NXOS" \
@@ -100,7 +92,6 @@ xorriso -as mkisofs -V "NXOS" \
 	-eltorito-alt-boot \
 	-c boot/isolinux/boot.cat \
 	-b boot/isolinux/isolinux.bin \
-	-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
 	-o ../nitruxos.iso ./
 
 tree

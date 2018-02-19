@@ -1,11 +1,11 @@
-dist: bionic
+dist: trusty
 
 sudo: required
 
 before_install:
   - uname -a
   - sudo apt-get -qq update
-  - sudo apt-get -qq install -y squashfs-tools xorriso syslinux-common isolinux debootstrap tree
+  - sudo apt-get -qq install -y squashfs-tools xorriso grub2 tree
 
 script:
   - sudo ./build.sh
