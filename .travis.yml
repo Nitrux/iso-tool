@@ -3,6 +3,7 @@ dist: bionic
 sudo: required
 
 before_install:
+  - uname -a
   - sudo apt-get -qq update
   - sudo apt-get -qq install -y squashfs-tools xorriso syslinux-common isolinux debootstrap tree
 
