@@ -30,10 +30,10 @@ mkdir -p \
 mount -o bind /dev filesystem/dev || exit 1
 mount -o bind /proc filesystem/proc || exit 1
 
-debootstrap --verbose --components=main,restricted,universe,multiverse,stable \
+debootstrap --components=main,restricted,universe,multiverse,stable \
         --include=linux-image-generic \
         --exclude=nano \
-        --arch amd64 xenial . http://us.archive.ubuntu.com/ubuntu/
+        --arch amd64 xenial filesystem/ http://us.archive.ubuntu.com/ubuntu/
 
 chroot filesystem/ sh -c "
 export LANG=C
