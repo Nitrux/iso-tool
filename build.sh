@@ -26,12 +26,12 @@ PACKAGES="initramfs-tools linux-image-generic nxos-desktop casper lupin-casper"
 chroot filesystem/ sh -c "
 	export LANG=C
 	export LC_ALL=C
-	
+
 	apt-get update
 	apt-get install -y apt-transport-https wget ca-certificates
-	
+
 	sed -i 's/#.*$//;/^$/d' /etc/apt/sources.list
-	
+
 	wget -q https://archive.neon.kde.org/public.key -O neon.key
 	if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
 		apt-key add neon.key
@@ -39,7 +39,7 @@ chroot filesystem/ sh -c "
 		echo deb http://archive.neon.kde.org/user xenial main >> /etc/apt/sources.list
 	fi
 	rm neon.key
-	
+
 	wget -q http://repo.nxos.org/public.key -O nxos.key
 	if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
 		apt-key add nxos.key
@@ -47,16 +47,17 @@ chroot filesystem/ sh -c "
 		echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 	fi
 	rm nxos.key
-	
+
 	apt-get update
 	apt-get -qq install $PACKAGES > /dev/null
 	apt-get clean
 	useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 	rm /etc/resolv.conf
-	umount /dev
-	umount /proc
 	"
+
+umount filesystem/proc
+umount filesystem/dev
 
 cp filesystem/vmlinuz iso/boot/linux
 cp filesystem/initrd.img iso/boot/initramfs
@@ -82,8 +83,8 @@ wget -q http://kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O 
 tar xf syslinux.tar.xz
 
 cd iso
-cp ../syslinux-6.03/bios/core/isolinux.bin \
-	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux/
+cp /usr/lib/ISOLINUX/isolinux.bin \
+	/usr/lib/syslinux/modules/bios/ldlinux.c32 boot/isolinux/
 
 echo "default /boot/linux initrd=/boot/initramfs BOOT=casper quiet splash" > boot/isolinux/isolinux.cfg
 echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
@@ -99,5 +100,7 @@ xorriso -as mkisofs -V "NXOS" \
 	-eltorito-alt-boot \
 	-c boot/isolinux/boot.cat \
 	-b boot/isolinux/isolinux.bin \
-	-isohybrid-mbr ../syslinux-6.03/bios/mbr/isohdpfx.bin \
+	-isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin \
 	-o ../nitruxos.iso ./
+
+tree
