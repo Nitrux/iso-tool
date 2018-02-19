@@ -50,9 +50,9 @@ if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.ke
 fi
 rm nxos.key
 
-apt-get -y update
-apt-get -y -qq install $PACKAGES > /dev/null
-apt-get -y clean
+apt-get update
+apt-get -qq install $PACKAGES
+apt-get clean
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
