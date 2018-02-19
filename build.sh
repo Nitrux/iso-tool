@@ -40,15 +40,20 @@ export LANG=C
 export LC_ALL=C
 
 apt-get update
-apt-get install -y apt-transport-https busybox ca-certificates
-busybox wget https://archive.neon.kde.org/public.key -O neon.key
-echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c
-apt-key add neon.key
+apt-get install -y apt-transport-https wget ca-certificates
+
+wget https://archive.neon.kde.org/public.key -O neon.key
+if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
+	apt-key add neon.key
+fi
 rm neon.key
-busybox wget http://repo.nxos.org/public.key -O nxos.key
-echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c
-apt-key add nxos.key
+
+wget http://repo.nxos.org/public.key -O nxos.key
+if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
+	apt-key add nxos.key
+fi
 rm nxos.key
+
 
 apt-get -y update
 apt-get -y -qq install $PACKAGES > /dev/null
