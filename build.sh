@@ -37,9 +37,9 @@ export LC_ALL=C
 apt-get update
 apt-get install -y apt-transport-https wget ca-certificates
 
-sed -i 's/#.*$//;/^$/d' filesystem/etc/apt/sources.list
+sed -i 's/#.*$//;/^$/d' /etc/apt/sources.list
 
-wget https://archive.neon.kde.org/public.key -O neon.key
+wget -q https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
 	apt-key add neon.key
 	echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
@@ -47,7 +47,7 @@ if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.ke
 fi
 rm neon.key
 
-wget http://repo.nxos.org/public.key -O nxos.key
+wget -q http://repo.nxos.org/public.key -O nxos.key
 if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
 	apt-key add nxos.key
 	echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
@@ -76,7 +76,9 @@ rm -rf filesystem/tmp/* \
 
 # Add the kernel and the initramfs to the ISO.
 
-cp filesystem/boot/vmlinuz-$(uname -r) iso/boot/linux
+ls filesystem/boot/
+exit 1
+cp filesystem/boot/vmlinuz* iso/boot/linux
 cp filesystem/boot/initrd.img-$(uname -r) iso/boot/initramfs
 
 (sleep 300; echo ' • ') &
@@ -94,7 +96,7 @@ cp ../syslinux-6.03/bios/core/isolinux.bin \
 	../syslinux-6.03/bios/com32/elflink/ldlinux/ldlinux.c32 boot/isolinux/
 
 echo "default /boot/linux initrd=/boot/initramfs BOOT=casper quiet splash" > boot/isolinux/isolinux.cfg
-echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > iso/casper/filesystem.size
+echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 find -type f -print0 | xargs -0 md5sum | grep -v isolinux/boot.cat > md5sum.txt
 
 
