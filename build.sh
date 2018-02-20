@@ -79,6 +79,7 @@ rm -rf filesystem/tmp/* \
 echo "Compressing the root filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
+cd iso/
 echo "linux /boot/vmlinuz initrd=/boot/initramfs boot=casper quiet splash" > boot/grub/grub.cfg
 echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
