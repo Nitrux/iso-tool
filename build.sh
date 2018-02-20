@@ -84,15 +84,16 @@ echo "linux /boot/vmlinuz initrd=/boot/initramfs boot=casper quiet splash" > boo
 echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
 # TODO: support for UEFI boot.
-xorriso -as mkisofs -V "NXOS" \
-	-J -l -D -r \
-	-no-emul-boot \
-	-cache-inodes \
-	-boot-info-table \
-	-boot-load-size 4 \
-	-eltorito-alt-boot \
-	-c boot/isolinux/boot.cat \
-	-b boot/isolinux/isolinux.bin \
-	-o ../nitruxos.iso ./
+#xorriso -as mkisofs -V "NXOS" \
+#	-J -l -D -r \
+#	-no-emul-boot \
+#	-cache-inodes \
+#	-boot-info-table \
+#	-boot-load-size 4 \
+#	-eltorito-alt-boot \
+#	-c boot/isolinux/boot.cat \
+#	-b boot/isolinux/isolinux.bin \
+#	-o ../nitruxos.iso ./
 
+grub-mkrescue -o ../nitruxos.iso ./
 tree
