@@ -86,12 +86,12 @@ set default="0"
 set timeout=10
 
 menuentry "Try Nitrux." {
-	linux /boot/vmlinuz boot=casper quiet splash
+	linux /boot/linux boot=casper quiet splash
 	initrd /boot/initramfs
 }
 
 menuentry "Install Nitrux." {
-	linux /boot/vmlinuz boot=casper quiet splash install_nitrux
+	linux /boot/linux boot=casper quiet splash install_nitrux
 	initrd /boot/initramfs
 }
 ' > boot/grub/grub.cfg
