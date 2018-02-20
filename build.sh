@@ -48,9 +48,8 @@ chroot filesystem/ sh -c "
 	fi
 	rm nxos.key
 
-	exec > /dev/null
 	apt-get update
-	apt-get -qq install $PACKAGES
+	apt-get -qq install $PACKAGES > /dev/null
 	apt-get clean
 	useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
