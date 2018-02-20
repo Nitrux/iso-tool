@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/sh -e
 
 # Prepare the root filesystem.
 
@@ -48,8 +48,9 @@ chroot filesystem/ sh -c "
 	fi
 	rm nxos.key
 
+	exec > /dev/null
 	apt-get update
-	apt-get -qq install $PACKAGES > /dev/null
+	apt-get -qq install $PACKAGES
 	apt-get clean
 	useradd -m -U -G sudo,cdrom,adm,dip,plugdev me
 	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
@@ -80,20 +81,23 @@ echo "Compressing the root filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
 cd iso/
-echo "linux /boot/vmlinuz initrd=/boot/initramfs boot=casper quiet splash" > boot/grub/grub.cfg
-echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
-# TODO: support for UEFI boot.
-#xorriso -as mkisofs -V "NXOS" \
-#	-J -l -D -r \
-#	-no-emul-boot \
-#	-cache-inodes \
-#	-boot-info-table \
-#	-boot-load-size 4 \
-#	-eltorito-alt-boot \
-#	-c boot/isolinux/boot.cat \
-#	-b boot/isolinux/isolinux.bin \
-#	-o ../nitruxos.iso ./
+echo '
+set default="0"
+set timeout=10
+
+menuentry "Try Nitrux." {
+	linux /boot/vmlinuz boot=casper quiet splash
+	initrd /boot/initramfs
+}
+
+menuentry "Install Nitrux." {
+	linux /boot/vmlinuz boot=casper quiet splash install_nitrux
+	initrd /boot/initramfs
+}
+' > boot/grub/grub.cfg
+
+echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
 grub-mkrescue -o ../nitruxos.iso ./
 tree
