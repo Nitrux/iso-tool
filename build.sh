@@ -22,7 +22,7 @@ mount -o bind /proc filesystem/proc || exit 1
 
 # Install the nxos-desktop to `filesystem/`
 
-PACKAGES="initramfs-tools linux-image-generic nxos-desktop casper lupin-casper"
+PACKAGES="nxos-desktop base-files casper lupin-casper linux-image-generic"
 chroot filesystem/ sh -c "
 	export LANG=C
 	export LC_ALL=C
@@ -52,15 +52,19 @@ chroot filesystem/ sh -c "
 	apt-get -qq install $PACKAGES > /dev/null
 	apt-get clean
 	useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
+	echo 'me:abcde' | chpasswd
+	hostnamectl set-hostname nitrux
 	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
-	rm /etc/resolv.conf
+	echo > /etc/resolv.conf
+	mkdir /home/me/Applications/
+	wget https://github.com/anupam-git/vlc-appimage/releases/download/latest/VLC_media_player-x86_64.AppImage -O /home/me/Applications/vlc.appimage
 	"
 
 umount filesystem/proc
 umount filesystem/dev
 
-cp filesystem/vmlinuz iso/boot/linux
-cp filesystem/initrd.img iso/boot/initramfs
+cp filesystem/vmlinuz iso/vmlinuz
+cp filesystem/initrd.img iso/initrd
 
 
 # Clean the filesystem.
@@ -77,26 +81,36 @@ rm -rf filesystem/tmp/* \
 
 (sleep 300; echo ' • ') &
 echo "Compressing the root filesystem"
-mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress -b 1M
+mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress
 
 cd iso/
 
 echo '
-set default="0"
-set timeout=10
+set default=0
+set timeout=5
+
+GRUB_THEME=nomad
 
 menuentry "Try Nitrux." {
-	linux /boot/linux boot=casper quiet splash
-	initrd /boot/initramfs
-}
-
-menuentry "Install Nitrux." {
-	linux /boot/linux boot=casper quiet splash install_nitrux
-	initrd /boot/initramfs
+	linux /vmlinuz boot=casper quiet splash
+	initrd /initrd
 }
 ' > boot/grub/grub.cfg
 
 echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
-grub-mkrescue -o ../nitruxos.iso ./
-tree
+
+# Add the GRUB theme.
+
+wget -q http://repo.nxos.org/public.key -O nxos.key
+if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
+	apt-key add nxos.key
+	echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
+	echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
+fi
+rm nxos.key
+
+apt-get update
+apt-get install -y grub2-theme-nomad
+
+grub-mkrescue --themes=grub2-theme-nomad -o ../nxos.iso ./

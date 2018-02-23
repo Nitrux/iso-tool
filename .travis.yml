@@ -3,16 +3,15 @@ dist: trusty
 sudo: required
 
 before_install:
-  - uname -a
   - sudo apt-get -qq update
-  - sudo apt-get -qq install -y squashfs-tools xorriso grub2 grub-common tree
+  - sudo apt-get -qq install -y squashfs-tools xorriso grub-common
 
 script:
   - sudo ./build.sh
 
 after_success:
   - sudo chmod a+rw nitruxos.iso
-  - sh ./upload.sh
+  - sh ./transfer.sh
 
 branches:
   except:
