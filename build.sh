@@ -5,7 +5,7 @@
 mkdir -p \
 	filesystem \
 	iso/casper \
-	iso/boot/grub
+	iso/boot/isolinux
 
 wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
 tar xf base.tar.gz -C filesystem/
@@ -22,7 +22,7 @@ mount -o bind /proc filesystem/proc || exit 1
 
 # Install the nxos-desktop to `filesystem/`
 
-PACKAGES="nxos-desktop base-files casper lupin-casper linux-image-generic"
+PACKAGES="nxos-desktop sddm base-files casper lupin-casper linux-image-generic"
 chroot filesystem/ sh -c "
 	export LANG=C
 	export LC_ALL=C
@@ -52,19 +52,18 @@ chroot filesystem/ sh -c "
 	apt-get -qq install $PACKAGES > /dev/null
 	apt-get clean
 	useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
-	echo 'me:abcde' | chpasswd
+	echo 'me:nitrux' | chpasswd
 	hostnamectl set-hostname nitrux
+	systemctl enable sddm
 	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
-	echo > /etc/resolv.conf
-	mkdir /home/me/Applications/
-	wget https://github.com/anupam-git/vlc-appimage/releases/download/latest/VLC_media_player-x86_64.AppImage -O /home/me/Applications/vlc.appimage
-	"
+	rm /etc/resolv.conf
+"
 
 umount filesystem/proc
 umount filesystem/dev
 
-cp filesystem/vmlinuz iso/vmlinuz
-cp filesystem/initrd.img iso/initrd
+cp filesystem/vmlinuz iso/boot/linux
+cp filesystem/initrd.img iso/boot/initramfs
 
 
 # Clean the filesystem.
@@ -83,34 +82,52 @@ rm -rf filesystem/tmp/* \
 echo "Compressing the root filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress
 
+
+wget https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O - | tar xJf -
+
+SL=syslinux-6.03
+cp $SL/bios/core/isolinux.bin \
+	$SL/bios/mbr/isohdpfx.bin \
+	$SL/bios/com32/menu/menu.c32 \
+	$SL/bios/com32/lib/libcom32.c32 \
+	$SL/bios/com32/menu/vesamenu.c32 \
+	$SL/bios/com32/libutil/libutil.c32 \
+	$SL/bios/com32/elflink/ldlinux/ldlinux.c32 \
+	iso/boot/isolinux/
+
+rm -rf $SL*
+
 cd iso/
 
+wget -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/splash.png -O boot/isolinux/splash.png
+wget -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/theme.txt -O boot/isolinux/theme.txt
+
 echo '
-set default=0
-set timeout=5
+default vesamenu.c32
+include theme.txt
 
-GRUB_THEME=nomad
+menu title Installer boot menu.
+label Try Nitrux
+	kernel /boot/linux
+	append initrd=/boot/initramfs boot=casper elevator=noop quiet splash
 
-menuentry "Try Nitrux." {
-	linux /vmlinuz boot=casper quiet splash
-	initrd /initrd
-}
-' > boot/grub/grub.cfg
+label Try Nitrux (safe graphics mode)
+	kernel /boot/linux
+	append initrd=/boot/initramfs boot=casper nomodeset elevator=noop quiet splash
+
+menu tabmsg Press ENTER to boot or TAB to edit a menu entry
+' > boot/isolinux/syslinux.cfg
 
 echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
+# TODO: create UEFI images.
 
-# Add the GRUB theme.
-
-wget -q http://repo.nxos.org/public.key -O nxos.key
-if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
-	apt-key add nxos.key
-	echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
-	echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
-fi
-rm nxos.key
-
-apt-get update
-apt-get install -y grub2-theme-nomad
-
-grub-mkrescue --themes=grub2-theme-nomad -o ../nxos.iso ./
+xorriso -as mkisofs \
+	-o ../nxos.iso \
+	-no-emul-boot \
+	-boot-info-table \
+	-boot-load-size 4 \
+	-c boot/isolinux/boot.cat \
+	-b boot/isolinux/isolinux.bin \
+	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
+	./
