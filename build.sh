@@ -49,7 +49,7 @@ chroot filesystem/ sh -c "
 	rm nxos.key
 
 	apt-get update
-	apt-get -qq install $PACKAGES > /dev/null
+	apt-get -qq install $PACKAGES > /dev/null || exit 1
 	apt-get clean
 	useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
 	echo 'me:nitrux' | chpasswd
@@ -99,8 +99,8 @@ rm -rf $SL*
 
 cd iso/
 
-wget -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/splash.png -O boot/isolinux/splash.png
-wget -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/theme.txt -O boot/isolinux/theme.txt
+wget -q -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/splash.png -O boot/isolinux/splash.png
+wget -q -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/theme.txt -O boot/isolinux/theme.txt
 
 echo '
 default vesamenu.c32
