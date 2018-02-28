@@ -1,15 +1,12 @@
 #! /bin/sh
 
-echo " ==> Finding latest release..."
-wget -q https://github.com/luis-lavaire/mkiso/releases/download/continuous/md5.txt
-wget -q https://github.com/luis-lavaire/mkiso/releases/download/continuous/urls
+mkdir latest
+cd latest
 
-echo " ==> Downloading ISO..."
-zsync -i ${1:-"nxos.iso"} $(cat urls | grep -E '\.zsync$')
+echo " ==> Fetching latest release..."
+for url in $(wget -qO - https://github.com/luis-lavaire/mkiso/releases/download/continuous/urls); do
+	wget -q -nc --show-progress $url
+done
 
-echo -e " ==> Verifying md5sum... \n"
-cat md5.txt
-md5sum nxos.iso
-rm -rf URL md5.txt
-
-echo -e " ==> Done. The file was saved as 'nxos.iso'"
+echo -e " ==> Verifying the file... \n"
+sha256sum -c checksum

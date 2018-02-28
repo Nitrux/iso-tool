@@ -1,12 +1,9 @@
 #! /bin/sh
 
-# Now I will use `zsync` in order to reduce bandwidth usage.
+mkdir out
 
-mkdir release
-
-md5sum nxos.iso > release/md5.txt
-zsyncmake -e -f nxos.iso -o nxos.zsync
-curl -i -F filedata=@nxos.zsync -F filedata=@nxos.iso https://transfer.sh | sed 's/https/\nhttps/g' > release/urls
+sha256sum nxos.iso > checksum
+curl -i -F filedata=@checksum -F filedata=@nxos.iso https://transfer.sh | sed 's/https/\nhttps/g' | grep https > out/urls
 
 wget -qO - https://github.com/probonopd/uploadtool/raw/master/upload.sh
-sh -c ./upload.sh release/*
+sh -c ./upload.sh out/*
