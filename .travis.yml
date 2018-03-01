@@ -1,0 +1,20 @@
+dist: trusty
+
+sudo: required
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install -y squashfs-tools xorriso
+
+script:
+  - sudo ./build.sh
+
+after_success:
+  - sh ./transfer.sh
+
+branches:
+  except:
+    - /^(?i:continuous)$/
+
+notifications:
+  email: false
