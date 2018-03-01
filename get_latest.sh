@@ -8,5 +8,5 @@ for url in $(wget -qO - https://github.com/luis-lavaire/mkiso/releases/download/
 	wget -q -nc --show-progress $url
 done
 
-echo -e " ==> Verifying the file... \n"
+echo " ==> Verifying the file..."
 sha256sum -c checksum
