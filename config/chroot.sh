@@ -9,7 +9,7 @@ echo '
 deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
 deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
 deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
-' > /etc/apt/sources.list
+' >> /etc/apt/sources.list
 
 apt-get update
 apt-get install -y apt-transport-https wget ca-certificates
@@ -23,7 +23,7 @@ fi
 rm neon.key
 
 wget -q http://repo.nxos.org/public.key -O nxos.key
-if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
+if echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c; then
 	apt-key add nxos.key
 	echo deb http://repo.nxos.org/stable nxos main >> /etc/apt/sources.list
 fi
