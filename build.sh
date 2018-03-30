@@ -20,8 +20,8 @@ mkdir -p \
 	filesystem/dev \
 	filesystem/proc
 
-mount -t devtmpfs filesystem/dev || exit 1
-mount -t proc filesystem/proc || exit 1
+mount -t devtmpfs none filesystem/dev || exit 1
+mount -t proc none filesystem/proc || exit 1
 
 
 # Install the nxos-desktop to `filesystem/`
