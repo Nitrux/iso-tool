@@ -10,7 +10,7 @@ mkdir -p \
 wget -q http://archive.ubuntu.com/ubuntu/pool/main/d/debootstrap/debootstrap_1.0.93+nmu2_all.deb
 dpkg -i *.deb
 
-debootstrap --arch=amd64 bionic filesystem/
+debootstrap bionic filesystem/ http://archive.ubuntu.com/ubuntu /usr/share/debootstrap/scripts/bionic
 
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
@@ -19,9 +19,9 @@ mkdir -p \
 	filesystem/dev \
 	filesystem/proc
 
+mount -t proc none filesystem/proc || exit 1
 mount -t devtmpfs none filesystem/dev || exit 1
 mount -t devpts none filesystem/dev/pts || exit 1
-mount -t proc none filesystem/proc || exit 1
 
 
 # Install the nxos-desktop to `filesystem/`
