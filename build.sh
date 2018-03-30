@@ -7,8 +7,8 @@ mkdir -p \
 	iso/casper \
 	iso/boot/isolinux
 
-#wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz -O base.tar.gz
+wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+#wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz -O base.tar.gz
 tar xf base.tar.gz -C filesystem/
 
 rm -rf filesystem/dev/*
@@ -54,7 +54,8 @@ echo "Compressing the root filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress
 
 
-wget https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O - | tar xJf -
+wget https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
+tar xf syslinux-6.03.tar.xz
 
 SL=syslinux-6.03
 cp $SL/bios/core/isolinux.bin \
@@ -65,8 +66,6 @@ cp $SL/bios/core/isolinux.bin \
 	$SL/bios/com32/libutil/libutil.c32 \
 	$SL/bios/com32/elflink/ldlinux/ldlinux.c32 \
 	iso/boot/isolinux/
-
-rm -rf $SL*
 
 cd iso/
 
