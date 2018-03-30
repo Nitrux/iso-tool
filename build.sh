@@ -27,7 +27,7 @@ mount -o bind /proc filesystem/proc || exit 1
 # Install the nxos-desktop to `filesystem/`
 
 cp config/chroot.sh filesystem/
-chroot filesystem/ /chroot.sh
+chroot filesystem/ /bin/sh /chroot.sh
 
 rm -r filesystem/chroot.sh
 
