@@ -94,7 +94,7 @@ echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/files
 # TODO: create UEFI images.
 
 xorriso -as mkisofs \
-	-o ~/nxos.iso \
+	-o ../nxos.iso \
 	-no-emul-boot \
 	-boot-info-table \
 	-boot-load-size 4 \
