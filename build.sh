@@ -11,7 +11,7 @@ mkdir -p \
 #wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz -O base.tar.gz
 #tar xf base.tar.gz -C filesystem/
 
-debootstrap --arch=amd64 bionic filesystem/
+debootstrap --arch=amd64 --merged-usr bionic filesystem/
 
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
@@ -26,14 +26,13 @@ mount -o bind /proc filesystem/proc || exit 1
 
 # Install the nxos-desktop to `filesystem/`
 
-cp config/* filesystem/
-chroot filesystem/ sh -c /chroot.sh
-rm -r \
-	filesystem/config
-	filesystem/chroot.sh
+cp config/chroot.sh filesystem/
+chroot filesystem/ /chroot.sh
 
-umount filesystem/proc
+rm -r filesystem/chroot.sh
+
 umount filesystem/dev
+umount filesystem/proc
 
 cp filesystem/vmlinuz iso/boot/linux
 cp filesystem/initrd.img iso/boot/initramfs

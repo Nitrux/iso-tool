@@ -3,7 +3,13 @@
 export LANG=C
 export LC_ALL=C
 
-PACKAGES=$(grep -v '^#' packages | tr '\n' ' ')
+PACKAGES='
+nxos-desktop
+lupin-casper
+casper
+'
+
+PACKAGES=$(echo $PACKAGES | tr '\n' ' ')
 
 apt-get update
 apt-get install -y apt-transport-https wget ca-certificates
@@ -11,8 +17,9 @@ apt-get install -y apt-transport-https wget ca-certificates
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
 	apt-key add neon.key
-	echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
 	echo deb http://archive.neon.kde.org/user xenial main >> /etc/apt/sources.list
+	echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
+	echo deb http://archive.neon.kde.org/dev/unstable xenial main >> /etc/apt/sources.list
 fi
 rm neon.key
 
