@@ -7,9 +7,8 @@ mkdir -p \
 	iso/casper \
 	iso/boot/isolinux
 
-#wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-#wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz -O base.tar.gz
-#tar xf base.tar.gz -C filesystem/
+wget -q http://archive.ubuntu.com/ubuntu/pool/main/d/debootstrap/debootstrap_1.0.93+nmu2_all.deb
+dpkg -i *.deb
 
 debootstrap --arch=amd64 bionic filesystem/
 
@@ -21,6 +20,7 @@ mkdir -p \
 	filesystem/proc
 
 mount -t devtmpfs none filesystem/dev || exit 1
+mount -t devpts none filesystem/dev/pts || exit 1
 mount -t proc none filesystem/proc || exit 1
 
 
