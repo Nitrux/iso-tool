@@ -11,7 +11,7 @@ mkdir -p \
 #wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz -O base.tar.gz
 #tar xf base.tar.gz -C filesystem/
 
-debootstrap --arch=amd64 --merged-usr bionic filesystem/
+debootstrap --arch=amd64 bionic filesystem/
 
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
