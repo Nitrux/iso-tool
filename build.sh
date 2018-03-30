@@ -20,8 +20,8 @@ mkdir -p \
 	filesystem/dev \
 	filesystem/proc
 
-mount -o bind /dev filesystem/dev || exit 1
-mount -o bind /proc filesystem/proc || exit 1
+mount -t devtmpfs filesystem/dev || exit 1
+mount -t proc filesystem/proc || exit 1
 
 
 # Install the nxos-desktop to `filesystem/`
@@ -55,7 +55,7 @@ echo "Compressing the root filesystem"
 mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress
 
 
-wget https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
+wget -q -nc https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz
 tar xf syslinux-6.03.tar.xz
 
 SL=syslinux-6.03
