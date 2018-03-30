@@ -29,6 +29,11 @@ mount -t proc none filesystem/proc || exit 1
 cp config/chroot.sh filesystem/
 chroot filesystem/ /bin/sh /chroot.sh
 
+ls filesystem/
+ls filesystem/bin
+
+exit 1
+
 rm -r filesystem/chroot.sh
 
 umount filesystem/dev
