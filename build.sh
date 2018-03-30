@@ -7,9 +7,11 @@ mkdir -p \
 	iso/casper \
 	iso/boot/isolinux
 
-wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
+#wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
 #wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz -O base.tar.gz
-tar xf base.tar.gz -C filesystem/
+#tar xf base.tar.gz -C filesystem/
+
+debootstrap --arch=amd64 bionic filesystem/
 
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
