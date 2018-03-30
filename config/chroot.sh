@@ -5,12 +5,6 @@ export LC_ALL=C
 
 PACKAGES=$(grep -v '^#' packages | tr '\n' ' ')
 
-echo '
-deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
-' >> /etc/apt/sources.list
-
 apt-get update
 apt-get install -y apt-transport-https wget ca-certificates
 
