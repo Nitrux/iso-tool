@@ -2,7 +2,7 @@ sudo: required
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq install -y squashfs-tools xorriso debootstrap
+  - sudo apt-get -qq -y install squashfs-tools xorriso
 
 script:
   - sudo ./build.sh
