@@ -76,36 +76,70 @@ cd iso/
 wget -q https://raw.githubusercontent.com/nomad-desktop/isolinux-theme-nomad/master/splash.png -O boot/isolinux/splash.png
 wget -q https://raw.githubusercontent.com/nomad-desktop/isolinux-theme-nomad/master/theme.txt -O boot/isolinux/theme.txt
 
-echo '
-default vesamenu.c32
-include theme.txt
-
-menu title Installer boot menu.
-label Try Nitrux
-	kernel /boot/kernel
-	append initrd=/boot/initramfs boot=casper elevator=noop quiet splash
-
-label Try Nitrux (safe graphics mode)
-	kernel /boot/kernel
-	append initrd=/boot/initramfs boot=casper nomodeset elevator=noop quiet splash
-
-menu tabmsg Press ENTER to boot or TAB to edit a menu entry
-' > boot/isolinux/syslinux.cfg
-
 echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
 
-# TODO: create UEFI images.
 # Create the ISO image.
 
+GRUB_MODULES="
+boot
+linux
+linux16
+normal
+configfile
+part_gpt
+part_msdos
+fat
+iso9660
+ext2
+btrfs
+udf
+test
+keystatus
+loopback
+regexp
+probe
+search
+searc_fs_uuid
+searc_fs_label
+efi_gop
+efi_uga
+all_video
+gfxterm
+font
+png
+jpeg
+echo
+read
+help
+ls
+cat
+halt
+reboot
+"
+
+GRUB_MODULES=$(echo $GRUB_MODULES | tr '\n' ' ')
+
+mkdir -p efi/boot/
+grub-mkimage -o efi/boot/bootx64.efi -O x86_64-efi -p /boot/grub $GRUB_MODULES
+
+git clone https://github.com/nomad-desktop/nomad-grub-theme --depth=1
+
+cp nomad-grub-theme/nomad/* boot/grub/
+rm -r nomad-grub-theme
+
 xorriso -as mkisofs \
-	-o ../nxos.iso \
-	-no-emul-boot \
-	-boot-info-table \
-	-boot-load-size 4 \
-	-c boot/isolinux/boot.cat \
-	-b boot/isolinux/isolinux.bin \
+	-r -V "NITRUX_OS" -cache-inodes -J -l
 	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-	./
+	-c isolinux/boot.cat
+	-b isolinux/isolinux.bin
+	-no-emul-boot
+	-boot-load-size 4
+	-boot-info-table
+	-eltorito-alt-boot
+	-e boot/efi/bootx64.efi
+	-no-emul-boot
+	-isohybrid-gpt-basdat
+	-o ../nxos.iso
 
 echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=../nxos.iso bs=1 seek=33651 count=512 conv=notrunc
