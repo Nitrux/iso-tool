@@ -7,6 +7,9 @@ PACKAGES='
 nxos-desktop
 lupin-casper
 casper
+linux-image-generic
+calamares
+calamares-settings-nxos
 '
 
 PACKAGES=$(echo $PACKAGES | tr '\n' ' ')
