@@ -129,17 +129,17 @@ cp nomad-grub-theme/nomad/* boot/grub/
 rm -r nomad-grub-theme
 
 xorriso -as mkisofs \
-	-r -V "NITRUX_OS" -cache-inodes -J -l
+	-r -V "NITRUX_OS" -cache-inodes -J -l \
 	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-	-c isolinux/boot.cat
-	-b isolinux/isolinux.bin
-	-no-emul-boot
-	-boot-load-size 4
-	-boot-info-table
-	-eltorito-alt-boot
-	-e boot/efi/bootx64.efi
-	-no-emul-boot
-	-isohybrid-gpt-basdat
-	-o ../nxos.iso
+	-c isolinux/boot.cat \
+	-b isolinux/isolinux.bin \
+	-no-emul-boot \
+	-boot-load-size 4 \
+	-boot-info-table \
+	-eltorito-alt-boot \
+	-e boot/efi/bootx64.efi \
+	-no-emul-boot \
+	-isohybrid-gpt-basdat \
+	-o ../nxos.iso ./
 
 echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=../nxos.iso bs=1 seek=33651 count=512 conv=notrunc
