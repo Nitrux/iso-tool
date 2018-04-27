@@ -18,11 +18,11 @@ FS_DIR=filesystem/
 rm -rf $FS_DIR/dev/*
 cp /etc/resolv.conf filesystem/etc/
 
-mount -t proc -o nodev none $FS_DIR/proc || exit 1
-mount -t devtmpfs -o nodev none $FS_DIR/dev || exit 1
+mount -t proc none $FS_DIR/proc || exit 1
+mount -t devtmpfs none $FS_DIR/dev || exit 1
 
 mkdir -p /dev/pts
-mount -t devpts -o nodev none $FS_DIR/dev/pts || exit 1
+mount -t devpts none $FS_DIR/dev/pts || exit 1
 
 cp ./config/config.sh $FS_DIR/
 chroot $FS_DIR/ sh -c "/config.sh"
