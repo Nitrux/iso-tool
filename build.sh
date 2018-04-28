@@ -5,6 +5,7 @@
 mkdir -p \
 	filesystem \
 	iso/casper \
+	iso/boot/grub \
 	iso/boot/isolinux
 
 wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz
