@@ -5,11 +5,12 @@
 mkdir -p \
 	filesystem \
 	iso/casper \
+	iso/efi/boot \
 	iso/boot/grub \
 	iso/boot/isolinux
 
 wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz
-tar xf *.tar.gz -C filesystem/
+tar xf *.tar.gz -C filesystem
 
 
 # Run a command in a chroot safely.
@@ -107,25 +108,19 @@ reboot
 
 GRUB_MODULES=$(echo $GRUB_MODULES | tr '\n' ' ')
 
-mkdir -p efi/boot
-
-set -x
-grub-mkimage -o efi/boot/bootx64.efi -O x86_64-efi -p /boot/grub $GRUB_MODULES
-set +x
+grub-mkimage -o iso/efi/boot/bootx64.efi -O x86_64-efi -p /boot/grub $GRUB_MODULES
 
 git clone https://github.com/nomad-desktop/isolinux-theme-nomad --depth=1
 git clone https://github.com/nomad-desktop/nomad-grub-theme --depth=1
 
-cp nomad-grub-theme/nomad/* boot/grub
-cp isolinux-theme-nomad/* boot/isolinux
+cp nomad-grub-theme/nomad/* iso/boot/grub
+cp isolinux-theme-nomad/* iso/boot/isolinux
 
-rm -r nomad-grub-theme
-rm -r isolinux-theme-nomad
 
 # Create the ISO image.
 
 mv boot iso/boot
-cd iso/
+cd iso
 
 echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
@@ -138,7 +133,7 @@ xorriso -as mkisofs \
 	-boot-load-size 4 \
 	-boot-info-table \
 	-eltorito-alt-boot \
-	-e ../efi/boot/bootx64.efi \
+	-e efi/boot/bootx64.efi \
 	-no-emul-boot \
 	-isohybrid-gpt-basdat \
 	-o ../nxos.iso .
