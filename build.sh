@@ -134,7 +134,7 @@ xorriso -as mkisofs \
 	-boot-load-size 4 \
 	-boot-info-table \
 	-eltorito-alt-boot \
-	-e boot/efi/bootx64.efi \
+	-e efi/boot/bootx64.efi \
 	-no-emul-boot \
 	-isohybrid-gpt-basdat \
 	-o ../nxos.iso .
