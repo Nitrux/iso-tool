@@ -108,7 +108,10 @@ reboot
 GRUB_MODULES=$(echo $GRUB_MODULES | tr '\n' ' ')
 
 mkdir -p efi/boot
+
+set -x
 grub-mkimage -o efi/boot/bootx64.efi -O x86_64-efi -p /boot/grub $GRUB_MODULES
+set +x
 
 git clone https://github.com/nomad-desktop/isolinux-theme-nomad --depth=1
 git clone https://github.com/nomad-desktop/nomad-grub-theme --depth=1
@@ -121,6 +124,7 @@ rm -r isolinux-theme-nomad
 
 # Create the ISO image.
 
+mv boot iso/boot
 cd iso/
 
 echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
@@ -134,7 +138,7 @@ xorriso -as mkisofs \
 	-boot-load-size 4 \
 	-boot-info-table \
 	-eltorito-alt-boot \
-	-e efi/boot/bootx64.efi \
+	-e ../efi/boot/bootx64.efi \
 	-no-emul-boot \
 	-isohybrid-gpt-basdat \
 	-o ../nxos.iso .
