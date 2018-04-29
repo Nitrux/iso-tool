@@ -37,6 +37,5 @@ apt-get clean
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
 echo 'me:nitrux' | chpasswd
 echo host > /etc/hostname
-systemctl enable sddm
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf

@@ -52,7 +52,6 @@ rm -rf $FS_DIR/tmp/* \
 (sleep 300; echo +) &
 echo "Compressing the root filesystem"
 mksquashfs $FS_DIR/ iso/casper/filesystem.squashfs -comp xz -no-progress
-echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
 
 # Prepare the ISO filesystem tree.
@@ -90,7 +89,6 @@ regexp
 probe
 search
 search_fs_uuid
-search_fs_label
 efi_gop
 efi_uga
 all_video
@@ -124,6 +122,8 @@ rm -r isolinux-theme-nomad
 # Create the ISO image.
 
 cd iso/
+
+echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
 xorriso -as mkisofs \
 	-r -V "NITRUX_OS" -J -l \
