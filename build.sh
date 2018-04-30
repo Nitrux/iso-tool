@@ -2,12 +2,7 @@
 
 # Prepare the root filesystem.
 
-mkdir -p \
-	filesystem \
-	iso/casper \
-	iso/efi/boot \
-	iso/boot/grub \
-	iso/boot/isolinux
+mkdir -p filesystem
 
 wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz
 tar xf *.tar.gz -C filesystem
@@ -34,7 +29,7 @@ umount -f $FS_DIR/dev/pts
 umount -f $FS_DIR/dev
 umount -f $FS_DIR/proc
 
-cp $FS_DIR/vmlinuz iso/boot/kernel
+cp $FS_DIR/vmlinuz iso/boot/linux
 cp $FS_DIR/initrd.img iso/boot/initramfs
 
 
@@ -52,7 +47,8 @@ rm -rf $FS_DIR/tmp/* \
 
 (sleep 300; echo +) &
 echo "Compressing the root filesystem"
-mksquashfs $FS_DIR/ iso/casper/filesystem.squashfs -comp xz -no-progress
+mkdir -p iso/casper
+mksquashfs $FS_DIR iso/casper/filesystem.squashfs -comp xz -no-progress
 
 
 # Prepare the ISO filesystem tree.
@@ -108,6 +104,7 @@ reboot
 
 GRUB_MODULES=$(echo $GRUB_MODULES | tr '\n' ' ')
 
+mkdir -p iso/efi/boot
 grub-mkimage -o iso/efi/boot/bootx64.efi -O x86_64-efi -p /boot/grub $GRUB_MODULES
 
 git clone https://github.com/nomad-desktop/isolinux-theme-nomad --depth=1
@@ -119,7 +116,6 @@ cp isolinux-theme-nomad/* iso/boot/isolinux
 
 # Create the ISO image.
 
-mv boot iso/boot
 cd iso
 
 echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
