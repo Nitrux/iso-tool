@@ -7,7 +7,7 @@ mkdir -p \
 	iso/casper \
 	iso/boot/isolinux
 
-wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04/release/ubuntu-base-16.04.4-base-amd64.tar.gz -O base.tar.gz
+wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04-base-amd64.tar.gz -O base.tar.gz
 tar xf base.tar.gz -C filesystem/
 rm -rf filesystem/dev/*
 cp /etc/resolv.conf filesystem/etc/
@@ -35,8 +35,8 @@ chroot filesystem/ sh -c "
 	wget -q https://archive.neon.kde.org/public.key -O neon.key
 	if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
 		apt-key add neon.key
-		echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
-		echo deb http://archive.neon.kde.org/user xenial main >> /etc/apt/sources.list
+		echo deb http://archive.neon.kde.org/dev/stable bionic main >> /etc/apt/sources.list
+		echo deb http://archive.neon.kde.org/dev xenial main >> /etc/apt/sources.list
 	fi
 	rm neon.key
 
@@ -44,7 +44,7 @@ chroot filesystem/ sh -c "
 	if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
 		apt-key add nxos.key
 		echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
-		echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
+		# echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
 	fi
 	rm nxos.key
 
