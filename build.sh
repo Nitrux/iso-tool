@@ -4,7 +4,7 @@
 
 mkdir -p filesystem
 
-wget -q http://cdimage.ubuntu.com/ubuntu-base/daily/current/bionic-base-amd64.tar.gz
+wget -q http://cdimage.ubuntu.com/ubuntu-base/bionic/daily/current/bionic-base-amd64.tar.gz
 tar xf *.tar.gz -C filesystem
 
 
@@ -29,7 +29,7 @@ umount -f $FS_DIR/dev/pts
 umount -f $FS_DIR/dev
 umount -f $FS_DIR/proc
 
-cp $FS_DIR/vmlinuz iso/boot/linux
+cp $FS_DIR/vmlinuz iso/boot/kernel
 cp $FS_DIR/initrd.img iso/boot/initramfs
 
 
@@ -121,17 +121,23 @@ cd iso
 echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
 xorriso -as mkisofs \
-	-r -V "NITRUX_OS" -J -l \
-	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-	-c boot/isolinux/boot.cat \
-	-b boot/isolinux/isolinux.bin \
+	-iso-level 3 \
+	-full-iso9660-filenames \
+	-volid "${iso_label}" \
+	-appid "${iso_application}" \
+	-publisher "${iso_publisher}" \
+	-preparer "prepared by mkarchiso" \
+	-eltorito-boot boot/isolinux/isolinux.bin \
+	-eltorito-catalog boot/isolinux/boot.cat \
 	-no-emul-boot \
 	-boot-load-size 4 \
 	-boot-info-table \
+	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
 	-eltorito-alt-boot \
 	-e efi/boot/bootx64.efi \
 	-no-emul-boot \
 	-isohybrid-gpt-basdat \
-	-o ../nxos.iso .
+	-output "${out_dir}/${img_name}" \
+	"${work_dir}/iso/"
 
 echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=../nxos.iso bs=1 seek=33651 count=512 conv=notrunc
