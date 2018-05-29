@@ -66,46 +66,13 @@ cp $SL/bios/core/isolinux.bin \
 	$SL/bios/com32/elflink/ldlinux/ldlinux.c32 \
 	iso/boot/isolinux
 
-GRUB_MODULES="
-boot
-linux
-linux16
-normal
-configfile
-part_gpt
-part_msdos
-fat
-iso9660
-ext2
-btrfs
-udf
-test
-keystatus
-loopback
-regexp
-probe
-search
-search_fs_uuid
-efi_gop
-efi_uga
-all_video
-gfxterm
-font
-png
-jpeg
-echo
-read
-help
-ls
-cat
-halt
-reboot
-"
-
-GRUB_MODULES=$(echo $GRUB_MODULES | tr '\n' ' ')
-
 mkdir -p iso/efi/boot
-grub-mkimage -o iso/efi/boot/bootx64.efi -O x86_64-efi -p /boot/grub $GRUB_MODULES
+grub-mkimage -C xz -O x86_64-efi -o iso/efi/boot/bootx64.efi -p /boot/grub \
+	boot linux search normal configfile \
+	part_gpt btrfs fat iso9660 loopback \
+	test keystatus gfxmenu regexp probe \
+	efi_gop efi_uga all_video gfxterm font \
+	echo read help ls cat png jpeg halt reboot
 
 git clone https://github.com/nomad-desktop/isolinux-theme-nomad --depth=1
 git clone https://github.com/nomad-desktop/nomad-grub-theme --depth=1
@@ -123,13 +90,12 @@ echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/fil
 xorriso -as mkisofs \
 	-iso-level 3 \
 	-full-iso9660-filenames \
-	-volid "${iso_label}" \
-	-appid "${iso_application}" \
-	-publisher "${iso_publisher}" \
-	-preparer "prepared by mkarchiso" \
+	-volid "Nitrux_testing" \
+	-appid "-" \
+	-publisher "Nitrux Latinoamericana." \
+	-preparer "mkiso" \
 	-eltorito-boot boot/isolinux/isolinux.bin \
 	-eltorito-catalog boot/isolinux/boot.cat \
-	-no-emul-boot \
 	-boot-load-size 4 \
 	-boot-info-table \
 	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
@@ -137,7 +103,9 @@ xorriso -as mkisofs \
 	-e efi/boot/bootx64.efi \
 	-no-emul-boot \
 	-isohybrid-gpt-basdat \
-	-output "${out_dir}/${img_name}" \
-	"${work_dir}/iso/"
+	-output ../nitrux_testing.iso ./
 
-echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=../nxos.iso bs=1 seek=33651 count=512 conv=notrunc
+cd ..
+
+zsyncmake nitrux_testing.iso
+echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=nitrux_testing.iso bs=1 seek=33651 count=512 conv=notrunc
