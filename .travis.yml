@@ -2,7 +2,7 @@ sudo: required
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get -qq -y install squashfs-tools xorriso grub-common grub-pc grub-efi-amd64 grub-efi-amd64-bin
+  - sudo apt-get -qq -y install squashfs-tools xorriso
 
 script:
   - sudo ./build.sh
