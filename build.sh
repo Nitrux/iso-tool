@@ -70,6 +70,8 @@ xorriso -as mkisofs -r -J -l \
 	-isohybrid-gpt-basdat \
 	-o ../$IMAGE_NAME.iso .
 
+cd ..
+
 zsyncmake $IMAGE_NAME.iso
 echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=$IMAGE_NAME.iso bs=1 seek=33651 count=512 conv=notrunc
 
