@@ -75,5 +75,5 @@ cd ..
 zsyncmake $IMAGE_NAME.iso
 echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=$IMAGE_NAME.iso bs=1 seek=33651 count=512 conv=notrunc
 
-curl -i -F filedata=@checksum -F filedata=@$IMAGE_NAME.iso https://transfer.sh | sed 's/http/\nhttp/g' | grep http > urls
 sha256sum $IMAGE_NAME.iso > checksum
+curl -i -F filedata=@checksum -F filedata=@$IMAGE_NAME.iso https://transfer.sh | sed 's/http/\nhttp/g' | grep http > urls
