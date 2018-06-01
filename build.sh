@@ -48,7 +48,7 @@ rm -rf $FS_DIR/tmp/* \
 echo "Compressing the root filesystem"
 mkdir -p $ISO_DIR/casper
 mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
-kill $!
+kill $! || true
 
 
 # Create the ISO image.
