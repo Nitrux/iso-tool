@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/sh -e
 
 FS_DIR=filesystem
 ISO_DIR=iso_image
@@ -54,7 +54,7 @@ kill $!
 # Create the ISO image.
 
 cd $ISO_DIR
-echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > $ISO_DIR/casper/filesystem.size
+echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
 xorriso -as mkisofs -r -J -l \
 	-V '#NITRUX' \
@@ -72,3 +72,6 @@ xorriso -as mkisofs -r -J -l \
 
 zsyncmake $IMAGE_NAME.iso
 echo "zsync|http://server.domain/path/your.iso.zsync" | dd of=$IMAGE_NAME.iso bs=1 seek=33651 count=512 conv=notrunc
+
+curl -i -F filedata=@checksum -F filedata=@$IMAGE_NAME.iso https://transfer.sh | sed 's/http/\nhttp/g' | grep http > urls
+sha256sum $IMAGE_NAME.iso > checksum
