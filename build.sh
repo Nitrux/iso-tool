@@ -1,133 +1,111 @@
-#! /bin/sh
+#! /bin/sh 
 
-# Prepare the root filesystem.
+set -e
 
-mkdir -p \
-	filesystem \
-	iso/casper \
-	iso/boot/isolinux
-
-wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-tar xf base.tar.gz -C filesystem/
-rm -rf filesystem/dev/*
-cp /etc/resolv.conf filesystem/etc/
-
-mkdir -p \
-	filesystem/dev \
-	filesystem/proc
-
-mount -o bind /dev filesystem/dev || exit 1
-mount -o bind /proc filesystem/proc || exit 1
+FS_DIR=root
+ISO_DIR=image
+IMAGE_NAME=nitrux
 
 
-# Install the nxos-desktop to `filesystem/`
+# Function for running commands in a chroot.
 
-PACKAGES="nxos-desktop sddm base-files casper lupin-casper linux-image-generic"
-chroot filesystem/ sh -c "
-	export LANG=C
-	export LC_ALL=C
+run_chroot() {
 
-	apt-get update
-	apt-get install -y apt-transport-https wget ca-certificates
+	clean () {
+		for d in $FS_DIR/*; do
 
-	sed -i 's/#.*$//;/^$/d' /etc/apt/sources.list
+			mountpoint -q $d && \
+				umount -Rf $d
 
-	wget -q https://archive.neon.kde.org/public.key -O neon.key
-	if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
-		apt-key add neon.key
-		echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
-		echo deb http://archive.neon.kde.org/user xenial main >> /etc/apt/sources.list
+		done
+	}
+
+	trap clean EXIT HUP INT TERM
+
+	mount -t proc . $FS_DIR/proc
+	mount -t sysfs . $FS_DIR/sys
+	mount -t devtmpfs . $FS_DIR/dev
+	mkdir -p $FS_DIR/dev/pts
+	mount -t devpts . $FS_DIR/dev/pts
+
+	if [ -f $1 && -x $1 ]; then
+		cp $1 $FS_DIR/
+		chroot $FS_DIR/ /$1
+		rm -r $FS_DIR/config.sh
+	else
+		chroot $FS_DIR/ $1
 	fi
-	rm neon.key
 
-	wget -q http://repo.nxos.org/public.key -O nxos.key
-	if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
-		apt-key add nxos.key
-		echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
-		echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
-	fi
-	rm nxos.key
+	clean
 
-	apt-get update
-	apt-get -qq install $PACKAGES > /dev/null || exit 1
-	apt-get clean
-	useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
-	echo 'me:nitrux' | chpasswd
-	hostnamectl set-hostname nitrux
-	systemctl enable sddm
-	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
-	rm /etc/resolv.conf
-"
+}
 
-umount filesystem/proc
-umount filesystem/dev
 
-cp filesystem/vmlinuz iso/boot/linux
-cp filesystem/initrd.img iso/boot/initramfs
+# Prepare the directory were the filesystem will be created.
+
+mkdir -p $FS_DIR
+
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04-base-amd64.tar.gz
+tar xf base.tar.gz -C $FS_DIR
+
+rm -rf $FS_DIR/dev/*
+cp /etc/resolv.conf $FS_DIR/etc
+
+
+# Create the filesystem.
+
+run_chroot ./bootstrap.sh
+
+
+# Copy the initramfs and the kernel to $ISO_DIR.
+
+cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
+cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
 # Clean the filesystem.
 
-rm -rf filesystem/tmp/* \
-	filesystem/boot/* \
-	filesystem/vmlinuz* \
-	filesystem/initrd.img* \
-	filesystem/var/log/* \
-	filesystem/var/lib/dbus/machine-id
+rm -rf $FS_DIR/tmp/* \
+	$FS_DIR/boot \
+	$FS_DIR/vmlinuz* \
+	$FS_DIR/initrd.img* \
+	$FS_DIR/var/log/* \
+	$FS_DIR/var/lib/dbus/machine-id
 
 
-# Compress the root filesystem and create the ISO.
+# Compress the root filesystem.
 
-(sleep 300; echo ' • ') &
+(sleep 300; echo +) &
+
 echo "Compressing the root filesystem"
-mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress
+mkdir -p $ISO_DIR/casper
+mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
+kill $! || true
 
 
-wget https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O - | tar xJf -
+# Create the ISO image.
 
-SL=syslinux-6.03
-cp $SL/bios/core/isolinux.bin \
-	$SL/bios/mbr/isohdpfx.bin \
-	$SL/bios/com32/menu/menu.c32 \
-	$SL/bios/com32/lib/libcom32.c32 \
-	$SL/bios/com32/menu/vesamenu.c32 \
-	$SL/bios/com32/libutil/libutil.c32 \
-	$SL/bios/com32/elflink/ldlinux/ldlinux.c32 \
-	iso/boot/isolinux/
+(
+	cd $ISO_DIR
+	echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
-rm -rf $SL*
+	xorriso -as mkisofs -r -J -l \
+		-V 'NITRUX_LIVE' \
+		-isohybrid-mbr boot/isolinux/isohdpfx.bin \
+		-c boot/isolinux/boot.cat \
+		-b boot/isolinux/isolinux.bin \
+		-no-emul-boot \
+		-boot-load-size 4 \
+		-boot-info-table \
+		-eltorito-alt-boot \
+		-e boot/grub/efi.img \
+		-no-emul-boot \
+		-isohybrid-gpt-basdat \
+		-o ../$IMAGE_NAME.iso .
+)
 
-cd iso/
+zsyncmake $IMAGE_NAME.iso
+echo "http://server.domain/path/your.iso.zsync" | dd of=$IMAGE_NAME.iso bs=1 seek=33651 count=512 conv=notrunc
 
-wget -q -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/splash.png -O boot/isolinux/splash.png
-wget -q -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/theme.txt -O boot/isolinux/theme.txt
-
-echo '
-default vesamenu.c32
-include theme.txt
-
-menu title Installer boot menu.
-label Try Nitrux
-	kernel /boot/linux
-	append initrd=/boot/initramfs boot=casper elevator=noop quiet splash
-
-label Try Nitrux (safe graphics mode)
-	kernel /boot/linux
-	append initrd=/boot/initramfs boot=casper nomodeset elevator=noop quiet splash
-
-menu tabmsg Press ENTER to boot or TAB to edit a menu entry
-' > boot/isolinux/syslinux.cfg
-
-echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
-
-# TODO: create UEFI images.
-
-xorriso -as mkisofs \
-	-o ../nxos.iso \
-	-no-emul-boot \
-	-boot-info-table \
-	-boot-load-size 4 \
-	-c boot/isolinux/boot.cat \
-	-b boot/isolinux/isolinux.bin \
-	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-	./
+sha256sum $IMAGE_NAME.iso > checksum
+curl -i -F filedata=@checksum -F filedata=@$IMAGE_NAME.iso https://transfer.sh | sed 's/http/\nhttp/g' | grep http > urls
