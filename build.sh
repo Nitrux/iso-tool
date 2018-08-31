@@ -4,7 +4,9 @@ set -e
 
 FS_DIR=root
 ISO_DIR=image
-IMAGE_NAME=nitrux
+OUTPUT_DIR=out
+
+IMAGE_NAME=nitrux.iso
 
 
 # Function for running commands in a chroot.
@@ -15,7 +17,7 @@ run_chroot() {
 		for d in $FS_DIR/*; do
 
 			mountpoint -q $d && \
-				umount -Rf $d
+				umount -f $d
 
 		done
 	}
@@ -54,7 +56,7 @@ cp /etc/resolv.conf $FS_DIR/etc
 
 # Create the filesystem.
 
-run_chroot ./bootstrap.sh
+run_chroot bootstrap.sh
 
 
 # Copy the initramfs and the kernel to $ISO_DIR.
@@ -83,7 +85,12 @@ mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
 kill $! || true
 
 
-# Create the ISO image.
+# Create the output directory.
+
+mkdir $OUTPUT_DIR
+
+
+# Generate the ISO image.
 
 (
 	cd $ISO_DIR
@@ -101,11 +108,35 @@ kill $! || true
 		-e boot/grub/efi.img \
 		-no-emul-boot \
 		-isohybrid-gpt-basdat \
-		-o ../$IMAGE_NAME.iso .
+		-o ../$OUTPUT_DIR/$IMAGE_NAME .
 )
 
-zsyncmake $IMAGE_NAME.iso
-echo "http://server.domain/path/your.iso.zsync" | dd of=$IMAGE_NAME.iso bs=1 seek=33651 count=512 conv=notrunc
 
-sha256sum $IMAGE_NAME.iso > checksum
-curl -i -F filedata=@checksum -F filedata=@$IMAGE_NAME.iso https://transfer.sh | sed 's/http/\nhttp/g' | grep http > urls
+# Embed the update information in the image.
+
+UPDATE_URL=http://88.198.66.58:8000/$IMAGE_NAME.zsync
+
+echo $UPDATE_URL | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
+
+
+# Generate the zsync file.
+
+zsyncmake $OUTPUT_DIR/$IMAGE_NAME -o $OUTPUT_DIR/$IMAGE_NAME.zsync
+
+
+# Calculate the checksum.
+
+sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
+
+
+# Deploy the image.
+
+if [ $TRAVIS_BRANCH = master ]; then
+	export SSHPASS=$DEPLOY_PASS
+
+	for f in $OUTPUT_DIR/$IMAGE_NAME*; do
+	    sshpass -e scp -vvv -o stricthostkeychecking=no $IMAGE_NAME $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+	done
+else
+	curl -T {$OUTPUT_DIR/$IMAGE_NAME,$OUTPUT_DIR/$IMAGE_NAME.zsync,$OUTPUT_DIR/$IMAGE_NAME.sha256sum} https://transfer.sh/
+fi

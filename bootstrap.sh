@@ -1,8 +1,5 @@
 #! /bin/sh
 
-# This script is ran in a chroot. It is intended to  create a usable
-# filesystem in the directory it runs in.
-
 export LANG=C
 export LC_ALL=C
 
@@ -37,9 +34,10 @@ rm nxos.key
 apt-get update
 apt-get -qq install $PACKAGES > /dev/null || exit 1
 apt-get clean
-useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
 
+useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
 echo 'user:foo' | chpasswd
+
 echo localhost > /etc/hostname
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
