@@ -30,10 +30,10 @@ run_chroot() {
 	mkdir -p $FS_DIR/dev/pts
 	mount -t devpts . $FS_DIR/dev/pts
 
-	if [ -f $1 && -x $1 ]; then
+	if [ -f $1 -a -x $1 ]; then
 		cp $1 $FS_DIR/
 		chroot $FS_DIR/ /$1
-		rm -r $FS_DIR/config.sh
+		rm -r $FS_DIR/$1
 	else
 		chroot $FS_DIR/ $1
 	fi
