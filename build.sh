@@ -24,11 +24,13 @@ run_chroot() {
 
 	trap clean EXIT HUP INT TERM
 
-	mount -t proc . $FS_DIR/proc
-	mount -t sysfs . $FS_DIR/sys
-	mount -t devtmpfs . $FS_DIR/dev
-	mkdir -p $FS_DIR/dev/pts
-	mount -t devpts . $FS_DIR/dev/pts
+	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
+	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
+	mount -t devtmpfs -o mode=0755,nosuid . $FS_DIR/dev
+	mount -t devpts -o mode=0620,gid=5,nosuid,noexec . $FS_DIR/dev/pts
+	mount -t tmpfs -o mode=1777,nosuid,nodev . $FS_DIR/dev/shm
+	mount -t tmpfs -o nosuid,nodev,mode=0755 . $FS_DIR/run
+	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
 
 	if [ -f $1 -a -x $1 ]; then
 		cp $1 $FS_DIR/
