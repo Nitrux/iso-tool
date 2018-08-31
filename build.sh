@@ -27,8 +27,8 @@ run_chroot() {
 	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
 	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
 	mount -t devtmpfs -o mode=0755,nosuid . $FS_DIR/dev
-	mount -t devpts -o mode=0620,gid=5,nosuid,noexec . $FS_DIR/dev/pts
-	mount -t tmpfs -o mode=1777,nosuid,nodev . $FS_DIR/dev/shm
+#	mount -t devpts -o mode=0620,gid=5,nosuid,noexec . $FS_DIR/dev/pts
+#	mount -t tmpfs -o mode=1777,nosuid,nodev . $FS_DIR/dev/shm
 	mount -t tmpfs -o nosuid,nodev,mode=0755 . $FS_DIR/run
 	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
 

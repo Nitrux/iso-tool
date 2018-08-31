@@ -35,7 +35,7 @@ apt-get update
 apt-get -qq install $PACKAGES > /dev/null || exit 1
 apt-get clean
 
-useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
+useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
 echo 'user:foo' | chpasswd
 
 echo localhost > /etc/hostname
