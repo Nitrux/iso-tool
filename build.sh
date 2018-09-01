@@ -36,7 +36,7 @@ run_chroot() {
 			umount -f $d
 	done
 
-	rm /etc/resolv.conf
+	rm $FS_DIR/etc/resolv.conf
 
 }
 

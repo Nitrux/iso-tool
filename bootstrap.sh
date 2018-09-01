@@ -41,7 +41,3 @@ useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
 echo 'user:foo' | chpasswd
 
 echo localhost > /etc/hostname
-find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
-rm /etc/resolv.conf
-
-echo "#########################"
