@@ -65,16 +65,15 @@ INITRAMFS_TMP=$(mktemp -d)
 
 (
 	cd $INITRAMFS_TMP
-	zcat $FS_DIR/initrd.img | cpio -idmv
+	lzma -dc -S .lz $FS_DIR/initrd.img | cpio -id
 )
 
 cat persistence >> $INITRAMFS_TMP/scripts/casper-bottom/05mountpoints_lupin
 
 (
 	cd $INITRAMFS_TMP
-	find . | cpio -oc | gzip -9 > $ISO_DIR/boot/initramfs
+	find . | cpio --quiet --dereference -o -H newc | lzma -7 > $ISO_DIR/boot/initramfs
 )
-
 
 
 # Clean the filesystem.
