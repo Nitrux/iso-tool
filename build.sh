@@ -2,9 +2,9 @@
 
 set -e
 
-FS_DIR=root
-ISO_DIR=image
-OUTPUT_DIR=out
+FS_DIR=$PWD/root
+ISO_DIR=$PWD/image
+OUTPUT_DIR=$PWD/out
 
 IMAGE_NAME=nitrux.iso
 
@@ -54,10 +54,27 @@ tar xf base.tar.gz -C $FS_DIR
 run_chroot bootstrap.sh || true
 
 
-# Copy the initramfs and the kernel to $ISO_DIR.
+# Copy the kernel to $ISO_DIR.
 
 cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
-cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
+
+
+# Customize the initramfs file and put it in $ISO_DIR.
+
+INITRAMFS_TMP=$(mktemp -d)
+
+(
+	cd $INITRAMFS_TMP
+	zcat $FS_DIR/initrd.img | cpio -idmv
+)
+
+cat persistence >> $INITRAMFS_TMP/scripts/casper-bottom/05mountpoints_lupin
+
+(
+	cd $INITRAMFS_TMP
+	find . | cpio -oc | gzip -9 > $ISO_DIR/boot/initramfs
+)
+
 
 
 # Clean the filesystem.
