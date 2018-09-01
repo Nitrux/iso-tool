@@ -32,7 +32,7 @@ fi
 rm nxos.key
 
 apt-get update
-apt-get -qq install $PACKAGES > /dev/null || exit 1
+apt-get -qq install $PACKAGES > /dev/null #|| exit 1
 apt-get clean
 
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
