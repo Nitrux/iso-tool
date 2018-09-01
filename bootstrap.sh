@@ -10,12 +10,14 @@ casper
 linux-image-generic
 calamares
 calamares-settings-nxos
+plymouth-label
+plymouth-themes
 '
 
 PACKAGES=$(echo $PACKAGES | tr '\n' ' ')
 
-apt-get update
-apt-get install -y apt-transport-https wget ca-certificates gnupg2
+apt-get -qq update
+apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
@@ -32,7 +34,7 @@ fi
 rm nxos.key
 
 apt-get update
-apt-get -qq install $PACKAGES > /dev/null #|| exit 1
+#apt-get -qq install $PACKAGES > /dev/null #|| exit 1
 apt-get clean
 
 useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
@@ -41,3 +43,5 @@ echo 'user:foo' | chpasswd
 echo localhost > /etc/hostname
 find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
 rm /etc/resolv.conf
+
+echo "#########################"

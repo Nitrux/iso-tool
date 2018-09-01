@@ -13,24 +13,15 @@ IMAGE_NAME=nitrux.iso
 
 run_chroot() {
 
-	clean () {
-		for d in $FS_DIR/*; do
-
-			mountpoint -q $d && \
-				umount -f $d
-
-		done
-	}
-
-	trap clean EXIT HUP INT TERM
+	rm -rf $FS_DIR/dev/*
 
 	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
 	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
 	mount -t devtmpfs -o mode=0755,nosuid . $FS_DIR/dev
-#	mount -t devpts -o mode=0620,gid=5,nosuid,noexec . $FS_DIR/dev/pts
-#	mount -t tmpfs -o mode=1777,nosuid,nodev . $FS_DIR/dev/shm
 	mount -t tmpfs -o nosuid,nodev,mode=0755 . $FS_DIR/run
 	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
+
+	cp /etc/resolv.conf $FS_DIR/etc
 
 	if [ -f $1 -a -x $1 ]; then
 		cp $1 $FS_DIR/
@@ -40,7 +31,12 @@ run_chroot() {
 		chroot $FS_DIR/ $1
 	fi
 
-	clean
+	for d in $FS_DIR/*; do
+		mountpoint -q $d && \
+			umount -f $d
+	done
+
+	rm /etc/resolv.conf
 
 }
 
@@ -52,13 +48,10 @@ mkdir -p $FS_DIR
 wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04-base-amd64.tar.gz
 tar xf base.tar.gz -C $FS_DIR
 
-rm -rf $FS_DIR/dev/*
-cp /etc/resolv.conf $FS_DIR/etc
-
 
 # Create the filesystem.
 
-run_chroot bootstrap.sh
+run_chroot bootstrap.sh || true
 
 
 # Copy the initramfs and the kernel to $ISO_DIR.
