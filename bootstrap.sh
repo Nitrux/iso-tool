@@ -4,12 +4,12 @@ export LANG=C
 export LC_ALL=C
 
 PACKAGES='
-nxos-desktop
-lupin-casper
 casper
-linux-image-generic
+lupin-casper
 calamares
 calamares-settings-nxos
+nxos-desktop
+linux-image-generic
 plymouth-label
 plymouth-themes
 '
@@ -41,3 +41,18 @@ useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
 echo 'user:foo' | chpasswd
 
 echo localhost > /etc/hostname
+
+
+# Install AppImages.
+
+APPS='
+https://github.com/Nitrux/znx/releases/download/continuous/znx
+'
+
+mkdir /Applications
+
+for x in $(echo $APPS | tr '\n' ' '); do
+	wget -qP /Applications $x
+done
+
+chmod +x /Applications/*

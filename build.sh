@@ -65,7 +65,7 @@ INITRAMFS_TMP=$(mktemp -d)
 
 (
 	cd $INITRAMFS_TMP
-	lzma -dc -S .lz $FS_DIR/initrd.img | cpio -id
+	lzma -dc -S .img $FS_DIR/initrd.img | cpio -id
 )
 
 cat persistence >> $INITRAMFS_TMP/scripts/casper-bottom/05mountpoints_lupin

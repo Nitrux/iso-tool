@@ -1,15 +1,13 @@
-ETC_TMP=$(mktemp -d /root/tmp/)
 mount -o bind /root/isodevice/data/etc /root/isodevice/data/etc
 mount -t overlay \
 	-o lowerdir=/root/etc \
 	-o upperdir=/root/isodevice/data/etc \
-	-o workdir=/root/tmp/$ETC_TMP \
+	-o workdir=/root/tmp/$(mktemp -d /root/tmp/XXXXXXXX) \
 	/root/etc
 
-HOME_TMP=$(mktemp -d)
 mount -o bind /root/isodevice/data/etc /root/isodevice/data/etc
 mount -t overlay \
 	-o lowerdir=/root/etc \
 	-o upperdir=/root/isodevice/data/etc \
-	-o workdir=/root/tmp/$HOME_TMP \
+	-o workdir=/root/tmp/$(mktemp -d /root/tmp/XXXXXXXX) \
 	/root/home
