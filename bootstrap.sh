@@ -47,6 +47,7 @@ echo localhost > /etc/hostname
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
+https://github.com/Nitrux/nx-software-center/releases/download/continuous/Software_Center-x86_64.AppImage
 '
 
 mkdir /Applications
