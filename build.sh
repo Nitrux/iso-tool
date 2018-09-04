@@ -61,22 +61,15 @@ cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
 
 # Customize the initramfs file and put it in $ISO_DIR.
 
-INITRAMFS_TMP=$(mktemp -d)
-
-(
-	cd $INITRAMFS_TMP
-	lzma -dc -S .img $FS_DIR/initrd.img | cpio -id
-)
-
-cat persistence >> $INITRAMFS_TMP/scripts/casper-bottom/05mountpoints_lupin
-
-(
-	cd $INITRAMFS_TMP
-	find . | cpio --quiet --dereference -o -H newc | lzma -7 > $ISO_DIR/boot/initramfs
-)
+cat persistence >> $FS_DIR/usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+run_chroot update-initramfs
+cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
 # Clean the filesystem.
+
+run_chroot apt purge casper lupin-casper plymouth-label plymouth-themes
+run_chroot apt autoremove
 
 rm -rf $FS_DIR/tmp/* \
 	$FS_DIR/boot \
