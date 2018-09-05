@@ -11,9 +11,10 @@ IMAGE_NAME=nitrux.iso
 
 # Function for running commands in a chroot.
 
-run_chroot() {
+run_chroot () {
 
-	rm -rf $FS_DIR/dev/*
+	[ mountpoint -q $FS_DIR/dev/ ] || \
+		rm -rf $FS_DIR/dev/*
 
 	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
 	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
@@ -25,10 +26,10 @@ run_chroot() {
 
 	if [ -f $1 -a -x $1 ]; then
 		cp $1 $FS_DIR/
-		chroot $FS_DIR/ /$1
+		chroot $FS_DIR/ /$@
 		rm -r $FS_DIR/$1
 	else
-		chroot $FS_DIR/ $1
+		chroot $FS_DIR/ $@
 	fi
 
 	for d in $FS_DIR/*; do
@@ -119,7 +120,6 @@ mkdir $OUTPUT_DIR
 # Embed the update information in the image.
 
 UPDATE_URL=http://88.198.66.58:8000/$IMAGE_NAME.zsync
-
 echo $UPDATE_URL | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
 
 
@@ -139,7 +139,7 @@ if [ $TRAVIS_BRANCH = master ]; then
 	export SSHPASS=$DEPLOY_PASS
 
 	for f in $OUTPUT_DIR/$IMAGE_NAME*; do
-	    sshpass -e scp -vvv -o stricthostkeychecking=no $IMAGE_NAME $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+	    sshpass -e scp -vvv -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 	done
 else
 	curl -T {$OUTPUT_DIR/$IMAGE_NAME,$OUTPUT_DIR/$IMAGE_NAME.zsync,$OUTPUT_DIR/$IMAGE_NAME.sha256sum} https://transfer.sh/
