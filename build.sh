@@ -69,8 +69,8 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # Clean the filesystem.
 
-run_chroot apt purge casper lupin-casper plymouth-label plymouth-themes
-run_chroot apt autoremove
+run_chroot apt-get -yy purge casper lupin-casper plymouth-label plymouth-themes
+run_chroot apt-get -yy autoremove
 
 rm -rf $FS_DIR/tmp/* \
 	$FS_DIR/boot \
