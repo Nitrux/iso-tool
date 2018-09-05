@@ -62,7 +62,7 @@ cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
 # Customize the initramfs file and put it in $ISO_DIR.
 
 cat persistence >> $FS_DIR/usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-run_chroot update-initramfs
+run_chroot update-initramfs -u
 cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
