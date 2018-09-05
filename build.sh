@@ -13,7 +13,7 @@ IMAGE_NAME=nitrux.iso
 
 run_chroot () {
 
-	[ mountpoint -q $FS_DIR/dev/ ] || \
+	mountpoint -q $FS_DIR/dev/ || \
 		rm -rf $FS_DIR/dev/*
 
 	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
@@ -70,7 +70,6 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 # Clean the filesystem.
 
 run_chroot apt-get -yy purge casper lupin-casper plymouth-label plymouth-themes
-run_chroot apt-get -yy autoremove
 
 rm -rf $FS_DIR/tmp/* \
 	$FS_DIR/boot \
