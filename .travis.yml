@@ -3,7 +3,7 @@ sudo: required
 script:
   - sudo apt-get -qq update
   - sudo apt-get -qq install -y squashfs-tools zsync xorriso sshpass
-  - sudo ./build.sh
+  - sudo bash ./build.sh
 
 branches:
   except:
