@@ -123,7 +123,7 @@ echo $UPDATE_URL | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=
 
 # Generate the zsync file.
 
-zsyncmake $OUTPUT_DIR/$IMAGE_NAME -o $OUTPUT_DIR/$IMAGE_NAME.zsync
+zsyncmake $OUTPUT_DIR/$IMAGE_NAME -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE_NAME.zsync
 
 
 # Calculate the checksum.
