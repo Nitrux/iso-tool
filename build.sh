@@ -81,12 +81,11 @@ rm -rf $FS_DIR/tmp/* \
 
 # Compress the root filesystem.
 
-(sleep 300; echo +) &
+(sleep 300; echo '\e[32m * \e[0m') &
 
 echo "Compressing the root filesystem"
 mkdir -p $ISO_DIR/casper
 mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
-kill $! || true
 
 
 # Create the output directory.
@@ -112,7 +111,7 @@ mkdir $OUTPUT_DIR
 		-e boot/grub/efi.img \
 		-no-emul-boot \
 		-isohybrid-gpt-basdat \
-		-o ../$OUTPUT_DIR/$IMAGE_NAME .
+		-o $OUTPUT_DIR/$IMAGE_NAME .
 )
 
 
@@ -134,12 +133,13 @@ sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
 
 # Deploy the image.
 
-if [ $TRAVIS_BRANCH = master ]; then
+#if [ $TRAVIS_BRANCH = master ]; then
 	export SSHPASS=$DEPLOY_PASS
 
 	for f in $OUTPUT_DIR/$IMAGE_NAME*; do
 	    sshpass -e scp -vvv -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+	    echo $f
 	done
-else
-	curl -T {$OUTPUT_DIR/$IMAGE_NAME,$OUTPUT_DIR/$IMAGE_NAME.zsync,$OUTPUT_DIR/$IMAGE_NAME.sha256sum} https://transfer.sh/
-fi
+#else
+#	curl -T {$OUTPUT_DIR/$IMAGE_NAME,$OUTPUT_DIR/$IMAGE_NAME.zsync,$OUTPUT_DIR/$IMAGE_NAME.sha256sum} https://transfer.sh/
+#fi
