@@ -8,7 +8,7 @@ casper
 lupin-casper
 calamares
 calamares-settings-nxos
-nxos-dekstop
+nxos-desktop
 linux-image-generic
 plymouth-label
 plymouth-themes
@@ -35,10 +35,10 @@ apt-get -qq update
 apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
-useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
-echo 'user:foo' | chpasswd
+#useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
+#echo 'user:foo' | chpasswd
 
-echo localhost > /etc/hostname
+#echo localhost > /etc/hostname
 
 
 # Install AppImages.
