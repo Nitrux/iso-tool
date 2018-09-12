@@ -3,11 +3,11 @@ mount -t overlay \
 	-o lowerdir=/root/etc \
 	-o upperdir=/root/isodevice/data/etc \
 	-o workdir=/root/tmp/$(mktemp -d /root/tmp/XXXXXXXX) \
-	/root/etc
+	. /root/etc
 
 mount -o bind /root/isodevice/data/etc /root/isodevice/data/etc
 mount -t overlay \
 	-o lowerdir=/root/etc \
 	-o upperdir=/root/isodevice/data/etc \
 	-o workdir=/root/tmp/$(mktemp -d /root/tmp/XXXXXXXX) \
-	/root/home
+	. /root/home
