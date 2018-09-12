@@ -8,7 +8,7 @@ casper
 lupin-casper
 calamares
 calamares-settings-nxos
-nxos-meta
+nxos-dekstop
 linux-image-generic
 plymouth-label
 plymouth-themes
@@ -27,7 +27,7 @@ rm neon.key
 wget -q http://repo.nxos.org/public.key -O nxos.key
 if echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c; then
 	apt-key add nxos.key
-	echo 'deb http://repo.nxos.org/development/ nxos main' >> /etc/apt/sources.list
+	echo 'deb http://repo.nxos.org/stable/ nxos main' >> /etc/apt/sources.list
 fi
 rm nxos.key
 
