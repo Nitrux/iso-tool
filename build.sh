@@ -137,8 +137,7 @@ sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
 	export SSHPASS=$DEPLOY_PASS
 
 	for f in $OUTPUT_DIR/$IMAGE_NAME*; do
-	    sshpass -e scp -vvv -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-	    echo $f
+	    sshpass -e scp -vvv -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
 	done
 #else
 #	curl -T {$OUTPUT_DIR/$IMAGE_NAME,$OUTPUT_DIR/$IMAGE_NAME.zsync,$OUTPUT_DIR/$IMAGE_NAME.sha256sum} https://transfer.sh/
