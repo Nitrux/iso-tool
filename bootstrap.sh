@@ -8,7 +8,7 @@ casper
 lupin-casper
 calamares
 calamares-settings-nxos
-nxos-desktop
+nxos-meta
 linux-image-generic
 plymouth-label
 plymouth-themes
