@@ -1,13 +1,15 @@
 mount -o bind /root/isodevice/data/etc /root/isodevice/data/etc
+
 mount -t overlay \
 	-o lowerdir=/root/etc \
 	-o upperdir=/root/isodevice/data/etc \
-	-o workdir=/root/tmp/$(mktemp -d /root/tmp/XXXXXXXX) \
+	-o workdir=$(mktemp -d /root/tmp/XXXXXXXX) \
 	. /root/etc
 
-mount -o bind /root/isodevice/data/etc /root/isodevice/data/etc
+mount -o bind /root/isodevice/data/home /root/isodevice/data/home
+
 mount -t overlay \
-	-o lowerdir=/root/etc \
-	-o upperdir=/root/isodevice/data/etc \
-	-o workdir=/root/tmp/$(mktemp -d /root/tmp/XXXXXXXX) \
+	-o lowerdir=/root/home \
+	-o upperdir=/root/isodevice/data/home \
+	-o workdir=$(mktemp -d /root/tmp/XXXXXXXX) \
 	. /root/home
