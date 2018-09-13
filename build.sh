@@ -101,17 +101,17 @@ mkdir $OUTPUT_DIR
 
 	xorriso -as mkisofs -r -J -l \
 		-V 'NITRUX_LIVE' \
-		-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-		-c boot/isolinux/boot.cat \
-		-b boot/isolinux/isolinux.bin \
-		-no-emul-boot \
-		-boot-load-size 4 \
 		-boot-info-table \
 		-eltorito-alt-boot \
 		-e boot/grub/efi.img \
 		-no-emul-boot \
 		-isohybrid-gpt-basdat \
 		-o $OUTPUT_DIR/$IMAGE_NAME .
+#		-isohybrid-mbr boot/isolinux/isohdpfx.bin \
+#		-c boot/isolinux/boot.cat \
+#		-b boot/isolinux/isolinux.bin \
+#		-no-emul-boot \
+#		-boot-load-size 4 \
 )
 
 
