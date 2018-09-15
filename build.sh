@@ -81,7 +81,7 @@ rm -rf $FS_DIR/tmp/* \
 
 # Compress the root filesystem.
 
-(sleep 300; echo '\e[32m * \e[0m') &
+(sleep 300; echo '.') &
 
 echo "Compressing the root filesystem"
 mkdir -p $ISO_DIR/casper
@@ -135,6 +135,7 @@ sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
 
 export SSHPASS=$DEPLOY_PASS
 
+(sleep 300; echo '.') &
 for f in $OUTPUT_DIR/$IMAGE_NAME*; do
     sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
 done
