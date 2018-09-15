@@ -13,3 +13,7 @@ mount -t overlay \
 	-o upperdir=/root/isodevice/data/home \
 	-o workdir=$(mktemp -d /root/tmp/XXXXXXXX) \
 	. /root/home
+
+# Start an early shell for debugging.
+
+sh
