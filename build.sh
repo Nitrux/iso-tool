@@ -136,5 +136,5 @@ sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
 export SSHPASS=$DEPLOY_PASS
 
 for f in $OUTPUT_DIR/$IMAGE_NAME*; do
-    sshpass -e scp -vvv -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
+    sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
 done
