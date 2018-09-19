@@ -1,19 +1,15 @@
-mount -o bind /root/isodevice/data/etc /root/isodevice/data/etc
+mkdir -p \
+	/root/isodevice/.overlay-tmp/etc.w \
+	/root/isodevice/.overlay-tmp/home.w
 
 mount -t overlay \
 	-o lowerdir=/root/etc \
 	-o upperdir=/root/isodevice/data/etc \
-	-o workdir=$(mktemp -d /root/tmp/XXXXXXXX) \
+	-o workdir=/root/isodevice/.overlay-tmp/etc.w \
 	. /root/etc
-
-mount -o bind /root/isodevice/data/home /root/isodevice/data/home
 
 mount -t overlay \
 	-o lowerdir=/root/home \
 	-o upperdir=/root/isodevice/data/home \
-	-o workdir=$(mktemp -d /root/tmp/XXXXXXXX) \
+	-o workdir=/root/isodevice/.overlay-tmp/home.w \
 	. /root/home
-
-# Start an early shell for debugging.
-
-sh

@@ -104,14 +104,6 @@ mkdir $OUTPUT_DIR
 		-e boot/grub/efi.img \
 		-no-emul-boot \
 		-o $OUTPUT_DIR/$IMAGE_NAME .
-#		-boot-info-table \
-#		-eltorito-alt-boot \
-#		-isohybrid-gpt-basdat \
-#		-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-#		-c boot/isolinux/boot.cat \
-#		-b boot/isolinux/isolinux.bin \
-#		-no-emul-boot \
-#		-boot-load-size 4 \
 )
 
 
