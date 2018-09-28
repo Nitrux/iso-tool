@@ -11,6 +11,8 @@ linux-image-generic
 plymouth-label
 plymouth-themes
 '
+apt-get -qq update
+apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
 
 # Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
 # The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
@@ -84,9 +86,6 @@ if rm /etc/apt/sources.list; then
     echo '# deb-src http://archive.ubuntu.com/ubuntu bionic-backports main restcited universe multiverse' >> /etc/apt/sources.list
     echo '' >> /etc/apt/sources.list
 fi
-
-apt-get -qq update
-apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
