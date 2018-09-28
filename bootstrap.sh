@@ -23,11 +23,11 @@ if rm /etc/apt/sources.list && touch /etc/apt/sources.list; then
     echo '################' >> /etc/apt/sources.list
     echo '' >> /etc/apt/sources.list
     echo '### Main' >> /etc/apt/sources.list
-    echo 'deb http://archive.ubuntu.com/ubuntu cosmic main restricted universe multiverse' >> /etc/apt/sources.list
+    #echo 'deb http://archive.ubuntu.com/ubuntu cosmic main restricted universe multiverse' >> /etc/apt/sources.list
     echo '' >> /etc/apt/sources.list
     echo '### Updates' >> /etc/apt/sources.list
-    echo 'deb http://archive.ubuntu.com/ubuntu cosmic-security main restricted universe multiverse' >> /etc/apt/sources.list
-    echo 'deb http://archive.ubuntu.com/ubuntu cosmic-updates main restricted universe multiverse' >> /etc/apt/sources.list
+    #echo 'deb http://archive.ubuntu.com/ubuntu cosmic-security main restricted universe multiverse' >> /etc/apt/sources.list
+    #echo 'deb http://archive.ubuntu.com/ubuntu cosmic-updates main restricted universe multiverse' >> /etc/apt/sources.list
     echo '# deb http://archive.ubuntu.com/ubuntu cosmic-proposed main restcited universe multiverse' >> /etc/apt/sources.list
     echo '# deb http://archive.ubuntu.com/ubuntu cosmic-backports main restcited universe multiverse' >> /etc/apt/sources.list
     echo '' >> /etc/apt/sources.list
