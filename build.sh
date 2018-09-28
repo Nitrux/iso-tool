@@ -6,7 +6,7 @@ FS_DIR=$PWD/root
 ISO_DIR=$PWD/image
 OUTPUT_DIR=$PWD/out
 
-IMAGE_NAME=nitrux.iso
+IMAGE_NAME=nitrux_release_testing.iso
 
 
 # Function for running commands in a chroot.
@@ -46,7 +46,7 @@ run_chroot () {
 
 mkdir -p $FS_DIR
 
-wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04-base-amd64.tar.gz
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.10/release/ubuntu-base-18.10-base-amd64.tar.gz
 tar xf base.tar.gz -C $FS_DIR
 
 
@@ -100,7 +100,7 @@ mkdir $OUTPUT_DIR
 	echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
 	xorriso -as mkisofs -r -J -l \
-		-V 'NITRUX_LIVE' \
+		-V 'NITRUX_OS' \
 		-e boot/grub/efi.img \
 		-no-emul-boot \
 		-o $OUTPUT_DIR/$IMAGE_NAME .
