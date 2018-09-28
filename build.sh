@@ -83,6 +83,8 @@ rm -rf $FS_DIR/tmp/* \
 # Compress the root filesystem.
 
 (sleep 300; echo '.') &
+(sleep 600; echo '.') &
+(sleep 900; echo '.') &
 
 echo "Compressing the root filesystem"
 mkdir -p $ISO_DIR/casper
