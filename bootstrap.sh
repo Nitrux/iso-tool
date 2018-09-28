@@ -9,6 +9,9 @@ lupin-casper
 nomad-desktop
 plymouth-label
 plymouth-themes
+
+iputils-ping
+dhcpcd5
 '
 apt-get -qq update
 apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
@@ -16,16 +19,14 @@ apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
 # Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
 # The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
 
+rm /etc/apt/sources.list
 echo '################' >> /etc/apt/sources.list
 echo '# Ubuntu Repos #' >> /etc/apt/sources.list
 echo '################' >> /etc/apt/sources.list
 echo '' >> /etc/apt/sources.list
 echo '### Main' >> /etc/apt/sources.list
-#echo 'deb http://archive.ubuntu.com/ubuntu cosmic main restricted universe multiverse' >> /etc/apt/sources.list
 echo '' >> /etc/apt/sources.list
 echo '### Updates' >> /etc/apt/sources.list
-#echo 'deb http://archive.ubuntu.com/ubuntu cosmic-security main restricted universe multiverse' >> /etc/apt/sources.list
-#echo 'deb http://archive.ubuntu.com/ubuntu cosmic-updates main restricted universe multiverse' >> /etc/apt/sources.list
 echo '# deb http://archive.ubuntu.com/ubuntu cosmic-proposed main restcited universe multiverse' >> /etc/apt/sources.list
 echo '# deb http://archive.ubuntu.com/ubuntu cosmic-backports main restcited universe multiverse' >> /etc/apt/sources.list
 echo '' >> /etc/apt/sources.list
