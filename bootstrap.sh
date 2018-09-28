@@ -12,8 +12,8 @@ plymouth-label
 plymouth-themes
 '
 
-# Use optimized sources.list. This sources.list includes the Ubuntu development release as the main repository and also includes the latest LTS release.
-# The LTS repositoriesare included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
+# Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
+# The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
 
 if rm /etc/apt/sources.list; then
     touch /etc/apt/sources.list
