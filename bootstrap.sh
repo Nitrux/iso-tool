@@ -115,8 +115,7 @@ fi
 rm nxos.key
 
 apt-get -qq update
-apt-get -qq install -f
-apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
 #useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
