@@ -35,7 +35,7 @@ if rm /etc/apt/sources.list; then
     echo '### Partner' >> /etc/apt/sources.list
     echo '# deb http://archive.ubuntu.com/ubuntu cosmic partner' >> /etc/apt/sources.list
     echo '' >> /etc/apt/sources.list
-    echo '#################' >> /etc/apt/sources.list
+    echo '#################' >> /etc/apt/sources.listd
     echo '# Ubuntu Source #' >> /etc/apt/sources.list
     echo '#################' >> /etc/apt/sources.list
     echo '' >> /etc/apt/sources.list
@@ -115,6 +115,7 @@ fi
 rm nxos.key
 
 apt-get -qq update
+apt-get -qq install -f
 apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
