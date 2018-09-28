@@ -17,8 +17,7 @@ apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
 # Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
 # The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
 
-if rm /etc/apt/sources.list; then
-    touch /etc/apt/sources.list
+if rm /etc/apt/sources.list && touch /etc/apt/sources.list; then
     echo '################' >> /etc/apt/sources.list
     echo '# Ubuntu Repos #' >> /etc/apt/sources.list
     echo '################' >> /etc/apt/sources.list
@@ -115,7 +114,7 @@ fi
 rm nxos.key
 
 apt-get -qq update
-apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
 #useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' user
