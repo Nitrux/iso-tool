@@ -11,6 +11,7 @@ plymouth-label
 plymouth-themes
 iputils-ping
 dhcpcd5
+kdialog
 '
 apt-get -qq update
 apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
