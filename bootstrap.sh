@@ -6,12 +6,14 @@ export LC_ALL=C
 PACKAGES='
 casper
 lupin-casper
-nomad-desktop
-plymouth-label
-plymouth-themes
 iputils-ping
 dhcpcd5
+plymouth
+plymouth-label
+plymouth-themes
+fonts-ubuntu
 kdialog
+nomad-desktop
 '
 apt-get -qq update
 apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
