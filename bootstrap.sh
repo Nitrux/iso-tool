@@ -146,8 +146,8 @@ GenericName=Operating System manager
 Comment=Operating System manager.
 Categories=Utilities;System;
 Keywords=deployer;live;
-TryExec=znx-gui
-Exec=znx-gui
+TryExec=sudo znx-gui
+Exec=sudo znx-gui
 MimeType=
 Actions=
 ' > /usr/share/applications/znx-gui.desktop

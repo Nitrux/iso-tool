@@ -69,7 +69,8 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # Clean the filesystem.
 
-run_chroot apt-get -yy purge casper lupin-casper plymouth-label plymouth-themes kwalletmanager plasma-discover
+run_chroot apt-get -yy purge casper lupin-casper plymouth kwalletmanager plasma-discover
+run_chroot apt-get -yy autoremove
 
 rm -rf $FS_DIR/tmp/* \
 	$FS_DIR/boot \
@@ -81,13 +82,12 @@ rm -rf $FS_DIR/tmp/* \
 
 # Compress the root filesystem.
 
-(sleep 300; echo '.') &
-(sleep 600; echo '.') &
-(sleep 900; echo '.') &
+(while :; do sleep 300; echo '.'; done) &
 
 echo "Compressing the root filesystem"
 mkdir -p $ISO_DIR/casper
 mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
+kill $!
 
 
 # Create the output directory.
