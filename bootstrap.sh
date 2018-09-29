@@ -133,6 +133,28 @@ done
 chmod +x /Applications/*
 
 
+# Add znx-gui.
+
+printf \
+'[Desktop Entry]
+Type=Application
+Terminal=false
+Name=znx
+Icon=live-installer
+GenericName=Operating System manager
+Comment=Operating System manager.
+Categories=Utilities;System;
+Keywords=deployer;live;
+TryExec=znx-gui
+Exec=znx-gui
+MimeType=
+Actions=
+' > /usr/share/applications/znx-gui.desktop
+
+wget -q https://raw.githubusercontent.com/luis-lavaire/znx-gui/master/znx-gui -O /bin/znx-gui
+chmod +x /bin/znx-gui
+
+
 # Install the latest stable kernel.
 
 kfiles='
@@ -149,3 +171,4 @@ for x in $kfiles; do
 done
 
 dpkg -iR latest_kernel
+rm -r latest_kernel

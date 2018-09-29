@@ -47,7 +47,6 @@ run_chroot () {
 mkdir -p $FS_DIR
 
 wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.1-base-amd64.tar.gz
-#wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.10/beta/ubuntu-base-18.10-beta-base-amd64.tar.gz
 tar xf base.tar.gz -C $FS_DIR
 
 
