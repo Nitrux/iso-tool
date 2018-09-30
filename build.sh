@@ -76,7 +76,7 @@ run_chroot ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x
 run_chroot apt-get -yy install firejail --no-install-recommends
 run_chroot apt-get -yy install --only-upgrade base-files=10.4+nxos
 
-run_chroot apt-get -yy purge --remove casper lupin-casperkwalletmanager plasma-discover
+run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager plasma-discover
 run_chroot apt-get -yy autoremove
 
 
