@@ -69,7 +69,7 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # Clean the filesystem.
 
-run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi plasma-discover plasma-discover-common plasma-discover-private xpra samba-common-bin python-crypto python samba
+run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi plasma-discover plasma-discover-common plasma-discover-private xpra samba-common-bin python-crypto python-samba
 run_chroot apt-get -yy install --only-upgrade base-files=10.4+nxos
 
 rm -rf $FS_DIR/tmp/* \
