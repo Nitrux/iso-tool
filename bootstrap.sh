@@ -5,15 +5,12 @@ export LC_ALL=C
 
 PACKAGES='
 user-setup
+localechooser-data
+lzma
 casper
 lupin-casper
 iputils-ping
 dhcpcd5
-plymouth
-plymouth-label
-plymouth-themes
-fonts-ubuntu
-kdialog
 nomad-desktop
 '
 apt-get -qq update
@@ -141,18 +138,17 @@ chmod +x /Applications/*
 
 printf \
 '[Desktop Entry]
-Type=Application
-Terminal=false
 Name=znx
-Icon=live-installer
 GenericName=Operating System manager
 Comment=Operating System manager.
+Icon=live-installer
+Type=Application
+Terminal=false
+Exec=sudo znx-gui
+TryExec=znx-gui
 Categories=Utilities;System;
 Keywords=deployer;live;
-TryExec=sudo znx-gui
-Exec=sudo znx-gui
-MimeType=
-Actions=
+
 ' > /usr/share/applications/znx-gui.desktop
 
 wget -q https://raw.githubusercontent.com/luis-lavaire/znx-gui/master/znx-gui -O /bin/znx-gui
@@ -176,3 +172,79 @@ done
 
 dpkg -iR latest_kernel
 rm -r latest_kernel
+
+# Install Software Center Maui port
+
+nxsc='
+https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center_2.3-1_amd64.deb
+'
+
+mkdir nxsc_deps
+
+for x in $nxsc; do
+	wget -q -P nxsc_deps $x
+done
+
+dpkg -iR --force-all nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
+rm -r nxsc_deps
+
+# Install Maui Apps Debs
+
+mauipkgs='
+https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/vvave_0.1-1_amd64.deb
+'
+
+mkdir maui_debs
+
+for x in $mauipkgs; do
+	wget -q -P maui_debs $x
+done
+
+dpkg -iR maui_debs
+rm -r maui_debs
+
+# Install Maui Apps tars
+
+MAUITARS='
+https://github.com/UriHerrera/storage/raw/master/Buho.tar.gz
+https://github.com/UriHerrera/storage/raw/master/Index.tar.gz
+https://github.com/UriHerrera/storage/raw/master/Pix.tar.gz
+'
+
+mkdir -p maui_tars
+
+(
+	cd maui_tars
+
+	for TAR in $MAUITARS
+	do
+		echo "- Downloading and extracting $TAR"
+
+		PKGNAME=$(echo $TAR | sed 's/.*\///')
+
+		wget -q $TAR
+		tar -xzf $PKGNAME
+		rm -rf $PKGNAME
+	done
+
+	EXECUTABLES=$(find ./ -executable -type f)
+
+	for EXE in $EXECUTABLES
+	do
+		echo "cp $EXE /usr/local/sbin"
+	done
+
+	LAUNCHERS=$(find ./ -name *.desktop)
+
+	for LAUNCHER in $LAUNCHERS
+	do
+		echo "cp $LAUNCHER /usr/share/applications"
+	done
+)
+
+rm -rf maui_tars
+
+
+
