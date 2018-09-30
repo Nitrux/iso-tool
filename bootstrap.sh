@@ -7,7 +7,6 @@ PACKAGES='
 user-setup
 localechooser-data
 lzma
-cifs-utils
 casper
 lupin-casper
 binutils-multiarch
@@ -160,10 +159,10 @@ chmod +x /bin/znx-gui
 # Install the latest stable kernel.d5
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-headers-4.18.10-041810_4.18.10-041810.201809260332_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-headers-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-image-unsigned-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-modules-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811_4.18.11-041811.201809290731_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-image-unsigned-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-modules-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
 '
 
 mkdir latest_kernel
