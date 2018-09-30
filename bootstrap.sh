@@ -156,13 +156,13 @@ wget -q https://raw.githubusercontent.com/luis-lavaire/znx-gui/master/znx-gui -O
 chmod +x /bin/znx-gui
 
 
-# Install the latest stable kernel.
+# Install the latest stable kernel.d5
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811_4.18.11-041811.201809290731_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-image-unsigned-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-modules-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-headers-4.18.10-041810_4.18.10-041810.201809260332_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-headers-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-image-unsigned-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-modules-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
 '
 
 mkdir latest_kernel
@@ -179,6 +179,9 @@ rm -r latest_kernel
 mauipkgs='
 https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/vvave_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/pix_1.0.0-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/index_0.1.0-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/buho_1.0.0-1_amd64.deb
 '
 
 mkdir maui_debs
@@ -190,46 +193,6 @@ done
 dpkg -iR maui_debs
 rm -r maui_debs
 
-# Install Maui Apps tars
-
-MAUITARS='
-https://github.com/UriHerrera/storage/raw/master/Buho.tar.gz
-https://github.com/UriHerrera/storage/raw/master/Index.tar.gz
-https://github.com/UriHerrera/storage/raw/master/Pix.tar.gz
-'
-
-mkdir -p maui_tars
-
-(
-	cd maui_tars
-
-	for TAR in $MAUITARS
-	do
-		echo "- Downloading and extracting $TAR"
-
-		PKGNAME=$(echo $TAR | sed 's/.*\///')
-
-		wget -q $TAR
-		tar -xzf $PKGNAME
-		rm -rf $PKGNAME
-	done
-
-	EXECUTABLES=$(find ./ -executable -type f)
-
-	for EXE in $EXECUTABLES
-	do
-		echo "cp -R $EXE /usr/local/sbin"
-	done
-
-	LAUNCHERS=$(find ./ -name *.desktop)
-
-	for LAUNCHER in $LAUNCHERS
-	do
-		echo "cp $LAUNCHER /usr/share/applications"
-	done
-)
-
-rm -rf maui_tars
 
 # Install Software Center Maui port
 
