@@ -9,6 +9,7 @@ localechooser-data
 lzma
 casper
 lupin-casper
+binutils-multiarch
 iputils-ping
 dhcpcd5
 nomad-desktop
@@ -158,10 +159,10 @@ chmod +x /bin/znx-gui
 # Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-headers-4.18.10-041810_4.18.10-041810.201809260332_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-headers-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-image-unsigned-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.10/linux-modules-4.18.10-041810-generic_4.18.10-041810.201809260332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811_4.18.11-041811.201809290731_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-image-unsigned-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-modules-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
 '
 
 mkdir latest_kernel
@@ -172,22 +173,6 @@ done
 
 dpkg -iR latest_kernel
 rm -r latest_kernel
-
-# Install Software Center Maui port
-
-nxsc='
-https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center_2.3-1_amd64.deb
-'
-
-mkdir nxsc_deps
-
-for x in $nxsc; do
-	wget -q -P nxsc_deps $x
-done
-
-dpkg -iR --force-all nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
-rm -r nxsc_deps
 
 # Install Maui Apps Debs
 
@@ -233,7 +218,7 @@ mkdir -p maui_tars
 
 	for EXE in $EXECUTABLES
 	do
-		echo "cp $EXE /usr/local/sbin"
+		echo "cp -R $EXE /usr/local/sbin"
 	done
 
 	LAUNCHERS=$(find ./ -name *.desktop)
@@ -246,5 +231,18 @@ mkdir -p maui_tars
 
 rm -rf maui_tars
 
+# Install Software Center Maui port
 
+nxsc='
+https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center_2.3-1_amd64.deb
+'
 
+mkdir nxsc_deps
+
+for x in $nxsc; do
+	wget -q -P nxsc_deps $x
+done
+
+dpkg --force-all -iR nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
+rm -r nxsc_deps
