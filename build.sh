@@ -69,8 +69,8 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # Clean the filesystem.
 
-run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager plasma-discover xpra
-run_chroot apt-get -yy autoremove
+run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager plasma-discover* plasma-discover-* xpra samba-* python-crypto python samba
+# run_chroot apt-get -yy autoremove
 run_chroot apt-get -yy install --only-upgrade base-files=10.4+nxos
 
 rm -rf $FS_DIR/tmp/* \

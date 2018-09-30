@@ -4,6 +4,7 @@ export LANG=C
 export LC_ALL=C
 
 PACKAGES='
+user-setup
 casper
 lupin-casper
 iputils-ping
