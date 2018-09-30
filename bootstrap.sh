@@ -7,6 +7,7 @@ PACKAGES='
 user-setup
 localechooser-data
 lzma
+cifs-utils
 casper
 lupin-casper
 binutils-multiarch
@@ -179,9 +180,9 @@ rm -r latest_kernel
 mauipkgs='
 https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/vvave_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/pix_1.0.0-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/index_0.1.0-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/buho_1.0.0-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/pix_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/index_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/buho_0.1-1_amd64.deb
 '
 
 mkdir maui_debs

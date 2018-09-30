@@ -71,6 +71,7 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 run_chroot ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so # needed for the software center
 run_chroot ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0 # needed for the software center
+run_chroot ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0 # needed for the software center
 run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager apt-config-icons-hidpi apt-config-icons-large apt-config-icons-large-hidpi plasma-discover plasma-discover-common plasma-discover-private plasma-discover-updater xpra
 run_chroot apt-get -yy install --only-upgrade base-files=10.4+nxos
 run_chroot apt-get -yy autoremove
