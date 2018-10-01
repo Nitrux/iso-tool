@@ -117,6 +117,7 @@ fi
 rm nxos.key
 
 apt-get -qq update
+apt-get -qq install -f
 apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
