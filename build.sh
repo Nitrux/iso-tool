@@ -75,7 +75,7 @@ run_chroot ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x
 
 run_chroot apt-get -yy install --only-upgrade base-files=10.4+nxos
 
-run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager plasma-discover xpra colord colord-data gnome-terminal gnome-terminal-data gsfonts gvfs gvfs-common gvfs-daemons gvfs-libs i965-va-driver kamera kgamma5 kwrited media-player-info mysql-common nautilus-extension-gnome-terminal qtwayland5 rake ruby ruby-did-you-mean ruby-minitest ruby-net-telnet ruby-power-assert ruby-test-unit ruby2.5 rubygems-integration sane-utils sni-qt sonnet-plugins vbetool vlc-plugin-samba wireless-tools yelp yelp-xsl
+run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager plasma-discover xpra colord colord-data gnome-terminal gnome-terminal-data gsfonts gvfs gvfs-common gvfs-daemons gvfs-libs kamera kgamma5 kwrited media-player-info nautilus-extension-gnome-terminal yelp yelp-xsl
 run_chroot apt-get -yy autoremove
 
 
