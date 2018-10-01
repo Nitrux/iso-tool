@@ -4,17 +4,17 @@ export LANG=C
 export LC_ALL=C
 
 PACKAGES='
-casper
-lupin-casper
 user-setup
 localechooser-data
-sudo
+cifs-utils
+casper
+lupin-casper
+binutils-multiarch
 iputils-ping
 dhcpcd5
-cifs-utils
-apt-utils
-binutils-multiarch
 nomad-desktop
+apt-utils
+sudo
 '
 apt-get -qq update
 apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
