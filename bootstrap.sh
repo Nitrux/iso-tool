@@ -117,6 +117,7 @@ fi
 rm nxos.key
 
 apt-get -qq update
+apt-get install -f -y
 apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
@@ -197,7 +198,6 @@ rm -r maui_debs
 # Install Software Center Maui port
 
 nxsc='
-http://repo.nxos.org/testing/pool/main/liba/libappimage/libappimage_1.0-gitb23cdbc_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center_2.3-1_amd64.deb
 '
