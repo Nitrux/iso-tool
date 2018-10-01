@@ -118,7 +118,6 @@ fi
 rm nxos.key
 
 apt-get -qq update
-apt-get -qq install -f
 apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
@@ -212,3 +211,5 @@ done
 
 dpkg --force-all -iR nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 rm -r nxsc_deps
+
+apt-get -qq install -f
