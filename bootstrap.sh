@@ -14,13 +14,9 @@ iputils-ping
 dhcpcd5
 nomad-desktop
 apt-utils
-sudo
-libelf1
-kmod
-libappimage
 '
 apt-get -qq update
-apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
+apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2 sudo libelf1 kmod
 
 # Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
 # The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
