@@ -6,13 +6,14 @@ export LC_ALL=C
 PACKAGES='
 user-setup
 localechooser-data
-lzma
+cifs-utils
 casper
 lupin-casper
 binutils-multiarch
 iputils-ping
 dhcpcd5
 nomad-desktop
+apt-utils
 '
 apt-get -qq update
 apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
