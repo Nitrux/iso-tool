@@ -118,7 +118,7 @@ rm nxos.key
 
 apt-get -qq update
 apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
-apt-get install -f
+apt-get clean
 
 # Install AppImages.
 
@@ -197,7 +197,7 @@ rm -r maui_debs
 # Install Software Center Maui port
 
 nxsc='
-http://repo.nxos.org/development/pool/main/liba/libappimage/libappimage_1-alpha-git758f8e7~local_amd64.deb
+http://repo.nxos.org/testing/pool/main/liba/libappimage/libappimage_1.0-gitb23cdbc_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center_2.3-1_amd64.deb
 '
@@ -210,5 +210,3 @@ done
 
 dpkg --force-all -iR nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 rm -r nxsc_deps
-
-apt-get clean
