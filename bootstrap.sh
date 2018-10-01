@@ -212,4 +212,4 @@ done
 dpkg --force-all -iR nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 rm -r nxsc_deps
 
-apt-get install -f
+apt-get -yy install -f
