@@ -117,8 +117,7 @@ fi
 rm nxos.key
 
 apt-get -qq update
-apt-get install -f -y
-apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get install -y $(echo $PACKAGES | tr '\n' ' ')
 apt-get clean
 
 # Install AppImages.
