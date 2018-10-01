@@ -116,7 +116,7 @@ if echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 fi
 rm nxos.key
 
-apt-get -qq update
+apt-get update
 apt-get -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
 apt-get clean
 
