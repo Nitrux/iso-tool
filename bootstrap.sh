@@ -14,6 +14,7 @@ iputils-ping
 dhcpcd5
 nomad-desktop
 apt-utils
+sudo
 '
 apt-get -qq update
 apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2
