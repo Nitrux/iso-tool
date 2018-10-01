@@ -16,7 +16,7 @@ nomad-desktop
 apt-utils
 '
 apt-get -qq update
-apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2 sudo libelf1 kmod
+apt-get -qq install -y apt-transport-https wget ca-certificates gnupg2 sudo libelf1 kmod linux-base
 
 # Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
 # The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
@@ -118,6 +118,7 @@ rm nxos.key
 
 apt-get -qq update
 apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get install -f
 apt-get clean
 
 
