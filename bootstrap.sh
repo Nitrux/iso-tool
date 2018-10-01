@@ -90,8 +90,6 @@ echo '# deb-src http://archive.ubuntu.com/ubuntu bionic-proposed main restcited 
 echo '# deb-src http://archive.ubuntu.com/ubuntu bionic-backports main restcited universe multiverse' >> /etc/apt/sources.list
 echo '' >> /etc/apt/sources.list
 
-apt-get -qq update
-
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
 	apt-key add neon.key
