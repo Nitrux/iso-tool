@@ -4,13 +4,13 @@ export LANG=C
 export LC_ALL=C
 
 PACKAGES='
-sudo
-iputils-ping
-dhcpcd5
 casper
 lupin-casper
 user-setup
 localechooser-data
+sudo
+iputils-ping
+dhcpcd5
 cifs-utils
 apt-utils
 binutils-multiarch
