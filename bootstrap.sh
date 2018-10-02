@@ -105,7 +105,7 @@ Keywords=deployer;live;
 
 ' > /usr/share/applications/znx-gui.desktop
 
-wget -q https://raw.githubusercontent.com/luis-lavaire/znx-gui/master/znx-gui -O /bin/znx-gui
+wget -q https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui -O /bin/znx-gui
 chmod +x /bin/znx-gui
 
 
