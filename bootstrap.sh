@@ -5,6 +5,7 @@ export LC_ALL=C
 
 PACKAGES='
 user-setup
+nomad-desktop
 localechooser-data
 cifs-utils
 casper
@@ -12,8 +13,8 @@ lupin-casper
 iputils-ping
 dhcpcd5
 '
-apt-get update
-apt-get install -y apt-transport-https wget ca-certificates gnupg2 apt-utils
+apt-get -y -qq update
+apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils
 
 # Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
 # The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
@@ -36,7 +37,7 @@ echo '### Partner' >> /etc/apt/sources.list
 echo '# deb http://archive.ubuntu.com/ubuntu bionic partner' >> /etc/apt/sources.list
 echo '' >> /etc/apt/sources.list
 
-apt-get update
+apt-get -y -qq update
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
@@ -52,7 +53,7 @@ if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.ke
 fi
 rm neon.key
 
-apt-get update
+apt-get -y -qq update
 
 wget -q http://repo.nxos.org/public.key -O nxos.key
 if echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c; then
@@ -67,10 +68,9 @@ if echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 fi
 rm nxos.key
 
-apt-get update
-apt-get install -y nomad-desktop
-apt-get install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
-apt-get clean
+apt-get -y -qq update
+apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get -y -qq clean
 
 
 # Install AppImages.
