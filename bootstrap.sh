@@ -162,3 +162,8 @@ done
 
 dpkg --force-all -iR nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 rm -r nxsc_deps
+
+
+# Add /Applications to $PATH.
+
+printf "PATH=$PATH:/Applications\n" > /etc/environment
