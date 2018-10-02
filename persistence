@@ -13,3 +13,5 @@ mount -t overlay \
 	-o upperdir=/root/isodevice/data/home \
 	-o workdir=/root/isodevice/.overlay-tmp/home.w \
 	. /root/home
+
+export PATH=$PATH:/Applications
