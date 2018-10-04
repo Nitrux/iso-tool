@@ -16,8 +16,7 @@ dhcpcd5
 apt-get -y -qq update
 apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils
 
-# Use optimized sources.list. This sources.list includes the current Ubuntu development release as the main repository and also includes the latest LTS release.
-# The LTS repositories are included to add support for the KDE Neon repository since these packages are built against this release of Ubuntu.
+# Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these packages are built against the latest LTS release of Ubuntu.
 
 rm /etc/apt/sources.list
 echo '#######################' >> /etc/apt/sources.list
@@ -112,10 +111,10 @@ chmod +x /bin/znx-gui
 # Install the latest stable kernel
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811_4.18.11-041811.201809290731_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-headers-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-image-unsigned-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.11/linux-modules-4.18.11-041811-generic_4.18.11-041811.201809290731_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-headers-4.18.12-041812_4.18.12-041812.201810032137_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-headers-4.18.12-041812-generic_4.18.12-041812.201810032137_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-image-unsigned-4.18.12-041812-generic_4.18.12-041812.201810032137_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-modules-4.18.12-041812-generic_4.18.12-041812.201810032137_amd64.deb
 '
 
 mkdir latest_kernel
