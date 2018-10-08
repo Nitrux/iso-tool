@@ -166,4 +166,4 @@ rm -r nxsc_deps
 # Add /Applications to $PATH.
 
 printf "PATH=$PATH:/Applications\n" > /etc/environment
-printf 'Defaults env_keep += "PATH"' > /etc/sudoers
+printf 'Defaults env_keep += "PATH"' >> /etc/sudoers
