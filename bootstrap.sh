@@ -68,6 +68,8 @@ if echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 fi
 rm nxos.key
 
+# Update package list and then install packages defined in list
+
 apt-get -y -qq update
 apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt-get -y -qq clean
