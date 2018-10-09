@@ -68,7 +68,7 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # Clean the filesystem.
 
-run_chroot apt-get -yy purge --remove casper lupin-casper kwalletmanager plasma-discover xpra colord colord-data gnome-terminal gnome-terminal-data gsfonts gvfs gvfs-common gvfs-daemons gvfs-libs kamera kgamma5 kwrited media-player-info nautilus-extension-gnome-terminal yelp yelp-xsl
+run_chroot apt-get -yy purge --remove casper lupin-casper
 run_chroot apt-get -yy autoremove
 
 
