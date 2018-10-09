@@ -11,6 +11,7 @@ localechooser-data
 cifs-utils
 casper
 lupin-casper
+dhcpcd5
 '
 apt-get -y -qq update
 apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils
@@ -166,10 +167,10 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-l
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0 # needed for the software center
 
 
-# Install Nitrux meta packages
+# Install Nitrux meta package
 
 apt-get -yy -q install --only-upgrade base-files=10.4+nxos
-apt-get -yy -q install nomad-desktop --no-install-recommends > /dev/null
+apt-get -yy -q install nomad-desktop --no-install-recommend
 
 
 # Add /Applications to $PATH.
