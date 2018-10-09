@@ -3,18 +3,19 @@
 export LANG=C
 export LC_ALL=C
 
+# Install packages for squashfs creation
+
 PACKAGES='
 user-setup
-nomad-desktop
 localechooser-data
 cifs-utils
 casper
 lupin-casper
-iputils-ping
 dhcpcd5
+nomad-desktop
 '
 apt-get -y -qq update
-apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils
+apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
 
 # Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these packages are built against the latest LTS release of Ubuntu.
 
@@ -68,7 +69,7 @@ fi
 rm nxos.key
 
 apt-get -y -qq update
-apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt-get -y -qq clean
 
 
@@ -162,6 +163,14 @@ done
 dpkg --force-all -iR nxsc_deps # For now the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 rm -r nxsc_deps
 
+ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so # needed for the software center
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0 # needed for the software center
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0 # needed for the software center
+
+
+# Install Nomad Desktop meta package avoiding recommended packages from deps
+
+apt-get -yy -q install --only-upgrade base-files=10.4+nxos
 
 # Add /Applications to $PATH.
 
