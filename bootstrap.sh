@@ -14,7 +14,7 @@ lupin-casper
 dhcpcd5
 '
 apt-get -y -qq update
-apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils
+apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
 
 # Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these packages are built against the latest LTS release of Ubuntu.
 
@@ -68,7 +68,7 @@ fi
 rm nxos.key
 
 apt-get -y -qq update
-apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') > /dev/null
+apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt-get -y -qq clean
 
 
@@ -167,10 +167,10 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-l
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0 # needed for the software center
 
 
-# Install Nitrux meta package
+# Install Nomad Desktop meta package avoiding recommended packages from deps
 
 apt-get -yy -q install --only-upgrade base-files=10.4+nxos
-apt-get -yy -q install nomad-desktop --no-install-recommend
+apt-get -yy -q install nomad-desktop --no-install-recommends
 
 
 # Add /Applications to $PATH.
