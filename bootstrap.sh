@@ -12,6 +12,7 @@ cifs-utils
 casper
 lupin-casper
 dhcpcd5
+nomad-desktop
 '
 apt-get -y -qq update
 apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
@@ -170,8 +171,6 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux
 # Install Nomad Desktop meta package avoiding recommended packages from deps
 
 apt-get -yy -q install --only-upgrade base-files=10.4+nxos
-apt-get -yy -q install nomad-desktop --no-install-recommends
-
 
 # Add /Applications to $PATH.
 
