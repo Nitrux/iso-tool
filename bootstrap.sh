@@ -177,4 +177,5 @@ apt-get -yy -q install --only-upgrade base-files=10.4+nxos
 # Add /Applications to $PATH.
 
 printf "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i '/env_reset/d' /etc/sudoers
+sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
+sed -i "/env_reset/d" /etc/sudoers
