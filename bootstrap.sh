@@ -166,4 +166,4 @@ rm -r nxsc_deps
 # Add /Applications to $PATH.
 
 printf "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i 's/env_reset/d' /etc/sudoers
+sed -i '/env_reset/d' /etc/sudoers
