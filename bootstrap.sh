@@ -17,6 +17,17 @@ nomad-desktop
 '
 
 
+# -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
+
+mv /bin/* /usr/bin
+mv /sbin/* /usr/bin
+mv /usr/sbin/* /usr/bin
+rm -rf /bin /sbin /usr/bin
+ln -s /usr/bin /bin
+ln -s /usr/bin /sbin
+ln -s /usr/bin /usr/sbin
+
+
 # -- Install basic packages.
 
 apt-get -y -qq update
@@ -38,15 +49,6 @@ cp /configs/sources.list /etc/apt/sources.list
 
 rm neon.key
 rm nxos.key
-
-
-# -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
-
-mv /bin/* /sbin/* /usr/sbin/* /usr/bin
-rm -rf /bin /sbin /usr/bin
-ln -s /usr/bin /bin
-ln -s /usr/bin /sbin
-ln -s /usr/bin /usr/sbin
 
 
 # -- Update packages list and install packages.
