@@ -19,16 +19,23 @@ nomad-desktop
 
 # -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
 
-mv /bin/* /usr/bin
-ln -s /usr/bin /bin
+# make copies of commands before moving
+cp /bin/mv /usr/bin/mv_clone
+cp /bin/ln /usr/bin/ln_clone
 
-mv /sbin/* /usr/bin
-ln -s /usr/bin /sbin
+# copy contents to usr/bin
+mv_clone /bin/* /usr/bin
+ln_clone -sv /usr/bin /bin
 
-mv /usr/sbin/* /usr/bin
-ln -s /usr/bin /usr/sbin
+mv_clone /sbin/* /usr/bin
+ln_clone -sv /usr/bin /sbin
 
+mv_clone /usr/sbin/* /usr/bin
+ln_clone -sv /usr/bin /usr/sbin
+
+# delete /bin /sbin /usr/sbin and mv_clone ln_clone
 rm -rf /bin /sbin /usr/sbin
+rm mv_clone ln_clone
 
 
 # -- Install basic packages.
