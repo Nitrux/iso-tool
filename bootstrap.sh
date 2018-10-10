@@ -20,12 +20,15 @@ nomad-desktop
 # -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
 
 mv /bin/* /usr/bin
-mv /sbin/* /usr/bin
-mv /usr/sbin/* /usr/bin
-rm -rf /bin /sbin /usr/sbin
 ln -s /usr/bin /bin
+
+mv /sbin/* /usr/bin
 ln -s /usr/bin /sbin
+
+mv /usr/sbin/* /usr/bin
 ln -s /usr/bin /usr/sbin
+
+rm -rf /bin /sbin /usr/sbin
 
 
 # -- Install basic packages.
