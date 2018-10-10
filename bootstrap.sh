@@ -29,11 +29,11 @@ rm -rf /bin
 ln_clone -sv /usr/bin /bin
 
 mv_clone /sbin/* /usr/bin
-rm -rf /bin
+rm -rf /sbin
 ln_clone -sv /usr/bin /sbin
 
 mv_clone /usr/sbin/* /usr/bin
-rm -rf /bin
+rm -rf /usr/sbin
 ln_clone -sv /usr/bin /usr/sbin
 
 # delete /bin /sbin /usr/sbin and mv_clone ln_clone
