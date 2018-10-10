@@ -40,6 +40,15 @@ rm neon.key
 rm nxos.key
 
 
+# -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
+
+mv /bin/* /sbin/* /usr/sbin/* /usr/bin
+rm -rf /bin /sbin /usr/bin
+ln -s /usr/bin /bin
+ln -s /usr/bin /sbin
+ln -s /usr/bin /usr/sbin
+
+
 # -- Update packages list and install packages.
 
 apt-get -y -qq update
