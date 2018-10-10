@@ -23,19 +23,21 @@ nomad-desktop
 cp /bin/mv /usr/bin/mv_clone
 cp /bin/ln /usr/bin/ln_clone
 
-# copy contents to usr/bin
+# copy contents to usr/bin and create symlinks
 mv_clone /bin/* /usr/bin
+rm -rf /bin
 ln_clone -sv /usr/bin /bin
 
 mv_clone /sbin/* /usr/bin
+rm -rf /bin
 ln_clone -sv /usr/bin /sbin
 
 mv_clone /usr/sbin/* /usr/bin
+rm -rf /bin
 ln_clone -sv /usr/bin /usr/sbin
 
 # delete /bin /sbin /usr/sbin and mv_clone ln_clone
-rm -rf /bin /sbin /usr/sbin
-rm mv_clone ln_clone
+rm /usr/bin/mv_clone /usr/bin/ln_clone
 
 
 # -- Install basic packages.
