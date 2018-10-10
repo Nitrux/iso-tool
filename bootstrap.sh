@@ -51,10 +51,11 @@ rm neon.key
 rm nxos.key
 
 
-# -- Update packages list and install packages.
+# -- Update packages list and install packages. Install Nomad Desktop meta package avoiding recommended packages from deps.
 
 apt-get -y -qq update
 apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt-get -yy -q install --only-upgrade base-files=10.4+nxos
 apt-get -y -qq clean
 
 
@@ -83,10 +84,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-headers-4.18.12-041812_4.18.12-041812.201810032137_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-headers-4.18.12-041812-generic_4.18.12-041812.201810032137_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-image-unsigned-4.18.12-041812-generic_4.18.12-041812.201810032137_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.12/linux-modules-4.18.12-041812-generic_4.18.12-041812.201810032137_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-headers-4.18.13-041813_4.18.13-041813.201810100332_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-headers-4.18.13-041813-generic_4.18.13-041813.201810100332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-image-unsigned-4.18.13-041813-generic_4.18.13-041813.201810100332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-modules-4.18.13-041813-generic_4.18.13-041813.201810100332_amd64.deb
 '
 
 mkdir latest_kernel
@@ -131,19 +132,15 @@ mkdir nxsc_deps
 for x in $nxsc; do
 	wget -q -P nxsc_deps $x
 done
-
-# -- For now, the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 dpkg --force-all -iR nxsc_deps
 rm -r nxsc_deps
+
+
+# -- For now, the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so # needed for the software center
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0 # needed for the software center
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0 # needed for the software center
-
-
-# -- Install Nomad Desktop meta package avoiding recommended packages from deps
-
-apt-get -yy -q install --only-upgrade base-files=10.4+nxos
 
 
 # -- Add /Applications to $PATH.
