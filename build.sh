@@ -23,6 +23,7 @@ run_chroot () {
 	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
 
 	cp /etc/resolv.conf $FS_DIR/etc
+	cp -r configs $FS_DIR
 
 	if [ -f $1 -a -x $1 ]; then
 		cp $1 $FS_DIR/
@@ -37,7 +38,9 @@ run_chroot () {
 			umount -f $d
 	done
 
-	rm $FS_DIR/etc/resolv.conf
+	rm -rf \
+		$FS_DIR/etc/resolv.conf
+		$FS_DIR/configs
 
 }
 
