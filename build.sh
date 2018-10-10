@@ -39,7 +39,7 @@ run_chroot () {
 	done
 
 	rm -rf \
-		$FS_DIR/etc/resolv.conf
+		$FS_DIR/etc/resolv.conf \
 		$FS_DIR/configs
 
 }
