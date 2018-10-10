@@ -69,6 +69,7 @@ cat persistence >> $FS_DIR/usr/share/initramfs-tools/scripts/casper-bottom/05mou
 run_chroot update-initramfs -u
 cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
+
 # Clean the filesystem.
 
 run_chroot apt-get -yy purge --remove casper lupin-casper

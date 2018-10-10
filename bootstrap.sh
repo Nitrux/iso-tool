@@ -22,7 +22,7 @@ nomad-desktop
 mv /bin/* /usr/bin
 mv /sbin/* /usr/bin
 mv /usr/sbin/* /usr/bin
-rm -rf /bin /sbin /usr/bin
+rm -rf /bin /sbin /usr/sbin
 ln -s /usr/bin /bin
 ln -s /usr/bin /sbin
 ln -s /usr/bin /usr/sbin
