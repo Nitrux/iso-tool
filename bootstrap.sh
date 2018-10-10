@@ -179,3 +179,16 @@ apt-get -yy -q install --only-upgrade base-files=10.4+nxos
 printf "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
+
+# Add config for SDDM
+
+rm /etc/sddm.conf
+echo '[General]' >> /etc/sddm.conf
+echo 'EnableHiDPI=true' >> /etc/sddm.conf
+echo '' >> /etc/sddm.conf
+echo 'InputMethod=' >> /etc/sddm.conf
+echo '' >> /etc/sddm.conf
+echo '[Theme]' >> /etc/sddm.conf
+echo 'Current=nomad-dark' >> /etc/sddm.conf
+echo 'CursorTheme=nomad-cursors' >> /etc/sddm.conf
+echo '' >> /etc/sddm.conf
