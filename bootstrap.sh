@@ -17,37 +17,39 @@ nomad-desktop
 '
 
 
-# -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
-
-# make copies of commands before moving
-cp /bin/mv /usr/bin/mv_clone
-cp /bin/ln /usr/bin/ln_clone
-
-# copy contents to usr/bin, delete dirs and create symlinks
-mv_clone /bin/* /usr/bin
-rm -rf /bin
-ln_clone -sv /usr/bin /bin
-
-mv_clone /sbin/* /usr/bin
-rm -rf /sbin
-ln_clone -sv /usr/bin /sbin
-
-mv_clone /usr/sbin/* /usr/bin
-rm -rf /usr/sbin
-ln_clone -sv /usr/bin /usr/sbin
-
-# delete copies of commands
-rm /usr/bin/mv_clone /usr/bin/ln_clone
+# # -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
+# 
+# # make copies of commands before moving
+# cp /bin/mv /usr/bin/mv_clone
+# cp /bin/ln /usr/bin/ln_clone
+# 
+# # copy contents to usr/bin, delete dirs and create symlinks
+# mv_clone /bin/* /usr/bin
+# rm -rf /bin
+# ln_clone -sv /usr/bin /bin
+# 
+# mv_clone /sbin/* /usr/bin
+# rm -rf /sbin
+# ln_clone -sv /usr/bin /sbin
+# 
+# mv_clone /usr/sbin/* /usr/bin
+# rm -rf /usr/sbin
+# ln_clone -sv /usr/bin /usr/sbin
+# 
+# # delete copies of commands
+# rm /usr/bin/mv_clone /usr/bin/ln_clone
 
 
 # -- Install basic packages.
 
-apt-get -y -qq update
-apt-get -y -qq install -y apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
+apt -qq update
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
 # -- packages are built against the latest LTS release of Ubuntu.
+
+cp /configs/sources.list /etc/apt/sources.list
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c &&
@@ -57,18 +59,18 @@ wget -q http://repo.nxos.org/public.key -O nxos.key
 echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c &&
 	apt-key add nxos.key
 
-cp /configs/sources.list /etc/apt/sources.list
-
 rm neon.key
 rm nxos.key
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package avoiding recommended packages from deps.
+# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
+# -- avoiding recommended packages.
 
-apt-get -y -qq update
-apt-get -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
-apt-get -yy install --only-upgrade base-files=10.4+nxos
-apt-get -y -qq clean
+apt -qq update
+apt -yy -qq install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
+apt -qq clean
+apt -qq autoclean
 
 
 # -- Install AppImages.
@@ -150,9 +152,9 @@ rm -r nxsc_deps
 
 # -- For now, the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 
-ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so # needed for the software center
-ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0 # needed for the software center
-ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0 # needed for the software center
+ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
 
 # -- Add /Applications to $PATH.

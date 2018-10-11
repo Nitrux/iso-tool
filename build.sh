@@ -72,8 +72,8 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # Clean the filesystem.
 
-run_chroot apt-get -yy purge --remove casper lupin-casper
-run_chroot apt-get -yy autoremove
+run_chroot apt -yy -qq purge --remove casper lupin-casper
+run_chroot apt -yy -qq autoremove
 
 
 rm -rf $FS_DIR/tmp/* \
