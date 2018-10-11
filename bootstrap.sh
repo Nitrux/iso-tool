@@ -23,7 +23,7 @@ nomad-desktop
 cp /bin/mv /usr/bin/mv_clone
 cp /bin/ln /usr/bin/ln_clone
 
-# copy contents to usr/bin and create symlinks
+# copy contents to usr/bin, delete dirs and create symlinks
 mv_clone /bin/* /usr/bin
 rm -rf /bin
 ln_clone -sv /usr/bin /bin
@@ -36,7 +36,7 @@ mv_clone /usr/sbin/* /usr/bin
 rm -rf /usr/sbin
 ln_clone -sv /usr/bin /usr/sbin
 
-# delete /bin /sbin /usr/sbin and mv_clone ln_clone
+# delete copies of commands
 rm /usr/bin/mv_clone /usr/bin/ln_clone
 
 
@@ -66,8 +66,8 @@ rm nxos.key
 # -- Update packages list and install packages. Install Nomad Desktop meta package avoiding recommended packages from deps.
 
 apt-get -y -qq update
-apt-get -y -qq install -y $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
-apt-get -yy -q install --only-upgrade base-files=10.4+nxos
+apt-get -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
+apt-get -yy install --only-upgrade base-files=10.4+nxos
 apt-get -y -qq clean
 
 
