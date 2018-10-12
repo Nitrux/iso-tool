@@ -58,15 +58,9 @@ tar xf base.tar.gz -C $FS_DIR
 run_chroot bootstrap.sh || true
 
 
-# Copy the kernel to $ISO_DIR.
+# Copy the kernel and initramfs to $ISO_DIR.
 
 cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
-
-
-# Customize the initramfs file and put it in $ISO_DIR.
-
-cat persistence >> $FS_DIR/usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-run_chroot update-initramfs -u
 cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 

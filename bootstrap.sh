@@ -167,3 +167,9 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Add config for SDDM.
 
 cp /configs/sddm.conf /etc
+
+
+# -- Modify the initramfs code.
+
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+update-initramfs -u
