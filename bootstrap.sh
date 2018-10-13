@@ -98,10 +98,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-headers-4.18.13-041813_4.18.13-041813.201810100332_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-headers-4.18.13-041813-generic_4.18.13-041813.201810100332_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-image-unsigned-4.18.13-041813-generic_4.18.13-041813.201810100332_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.13/linux-modules-4.18.13-041813-generic_4.18.13-041813.201810100332_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-headers-4.18.14-041814_4.18.14-041814.201810130431_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-headers-4.18.14-041814-generic_4.18.14-041814.201810130431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-image-unsigned-4.18.14-041814-generic_4.18.14-041814.201810130431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-modules-4.18.14-041814-generic_4.18.14-041814.201810130431_amd64.deb
 '
 
 mkdir latest_kernel
@@ -173,3 +173,7 @@ cp /configs/sddm.conf /etc
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
+
+# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
+
+cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
