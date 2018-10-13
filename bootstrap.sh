@@ -13,8 +13,6 @@ localechooser-data
 cifs-utils
 casper
 lupin-casper
-nitrux-minimal
-nitrux-standard
 nomad-desktop
 '
 
@@ -56,22 +54,20 @@ cp /configs/sources.list /etc/apt/sources.list
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c &&
 	apt-key add neon.key
-	apt -qq update
-	rm neon.key
 
 wget -q http://repo.nxos.org/public.key -O nxos.key
 echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c &&
 	apt-key add nxos.key
-	apt -qq update
-	rm nxos.key
+
+rm neon.key
+rm nxos.key
 
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
 apt -qq update
-apt -yy -qq upgrade
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
 apt -qq autoclean
