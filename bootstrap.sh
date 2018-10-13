@@ -156,6 +156,20 @@ ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
+# -- Install AppImage daemon.
+
+appimaged='
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git189b800.travis42_amd64.deb
+'
+
+mkdir appimaged_deb
+
+for x in appimaged; do
+	wget -q -P appimaged_deb $x
+done
+dpkg -iR appimaged_deb
+rm -r appimaged_deb
+
 
 # -- Add /Applications to $PATH.
 
