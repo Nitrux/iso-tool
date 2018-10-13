@@ -2,7 +2,7 @@ sudo: required
 
 script:
   - sudo apt-get -qq update
-  - sudo apt-get -yy -qq install squashfs-tools zsync xorriso sshpass apt-utils --no-install-recommends
+  - sudo apt-get -yy -qq install squashfs-tools zsync xorriso sshpass apt-utils
   - sudo bash ./build.sh
 
 branches:

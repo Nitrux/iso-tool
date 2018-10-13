@@ -13,6 +13,7 @@ localechooser-data
 cifs-utils
 casper
 lupin-casper
+nomad-desktop
 '
 
 
@@ -67,7 +68,6 @@ rm nxos.key
 
 apt -qq update
 apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
-apt -yy install nomad-desktop --no-install-recommends
 apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
 apt -qq autoclean
