@@ -49,8 +49,6 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
 # -- packages are built against the latest LTS release of Ubuntu.
 
-cp /configs/sources.list /etc/apt/sources.list
-
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c &&
 	apt-key add neon.key
@@ -58,6 +56,8 @@ echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key |
 wget -q http://repo.nxos.org/public.key -O nxos.key
 echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c &&
 	apt-key add nxos.key
+	
+cp /configs/sources.list /etc/apt/sources.list
 
 rm neon.key
 rm nxos.key
