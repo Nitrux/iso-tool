@@ -66,8 +66,8 @@ rm nxos.key
 # -- avoiding recommended packages.
 
 apt -qq update
-apt -yy -qq install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
-apt -yy -qq install nomad-desktop --no-install-recommends > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
+apt -yy install nomad-desktop --no-install-recommends
 apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
 apt -qq autoclean
