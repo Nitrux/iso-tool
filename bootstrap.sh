@@ -173,9 +173,9 @@ rm -r appimaged_deb
 
 # -- Add /Applications to $PATH.
 
-printf "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
-sed -i "/env_reset/d" /etc/sudoers
+# printf "PATH=$PATH:/Applications\n" > /etc/environment
+# sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
+# sed -i "/env_reset/d" /etc/sudoers
 
 
 # -- Add config for SDDM.
