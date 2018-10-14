@@ -156,7 +156,8 @@ ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
-# -- Install AppImage daemon.
+# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
+# -- firejail should be automatically used by the daemon to sandbox AppImages.
 
 appimaged='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git189b800.travis42_amd64.deb
@@ -177,7 +178,6 @@ printf "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
-
 # -- Add config for SDDM.
 
 cp /configs/sddm.conf /etc
@@ -191,3 +191,8 @@ update-initramfs -u
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
 
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+
+# -- Create /Applications dir for users. This dir "should" be created by the Software Center.
+# -- Downloading AppImages with the SC will fail if this dir doesn't exist.
+
+mkdir /etc/skel/Applications
