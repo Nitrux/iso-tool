@@ -77,6 +77,7 @@ apt -qq autoclean
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
+https://github.com/UriHerrera/storage/blob/master/ungoogled-chromium_69.0.3497.100-2_linux.AppImage
 '
 
 mkdir /Applications
