@@ -77,6 +77,9 @@ apt -qq autoclean
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
+https://github.com/UriHerrera/storage/raw/master/ungoogled-chromium_69.0.3497.100-2_linux.AppImage
+https://github.com/anupam-git/vlc-appimage/releases/download/continuous/VLC_media_player-x86_64.AppImage
+https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -159,13 +162,13 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
-appimaged='
+appimgd='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git189b800.travis42_amd64.deb
 '
 
 mkdir appimaged_deb
 
-for x in appimaged; do
+for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 dpkg -iR appimaged_deb
@@ -197,6 +200,6 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 mkdir /etc/skel/Applications
 
-# -- Move Chromium AppImage to the user /Applications dir
+# -- Move AppImages to the user /Applications dir.
 
-# mv /Applications/ungoogled-chromium_69.0.3497.100-2_linux.AppImage /etc/skel/Applications
+mv /Applications/*.AppImage /etc/skel/Applications
