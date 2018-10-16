@@ -197,3 +197,7 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 # -- Downloading AppImages with the SC will fail if this dir doesn't exist.
 
 mkdir /etc/skel/Applications
+
+# -- Move Chromium AppImage to the user /Applications dir
+
+mv /Applications/ungoogled-chromium_69.0.3497.100-2_linux.AppImage /etc/skel/Applications
