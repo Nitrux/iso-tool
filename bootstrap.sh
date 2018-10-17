@@ -202,4 +202,4 @@ mkdir /etc/skel/Applications
 
 # -- Move AppImages to the user /Applications dir.
 
-#   mv /Applications/*.AppImage /etc/skel/Applications
+ln -sv /Applications/*.AppImage /etc/skel/Applications
