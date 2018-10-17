@@ -189,6 +189,7 @@ cp /configs/sddm.conf /etc
 # -- Modify the initramfs code.
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+cat /configs/update-image >> /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 update-initramfs -u
 
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
