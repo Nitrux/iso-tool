@@ -67,6 +67,7 @@ rm nxos.key
 # -- avoiding recommended packages.
 
 apt -qq update
+apt -yy -qq dist-upgrade
 apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
@@ -138,6 +139,8 @@ rm -r maui_debs
 
 
 # -- Install Software Center Maui port.
+# -- For now, the software center, libappimage and libappimageinfo provide the same library
+# -- and to install each package the library must be overwritten each time.
 
 nxsc='
 https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
@@ -151,9 +154,6 @@ for x in $nxsc; do
 done
 dpkg --force-all -iR nxsc_deps
 rm -r nxsc_deps
-
-
-# -- For now, the software center, libappimage and libappimageinfo provide the same library and to install each one it must be overriden each time.
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
@@ -204,6 +204,6 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 mkdir /etc/skel/Applications
 
 
-# -- Move AppImages to the user /Applications dir.
+# -- Create links of AppImages to the user /Applications dir.
 
 ln -sv /Applications/*.AppImage /etc/skel/Applications
