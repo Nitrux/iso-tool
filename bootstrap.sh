@@ -101,10 +101,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-headers-4.18.14-041814_4.18.14-041814.201810130431_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-headers-4.18.14-041814-generic_4.18.14-041814.201810130431_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-image-unsigned-4.18.14-041814-generic_4.18.14-041814.201810130431_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.14/linux-modules-4.18.14-041814-generic_4.18.14-041814.201810130431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-headers-4.18.16-041816_4.18.16-041816.201810200431_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-headers-4.18.16-041816-generic_4.18.16-041816.201810200431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-image-unsigned-4.18.16-041816-generic_4.18.16-041816.201810200431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-modules-4.18.16-041816-generic_4.18.16-041816.201810200431_amd64.deb
 '
 
 mkdir latest_kernel
@@ -141,7 +141,7 @@ rm -r maui_debs
 
 nxsc='
 https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center_2.3-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center-maui_2.3-1_amd64.deb
 '
 
 mkdir nxsc_deps
