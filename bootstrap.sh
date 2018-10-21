@@ -192,15 +192,23 @@ cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05m
 cat /configs/update-image >> /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 update-initramfs -u
 
+
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
 
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+
 
 # -- Create /Applications dir for users. This dir "should" be created by the Software Center.
 # -- Downloading AppImages with the SC will fail if this dir doesn't exist.
 
 mkdir /etc/skel/Applications
 
+
 # -- Move AppImages to the user /Applications dir.
 
 ln -sv /Applications/*.AppImage /etc/skel/Applications
+
+
+# -- TEST.
+
+touch /UPDATE-TEST
