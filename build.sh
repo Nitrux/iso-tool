@@ -9,7 +9,7 @@ OUTPUT_DIR=$PWD/out
 IMAGE_NAME=nitrux_release_testing.iso
 
 
-# Function for running commands in a chroot.
+# -- Function for running commands in a chroot.
 
 run_chroot () {
 
@@ -45,7 +45,7 @@ run_chroot () {
 }
 
 
-# Prepare the directory were the filesystem will be created.
+# -- Prepare the directory were the filesystem will be created.
 
 mkdir -p $FS_DIR
 
@@ -53,18 +53,18 @@ wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/rele
 tar xf base.tar.gz -C $FS_DIR
 
 
-# Create the filesystem.
+# -- Create the filesystem.
 
 run_chroot bootstrap.sh || true
 
 
-# Copy the kernel and initramfs to $ISO_DIR.
+# -- Copy the kernel and initramfs to $ISO_DIR.
 
 cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
 cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
-# Clean the filesystem.
+# -- Clean the filesystem.
 
 run_chroot apt -yy -qq purge --remove casper lupin-casper
 run_chroot apt -yy -qq autoremove
@@ -78,7 +78,7 @@ rm -rf $FS_DIR/tmp/* \
 	$FS_DIR/var/lib/dbus/machine-id
 
 
-# Compress the root filesystem.
+# -- Compress the root filesystem.
 
 (while :; do sleep 300; echo '.'; done) &
 
@@ -88,12 +88,12 @@ mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
 kill $!
 
 
-# Create the output directory.
+# -- Create the output directory.
 
 mkdir $OUTPUT_DIR
 
 
-# Generate the ISO image.
+# -- Generate the ISO image.
 
 (
 	cd $ISO_DIR
@@ -107,27 +107,32 @@ mkdir $OUTPUT_DIR
 )
 
 
-# Embed the update information in the image.
+# -- Embed the update information in the image.
 
 UPDATE_URL=http://88.198.66.58:8000/$IMAGE_NAME.zsync
 echo $UPDATE_URL | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
 
 
-# Generate the zsync file.
+# -- Generate the zsync file.
 
 zsyncmake $OUTPUT_DIR/$IMAGE_NAME -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE_NAME.zsync
 
 
-# Calculate the checksum.
+# -- Calculate the checksum.
 
 sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
 
 
-# Deploy the image.
+# -- Upload the ISO image.
 
 export SSHPASS=$DEPLOY_PASS
 
+cd $OUTPUT_DIR
+
+ln -s $IMAGE_NAME IMAGE-$(git rev-parse --short HEAD).iso
+ln -s $IMAGE_NAME.zsync UPDATE_INFO-$(git rev-parse --short HEAD).zsync
+
 (sleep 300; echo '.') &
-for f in $OUTPUT_DIR/$IMAGE_NAME*; do
+for f in *; do
     sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
 done
