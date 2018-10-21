@@ -207,8 +207,3 @@ mkdir /etc/skel/Applications
 # -- Move AppImages to the user /Applications dir.
 
 ln -sv /Applications/*.AppImage /etc/skel/Applications
-
-
-# -- TEST.
-
-touch /UPDATE-TEST
