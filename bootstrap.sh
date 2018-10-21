@@ -143,8 +143,8 @@ rm -r maui_debs
 # -- and to install each package the library must be overwritten each time.
 
 nxsc='
-https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center-maui_2.3-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center-maui_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
