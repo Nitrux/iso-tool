@@ -43,13 +43,11 @@ nomad-desktop
 # -- Install basic packages.
 
 apt -qq update
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
 # -- packages are built against the latest LTS release of Ubuntu.
-
-cp /configs/sources.list /etc/apt/sources.list
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c &&
@@ -62,14 +60,15 @@ echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key |
 rm neon.key
 rm nxos.key
 
+cp /configs/sources.list /etc/apt/sources.list
+
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
 apt -qq update
-# apt -yy -qq dist-upgrade
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
-apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
+apt -yy -qq install --only-upgrade base-files=10.4+nxos
 apt -qq clean
 apt -qq autoclean
 
