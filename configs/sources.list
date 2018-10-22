@@ -1,5 +1,5 @@
 #######################
-# Ubuntu Repos Bionic 
+# Ubuntu Repos Bionic #
 #######################
 
 deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
@@ -10,7 +10,11 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe mul
 ##################
 # KDE Neon Repos #
 ##################
+
+# deb http://archive.neon.kde.org/dev/unstable bionic main
+# deb http://archive.neon.kde.org/dev/stable bionic main
 deb http://archive.neon.kde.org/user bionic main
+
 
 
 ################

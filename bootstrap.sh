@@ -67,7 +67,7 @@ rm nxos.key
 # -- avoiding recommended packages.
 
 apt -qq update
-apt -yy -qq dist-upgrade
+# apt -yy -qq dist-upgrade
 apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
