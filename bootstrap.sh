@@ -43,7 +43,7 @@ nomad-desktop
 # -- Install basic packages.
 
 apt -qq update
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -67,8 +67,9 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- avoiding recommended packages.
 
 apt -qq update
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
-apt -yy -qq install --only-upgrade base-files=10.4+nxos
+apt -yy -qq upgrade
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends  > /dev/null
+apt -yy -qq install --only-upgrade base-files=10.4+nxos  > /dev/null
 apt -qq clean
 apt -qq autoclean
 
@@ -101,10 +102,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-headers-4.18.16-041816_4.18.16-041816.201810200431_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-headers-4.18.16-041816-generic_4.18.16-041816.201810200431_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-image-unsigned-4.18.16-041816-generic_4.18.16-041816.201810200431_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.18.16/linux-modules-4.18.16-041816-generic_4.18.16-041816.201810200431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
 '
 
 mkdir latest_kernel
