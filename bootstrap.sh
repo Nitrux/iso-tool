@@ -16,6 +16,30 @@ lupin-casper
 nomad-desktop
 '
 
+
+# # -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
+# 
+# # make copies of commands before moving
+# cp /bin/mv /usr/bin/mv_clone
+# cp /bin/ln /usr/bin/ln_clone
+# 
+# # copy contents to usr/bin, delete dirs and create symlinks
+# mv_clone /bin/* /usr/bin
+# rm -rf /bin
+# ln_clone -sv /usr/bin /bin
+# 
+# mv_clone /sbin/* /usr/bin
+# rm -rf /sbin
+# ln_clone -sv /usr/bin /sbin
+# 
+# mv_clone /usr/sbin/* /usr/bin
+# rm -rf /usr/sbin
+# ln_clone -sv /usr/bin /usr/sbin
+# 
+# # delete copies of commands
+# rm /usr/bin/mv_clone /usr/bin/ln_clone
+
+
 # -- Install basic packages.
 
 apt -qq update
@@ -65,7 +89,18 @@ for x in $(echo $APPS | tr '\n' ' '); do
 	wget -qP /Applications $x
 done
 
-chmod +x /Applications/*
+chmod 0500 /Applications/*
+
+
+# -- Create /Applications dir for users. This dir "should" be created by the Software Center.
+# -- Downloading AppImages with the SC will fail if this dir doesn't exist.
+
+mkdir /etc/skel/Applications
+
+
+# -- Create links of AppImages to the user /Applications dir.
+
+ln -sv /Applications/*.AppImage /etc/skel/Applications
 
 
 # -- Add znx-gui.
@@ -172,9 +207,3 @@ update-initramfs -u
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
 
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-
-
-# -- Create /Applications dir for users. This dir "should" be created by the Software Center.
-# -- Downloading AppImages with the SC will fail if this dir doesn't exist.
-
-mkdir /etc/skel/Applications
