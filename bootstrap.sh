@@ -65,7 +65,7 @@ for x in $(echo $APPS | tr '\n' ' '); do
 	wget -qP /Applications $x
 done
 
-chmod 744 /Applications/*
+chmod 0554 /Applications/*
 
 
 # -- Create /Applications dir for users. This dir "should" be created by the Software Center.
@@ -139,6 +139,7 @@ mkdir nxsc_deps
 for x in $nxsc; do
 	wget -q -P nxsc_deps $x
 done
+
 dpkg --force-all -iR nxsc_deps
 rm -r nxsc_deps
 
@@ -158,6 +159,7 @@ mkdir appimaged_deb
 for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
+
 dpkg -iR appimaged_deb
 rm -r appimaged_deb
 
