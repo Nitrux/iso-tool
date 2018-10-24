@@ -110,7 +110,7 @@ mkdir $OUTPUT_DIR
 # -- Embed the update information in the image.
 
 UPDATE_URL=http://88.198.66.58:8000/$IMAGE_NAME.zsync
-echo $UPDATE_URL | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
+echo "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
 
 
 # -- Generate the zsync file.
