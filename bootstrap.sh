@@ -16,30 +16,6 @@ lupin-casper
 nomad-desktop
 '
 
-
-# # -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
-# 
-# # make copies of commands before moving
-# cp /bin/mv /usr/bin/mv_clone
-# cp /bin/ln /usr/bin/ln_clone
-# 
-# # copy contents to usr/bin, delete dirs and create symlinks
-# mv_clone /bin/* /usr/bin
-# rm -rf /bin
-# ln_clone -sv /usr/bin /bin
-# 
-# mv_clone /sbin/* /usr/bin
-# rm -rf /sbin
-# ln_clone -sv /usr/bin /sbin
-# 
-# mv_clone /usr/sbin/* /usr/bin
-# rm -rf /usr/sbin
-# ln_clone -sv /usr/bin /usr/sbin
-# 
-# # delete copies of commands
-# rm /usr/bin/mv_clone /usr/bin/ln_clone
-
-
 # -- Install basic packages.
 
 apt -qq update
@@ -89,7 +65,7 @@ for x in $(echo $APPS | tr '\n' ' '); do
 	wget -qP /Applications $x
 done
 
-chmod 0500 /Applications/*
+chmod 644 /Applications/*
 
 
 # -- Create /Applications dir for users. This dir "should" be created by the Software Center.
@@ -132,7 +108,7 @@ rm -r latest_kernel
 # -- Install Maui Apps Debs.
 
 mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1.2-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/vvave_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/pix_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/index_0.1-1_amd64.deb
@@ -149,13 +125,13 @@ dpkg -iR maui_debs
 rm -r maui_debs
 
 
-# -- Install Software Center Maui port.
+# -- Install Software Center.
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
 # -- and to install each package the library must be overwritten each time.
 
 nxsc='
 https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center-maui_2.3-2_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center-plasma_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
