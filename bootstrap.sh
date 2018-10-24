@@ -74,9 +74,9 @@ chmod +x /Applications/*
 mkdir /etc/skel/Applications
 
 
-# -- Create links of AppImages to the user /Applications dir.
+# -- Add AppImages to the user /Applications dir.
 
-ln -sv /Applications/*.AppImage /etc/skel/Applications
+mv /Applications/*.AppImage /etc/skel/Applications
 
 
 # -- Add znx-gui.
@@ -108,7 +108,7 @@ rm -r latest_kernel
 # -- Install Maui Apps Debs.
 
 mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1.2-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/vvave_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/pix_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/index_0.1-1_amd64.deb
