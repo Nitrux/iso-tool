@@ -65,7 +65,7 @@ for x in $(echo $APPS | tr '\n' ' '); do
 	wget -qP /Applications $x
 done
 
-chmod 0554 /Applications/*
+chmod u=rwx,g=rx,o= /Applications/*
 
 
 # -- Create /Applications dir for users. This dir "should" be created by the Software Center.
