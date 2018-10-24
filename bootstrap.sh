@@ -74,7 +74,7 @@ apt -qq clean
 apt -qq autoclean
 
 
-# -- Install AppImages.
+# -- Add AppImages.
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
@@ -204,6 +204,6 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 mkdir /etc/skel/Applications
 
 
-# -- Create links of AppImages to the user /Applications dir.
+# -- Move default AppImages to /Applications dir. DO NOT CREATE LINKS. LINKS CRASH THE SC.
 
-ln -sv /Applications/*.AppImage /etc/skel/Applications
+mv /Applications/*.AppImage /etc/skel/Applications
