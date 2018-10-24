@@ -16,30 +16,6 @@ lupin-casper
 nomad-desktop
 '
 
-
-# # -- Make /bin, /sbin and /usr/sbin, symlinks to /usr/bin.
-# 
-# # make copies of commands before moving
-# cp /bin/mv /usr/bin/mv_clone
-# cp /bin/ln /usr/bin/ln_clone
-# 
-# # copy contents to usr/bin, delete dirs and create symlinks
-# mv_clone /bin/* /usr/bin
-# rm -rf /bin
-# ln_clone -sv /usr/bin /bin
-# 
-# mv_clone /sbin/* /usr/bin
-# rm -rf /sbin
-# ln_clone -sv /usr/bin /sbin
-# 
-# mv_clone /usr/sbin/* /usr/bin
-# rm -rf /usr/sbin
-# ln_clone -sv /usr/bin /usr/sbin
-# 
-# # delete copies of commands
-# rm /usr/bin/mv_clone /usr/bin/ln_clone
-
-
 # -- Install basic packages.
 
 apt -qq update
@@ -202,8 +178,3 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 # -- Downloading AppImages with the SC will fail if this dir doesn't exist.
 
 mkdir /etc/skel/Applications
-
-
-# -- Move default AppImages to /Applications dir. DO NOT CREATE LINKS. LINKS CRASH THE SC.
-
-mv /Applications/*.AppImage /etc/skel/Applications
