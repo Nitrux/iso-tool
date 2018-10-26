@@ -54,7 +54,7 @@ apt -qq autoclean
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
-https://github.com/UriHerrera/storage/raw/master/ungoogled-chromium_69.0.3497.100-2_linux.AppImage
+https://github.com/UriHerrera/storage/raw/master/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
 https://github.com/UriHerrera/storage/raw/master/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 '
