@@ -6,7 +6,7 @@ FS_DIR=$PWD/root
 ISO_DIR=$PWD/image
 OUTPUT_DIR=$PWD/out
 
-IMAGE_NAME=nitrux_release_testing.iso
+IMAGE_NAME=nitrux_release_stable
 
 
 # -- Function for running commands in a chroot.
