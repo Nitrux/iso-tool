@@ -1,133 +1,138 @@
-#! /bin/sh
+#! /bin/sh 
 
-# Prepare the root filesystem.
+set -e
 
-mkdir -p \
-	filesystem \
-	iso/casper \
-	iso/boot/isolinux
+FS_DIR=$PWD/root
+ISO_DIR=$PWD/image
+OUTPUT_DIR=$PWD/out
 
-wget -q http://cdimage.ubuntu.com/ubuntu-base/releases/16.04.3/release/ubuntu-base-16.04.3-base-amd64.tar.gz -O base.tar.gz
-tar xf base.tar.gz -C filesystem/
-rm -rf filesystem/dev/*
-cp /etc/resolv.conf filesystem/etc/
-
-mkdir -p \
-	filesystem/dev \
-	filesystem/proc
-
-mount -o bind /dev filesystem/dev || exit 1
-mount -o bind /proc filesystem/proc || exit 1
+IMAGE_NAME=nitrux_release_testing.iso
 
 
-# Install the nxos-desktop to `filesystem/`
+# -- Function for running commands in a chroot.
 
-PACKAGES="nxos-desktop sddm base-files casper lupin-casper linux-image-generic"
-chroot filesystem/ sh -c "
-	export LANG=C
-	export LC_ALL=C
+run_chroot () {
 
-	apt-get update
-	apt-get install -y apt-transport-https wget ca-certificates
+	mountpoint -q $FS_DIR/dev/ || \
+		rm -rf $FS_DIR/dev/*
 
-	sed -i 's/#.*$//;/^$/d' /etc/apt/sources.list
+	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
+	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
+	mount -t devtmpfs -o mode=0755,nosuid . $FS_DIR/dev
+	mount -t tmpfs -o nosuid,nodev,mode=0755 . $FS_DIR/run
+	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
 
-	wget -q https://archive.neon.kde.org/public.key -O neon.key
-	if echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c; then
-		apt-key add neon.key
-		echo deb http://archive.neon.kde.org/dev/stable xenial main >> /etc/apt/sources.list
-		echo deb http://archive.neon.kde.org/user xenial main >> /etc/apt/sources.list
+	cp /etc/resolv.conf $FS_DIR/etc
+	cp -r configs $FS_DIR
+
+	if [ -f $1 -a -x $1 ]; then
+		cp $1 $FS_DIR/
+		chroot $FS_DIR/ /$@
+		rm -r $FS_DIR/$1
+	else
+		chroot $FS_DIR/ $@
 	fi
-	rm neon.key
 
-	wget -q http://repo.nxos.org/public.key -O nxos.key
-	if echo de7501e2951a9178173f67bdd29a9de45a572f19e387db5f4e29eb22100c2d0e nxos.key | sha256sum -c; then
-		apt-key add nxos.key
-		echo deb http://repo.nxos.org nxos main >> /etc/apt/sources.list
-		echo deb http://repo.nxos.org xenial main >> /etc/apt/sources.list
-	fi
-	rm nxos.key
+	for d in $FS_DIR/*; do
+		mountpoint -q $d && \
+			umount -f $d
+	done
 
-	apt-get update
-	apt-get -qq install $PACKAGES > /dev/null || exit 1
-	apt-get clean
-	useradd -m -U -G sudo,cdrom,adm,dip,plugdev -p '' me
-	echo 'me:nitrux' | chpasswd
-	hostnamectl set-hostname nitrux
-	systemctl enable sddm
-	find /var/log -regex '.*?[0-9].*?' -exec rm -v {} \;
-	rm /etc/resolv.conf
-"
+	rm -rf \
+		$FS_DIR/etc/resolv.conf \
+		$FS_DIR/configs
 
-umount filesystem/proc
-umount filesystem/dev
-
-cp filesystem/vmlinuz iso/boot/linux
-cp filesystem/initrd.img iso/boot/initramfs
+}
 
 
-# Clean the filesystem.
+# -- Prepare the directory were the filesystem will be created.
 
-rm -rf filesystem/tmp/* \
-	filesystem/boot/* \
-	filesystem/vmlinuz* \
-	filesystem/initrd.img* \
-	filesystem/var/log/* \
-	filesystem/var/lib/dbus/machine-id
+mkdir -p $FS_DIR
+
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.1-base-amd64.tar.gz
+tar xf base.tar.gz -C $FS_DIR
 
 
-# Compress the root filesystem and create the ISO.
+# -- Create the filesystem.
 
-(sleep 300; echo ' • ') &
+run_chroot bootstrap.sh || true
+
+
+# -- Copy the kernel and initramfs to $ISO_DIR.
+
+cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
+cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
+
+
+# -- Clean the filesystem.
+
+run_chroot apt -yy -qq purge --remove casper lupin-casper
+run_chroot apt -yy -qq autoremove
+
+
+rm -rf $FS_DIR/tmp/* \
+	$FS_DIR/boot \
+	$FS_DIR/vmlinuz* \
+	$FS_DIR/initrd.img* \
+	$FS_DIR/var/log/* \
+	$FS_DIR/var/lib/dbus/machine-id
+
+
+# -- Compress the root filesystem.
+
+(while :; do sleep 300; echo '.'; done) &
+
 echo "Compressing the root filesystem"
-mksquashfs filesystem/ iso/casper/filesystem.squashfs -comp xz -no-progress
+mkdir -p $ISO_DIR/casper
+mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
+kill $!
 
 
-wget https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz -O - | tar xJf -
+# -- Create the output directory.
 
-SL=syslinux-6.03
-cp $SL/bios/core/isolinux.bin \
-	$SL/bios/mbr/isohdpfx.bin \
-	$SL/bios/com32/menu/menu.c32 \
-	$SL/bios/com32/lib/libcom32.c32 \
-	$SL/bios/com32/menu/vesamenu.c32 \
-	$SL/bios/com32/libutil/libutil.c32 \
-	$SL/bios/com32/elflink/ldlinux/ldlinux.c32 \
-	iso/boot/isolinux/
+mkdir $OUTPUT_DIR
 
-rm -rf $SL*
 
-cd iso/
+# -- Generate the ISO image.
 
-wget -q -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/splash.png -O boot/isolinux/splash.png
-wget -q -nc https://raw.githubusercontent.com/nomad-desktop/isolinux-nomad-theme/master/theme.txt -O boot/isolinux/theme.txt
+(
+	cd $ISO_DIR
+	echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
 
-echo '
-default vesamenu.c32
-include theme.txt
+	xorriso -as mkisofs -r -J -l \
+		-V 'NITRUX_OS' \
+		-e boot/grub/efi.img \
+		-no-emul-boot \
+		-o $OUTPUT_DIR/$IMAGE_NAME .
+)
 
-menu title Installer boot menu.
-label Try Nitrux
-	kernel /boot/linux
-	append initrd=/boot/initramfs boot=casper elevator=noop quiet splash
 
-label Try Nitrux (safe graphics mode)
-	kernel /boot/linux
-	append initrd=/boot/initramfs boot=casper nomodeset elevator=noop quiet splash
+# -- Embed the update information in the image.
 
-menu tabmsg Press ENTER to boot or TAB to edit a menu entry
-' > boot/isolinux/syslinux.cfg
+UPDATE_URL=http://88.198.66.58:8000/$IMAGE_NAME.zsync
+echo "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
 
-echo -n $(du -sx --block-size=1 . | tail -1 | awk '{ print $1 }') > casper/filesystem.size
 
-# TODO: create UEFI images.
+# -- Generate the zsync file.
 
-xorriso -as mkisofs \
-	-o ../nxos.iso \
-	-no-emul-boot \
-	-boot-info-table \
-	-boot-load-size 4 \
-	-c boot/isolinux/boot.cat \
-	-b boot/isolinux/isolinux.bin \
-	-isohybrid-mbr boot/isolinux/isohdpfx.bin \
-	./
+zsyncmake $OUTPUT_DIR/$IMAGE_NAME -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE_NAME.zsync
+
+
+# -- Calculate the checksum.
+
+sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
+
+
+# -- Upload the ISO image.
+
+export SSHPASS=$DEPLOY_PASS
+
+cd $OUTPUT_DIR
+
+ln -s $IMAGE_NAME IMAGE-$(git rev-parse --short HEAD).iso
+ln -s $IMAGE_NAME.zsync UPDATE_INFO-$(git rev-parse --short HEAD).zsync
+
+(sleep 300; echo '.') &
+for f in *; do
+    sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
+done

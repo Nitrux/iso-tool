@@ -1,1 +1,7 @@
-latest/*iso
+# Compiled source #
+###################
+*.directory
+*.bak
+/.project
+*.db
+*.qmlc

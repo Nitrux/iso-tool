@@ -1,0 +1,15 @@
+mkdir -p \
+	/root/isodevice/.overlay-tmp/etc.w \
+	/root/isodevice/.overlay-tmp/home.w
+
+mount -t overlay \
+	-o lowerdir=/root/etc \
+	-o upperdir=/root/isodevice/data/etc \
+	-o workdir=/root/isodevice/.overlay-tmp/etc.w \
+	. /root/etc
+
+mount -t overlay \
+	-o lowerdir=/root/home \
+	-o upperdir=/root/isodevice/data/home \
+	-o workdir=/root/isodevice/.overlay-tmp/home.w \
+	. /root/home
