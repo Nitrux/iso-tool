@@ -44,8 +44,8 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update
 apt -yy -qq upgrade
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends  > /dev/null
-apt -yy -qq install --only-upgrade base-files=10.4+nxos  > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
+apt -yy -qq install --only-upgrade base-files=10.4+nxos nomad-desktop-settings=1.4.14 nomad-plasma-look-and-feel=1.6.15
 apt -qq clean
 apt -qq autoclean
 
