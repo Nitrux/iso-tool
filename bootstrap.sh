@@ -33,6 +33,9 @@ wget -q http://repo.nxos.org/public.key -O nxos.key
 echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c &&
 	apt-key add nxos.key
 
+# -- Add key for the Graphics Driver PPA
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C
+
 rm neon.key
 rm nxos.key
 
@@ -43,8 +46,8 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- avoiding recommended packages.
 
 apt -qq update
-apt -yy -qq upgrade
 apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy -qq upgrade
 apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
 apt -qq autoclean
