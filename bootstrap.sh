@@ -44,8 +44,8 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update
 apt -yy -qq upgrade
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends  > /dev/null
-apt -yy -qq install --only-upgrade base-files=10.4+nxos  > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
 apt -qq clean
 apt -qq autoclean
 
@@ -182,6 +182,6 @@ cat /configs/update-image >> /usr/share/initramfs-tools/scripts/casper-premount/
 update-initramfs -u
 
 
-# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
+# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
