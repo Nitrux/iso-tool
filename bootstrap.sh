@@ -182,6 +182,6 @@ cat /configs/update-image >> /usr/share/initramfs-tools/scripts/casper-premount/
 update-initramfs -u
 
 
-# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842
+# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
