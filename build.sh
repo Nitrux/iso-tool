@@ -6,7 +6,7 @@ FS_DIR=$PWD/root
 ISO_DIR=$PWD/image
 OUTPUT_DIR=$PWD/out
 
-IMAGE_NAME=nitrux_release_stable
+IMAGE_NAME=nitrux_release_$(git branch | grep \* | cut -d ' ' -f2 | sed 's/master/stable/')
 
 
 # -- Function for running commands in a chroot.
