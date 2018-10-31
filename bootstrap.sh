@@ -19,7 +19,7 @@ nomad-desktop
 # -- Install basic packages.
 
 apt -qq update
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -46,9 +46,9 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- avoiding recommended packages.
 
 apt -qq update
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
 apt -yy -qq upgrade
-apt -yy -qq install --only-upgrade base-files=10.4+nxos > /dev/null
+apt -yy -qq install --only-upgrade base-files=10.4+nxos
 apt -qq clean
 apt -qq autoclean
 
