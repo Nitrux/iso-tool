@@ -48,7 +48,6 @@ cp /configs/sources.list /etc/apt/sources.list
 apt -qq update
 apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
 apt -yy -qq upgrade
-apt -yy -qq install --only-upgrade base-files=10.4+nxos
 apt -qq clean
 apt -qq autoclean
 
