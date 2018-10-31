@@ -25,3 +25,9 @@ deb http://repo.nxos.org/testing nxos main
 ####################
 
 deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main 
+
+####################
+# Graphics Drivers #
+####################
+
+deb http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu 

@@ -36,6 +36,9 @@ echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key |
 # -- Add key for the Graphics Driver PPA
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C
 
+# -- Add key for the Ubuntu-X PPA
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9
+
 rm neon.key
 rm nxos.key
 
