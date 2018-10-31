@@ -30,4 +30,4 @@ deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main
 # Graphics Drivers #
 ####################
 
-deb http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu 
+deb http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu bionic main 
