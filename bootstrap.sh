@@ -81,7 +81,7 @@ mkdir /etc/skel/Applications
 
 # -- Add AppImages to the user /Applications dir.
 
-mv /Applications/*.AppImage /etc/skel/Applications
+cp -a /Applications/*.AppImage /etc/skel/Applications
 
 
 # -- Add znx-gui.
