@@ -67,7 +67,7 @@ https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_6
 mkdir /Applications
 
 for x in $(echo $APPS | tr '\n' ' '); do
-	wget -qP /Applications $x
+	wget -P /Applications $x
 done
 
 chmod +x /Applications/*
