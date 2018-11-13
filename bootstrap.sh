@@ -127,7 +127,7 @@ for x in $mauipkgs; do
 	wget -q -P maui_debs $x
 done
 
-dpkg -iR maui_debs
+dpkg --force-all -iR maui_debs
 rm -r maui_debs
 
 
