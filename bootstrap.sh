@@ -18,8 +18,8 @@ nomad-desktop
 
 # -- Install basic packages.
 
-apt -qq update
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
+apt -qq update > /dev/null
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -48,10 +48,10 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt -qq update
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends
-apt -yy -qq upgrade
-apt -qq clean
+apt -qq update > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy -qq upgrade > /dev/null
+apt -qq clean 
 apt -qq autoclean
 
 
@@ -59,18 +59,19 @@ apt -qq autoclean
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
-https://github.com/UriHerrera/storage/raw/master/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
-https://github.com/UriHerrera/storage/raw/master/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 '
 
 mkdir /Applications
 
 for x in $(echo $APPS | tr '\n' ' '); do
-	wget -P /Applications $x
+	wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
+
 
 
 # -- Create /Applications dir for users. This dir "should" be created by the Software Center.
@@ -127,7 +128,7 @@ for x in $mauipkgs; do
 	wget -q -P maui_debs $x
 done
 
-dpkg --force-all -iR maui_debs
+dpkg --force-all -iR maui_debs > /dev/null
 rm -r maui_debs
 
 
@@ -146,7 +147,7 @@ for x in $nxsc; do
 	wget -q -P nxsc_deps $x
 done
 
-dpkg --force-all -iR nxsc_deps
+dpkg --force-all -iR nxsc_deps > /dev/null
 rm -r nxsc_deps
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
@@ -166,7 +167,7 @@ for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 
-dpkg -iR appimaged_deb
+dpkg -iR appimaged_deb > /dev/null
 rm -r appimaged_deb
 
 
