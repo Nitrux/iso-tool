@@ -96,10 +96,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.1/linux-headers-4.19.1-041901_4.19.1-041901.201811041431_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.1/linux-headers-4.19.1-041901-generic_4.19.1-041901.201811041431_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.1/linux-image-unsigned-4.19.1-041901-generic_4.19.1-041901.201811041431_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.1/linux-modules-4.19.1-041901-generic_4.19.1-041901.201811041431_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-headers-4.19.2-041902_4.19.2-041902.201811132032_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-headers-4.19.2-041902-generic_4.19.2-041902.201811132032_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-image-unsigned-4.19.2-041902-generic_4.19.2-041902.201811132032_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-modules-4.19.2-041902-generic_4.19.2-041902.201811132032_amd64.deb
 '
 
 mkdir latest_kernel
@@ -108,7 +108,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel
+dpkg -iR latest_kernel > /dev/null
 rm -r latest_kernel
 
 
