@@ -4,6 +4,8 @@ export LANG=C
 export LC_ALL=C
 
 
+set -e
+
 # -- Packages to install.
 
 PACKAGES='
