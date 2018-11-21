@@ -11,6 +11,7 @@ BUILD_DIR=$(mktemp -d)
 ISO_DIR=$(mktemp -d)
 OUTPUT_DIR=$(mktemp -d)
 
+CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
