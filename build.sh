@@ -117,15 +117,17 @@ printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE bs=1 seek=33651 count=512 
 
 # -- Calculate the checksum.
 
-sha256sum $IMAGE > $OUTPUT_DIR/$IMAGE.sha256sum
+sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/$IMAGE.sha256sum
 
 
 # -- Generate the zsync file.
 
-zsyncmake $IMAGE -u ${UPDATE_URL/.zsync} -o $IMAGE.zsync
+zsyncmake $OUTPUT_DIR/$IMAGE -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE.zsync
 
 
 # -- Upload the ISO image.
+
+cd $OUTPUT_DIR
 
 export SSHPASS=$DEPLOY_PASS
 
