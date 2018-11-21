@@ -66,6 +66,8 @@ run_chroot bootstrap.sh || true
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
 
+mkdir -p $ISO_DIR/boot
+
 cp $BUILD_DIR/vmlinuz $ISO_DIR/boot/kernel
 cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
 
