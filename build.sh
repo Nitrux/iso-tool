@@ -1,56 +1,62 @@
 #! /bin/sh 
 
+# -- Exit on errors.
+
 set -e
 
-FS_DIR=$PWD/root
-ISO_DIR=$PWD/image
-OUTPUT_DIR=$PWD/out
 
-IMAGE_NAME=nitrux_release_$(echo $TRAVIS_BRANCH | sed 's/master/stable/')
+# -- Prepare the directories for the build.
+
+BUILD_DIR=$(mktemp -d)
+ISO_DIR=$(mktemp -d)
+OUTPUT_DIR=$(mktemp -d)
+
+
+# -- The name of the ISO image.
+
+IMAGE=nitrux_release_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
 
 
 # -- Function for running commands in a chroot.
 
 run_chroot () {
 
-	mountpoint -q $FS_DIR/dev/ || \
-		rm -rf $FS_DIR/dev/*
+	mountpoint -q $BUILD_DIR/dev/ || \
+		rm -rf $BUILD_DIR/dev/*
 
-	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
-	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
-	mount -t devtmpfs -o mode=0755,nosuid . $FS_DIR/dev
-	mount -t tmpfs -o nosuid,nodev,mode=0755 . $FS_DIR/run
-	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
+	mount -t proc -o nosuid,noexec,nodev . $BUILD_DIR/proc
+	mount -t sysfs -o nosuid,noexec,nodev,ro . $BUILD_DIR/sys
+	mount -t devtmpfs -o mode=0755,nosuid . $BUILD_DIR/dev
+	mount -t tmpfs -o nosuid,nodev,mode=0755 . $BUILD_DIR/run
+	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $BUILD_DIR/tmp
 
-	cp /etc/resolv.conf $FS_DIR/etc
-	cp -r configs $FS_DIR
+	cp /etc/resolv.conf $BUILD_DIR/etc
+	cp -r configs $BUILD_DIR
 
 	if [ -f $1 -a -x $1 ]; then
-		cp $1 $FS_DIR/
-		chroot $FS_DIR/ /$@
-		rm -r $FS_DIR/$1
+		cp $1 $BUILD_DIR/
+		chroot $BUILD_DIR/ /$@
+		rm -r $BUILD_DIR/$1
 	else
-		chroot $FS_DIR/ $@
+		chroot $BUILD_DIR/ $@
 	fi
 
-	for d in $FS_DIR/*; do
+	for d in $BUILD_DIR/*; do
 		mountpoint -q $d && \
 			umount -f $d
 	done
 
 	rm -rf \
-		$FS_DIR/etc/resolv.conf \
-		$FS_DIR/configs
+		$BUILD_DIR/etc/resolv.conf \
+		$BUILD_DIR/configs
 
 }
 
 
-# -- Prepare the directory were the filesystem will be created.
-
-mkdir -p $FS_DIR
+# -- Prepare the directory where the filesystem will be created.
 
 wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.1-base-amd64.tar.gz
-tar xf base.tar.gz -C $FS_DIR
+tar xf base.tar.gz -C $BUILD_DIR
 
 
 # -- Create the filesystem.
@@ -60,8 +66,8 @@ run_chroot bootstrap.sh || true
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
 
-cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
-cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
+cp $BUILD_DIR/vmlinuz $ISO_DIR/boot/kernel
+cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
 # -- Clean the filesystem.
@@ -69,70 +75,57 @@ cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
 run_chroot apt -yy -qq purge --remove casper lupin-casper
 run_chroot apt -yy -qq autoremove
 
-
-rm -rf $FS_DIR/tmp/* \
-	$FS_DIR/boot \
-	$FS_DIR/vmlinuz* \
-	$FS_DIR/initrd.img* \
-	$FS_DIR/var/log/* \
-	$FS_DIR/var/lib/dbus/machine-id
+rm -rf \
+	$BUILD_DIR/tmp/* \
+	$BUILD_DIR/boot \
+	$BUILD_DIR/vmlinuz* \
+	$BUILD_DIR/initrd.img* \
+	$BUILD_DIR/var/log/* \
+	$BUILD_DIR/var/lib/dbus/machine-id
 
 
 # -- Compress the root filesystem.
 
-(while :; do sleep 300; echo '.'; done) &
+(while :; do sleep 300; printf ".\n"; done) &
 
-echo "Compressing the root filesystem"
 mkdir -p $ISO_DIR/casper
-mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
-kill $!
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
 
 
-# -- Create the output directory.
+# -- Write a short version of the commit hash that generated the image.
 
-mkdir $OUTPUT_DIR
+#du -sx --block-size=1 $ISO_DIR/ | tail -n 1 | awk '{ print $1 }' > $ISO_DIR/casper/filesystem.size
+printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
 
 
 # -- Generate the ISO image.
 
-(
-	cd $ISO_DIR
-	echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/master/mkiso
+chmod +x /bin/mkiso
 
-	xorriso -as mkisofs -r -J -l \
-		-V 'NITRUX_OS' \
-		-e boot/grub/efi.img \
-		-no-emul-boot \
-		-o $OUTPUT_DIR/$IMAGE_NAME .
-)
+mkiso -d $ISO_DIR -V "NITRUX_OS" -g $CONFIG_DIR/grub.cfg -g $CONFIG_DIR/loopback.cfg -o $OUTPUT_DIR/$IMAGE
 
 
 # -- Embed the update information in the image.
 
 UPDATE_URL=http://repo.nxos.org:8000/$IMAGE_NAME.zsync
-echo "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
-
-
-# -- Generate the zsync file.
-
-zsyncmake $OUTPUT_DIR/$IMAGE_NAME -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE_NAME.zsync
+printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
 
 
 # -- Calculate the checksum.
 
-sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
+sha256sum $IMAGE > $OUTPUT_DIR/$IMAGE.sha256sum
+
+
+# -- Generate the zsync file.
+
+zsyncmake $IMAGE -u ${UPDATE_URL/.zsync} -o $IMAGE.zsync
 
 
 # -- Upload the ISO image.
 
 export SSHPASS=$DEPLOY_PASS
 
-cd $OUTPUT_DIR
-
-ln -s $IMAGE_NAME IMAGE-$(git rev-parse --short HEAD).iso
-ln -s $IMAGE_NAME.zsync UPDATE_INFO-$(git rev-parse --short HEAD).zsync
-
-(sleep 300; echo '.') &
 for f in *; do
     sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
 done
