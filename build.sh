@@ -111,8 +111,8 @@ mkiso -d $ISO_DIR -V "NITRUX_OS" -g $CONFIG_DIR/grub.cfg -g $CONFIG_DIR/loopback
 
 # -- Embed the update information in the image.
 
-UPDATE_URL=http://repo.nxos.org:8000/$IMAGE_NAME.zsync
-printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
+UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
+printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE bs=1 seek=33651 count=512 conv=notrunc
 
 
 # -- Calculate the checksum.
