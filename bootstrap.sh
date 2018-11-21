@@ -4,8 +4,6 @@ export LANG=C
 export LC_ALL=C
 
 
-set -e
-
 # -- Packages to install.
 
 PACKAGES='
@@ -17,6 +15,13 @@ casper
 lupin-casper
 nomad-desktop
 '
+
+
+# -- HACK.
+
+chown -Rv _apt:root /var/cache/apt/archives/partial/
+chmod -Rv 700 /var/cache/apt/archives/partial/
+
 
 # -- Install basic packages.
 
@@ -107,10 +112,11 @@ http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-modules-4.19.2-04190
 mkdir latest_kernel
 
 for x in $kfiles; do
+	printf "$x\n"
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel > /dev/null
+dpkg -iR latest_kernel
 rm -r latest_kernel
 
 
@@ -216,4 +222,5 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cat /configs/update-image >> /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+
 update-initramfs -u
