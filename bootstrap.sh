@@ -20,7 +20,7 @@ nomad-desktop
 # -- HACK.
 
 chown -Rv _apt:root /var/cache/apt/archives/partial/
-chmod -Rv 700 /var/cache/apt/archives/partial/
+chmod -Rv a+rw /var/cache/apt/archives/partial/
 
 
 # -- Install basic packages.
@@ -116,7 +116,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel
+dpkg --force-all -iR latest_kernel
 rm -r latest_kernel
 
 
@@ -162,8 +162,11 @@ ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
+
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
+
+printf " ### appimaged\n"
 
 appimgd='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git189b800.travis42_amd64.deb
@@ -175,7 +178,7 @@ for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 
-dpkg -iR appimaged_deb > /dev/null
+dpkg --force-all -iR appimaged_deb > /dev/null
 rm -r appimaged_deb
 
 
