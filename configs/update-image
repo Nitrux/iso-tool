@@ -1,5 +1,0 @@
-dir=/isodevice/$(dirname $iso_path)
-
-[ -f $dir/.0 ] &&
-	[ -f $dir/pending-update ] &&
-		mv $dir/pending-update $dir/*.iso

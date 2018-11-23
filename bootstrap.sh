@@ -218,6 +218,5 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 # -- Modify the initramfs code.
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-cat /configs/update-image >> /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u

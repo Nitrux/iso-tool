@@ -15,7 +15,7 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=nitrux_release_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
+IMAGE=nitrux_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
 
 
 # -- Function for running commands in a chroot.
