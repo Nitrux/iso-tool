@@ -15,7 +15,7 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=nitrux_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
+IMAGE=nitrux_$TRAVIS_BRANCH
 
 
 # -- Function for running commands in a chroot.
@@ -95,7 +95,7 @@ mkdir -p $ISO_DIR/casper
 mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
 
 
-# -- Write a short version of the commit hash that generated the image.
+# -- Write the commit hash that generated the image.
 
 #du -sx --block-size=1 $ISO_DIR/ | tail -n 1 | awk '{ print $1 }' > $ISO_DIR/casper/filesystem.size
 printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
@@ -106,7 +106,13 @@ printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
 wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/master/mkiso
 chmod +x /bin/mkiso
 
-mkiso -d $ISO_DIR -V "NITRUX_OS" -g $CONFIG_DIR/grub.cfg -g $CONFIG_DIR/loopback.cfg -o $OUTPUT_DIR/$IMAGE
+mkiso \
+	-d $ISO_DIR \
+	-V "NITRUX" \
+	-g $CONFIG_DIR/grub.cfg \
+	-g $CONFIG_DIR/loopback.cfg \
+	-t $CONFIG_DIR/nitrux-grub-theme \
+	-o $OUTPUT_DIR/$IMAGE
 
 
 # -- Embed the update information in the image.
@@ -132,5 +138,5 @@ cd $OUTPUT_DIR
 export SSHPASS=$DEPLOY_PASS
 
 for f in *; do
-    sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
+    sshpass -e scp -q -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 done
