@@ -63,6 +63,7 @@ https://github.com/Nitrux/znx/releases/download/continuous/znx
 https://raw.githubusercontent.com/UriHerrera/storage/master/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
+https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -97,10 +98,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-headers-4.19.2-041902_4.19.2-041902.201811132032_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-headers-4.19.2-041902-generic_4.19.2-041902.201811132032_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-image-unsigned-4.19.2-041902-generic_4.19.2-041902.201811132032_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.2/linux-modules-4.19.2-041902-generic_4.19.2-041902.201811132032_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-headers-4.19.4-041904_4.19.4-041904.201811230330_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-headers-4.19.4-041904-generic_4.19.4-041904.201811230330_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-image-unsigned-4.19.4-041904-generic_4.19.4-041904.201811230330_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-modules-4.19.4-041904-generic_4.19.4-041904.201811230330_amd64.deb
 '
 
 mkdir latest_kernel
@@ -110,7 +111,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg --force-all -iR latest_kernel
+dpkg --force-all -iR latest_kernel > /dev/null
 rm -r latest_kernel
 
 
