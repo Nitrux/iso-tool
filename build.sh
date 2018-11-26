@@ -13,9 +13,10 @@ OUTPUT_DIR=$(mktemp -d)
 
 CONFIG_DIR=$PWD/configs
 
+
 # -- The name of the ISO image.
 
-IMAGE=nitrux_$TRAVIS_BRANCH
+IMAGE=nitrux_release_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
 
 
 # -- Function for running commands in a chroot.
@@ -128,7 +129,10 @@ sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/$IMAGE.sha256sum
 
 # -- Generate the zsync file.
 
-zsyncmake $OUTPUT_DIR/$IMAGE -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE.zsync
+zsyncmake \
+	$OUTPUT_DIR/$IMAGE \
+	-u ${UPDATE_URL/.zsync} \
+	-o $OUTPUT_DIR/$IMAGE.zsync
 
 
 # -- Upload the ISO image.
