@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/x-iso9660-appimage;
+Actions=AppImageExecutable;AppImageUpdate;
+
+[Desktop Action AppImageUpdate]
+TryExec=AppImageUpdate
+Exec=konsole -e --background-mode AppImageUpdate %f
+Icon=utilities-terminal
+Name=Update AppImage
+Comment=Update the AppImage using AppImageUpdate
