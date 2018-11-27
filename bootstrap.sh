@@ -105,10 +105,10 @@ chmod +x /bin/znx-gui
 # -- Install the latest stable kernel.
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-headers-4.19.4-041904_4.19.4-041904.201811230330_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-headers-4.19.4-041904-generic_4.19.4-041904.201811230330_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-image-unsigned-4.19.4-041904-generic_4.19.4-041904.201811230330_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.4/linux-modules-4.19.4-041904-generic_4.19.4-041904.201811230330_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905_4.19.5-041905.201811271131_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-image-unsigned-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
 '
 
 mkdir latest_kernel
