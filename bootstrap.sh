@@ -60,8 +60,8 @@ apt -qq autoclean
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
-https://raw.githubusercontent.com/UriHerrera/storage/master/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -125,11 +125,11 @@ rm -r latest_kernel
 # -- Install Maui Apps Debs.
 
 mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/mauikit-framework_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/vvave_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/pix_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/index_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/buho_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-framework_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho_0.1-1_amd64.deb
 '
 
 mkdir maui_debs
@@ -147,8 +147,8 @@ rm -r maui_debs
 # -- and to install each package the library must be overwritten each time.
 
 nxsc='
-https://raw.githubusercontent.com/UriHerrera/storage/master/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/nx-software-center-plasma_2.3-2_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libappimageinfo_0.1.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
