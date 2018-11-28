@@ -74,20 +74,6 @@ cp $BUILD_DIR/vmlinuz $ISO_DIR/boot/kernel
 cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
-# -- Clean the filesystem.
-
-run_chroot apt -yy -qq purge --remove casper lupin-casper
-run_chroot apt -yy -qq autoremove
-
-rm -rf \
-	$BUILD_DIR/tmp/* \
-	$BUILD_DIR/boot \
-	$BUILD_DIR/vmlinuz* \
-	$BUILD_DIR/initrd.img* \
-	$BUILD_DIR/var/log/* \
-	$BUILD_DIR/var/lib/dbus/machine-id
-
-
 # -- Compress the root filesystem.
 
 (while :; do sleep 300; printf ".\n"; done) &

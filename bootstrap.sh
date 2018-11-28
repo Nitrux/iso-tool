@@ -52,8 +52,6 @@ cp /configs/sources.list /etc/apt/sources.list
 apt -qq update > /dev/null
 apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -qq clean 
-apt -qq autoclean
 
 
 # -- Add AppImages.
@@ -75,9 +73,8 @@ done
 chmod +x /Applications/*
 
 
-
-# -- Create /Applications dir for users. This dir "should" be created by the Software Center.
-# -- Downloading AppImages with the SC will fail if this dir doesn't exist.
+# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
+# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
 
 mkdir /etc/skel/Applications
 
@@ -168,8 +165,6 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
-printf " ### appimaged\n"
-
 appimgd='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-gita3b100b.travis57_amd64.deb
 '
@@ -190,6 +185,7 @@ printf "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
+
 # -- Add config for SDDM.
 
 cp /configs/sddm.conf /etc
@@ -200,35 +196,20 @@ cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 
-# -- Add Steam
-
-#dpkg --add-architecture i386
-
-#apt -qq update > /dev/null
-
-#apt -yy install curl gstreamer1.0-gl libbrotli1 libgraphene-1.0-0 libgstreamer-gl1.0-0 libjavascriptcoregtk-4.0-18 libwebkitgtk-4.0-37 libwoff1 python-apt zenity zenity-common > /dev/null
-#apt -yy install gcc-8-base:i386 libbsd0:i386 libc6:i386 libdrm-amdgpu1:i386 libdrm-intel1:i386 libdrm-nouveau2:i386 libdrm-radeon1:i386 libdrm2:i386 libedit2:i386 libelf1:i386 libexpat1:i386 libffi6:i386 libgcc1:i386 libgl1:i386 libgl1-mesa-dri:i386 libgl1-mesa-glx:i386 libglapi-mesa:i386 libglvnd0:i386 libglx-mesa0:i386 libglx0:i386 libllvm7:i386 libpciaccess0:i386 libsensors4:i386 libstdc++6:i386 libtinfo5:i386 libx11-6:i386 libx11-xcb1:i386 libxau6:i386 libxcb-dri2-0:i386 libxcb-dri3-0:i386 libxcb-glx0:i386 libxcb-present0:i386 libxcb-sync1:i386 libxcb1:i386 libxdamage1:i386 libxdmcp6:i386 libxext6:i386 libxfixes3:i386 libxshmfence1:i386 libxxf86vm1:i386 xbitmaps xterm zlib1g:i386 --no-install-recommends > /dev/null
-
-#steam='
-#http://media.steampowered.com/client/installer/steam.deb
-#'
-
-#mkdir steam_deb
-
-#for x in steam; do
-#	wget -q -P steam_deb $x
-#done
-
-#dpkg -iR steam_deb > /dev/null
-#rm -r steam_deb
-
-
 # -- Modify the initramfs code.
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 
 update-initramfs -u
 
+
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+
+# -- Clean the filesystem.
+
+apt -yy -qq purge --remove casper lupin-casper
+apt -yy -qq autoremove
+apt -yy -qq clean 
+apt -yy -qq autoclean
