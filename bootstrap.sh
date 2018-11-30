@@ -77,6 +77,21 @@ chmod +x /Applications/*
 # -- Downloading AppImages with the SC will fail if this directory doesn't exist.
 
 mkdir /etc/skel/Applications
+
+# -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise the AppImages will not display an icon when added to the menu launcher by appimaged. 
+
+cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
+cp -a /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage /etc/skel/Applications
+cp -a /Applications/LibreOffice-fresh.basic-x86_64.AppImage /etc/skel/Applications
+cp -a /Applications/znx-gui /etc/skel/Applications
+
+rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+rm /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage 
+rm /Applications/LibreOffice-fresh.basic-x86_64.AppImage
+rm /Applications/znx-gui /etc/skel/Applications
+
+# -- Rename AppImageUpdate file.
+
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 
 
@@ -188,6 +203,10 @@ update-initramfs -u
 
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
+# -- Remove VLC (for some reason is being installed).
+
+apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc
+apt -yy -qq autoremove
 
 # -- Clean the filesystem.
 
