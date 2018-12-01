@@ -50,14 +50,14 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- avoiding recommended packages.
 
 apt -qq update > /dev/null
-apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 apt -yy -qq upgrade > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
 
 
 # -- Add AppImages.
 
 APPS='
-https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui
+https://github.com/Nitrux/znx/releases/download/continuous/znx
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
@@ -78,7 +78,8 @@ chmod +x /Applications/*
 
 mkdir /etc/skel/Applications
 
-# -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise the AppImages will not display an icon when added to the menu launcher by appimaged. 
+# -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise 
+# -- the AppImages will not display an icon when added to the menu launcher by appimaged. 
 
 cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
 cp -a /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage /etc/skel/Applications
@@ -90,9 +91,17 @@ rm /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
 rm /Applications/LibreOffice-fresh.basic-x86_64.AppImage
 rm /Applications/znx-gui /etc/skel/Applications
 
+
 # -- Rename AppImageUpdate file.
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+
+
+# -- Add znx-gui.
+
+cp /configs/znx-gui.desktop /usr/share/applications
+	wget -q https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui -O /bin/znx-gui
+chmod +x /bin/znx-gui
 
 
 # -- Install the latest stable kernel.
@@ -203,10 +212,12 @@ update-initramfs -u
 
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
-# -- Remove VLC (for some reason is being installed).
+
+# -- Remove VLC (for some reason is being installed?).
 
 apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc
 apt -yy -qq autoremove
+
 
 # -- Clean the filesystem.
 
