@@ -120,7 +120,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg --force-all -iR latest_kernel > /dev/null
+dpkg -iR latest_kernel > /dev/null
 rm -r latest_kernel
 
 
@@ -132,7 +132,6 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave_0.1-
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota_0.1-1_amd64.deb
 '
 
 mkdir maui_debs
@@ -141,7 +140,7 @@ for x in $mauipkgs; do
 	wget -q -P maui_debs $x
 done
 
-dpkg --force-all -iR maui_debs > /dev/null
+dpkg -iR maui_debs > /dev/null
 rm -r maui_debs
 
 
