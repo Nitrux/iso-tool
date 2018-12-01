@@ -132,6 +132,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave_0.1-
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index_0.1-1_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota_0.1-1_amd64.deb
 '
 
 mkdir maui_debs
