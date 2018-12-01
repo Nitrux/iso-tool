@@ -84,12 +84,10 @@ mkdir /etc/skel/Applications
 cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
 cp -a /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage /etc/skel/Applications
 cp -a /Applications/LibreOffice-fresh.basic-x86_64.AppImage /etc/skel/Applications
-cp -a /Applications/znx-gui /etc/skel/Applications
 
 rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 rm /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage 
 rm /Applications/LibreOffice-fresh.basic-x86_64.AppImage
-rm /Applications/znx-gui /etc/skel/Applications
 
 
 # -- Rename AppImageUpdate file.
