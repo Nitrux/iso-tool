@@ -1,138 +1,227 @@
-#! /bin/sh 
+#! /bin/sh
 
-set -e
-
-FS_DIR=$PWD/root
-ISO_DIR=$PWD/image
-OUTPUT_DIR=$PWD/out
-
-IMAGE_NAME=nitrux_release_$(echo $TRAVIS_BRANCH | sed 's/master/stable/')
+export LANG=C
+export LC_ALL=C
 
 
-# -- Function for running commands in a chroot.
+# -- Packages to install.
 
-run_chroot () {
-
-	mountpoint -q $FS_DIR/dev/ || \
-		rm -rf $FS_DIR/dev/*
-
-	mount -t proc -o nosuid,noexec,nodev . $FS_DIR/proc
-	mount -t sysfs -o nosuid,noexec,nodev,ro . $FS_DIR/sys
-	mount -t devtmpfs -o mode=0755,nosuid . $FS_DIR/dev
-	mount -t tmpfs -o nosuid,nodev,mode=0755 . $FS_DIR/run
-	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $FS_DIR/tmp
-
-	cp /etc/resolv.conf $FS_DIR/etc
-	cp -r configs $FS_DIR
-
-	if [ -f $1 -a -x $1 ]; then
-		cp $1 $FS_DIR/
-		chroot $FS_DIR/ /$@
-		rm -r $FS_DIR/$1
-	else
-		chroot $FS_DIR/ $@
-	fi
-
-	for d in $FS_DIR/*; do
-		mountpoint -q $d && \
-			umount -f $d
-	done
-
-	rm -rf \
-		$FS_DIR/etc/resolv.conf \
-		$FS_DIR/configs
-
-}
+PACKAGES='
+dhcpcd5
+user-setup
+localechooser-data
+cifs-utils
+casper
+lupin-casper
+nomad-desktop
+'
 
 
-# -- Prepare the directory were the filesystem will be created.
+# -- Install basic packages.
 
-mkdir -p $FS_DIR
-
-wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.1-base-amd64.tar.gz
-tar xf base.tar.gz -C $FS_DIR
+apt -qq update > /dev/null
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
-# -- Create the filesystem.
+# -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
+# -- packages are built against the latest LTS release of Ubuntu.
 
-run_chroot bootstrap.sh || true
+wget -q https://archive.neon.kde.org/public.key -O neon.key
+echo ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c &&
+	apt-key add neon.key
+
+wget -q http://repo.nxos.org/public.key -O nxos.key
+echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c &&
+	apt-key add nxos.key
+
+# -- Add key for the Graphics Driver PPA
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C
+
+# -- Add key for the Ubuntu-X PPA
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9
+
+rm neon.key
+rm nxos.key
+
+cp /configs/sources.list /etc/apt/sources.list
 
 
-# -- Copy the kernel and initramfs to $ISO_DIR.
+# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
+# -- avoiding recommended packages.
 
-cp $FS_DIR/vmlinuz $ISO_DIR/boot/kernel
-cp $FS_DIR/initrd.img $ISO_DIR/boot/initramfs
+apt -qq update > /dev/null
+apt -yy -qq upgrade > /dev/null
+apt -yy install $(echo $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+
+
+# -- Add AppImages.
+
+APPS='
+https://github.com/Nitrux/znx/releases/download/continuous/znx
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
+https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
+https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
+'
+
+mkdir /Applications
+
+for x in $(echo $APPS | tr '\n' ' '); do
+	wget -q -P /Applications $x
+done
+
+chmod +x /Applications/*
+
+
+# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
+# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
+
+mkdir /etc/skel/Applications
+
+# -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise 
+# -- the AppImages will not display an icon when added to the menu launcher by appimaged. 
+
+cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
+cp -a /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage /etc/skel/Applications
+cp -a /Applications/LibreOffice-fresh.basic-x86_64.AppImage /etc/skel/Applications
+cp -a /Applications/znx-gui /etc/skel/Applications
+
+rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+rm /Applications/ungoogled-chromium_70.0.3538.77-1_linux.AppImage 
+rm /Applications/LibreOffice-fresh.basic-x86_64.AppImage
+rm /Applications/znx-gui /etc/skel/Applications
+
+
+# -- Rename AppImageUpdate file.
+
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+
+
+# -- Add znx-gui.
+
+cp /configs/znx-gui.desktop /usr/share/applications
+	wget -q https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui -O /bin/znx-gui
+chmod +x /bin/znx-gui
+
+
+# -- Install the latest stable kernel.
+
+kfiles='
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905_4.19.5-041905.201811271131_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-image-unsigned-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+'
+
+mkdir latest_kernel
+
+for x in $kfiles; do
+	printf "$x\n"
+	wget -q -P latest_kernel $x
+done
+
+dpkg -iR latest_kernel > /dev/null
+rm -r latest_kernel
+
+
+# -- Install Maui Apps Debs.
+
+mauipkgs='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-framework_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index_0.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho_0.1-1_amd64.deb
+'
+
+mkdir maui_debs
+
+for x in $mauipkgs; do
+	wget -q -P maui_debs $x
+done
+
+dpkg --force-all -iR maui_debs > /dev/null
+rm -r maui_debs
+
+
+# -- Install Software Center.
+# -- For now, the software center, libappimage and libappimageinfo provide the same library
+# -- and to install each package the library must be overwritten each time.
+
+nxsc='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libappimageinfo_0.1.1-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
+'
+
+mkdir nxsc_deps
+
+for x in $nxsc; do
+	wget -q -P nxsc_deps $x
+done
+
+dpkg --force-all -iR nxsc_deps > /dev/null
+rm -r nxsc_deps
+
+ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
+
+
+# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
+# -- firejail should be automatically used by the daemon to sandbox AppImages.
+
+appimgd='
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-gita3b100b.travis57_amd64.deb
+'
+
+mkdir appimaged_deb
+
+for x in $appimgd; do
+	wget -q -P appimaged_deb $x
+done
+
+dpkg --force-all -iR appimaged_deb > /dev/null
+rm -r appimaged_deb
+
+
+# -- Add /Applications to $PATH.
+
+printf "PATH=$PATH:/Applications\n" > /etc/environment
+sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
+sed -i "/env_reset/d" /etc/sudoers
+
+
+# -- Add config for SDDM.
+
+cp /configs/sddm.conf /etc
+
+
+# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
+
+cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+
+
+# -- Modify the initramfs code.
+
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+
+update-initramfs -u
+
+
+# -- Add kservice menu item for Dolphin for AppImageUpdate.
+
+cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+
+
+# -- Remove VLC (for some reason is being installed?).
+
+apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc
+apt -yy -qq autoremove
 
 
 # -- Clean the filesystem.
 
-run_chroot apt -yy -qq purge --remove casper lupin-casper
-run_chroot apt -yy -qq autoremove
-
-
-rm -rf $FS_DIR/tmp/* \
-	$FS_DIR/boot \
-	$FS_DIR/vmlinuz* \
-	$FS_DIR/initrd.img* \
-	$FS_DIR/var/log/* \
-	$FS_DIR/var/lib/dbus/machine-id
-
-
-# -- Compress the root filesystem.
-
-(while :; do sleep 300; echo '.'; done) &
-
-echo "Compressing the root filesystem"
-mkdir -p $ISO_DIR/casper
-mksquashfs $FS_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
-kill $!
-
-
-# -- Create the output directory.
-
-mkdir $OUTPUT_DIR
-
-
-# -- Generate the ISO image.
-
-(
-	cd $ISO_DIR
-	echo -n $(du -sx --block-size=1 . | tail -n 1 | awk '{ print $1 }') > casper/filesystem.size
-
-	xorriso -as mkisofs -r -J -l \
-		-V 'NITRUX_OS' \
-		-e boot/grub/efi.img \
-		-no-emul-boot \
-		-o $OUTPUT_DIR/$IMAGE_NAME .
-)
-
-
-# -- Embed the update information in the image.
-
-UPDATE_URL=http://88.198.66.58:8000/$IMAGE_NAME.zsync
-echo "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE_NAME bs=1 seek=33651 count=512 conv=notrunc
-
-
-# -- Generate the zsync file.
-
-zsyncmake $OUTPUT_DIR/$IMAGE_NAME -u ${UPDATE_URL/.zsync} -o $OUTPUT_DIR/$IMAGE_NAME.zsync
-
-
-# -- Calculate the checksum.
-
-sha256sum $OUTPUT_DIR/$IMAGE_NAME > $OUTPUT_DIR/$IMAGE_NAME.sha256sum
-
-
-# -- Upload the ISO image.
-
-export SSHPASS=$DEPLOY_PASS
-
-cd $OUTPUT_DIR
-
-ln -s $IMAGE_NAME IMAGE-$(git rev-parse --short HEAD).iso
-ln -s $IMAGE_NAME.zsync UPDATE_INFO-$(git rev-parse --short HEAD).zsync
-
-(sleep 300; echo '.') &
-for f in *; do
-    sshpass -e scp -o stricthostkeychecking=no $f $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH > /dev/null
-done
+apt -yy -qq purge --remove casper lupin-casper
+apt -yy -qq autoremove
+apt -yy -qq clean 
+apt -yy -qq autoclean

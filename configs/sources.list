@@ -19,3 +19,15 @@ deb http://archive.neon.kde.org/dev/stable bionic main
 deb http://repo.nxos.org/stable nxos main
 deb http://repo.nxos.org/development nxos main
 deb http://repo.nxos.org/testing nxos main
+
+####################
+# Graphics Drivers #
+####################
+
+deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main 
+
+####################
+# Graphics Drivers #
+####################
+
+deb http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu bionic main 

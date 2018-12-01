@@ -2,8 +2,8 @@ sudo: required
 
 script:
   - sudo apt-get -qq update
-  - sudo apt-get -yy -qq install squashfs-tools zsync xorriso sshpass apt-utils --no-install-recommends > /dev/null
-  - sudo bash ./build.sh
+  - sudo apt-get -yy -qq install squashfs-tools zsync xorriso grub-common grub2-common grub-efi-amd64-bin sshpass apt-utils --no-install-recommends > /dev/null
+  - sudo bash build.sh
 
 branches:
   except:

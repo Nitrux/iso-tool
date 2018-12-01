@@ -2,7 +2,7 @@
 Name=znx GUI
 GenericName=Operating System manager
 Comment=Operating System manager.
-Icon=live-installer
+Icon=znx-gui
 Type=Application
 Terminal=false
 Exec=sudo -H znx-gui
