@@ -92,7 +92,7 @@ mv /etc/skel/Applications/AppImageUpdate* /etc/skel/Applications/AppImageUpdate
 # -- Add znx-gui.
 
 cp /configs/configs/znx-gui.desktop /usr/share/applications
-wget -q https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui -O /bin/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui
 chmod +x /bin/znx-gui
 
 
@@ -213,5 +213,5 @@ apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc
 
 apt -yy -qq purge --remove casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
-apt -yy -qq clean  > /dev/null
+apt -yy -qq clean > /dev/null
 apt -yy -qq autoclean > /dev/null
