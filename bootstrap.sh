@@ -29,11 +29,11 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- packages are built against the latest LTS release of Ubuntu.
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
-printf ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key | sha256sum -c &&
+printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
 	apt-key add neon.key
 
 wget -q http://repo.nxos.org/public.key -O nxos.key
-printf b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key | sha256sum -c &&
+printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
 	apt-key add nxos.key
 
 # -- Add key for the Graphics Driver PPA
@@ -53,7 +53,7 @@ cp /configs/configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install $(printf $PACKAGES | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy install $(printf "$PACKAGES" | tr '\n' ' ') --no-install-recommends > /dev/null
 
 
 # -- Add AppImages.
@@ -68,7 +68,7 @@ https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImage
 
 mkdir /Applications
 
-for x in $(printf $APPS | tr '\n' ' '); do
+for x in $APPS; do
 	wget -q -P /Applications $x
 done
 
@@ -110,7 +110,6 @@ http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-04190
 mkdir latest_kernel
 
 for x in $kfiles; do
-	printf "$x\n"
 	wget -q -P latest_kernel $x
 done
 
