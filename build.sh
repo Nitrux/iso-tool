@@ -33,7 +33,7 @@ chmod +x /bin/runc
 
 # -- Create the filesystem.
 
-runc -d configs $BUILD_DIR bootstrap.sh || true
+bash -x /bin/runc -d configs $BUILD_DIR bootstrap.sh || true
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
