@@ -25,7 +25,7 @@ wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/rele
 tar xf base.tar.gz -C $BUILD_DIR
 
 
-# -- Command  for running commands in a chroot.
+# -- Tool for running commands in a chroot.
 
 wget -qO /bin/runc https://raw.githubusercontent.com/Nitrux/runc/master/runc
 chmod +x /bin/runc
@@ -33,7 +33,7 @@ chmod +x /bin/runc
 
 # -- Create the filesystem.
 
-runc bootstrap.sh || true
+runc -d configs $BUILD_DIR bootstrap.sh || true
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.

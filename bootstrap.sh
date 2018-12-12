@@ -43,7 +43,7 @@ echo b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key |
 rm neon.key
 rm nxos.key
 
-cp /configs/sources.list /etc/apt/sources.list
+cp /configs/configs/sources.list /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
@@ -99,7 +99,7 @@ mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 
 # -- Add znx-gui.
 
-cp /configs/znx-gui.desktop /usr/share/applications
+cp /configs/configs/znx-gui.desktop /usr/share/applications
 	wget -q https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui -O /bin/znx-gui
 chmod +x /bin/znx-gui
 
@@ -193,24 +193,24 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add config for SDDM.
 
-cp /configs/sddm.conf /etc
+cp /configs/configs/sddm.conf /etc
 
 
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 
-cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 
 # -- Modify the initramfs code.
 
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+cat /configs/configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 
 update-initramfs -u
 
 
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 
-cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
 
 # -- Remove VLC (for some reason is being installed?).
