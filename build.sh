@@ -30,7 +30,7 @@ tar xf base.tar.gz -C $BUILD_DIR
 wget -qO /bin/runc https://raw.githubusercontent.com/Nitrux/runc/master/runc
 chmod +x /bin/runc
 
-runc -d configs $BUILD_DIR bootstrap.sh || true
+bash -x /bin/runc -d configs $BUILD_DIR bootstrap.sh || true
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
