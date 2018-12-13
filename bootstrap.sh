@@ -1,5 +1,8 @@
 #! /bin/sh
 
+
+printf $CONFIGS_DIR
+
 export LANG=C
 export LC_ALL=C
 
@@ -20,7 +23,7 @@ nomad-desktop
 # -- Install basic packages.
 
 apt -qq update > /dev/null
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends 
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -43,7 +46,7 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 rm neon.key
 rm nxos.key
 
-cp /configs/configs/sources.list /etc/apt/sources.list
+cp /configs/sources.list /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
@@ -51,7 +54,7 @@ cp /configs/configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install $(printf "$PACKAGES" | tr '\n' ' ') --no-install-recommends > /dev/null
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add AppImages.
@@ -91,7 +94,7 @@ mv /etc/skel/Applications/AppImageUpdate* /etc/skel/Applications/AppImageUpdate
 
 # -- Add znx-gui.
 
-cp /configs/configs/znx-gui.desktop /usr/share/applications
+cp /configs/znx-gui.desktop /usr/share/applications
 wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui
 chmod +x /bin/znx-gui
 
@@ -111,7 +114,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel > /dev/null
+dpkg -iR latest_kernel
 rm -r latest_kernel
 
 
@@ -131,7 +134,7 @@ for x in $mauipkgs; do
 	wget -q -P maui_debs $x
 done
 
-dpkg --force-all -iR maui_debs > /dev/null
+dpkg --force-all -iR maui_debs
 rm -r maui_debs
 
 
@@ -171,7 +174,7 @@ for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 
-dpkg --force-all -iR appimaged_deb > /dev/null
+dpkg --force-all -iR appimaged_deb
 rm -r appimaged_deb
 
 
@@ -184,23 +187,23 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add config for SDDM.
 
-cp /configs/configs/sddm.conf /etc
+cp /configs/sddm.conf /etc
 
 
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 
-cp /configs/configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 
 # -- Modify the initramfs code.
 
-cat /configs/configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
 
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 
-cp /configs/configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
 
 # -- Remove VLC (for some reason is being installed?).
@@ -213,4 +216,3 @@ apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc
 apt -yy -qq purge --remove casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
 apt -yy -qq clean > /dev/null
-apt -yy -qq autoclean > /dev/null
