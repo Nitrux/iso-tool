@@ -21,7 +21,7 @@ nomad-desktop
 # -- Install basic packages.
 
 apt -qq update > /dev/null
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends 
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -52,7 +52,7 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 
 
 # -- Add AppImages.
@@ -204,13 +204,8 @@ update-initramfs -u
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
 
-# -- Remove VLC (for some reason is being installed?).
-
-apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc
-
-
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove casper lupin-casper > /dev/null
+apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
 apt -yy -qq clean > /dev/null
