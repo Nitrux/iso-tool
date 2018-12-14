@@ -181,7 +181,7 @@ cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
 # -- Install the latest stable kernel.
 
-printf "------- INSTALLING NEW KERNEL. -------"
+printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
@@ -194,6 +194,7 @@ http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-04190
 mkdir latest_kernel
 
 for x in $kfiles; do
+	printf "$x"
 	wget -q -P latest_kernel $x
 done
 
