@@ -144,7 +144,7 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-gita3b100b.travis57_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git660c916.travis65_amd64.deb
 '
 
 mkdir appimaged_deb
