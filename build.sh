@@ -32,7 +32,7 @@ chmod +x /bin/runc
 
 cp -r configs $BUILD_DIR/
 
-runc $BUILD_DIR bootstrap.sh
+runc $BUILD_DIR bootstrap.sh || true
 
 rm -rf $BUILD_DIR/configs
 
@@ -40,6 +40,8 @@ rm -rf $BUILD_DIR/configs
 # -- Copy the kernel and initramfs to $ISO_DIR.
 
 mkdir -p $ISO_DIR/boot
+
+ls $BUILD_DIR/
 
 cp $BUILD_DIR/vmlinuz $ISO_DIR/boot/kernel
 cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs

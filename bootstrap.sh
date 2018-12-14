@@ -97,25 +97,6 @@ wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/
 chmod +x /bin/znx-gui
 
 
-# -- Install the latest stable kernel.
-
-kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905_4.19.5-041905.201811271131_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-image-unsigned-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
-'
-
-mkdir latest_kernel
-
-for x in $kfiles; do
-	wget -q -P latest_kernel $x
-done
-
-dpkg -iR latest_kernel
-rm -r latest_kernel
-
-
 # -- Install Maui Apps Debs.
 
 mauipkgs='
@@ -193,15 +174,37 @@ cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 
-# -- Modify the initramfs code.
-
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-update-initramfs -u
-
-
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+
+
+# -- Install the latest stable kernel.
+
+printf "------- INSTALLING NEW KERNEL. -------"
+
+
+kfiles='
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905_4.19.5-041905.201811271131_all.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-image-unsigned-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+'
+
+mkdir latest_kernel
+
+for x in $kfiles; do
+	wget -q -P latest_kernel $x
+done
+
+dpkg -iR latest_kernel
+rm -r latest_kernel
+
+
+# -- Update the initramfs.
+
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+update-initramfs -u
 
 
 # -- Clean the filesystem.
