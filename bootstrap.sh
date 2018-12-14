@@ -185,10 +185,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905_4.19.5-041905.201811271131_all.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-headers-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-image-unsigned-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
-http://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.5/linux-modules-4.19.5-041905-generic_4.19.5-041905.201811271131_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-headers-4.19.9-041909_4.19.9-041909.201812130432_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-headers-4.19.9-041909-generic_4.19.9-041909.201812130432_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-image-unsigned-4.19.9-041909-generic_4.19.9-041909.201812130432_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-modules-4.19.9-041909-generic_4.19.9-041909.201812130432_amd64.deb
 '
 
 mkdir latest_kernel
