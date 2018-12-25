@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Nota
+GenericName=Text editor
+Comment=Nota is a simple and convergent text editor.
+Icon=utilities-text-editor
+Type=Application
+Terminal=false
+Exec=/opt/nota/bin/nota
+TryExec=/opt/nota/bin/nota
+Categories=Utilities;
+Keywords=text;editor;

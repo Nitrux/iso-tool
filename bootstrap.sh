@@ -61,7 +61,7 @@ APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
-https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
@@ -157,6 +157,11 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+
+
+# -- Add launcher for Nota.
+
+cp /configs/nota.desktop /usr/share/applications
 
 
 # -- Install the latest stable kernel.
