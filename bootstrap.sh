@@ -60,7 +60,7 @@ apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous/znx
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.77-1_linux.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -95,26 +95,6 @@ mv /etc/skel/Applications/AppImageUpdate* /etc/skel/Applications/AppImageUpdate
 cp /configs/znx-gui.desktop /usr/share/applications
 wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui
 chmod +x /bin/znx-gui
-
-
-# -- Install Maui Apps Debs.
-
-mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-framework_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index_0.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho_0.1-1_amd64.deb
-'
-
-mkdir maui_debs
-
-for x in $mauipkgs; do
-	wget -q -P maui_debs $x
-done
-
-dpkg --force-all -iR maui_debs
-rm -r maui_debs
 
 
 # -- Install Software Center.
@@ -185,10 +165,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-headers-4.19.9-041909_4.19.9-041909.201812130432_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-headers-4.19.9-041909-generic_4.19.9-041909.201812130432_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-image-unsigned-4.19.9-041909-generic_4.19.9-041909.201812130432_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.9/linux-modules-4.19.9-041909-generic_4.19.9-041909.201812130432_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-headers-4.20.0-042000_4.20.0-042000.201812232030_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-headers-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-image-unsigned-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-modules-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
 '
 
 mkdir latest_kernel
