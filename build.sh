@@ -41,15 +41,13 @@ rm -rf $BUILD_DIR/configs
 
 mkdir -p $ISO_DIR/boot
 
-ls $BUILD_DIR/
-
 cp $BUILD_DIR/vmlinuz $ISO_DIR/boot/kernel
 cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 
 # -- Compress the root filesystem.
 
-(while :; do sleep 300; printf ".\n"; done) &
+(while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
 mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
