@@ -171,6 +171,11 @@ cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/nota.desktop /usr/share/applications
 
 
+# -- Add policy file for KDialog.
+
+cp /configs/nota.desktop/org.freedesktop.policykit.pkexec.policy /usr/share/polkit-1/actions/
+
+
 # -- Install the latest stable kernel.
 
 printf "INSTALLING NEW KERNEL."
