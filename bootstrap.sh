@@ -58,7 +58,7 @@ apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 # -- Add AppImages.
 
 APPS='
-https://github.com/Nitrux/znx/releases/download/continuous/znx
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
@@ -91,9 +91,10 @@ rm /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
 rm /Applications/LibreOffice-pre.standard-x86_64.AppImage
 
 
-# -- Rename AppImageUpdate file.
+# -- Rename AppImageUpdate file and znx.
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+mv /Applications/znx_stable /Applications/znx
 
 
 # -- Add znx-gui.
