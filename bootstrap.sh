@@ -52,7 +52,7 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 
 
 # -- Add AppImages.
@@ -82,18 +82,24 @@ mkdir /etc/skel/Applications
 # -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise
 # -- the AppImages will not display an icon when added to the menu launcher by appimaged.
 
-mv /Applications/* /etc/skel/Applications
+cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
+cp -a /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage /etc/skel/Applications
+cp -a /Applications/LibreOffice-pre.standard-x86_64.AppImage /etc/skel/Applications
+
+rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+rm /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
+rm /Applications/LibreOffice-pre.standard-x86_64.AppImage
 
 
 # -- Rename AppImageUpdate file.
 
-mv /etc/skel/Applications/AppImageUpdate* /etc/skel/Applications/AppImageUpdate
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 
 
 # -- Add znx-gui.
 
 cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
 chmod +x /bin/znx-gui
 
 
