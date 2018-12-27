@@ -91,7 +91,7 @@ rm /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
 rm /Applications/LibreOffice-pre.standard-x86_64.AppImage
 
 
-# -- Rename AppImageUpdate file and znx.
+# -- Rename AppImageUpdate and znx.
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 mv /Applications/znx_stable /Applications/znx
@@ -140,7 +140,7 @@ for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 
-dpkg --force-all -iR appimaged_deb
+dpkg -iR appimaged_deb  > /dev/null
 rm -r appimaged_deb
 
 
@@ -166,12 +166,12 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 
 
-# -- Add launcher for Nota.
+# -- Add custom launchers for Maui apps.
 
-cp /configs/nota.desktop /usr/share/applications
+cp /configs/org.kde.* /usr/share/applications
 
 
-# -- Add policy file for KDialog.
+# -- Add policykit file for KDialog.
 
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
@@ -195,7 +195,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel
+dpkg -iR latest_kernel  > /dev/null
 rm -r latest_kernel
 
 
