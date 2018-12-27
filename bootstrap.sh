@@ -173,7 +173,7 @@ cp /configs/nota.desktop /usr/share/applications
 
 # -- Add policy file for KDialog.
 
-cp /configs/nota.desktop/org.freedesktop.policykit.pkexec.policy /usr/share/polkit-1/actions/
+cp /configs/org.freedesktop.policykit.pkexec.policy /usr/share/polkit-1/actions/
 
 
 # -- Install the latest stable kernel.
