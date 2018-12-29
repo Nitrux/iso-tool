@@ -19,51 +19,22 @@ CONFIG_DIR=$PWD/configs
 IMAGE=nitrux_release_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
 
 
-# -- Function for running commands in a chroot.
-
-run_chroot () {
-
-	mountpoint -q $BUILD_DIR/dev/ || \
-		rm -rf $BUILD_DIR/dev/*
-
-	mount -t proc -o nosuid,noexec,nodev . $BUILD_DIR/proc
-	mount -t sysfs -o nosuid,noexec,nodev,ro . $BUILD_DIR/sys
-	mount -t devtmpfs -o mode=0755,nosuid . $BUILD_DIR/dev
-	mount -t tmpfs -o nosuid,nodev,mode=0755 . $BUILD_DIR/run
-	mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid . $BUILD_DIR/tmp
-
-	cp /etc/resolv.conf $BUILD_DIR/etc
-	cp -r configs $BUILD_DIR
-
-	if [ -f $1 -a -x $1 ]; then
-		cp $1 $BUILD_DIR/
-		chroot $BUILD_DIR/ /$@
-		rm -r $BUILD_DIR/$1
-	else
-		chroot $BUILD_DIR/ $@
-	fi
-
-	for d in $BUILD_DIR/*; do
-		mountpoint -q $d && \
-			umount -f $d
-	done
-
-	rm -rf \
-		$BUILD_DIR/etc/resolv.conf \
-		$BUILD_DIR/configs
-
-}
-
-
 # -- Prepare the directory where the filesystem will be created.
 
 wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.1-base-amd64.tar.gz
 tar xf base.tar.gz -C $BUILD_DIR
 
 
-# -- Create the filesystem.
+# -- Populate $BUILD_DIR.
 
-run_chroot bootstrap.sh || true
+wget -qO /bin/runc https://raw.githubusercontent.com/Nitrux/runc/master/runc
+chmod +x /bin/runc
+
+cp -r configs $BUILD_DIR/
+
+runc $BUILD_DIR bootstrap.sh || true
+
+rm -rf $BUILD_DIR/configs
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
@@ -76,7 +47,7 @@ cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
 
 # -- Compress the root filesystem.
 
-(while :; do sleep 300; printf ".\n"; done) &
+(while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
 mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
@@ -84,7 +55,6 @@ mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
 
 # -- Write the commit hash that generated the image.
 
-#du -sx --block-size=1 $ISO_DIR/ | tail -n 1 | awk '{ print $1 }' > $ISO_DIR/casper/filesystem.size
 printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
 
 
@@ -93,12 +63,14 @@ printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
 wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/master/mkiso
 chmod +x /bin/mkiso
 
+git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
+
 mkiso \
 	-d $ISO_DIR \
 	-V "NITRUX" \
 	-g $CONFIG_DIR/grub.cfg \
 	-g $CONFIG_DIR/loopback.cfg \
-	-t $CONFIG_DIR/nitrux-grub-theme \
+	-t grub-theme/nomad \
 	-o $OUTPUT_DIR/$IMAGE
 
 
