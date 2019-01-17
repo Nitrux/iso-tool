@@ -176,7 +176,7 @@ cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
-# -- Add policykit file for KDialog.
+# -- Add vfio configuration file
 
 cp /configs/vfio.conf /etc/modprobe.d/
 
