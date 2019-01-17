@@ -176,6 +176,11 @@ cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
+# -- Add policykit file for KDialog.
+
+cp /configs/vfio.conf /etc/modprobe.d/
+
+
 # -- Install the latest stable kernel.
 
 printf "INSTALLING NEW KERNEL."
