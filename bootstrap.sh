@@ -60,7 +60,7 @@ apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -83,11 +83,11 @@ mkdir /etc/skel/Applications
 # -- the AppImages will not display an icon when added to the menu launcher by appimaged.
 
 cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
-cp -a /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage /etc/skel/Applications
+cp -a /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage /etc/skel/Applications
 cp -a /Applications/LibreOffice-pre.standard-x86_64.AppImage /etc/skel/Applications
 
 rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-rm /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
+rm /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 rm /Applications/LibreOffice-pre.standard-x86_64.AppImage
 
 
@@ -176,9 +176,25 @@ cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
-# -- Add vfio configuration file
+# -- Add vfio modules and files
 
-cp /configs/vfio.conf /etc/modprobe.d/
+echo "softdep nvidia pre: vfio vfio_pci" > /etc/initramfs-tools/modules
+echo "vfio" > /etc/initramfs-tools/modules
+echo "vfio_iommu_type1" > /etc/initramfs-tools/modules
+echo "vfio_virqfd" > /etc/initramfs-tools/modules
+echo "options vfio_pci ids=" > /etc/initramfs-tools/modules
+echo "vfio_pci ids=" > /etc/initramfs-tools/modules
+echo "vfio_pci" > /etc/initramfs-tools/modules
+echo "nvidia" > /etc/initramfs-tools/modules
+
+echo "vfio" > /etc/modules
+echo "vfio_iommu_type1" > /etc/modules
+echo "vfio_pci ids=" > /etc/modules
+
+cp /configs/amdgpu.conf /etc/modprobe.d/
+cp /configs/nvidia.conf /etc/modprobe.d/
+cp /configs/vfio_pci.conf /etc/modprobe.d/
+cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
 
 # -- Install the latest stable kernel.
