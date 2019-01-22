@@ -203,10 +203,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-headers-4.20.0-042000_4.20.0-042000.201812232030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-headers-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-image-unsigned-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-modules-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-headers-4.20.3-042003_4.20.3-042003.201901171122_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-headers-4.20.3-042003-generic_4.20.3-042003.201901171122_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-image-unsigned-4.20.3-042003-generic_4.20.3-042003.201901171122_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-modules-4.20.3-042003-generic_4.20.3-042003.201901171122_amd64.deb
 '
 
 mkdir latest_kernel
