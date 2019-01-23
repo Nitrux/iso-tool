@@ -2,7 +2,7 @@ sudo: required
 script:
 - sudo apt-get -qq update > /dev/null
 - sudo apt-get -yy -qq install util-linux squashfs-tools zsync xorriso grub-common
-  grub2-common grub-efi-amd64-bin sshpass apt-utils --no-install-recommends > /dev/null
+  grub2-common grub-efi-amd64-bin sshpass apt-utils mtools --no-install-recommends > /dev/null
 - sudo bash build.sh
 branches:
   except:
