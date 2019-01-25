@@ -59,8 +59,8 @@ apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/config/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/config/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -109,8 +109,8 @@ chmod +x /bin/znx-gui
 # -- and to install each package the library must be overwritten each time.
 
 nxsc='
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/config/debs/libs/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/config/debs/libs/nx-software-center-plasma_2.3-2_amd64.deb
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libappimageinfo_0.1.1-1_amd64.deb
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/nx-software-center-plasma_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
