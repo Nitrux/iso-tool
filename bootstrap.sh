@@ -100,7 +100,7 @@ mv /Applications/znx_stable /Applications/znx
 # -- Add znx-gui.
 
 cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/storage/development/configs/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
 chmod +x /bin/znx-gui
 
 
