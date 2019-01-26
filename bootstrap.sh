@@ -21,7 +21,7 @@ nomad-desktop
 # -- Install basic packages.
 
 apt -qq update
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -52,7 +52,7 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update
 apt -yy -qq upgrade
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends  > /dev/null
 
 
 # -- Add AppImages.
@@ -119,7 +119,7 @@ for x in $nxsc; do
 	wget -q -P nxsc_deps $x
 done
 
-dpkg --force-all -iR nxsc_deps
+dpkg --force-all -iR nxsc_deps  > /dev/null
 rm -r nxsc_deps
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
@@ -140,7 +140,7 @@ for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 
-dpkg -iR appimaged_deb
+dpkg -iR appimaged_deb  > /dev/null
 rm -r appimaged_deb
 
 
@@ -220,7 +220,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel
+dpkg -iR latest_kernel  > /dev/null
 rm -r latest_kernel
 
 
@@ -232,6 +232,6 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper
+apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper  > /dev/null
 apt -yy -qq autoremove
 apt -yy -qq clean
