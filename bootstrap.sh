@@ -110,7 +110,7 @@ chmod +x /bin/znx-gui
 
 nxsc='
 https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/nx-software-center-plasma_2.3-2_amd64.deb
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
@@ -207,10 +207,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-headers-4.20.3-042003_4.20.3-042003.201901171122_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-headers-4.20.3-042003-generic_4.20.3-042003.201901171122_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-image-unsigned-4.20.3-042003-generic_4.20.3-042003.201901171122_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.3/linux-modules-4.20.3-042003-generic_4.20.3-042003.201901171122_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004_4.20.4-042004.201901222207_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-image-unsigned-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-modules-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
 '
 
 mkdir latest_kernel
