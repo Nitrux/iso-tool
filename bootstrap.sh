@@ -20,7 +20,7 @@ nomad-desktop
 
 # -- Install basic packages.
 
-apt -qq update > /dev/null
+apt -qq update
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
@@ -50,17 +50,17 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt -qq update > /dev/null
-apt -yy -qq upgrade > /dev/null
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -qq update
+apt -yy -qq upgrade
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends  > /dev/null
 
 
 # -- Add AppImages.
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -83,11 +83,11 @@ mkdir /etc/skel/Applications
 # -- the AppImages will not display an icon when added to the menu launcher by appimaged.
 
 cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
-cp -a /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage /etc/skel/Applications
+cp -a /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage /etc/skel/Applications
 cp -a /Applications/LibreOffice-pre.standard-x86_64.AppImage /etc/skel/Applications
 
 rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-rm /Applications/ungoogled-chromium_70.0.3538.110-1_linux.AppImage
+rm /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 rm /Applications/LibreOffice-pre.standard-x86_64.AppImage
 
 
@@ -109,8 +109,8 @@ chmod +x /bin/znx-gui
 # -- and to install each package the library must be overwritten each time.
 
 nxsc='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libappimageinfo_0.1.1-1_amd64.deb
+https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
@@ -119,7 +119,7 @@ for x in $nxsc; do
 	wget -q -P nxsc_deps $x
 done
 
-dpkg --force-all -iR nxsc_deps > /dev/null
+dpkg --force-all -iR nxsc_deps  > /dev/null
 rm -r nxsc_deps
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
@@ -176,16 +176,41 @@ cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
+# -- Add vfio modules and files
+
+echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "vfio" >> /etc/initramfs-tools/modules
+echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
+echo "vfio_virqfd" >> /etc/initramfs-tools/modules
+echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
+echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
+echo "vfio_pci" >> /etc/initramfs-tools/modules
+echo "nvidia" >> /etc/initramfs-tools/modules
+
+echo "vfio" >> /etc/modules
+echo "vfio_iommu_type1" >> /etc/modules
+echo "vfio_pci ids=" >> /etc/modules
+
+cp /configs/amdgpu.conf /etc/modprobe.d/
+cp /configs/nvidia.conf /etc/modprobe.d/
+cp /configs/vfio_pci.conf /etc/modprobe.d/
+cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+cp /configs/kvm.conf /etc/modprobe.d/
+
+cp /configs/asound.conf /etc/
+cp /configs/asound.conf /etc/skel/.asoundrc
+
+
 # -- Install the latest stable kernel.
 
 printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-headers-4.20.0-042000_4.20.0-042000.201812232030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-headers-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-image-unsigned-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20/linux-modules-4.20.0-042000-generic_4.20.0-042000.201812232030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004_4.20.4-042004.201901222207_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-image-unsigned-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-modules-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
 '
 
 mkdir latest_kernel
@@ -207,6 +232,6 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper > /dev/null
-apt -yy -qq autoremove > /dev/null
-apt -yy -qq clean > /dev/null
+apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper  > /dev/null
+apt -yy -qq autoremove
+apt -yy -qq clean
