@@ -20,8 +20,8 @@ nomad-desktop
 
 # -- Install basic packages.
 
-apt -qq update
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends
+apt -qq update > /dev/null
+apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
@@ -50,9 +50,9 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt -qq update
-apt -yy -qq upgrade
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt -qq update > /dev/null
+apt -yy -qq upgrade > /dev/null
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 
 
 # -- Add AppImages.
@@ -100,7 +100,7 @@ mv /Applications/znx_stable /Applications/znx
 # -- Add znx-gui.
 
 cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/storage/development/configs/znx-gui
 chmod +x /bin/znx-gui
 
 
@@ -176,7 +176,7 @@ cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
-# -- Add vfio modules and files
+# -- Add vfio modules and files.
 
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
