@@ -41,7 +41,7 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 # -- Add key for the Ubuntu-X PPA
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9
 
-rm neon.key
+# rm neon.key
 rm nxos.key
 
 cp /configs/sources.list /etc/apt/sources.list
@@ -59,7 +59,7 @@ for x in libqt5websockets5; do
 	wget -q -P libqt5websockets5_deps $x
 done
 
-dpkg --force-all -iR libqt5websockets5_deps > /dev/null
+dpkg -i libqt5websockets5_deps > /dev/null
 rm -r libqt5websockets5_deps
 
 
