@@ -27,10 +27,6 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
 # -- packages are built against the latest LTS release of Ubuntu.
 
-# wget -q https://archive.neon.kde.org/public.key -O neon.key
-# printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-# 	apt-key add neon.key
-
 wget -q http://repo.nxos.org/public.key -O nxos.key
 printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
 	apt-key add nxos.key
@@ -41,30 +37,29 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 # -- Add key for the Ubuntu-X PPA
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9
 
-# rm neon.key
 rm nxos.key
 
 cp /configs/sources.list /etc/apt/sources.list
 
 # -- Update packages list and install packages.
 
-apt -qq update > /dev/null
+apt -qq update
 
 
 # -- Install libqt5websockets5 5.11.3. Use this until the deb is available in our repository.
 
-qt5sckts5='
+libqt5='
 https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libqt5websockets5_5.11.3-5_amd64.deb
 '
 
-mkdir qt5sckts5_deb
+mkdir libqt5file_deb
 
-for x in $qt5sckts5; do
-	wget -q -P qt5sckts5_deb $x
+for x in $libqt5; do
+	wget -q -P libqt5file_deb $x
 done
 
-dpkg -iR qt5sckts5_deb
-rm -r qt5sckts5_deb
+dpkg -iR libqt5file_deb
+rm -r libqt5file_deb
 
 
 # -- Install Nomad Desktop meta package and base-files package
