@@ -200,6 +200,11 @@ cp /configs/kvm.conf /etc/modprobe.d/
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
+# -- Add symlink for Phonon backend
+
+mkdir /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/
+ln -sv /usr/lib/x86_64-linux-gnu/qt4/plugins/phonon_backend/phonon_gstreamer.so /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/phonon_gstreamer.so
+
 
 # -- Install the latest stable kernel.
 
@@ -207,10 +212,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004_4.20.4-042004.201901222207_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-image-unsigned-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-modules-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-headers-4.20.5-042005_4.20.5-042005.201901260434_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-headers-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-image-unsigned-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-modules-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
 '
 
 mkdir latest_kernel
