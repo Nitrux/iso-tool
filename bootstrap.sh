@@ -47,7 +47,7 @@ rm nxos.key
 cp /configs/sources.list /etc/apt/sources.list
 
 
-# -- Install libqt5websockets5 5.11.3
+# -- Install libqt5websockets5 5.11.3. Use this until the deb is available in our repository.
 
 qt5sckts5='
 https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libqt5websockets5_5.11.3-5_amd64.deb
@@ -56,10 +56,10 @@ https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/l
 mkdir qt5sckts5_deb
 
 for x in $qt5sckts5; do
-	wget -q -P qt5sckts5deb $x
+	wget -q -P qt5sckts5_deb $x
 done
 
-dpkg -iR qt5sckts5_deb > /dev/null
+dpkg -iR qt5sckts5_deb
 rm -r qt5sckts5_deb
 
 
@@ -253,7 +253,7 @@ apt -yy -qq autoremove
 apt -yy -qq clean
 
 
-# -- Add symlink for Phonon backend since it's the same file just a different path. Because how dpkg works, VLC can't be removed it if the folder is not empty.
+# -- Add symlink for Phonon backend since it's the same file just a different path. Because how dpkg works, VLC can't be removed it if the folder is not empty, so remove first, creat link later.
 
 mkdir /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/
 ln -sv /usr/lib/x86_64-linux-gnu/qt4/plugins/phonon_backend/phonon_gstreamer.so /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/phonon_gstreamer.so
