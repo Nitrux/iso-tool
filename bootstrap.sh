@@ -23,26 +23,27 @@ nomad-desktop
 apt -qq update > /dev/null
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
-
-# -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
-# -- packages are built against the latest LTS release of Ubuntu.
-
+# -- Add key for the KDE Neon repository.
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key
+	apt-key add neon.key > /dev/null
 
+# -- Add key for our repository.
 wget -q http://repo.nxos.org/public.key -O nxos.key
 printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
-	apt-key add nxos.key
+	apt-key add nxos.key > /dev/null
 
-# -- Add key for the Graphics Driver PPA
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C
+# -- Add key for the Graphics Driver PPA.
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
-# -- Add key for the Ubuntu-X PPA
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9
+# -- Add key for the Ubuntu-X PPA.
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
+# -- Remove key files
 rm neon.key
 rm nxos.key
+
+# -- Use optimized sources.list.
 
 cp /configs/sources.list /etc/apt/sources.list
 
@@ -53,6 +54,7 @@ cp /configs/sources.list /etc/apt/sources.list
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq purge --remove vlc
 
 
 # -- Add AppImages.
@@ -79,7 +81,7 @@ chmod +x /Applications/*
 
 mkdir /etc/skel/Applications
 
-# -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise
+# -- Add AppImages to the skel /Applications dir. Then remove AppImages from root /Applications, otherwise
 # -- the AppImages will not display an icon when added to the menu launcher by appimaged.
 
 cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
@@ -130,18 +132,18 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git660c916.travis65_amd64.deb
-'
-
-mkdir appimaged_deb
-
-for x in $appimgd; do
-	wget -q -P appimaged_deb $x
-done
-
-dpkg -iR appimaged_deb > /dev/null
-rm -r appimaged_deb
+# appimgd='
+# https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git660c916.travis65_amd64.deb
+# '
+# 
+# mkdir appimaged_deb
+# 
+# for x in $appimgd; do
+# 	wget -q -P appimaged_deb $x
+# done
+# 
+# dpkg -iR appimaged_deb > /dev/null
+# rm -r appimaged_deb
 
 
 # -- Add /Applications to $PATH.
@@ -232,12 +234,7 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper
+apt -yy -qq purge --remove casper lupin-casper
 apt -yy -qq autoremove
 apt -yy -qq clean
 
-
-# -- Add symlink for Phonon backend since it's the same file just a different path. Because how dpkg works, VLC can't be removed it if the folder is not empty, so remove first, creat link later.
-
-mkdir /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/
-ln -sv /usr/lib/x86_64-linux-gnu/qt4/plugins/phonon_backend/phonon_gstreamer.so /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/phonon_gstreamer.so
