@@ -46,6 +46,10 @@ rm nxos.key
 
 cp /configs/sources.list /etc/apt/sources.list
 
+# -- Update packages list and install packages.
+
+apt -qq update > /dev/null
+
 
 # -- Install libqt5websockets5 5.11.3. Use this until the deb is available in our repository.
 
@@ -63,10 +67,9 @@ dpkg -iR qt5sckts5_deb
 rm -r qt5sckts5_deb
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
+# -- Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
 
