@@ -49,18 +49,18 @@ cp /configs/sources.list /etc/apt/sources.list
 
 # -- Install libqt5websockets5 5.11.3
 
-libqt5websockets5='
+qt5sckts5='
 https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libqt5websockets5_5.11.3-5_amd64.deb
 '
 
-mkdir libqt5websockets5_deps
+mkdir qt5sckts5_deb
 
-for x in libqt5websockets5; do
-	wget -q -P libqt5websockets5_deps $x
+for x in $qt5sckts5; do
+	wget -q -P qt5sckts5deb $x
 done
 
-dpkg -i libqt5websockets5_deps > /dev/null
-rm -r libqt5websockets5_deps
+dpkg -iR qt5sckts5_deb > /dev/null
+rm -r qt5sckts5_deb
 
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
