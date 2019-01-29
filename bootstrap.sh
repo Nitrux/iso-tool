@@ -27,9 +27,9 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
 # -- packages are built against the latest LTS release of Ubuntu.
 
-wget -q https://archive.neon.kde.org/public.key -O neon.key
-printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key
+# wget -q https://archive.neon.kde.org/public.key -O neon.key
+# printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+# 	apt-key add neon.key
 
 wget -q http://repo.nxos.org/public.key -O nxos.key
 printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
@@ -200,7 +200,7 @@ cp /configs/kvm.conf /etc/modprobe.d/
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
-# -- Add symlink for Phonon backend
+# -- Add symlink for Phonon backend since it's the same file just a different path.
 
 mkdir /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/
 ln -sv /usr/lib/x86_64-linux-gnu/qt4/plugins/phonon_backend/phonon_gstreamer.so /usr/lib/x86_64-linux-gnu/qt5/plugins/phonon4qt5_backend/phonon_gstreamer.so
