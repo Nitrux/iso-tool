@@ -53,6 +53,13 @@ cp /configs/sources.list /etc/apt/sources.list
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 
+# -- Install Nomad Desktop meta package and base-files package
+# -- avoiding recommended packages.
+
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -yy -qq purge --remove vlc > /dev/null
+
+
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
 # -- and to install each package the library must be overwritten each time.
 
@@ -67,13 +74,6 @@ rm libappimageinfo_0.1.1-1_amd64.deb
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
-
-
-# -- Install Nomad Desktop meta package and base-files package
-# -- avoiding recommended packages.
-
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
-apt -yy -qq purge --remove vlc > /dev/null
 
 
 # -- Add AppImages.
