@@ -53,16 +53,16 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
-apt -yy -qq purge --remove vlc
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -yy -qq purge --remove vlc > /dev/null
 
 
 # -- Add AppImages.
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -106,23 +106,8 @@ wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool
 chmod +x /bin/znx-gui
 
 
-# -- Install Software Center.
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
 # -- and to install each package the library must be overwritten each time.
-
-nxsc='
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
-'
-
-mkdir nxsc_deps
-
-for x in $nxsc; do
-	wget -q -P nxsc_deps $x
-done
-
-dpkg --force-all -iR nxsc_deps > /dev/null
-rm -r nxsc_deps
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
@@ -234,7 +219,7 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove casper lupin-casper
-apt -yy -qq autoremove
-apt -yy -qq clean
+apt -yy -qq purge --remove casper lupin-casper > /dev/null
+apt -yy -qq autoremove > /dev/null
+apt -yy -qq clean > /dev/null
 
