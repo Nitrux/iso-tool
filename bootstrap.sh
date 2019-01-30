@@ -48,11 +48,30 @@ rm nxos.key
 cp /configs/sources.list /etc/apt/sources.list
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
-# -- avoiding recommended packages.
+# -- Update packages list.
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
+
+# -- For now, the software center, libappimage and libappimageinfo provide the same library
+# -- and to install each package the library must be overwritten each time.
+
+apt download nx-software-center-plasma
+apt download libappimageinfo
+dpkg --force-all -i nx-software-center-plasma_2.3-2_amd64.deb
+dpkg --force-all -i libappimageinfo_0.1.1-1_amd64.deb
+
+rm nx-software-center-plasma_2.3-2_amd64.deb
+rm libappimageinfo_0.1.1-1_amd64.deb
+
+ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
+
+
+# -- Install Nomad Desktop meta package and base-files package
+# -- avoiding recommended packages.
+
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
 
@@ -104,14 +123,6 @@ mv /Applications/znx_stable /Applications/znx
 cp /configs/znx-gui.desktop /usr/share/applications
 wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
 chmod +x /bin/znx-gui
-
-
-# -- For now, the software center, libappimage and libappimageinfo provide the same library
-# -- and to install each package the library must be overwritten each time.
-
-ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
-ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
-ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
