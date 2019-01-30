@@ -20,29 +20,30 @@ nomad-desktop
 
 # -- Install basic packages.
 
-apt -qq update
+apt -qq update > /dev/null
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
-
-# -- Use optimized sources.list. The LTS repositories are used to support the KDE Neon repository since these
-# -- packages are built against the latest LTS release of Ubuntu.
-
+# -- Add key for the KDE Neon repository.
 wget -q https://archive.neon.kde.org/public.key -O neon.key
 printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key
+	apt-key add neon.key > /dev/null
 
+# -- Add key for our repository.
 wget -q http://repo.nxos.org/public.key -O nxos.key
 printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
-	apt-key add nxos.key
+	apt-key add nxos.key > /dev/null
 
-# -- Add key for the Graphics Driver PPA
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C
+# -- Add key for the Graphics Driver PPA.
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
-# -- Add key for the Ubuntu-X PPA
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9
+# -- Add key for the Ubuntu-X PPA.
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
+# -- Remove key files
 rm neon.key
 rm nxos.key
+
+# -- Use optimized sources.list.
 
 cp /configs/sources.list /etc/apt/sources.list
 
@@ -50,17 +51,18 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt -qq update
-apt -yy -qq upgrade
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends  > /dev/null
+apt -qq update > /dev/null
+apt -yy -qq upgrade > /dev/null
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -yy -qq purge --remove vlc > /dev/null
 
 
 # -- Add AppImages.
 
 APPS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
@@ -79,7 +81,7 @@ chmod +x /Applications/*
 
 mkdir /etc/skel/Applications
 
-# -- Add AppImages to the user /Applications dir. Then remove AppImages from root /Applications, otherwise
+# -- Add AppImages to the skel /Applications dir. Then remove AppImages from root /Applications, otherwise
 # -- the AppImages will not display an icon when added to the menu launcher by appimaged.
 
 cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
@@ -100,17 +102,16 @@ mv /Applications/znx_stable /Applications/znx
 # -- Add znx-gui.
 
 cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
 chmod +x /bin/znx-gui
 
 
-# -- Install Software Center.
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
 # -- and to install each package the library must be overwritten each time.
 
 nxsc='
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/libs/libappimageinfo_0.1.1-1_amd64.deb
-https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/debs/apps/nx-software-center-plasma_2.3-2_amd64.deb
+http://repo.nxos.org/stable/pool/main/liba/libappimageinfo/libappimageinfo_0.1.1-1_amd64.deb
+http://repo.nxos.org/stable/pool/main/n/nx-software-center-plasma/nx-software-center-plasma_2.3-2_amd64.deb
 '
 
 mkdir nxsc_deps
@@ -119,7 +120,7 @@ for x in $nxsc; do
 	wget -q -P nxsc_deps $x
 done
 
-dpkg --force-all -iR nxsc_deps  > /dev/null
+dpkg --force-all -iR nxsc_deps > /dev/null
 rm -r nxsc_deps
 
 ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
@@ -130,18 +131,18 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git660c916.travis65_amd64.deb
-'
-
-mkdir appimaged_deb
-
-for x in $appimgd; do
-	wget -q -P appimaged_deb $x
-done
-
-dpkg -iR appimaged_deb  > /dev/null
-rm -r appimaged_deb
+# appimgd='
+# https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git660c916.travis65_amd64.deb
+# '
+# 
+# mkdir appimaged_deb
+# 
+# for x in $appimgd; do
+# 	wget -q -P appimaged_deb $x
+# done
+# 
+# dpkg -iR appimaged_deb > /dev/null
+# rm -r appimaged_deb
 
 
 # -- Add /Applications to $PATH.
@@ -176,7 +177,7 @@ cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
-# -- Add vfio modules and files
+# -- Add vfio modules and files.
 
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
@@ -207,10 +208,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004_4.20.4-042004.201901222207_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-headers-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-image-unsigned-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.4/linux-modules-4.20.4-042004-generic_4.20.4-042004.201901222207_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-headers-4.20.5-042005_4.20.5-042005.201901260434_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-headers-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-image-unsigned-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-modules-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
 '
 
 mkdir latest_kernel
@@ -220,7 +221,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel  > /dev/null
+dpkg -iR latest_kernel > /dev/null
 rm -r latest_kernel
 
 
@@ -232,6 +233,7 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove phonon4qt5-backend-vlc vlc casper lupin-casper  > /dev/null
-apt -yy -qq autoremove
-apt -yy -qq clean
+apt -yy -qq purge --remove casper lupin-casper > /dev/null
+apt -yy -qq autoremove > /dev/null
+apt -yy -qq clean > /dev/null
+
