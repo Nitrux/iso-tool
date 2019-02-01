@@ -23,10 +23,10 @@ nomad-desktop
 apt -qq update > /dev/null
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
-# -- Add key for the KDE Neon repository.
-wget -q https://archive.neon.kde.org/public.key -O neon.key
-printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key > /dev/null
+# # -- Add key for the KDE Neon repository.
+# wget -q https://archive.neon.kde.org/public.key -O neon.key
+# printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+# 	apt-key add neon.key > /dev/null
 
 # -- Add key for our repository.
 wget -q http://repo.nxos.org/public.key -O nxos.key
@@ -40,7 +40,7 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 # -- Remove key files
-rm neon.key
+# rm neon.key
 rm nxos.key
 
 # -- Use optimized sources.list.
@@ -128,21 +128,21 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-l
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
 
-# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
-# -- firejail should be automatically used by the daemon to sandbox AppImages.
+-- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
+-- firejail should be automatically used by the daemon to sandbox AppImages.
 
-# appimgd='
-# https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git660c916.travis65_amd64.deb
-# '
-# 
-# mkdir appimaged_deb
-# 
-# for x in $appimgd; do
-# 	wget -q -P appimaged_deb $x
-# done
-# 
-# dpkg -iR appimaged_deb > /dev/null
-# rm -r appimaged_deb
+appimgd='
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git369c33a.travis92_amd64.deb
+'
+
+mkdir appimaged_deb
+
+for x in $appimgd; do
+	wget -q -P appimaged_deb $x
+done
+
+dpkg -iR appimaged_deb > /dev/null
+rm -r appimaged_deb
 
 
 # -- Add /Applications to $PATH.
@@ -180,6 +180,7 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 # -- Add vfio modules and files.
 
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "# softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
 echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
 echo "vfio_virqfd" >> /etc/initramfs-tools/modules
@@ -187,6 +188,7 @@ echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
+echo "# amdgpu" >> /etc/initramfs-tools/modules
 
 echo "vfio" >> /etc/modules
 echo "vfio_iommu_type1" >> /etc/modules
@@ -202,16 +204,16 @@ cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
 
-# -- Install the latest stable kernel.
+# -- Install the latest stable kernel. The image and the headers contain the ACS override patch applied for PCI devices.
 
 printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-headers-4.20.5-042005_4.20.5-042005.201901260434_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-headers-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-image-unsigned-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.5/linux-modules-4.20.5-042005-generic_4.20.5-042005.201901260434_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-headers-4.20.6-042006_4.20.6-042006.201901310331_all.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/151541520/artifacts/raw/linux-headers-4.20.5-acso_4.20.5-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/151541520/artifacts/raw/linux-image-4.20.5-acso_4.20.5-acso-1_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-modules-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
 '
 
 mkdir latest_kernel
