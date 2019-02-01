@@ -50,7 +50,7 @@ cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
 (while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
-mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress -b 1M
 
 
 # -- Write the commit hash that generated the image.
