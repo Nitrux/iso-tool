@@ -204,15 +204,15 @@ cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
 
-# -- Install the latest stable kernel. The image and the headers contain the ACS override patch applied for PCI devices.
+# -- Install the latest stable kernel.
 
 printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-headers-4.20.6-042006_4.20.6-042006.201901310331_all.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/153999927/artifacts/raw/linux-headers-4.20.6-acso_4.20.6-acso-1_amd64.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/153999927/artifacts/raw/linux-image-4.20.6-acso_4.20.6-acso-1_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-headers-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-image-unsigned-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-modules-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
 '
 
