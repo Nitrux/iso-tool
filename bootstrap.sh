@@ -56,27 +56,50 @@ apt -yy -qq purge --remove vlc > /dev/null
 # -- Add AppImages.
 
 APPS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable -o znx
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
 http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
-mkdir /etc/skel/Applications
+mkdir /Applications
 
 for x in $APPS; do
-	wget -q -P /etc/skel/Applications $x
+	wget -q -P /Applications $x
 done
 
-chmod +x /etc/skel/Applications/*
+chmod +x /Applications/*
+
+
+# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
+# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
+
+mkdir /etc/skel/Applications
+
+# -- Add AppImages to the skel /Applications dir. Then remove AppImages from root /Applications, otherwise
+# -- the AppImages will not display an icon when added to the menu launcher by appimaged.
+
+cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
+cp -a /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage /etc/skel/Applications
+cp -a /Applications/LibreOffice-pre.standard-x86_64.AppImage /etc/skel/Applications
+
+rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+rm /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
+rm /Applications/LibreOffice-pre.standard-x86_64.AppImage
+
+
+# -- Rename AppImageUpdate and znx.
+
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+mv /Applications/znx_stable /Applications/znx
 
 
 # -- Add znx-gui.
 
 cp /configs/znx-gui.desktop /usr/share/applications
-cp /configs/deploy-nitrux-image /bin/
-chmod +x /bin/deploy-nitrux-image
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
+chmod +x /bin/znx-gui
 
 
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
@@ -96,9 +119,9 @@ done
 dpkg --force-all -iR nxsc_deps > /dev/null
 rm -r nxsc_deps
 
-ln -s /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
-ln -s /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
-ln -s /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
+ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
+ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -120,8 +143,8 @@ rm -r appimaged_deb
 
 # -- Add /Applications to $PATH.
 
-printf "PATH=$PATH:~/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:~/Applications\"|g" /etc/sudoers
+printf "PATH=$PATH:/Applications\n" > /etc/environment
+sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
 
@@ -213,5 +236,7 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
+apt -yy -qq purge --remove casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
 apt -yy -qq clean > /dev/null
+
