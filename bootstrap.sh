@@ -205,7 +205,7 @@ echo "#" >> /etc/initramfs-tools/initramfs.conf
 echo "#" >> /etc/initramfs-tools/initramfs.conf
 echo "# FILES to load" >> /etc/initramfs-tools/initramfs.conf
 echo " " >> /etc/initramfs-tools/initramfs.conf
-echo "FILES=(/etc/modprobe.d/vfio.conf /usr/bin/vfio-pci-override.sh)" >> /etc/initramfs-tools/initramfs.conf
+echo "FILES=(/etc/modprobe.d/vfio_pci.conf /usr/bin/vfio-pci-override.sh)" >> /etc/initramfs-tools/initramfs.conf
 echo " " >> /etc/initramfs-tools/initramfs.conf
 echo " " >> /etc/initramfs-tools/initramfs.conf
 
