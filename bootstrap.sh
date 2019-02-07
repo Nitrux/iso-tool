@@ -195,6 +195,7 @@ cp /configs/nvidia.conf /etc/modprobe.d/
 cp /configs/vfio_pci.conf /etc/modprobe.d/
 cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 cp /configs/kvm.conf /etc/modprobe.d/
+cp /configs/qemu-system-x86.conf /etc/modprobe.d
 
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
