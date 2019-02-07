@@ -23,10 +23,6 @@ nomad-desktop
 apt -qq update > /dev/null
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
-# # -- Add key for the KDE Neon repository.
-# wget -q https://archive.neon.kde.org/public.key -O neon.key
-# printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-# 	apt-key add neon.key > /dev/null
 
 # -- Add key for our repository.
 wget -q http://repo.nxos.org/public.key -O nxos.key
@@ -40,8 +36,8 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 # -- Remove key files
-# rm neon.key
 rm nxos.key
+
 
 # -- Use optimized sources.list.
 
@@ -53,7 +49,7 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
 
 
