@@ -199,6 +199,16 @@ cp /configs/kvm.conf /etc/modprobe.d/
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
+cp /configs/vfio-pci-override-vga.sh /usr/bin/
+
+echo "#" >> /etc/initramfs-tools/initramfs.conf
+echo "#" >> /etc/initramfs-tools/initramfs.conf
+echo "# FILES to load" >> /etc/initramfs-tools/initramfs.conf
+echo " " >> /etc/initramfs-tools/initramfs.conf
+echo "FILES=(/etc/modprobe.d/vfio.conf /usr/bin/vfio-pci-override.sh)" >> /etc/initramfs-tools/initramfs.conf
+echo " " >> /etc/initramfs-tools/initramfs.conf
+echo " " >> /etc/initramfs-tools/initramfs.conf
+
 
 # -- Install the latest stable kernel.
 
@@ -206,10 +216,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-headers-4.20.6-042006_4.20.6-042006.201901310331_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-headers-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-image-unsigned-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.6/linux-modules-4.20.6-042006-generic_4.20.6-042006.201901310331_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007_4.20.7-042007.201902061234_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-image-unsigned-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-modules-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
 '
 
 mkdir latest_kernel
