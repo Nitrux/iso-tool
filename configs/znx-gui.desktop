@@ -5,7 +5,7 @@ Comment=Operating System manager.
 Icon=znx-gui
 Type=Application
 Terminal=false
-Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY znx-gui
-TryExec=znx-gui
+Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY deploy-nitrux-image
+TryExec=deploy-nitrux-image
 Categories=Utilities;System;
 Keywords=deployer;live;
