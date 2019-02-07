@@ -124,8 +124,8 @@ ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-l
 ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
 
 
--- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
--- firejail should be automatically used by the daemon to sandbox AppImages.
+# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
+# -- firejail should be automatically used by the daemon to sandbox AppImages.
 
 appimgd='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git369c33a.travis92_amd64.deb
@@ -201,13 +201,7 @@ cp /configs/asound.conf /etc/skel/.asoundrc
 
 cp /configs/vfio-pci-override-vga.sh /usr/bin/
 
-echo "#" >> /etc/initramfs-tools/initramfs.conf
-echo "#" >> /etc/initramfs-tools/initramfs.conf
-echo "# FILES to load" >> /etc/initramfs-tools/initramfs.conf
-echo " " >> /etc/initramfs-tools/initramfs.conf
-echo "FILES=(/etc/modprobe.d/vfio_pci.conf /usr/bin/vfio-pci-override.sh)" >> /etc/initramfs-tools/initramfs.conf
-echo " " >> /etc/initramfs-tools/initramfs.conf
-echo " " >> /etc/initramfs-tools/initramfs.conf
+cp /configs/initramfs.conf /etc/initramfs-tools/
 
 
 # -- Install the latest stable kernel.
