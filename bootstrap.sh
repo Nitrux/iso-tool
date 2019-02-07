@@ -211,10 +211,9 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007_4.20.7-042007.201902061234_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-image-unsigned-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-modules-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-headers-4.20.7-acso_4.20.7-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-image-4.20.7-acso_4.20.7-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-libc-dev_4.20.7-acso-1_amd64.deb
 '
 
 mkdir latest_kernel

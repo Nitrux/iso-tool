@@ -41,8 +41,8 @@ rm -rf $BUILD_DIR/configs
 
 mkdir -p $ISO_DIR/boot
 
-cp $BUILD_DIR/vmlinuz $ISO_DIR/boot/kernel
-cp $BUILD_DIR/initrd.img $ISO_DIR/boot/initramfs
+cp $(echo $BUILD_DIR/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
+cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
 
 
 # -- Compress the root filesystem.
