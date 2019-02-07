@@ -60,7 +60,7 @@ printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
 
 # -- Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/7f171c70b0ee26872afc732fec94518223777f36/mkiso
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/master/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
