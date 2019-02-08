@@ -212,9 +212,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/155578949/artifacts/raw/linux-libc-dev_5.0.0-rc5-acso-1_amd64.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/155578949/artifacts/raw/linux-image-5.0.0-rc5-acso_5.0.0-rc5-acso-1_amd64.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/155578949/artifacts/raw/linux-headers-5.0.0-rc5-acso_5.0.0-rc5-acso-1_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007_4.20.7-042007.201902061234_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-image-unsigned-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-modules-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
 '
 
 mkdir latest_kernel
@@ -224,14 +225,14 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel
+dpkg -iR latest_kernel > /dev/null
 rm -r latest_kernel
 
 
 # -- Update the initramfs.
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-update-initramfs -c -k 5.0.0-rc5-acso
+update-initramfs -u
 
 
 # -- Clean the filesystem.
