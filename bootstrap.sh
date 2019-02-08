@@ -212,9 +212,9 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-libc-dev_4.20.7-acso-1_amd64.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-image-4.20.7-acso_4.20.7-acso-1_amd64.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-headers-4.20.7-acso_4.20.7-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/155578949/artifacts/raw/linux-libc-dev_5.0.0-rc5-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/155578949/artifacts/raw/linux-image-5.0.0-rc5-acso_5.0.0-rc5-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/155578949/artifacts/raw/linux-headers-5.0.0-rc5-acso_5.0.0-rc5-acso-1_amd64.deb
 '
 
 mkdir latest_kernel
