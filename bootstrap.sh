@@ -1,4 +1,4 @@
-w#! /bin/bash
+#! /bin/bash
 
 
 export LANG=C
