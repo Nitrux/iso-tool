@@ -1,4 +1,4 @@
-#! /bin/bash
+w#! /bin/bash
 
 
 export LANG=C
@@ -212,9 +212,9 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-headers-4.20.7-acso_4.20.7-acso-1_amd64.deb
-https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-image-4.20.7-acso_4.20.7-acso-1_amd64.deb
 https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-libc-dev_4.20.7-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-image-4.20.7-acso_4.20.7-acso-1_amd64.deb
+https://gitlab.com/Queuecumber/linux-acs-override/-/jobs/157421272/artifacts/raw/linux-headers-4.20.7-acso_4.20.7-acso-1_amd64.deb
 '
 
 mkdir latest_kernel
@@ -224,7 +224,7 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel > /dev/null
+dpkg -iR latest_kernel
 rm -r latest_kernel
 
 
