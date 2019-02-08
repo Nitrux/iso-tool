@@ -231,7 +231,7 @@ rm -r latest_kernel
 # -- Update the initramfs.
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-update-initramfs -u
+update-initramfs -c -k 5.0.0-rc5-acso
 
 
 # -- Clean the filesystem.
