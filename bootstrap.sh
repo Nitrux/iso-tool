@@ -15,6 +15,7 @@ cifs-utils
 casper
 lupin-casper
 nomad-desktop
+xz-utils
 '
 
 
@@ -59,7 +60,7 @@ APPS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
 http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
-http://libreoffice.soluzioniopen.com/pre-releases/beta2/standard/LibreOffice-pre.standard-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
