@@ -194,6 +194,7 @@ echo "vfio_pci ids=" >> /etc/modules
 cp /configs/amdgpu.conf /etc/modprobe.d/
 cp /configs/nvidia.conf /etc/modprobe.d/
 cp /configs/vfio_pci.conf /etc/modprobe.d/
+cp /configs/vfio.conf /etc/modprobe.d/
 cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 cp /configs/kvm.conf /etc/modprobe.d/
 cp /configs/qemu-system-x86.conf /etc/modprobe.d
