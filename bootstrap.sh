@@ -202,8 +202,7 @@ cp /configs/qemu-system-x86.conf /etc/modprobe.d
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
-cp /configs/vfio-pci-override-vga.sh /usr/bin/
-cp /configs/vfio-pci.sh /usr/share/initramfs-tools/hooks
+cp /configs/vfio-pci-override-vga.sh /usr/share/initramfs-tools/hooks
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
 
@@ -214,10 +213,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007_4.20.7-042007.201902061234_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-headers-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-image-unsigned-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.7/linux-modules-4.20.7-042007-generic_4.20.7-042007.201902061234_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-headers-4.20.8-042008_4.20.8-042008.201902121544_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-headers-4.20.8-042008-generic_4.20.8-042008.201902121544_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-image-unsigned-4.20.8-042008-generic_4.20.8-042008.201902121544_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-modules-4.20.8-042008-generic_4.20.8-042008.201902121544_amd64.deb
 '
 
 mkdir latest_kernel
