@@ -203,6 +203,7 @@ cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
 cp /configs/vfio-pci-override-vga.sh /usr/bin/
+cp /configs/vfio-pci.sh /usr/share/initramfs-tools/hooks
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
 
