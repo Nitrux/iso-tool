@@ -1,6 +1,5 @@
 #!/bin/sh
 
-run_hook(){
 for i in $(find /sys/devices/pci* -name boot_vga); do
         if [ $(cat $i) -eq 0 ]; then
                 GPU=$(dirname $i)
@@ -12,5 +11,6 @@ for i in $(find /sys/devices/pci* -name boot_vga); do
         fi
 done
 
-modprobe -i vfio-pci
-}
+modprobe -i vfio_pci
+
+

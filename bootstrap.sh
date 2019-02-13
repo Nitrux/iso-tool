@@ -191,20 +191,21 @@ echo "vfio" >> /etc/modules
 echo "vfio_iommu_type1" >> /etc/modules
 echo "vfio_pci ids=" >> /etc/modules
 
-cp /configs/amdgpu.conf /etc/modprobe.d/
-cp /configs/nvidia.conf /etc/modprobe.d/
-cp /configs/vfio_pci.conf /etc/modprobe.d/
-cp /configs/vfio.conf /etc/modprobe.d/
-cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/kvm.conf /etc/modprobe.d/
-cp /configs/qemu-system-x86.conf /etc/modprobe.d
-
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
-cp /configs/vfio-pci-override-vga.sh /usr/share/initramfs-tools/hooks
-
 cp /configs/initramfs.conf /etc/initramfs-tools/
+cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+
+cp /configs/vfio-pci-override-vga.sh /usr/bin/
+cp /configs/vfio-pci.sh /usr/share/initramfs-tools/hooks
+
+cp /configs/amdgpu.conf /etc/modprobe.d/
+cp /configs/kvm.conf /etc/modprobe.d/
+cp /configs/nvidia.conf /etc/modprobe.d/
+cp /configs/qemu-system-x86.conf /etc/modprobe.d
+cp /configs/vfio.conf /etc/modprobe.d/
+cp /configs/vfio_pci.conf /etc/modprobe.d/
 
 
 # -- Install the latest stable kernel.
