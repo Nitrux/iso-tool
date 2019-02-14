@@ -53,42 +53,47 @@ apt -yy -qq upgrade > /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
 
+# -- Add /Applications to $PATH.
+
+printf "PATH=$PATH:/Applications\n" > /etc/environment
+sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
+sed -i "/env_reset/d" /etc/sudoers
+
 
 # -- Add AppImages.
+# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
+# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
+# -- Rename AppImageUpdate and znx.
 
-APPS='
+APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
-http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
-http://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
 mkdir /Applications
 
-for x in $APPS; do
+for x in $APPS_SYS; do
 	wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
 
-
-# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
-# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
-
 mkdir -p /etc/skel/Applications
 
-for x in $APPS; do
+APPS_USR='
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
+http://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage
+'
+
+for x in $APPS_USR; do
     wget -q -P /etc/skel/Applications $x
 done
 
 chmod +x /etc/skel/Applications/*
 
-
-# -- Rename AppImageUpdate and znx.
-
-mv /etc/skel/Applications/AppImageUpdate-x86_64.AppImage /etc/skel/Applications/AppImageUpdate
-mv /etc/skel/Applications/znx_stable /etc/skel/Applications/znx
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+mv /Applications/znx_stable /Applications/znx
 
 
 # -- Add znx-gui.
@@ -137,35 +142,16 @@ dpkg -iR appimaged_deb > /dev/null
 rm -r appimaged_deb
 
 
-# -- Add /Applications to $PATH.
-
-printf "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
-sed -i "/env_reset/d" /etc/sudoers
-
-
 # -- Add config for SDDM.
-
-cp /configs/sddm.conf /etc
-
-
 # -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-
-cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-
-
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
-
-cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
-
-
 # -- Add custom launchers for Maui apps.
-
-cp /configs/org.kde.* /usr/share/applications
-
-
 # -- Add policykit file for KDialog.
 
+cp /configs/sddm.conf /etc
+cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
