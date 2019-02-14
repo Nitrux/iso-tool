@@ -1,13 +1,20 @@
 #!/bin/sh
 
-set -e
+PREREQ=""
+
+prereqs()
+{
+	echo "$PREREQ"
+}
 
 case $1 in
+
 prereqs)
-    prereqs
-    exit 0
-    ;;
+	prereqs
+	exit 0
+	;;
 esac
+
 
 for i in $(find /sys/devices/pci* -name boot_vga); do
         if [ $(cat $i) -eq 0 ]; then
