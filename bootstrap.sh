@@ -76,24 +76,19 @@ chmod +x /Applications/*
 # -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
 # -- Downloading AppImages with the SC will fail if this directory doesn't exist.
 
-mkdir /etc/skel/Applications
+mkdir -p /etc/skel/Applications
 
-# -- Add AppImages to the skel /Applications dir. Then remove AppImages from root /Applications, otherwise
-# -- the AppImages will not display an icon when added to the menu launcher by appimaged.
+for x in $APPS; do
+    wget -q -P /etc/skel/Applications $x
+done
 
-cp -a /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage /etc/skel/Applications
-cp -a /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage /etc/skel/Applications
-cp -a /Applications/LibreOfficeDev-daily-x86_64.AppImage /etc/skel/Applications
-
-rm /Applications/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-rm /Applications/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
-rm /Applications/LibreOfficeDev-daily-x86_64.AppImage
+chmod +x /etc/skel/Applications/*
 
 
 # -- Rename AppImageUpdate and znx.
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_stable /Applications/znx
+mv /etc/skel/Applications/AppImageUpdate-x86_64.AppImage /etc/skel/Applications/AppImageUpdate
+mv /etc/skel/Applications/znx_stable /etc/skel/Applications/znx
 
 
 # -- Add znx-gui.
