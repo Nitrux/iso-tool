@@ -176,22 +176,20 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 
 # -- Add vfio modules and files.
 
-echo "softdep nvidia pre: vfio vfio_pci vfio-pci" >> /etc/initramfs-tools/modules
-echo "softdep amdgpu pre: vfio vfio_pci vfio-pci" >> /etc/initramfs-tools/modules
+echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
 echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
 echo "vfio_virqfd" >> /etc/initramfs-tools/modules
 echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
-echo "vfio-pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
 
 echo "vfio" >> /etc/modules
 echo "vfio_iommu_type1" >> /etc/modules
 echo "vfio_pci" >> /etc/modules
-echo "vfio-pci" >> /etc/modules
 echo "vfio_pci ids=" >> /etc/modules
 
 cp /configs/asound.conf /etc/

@@ -11,3 +11,5 @@ for i in $(find /sys/devices/pci* -name boot_vga); do
         fi
 done
 
+modprobe -i vfio-pci
+
