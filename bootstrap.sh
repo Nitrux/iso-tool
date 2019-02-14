@@ -193,7 +193,7 @@ cp /configs/asound.conf /etc/skel/.asoundrc
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
-cp /configs/vfio-pci-override-vga.sh /etc/initramfs-tools/scripts/local-top/
+cp /configs/vfio-pci-override-vga.sh /etc/initramfs-tools/scripts/local-premount/
 
 cp /configs/amdgpu.conf /etc/modprobe.d/
 cp /configs/kvm.conf /etc/modprobe.d/

@@ -1,9 +1,12 @@
 #!/bin/sh
 
-prereqs () { echo "$PREREQ"; }
+set -e
 
 case $1 in
-    prereqs) prereqs; exit 0;;
+prereqs)
+    prereqs
+    exit 0
+    ;;
 esac
 
 for i in $(find /sys/devices/pci* -name boot_vga); do
@@ -17,5 +20,4 @@ for i in $(find /sys/devices/pci* -name boot_vga); do
         fi
 done
 
-modprobe -i vfio-pci
-
+exit 0
