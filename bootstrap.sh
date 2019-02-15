@@ -185,6 +185,7 @@ cp /configs/kvm.conf /etc/modprobe.d/
 cp /configs/nvidia.conf /etc/modprobe.d/
 cp /configs/qemu-system-x86.conf /etc/modprobe.d
 cp /configs/vfio_pci.conf /etc/modprobe.d/
+cp /configs/vfio-pci.conf /etc/modprobe.d/
 
 cp /configs/vfio-pci-override-vga.sh /bin/
 
