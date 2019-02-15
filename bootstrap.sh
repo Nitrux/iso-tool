@@ -158,6 +158,7 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 # -- Add vfio modules and files.
 
 echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
@@ -178,6 +179,7 @@ cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
+
 cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
 cp /configs/amdgpu.conf /etc/modprobe.d/
