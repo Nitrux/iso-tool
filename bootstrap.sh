@@ -26,14 +26,13 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 
 
 # -- Add key for our repository.
+# -- Add key for the Graphics Driver PPA.
+# -- Add key for the Ubuntu-X PPA.
+
 wget -q http://repo.nxos.org/public.key -O nxos.key
 printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
 	apt-key add nxos.key > /dev/null
-
-# -- Add key for the Graphics Driver PPA.
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-
-# -- Add key for the Ubuntu-X PPA.
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 # -- Remove key files
@@ -52,6 +51,7 @@ apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
+
 
 # -- Add /Applications to $PATH.
 
@@ -157,6 +157,7 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 
 # -- Add vfio modules and files.
 
+echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
@@ -179,13 +180,13 @@ cp /configs/asound.conf /etc/skel/.asoundrc
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
-cp /configs/vfio-pci-override-vga.sh /etc/initramfs-tools/scripts/local-premount/
-
 cp /configs/amdgpu.conf /etc/modprobe.d/
 cp /configs/kvm.conf /etc/modprobe.d/
 cp /configs/nvidia.conf /etc/modprobe.d/
 cp /configs/qemu-system-x86.conf /etc/modprobe.d
 cp /configs/vfio_pci.conf /etc/modprobe.d/
+
+cp /configs/vfio-pci-override-vga.sh /bin/
 
 
 # -- Install the latest stable kernel.
