@@ -66,7 +66,7 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_development
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
@@ -84,6 +84,7 @@ APPS_USR='
 http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage
+https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui
 '
 
 for x in $APPS_USR; do
@@ -93,14 +94,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_stable /Applications/znx
-
-
-# -- Add znx-gui.
-
-cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
-chmod +x /bin/znx-gui
+mv /Applications/znx_development /Applications/znx
 
 
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
@@ -198,10 +192,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-headers-4.20.8-042008_4.20.8-042008.201902121544_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-headers-4.20.8-042008-generic_4.20.8-042008.201902121544_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-image-unsigned-4.20.8-042008-generic_4.20.8-042008.201902121544_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.8/linux-modules-4.20.8-042008-generic_4.20.8-042008.201902121544_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-headers-4.20.11-042011_4.20.11-042011.201902200535_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-headers-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-image-unsigned-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-modules-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
 '
 
 mkdir latest_kernel
