@@ -66,7 +66,7 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_development
+https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
@@ -77,14 +77,12 @@ for x in $APPS_SYS; do
 done
 
 chmod +x /Applications/*
-
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
 http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui
 '
 
 for x in $APPS_USR; do
@@ -95,6 +93,12 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 mv /Applications/znx_development /Applications/znx
+
+# -- Add znx-gui.
+
+cp /configs/znx-gui.desktop /usr/share/applications
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
+chmod +x /bin/znx-gui
 
 
 # -- For now, the software center, libappimage and libappimageinfo provide the same library
