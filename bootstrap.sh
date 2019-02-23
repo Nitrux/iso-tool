@@ -15,9 +15,6 @@ cifs-utils
 casper
 lupin-casper
 xz-utils
-nitrux-minimal
-nitrux-standard
-nitrux-hardware-drivers
 nomad-desktop
 '
 
@@ -84,9 +81,9 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
 http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
-http://libreoffice.soluzioniopen.com/daily/86/LibreOfficeDev-daily-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.0-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
