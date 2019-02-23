@@ -197,7 +197,7 @@ rm -r latest_kernel
 mkdir /etc/skel/.local/share/applications
 cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 wget -q -O /etc/skel/.config https://raw.githubusercontent.com/UriHerrera/storage/master/Files/itch-setup
-chmod +x /etc/skel/.confi/itch-setup
+chmod +x /etc/skel/.config/itch-setup
 
 
 # -- Update the initramfs.
