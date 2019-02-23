@@ -102,28 +102,6 @@ wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool
 chmod +x /bin/znx-gui
 
 
-# -- For now, the software center, libappimage and libappimageinfo provide the same library
-# -- and to install each package the library must be overwritten each time.
-
-nxsc='
-http://repo.nxos.org/stable/pool/main/liba/libappimageinfo/libappimageinfo_0.1.1-1_amd64.deb
-http://repo.nxos.org/stable/pool/main/n/nx-software-center-plasma/nx-software-center-plasma_2.3-2_amd64.deb
-'
-
-mkdir nxsc_deps
-
-for x in $nxsc; do
-	wget -q -P nxsc_deps $x
-done
-
-dpkg --force-all -iR nxsc_deps > /dev/null
-rm -r nxsc_deps
-
-ln -sv /usr/lib/x86_64-linux-gnu/libbfd-2.30-multiarch.so /usr/lib/x86_64-linux-gnu/libbfd-2.31.1-multiarch.so
-ln -sv /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.67.0
-ln -sv /usr/lib/x86_64-linux-gnu/libboost_system.so.1.65.1 /usr/lib/x86_64-linux-gnu/libboost_system.so.1.67.0
-
-
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
@@ -212,6 +190,14 @@ done
 
 dpkg -iR latest_kernel > /dev/null
 rm -r latest_kernel
+
+
+# -- Add itch.io store launcher.
+
+mkdir /etc/skel/.local/share/applications
+cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
+wget -q -O /etc/skel/.config https://raw.githubusercontent.com/UriHerrera/storage/master/Files/itch-setup
+chmod +x /etc/skel/.confi/itch-setup
 
 
 # -- Update the initramfs.
