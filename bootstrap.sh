@@ -14,8 +14,11 @@ localechooser-data
 cifs-utils
 casper
 lupin-casper
-nomad-desktop
 xz-utils
+nitrux-minimal
+nitrux-standard
+nitrux-hardware-drivers
+nomad-desktop
 '
 
 
@@ -29,10 +32,6 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Add key for the Graphics Driver PPA.
 # -- Add key for the Ubuntu-X PPA.
 
-wget -q https://archive.neon.kde.org/public.key -O neon.key
-printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key
-
 wget -q http://repo.nxos.org/public.key -O nxos.key
 printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
 	apt-key add nxos.key > /dev/null
@@ -42,7 +41,6 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 # -- Remove key files
 
 rm nxos.key
-rm neon.key
 
 
 # -- Use optimized sources.list.
@@ -56,7 +54,6 @@ cp /configs/sources.list /etc/apt/sources.list
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
-apt -yy -qq install libqt5core5a=5.11.2+dfsg-0xneon+18.04+bionic+build49 --no-install-recommends
 apt -yy -qq purge --remove vlc > /dev/null
 
 
