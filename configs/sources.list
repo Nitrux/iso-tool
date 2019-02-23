@@ -2,17 +2,23 @@
 # Ubuntu Repos Bionic #
 #######################
 
-deb http://archive.ubuntu.com/ubuntu disco main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu disco-security main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu disco-updates main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
+
+##################
+# KDE Neon Repos #
+##################
+
+deb http://archive.neon.kde.org/user bionic main
 
 ################
 # Nitrux Repos #
 ################
 
-# deb http://repo.nxos.org/stable nxos main
-# deb http://repo.nxos.org/development nxos main
-# deb http://repo.nxos.org/testing nxos main
+deb http://repo.nxos.org/stable nxos main
+deb http://repo.nxos.org/development nxos main
+deb http://repo.nxos.org/testing nxos main
 
 ####################
 # Graphics Drivers #
