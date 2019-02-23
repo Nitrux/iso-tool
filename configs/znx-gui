@@ -72,14 +72,17 @@ Deploy () {
 		showUnexpectedError
 }
 
-List () {	
-	echo "Listing deployed images."
+Revert () {	
+	echo "Reverting deployed images."
 
 	DEVICE=$(GetDevice)
+	IMAGENAME=$(GetName)
+	IMAGEPATH=$(GetPath)
 
 	showProgressDialog
 
-	kdialog --style breeze --textbox $(znx list $DEVICE) ||
+	znx revert $DEVICE $IMAGENAME &&
+		showSuccess "Successfully reverted $IMAGENAME." ||
 		showUnexpectedError
 }
 
@@ -112,7 +115,7 @@ Remove () {
 while :; do
 	OPTIONS="0 init on \
 	1 deploy off \
-	2 list off \
+	2 revert off \
 	3 update off \
 	4 remove off"
 
@@ -131,7 +134,7 @@ while :; do
 		;;
 
 		2)
-			List
+			Revert
 		;;
 
 		3)
