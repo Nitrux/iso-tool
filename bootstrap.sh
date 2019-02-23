@@ -195,11 +195,8 @@ rm -r latest_kernel
 # -- Add itch.io store launcher.
 
 mkdir -p /etc/skel/.local/share/applications
-
 cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
-wget -q -O /etc/skel/.config/itch-setup https://raw.githubusercontent.com/UriHerrera/storage/master/Files/itch-setup
-chmod +x /etc/skel/.config/itch-setup
-
+cp /configs/install-itchi-io.sh /etc/skel/.config
 
 # -- Update the initramfs.
 
