@@ -196,7 +196,7 @@ rm -r latest_kernel
 
 mkdir -p /etc/skel/.local/share/applications
 cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
-cp /configs/install-itchi-io.sh /etc/skel/.config
+cp /configs/install-itch-io.sh /etc/skel/.config
 
 # -- Update the initramfs.
 
