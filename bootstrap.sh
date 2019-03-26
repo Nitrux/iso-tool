@@ -110,7 +110,7 @@ chmod +x /bin/znx-gui
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git369c33a.travis92_amd64.deb
 '
 
 mkdir appimaged_deb
@@ -179,10 +179,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-headers-5.0.4-050004_5.0.4-050004.201903231634_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-headers-5.0.4-050004-generic_5.0.4-050004.201903231634_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-image-unsigned-5.0.4-050004-generic_5.0.4-050004.201903231634_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-modules-5.0.4-050004-generic_5.0.4-050004.201903231634_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-headers-4.20.11-042011_4.20.11-042011.201902200535_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-headers-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-image-unsigned-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-modules-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
 '
 
 mkdir latest_kernel
