@@ -15,7 +15,7 @@ cifs-utils
 casper
 lupin-casper
 xz-utils
-nomad-desktop
+nitrux-minimal
 '
 
 
@@ -42,7 +42,7 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt update && apt-cache policy nomad-desktop
+apt -qq update
 apt -yy -qq upgrade
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
 apt -yy -qq purge --remove vlc
