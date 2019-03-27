@@ -42,10 +42,10 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt -qq update
-apt -yy -qq upgrade
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
-apt -yy -qq purge --remove vlc
+apt -qq update > /dev/null
+apt -yy -qq upgrade > /dev/null
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -yy -qq purge --remove vlc > /dev/null
 
 
 # -- Add /Applications to $PATH.
