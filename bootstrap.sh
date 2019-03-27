@@ -42,9 +42,9 @@ cp /configs/sources.list /etc/apt/sources.list
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
 # -- avoiding recommended packages.
 
-apt update
+apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
 
 
@@ -75,7 +75,7 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.2-x86_64.AppImage
 '
