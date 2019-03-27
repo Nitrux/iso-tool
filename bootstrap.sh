@@ -29,9 +29,9 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Add key for the Graphics Driver PPA.
 # -- Add key for the Ubuntu-X PPA.
 
-wget -q http://repo.nxos.org/public.key -O nxos.key
-printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
-	apt-key add nxos.key > /dev/null
+# wget -q http://repo.nxos.org/public.key -O nxos.key
+# printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
+# 	apt-key add nxos.key > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 	
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
@@ -39,7 +39,7 @@ printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.ke
 
 # -- Remove key files
 
-rm nxos.key
+# rm nxos.key
 
 
 # -- Use optimized sources.list.
