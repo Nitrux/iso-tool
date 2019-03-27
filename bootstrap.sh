@@ -75,9 +75,7 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.2-x86_64.AppImage
+
 '
 
 for x in $APPS_USR; do
@@ -99,18 +97,18 @@ chmod +x /bin/znx-gui
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
-# appimgd='
-# https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
-# '
-# 
-# mkdir appimaged_deb
-# 
-# for x in $appimgd; do
-# 	wget -q -P appimaged_deb $x
-# done
-# 
-# dpkg -iR appimaged_deb > /dev/null
-# rm -r appimaged_deb
+appimgd='
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
+'
+
+mkdir appimaged_deb
+
+for x in $appimgd; do
+	wget -q -P appimaged_deb $x
+done
+
+dpkg -iR appimaged_deb > /dev/null
+rm -r appimaged_deb
 
 
 # -- Add config for SDDM.
@@ -169,10 +167,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-headers-5.0.4-050004_5.0.4-050004.201903231634_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-headers-5.0.4-050004-generic_5.0.4-050004.201903231634_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-image-unsigned-5.0.4-050004-generic_5.0.4-050004.201903231634_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.4/linux-modules-5.0.4-050004-generic_5.0.4-050004.201903231634_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017_4.20.17-042017.201903190933_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-image-unsigned-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-modules-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
 '
 
 mkdir latest_kernel
