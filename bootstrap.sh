@@ -15,7 +15,7 @@ cifs-utils
 casper
 lupin-casper
 xz-utils
-nitrux-minimal
+nomad-desktop
 '
 
 
