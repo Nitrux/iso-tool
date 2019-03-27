@@ -99,18 +99,18 @@ chmod +x /bin/znx-gui
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
-'
-
-mkdir appimaged_deb
-
-for x in $appimgd; do
-	wget -q -P appimaged_deb $x
-done
-
-dpkg -iR appimaged_deb > /dev/null
-rm -r appimaged_deb
+# appimgd='
+# https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
+# '
+# 
+# mkdir appimaged_deb
+# 
+# for x in $appimgd; do
+# 	wget -q -P appimaged_deb $x
+# done
+# 
+# dpkg -iR appimaged_deb > /dev/null
+# rm -r appimaged_deb
 
 
 # -- Add config for SDDM.
