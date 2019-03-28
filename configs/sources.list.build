@@ -10,16 +10,6 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe mul
 # Nitrux Repos #
 ################
 
-deb http://repo.nxos.org/nitrux-minimal nxos main
-deb http://repo.nxos.org/nitrux-standard nxos main
-deb http://repo.nxos.org/nitrux-hardware-drivers nxos main
-deb http://repo.nxos.org/nomad-desktop nxos main
-
-
-################
-# Nitrux Repos #
-################
-
 deb http://repo.nxos.org/stable nxos main
 deb http://repo.nxos.org/testing nxos main
 deb http://repo.nxos.org/development nxos main

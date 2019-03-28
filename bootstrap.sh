@@ -36,7 +36,7 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 
 # -- Use optimized sources.list.
 
-cp /configs/sources.list /etc/apt/sources.list
+cp /configs/sources.list.build /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
@@ -75,7 +75,9 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.2-x86_64.AppImage
+http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -202,3 +204,6 @@ apt -yy -qq purge --remove casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
 apt -yy -qq clean > /dev/null
 
+# -- Copy end-user sources.list.
+
+/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
