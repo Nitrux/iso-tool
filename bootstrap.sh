@@ -29,20 +29,14 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Add key for the Graphics Driver PPA.
 # -- Add key for the Ubuntu-X PPA.
 
-wget -q http://repo.nxos.org/public.key -O nxos.key
-printf "b51f77c43f28b48b14a4e06479c01afba4e54c37dc6eb6ae7f51c5751929fccc nxos.key" | sha256sum -c &&
-	apt-key add nxos.key > /dev/null
+	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
-
-# -- Remove key files
-
-rm nxos.key
 
 
 # -- Use optimized sources.list.
 
-cp /configs/sources.list /etc/apt/sources.list
+cp /configs/sources.list.build /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
@@ -50,7 +44,7 @@ cp /configs/sources.list /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
 
 
@@ -81,9 +75,9 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
-http://repo.nxos.org/appimages/ungoogled-chromium_71.0.3578.98-2_linux.AppImage
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.0-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.2-x86_64.AppImage
+http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -106,7 +100,7 @@ chmod +x /bin/znx-gui
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git369c33a.travis92_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
 '
 
 mkdir appimaged_deb
@@ -175,10 +169,10 @@ printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-headers-4.20.11-042011_4.20.11-042011.201902200535_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-headers-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-image-unsigned-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.11/linux-modules-4.20.11-042011-generic_4.20.11-042011.201902200535_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017_4.20.17-042017.201903190933_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-image-unsigned-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-modules-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
 '
 
 mkdir latest_kernel
@@ -210,3 +204,6 @@ apt -yy -qq purge --remove casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
 apt -yy -qq clean > /dev/null
 
+# -- Copy end-user sources.list.
+
+/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list

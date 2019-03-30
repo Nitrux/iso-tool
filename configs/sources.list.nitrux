@@ -1,0 +1,9 @@
+################
+# Nitrux Repos #
+################
+
+deb http://repo.nxos.org/nitrux-minimal nxos main
+deb http://repo.nxos.org/nitrux-standard nxos main
+deb http://repo.nxos.org/nitrux-hardware-drivers nxos main
+deb http://repo.nxos.org/nomad-desktop nxos main
+
