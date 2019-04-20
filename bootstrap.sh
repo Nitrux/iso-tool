@@ -75,7 +75,7 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.2-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.3-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 '
@@ -163,16 +163,16 @@ cp /configs/vfio-pci.conf /etc/modprobe.d/
 cp /configs/vfio-pci-override-vga.sh /bin/
 
 
-# -- Install the latest stable kernel.
+# -- Install the latest LTS kernel.
 
 printf "INSTALLING NEW KERNEL."
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017_4.20.17-042017.201903190933_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-image-unsigned-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-modules-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-headers-4.19.35-041935_4.19.35-041935.201904170334_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-headers-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-image-unsigned-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-modules-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
 '
 
 mkdir latest_kernel
