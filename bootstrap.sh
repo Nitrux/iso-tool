@@ -29,9 +29,9 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 # -- Add key for the Graphics Driver PPA.
 # -- Add key for the Ubuntu-X PPA.
 
-	wget -q https://archive.neon.kde.org/public.key -O neon.key
-	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key
+# 	wget -q https://archive.neon.kde.org/public.key -O neon.key
+# 	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+# 	apt-key add neon.key
 
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
