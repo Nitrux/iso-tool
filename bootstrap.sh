@@ -31,7 +31,7 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 
 	wget -q https://archive.neon.kde.org/public.key -O neon.key
 	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key
+	apt-key add neon.key > /dev/null
 
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
@@ -48,7 +48,7 @@ cp /configs/sources.list.build /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends
 apt -yy -qq purge --remove vlc > /dev/null
 
 
@@ -56,11 +56,10 @@ apt -yy -qq purge --remove vlc > /dev/null
 
 cp /configs/sources.list.upgrade /etc/apt/sources.list
 
-apt -qq clean
-apt -qq autoclean
+apt -qq clean > /dev/null
+apt -qq autoclean > /dev/null
 apt -qq update > /dev/null
-apt -yy -qq dist-upgrade
-apt -yy -qq install -f
+apt -yy -qq install libqt5core5a --only-upgrade
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
