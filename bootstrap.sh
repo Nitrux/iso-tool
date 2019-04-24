@@ -56,8 +56,11 @@ apt -yy -qq purge --remove vlc > /dev/null
 
 cp /configs/sources.list.upgrade /etc/apt/sources.list
 
+apt -qq clean
+apt -qq autoclean
 apt -qq update > /dev/null
-apt -yy -qq dist-upgrade > /dev/null
+apt -yy -qq dist-upgrade
+apt -yy -qq install -f
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
