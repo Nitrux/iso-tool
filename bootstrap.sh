@@ -48,18 +48,8 @@ cp /configs/sources.list.build /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
-
-
-# -- Use sources.list.upgrade to update system.
-
-cp /configs/sources.list.upgrade /etc/apt/sources.list
-
-apt -qq clean > /dev/null
-apt -qq autoclean > /dev/null
-apt -qq update > /dev/null
-apt -yy -qq install libqt5core5a --only-upgrade
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
