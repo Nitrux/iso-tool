@@ -25,75 +25,32 @@ apt -qq update > /dev/null
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
+# -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Graphics Driver PPA.
 # -- Add key for the Ubuntu-X PPA.
+
+	wget -q https://archive.neon.kde.org/public.key -O neon.key
+	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+	apt-key add neon.key > /dev/null
 
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
-# -- Use optimized sources.list.
+# -- Use sources.list.build to build ISO.
 
 cp /configs/sources.list.build /etc/apt/sources.list
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
-# -- avoiding recommended packages.
+# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
-
-
-# -- Add /Applications to $PATH.
-
-printf "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
-sed -i "/env_reset/d" /etc/sudoers
-
-
-# -- Add AppImages.
-# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
-# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
-# -- Rename AppImageUpdate and znx.
-
-APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
-https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-'
-
-mkdir /Applications
-
-for x in $APPS_SYS; do
-	wget -q -P /Applications $x
-done
-
-chmod +x /Applications/*
-mkdir -p /etc/skel/Applications
-
-APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.2-x86_64.AppImage
-http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-'
-
-for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
-done
-
-chmod +x /etc/skel/Applications/*
-
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_stable /Applications/znx
-
-# -- Add znx-gui.
-
-cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
-chmod +x /bin/znx-gui
+apt -yy -qq dist-upgrade
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -113,8 +70,97 @@ dpkg -iR appimaged_deb > /dev/null
 rm -r appimaged_deb
 
 
+# -- Install the latest LTS kernel.
+
+printf "INSTALLING NEW KERNEL."
+
+kfiles='
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-headers-4.19.35-041935_4.19.35-041935.201904170334_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-headers-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-image-unsigned-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-modules-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
+'
+
+mkdir latest_kernel
+
+for x in $kfiles; do
+	printf "$x"
+	wget -q -P latest_kernel $x
+done
+
+dpkg -iR latest_kernel > /dev/null
+rm -r latest_kernel
+
+# -- Install util-linux 2.33.1.
+
+util_linux='
+http://mirrors.kernel.org/ubuntu/pool/main/libc/libcap-ng/libcap-ng0_0.7.9-2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/u/util-linux/libsmartcols1_2.33.1-0.1ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/s/shadow/login_4.5-1.1ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/u/util-linux/util-linux_2.33.1-0.1ubuntu2_amd64.deb
+'
+
+mkdir util_linux_233
+
+for x in $util_linux; do
+	printf "$x"
+	wget -q -P util_linux_233 $x
+done
+
+dpkg --force-all -iR util_linux_233 > /dev/null
+rm -r util_linux_233
+
+
+# -- Add /Applications to $PATH.
+
+printf "PATH=$PATH:/Applications\n" > /etc/environment
+sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
+sed -i "/env_reset/d" /etc/sudoers
+
+
+# -- Add system AppImages.
+# -- Create /Applications directory for users.
+# -- Rename AppImageUpdate and znx.
+
+APPS_SYS='
+https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
+https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
+'
+
+mkdir /Applications
+
+for x in $APPS_SYS; do
+	wget -q -P /Applications $x
+done
+
+chmod +x /Applications/*
+mkdir -p /etc/skel/Applications
+
+APPS_USR='
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.3-x86_64.AppImage
+http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
+http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+'
+
+for x in $APPS_USR; do
+    wget -q -P /etc/skel/Applications $x
+done
+
+chmod +x /etc/skel/Applications/*
+
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+mv /Applications/znx_development /Applications/znx
+
+# -- Add znx-gui.
+
+cp /configs/znx-gui.desktop /usr/share/applications
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
+chmod +x /bin/znx-gui
+
+
 # -- Add config for SDDM.
-# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
+# -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add custom launchers for Maui apps.
 # -- Add policykit file for KDialog.
@@ -163,29 +209,6 @@ cp /configs/vfio-pci.conf /etc/modprobe.d/
 cp /configs/vfio-pci-override-vga.sh /bin/
 
 
-# -- Install the latest stable kernel.
-
-printf "INSTALLING NEW KERNEL."
-
-
-kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017_4.20.17-042017.201903190933_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-headers-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-image-unsigned-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.20.17/linux-modules-4.20.17-042017-generic_4.20.17-042017.201903190933_amd64.deb
-'
-
-mkdir latest_kernel
-
-for x in $kfiles; do
-	printf "$x"
-	wget -q -P latest_kernel $x
-done
-
-dpkg -iR latest_kernel > /dev/null
-rm -r latest_kernel
-
-
 # -- Add itch.io store launcher.
 
 mkdir -p /etc/skel/.local/share/applications
@@ -204,6 +227,6 @@ apt -yy -qq purge --remove casper lupin-casper > /dev/null
 apt -yy -qq autoremove > /dev/null
 apt -yy -qq clean > /dev/null
 
-# -- Copy end-user sources.list.
+# -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list

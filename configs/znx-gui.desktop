@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=znx GUI
+Name=ZNX GUI
 GenericName=Operating System manager
 Comment=Operating System manager.
 Icon=znx-gui
 Type=Application
 Terminal=false
-Exec=pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY znx-gui
+Exec=znx-gui
 TryExec=znx-gui
 Categories=Utilities;System;
 Keywords=deployer;live;

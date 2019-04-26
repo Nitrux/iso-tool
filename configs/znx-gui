@@ -1,152 +1,70 @@
 #! /bin/sh
 
-TITLE="ZNX Gui"
 
-GetDevice () {
-	echo $(kdialog \
-		--style breeze \
-		--title "$TITLE" \
-		--combobox "Select the target device to deploy the image." $(lsblk -npdlo NAME))
+# -- Variables.
+
+TITLE=ZNX_GUI
+STYLE=breeze
+
+set -x
+
+
+# -- Functions for the GUI.
+
+alias ui="kdialog --title='$TITLE'"
+
+error () { ui --error "$@"; exit 1; }
+notify () { ui --passivepopup "$@" 5; }
+ask () { ui --yesno "$@"; }
+as_root () { ui --password "Password:" | sudo -Sk $@; }
+
+CMDS="init restore-esp deploy update revert remove clean reset stats"
+
+select_command () { ui --combobox "Command to run:" $CMDS; }
+select_device () { ui --combobox "Device:" $(lsblk -npdlo NAME); }
+select_image () { ui --combobox "Image:" $(as_root znx list $DEVICE); }
+
+get_url () { ui --inputbox "File to deploy (URL or path):"; }
+get_image () { ui --inputbox "Image name:"; }
+
+
+# -- Wrappers for znx's commands.
+
+_znx_gui_init () { as_root znx init $DEVICE; }
+_znx_gui_restore_esp () { as_root znx restore-esp $DEVICE; }
+_znx_gui_deploy () { as_root znx deploy $DEVICE $(get_image) $(eval echo $(get_url)); }
+_znx_gui_update () { as_root znx update $DEVICE $(select_image); }
+_znx_gui_revert () { as_root znx revert $DEVICE $(select_image); }
+_znx_gui_remove () { as_root znx remove $DEVICE $(select_image); }
+_znx_gui_clean () { as_root znx clean $DEVICE $(select_image); }
+_znx_gui_reset () { as_root znx reset $DEVICE $(select_image); }
+
+_znx_gui_stats () {
+    TMP_FILE=$(mktemp)
+    as_root znx stats $DEVICE $(select_image) > $TMP_FILE
+    ui --textbox $TMP_FILE
+    rm -rf $TMP_FILE
 }
 
-GetName () {
-	echo $(kdialog \
-		--style breeze \
-		--title "$TITLE" \
-		--inputbox "Name of image (Ex : nitrux/rolling, nitrux/release_v1-01).")
-}
 
-GetPath () {
-	echo $(kdialog \
-		--style breeze \
-		--title "$TITLE" \
-		--inputbox "Full path or  web URL to ISO image or zsync file.")
-}
-
-showSuccess () {
-	kdialog \
-		--style breeze \
-		--title "Success - $TITLE" \
-		--msgbox "$1"
-}
-
-showUnexpectedError () {
-	kdialog \
-		--style breeze \
-		--title "Error - $TITLE" \
-		--error "Unexpected Error Occurred. Run this software in a Terminal for more details."
-}
-
-showProgressDialog () {
-	kdialog \
-		--title "$TITLE" \
-		--style breeze \
-		--msgbox "Please Wait. This may take some time.\nYou can close this window. You'll be informed once the command completes." &
-}
-
-Init () {
-	echo "Initializing device."
-
-	if kdialog --style breeze --yesno "This will erase your device. Are you sure you wish to proceed?."; then
-		DEVICE=$(GetDevice)
-
-		showProgressDialog
-
-		znx init $DEVICE &&
-			showSuccess "Device initialized." ||
-			showUnexpectedError
-	fi
-}
-
-Deploy () {
-	echo "Deploying image."
-
-	DEVICE=$(GetDevice)
-	IMAGENAME=$(GetName)
-	IMAGEPATH=$(GetPath)
-
-	showProgressDialog	
-
-	znx deploy $DEVICE $IMAGENAME $IMAGEPATH &&
-		showSuccess "Successfully deployed $IMAGENAME." ||
-		showUnexpectedError
-}
-
-Revert () {	
-	echo "Reverting deployed images."
-
-	DEVICE=$(GetDevice)
-	IMAGENAME=$(GetName)
-	IMAGEPATH=$(GetPath)
-
-	showProgressDialog
-
-	znx revert $DEVICE $IMAGENAME &&
-		showSuccess "Successfully reverted $IMAGENAME." ||
-		showUnexpectedError
-}
-
-Update () {
-	echo "Updating deployed image."
-
-	DEVICE=$(GetDevice)
-	IMAGENAME=$(GetName)
-
-	showProgressDialog
-
-	znx update $DEVICE $IMAGENAME &&
-		showSuccess "Successfully updated $IMAGENAME." ||
-		showUnexpectedError
-}
-
-Remove () {	
-	echo "Removing deployed image."
-
-	DEVICE=$(GetDevice)
-	IMAGENAME=$(GetName)
-
-	showProgressDialog
-
-	znx remove $DEVICE $IMAGENAME &&
-		showSuccess "Successfully removed $IMAGENAME" ||
-		showUnexpectedError
-}
+# -- Loop until the user closes the main window.
 
 while :; do
-	OPTIONS="0 init on \
-	1 deploy off \
-	2 revert off \
-	3 update off \
-	4 remove off"
 
-	INPUT_OPTION=$(kdialog \
-					--style breeze \
-					--title "$TITLE" \
-					--radiolist "Select the Function to run" $OPTIONS)
+    COMMAND=$(select_command)
 
-	case "$INPUT_OPTION" in
-		0)
-			Init
-		;;
+    [ ${#COMMAND} -gt 0 ] ||
+        error "Operation cancelled."
 
-		1)
-			Deploy
-		;;
+    DEVICE=$(select_device)
 
-		2)
-			Revert
-		;;
+    notify "Please wait. You will be notified when the command finishes." &
 
-		3)
-			Update
-		;;
+    _znx_gui_$COMMAND &&
+        notify "Operation completed successfully." ||
+        error "Operation failed!."
 
-		4)
-			Remove
-		;;
+    ask "Do you want to perform another action?." ||
+        exit
 
-		*)
-			break
-		;;
-	esac
 done
