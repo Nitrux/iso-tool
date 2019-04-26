@@ -25,6 +25,7 @@ apt -qq update > /dev/null
 apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
 
 
+# -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Graphics Driver PPA.
 # -- Add key for the Ubuntu-X PPA.
@@ -43,13 +44,13 @@ apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --
 cp /configs/sources.list.build /etc/apt/sources.list
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package
-# -- avoiding recommended packages.
+# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
 apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
+apt -yy -qq dist-upgrade
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -73,7 +74,6 @@ rm -r appimaged_deb
 
 printf "INSTALLING NEW KERNEL."
 
-
 kfiles='
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-headers-4.19.35-041935_4.19.35-041935.201904170334_all.deb
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.35/linux-headers-4.19.35-041935-generic_4.19.35-041935.201904170334_amd64.deb
@@ -91,6 +91,26 @@ done
 dpkg -iR latest_kernel > /dev/null
 rm -r latest_kernel
 
+# -- Install util-linux 2.33.1.
+
+util_linux='
+http://mirrors.kernel.org/ubuntu/pool/main/libc/libcap-ng/libcap-ng0_0.7.9-2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/u/util-linux/libsmartcols1_2.33.1-0.1ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/s/shadow/login_4.5-1.1ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/u/util-linux/util-linux_2.33.1-0.1ubuntu2_amd64.deb
+'
+
+mkdir util_linux_233
+
+for x in $util_linux; do
+	printf "$x"
+	wget -q -P util_linux_233 $x
+done
+
+dpkg --force-all -iR util_linux_233 > /dev/null
+rm -r util_linux_233
+
 
 # -- Add /Applications to $PATH.
 
@@ -99,9 +119,8 @@ sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
 
-# -- Add AppImages.
-# -- Create /Applications dirrectory for users. This directory "should" be created by the Software Center.
-# -- Downloading AppImages with the SC will fail if this directory doesn't exist.
+# -- Add system AppImages.
+# -- Create /Applications directory for users.
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
@@ -141,7 +160,7 @@ chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
-# -- Fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
+# -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add custom launchers for Maui apps.
 # -- Add policykit file for KDialog.

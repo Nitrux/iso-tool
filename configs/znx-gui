@@ -1,53 +1,60 @@
 #! /bin/sh
 
-TITLE="ZNX Gui"
+TITLE="znx GUI — Operating System Deployment Tool"
 
 GetDevice () {
 	echo $(kdialog \
 		--style breeze \
 		--title "$TITLE" \
-		--combobox "Select the target device to deploy the image." $(lsblk -npdlo NAME))
+		--combobox "Select a target device to continue." $(lsblk -npdlo NAME))
 }
 
 GetName () {
 	echo $(kdialog \
 		--style breeze \
 		--title "$TITLE" \
-		--inputbox "Name of image (Ex : nitrux/rolling, nitrux/release_v1-01).")
+		--inputbox "Name of ISO image to deploy." "nitrux/stable")
 }
 
 GetPath () {
 	echo $(kdialog \
 		--style breeze \
 		--title "$TITLE" \
-		--inputbox "Full path or  web URL to ISO image or zsync file.")
+		--inputbox "Enter the path or the remote URL of the ISO file." "/home/user/nitrux.iso")
 }
 
 showSuccess () {
 	kdialog \
 		--style breeze \
-		--title "Success - $TITLE" \
+		--title "Success — $TITLE" \
 		--msgbox "$1"
 }
 
 showUnexpectedError () {
 	kdialog \
 		--style breeze \
-		--title "Error - $TITLE" \
-		--error "Unexpected Error Occurred. Run this software in a Terminal for more details."
+		--title "Error — $TITLE" \
+		--error "Unexpected Error Occurred. Run znx in a Terminal for verbose output."
 }
 
 showProgressDialog () {
 	kdialog \
 		--title "$TITLE" \
 		--style breeze \
-		--msgbox "Please Wait. This may take some time.\nYou can close this window. You'll be informed once the command completes." &
+		--msgbox "Please Wait, this may take some time.\nYou can close this window. This program will inform you when the process completes." &
+}
+
+showTextDialog () {
+	kdialog \
+		--title "$TITLE" \
+		--style breeze \
+		--textbox /tmp/znx_output
 }
 
 Init () {
-	echo "Initializing device."
+	echo "Initialize the storage device."
 
-	if kdialog --style breeze --yesno "This will erase your device. Are you sure you wish to proceed?."; then
+	if kdialog --style breeze --yesno "This will wipe your device. Do you wish to proceed?."; then
 		DEVICE=$(GetDevice)
 
 		showProgressDialog
@@ -58,8 +65,21 @@ Init () {
 	fi
 }
 
+Restore () {
+	echo "Restore the ESP (EFI System Partition) of the given device."
+
+		DEVICE=$(GetDevice)
+
+		showProgressDialog
+
+		znx restore $DEVICE &&
+			showSuccess "ESP (EFI System Partition) restored." ||
+			showUnexpectedError
+	fi
+}
+
 Deploy () {
-	echo "Deploying image."
+	echo "Deploy an image on a storage device."
 
 	DEVICE=$(GetDevice)
 	IMAGENAME=$(GetName)
@@ -72,8 +92,21 @@ Deploy () {
 		showUnexpectedError
 }
 
+Update () {
+	echo "Update the specified image."
+
+	DEVICE=$(GetDevice)
+	IMAGENAME=$(GetName)
+
+	showProgressDialog
+
+	znx update $DEVICE $IMAGENAME &&
+		showSuccess "Successfully updated $IMAGENAME." ||
+		showUnexpectedError
+}
+
 Revert () {	
-	echo "Reverting deployed images."
+	echo "Revert to the previous version of the image."
 
 	DEVICE=$(GetDevice)
 	IMAGENAME=$(GetName)
@@ -86,21 +119,34 @@ Revert () {
 		showUnexpectedError
 }
 
-Update () {
-	echo "Updating deployed image."
+Clean () {	
+	echo "Remove the backup that is created during an update."
 
 	DEVICE=$(GetDevice)
 	IMAGENAME=$(GetName)
 
 	showProgressDialog
 
-	znx update $DEVICE $IMAGENAME &&
-		showSuccess "Successfully updated $IMAGENAME." ||
+	znx clean $DEVICE $IMAGENAME &&
+		showSuccess "Successfully removed backup of $IMAGENAME." ||
+		showUnexpectedError
+}
+
+Reset () {	
+	echo "Delete all user data of the specified image."
+
+	DEVICE=$(GetDevice)
+	IMAGENAME=$(GetName)
+
+	showProgressDialog
+
+	znx reset $DEVICE $IMAGENAME &&
+		showSuccess "Successfully cleaned user data of $IMAGENAME." ||
 		showUnexpectedError
 }
 
 Remove () {	
-	echo "Removing deployed image."
+	echo "Remove the specified image."
 
 	DEVICE=$(GetDevice)
 	IMAGENAME=$(GetName)
@@ -108,21 +154,54 @@ Remove () {
 	showProgressDialog
 
 	znx remove $DEVICE $IMAGENAME &&
-		showSuccess "Successfully removed $IMAGENAME" ||
+		showSuccess "Successfully removed $IMAGENAME." ||
 		showUnexpectedError
+}
+
+Stats () {	
+	echo "Show statistics about the provided image."
+
+	DEVICE=$(GetDevice)
+	IMAGENAME=$(GetName)
+
+	showTextDialog
+
+	znx stats $DEVICE $IMAGENAME > /tmp/znx_output &&
+			showSuccess "Displaying statistics of $IMAGENAME" ||
+			showUnexpectedError
+	fi
+}
+
+List () {	
+	echo "List the deployed images."
+
+	DEVICE=$(GetDevice)
+	IMAGENAME=$(GetName)
+
+	showTextDialog
+
+	znx list $DEVICE > /tmp/znx_output &&
+			showSuccess "The following ISO files were found in $DEVICE." ||
+			showUnexpectedError
+	fi
 }
 
 while :; do
 	OPTIONS="0 init on \
-	1 deploy off \
-	2 revert off \
+	1 restore off \
+	2 deploy off \
 	3 update off \
-	4 remove off"
+	4 revert off \
+	5 clean off \
+	6 reset off \
+	7 remove off \
+	8 stats off \
+	9 list off"
 
 	INPUT_OPTION=$(kdialog \
 					--style breeze \
 					--title "$TITLE" \
-					--radiolist "Select the Function to run" $OPTIONS)
+					--radiolist "Select a command to continue" $OPTIONS)
 
 	case "$INPUT_OPTION" in
 		0)
@@ -130,11 +209,11 @@ while :; do
 		;;
 
 		1)
-			Deploy
+			Restore
 		;;
 
 		2)
-			Revert
+			Deploy
 		;;
 
 		3)
@@ -142,7 +221,27 @@ while :; do
 		;;
 
 		4)
+			Revert
+		;;
+
+		5)
+			Clean
+		;;
+
+		6)
+			Reset
+		;;
+
+		7)
 			Remove
+		;;
+
+		8)
+			Stats
+		;;
+
+		9)
+			List
 		;;
 
 		*)
