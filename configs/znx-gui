@@ -62,9 +62,9 @@ while :; do
 
     _znx_gui_$COMMAND &&
         notify "Operation completed successfully." ||
-        error "Operation failed!"
+        error "Operation failed!."
 
-    ask "Do you want to perform another action?" ||
+    ask "Do you want to perform another action?." ||
         exit
 
 done
