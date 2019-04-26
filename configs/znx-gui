@@ -22,7 +22,7 @@ CMDS="init restore-esp deploy update revert remove clean reset stats"
 
 select_command () { ui --combobox "Command to run:" $CMDS; }
 select_device () { ui --combobox "Device:" $(lsblk -npdlo NAME); }
-select_image () { ui --combobox "Image:" $(as_root ./znx list $DEVICE); }
+select_image () { ui --combobox "Image:" $(as_root znx list $DEVICE); }
 
 get_url () { ui --inputbox "File to deploy (URL or path):"; }
 get_image () { ui --inputbox "Image name:"; }
@@ -30,18 +30,18 @@ get_image () { ui --inputbox "Image name:"; }
 
 # -- Wrappers for znx's commands.
 
-_znx_gui_init () { as_root ./znx init $DEVICE; }
-_znx_gui_restore_esp () { as_root ./znx restore-esp $DEVICE; }
-_znx_gui_deploy () { as_root ./znx deploy $DEVICE $(get_image) $(eval echo $(get_url)); }
-_znx_gui_update () { as_root ./znx update $DEVICE $(select_image); }
-_znx_gui_revert () { as_root ./znx revert $DEVICE $(select_image); }
-_znx_gui_remove () { as_root ./znx remove $DEVICE $(select_image); }
-_znx_gui_clean () { as_root ./znx clean $DEVICE $(select_image); }
-_znx_gui_reset () { as_root ./znx reset $DEVICE $(select_image); }
+_znx_gui_init () { as_root znx init $DEVICE; }
+_znx_gui_restore_esp () { as_root znx restore-esp $DEVICE; }
+_znx_gui_deploy () { as_root znx deploy $DEVICE $(get_image) $(eval echo $(get_url)); }
+_znx_gui_update () { as_root znx update $DEVICE $(select_image); }
+_znx_gui_revert () { as_root znx revert $DEVICE $(select_image); }
+_znx_gui_remove () { as_root znx remove $DEVICE $(select_image); }
+_znx_gui_clean () { as_root znx clean $DEVICE $(select_image); }
+_znx_gui_reset () { as_root znx reset $DEVICE $(select_image); }
 
 _znx_gui_stats () {
     TMP_FILE=$(mktemp)
-    as_root ./znx stats $DEVICE $(select_image) > $TMP_FILE
+    as_root znx stats $DEVICE $(select_image) > $TMP_FILE
     ui --textbox $TMP_FILE
     rm -rf $TMP_FILE
 }
