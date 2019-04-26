@@ -150,7 +150,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_stable /Applications/znx
+mv /Applications/znx_development /Applications/znx
 
 # -- Add znx-gui.
 
