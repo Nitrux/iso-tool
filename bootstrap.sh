@@ -123,7 +123,7 @@ mkdir libc6_229
 
 for x in $libc6; do
 	printf "$x"
-	wget -q -P libc6_228 $x
+	wget -q -P libc6_229 $x
 done
 
 dpkg --force-all -iR libc6_229 > /dev/null
