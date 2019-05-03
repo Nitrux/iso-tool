@@ -111,6 +111,24 @@ done
 dpkg --force-all -iR util_linux_233 > /dev/null
 rm -r util_linux_233
 
+# -- Install libc6 2.29.
+
+libc6='
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.29-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.29-0ubuntu2_all.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.29-0ubuntu2_amd64.deb
+'
+
+mkdir libc6_229
+
+for x in $libc6; do
+	printf "$x"
+	wget -q -P libc6_228 $x
+done
+
+dpkg --force-all -iR libc6_229 > /dev/null
+rm -r libc6_229
+
 
 # -- Add /Applications to $PATH.
 
