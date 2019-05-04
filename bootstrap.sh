@@ -48,9 +48,9 @@ cp /configs/sources.list.build /etc/apt/sources.list
 
 apt -qq update > /dev/null
 apt -yy -qq upgrade > /dev/null
-apt -yy install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
 apt -yy -qq purge --remove vlc > /dev/null
-apt -yy -qq dist-upgrade
+apt -yy -qq dist-upgrade > /dev/null
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -158,11 +158,11 @@ mkdir -p /etc/skel/Applications
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.3-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 '
 
 for x in $APPS_USR; do
-    wget -P /etc/skel/Applications $x
+    wget -q -P /etc/skel/Applications $x
 done
 
 chmod +x /etc/skel/Applications/*
