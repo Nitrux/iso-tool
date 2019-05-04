@@ -149,7 +149,7 @@ https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImage
 mkdir /Applications
 
 for x in $APPS_SYS; do
-	wget -q -P /Applications $x
+	wget -P /Applications $x
 done
 
 chmod +x /Applications/*
