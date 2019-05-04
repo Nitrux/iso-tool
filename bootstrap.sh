@@ -149,7 +149,7 @@ https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImage
 mkdir /Applications
 
 for x in $APPS_SYS; do
-	wget -P /Applications $x
+	wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
@@ -162,7 +162,7 @@ http://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 '
 
 for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
+    wget -P /etc/skel/Applications $x
 done
 
 chmod +x /etc/skel/Applications/*
