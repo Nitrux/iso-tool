@@ -57,7 +57,7 @@ apt -yy -qq dist-upgrade > /dev/null
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git2e34378.travis108_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-gitff7f673.travis117_amd64.deb
 '
 
 mkdir appimaged_deb
