@@ -8,21 +8,21 @@ export LC_ALL=C
 # -- Packages to install.
 
 PACKAGES='
-dhcpcd5
-user-setup
-localechooser-data
-cifs-utils
-casper
-lupin-casper
-xz-utils
+nitrux-minimal
+nitrux-standard
+nitrux-hardware-drivers
 nomad-desktop
 '
 
 
 # -- Install basic packages.
 
-apt -qq update > /dev/null
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
+printf "\n"
+printf "INSTALLING BASIC PACKAGES."
+printf "\n"
+
+apt -qq update &> /dev/null
+apt -yy install apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc > /dev/null
 
 
 # -- Add key for Neon repository.
