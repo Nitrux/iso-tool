@@ -1,15 +1,46 @@
-mkdir -p \
-	/root/isodevice/.overlay-tmp/etc.w \
-	/root/isodevice/.overlay-tmp/home.w
+#! /bin/sh
 
-mount -t overlay \
-	-o lowerdir=/root/etc \
-	-o upperdir=/root/isodevice/data/etc \
-	-o workdir=/root/isodevice/.overlay-tmp/etc.w \
-	. /root/etc
+for o in $(cat /proc/cmdline); do
 
-mount -t overlay \
-	-o lowerdir=/root/home \
-	-o upperdir=/root/isodevice/data/home \
-	-o workdir=/root/isodevice/.overlay-tmp/home.w \
-	. /root/home
+	case $o in
+
+		# -- Determine the overlay mountpoints from /proc/cmdline.
+
+		ZNX_OVERLAYS=*)
+
+			ZNX_OVERLAYS=${o#ZNX_OVERLAYS=}
+			ZNX_OVERLAYS=$(printf $ZNX_OVERLAYS | sed 's/,/ /g')
+
+		;;
+
+		# -- Find the persistent storage directory.
+
+		iso-scan/filename=*)
+
+			PERSISTENT_DATA=${o#iso-scan/filename=}
+			PERSISTENT_DATA=${PERSISTENT_DATA%/*}/DATA
+
+		;;
+
+	esac
+
+done
+
+
+# -- Mount the requested overlays.
+
+for k in $ZNX_OVERLAYS; do
+
+	mkdir -p \
+		/root/$k \
+		/root/isodevice/.overlay-tmp/$k.w \
+		/root/isodevice/$PERSISTENT_DATA/$k \
+		/root/isodevice/.overlay-tmp/$k.w
+
+	mount -t overlay \
+		-o lowerdir=/root/$k \
+		-o upperdir=/root/isodevice/$PERSISTENT_DATA/$k \
+		-o workdir=/root/isodevice/.overlay-tmp/$k.w \
+		. /root/$k
+
+done
