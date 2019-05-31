@@ -1,38 +1,40 @@
 #! /bin/bash
 
 
-export LANG=C
-export LC_ALL=C
+printf "\n"
+printf "STARTING BOOTSTRAP."
+printf "\n"
 
 
 # -- Packages to install.
 
 PACKAGES='
-dhcpcd5
-user-setup
-localechooser-data
-cifs-utils
-casper
-lupin-casper
-xz-utils
+nitrux-minimal
+nitrux-standard
+nitrux-hardware-drivers
 nomad-desktop
 '
 
 
 # -- Install basic packages.
 
-apt -qq update > /dev/null
-apt -yy -qq install apt-transport-https wget ca-certificates gnupg2 apt-utils --no-install-recommends > /dev/null
+printf "\n"
+printf "INSTALLING BASIC PACKAGES."
+printf "\n"
+
+apt -qq update &> /dev/null
+apt -yy install apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
 
 
 # -- Add key for Neon repository.
 # -- Add key for our repository.
-# -- Add key for the Graphics Driver PPA.
+# -- Add key for the Proprietary Graphics Drivers PPA.
 # -- Add key for the Ubuntu-X PPA.
 
 	wget -q https://archive.neon.kde.org/public.key -O neon.key
 	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
 	apt-key add neon.key > /dev/null
+	rm neon.key
 
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
@@ -46,18 +48,26 @@ cp /configs/sources.list.build /etc/apt/sources.list
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
 
-apt -qq update > /dev/null
-apt -yy -qq upgrade > /dev/null
-apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends > /dev/null
-apt -yy -qq purge --remove vlc > /dev/null
+printf "\n"
+printf "INSTALLING DESKTOP."
+printf "\n"
+
+apt -qq update &> /dev/null
+apt -yy -qq upgrade &> /dev/null
+apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade > /dev/null
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
 
+printf "\n"
+printf "INSTALLING APPIMAGE DAEMON."
+printf "\n"
+
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-gitff7f673.travis117_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git8f26d64.travis204_amd64.deb
 '
 
 mkdir appimaged_deb
@@ -66,19 +76,24 @@ for x in $appimgd; do
 	wget -q -P appimaged_deb $x
 done
 
-dpkg -iR appimaged_deb > /dev/null
+dpkg -iR appimaged_deb &> /dev/null
+apt -yy --fix-broken install &> /dev/null
 rm -r appimaged_deb
 
 
-# -- Install the latest LTS kernel.
 
-printf "INSTALLING NEW KERNEL."
+# -- Install the kernel.
+
+printf "\n"
+printf "INSTALLING KERNEL."
+printf "\n"
+
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-headers-4.19.39-041939_4.19.39-041939.201905040435_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-headers-4.19.39-041939-generic_4.19.39-041939.201905040435_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-image-unsigned-4.19.39-041939-generic_4.19.39-041939.201905040435_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-modules-4.19.39-041939-generic_4.19.39-041939.201905040435_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-headers-4.19.47-041947_4.19.47-041947.201905311431_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-headers-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-image-unsigned-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-modules-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
 '
 
 mkdir latest_kernel
@@ -88,10 +103,16 @@ for x in $kfiles; do
 	wget -q -P latest_kernel $x
 done
 
-dpkg -iR latest_kernel > /dev/null
+dpkg -iR latest_kernel &> /dev/null
+dpkg --configure -a &> /dev/null
 rm -r latest_kernel
 
+
 # -- Install util-linux 2.33.1.
+
+printf "\n"
+printf "INSTALLING UTIL-LINUX."
+printf "\n"
 
 util_linux='
 http://mirrors.kernel.org/ubuntu/pool/main/libc/libcap-ng/libcap-ng0_0.7.9-2_amd64.deb
@@ -108,10 +129,16 @@ for x in $util_linux; do
 	wget -q -P util_linux_233 $x
 done
 
-dpkg --force-all -iR util_linux_233 > /dev/null
+dpkg --force-all -iR util_linux_233 &> /dev/null
+dpkg --configure -a &> /dev/null
 rm -r util_linux_233
 
+
 # -- Install libc6 2.29.
+
+printf "\n"
+printf "INSTALLING LIBC6."
+printf "\n"
 
 libc6='
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.29-0ubuntu2_amd64.deb
@@ -126,11 +153,16 @@ for x in $libc6; do
 	wget -q -P libc6_229 $x
 done
 
-dpkg --force-all -iR libc6_229 > /dev/null
+dpkg --force-all -iR libc6_229 &> /dev/null
+dpkg --configure -a &> /dev/null
 rm -r libc6_229
 
 
 # -- Add /Applications to $PATH.
+
+printf "\n"
+printf "ADD APPIMAGES."
+printf "\n"
 
 printf "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
@@ -142,7 +174,7 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_stable
+https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
@@ -156,9 +188,9 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.3-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.4-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://github.com/UriHerrera/storage/raw/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -168,9 +200,14 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_stable /Applications/znx
+mv /Applications/znx_development /Applications/znx
+
 
 # -- Add znx-gui.
+
+printf "\n"
+printf "ADD ZNX_GUI."
+printf "\n"
 
 cp /configs/znx-gui.desktop /usr/share/applications
 wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
@@ -182,6 +219,11 @@ chmod +x /bin/znx-gui
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add custom launchers for Maui apps.
 # -- Add policykit file for KDialog.
+# -- Stop kernel printk from flooding the console and other settings.
+
+printf "\n"
+printf "ADD MISC. FIXES."
+printf "\n"
 
 cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
@@ -213,8 +255,6 @@ echo "vfio_pci ids=" >> /etc/modules
 cp /configs/asound.conf /etc/
 cp /configs/asound.conf /etc/skel/.asoundrc
 
-cp /configs/initramfs.conf /etc/initramfs-tools/
-
 cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
 cp /configs/amdgpu.conf /etc/modprobe.d/
@@ -233,7 +273,23 @@ mkdir -p /etc/skel/.local/share/applications
 cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
+
+# -- Add Window title plasmoid.
+
+printf "\n"
+printf "ADD WINDOW TITLE PLASMOID."
+printf "\n"
+
+cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
+
+
 # -- Update the initramfs.
+
+printf "\n"
+printf "UPDATE INITRAMFS."
+printf "\n"
+
+cp /configs/initramfs.conf /etc/initramfs-tools/
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
@@ -241,10 +297,20 @@ update-initramfs -u
 
 # -- Clean the filesystem.
 
-apt -yy -qq purge --remove casper lupin-casper > /dev/null
-apt -yy -qq autoremove > /dev/null
-apt -yy -qq clean > /dev/null
+printf "\n"
+printf "REMOVE CASPER."
+printf "\n"
+
+apt -yy -qq purge --remove casper lupin-casper &> /dev/null
+apt -yy -qq autoremove
+apt -yy -qq clean &> /dev/null
+
 
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+
+
+printf "\n"
+printf "EXITING BOOTSTRAP."
+printf "\n"
