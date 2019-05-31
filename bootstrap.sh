@@ -52,10 +52,10 @@ printf "\n"
 printf "INSTALLING DESKTOP."
 printf "\n"
 
-apt -qq update > /dev/null
-apt -yy -qq upgrade > /dev/null
+apt -qq update &> /dev/null
+apt -yy -qq upgrade &> /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
-apt -yy -qq purge --remove vlc > /dev/null
+apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade > /dev/null
 
 
@@ -67,7 +67,7 @@ printf "INSTALLING APPIMAGE DAEMON."
 printf "\n"
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git23a3b00.travis197_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git8f26d64.travis204_amd64.deb
 '
 
 mkdir appimaged_deb
@@ -90,10 +90,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-headers-4.19.39-041939_4.19.39-041939.201905040435_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-headers-4.19.39-041939-generic_4.19.39-041939.201905040435_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-image-unsigned-4.19.39-041939-generic_4.19.39-041939.201905040435_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.39/linux-modules-4.19.39-041939-generic_4.19.39-041939.201905040435_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-headers-4.19.47-041947_4.19.47-041947.201905311431_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-headers-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-image-unsigned-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-modules-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
 '
 
 mkdir latest_kernel
@@ -301,9 +301,9 @@ printf "\n"
 printf "REMOVE CASPER."
 printf "\n"
 
-apt -yy -qq purge --remove casper lupin-casper > /dev/null
+apt -yy -qq purge --remove casper lupin-casper &> /dev/null
 apt -yy -qq autoremove
-apt -yy -qq clean > /dev/null
+apt -yy -qq clean &> /dev/null
 
 
 # -- Use sources.list.nitrux for release.
