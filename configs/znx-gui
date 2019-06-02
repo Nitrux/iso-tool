@@ -31,7 +31,7 @@ get_image () { ui --inputbox "Image name:"; }
 # -- Wrappers for znx's commands.
 
 _znx_gui_init () { as_root znx init $DEVICE; }
-_znx_gui_restore_esp () { as_root znx restore_esp $DEVICE; }
+_znx_gui_restore () { as_root znx restore $DEVICE; }
 _znx_gui_deploy () { as_root znx deploy $DEVICE $(get_image) $(eval echo $(get_url)); }
 _znx_gui_update () { as_root znx update $DEVICE $(select_image); }
 _znx_gui_revert () { as_root znx revert $DEVICE $(select_image); }
