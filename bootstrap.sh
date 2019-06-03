@@ -174,7 +174,7 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
@@ -200,7 +200,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_development /Applications/znx
+mv /Applications/znx_stable /Applications/znx
 
 
 # -- Add znx-gui.

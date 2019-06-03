@@ -7,5 +7,5 @@ Type=Application
 Terminal=false
 Exec=znx-gui
 TryExec=znx-gui
-Categories=Utilities;System;
+Categories=Utility;System;
 Keywords=deployer;live;
