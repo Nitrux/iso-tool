@@ -16,7 +16,7 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=nitrux_release_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')
+IMAGE=nitrux-1.1.7-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64
 
 
 # -- Prepare the directory where the filesystem will be created.
