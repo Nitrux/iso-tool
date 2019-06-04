@@ -77,18 +77,18 @@ mkiso \
 # -- Embed the update information in the image.
 
 UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
-printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE bs=1 seek=33651 count=512 conv=notrunc
+printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE.iso bs=1 seek=33651 count=512 conv=notrunc
 
 
 # -- Calculate the checksum.
 
-sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/$IMAGE.sha256sum
+sha256sum $OUTPUT_DIR/$IMAGE.iso > $OUTPUT_DIR/$IMAGE.sha256sum
 
 
 # -- Generate the zsync file.
 
 zsyncmake \
-	$OUTPUT_DIR/$IMAGE \
+	$OUTPUT_DIR/$IMAGE.iso \
 	-u ${UPDATE_URL/.zsync} \
 	-o $OUTPUT_DIR/$IMAGE.zsync
 
