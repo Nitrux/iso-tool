@@ -16,7 +16,7 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=nitrux-1.1.7-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64
+IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64
 
 
 # -- Prepare the directory where the filesystem will be created.
@@ -71,7 +71,7 @@ mkiso \
 	-g $CONFIG_DIR/grub.cfg \
 	-g $CONFIG_DIR/loopback.cfg \
 	-t grub-theme/nomad \
-	-o $OUTPUT_DIR/$IMAGE
+	-o $OUTPUT_DIR/$IMAGE.iso
 
 
 # -- Embed the update information in the image.
