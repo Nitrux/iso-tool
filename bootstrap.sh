@@ -175,7 +175,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
-https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
+https://github.com/UriHerrera/storage/raw/master/AppImages/AppImageUpdate-x86_64.AppImage
 '
 
 mkdir /Applications
