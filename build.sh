@@ -93,9 +93,9 @@ zsyncmake \
 	-o $OUTPUT_DIR/$IMAGE.zsync
 
 
-# -- Add .iso extension to file.
+# -- Add .iso extension to file for redistribution.
 
-mv $OUTPUT_DIR/$IMAGE $OUTPUT_DIR/$IMAGE.iso
+cp $OUTPUT_DIR/$IMAGE $OUTPUT_DIR/$IMAGE.iso
 
 
 # -- Upload the ISO image.
