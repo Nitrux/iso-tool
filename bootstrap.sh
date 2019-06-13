@@ -90,10 +90,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-headers-4.19.47-041947_4.19.47-041947.201905311431_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-headers-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-image-unsigned-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.47/linux-modules-4.19.47-041947-generic_4.19.47-041947.201905311431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.50/linux-headers-4.19.50-041950_4.19.50-041950.201906110735_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.50/linux-headers-4.19.50-041950-generic_4.19.50-041950.201906110735_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.50/linux-image-unsigned-4.19.50-041950-generic_4.19.50-041950.201906110735_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.50/linux-modules-4.19.50-041950-generic_4.19.50-041950.201906110735_amd64.deb
 '
 
 mkdir latest_kernel
@@ -174,7 +174,7 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
+https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
 https://github.com/UriHerrera/storage/raw/master/AppImages/AppImageUpdate-x86_64.AppImage
 '
 
@@ -200,7 +200,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_master /Applications/znx
+mv /Applications/znx_development /Applications/znx
 
 
 # -- Add znx-gui.
