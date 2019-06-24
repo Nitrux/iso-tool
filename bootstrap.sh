@@ -67,7 +67,7 @@ printf "INSTALLING APPIMAGE DAEMON."
 printf "\n"
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git8f26d64.travis204_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
 '
 
 mkdir appimaged_deb
@@ -90,10 +90,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.53/linux-headers-4.19.53-041953_4.19.53-041953.201906190731_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.53/linux-headers-4.19.53-041953-generic_4.19.53-041953.201906190731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.53/linux-image-unsigned-4.19.53-041953-generic_4.19.53-041953.201906190731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.53/linux-modules-4.19.53-041953-generic_4.19.53-041953.201906190731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-headers-4.19.55-041955_4.19.55-041955.201906221031_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-headers-4.19.55-041955-generic_4.19.55-041955.201906221031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-image-unsigned-4.19.55-041955-generic_4.19.55-041955.201906221031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-modules-4.19.55-041955-generic_4.19.55-041955.201906221031_amd64.deb
 '
 
 mkdir latest_kernel
@@ -225,8 +225,8 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 
 # -- Add vfio modules and files.
 
-echo "install vfio-pci /bin/vfio-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /bin/vfio-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
@@ -255,7 +255,7 @@ cp /configs/qemu-system-x86.conf /etc/modprobe.d
 cp /configs/vfio_pci.conf /etc/modprobe.d/
 cp /configs/vfio-pci.conf /etc/modprobe.d/
 
-cp /configs/vfio-vga.sh /bin/
+cp /configs/vfio-pci-override-vga.sh /bin/
 
 
 # -- Add itch.io store launcher.
