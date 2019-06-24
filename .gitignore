@@ -1,6 +1,7 @@
 # Compiled source #
 ###################
 *.directory
+*.DS_Store
 *.bak
 /.project
 *.db
