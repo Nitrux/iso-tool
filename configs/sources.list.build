@@ -16,10 +16,10 @@ deb http://archive.neon.kde.org/user bionic main
 # Nitrux Repos #
 ################
 
-deb http://repo.nxos.org/nitrux-minimal nxos main
-deb http://repo.nxos.org/nitrux-standard nxos main
-deb http://repo.nxos.org/nitrux-hardware-drivers nxos main
-deb http://repo.nxos.org/nomad-desktop nxos main
+deb https://repo.nxos.org/ubuntu/repos/nitrux-minimal/ nxos main
+deb https://repo.nxos.org/ubuntu/repos/nitrux-standard nxos main
+deb https://repo.nxos.org/ubuntu/repos/nitrux-hardware-drivers nxos main
+deb https://repo.nxos.org/ubuntu/repos/nomad-desktop nxos main
 
 
 ####################

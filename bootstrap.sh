@@ -81,7 +81,6 @@ apt -yy --fix-broken install &> /dev/null
 rm -r appimaged_deb
 
 
-
 # -- Install the kernel.
 
 printf "\n"
@@ -106,56 +105,6 @@ done
 dpkg -iR latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r latest_kernel
-
-
-# -- Install util-linux 2.33.1.
-
-printf "\n"
-printf "INSTALLING UTIL-LINUX."
-printf "\n"
-
-util_linux='
-http://mirrors.kernel.org/ubuntu/pool/main/libc/libcap-ng/libcap-ng0_0.7.9-2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/u/util-linux/libsmartcols1_2.33.1-0.1ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/s/shadow/login_4.5-1.1ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/u/util-linux/util-linux_2.33.1-0.1ubuntu2_amd64.deb
-'
-
-mkdir util_linux_233
-
-for x in $util_linux; do
-	printf "$x"
-	wget -q -P util_linux_233 $x
-done
-
-dpkg --force-all -iR util_linux_233 &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r util_linux_233
-
-
-# -- Install libc6 2.29.
-
-printf "\n"
-printf "INSTALLING LIBC6."
-printf "\n"
-
-libc6='
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.29-0ubuntu2_all.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.29-0ubuntu2_amd64.deb
-'
-
-mkdir libc6_229
-
-for x in $libc6; do
-	printf "$x"
-	wget -q -P libc6_229 $x
-done
-
-dpkg --force-all -iR libc6_229 &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r libc6_229
 
 
 # -- Add /Applications to $PATH.
@@ -192,12 +141,16 @@ mkdir -p /etc/skel/Applications
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.4-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://github.com/UriHerrera/storage/raw/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
+https://repo.nxos.org/appimages/Index-x86_64.AppImage
+https://repo.nxos.org/appimages/Pix-x86_64.AppImage
+https://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
+https://repo.nxos.org/appimages/vvave-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
+    wget -q -P --user-agent="Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0" /etc/skel/Applications $x
 done
 
 chmod +x /etc/skel/Applications/*
@@ -220,7 +173,6 @@ printf "\n"
 cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
-# cp /configs/org.kde.* /usr/share/applications
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 
 
