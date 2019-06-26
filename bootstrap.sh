@@ -12,7 +12,7 @@ PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
-nomad-desktop
+nx-desktop
 '
 
 
