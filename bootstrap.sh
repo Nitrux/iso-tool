@@ -90,10 +90,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-headers-4.19.55-041955_4.19.55-041955.201906221031_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-headers-4.19.55-041955-generic_4.19.55-041955.201906221031_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-image-unsigned-4.19.55-041955-generic_4.19.55-041955.201906221031_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.55/linux-modules-4.19.55-041955-generic_4.19.55-041955.201906221031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114_5.1.14-050114.201906221030_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-image-unsigned-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-modules-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
 '
 
 mkdir latest_kernel
@@ -193,6 +193,7 @@ APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.4-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 https://github.com/UriHerrera/storage/raw/master/AppImages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 '
 
 for x in $APPS_USR; do
