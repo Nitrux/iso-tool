@@ -70,7 +70,7 @@ mkiso \
 	-V "NITRUX" \
 	-g $CONFIG_DIR/grub.cfg \
 	-g $CONFIG_DIR/loopback.cfg \
-	-t grub-theme/nomad \
+	-t grub-theme/nitrux \
 	-o $OUTPUT_DIR/$IMAGE
 
 
