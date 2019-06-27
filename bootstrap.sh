@@ -150,7 +150,7 @@ https://repo.nxos.org/appimages/vvave-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
-    wget -q -P --user-agent="Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0" /etc/skel/Applications $x
+    wget -q -P /etc/skel/Applications $x
 done
 
 chmod +x /etc/skel/Applications/*
