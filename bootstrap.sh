@@ -122,7 +122,7 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Rename AppImageUpdate and znx.
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 '
 
@@ -151,7 +151,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
-mv /Applications/znx_development /Applications/znx
+mv /Applications/znx_master/Applications/znx
 
 
 # -- Add znx-gui.
@@ -259,6 +259,10 @@ apt -yy -qq autoremove
 apt -yy -qq clean &> /dev/null
 
 cupt remove apt -y
+
+# -- Overwrite file so cupt doesn't complain.
+
+/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 
 
 # -- Use sources.list.nitrux for release.
