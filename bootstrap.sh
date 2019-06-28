@@ -1,6 +1,5 @@
 #! /bin/bash
 
-
 printf "\n"
 printf "STARTING BOOTSTRAP."
 printf "\n"
@@ -31,14 +30,14 @@ apt -yy install apt-transport-https wget ca-certificates gnupg2 apt-utils xz-uti
 # -- Add key for the Proprietary Graphics Drivers PPA.
 # -- Add key for the Ubuntu-X PPA.
 
-	wget -q https://archive.neon.kde.org/public.key -O neon.key
-	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key > /dev/null
-	rm neon.key
+wget -q https://archive.neon.kde.org/public.key -O neon.key
+printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+apt-key add neon.key > /dev/null
+rm neon.key
 
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-	apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
@@ -73,7 +72,7 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-a
 mkdir appimaged_deb
 
 for x in $appimgd; do
-	wget -q -P appimaged_deb $x
+wget -q -P appimaged_deb $x
 done
 
 dpkg -iR appimaged_deb &> /dev/null
@@ -89,17 +88,17 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114_5.1.14-050114.201906221030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-image-unsigned-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-modules-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115_5.1.15-050115.201906250430_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-image-unsigned-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-modules-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
 '
 
 mkdir latest_kernel
 
 for x in $kfiles; do
-	printf "$x"
-	wget -q -P latest_kernel $x
+printf "$x"
+wget -q -P latest_kernel $x
 done
 
 dpkg -iR latest_kernel &> /dev/null
@@ -121,18 +120,16 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
 # -- Rename AppImageUpdate and znx.
-# -- Add znx-gui.
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_master-x86_64.AppImage
 '
 
 mkdir /Applications
 
 for x in $APPS_SYS; do
-	wget -q -P /Applications $x
+wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
@@ -155,7 +152,17 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 mv /Applications/znx_development /Applications/znx
-mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
+
+
+# -- Add znx-gui.
+
+printf "\n"
+printf "ADD ZNX_GUI."
+printf "\n"
+
+cp /configs/znx-gui.desktop /usr/share/applications
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
+chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
@@ -175,6 +182,10 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 
 
 # -- Add vfio modules and files.
+
+printf "\n"
+printf "ADD VFIO ENABLEMENT."
+printf "\n"
 
 echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
