@@ -258,7 +258,7 @@ apt -yy -qq purge --remove casper lupin-casper &> /dev/null
 apt -yy -qq autoremove
 apt -yy -qq clean &> /dev/null
 
-cupt remove apt
+cupt remove apt -y
 
 
 # -- Use sources.list.nitrux for release.
