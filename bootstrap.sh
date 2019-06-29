@@ -22,7 +22,7 @@ printf "INSTALLING BASIC PACKAGES."
 printf "\n"
 
 apt -qq update &> /dev/null
-apt -yy install cupt apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
+apt -yy install rpl cupt apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -272,6 +272,11 @@ rm /bin/sh.distrib
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
 ln -sv /bin/mksh /bin/sh
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+
+
+# -- Use mksh as default shell for all users.
+
+sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
 
 
 # -- Use sources.list.nitrux for release.
