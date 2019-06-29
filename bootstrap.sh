@@ -51,9 +51,10 @@ printf "\n"
 printf "INSTALLING DESKTOP."
 printf "\n"
 
-apt -qq update &> /dev/null
+apt -qq update
 apt -yy -qq upgrade &> /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
+apt --fix-broken install 
 apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade > /dev/null
 
