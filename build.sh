@@ -1,4 +1,4 @@
-#! /bin/sh 
+#! /bin/sh
 
 # -- Exit on errors.
 
@@ -12,6 +12,7 @@ ISO_DIR=$(mktemp -d)
 OUTPUT_DIR=$(mktemp -d)
 
 CONFIG_DIR=$PWD/configs
+UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
 
 
 # -- The name of the ISO image.
@@ -55,7 +56,8 @@ mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress 
 
 # -- Write the commit hash that generated the image.
 
-printf "${TRAVIS_COMMIT:0:7}" > $ISO_DIR/.git-commit
+printf "UPDATE_URL $UPDATE_URL" >> $ISO_DIR/.INFO
+printf "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
 
 
 # -- Generate the ISO image.
@@ -76,7 +78,6 @@ mkiso \
 
 # -- Embed the update information in the image.
 
-UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
 printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE bs=1 seek=33651 count=512 conv=notrunc
 
 
