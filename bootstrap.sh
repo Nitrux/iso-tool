@@ -125,6 +125,7 @@ sed -i "/env_reset/d" /etc/sudoers
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
+https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -142,7 +143,6 @@ http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://repo.nxos.org/appimages/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
-https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -153,6 +153,7 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 mv /Applications/znx_master /Applications/znx
+mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/appimage-user-tool
 
 
 # -- Add znx-gui.
