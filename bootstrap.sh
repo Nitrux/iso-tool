@@ -265,6 +265,14 @@ cupt remove apt -y
 /bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 
 
+# -- Remove dash and use mksh as /bin/sh.
+
+rm /bin/sh.distrib
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+ln -sv /bin/mksh /bin/sh
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+
+
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
