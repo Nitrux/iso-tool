@@ -22,7 +22,7 @@ printf "INSTALLING BASIC PACKAGES."
 printf "\n"
 
 apt -qq update &> /dev/null
-apt -yy install rpl cupt apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
+apt -yy install cupt apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -44,29 +44,6 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 cp /configs/sources.list.build /etc/apt/sources.list
 
-# -- Install missing linuxbrew-wrapper deps.
-# -- FIXME 
-
-printf "\n"
-printf "INSTALLING linuxbrew-wrapper deps."
-printf "\n"
-
-brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
-'
-
-mkdir brew_deps
-
-for x in $brewd; do
-wget -q -P brew_deps $x
-done
-
-dpkg -iR brew_deps &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-rm -r brew_deps
-
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
 
@@ -77,7 +54,7 @@ printf "\n"
 apt -qq update
 apt -yy -qq upgrade &> /dev/null
 apt -yy -qq install ${PACKAGES//\\n/ } --no-install-recommends
-apt --fix-broken install -y
+apt -yy --fix-broken install
 apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade > /dev/null
 
@@ -258,6 +235,31 @@ printf "ADD WINDOW TITLE PLASMOID."
 printf "\n"
 
 cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
+
+
+# -- Install missing linuxbrew-wrapper deps.
+# -- FIXME 
+
+printf "\n"
+printf "INSTALLING linuxbrew-wrapper deps."
+printf "\n"
+
+brewd='
+http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
+'
+
+mkdir brew_deps
+
+for x in $brewd; do
+wget -q -P brew_deps $x
+done
+
+dpkg -iR brew_deps &> /dev/null
+apt -yy --fix-broken install
+rm -r brew_deps
 
 
 # -- Update the initramfs.
