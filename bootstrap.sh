@@ -302,6 +302,7 @@ ln -sv /bin/mksh /bin/sh
 # -- Use mksh as default shell for all users.
 
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
+sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 
 
 # -- Use sources.list.nitrux for release.
