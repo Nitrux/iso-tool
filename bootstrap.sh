@@ -44,6 +44,29 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 cp /configs/sources.list.build /etc/apt/sources.list
 
+# -- Install missing linuxbrew-wrapper deps.
+# -- FIXME 
+
+printf "\n"
+printf "INSTALLING linuxbrew-wrapper deps."
+printf "\n"
+
+brewd='
+http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
+'
+
+mkdir brew_deps
+
+for x in $brewd; do
+wget -q -P brew_deps $x
+done
+
+dpkg -iR brew_deps &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+rm -r brew_deps
+
 
 # -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
 
