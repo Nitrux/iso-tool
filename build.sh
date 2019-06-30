@@ -12,12 +12,12 @@ ISO_DIR=$(mktemp -d)
 OUTPUT_DIR=$(mktemp -d)
 
 CONFIG_DIR=$PWD/configs
-UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
 
 
 # -- The name of the ISO image.
 
 IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64
+UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
 
 
 # -- Prepare the directory where the filesystem will be created.
