@@ -57,7 +57,9 @@ mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress 
 # -- Write the commit hash that generated the image.
 
 printf "UPDATE_URL $UPDATE_URL" >> $ISO_DIR/.INFO
+printf "\n" >> $ISO_DIR/.INFO
 printf "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
+printf "\n" >> $ISO_DIR/.INFO
 
 
 # -- Generate the ISO image.
