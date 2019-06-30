@@ -153,7 +153,7 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
 mv /Applications/znx_master /Applications/znx
-mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/appimage-user-tool
+mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 
 
 # -- Add znx-gui.
@@ -309,6 +309,11 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+
+
+# -- Add AppImage providers for appimage-cli-tool
+
+cp /configs/appimage-providers.yaml /etc/
 
 
 printf "\n"
