@@ -317,11 +317,6 @@ cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05m
 update-initramfs -u
 
 
-# -- Overwrite file so cupt doesn't complain.
-
-/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-
-
 # -- Clean the filesystem.
 
 printf "\n"
@@ -337,7 +332,12 @@ apt -yy install ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 apt -yy -qq autoremove &> /dev/null
 apt -yy -qq clean &> /dev/null
 
-cupt remove apt -y
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
+
+
+# -- Overwrite file so cupt doesn't complain.
+
+/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 
 
 # -- Remove dash and use mksh as /bin/sh.
@@ -355,6 +355,11 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+
+
+# -- Update list.
+
+cupt -q update
 
 
 printf "\n"
