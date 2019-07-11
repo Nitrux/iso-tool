@@ -16,7 +16,6 @@ apt-transport-https
 apt-utils
 ca-certificates
 casper
-cupt
 dhcpcd5
 fuse
 gnupg2
@@ -79,6 +78,8 @@ apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade > /dev/null
+
+cupt -q update
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -359,7 +360,7 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 
 # -- Update list.
 
-cupt -q update
+# cupt -q update
 
 
 printf "\n"
