@@ -11,27 +11,31 @@ printf "\n"
 printf "INSTALLING BASIC PACKAGES."
 printf "\n"
 
-BASIC_PACKAGES='
-apt-transport-https
-apt-utils
-ca-certificates
-casper
-dhcpcd5
-fuse
-gnupg2
-libarchive13
-libelf1
-localechooser-data
-lupin-casper
-phonon4qt5
-phonon4qt5-backend-vlc
-user-setup
-wget
-xz-utils
-'
+# BASIC_PACKAGES='
+# apt-transport-https
+# apt-utils
+# ca-certificates
+# casper
+# dhcpcd5
+# fuse
+# gnupg2
+# libarchive13
+# libelf1
+# localechooser-data
+# lupin-casper
+# phonon4qt5
+# phonon4qt5-backend-vlc
+# user-setup
+# wget
+# xz-utils
+# '
 
 apt -qq update &> /dev/null
-apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+# apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install cupt apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
+
+cupt update
+
 
 
 # -- Add key for Neon repository.
@@ -72,14 +76,12 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-apt -qq update
+apt -qq update &> /dev/null
 apt -yy -qq upgrade &> /dev/null
 apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade > /dev/null
-
-cupt -q update
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -360,7 +362,7 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 
 # -- Update list.
 
-# cupt -q update
+cupt -q update
 
 
 printf "\n"
