@@ -11,31 +11,27 @@ printf "\n"
 printf "INSTALLING BASIC PACKAGES."
 printf "\n"
 
-# BASIC_PACKAGES='
-# apt-transport-https
-# apt-utils
-# ca-certificates
-# casper
-# dhcpcd5
-# fuse
-# gnupg2
-# libarchive13
-# libelf1
-# localechooser-data
-# lupin-casper
-# phonon4qt5
-# phonon4qt5-backend-vlc
-# user-setup
-# wget
-# xz-utils
-# '
+BASIC_PACKAGES='
+apt-transport-https
+apt-utils
+ca-certificates
+casper
+dhcpcd5
+fuse
+gnupg2
+libarchive13
+libelf1
+localechooser-data
+lupin-casper
+phonon4qt5
+phonon4qt5-backend-vlc
+user-setup
+wget
+xz-utils
+'
 
 apt -qq update &> /dev/null
-# apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
-apt -yy install cupt apt-transport-https wget ca-certificates gnupg2 apt-utils xz-utils casper lupin-casper libarchive13 fuse dhcpcd5 user-setup localechooser-data libelf1 phonon4qt5 phonon4qt5-backend-vlc &> /dev/null
-
-cupt update
-
+apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
