@@ -132,7 +132,7 @@ rm -r latest_kernel
 #FIXME These dependencies should be included in a metapackage.
 
 printf "\n"
-printf "INSTALLING linuxbrew-wrapper DEPS."
+printf "INSTALLING LINUXBREW DEPS."
 printf "\n"
 
 brewd='
@@ -304,7 +304,7 @@ cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
 
-# -- Update the initramfs.
+# -- Add the persistence and update the initramfs.
 
 printf "\n"
 printf "UPDATE INITRAMFS."
@@ -314,6 +314,40 @@ cp /configs/initramfs.conf /etc/initramfs-tools/
 
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
+
+
+# -- Remove dash and use mksh as /bin/sh.
+# -- Use mksh as default shell for all users.
+
+printf "\n"
+printf "REMOVE DASH AND USE MKSH."
+printf "\n"
+
+rm /bin/sh.distrib
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+ln -sv /bin/mksh /bin/sh
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+
+sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
+sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
+
+
+# -- Use sources.list.nitrux for release.
+
+/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+
+
+# -- Overwrite file so cupt doesn't complain.
+# -- Remove APT.
+# -- Update package index using cupt.
+
+printf "\n"
+printf "REMOVE APT."
+printf "\n"
+
+/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
+cupt -q update
 
 
 # -- Clean the filesystem.
@@ -330,35 +364,6 @@ lupin-casper
 apt -yy install ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 apt -yy -qq autoremove &> /dev/null
 apt -yy -qq clean &> /dev/null
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
-
-
-# -- Overwrite file so cupt doesn't complain.
-
-/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-
-
-# -- Remove dash and use mksh as /bin/sh.
-# -- Use mksh as default shell for all users.
-
-rm /bin/sh.distrib
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
-ln -sv /bin/mksh /bin/sh
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
-
-sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
-sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
-
-
-# -- Use sources.list.nitrux for release.
-
-/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
-
-
-# -- Update list.
-
-cupt -q update
 
 
 printf "\n"
