@@ -304,24 +304,6 @@ cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
 
-# -- Use XZ compression when creating the ISO.
-# -- Add initramfs hook script.
-# -- Add the persistence and update the initramfs.
-
-printf "\n"
-printf "UPDATE INITRAMFS."
-printf "\n"
-
-cp /configs/initramfs.conf /etc/initramfs-tools/
-
-cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-update-initramfs -u
-
-lsinitramfs /boot/initrd.img-5.1.16-050116-generic | grep vfio
-
-
 # -- Remove dash and use mksh as /bin/sh.
 # -- Use mksh as default shell for all users.
 
@@ -356,6 +338,24 @@ printf "\n"
 cupt -q update
 
 
+# -- Use XZ compression when creating the ISO.
+# -- Add initramfs hook script.
+# -- Add the persistence and update the initramfs.
+
+printf "\n"
+printf "UPDATE INITRAMFS."
+printf "\n"
+
+cp /configs/initramfs.conf /etc/initramfs-tools/
+
+cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+update-initramfs -u
+
+lsinitramfs /boot/initrd.img-5.1.16-050116-generic | grep vfio
+
+
 # -- Clean the filesystem.
 
 printf "\n"
@@ -367,9 +367,8 @@ casper
 lupin-casper
 '
 
-apt -yy purge --remove ${REMOVE_PACKAGES//\\n/ }
-apt -yy -qq autoremove &> /dev/null
-apt -yy -qq clean &> /dev/null
+cupt -y -q purge ${REMOVE_PACKAGES//\\n/ }
+cupt -y -q clean &> /dev/null
 
 
 printf "\n"
