@@ -367,7 +367,7 @@ casper
 lupin-casper
 '
 
-apt -yy install ${REMOVE_PACKAGES//\\n/ } &> /dev/null
+apt -yy purge --remove ${REMOVE_PACKAGES//\\n/ }
 apt -yy -qq autoremove &> /dev/null
 apt -yy -qq clean &> /dev/null
 
