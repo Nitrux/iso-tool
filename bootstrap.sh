@@ -304,6 +304,8 @@ cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
 
+# -- Use XZ compression when creating the ISO.
+# -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
 
 printf "\n"
@@ -312,8 +314,12 @@ printf "\n"
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
 
+cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
+
+lsinitramfs /boot/initrd.img-5.1.16-050116-generic | grep vfio
 
 
 # -- Remove dash and use mksh as /bin/sh.
