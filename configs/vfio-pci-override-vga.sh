@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/mksh
 
 for i in $(find /sys/devices/pci* -name boot_vga); do
         if [ $(cat $i) -eq 0 ]; then
