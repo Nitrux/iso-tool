@@ -312,9 +312,9 @@ printf "REMOVE DASH AND USE MKSH."
 printf "\n"
 
 rm /bin/sh.distrib
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
 ln -sv /bin/mksh /bin/sh
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
 
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
