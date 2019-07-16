@@ -15,5 +15,5 @@ esac
  . /usr/share/initramfs-tools/hook-functions
 # Begin real processing below this line
 
- touch /bin/vfio-pci-override-vga.sh
+ copy_exec /bin/dummy.sh /bin/vfio-pci-override-vga.sh
  
