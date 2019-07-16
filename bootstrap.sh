@@ -263,6 +263,7 @@ echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/mo
 echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
 echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
 echo "vfio_virqfd" >> /etc/initramfs-tools/modules
