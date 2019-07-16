@@ -292,7 +292,7 @@ cp /configs/vfio_pci.conf /etc/modprobe.d/
 cp /configs/vfio-pci.conf /etc/modprobe.d/
 
 cp /configs/vfio-pci-override-vga.sh /bin/
-touch /bin/dummy.sh
+cp /configs/dummy.sh /bin/
 
 
 # -- Add itch.io store launcher.
