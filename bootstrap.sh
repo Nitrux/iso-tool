@@ -294,6 +294,8 @@ cp /configs/vfio-pci.conf /etc/modprobe.d/
 cp /configs/vfio-pci-override-vga.sh /bin/
 cp /configs/dummy.sh /bin/
 
+chmod +x /bin/dummy.sh
+
 
 # -- Add itch.io store launcher.
 
@@ -357,6 +359,8 @@ cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05m
 update-initramfs -u
 
 lsinitramfs /boot/initrd.img-5.1.16-050116-generic | grep vfio
+
+rm /bin/dummy.sh
 
 
 # -- Clean the filesystem.
