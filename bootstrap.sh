@@ -271,6 +271,7 @@ echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
+echo "i915" >> /etc/initramfs-tools/modules
 
 echo "vfio" >> /etc/modules
 echo "vfio_iommu_type1" >> /etc/modules
