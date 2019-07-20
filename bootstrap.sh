@@ -177,7 +177,7 @@ rm -r kup_back
 
 cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
-apt -qq -yy dist-upgrade
+apt -qq -yy upgrade
 
 
 # -- Add Window title plasmoid.
