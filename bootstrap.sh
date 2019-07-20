@@ -152,33 +152,6 @@ dpkg -iR brew_deps &> /dev/null
 apt -yy --fix-broken install
 rm -r brew_deps
 
-# -- Install kup-backup.
-#FIXME This package should be included in a metapackage.
-
-printf "\n"
-printf "INSTALLING KUP."
-printf "\n"
-
-kup='
-http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build1_amd64.deb
-'
-
-mkdir kup_back
-
-for x in $kup; do
-wget -q -P kup_back $x
-done
-
-dpkg -iR kup_back &> /dev/null
-apt -yy --fix-broken install
-rm -r kup_back
-
-# -- Use sources.list.eoan to base packages.
-
-cp /configs/sources.list.eoan /etc/apt/sources.list
-apt -qq update
-apt -qq -yy upgrade
-
 
 # -- Add Window title plasmoid.
 #FIXME This should be included as a deb file downloaded from our repository.
@@ -188,6 +161,13 @@ printf "ADD WINDOW TITLE PLASMOID."
 printf "\n"
 
 cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
+
+
+# -- Use sources.list.eoan to base packages.
+
+cp /configs/sources.list.eoan /etc/apt/sources.list
+apt -qq update
+apt -qq -yy upgrade
 
 
 # -- Add /Applications to $PATH.
