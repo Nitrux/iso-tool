@@ -165,9 +165,21 @@ cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 # -- Use sources.list.eoan to base packages.
 
+printf "\n"
+printf "UPDATE BASE PACKAGES."
+printf "\n"
+
 cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
-apt -qq -yy upgrade
+
+UPGRADE_PACKAGES='
+openssl
+openssh-client
+xserver-xorg-core
+'
+
+apt -qq update &> /dev/null
+apt -yy -qq install ${UPGRADE_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
