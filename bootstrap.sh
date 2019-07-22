@@ -31,7 +31,7 @@ xz-utils
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
