@@ -110,10 +110,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.2/linux-headers-5.2.2-050202_5.2.2-050202.201907231250_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.2/linux-headers-5.2.2-050202-generic_5.2.2-050202.201907231250_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.2/linux-image-unsigned-5.2.2-050202-generic_5.2.2-050202.201907231250_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.2/linux-modules-5.2.2-050202-generic_5.2.2-050202.201907231250_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-headers-5.2.3-050203_5.2.3-050203.201907260838_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-headers-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-image-unsigned-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-modules-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
 '
 
 mkdir latest_kernel
