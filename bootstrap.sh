@@ -91,15 +91,15 @@ appimgd='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
 '
 
-mkdir appimaged_deb
+mkdir /appimaged_deb
 
 for x in $appimgd; do
-wget -q -P appimaged_deb $x
+    wget -q -P /appimaged_deb $x
 done
 
-dpkg -iR appimaged_deb &> /dev/null
+dpkg -iR /appimaged_deb &> /dev/null
 apt -yy --fix-broken install &> /dev/null
-rm -r appimaged_deb
+rm -r /appimaged_deb
 
 
 # -- Install the kernel.
@@ -116,16 +116,16 @@ https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-image-unsigned-5.2.4
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-modules-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
 '
 
-mkdir latest_kernel
+mkdir /latest_kernel
 
 for x in $kfiles; do
 printf "$x"
-wget -q -P latest_kernel $x
+    wget -q -P /latest_kernel $x
 done
 
-dpkg -iR latest_kernel &> /dev/null
+dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
-rm -r latest_kernel
+rm -r /latest_kernel
 
 
 # -- Install linuxbrew-wrapper.
@@ -142,19 +142,19 @@ http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_am
 http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
 '
 
-mkdir brew_deps
+mkdir /brew_deps
 
 for x in $brewd; do
-wget -q -P brew_deps $x
+    wget -q -P /brew_deps $x
 done
 
-dpkg -iR brew_deps &> /dev/null
+dpkg -iR /brew_deps &> /dev/null
 apt -yy --fix-broken install
-rm -r brew_deps
+rm -r /brew_deps
 
 
 # -- Add missing firmware modules.
-#FIXME This files should be included in a package.
+#FIXME This files should be included to a package.
 
 printf "\n"
 printf "ADDING MISSING FIRMWARE."
@@ -166,15 +166,15 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_r
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
 '
 
-mkdir fw_files
+mkdir /fw_files
 
 for x in $fw; do
-wget -q -P fw_files $x
+    wget -q -P /fw_files $x
 done
 
-mv vega20_ta.bin raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-rm -r fw_files
+mv /fw_files/vega20_ta.bin raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+rm -r /fw_files
 
 
 # -- Add Window title plasmoid.
@@ -196,7 +196,7 @@ printf "\n"
 cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
 
-UPGRADE_X11_PACKAGES='
+UPGRADE_OS_PACKAGES='
 openssl
 openssh-client
 x11-session-utils
@@ -230,7 +230,7 @@ intel-microcode
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_X11_PACKAGES//\\n/ } --only-upgrade
+apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
@@ -261,7 +261,7 @@ https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 mkdir /Applications
 
 for x in $APPS_SYS; do
-wget -q -P /Applications $x
+    wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
@@ -310,7 +310,6 @@ chmod +x /bin/znx-gui
 # -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
-# -- Add custom launchers for Maui apps.
 # -- Add policykit file for KDialog.
 
 printf "\n"
