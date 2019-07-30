@@ -153,6 +153,30 @@ apt -yy --fix-broken install
 rm -r brew_deps
 
 
+# -- Add missing firmware modules.
+#FIXME This files should be included in a package.
+
+printf "\n"
+printf "ADDING MISSING FIRMWARE."
+printf "\n"
+
+fw='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+'
+
+mkdir fw_files
+
+for x in $fw; do
+wget -q -P fw_files $x
+done
+
+mv vega20_ta.bin raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+rm -r brew_deps
+
+
 # -- Add Window title plasmoid.
 #FIXME This should be included as a deb file downloaded from our repository.
 
@@ -178,25 +202,17 @@ openssh-client
 x11-session-utils
 xinit
 xserver-xorg-core
-xserver-xorg-input-aiptek
-xserver-xorg-input-elographics 
 xserver-xorg-input-wacom
 xserver-xorg-input-libinput
-xserver-xorg-input-joystick
-xserver-xorg-input-kbd
 xserver-xorg-input-mouse
 xserver-xorg-input-evdev
-xserver-xorg-input-mtrack
-xserver-xorg-input-mutouch
 xserver-xorg-input-synaptics
 xserver-xorg-input-void
 xserver-xorg-video-amdgpu
 xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
-xserver-xorg-input-void
 xserver-xorg-video-vmware
-xserver-xorg-input-xwiimote
 libdrm-amdgpu1
 libdrm-radeon1
 i965-va-driver
@@ -209,6 +225,8 @@ thunderbolt-tools
 mesa-va-drivers
 mesa-vdpau-drivers
 mesa-vulkan-drivers
+amd64-microcode
+intel-microcode
 '
 
 apt -qq update &> /dev/null
@@ -411,7 +429,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.3-050203-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.2.4-050204-generic | grep vfio
 
 rm /bin/dummy.sh
 
