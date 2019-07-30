@@ -174,7 +174,7 @@ done
 
 mv vega20_ta.bin raven_kicker_rlc.bin /lib/firmware/amdgpu/
 mv bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-rm -r brew_deps
+rm -r fw_files
 
 
 # -- Add Window title plasmoid.
