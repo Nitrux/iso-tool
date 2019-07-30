@@ -172,7 +172,7 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-mv /fw_files/vega20_ta.bin raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/vega20_ta.bin /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
