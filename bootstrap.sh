@@ -405,7 +405,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.3.0-050300rc2-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.0.21-050021-generic | grep vfio
 
 rm /bin/dummy.sh
 
