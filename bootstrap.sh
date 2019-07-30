@@ -110,10 +110,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-headers-5.2.4-050204_5.2.4-050204.201907280731_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-headers-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-image-unsigned-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-modules-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-headers-4.19.62-041962_4.19.62-041962.201907280331_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-headers-4.19.62-041962-generic_4.19.62-041962.201907280331_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-image-unsigned-4.19.62-041962-generic_4.19.62-041962.201907280331_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-modules-4.19.62-041962-generic_4.19.62-041962.201907280331_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -151,30 +151,6 @@ done
 dpkg -iR /brew_deps &> /dev/null
 apt -yy --fix-broken install
 rm -r /brew_deps
-
-
-# -- Add missing firmware modules.
-#FIXME This files should be included to a package.
-
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
-
-fw='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
-'
-
-mkdir /fw_files
-
-for x in $fw; do
-    wget -q -P /fw_files $x
-done
-
-mv /fw_files/vega20_ta.bin /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-rm -r /fw_files
 
 
 # -- Add Window title plasmoid.
