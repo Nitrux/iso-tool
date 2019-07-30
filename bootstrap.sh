@@ -28,6 +28,7 @@ phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
+libstartup-notification0
 '
 
 apt -qq update &> /dev/null
@@ -110,10 +111,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-headers-4.19.62-041962_4.19.62-041962.201907280331_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-headers-4.19.62-041962-generic_4.19.62-041962.201907280331_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-image-unsigned-4.19.62-041962-generic_4.19.62-041962.201907280331_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.19.62/linux-modules-4.19.62-041962-generic_4.19.62-041962.201907280331_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3-rc2/linux-headers-5.3.0-050300rc2_5.3.0-050300rc2.201907281631_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3-rc2/linux-headers-5.3.0-050300rc2-generic_5.3.0-050300rc2.201907281631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3-rc2/linux-image-unsigned-5.3.0-050300rc2-generic_5.3.0-050300rc2.201907281631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3-rc2/linux-modules-5.3.0-050300rc2-generic_5.3.0-050300rc2.201907281631_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -404,7 +405,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.4-050204-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.0-050300rc2-generic | grep vfio
 
 rm /bin/dummy.sh
 
