@@ -110,10 +110,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-headers-5.2.3-050203_5.2.3-050203.201907260838_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-headers-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-image-unsigned-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-modules-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-headers-5.2.4-050204_5.2.4-050204.201907280731_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-headers-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-image-unsigned-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.4/linux-modules-5.2.4-050204-generic_5.2.4-050204.201907280731_amd64.deb
 '
 
 mkdir latest_kernel
@@ -172,14 +172,47 @@ printf "\n"
 cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
 
-UPGRADE_PACKAGES='
+UPGRADE_X11_PACKAGES='
 openssl
 openssh-client
+x11-session-utils
+xinit
 xserver-xorg-core
+xserver-xorg-input-aiptek
+xserver-xorg-input-elographics 
+xserver-xorg-input-wacom
+xserver-xorg-input-libinput
+xserver-xorg-input-joystick
+xserver-xorg-input-kbd
+xserver-xorg-input-mouse
+xserver-xorg-input-evdev
+xserver-xorg-input-mtrack
+xserver-xorg-input-mutouch
+xserver-xorg-input-synaptics
+xserver-xorg-input-void
+xserver-xorg-video-amdgpu
+xserver-xorg-video-intel
+xserver-xorg-video-qxl
+xserver-xorg-video-radeon
+xserver-xorg-input-void
+xserver-xorg-video-vmware
+xserver-xorg-input-xwiimote
+libdrm-amdgpu1
+libdrm-radeon1
+i965-va-driver
+libdrm-intel1
+libva-drm2
+libva-glx2
+libva-x11-2
+libva2
+thunderbolt-tools
+mesa-va-drivers
+mesa-vdpau-drivers
+mesa-vulkan-drivers
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_PACKAGES//\\n/ } --only-upgrade
+apt -yy -qq install ${UPGRADE_X11_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
