@@ -111,10 +111,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.21/linux-headers-5.0.21-050021_5.0.21-050021.201906040731_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.21/linux-headers-5.0.21-050021-generic_5.0.21-050021.201906040731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.21/linux-image-unsigned-5.0.21-050021-generic_5.0.21-050021.201906040731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.0.21/linux-modules-5.0.21-050021-generic_5.0.21-050021.201906040731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.1/linux-headers-5.1.1-050101_5.1.1-050101.201905110631_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.1/linux-headers-5.1.1-050101-generic_5.1.1-050101.201905110631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.1/linux-image-unsigned-5.1.1-050101-generic_5.1.1-050101.201905110631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.1/linux-modules-5.1.1-050101-generic_5.1.1-050101.201905110631_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -164,7 +164,29 @@ printf "\n"
 cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
-# -- Use sources.list.eoan to base packages.
+# -- Add missing firmware modules.
+#FIXME This files should be included to a package.
+
+printf "\n"
+printf "ADDING MISSING FIRMWARE."
+printf "\n"
+
+fw='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+'
+
+mkdir /fw_files
+
+for x in $fw; do
+    wget -q -P /fw_files $x
+done
+
+mv /fw_files/vega20_ta.bin /fw_files/raven_kicker_rlc.bin
+rm -r /fw_files
+
+
+# -- Use sources.list.eoan to update packages
+# -- Update X11, Intel and AMD microcode, and OpenSSH.
 
 printf "\n"
 printf "UPDATE BASE PACKAGES."
@@ -273,7 +295,7 @@ cp /configs/appimage-providers.yaml /etc/
 
 
 # -- Add znx-gui.
-#FIXME Should use the AppImage but firejail prevents the use of sudo.
+#FIXME We should include the AppImage but firejail prevents the use of sudo.
 
 printf "\n"
 printf "ADD ZNX_GUI."
@@ -405,7 +427,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.0.21-050021-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.1.1-050101-generic | grep vfio
 
 rm /bin/dummy.sh
 
