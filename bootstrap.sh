@@ -111,10 +111,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.5/linux-headers-5.2.5-050205_5.2.5-050205.201907310632_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.5/linux-headers-5.2.5-050205-generic_5.2.5-050205.201907310632_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.5/linux-image-unsigned-5.2.5-050205-generic_5.2.5-050205.201907310632_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.5/linux-modules-5.2.5-050205-generic_5.2.5-050205.201907310632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-headers-5.1.10-050110_5.1.10-050110.201906151034_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-headers-5.1.10-050110-generic_5.1.10-050110.201906151034_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-image-unsigned-5.1.10-050110-generic_5.1.10-050110.201906151034_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-modules-5.1.10-050110-generic_5.1.10-050110.201906151034_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -181,7 +181,7 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-mv /fw_files/vega20_ta.bin /fw_files/raven_kicker_rlc.bin
+mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
 rm -r /fw_files
 
 
@@ -427,7 +427,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.5-050205-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.1.10-050110-generic | grep vfio
 
 rm /bin/dummy.sh
 
