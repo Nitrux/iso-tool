@@ -111,10 +111,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-headers-5.1.10-050110_5.1.10-050110.201906151034_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-headers-5.1.10-050110-generic_5.1.10-050110.201906151034_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-image-unsigned-5.1.10-050110-generic_5.1.10-050110.201906151034_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.10/linux-modules-5.1.10-050110-generic_5.1.10-050110.201906151034_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114_5.1.14-050114.201906221030_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-image-unsigned-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-modules-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -155,7 +155,7 @@ rm -r /brew_deps
 
 
 # -- Add Window title plasmoid.
-#FIXME This should be included as a deb file downloaded from our repository.
+#FIXME This should be included as a deb package downloaded from our repository.
 
 printf "\n"
 printf "ADD WINDOW TITLE PLASMOID."
@@ -173,6 +173,7 @@ printf "\n"
 
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
 '
 
 mkdir /fw_files
@@ -182,6 +183,8 @@ for x in $fw; do
 done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
+mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+
 rm -r /fw_files
 
 
@@ -271,7 +274,8 @@ http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.5-x86_64.AppIm
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://repo.nxos.org/appimages/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
+https://repo.nxos.org/appimages/Index-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -280,7 +284,7 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 
@@ -310,6 +314,7 @@ chmod +x /bin/znx-gui
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
+#FIXME These fixes should be included in a package.
 
 printf "\n"
 printf "ADD MISC. FIXES."
@@ -322,6 +327,7 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 
 
 # -- Add vfio modules and files.
+#FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
 
 printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
@@ -367,6 +373,7 @@ chmod +x /bin/dummy.sh
 
 
 # -- Add itch.io store launcher.
+#FIXME This should be in a package.
 
 printf "\n"
 printf "ADD ITCH.IO LAUNCHER."
@@ -380,6 +387,7 @@ cp /configs/install-itch-io.sh /etc/skel/.config
 
 # -- Remove dash and use mksh as /bin/sh.
 # -- Use mksh as default shell for all users.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "REMOVE DASH AND USE MKSH."
@@ -402,6 +410,7 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 # -- Overwrite file so cupt doesn't complain.
 # -- Remove APT.
 # -- Update package index using cupt.
+#FIXME We probably need to provide our own cupt package which also does this.
 
 printf "\n"
 printf "REMOVE APT."
@@ -427,7 +436,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.1.10-050110-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.1.14-050114-generic | grep vfio
 
 rm /bin/dummy.sh
 
