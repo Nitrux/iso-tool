@@ -28,6 +28,7 @@ phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
+libstartup-notification0
 '
 
 apt -qq update &> /dev/null
