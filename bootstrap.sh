@@ -28,7 +28,6 @@ phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
-libstartup-notification0
 '
 
 apt -qq update &> /dev/null
@@ -111,10 +110,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114_5.1.14-050114.201906221030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-headers-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-image-unsigned-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.14/linux-modules-5.1.14-050114-generic_5.1.14-050114.201906221030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-headers-5.2.8-050208_5.2.8-050208.201908091630_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-headers-5.2.8-050208-generic_5.2.8-050208.201908091630_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-image-unsigned-5.2.8-050208-generic_5.2.8-050208.201908091630_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-modules-5.2.8-050208-generic_5.2.8-050208.201908091630_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -174,6 +173,7 @@ printf "\n"
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
 '
 
 mkdir /fw_files
@@ -183,6 +183,7 @@ for x in $fw; do
 done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
+mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
@@ -270,7 +271,7 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.5-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.0-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
@@ -435,7 +436,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.1.14-050114-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.2.8-050208-generic | grep vfio
 
 rm /bin/dummy.sh
 
