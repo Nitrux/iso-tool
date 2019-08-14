@@ -110,10 +110,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-headers-5.2.8-050208_5.2.8-050208.201908091630_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-headers-5.2.8-050208-generic_5.2.8-050208.201908091630_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-image-unsigned-5.2.8-050208-generic_5.2.8-050208.201908091630_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.8/linux-modules-5.2.8-050208-generic_5.2.8-050208.201908091630_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115_5.1.15-050115.201906250430_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-image-unsigned-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-modules-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -436,7 +436,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.8-050208-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.1.15-050115-generic | grep vfio
 
 rm /bin/dummy.sh
 
