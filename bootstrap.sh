@@ -51,7 +51,6 @@ rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
@@ -110,10 +109,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.16/linux-headers-5.1.16-050116_5.1.16-050116.201907031232_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.16/linux-headers-5.1.16-050116-generic_5.1.16-050116.201907031232_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.16/linux-image-unsigned-5.1.16-050116-generic_5.1.16-050116.201907031232_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.16/linux-modules-5.1.16-050116-generic_5.1.16-050116.201907031232_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115_5.1.15-050115.201906250430_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-image-unsigned-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-modules-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -230,6 +229,10 @@ mesa-vdpau-drivers
 mesa-vulkan-drivers
 amd64-microcode
 intel-microcode
+mawk
+ovmf
+seabios
+ipxe-qemu
 '
 
 apt -qq update &> /dev/null
@@ -436,7 +439,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.1.16-050116-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.1.15-050115-generic | grep vfio
 
 rm /bin/dummy.sh
 

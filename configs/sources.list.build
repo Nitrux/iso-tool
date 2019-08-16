@@ -28,8 +28,3 @@ deb https://repo.nxos.org/ubuntu/repos/nomad-desktop nxos main
 
 deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main 
 
-#################
-# XORG and Mesa #
-#################
-
-deb http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu bionic main 
