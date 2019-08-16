@@ -37,8 +37,6 @@ apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/nul
 # -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
-# -- Add key for the Ubuntu-X PPA.
-
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
