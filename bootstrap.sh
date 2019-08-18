@@ -404,6 +404,12 @@ sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 
 
+# -- Decrease timeout for systemd start and stop services.
+
+sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
+sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
+
+
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
