@@ -200,7 +200,6 @@ UPGRADE_OS_PACKAGES='
 amd64-microcode
 i965-va-driver
 intel-microcode
-ipxe-qemu
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
@@ -215,7 +214,6 @@ mesa-vulkan-drivers
 openssh-client
 openssl
 ovmf
-seabios
 thunderbolt-tools
 x11-session-utils
 xinit
