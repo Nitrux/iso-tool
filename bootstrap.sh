@@ -199,6 +199,9 @@ apt -qq update
 UPGRADE_OS_PACKAGES='
 amd64-microcode
 i965-va-driver
+initramfs-tools
+initramfs-tools-bin
+initramfs-tools-core
 intel-microcode
 libdrm-amdgpu1
 libdrm-intel1
@@ -214,6 +217,7 @@ mesa-vulkan-drivers
 openssh-client
 openssl
 ovmf
+seabios
 thunderbolt-tools
 x11-session-utils
 xinit
