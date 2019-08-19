@@ -69,11 +69,11 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-apt -qq update
+apt -qq update &> /dev/null
 apt -yy -qq upgrade
 apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
-apt -yy -qq purge --remove vlc
+apt -yy --fix-broken install &> /dev/null
+apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade
 
 
@@ -203,6 +203,7 @@ initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
 intel-microcode
+ipxe-qemu
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
