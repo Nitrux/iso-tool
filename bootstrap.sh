@@ -262,6 +262,7 @@ APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 '
 
 mkdir /Applications
@@ -279,6 +280,7 @@ http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
 https://repo.nxos.org/appimages/Pix-x86_64.AppImage
+https://repo.nxos.org/appimages/Buho-70c0ff7-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -317,6 +319,7 @@ chmod +x /bin/znx-gui
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
+# -- Add VMetal desktop launcher.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -327,7 +330,7 @@ cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
-
+cp /configs/vmetal.desktop /usr/share/applications
 
 # -- Add vfio modules and files.
 #FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
