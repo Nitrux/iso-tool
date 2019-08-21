@@ -279,8 +279,8 @@ http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.0-x86_64.AppIm
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
-https://repo.nxos.org/appimages/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/Buho-70c0ff7-x86_64.AppImage
+https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
+https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
