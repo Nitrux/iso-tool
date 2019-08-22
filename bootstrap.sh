@@ -64,9 +64,6 @@ printf "\n"
 
 DESKTOP_PACKAGES='
 nitrux-minimal
-nitrux-standard
-nitrux-hardware-drivers
-nx-desktop
 '
 
 apt -qq update &> /dev/null
@@ -77,26 +74,26 @@ apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade
 
 
-# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
-# -- firejail should be automatically used by the daemon to sandbox AppImages.
-
-printf "\n"
-printf "INSTALLING APPIMAGE DAEMON."
-printf "\n"
-
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
-'
-
-mkdir /appimaged_deb
-
-for x in $appimgd; do
-    wget -q -P /appimaged_deb $x
-done
-
-dpkg -iR /appimaged_deb &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-rm -r /appimaged_deb
+# # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
+# # -- firejail should be automatically used by the daemon to sandbox AppImages.
+# 
+# printf "\n"
+# printf "INSTALLING APPIMAGE DAEMON."
+# printf "\n"
+# 
+# appimgd='
+# https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
+# '
+# 
+# mkdir /appimaged_deb
+# 
+# for x in $appimgd; do
+#     wget -q -P /appimaged_deb $x
+# done
+# 
+# dpkg -iR /appimaged_deb &> /dev/null
+# apt -yy --fix-broken install &> /dev/null
+# rm -r /appimaged_deb
 
 
 # -- Install the kernel.
@@ -125,39 +122,39 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- Install linuxbrew-wrapper.
-#FIXME This package should be included in a metapackage.
+# # -- Install linuxbrew-wrapper.
+# #FIXME This package should be included in a metapackage.
+# 
+# printf "\n"
+# printf "INSTALLING LINUXBREW."
+# printf "\n"
+# 
+# brewd='
+# http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
+# http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
+# http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
+# http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
+# '
+# 
+# mkdir /brew_deps
+# 
+# for x in $brewd; do
+#     wget -q -P /brew_deps $x
+# done
+# 
+# dpkg -iR /brew_deps &> /dev/null
+# apt -yy --fix-broken install
+# rm -r /brew_deps
 
-printf "\n"
-printf "INSTALLING LINUXBREW."
-printf "\n"
 
-brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
-'
-
-mkdir /brew_deps
-
-for x in $brewd; do
-    wget -q -P /brew_deps $x
-done
-
-dpkg -iR /brew_deps &> /dev/null
-apt -yy --fix-broken install
-rm -r /brew_deps
-
-
-# -- Add Window title plasmoid.
-#FIXME This should be included as a deb package downloaded from our repository.
-
-printf "\n"
-printf "ADD WINDOW TITLE PLASMOID."
-printf "\n"
-
-cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
+# # -- Add Window title plasmoid.
+# #FIXME This should be included as a deb package downloaded from our repository.
+# 
+# printf "\n"
+# printf "ADD WINDOW TITLE PLASMOID."
+# printf "\n"
+# 
+# cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add missing firmware modules.
@@ -186,57 +183,57 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
 
-# -- Use sources.list.eoan to update packages
-# -- Update X11, Intel and AMD microcode, and OpenSSH.
-
-printf "\n"
-printf "UPDATE BASE PACKAGES."
-printf "\n"
-
-cp /configs/sources.list.eoan /etc/apt/sources.list
-apt -qq update
-
-UPGRADE_OS_PACKAGES='
-amd64-microcode
-i965-va-driver
-initramfs-tools
-initramfs-tools-bin
-initramfs-tools-core
-intel-microcode
-ipxe-qemu
-libdrm-amdgpu1
-libdrm-intel1
-libdrm-radeon1
-libva-drm2
-libva-glx2
-libva-x11-2
-libva2
-linux-firmware
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
-openssh-client
-openssl
-ovmf
-seabios
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
-'
-
-apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+# # -- Use sources.list.eoan to update packages
+# # -- Update X11, Intel and AMD microcode, and OpenSSH.
+# 
+# printf "\n"
+# printf "UPDATE BASE PACKAGES."
+# printf "\n"
+# 
+# cp /configs/sources.list.eoan /etc/apt/sources.list
+# apt -qq update
+# 
+# UPGRADE_OS_PACKAGES='
+# amd64-microcode
+# i965-va-driver
+# initramfs-tools
+# initramfs-tools-bin
+# initramfs-tools-core
+# intel-microcode
+# ipxe-qemu
+# libdrm-amdgpu1
+# libdrm-intel1
+# libdrm-radeon1
+# libva-drm2
+# libva-glx2
+# libva-x11-2
+# libva2
+# linux-firmware
+# mesa-va-drivers
+# mesa-vdpau-drivers
+# mesa-vulkan-drivers
+# openssh-client
+# openssl
+# ovmf
+# seabios
+# thunderbolt-tools
+# x11-session-utils
+# xinit
+# xserver-xorg-core
+# xserver-xorg-input-evdev
+# xserver-xorg-input-libinput
+# xserver-xorg-input-mouse
+# xserver-xorg-input-synaptics
+# xserver-xorg-input-wacom
+# xserver-xorg-video-amdgpu
+# xserver-xorg-video-intel
+# xserver-xorg-video-qxl
+# xserver-xorg-video-radeon
+# xserver-xorg-video-vmware
+# '
+# 
+# apt -qq update &> /dev/null
+# apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
@@ -275,12 +272,6 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.0-x86_64.AppImage
-http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
-https://repo.nxos.org/appimages/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/Buho-70c0ff7-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -303,16 +294,16 @@ printf "\n"
 cp /configs/appimage-providers.yaml /etc/
 
 
-# -- Add znx-gui.
-#FIXME We should include the AppImage but firejail prevents the use of sudo.
-
-printf "\n"
-printf "ADD ZNX_GUI."
-printf "\n"
-
-cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/appdir/znx-gui
-chmod +x /bin/znx-gui
+# # -- Add znx-gui.
+# #FIXME We should include the AppImage but firejail prevents the use of sudo.
+# 
+# printf "\n"
+# printf "ADD ZNX_GUI."
+# printf "\n"
+# 
+# cp /configs/znx-gui.desktop /usr/share/applications
+# wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/appdir/znx-gui
+# chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
@@ -328,8 +319,8 @@ printf "\n"
 
 cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
-cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
+# cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+# cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
 
 # -- Add vfio modules and files.
@@ -378,17 +369,17 @@ cp /configs/dummy.sh /bin/
 chmod +x /bin/dummy.sh
 
 
-# -- Add itch.io store launcher.
-#FIXME This should be in a package.
-
-printf "\n"
-printf "ADD ITCH.IO LAUNCHER."
-printf "\n"
-
-
-mkdir -p /etc/skel/.local/share/applications
-cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
-cp /configs/install-itch-io.sh /etc/skel/.config
+# # -- Add itch.io store launcher.
+# #FIXME This should be in a package.
+# 
+# printf "\n"
+# printf "ADD ITCH.IO LAUNCHER."
+# printf "\n"
+# 
+# 
+# mkdir -p /etc/skel/.local/share/applications
+# cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
+# cp /configs/install-itch-io.sh /etc/skel/.config
 
 
 # -- Remove dash and use mksh as /bin/sh.
