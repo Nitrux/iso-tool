@@ -25,6 +25,7 @@ localechooser-data
 lupin-casper
 phonon4qt5
 phonon4qt5-backend-vlc
+systemd
 user-setup
 wget
 xz-utils
