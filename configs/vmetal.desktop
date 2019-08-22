@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=VMetal — Hardware Virtualization
-Exec=sudo -SK vmetal
-Icon=win-launcher
-Terminal=false
-Categories=Utility;
-MimeType=
-Comment="Hardware-accelerated Virtual Machines".

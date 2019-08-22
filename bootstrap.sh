@@ -19,12 +19,15 @@ casper
 dhcpcd5
 fuse
 gnupg2
+ipxe-qemu
 libarchive13
 libelf1
 localechooser-data
 lupin-casper
+ovmf
 phonon4qt5
 phonon4qt5-backend-vlc
+seabios
 systemd
 user-setup
 wget
@@ -181,42 +184,21 @@ cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
 
 UPGRADE_OS_PACKAGES='
-amd64-microcode
-i965-va-driver
 initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
-intel-microcode
 ipxe-qemu
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
 libva-drm2
-libva-glx2
 libva-x11-2
 libva2
 linux-firmware
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
 openssh-client
 openssl
 ovmf
 seabios
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
 '
 
 apt -qq update &> /dev/null
@@ -244,7 +226,6 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
-https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 '
@@ -267,7 +248,6 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 
