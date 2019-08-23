@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=VMetal — Hardware Virtualization
-Exec=sudo -SK vmetal
+Exec=sudo -Sk vmetal %U
 Icon=win-launcher
 Terminal=false
 Categories=Utility;
