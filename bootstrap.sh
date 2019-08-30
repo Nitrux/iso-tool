@@ -79,6 +79,7 @@ apt -yy -qq dist-upgrade
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
+#FIXME This should be put in our repository
 
 printf "\n"
 printf "INSTALLING APPIMAGE DAEMON."
@@ -100,6 +101,7 @@ rm -r /appimaged_deb
 
 
 # -- Install the kernel.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "INSTALLING KERNEL."
@@ -107,10 +109,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115_5.1.15-050115.201906250430_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-headers-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-image-unsigned-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.1.15/linux-modules-5.1.15-050115-generic_5.1.15-050115.201906250430_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-headers-5.2.11-050211_5.2.11-050211.201908290731_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-headers-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-image-unsigned-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-modules-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -161,7 +163,7 @@ cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add missing firmware modules.
-#FIXME This files should be included to a package.
+#FIXME This files should be included in a package.
 
 printf "\n"
 printf "ADDING MISSING FIRMWARE."
@@ -436,6 +438,7 @@ cupt -q update
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "UPDATE INITRAMFS."
