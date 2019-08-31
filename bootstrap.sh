@@ -201,6 +201,11 @@ apt -qq update
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
+grub-common
+grub-efi-amd64
+grub-efi-amd64-bin
+grub-efi-amd64-signed
+grub2-common
 i965-va-driver
 initramfs-tools
 initramfs-tools-bin
