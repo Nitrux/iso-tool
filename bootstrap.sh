@@ -225,6 +225,7 @@ seabios
 thunderbolt-tools
 x11-session-utils
 xinit
+xserver-xorg
 xserver-xorg-core
 xserver-xorg-input-evdev
 xserver-xorg-input-libinput
@@ -314,7 +315,7 @@ printf "ADD ZNX_GUI."
 printf "\n"
 
 cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/znx-gui/master/appdir/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
 chmod +x /bin/znx-gui
 
 
