@@ -38,8 +38,6 @@ apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/nul
 # -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
-# -- Add key for the Ubuntu-X PPA.
-
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
@@ -52,7 +50,6 @@ rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
@@ -74,15 +71,16 @@ nx-desktop
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq upgrade &> /dev/null
+apt -yy -qq upgrade
 apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
+apt -yy --fix-broken install &> /dev/null
 apt -yy -qq purge --remove vlc &> /dev/null
-apt -yy -qq dist-upgrade > /dev/null
+apt -yy -qq dist-upgrade
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
 # -- firejail should be automatically used by the daemon to sandbox AppImages.
+#FIXME This should be put in our repository
 
 printf "\n"
 printf "INSTALLING APPIMAGE DAEMON."
@@ -92,18 +90,19 @@ appimgd='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
 '
 
-mkdir appimaged_deb
+mkdir /appimaged_deb
 
 for x in $appimgd; do
-wget -q -P appimaged_deb $x
+    wget -q -P /appimaged_deb $x
 done
 
-dpkg -iR appimaged_deb &> /dev/null
+dpkg -iR /appimaged_deb &> /dev/null
 apt -yy --fix-broken install &> /dev/null
-rm -r appimaged_deb
+rm -r /appimaged_deb
 
 
 # -- Install the kernel.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "INSTALLING KERNEL."
@@ -111,22 +110,22 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-headers-5.2.3-050203_5.2.3-050203.201907260838_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-headers-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-image-unsigned-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.3/linux-modules-5.2.3-050203-generic_5.2.3-050203.201907260838_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-headers-5.2.11-050211_5.2.11-050211.201908290731_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-headers-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-image-unsigned-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-modules-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
 '
 
-mkdir latest_kernel
+mkdir /latest_kernel
 
 for x in $kfiles; do
 printf "$x"
-wget -q -P latest_kernel $x
+    wget -q -P /latest_kernel $x
 done
 
-dpkg -iR latest_kernel &> /dev/null
+dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
-rm -r latest_kernel
+rm -r /latest_kernel
 
 
 # -- Install linuxbrew-wrapper.
@@ -143,19 +142,19 @@ http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_am
 http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
 '
 
-mkdir brew_deps
+mkdir /brew_deps
 
 for x in $brewd; do
-wget -q -P brew_deps $x
+    wget -q -P /brew_deps $x
 done
 
-dpkg -iR brew_deps &> /dev/null
+dpkg -iR /brew_deps &> /dev/null
 apt -yy --fix-broken install
-rm -r brew_deps
+rm -r /brew_deps
 
 
 # -- Add Window title plasmoid.
-#FIXME This should be included as a deb file downloaded from our repository.
+#FIXME This should be included as a deb package downloaded from our repository.
 
 printf "\n"
 printf "ADD WINDOW TITLE PLASMOID."
@@ -164,7 +163,34 @@ printf "\n"
 cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
-# -- Use sources.list.eoan to base packages.
+# -- Add missing firmware modules.
+#FIXME This files should be included in a package.
+
+printf "\n"
+printf "ADDING MISSING FIRMWARE."
+printf "\n"
+
+fw='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+'
+
+mkdir /fw_files
+
+for x in $fw; do
+    wget -q -P /fw_files $x
+done
+
+mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
+mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+
+rm -r /fw_files
+
+
+# -- Use sources.list.eoan to update packages
+# -- Update X11, Intel and AMD microcode, and OpenSSH.
 
 printf "\n"
 printf "UPDATE BASE PACKAGES."
@@ -173,14 +199,48 @@ printf "\n"
 cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
 
-UPGRADE_PACKAGES='
-openssl
+UPGRADE_OS_PACKAGES='
+amd64-microcode
+i965-va-driver
+initramfs-tools
+initramfs-tools-bin
+initramfs-tools-core
+intel-microcode
+ipxe-qemu
+libdrm-amdgpu1
+libdrm-intel1
+libdrm-radeon1
+libva-drm2
+libva-glx2
+libva-x11-2
+libva2
+linux-firmware
+mesa-va-drivers
+mesa-vdpau-drivers
+mesa-vulkan-drivers
 openssh-client
+openssl
+ovmf
+seabios
+thunderbolt-tools
+x11-session-utils
+xinit
+xserver-xorg
 xserver-xorg-core
+xserver-xorg-input-evdev
+xserver-xorg-input-libinput
+xserver-xorg-input-mouse
+xserver-xorg-input-synaptics
+xserver-xorg-input-wacom
+xserver-xorg-video-amdgpu
+xserver-xorg-video-intel
+xserver-xorg-video-qxl
+xserver-xorg-video-radeon
+xserver-xorg-video-vmware
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_PACKAGES//\\n/ } --only-upgrade
+apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
@@ -206,23 +266,25 @@ APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 '
 
 mkdir /Applications
 
 for x in $APPS_SYS; do
-wget -q -P /Applications $x
+    wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.2.5-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.0-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://repo.nxos.org/appimages/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
+https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
+https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -231,7 +293,7 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/AppImageUpdate
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 
@@ -246,22 +308,23 @@ cp /configs/appimage-providers.yaml /etc/
 
 
 # -- Add znx-gui.
-#FIXME Should use the AppImage but firejail prevents the use of sudo.
+#FIXME We should include the AppImage but firejail prevents the use of sudo.
 
 printf "\n"
 printf "ADD ZNX_GUI."
 printf "\n"
 
 cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/development/configs/znx-gui
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
 chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
-# -- Add custom launchers for Maui apps.
 # -- Add policykit file for KDialog.
+# -- Add VMetal desktop launcher.
+#FIXME These fixes should be included in a package.
 
 printf "\n"
 printf "ADD MISC. FIXES."
@@ -271,9 +334,10 @@ cp /configs/sddm.conf /etc
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
-
+cp /configs/vmetal.desktop /usr/share/applications
 
 # -- Add vfio modules and files.
+#FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
 
 printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
@@ -319,6 +383,7 @@ chmod +x /bin/dummy.sh
 
 
 # -- Add itch.io store launcher.
+#FIXME This should be in a package.
 
 printf "\n"
 printf "ADD ITCH.IO LAUNCHER."
@@ -332,6 +397,7 @@ cp /configs/install-itch-io.sh /etc/skel/.config
 
 # -- Remove dash and use mksh as /bin/sh.
 # -- Use mksh as default shell for all users.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "REMOVE DASH AND USE MKSH."
@@ -346,6 +412,12 @@ sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 
 
+# -- Decrease timeout for systemd start and stop services.
+
+sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
+sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
+
+
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
@@ -354,6 +426,7 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
 # -- Overwrite file so cupt doesn't complain.
 # -- Remove APT.
 # -- Update package index using cupt.
+#FIXME We probably need to provide our own cupt package which also does this.
 
 printf "\n"
 printf "REMOVE APT."
@@ -367,6 +440,7 @@ cupt -q update
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "UPDATE INITRAMFS."
@@ -379,7 +453,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.3-050203-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.2.11-050211-lowlatency | grep vfio
 
 rm /bin/dummy.sh
 

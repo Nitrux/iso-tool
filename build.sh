@@ -64,18 +64,17 @@ printf "\n" >> $ISO_DIR/.INFO
 
 # -- Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/7f171c70b0ee26872afc732fec94518223777f36/mkiso
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/mkiso/master/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
 mkiso \
-	-d $ISO_DIR \
 	-V "NITRUX" \
 	-g $CONFIG_DIR/grub.cfg \
 	-g $CONFIG_DIR/loopback.cfg \
 	-t grub-theme/nitrux \
-	-o $OUTPUT_DIR/$IMAGE
+	$ISO_DIR $OUTPUT_DIR/$IMAGE
 
 
 # -- Embed the update information in the image.
