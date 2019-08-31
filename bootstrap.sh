@@ -210,7 +210,6 @@ i965-va-driver
 initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
-intel-microcode
 ipxe-qemu
 libdrm-amdgpu1
 libdrm-intel1
