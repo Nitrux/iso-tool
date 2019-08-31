@@ -26,8 +26,8 @@ printf "$x"
     wget -q -P /latest_xorriso $x
 done
 
-dpkg -i /latest_xorriso/*.deb
-dpkg /latest_xorriso -a
+dpkg -iR /latest_xorriso/
+dpkg --configure -a 
 rm -r /latest_xorriso
 
 
