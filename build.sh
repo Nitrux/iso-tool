@@ -4,6 +4,32 @@
 
 set -e
 
+# -- Update xorriso and grub.
+
+xorriso='
+http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/xorriso_1.5.0-1build1_amd64.deb 
+http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/libisoburn1_1.5.0-1build1_amd64.deb 
+http://mirrors.kernel.org/ubuntu/pool/universe/libb/libburn/libburn4_1.5.0-1_amd64.deb 
+http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisofs/libisofs6_1.5.0-1_amd64.deb 
+http://mirrors.kernel.org/ubuntu/pool/main/r/readline/libreadline8_8.0-1_amd64.deb 
+http://mirrors.kernel.org/ubuntu/pool/main/r/readline/readline-common_8.0-1_all.deb 
+http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64-bin_2.02-2ubuntu8.13_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-common_2.02-2ubuntu8.13_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.02-2ubuntu8.13_amd64.deb
+'
+
+mkdir /latest_xorriso
+
+for x in $xorriso; do
+printf "$x"
+    wget -q -P /latest_xorriso $x
+done
+
+dpkg -iR /latest_xorriso/ &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /latest_xorriso
+
 
 # -- Prepare the directories for the build.
 
