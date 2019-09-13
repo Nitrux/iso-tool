@@ -113,7 +113,7 @@ kfiles='
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-headers-5.2.14-050214_5.2.14-050214.201909101030_all.deb
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-headers-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-image-unsigned-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-modules-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.debl
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-modules-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -174,6 +174,19 @@ fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
 '
 
 mkdir /fw_files
@@ -184,14 +197,10 @@ done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
 mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
-
-wget -r -np -R "index.html*" https://people.freedesktop.org/~agd5f/radeon_ucode/navi10/
-cd people.freedesktop.org/~agd5f/radeon_ucode/navi10/
-sudo cp navi* /lib/firmware/amdgpu
-rm -R people.freedesktop.org/
 
 
 # -- Use sources.list.eoan to update packages
