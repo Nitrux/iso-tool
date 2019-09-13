@@ -300,6 +300,8 @@ chmod +x /etc/skel/Applications/*
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+ls -l /Applications
+ls -l /etc/skel/Applications
 
 
 # -- Add AppImage providers for appimage-cli-tool
