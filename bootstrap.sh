@@ -188,6 +188,11 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
 
+wget -r -np -R "index.html*" https://people.freedesktop.org/~agd5f/radeon_ucode/navi10/
+cd people.freedesktop.org/~agd5f/radeon_ucode/navi10/
+sudo cp navi* /lib/firmware/amdgpu
+rm -R people.freedesktop.org/
+
 
 # -- Use sources.list.eoan to update packages
 # -- Update X11, Intel and AMD microcode, and OpenSSH.
