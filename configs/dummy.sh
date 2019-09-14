@@ -1,4 +1,4 @@
-#!/bin/mksh
+#!/bin/sh
 
 exit 0
- 
+
