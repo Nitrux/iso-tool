@@ -466,7 +466,7 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-cp /configs/initramfs.conf /etc/initramfs-tools/
+#cp /configs/initramfs.conf /etc/initramfs-tools/
 
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 
