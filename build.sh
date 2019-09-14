@@ -28,8 +28,8 @@ tar xf base.tar.gz -C $BUILD_DIR
 
 # -- Populate $BUILD_DIR.
 
-wget -qO /bin/runc https://raw.githubusercontent.com/Nitrux/runc/master/runc
-chmod +x /bin/runc
+wget -qO /bin/runch https://raw.githubusercontent.com/Nitrux/tools/master/runch
+chmod +x /bin/runch
 
 cp -r configs $BUILD_DIR/
 
