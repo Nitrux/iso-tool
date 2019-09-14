@@ -59,7 +59,7 @@ chmod +x /bin/runch
 
 cp -r configs $BUILD_DIR/
 
-runch $BUILD_DIR bootstrap.sh || true
+runch $BUILD_DIR -s bootstrap.sh || true
 
 rm -rf $BUILD_DIR/configs
 
