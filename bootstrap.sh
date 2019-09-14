@@ -57,7 +57,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 cp /configs/sources.list.build /etc/apt/sources.list
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
+# -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
 
 printf "\n"
 printf "INSTALLING DESKTOP."
@@ -75,7 +75,7 @@ apt -yy -qq upgrade
 apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy -qq purge --remove vlc &> /dev/null
-#apt -yy -qq dist-upgrade
+apt -yy -qq dist-upgrade
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -357,7 +357,7 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 cp /configs/vmetal.desktop /usr/share/applications
 
 # -- Add vfio modules and files.
-#FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
+#FIXME This configuration should be included a in a package; replacing the default package like base-files.
 
 printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
@@ -466,7 +466,7 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-#cp /configs/initramfs.conf /etc/initramfs-tools/
+cp /configs/initramfs.conf /etc/initramfs-tools/
 
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 
