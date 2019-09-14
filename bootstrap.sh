@@ -18,7 +18,6 @@ printf "\n"
 # of the 'nitrux-minimal' package.
 
 BASIC_PACKAGES='
-zsh
 apt-transport-https
 apt-utils
 ca-certificates
@@ -422,17 +421,17 @@ cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
 
-# -- Remove dash and use zsh as /bin/sh.
+# -- Remove dash and use mksh as /bin/sh.
 # -- Use zsh as default shell for all users.
 #FIXME This should be put in a package.
 
 printf "\n"
-printf "REMOVE DASH AND USE MKSH."
+printf "REMOVE DASH AND USE MKSH + ZSH."
 printf "\n"
 
 rm /bin/sh.distrib
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
-ln -sv /bin/zsh /bin/sh
+ln -sv /bin/mksh /bin/sh
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
 
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
