@@ -42,8 +42,8 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64
-UPDATE_URL=http://repo.nxos.org:8000/$IMAGE.zsync
+IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64.iso
+UPDATE_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.zsync
 
 
 # -- Prepare the directory where the filesystem will be created.
@@ -110,20 +110,15 @@ printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE bs=1 seek=33651 count=512 
 
 # -- Calculate the checksum.
 
-sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/$IMAGE.sha256sum
+sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/${IMAGE%.iso}.sha256sum
 
 
 # -- Generate the zsync file.
 
 zsyncmake \
 	$OUTPUT_DIR/$IMAGE \
-	-u ${UPDATE_URL/.zsync} \
-	-o $OUTPUT_DIR/$IMAGE.zsync
-
-
-# -- Add .iso extension to file for redistribution.
-
-cp $OUTPUT_DIR/$IMAGE $OUTPUT_DIR/$IMAGE.iso
+	-u ${UPDATE_URL/.zsync}.iso \
+	-o $OUTPUT_DIR/${IMAGE%.iso}.zsync
 
 
 # -- Upload the ISO image.
