@@ -30,7 +30,8 @@ ovmf
 phonon4qt5
 phonon4qt5-backend-vlc
 seabios
-systemd
+systemd-sysv
+network-manager
 user-setup
 wget
 xz-utils
