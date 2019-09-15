@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 printf "\n"
 printf "STARTING BOOTSTRAP."
 printf "\n"
