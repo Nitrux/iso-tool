@@ -77,11 +77,11 @@ nx-desktop
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq upgrade
-apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq upgrade &> /dev/null
+apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy -qq purge --remove vlc &> /dev/null
-apt -yy -qq dist-upgrade
+apt -yy -qq dist-upgrade &> /dev/null
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
