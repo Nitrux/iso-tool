@@ -13,12 +13,6 @@ printf "\n"
 printf "INSTALLING BASIC PACKAGES."
 printf "\n"
 
-
-# TODO:
-# Remove zsh from the list below.
-# It should be another dependency
-# of the 'nitrux-minimal' package.
-
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
@@ -118,10 +112,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-headers-5.2.14-050214_5.2.14-050214.201909101030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-headers-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-image-unsigned-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-modules-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-headers-5.3.0-050300_5.3.0-050300.201909152230_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-headers-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-image-unsigned-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-modules-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -212,7 +206,7 @@ rm -r /fw_files
 
 
 # -- Use sources.list.eoan to update packages
-# -- Update X11, Intel and AMD microcode, and OpenSSH.
+# -- Update X11, MESA, AMD microcode, and OpenSSH.
 
 printf "\n"
 printf "UPDATE BASE PACKAGES."
@@ -282,7 +276,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate and znx.
+# -- Rename AppImageUpdate, appimage-user-tool and znx.
 
 printf "\n"
 printf "ADD APPIMAGES."
@@ -293,6 +287,7 @@ https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
+https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_development-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -321,7 +316,9 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
+mv /Applications/znx-gui_development-x86_64.AppImage /Applications/znx-gui
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+
 ls -l /Applications
 ls -l /etc/skel/Applications
 
@@ -333,18 +330,6 @@ printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
 cp /configs/appimage-providers.yaml /etc/
-
-
-# -- Add znx-gui.
-#FIXME We should include the AppImage but firejail prevents the use of sudo.
-
-printf "\n"
-printf "ADD ZNX_GUI."
-printf "\n"
-
-cp /configs/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
-chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
