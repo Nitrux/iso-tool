@@ -41,7 +41,6 @@ apt -qq update &> /dev/null
 apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
-# -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
 
@@ -66,15 +65,14 @@ printf "\n"
 
 DESKTOP_PACKAGES='
 nitrux-minimal
-nitrux-standard
 '
 
 apt -qq update &> /dev/null
-apt -yy -qq upgrade
+apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy -qq purge --remove vlc &> /dev/null
-apt -yy -qq dist-upgrade
+apt -yy dist-upgrade
 
 
 # -- Install the kernel.
@@ -85,10 +83,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-headers-5.2.14-050214_5.2.14-050214.201909101030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-headers-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-image-unsigned-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.14/linux-modules-5.2.14-050214-generic_5.2.14-050214.201909101030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-headers-5.3.0-050300_5.3.0-050300.201909152230_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-headers-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-image-unsigned-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-modules-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -101,71 +99,6 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
-
-
-# -- Install linuxbrew-wrapper.
-#FIXME This package should be included in a metapackage.
-
-printf "\n"
-printf "INSTALLING LINUXBREW."
-printf "\n"
-
-brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
-'
-
-mkdir /brew_deps
-
-for x in $brewd; do
-    wget -q -P /brew_deps $x
-done
-
-dpkg -iR /brew_deps &> /dev/null
-apt -yy --fix-broken install
-rm -r /brew_deps
-
-
-# -- Add missing firmware modules.
-#FIXME This files should be included to a package.
-
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
-
-fw='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
-'
-
-mkdir /fw_files
-
-for x in $fw; do
-    wget -q -P /fw_files $x
-done
-
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-
-rm -r /fw_files
 
 
 # -- Use sources.list.eoan to update packages
@@ -198,6 +131,7 @@ seabios
 
 apt -qq update &> /dev/null
 apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+apt -yy -qq autoremove
 
 
 # -- Add /Applications to $PATH.
@@ -267,7 +201,7 @@ printf "ADD MISC. FIXES."
 printf "\n"
 
 cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/vmetal.desktop /usr/share/applications
+
 
 # -- Add vfio modules and files.
 #FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
@@ -372,7 +306,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.14-050214-generic | grep vfio
+lsinitramfs /boot/initrd.img--5.3.0-050300-generic | grep vfio
 
 rm /bin/dummy.sh
 
