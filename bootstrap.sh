@@ -23,6 +23,7 @@ fuse
 gnupg2
 libarchive13
 libelf1
+libstartup-notification0
 localechooser-data
 lupin-casper
 phonon4qt5
@@ -30,7 +31,6 @@ phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
-libstartup-notification0
 '
 
 apt -qq update &> /dev/null
@@ -104,7 +104,7 @@ rm -r /appimaged_deb
 
 
 # -- Install the kernel.
-#FIXME This should be put in a package.
+#FIXME This should be put in our repository
 
 printf "\n"
 printf "INSTALLING KERNEL."
@@ -156,7 +156,7 @@ rm -r /brew_deps
 
 
 # -- Add Window title plasmoid.
-#FIXME This should be included as a deb package downloaded from our repository.
+#FIXME This should be included as a deb package downloaded to our repository.
 
 printf "\n"
 printf "ADD WINDOW TITLE PLASMOID."
@@ -166,7 +166,7 @@ cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add missing firmware modules.
-#FIXME This files should be included in a package.
+#FIXME These files should be included in a package.
 
 printf "\n"
 printf "ADDING MISSING FIRMWARE."
@@ -318,6 +318,7 @@ mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/znx-gui_development-x86_64.AppImage /Applications/znx-gui
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
 ls -l /Applications
 ls -l /etc/skel/Applications
@@ -348,6 +349,7 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
+
 
 # -- Add vfio modules and files.
 #FIXME This configuration should be included a in a package; replacing the default package like base-files.
@@ -466,7 +468,7 @@ cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img-5.2.14-050214-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.0-050300-generic | grep vfio
 
 rm /bin/dummy.sh
 
