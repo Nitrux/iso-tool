@@ -65,6 +65,8 @@ printf "\n"
 
 DESKTOP_PACKAGES='
 nitrux-minimal
+nitrux-standard
+nitrux-hardware-drivers
 '
 
 apt -qq update &> /dev/null
