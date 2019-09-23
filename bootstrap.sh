@@ -112,10 +112,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.17/linux-headers-5.2.17-050217_5.2.17-050217.201909210635_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.17/linux-headers-5.2.17-050217-generic_5.2.17-050217.201909210635_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.17/linux-image-unsigned-5.2.17-050217-generic_5.2.17-050217.201909210635_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.17/linux-modules-5.2.17-050217-generic_5.2.17-050217.201909210635_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301_5.3.1-050301.201909210632_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-image-unsigned-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-modules-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -138,7 +138,7 @@ printf "INSTALLING LINUXBREW."
 printf "\n"
 
 brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-29.31_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
@@ -410,6 +410,15 @@ cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
 
+# -- Add oh my zsh.
+
+printf "\n"
+printf "ADD OH MY ZSH."
+printf "\n"
+
+git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
+
+
 # -- Remove dash and use mksh as /bin/sh.
 # -- Use zsh as default shell for all users.
 #FIXME This should be put in a package.
@@ -462,13 +471,10 @@ printf "UPDATE INITRAMFS."
 printf "\n"
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
-
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
-
-lsinitramfs /boot/initrd.img-5.3.0-050300-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 
 rm /bin/dummy.sh
 
