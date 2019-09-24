@@ -245,11 +245,6 @@ apt -qq update &> /dev/null
 apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
-printf "\n"
-printf "STAGE 1 COMPLETE."
-printf "\n"
-
-
 # -- Add /Applications to $PATH.
 
 printf "\n"
@@ -449,6 +444,11 @@ lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 rm /bin/dummy.sh
 
 
+printf "\n"
+printf "STAGE 1 COMPLETE."
+printf "\n"
+
+
 # -- Downgrade packages using Devuan.
 # -- Use sources.list.build.stage2 to add init from Devuan.
 
@@ -519,7 +519,17 @@ sysvinit-core
 sysvinit-utils
 '
 
-apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
+
+
+# -- Check that init system is not systemd.
+
+printf "\n"
+printf "Check init link."
+printf "\n"
+
+init --version
+stat /sbin/init
 
 
 # -- Install packages from Xenial.
@@ -532,12 +542,13 @@ ttf-ubuntu-font-family
 '
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
-apt -yy -qq purge --remove dracut dracut-core kpartx pkg-config
+apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
 
 
 # -- Reinstall Nitrux metapackages.
 
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
+apt -yy --fix-broken install
 
 
 printf "\n"
@@ -575,7 +586,7 @@ casper
 lupin-casper
 '
 
-cupt -y -q purge ${REMOVE_PACKAGES//\\n/ }
+cupt -y purge ${REMOVE_PACKAGES//\\n/ }
 cupt -y -q clean &> /dev/null
 
 
