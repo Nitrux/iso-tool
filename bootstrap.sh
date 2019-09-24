@@ -254,6 +254,7 @@ printf "\n"
 # -- Use sources.list.build.stage2 to add init from Devuan.
 
 cp /configs/sources.list.build.stage2 /etc/apt/sources.list
+apt -qq update &> /dev/null
 
 
 # -- Download and install libsystemd0 from Devuan.
@@ -305,7 +306,7 @@ udisks2=2.1.8-1+devuan2
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Add OpenRC as init.
+# -- Add SysV as init.
 
 printf "\n"
 printf "ADD SYSVRC AS INIT."
