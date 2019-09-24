@@ -246,9 +246,9 @@ apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Downgrade packages using Devuan.
-# -- Use sources.list.devuan to add init from Devuan.
+# -- Use sources.list.build to add init from Devuan.
 
-cp /configs/sources.list.devuan /etc/apt/sources.list
+cp /configs/sources.list.build /etc/apt/sources.list
 
 
 # -- Download and install libsystemd0 from Devuan.
@@ -309,6 +309,7 @@ printf "\n"
 DEVUAN_INIT_PACKAGES='
 init
 init-system-helpers
+sysv-rc
 sysvinit-core
 sysvinit-utils
 '

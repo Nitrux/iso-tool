@@ -1,5 +1,29 @@
+################
+# Devuan Repos #
+################
+
+deb http://pkgmaster.devuan.org/devuan ceres main
+
+deb http://pkgmaster.devuan.org/devuan ascii main
+deb http://pkgmaster.devuan.org/devuan ascii-security main
+deb http://pkgmaster.devuan.org/devuan ascii-updates main
+deb http://pkgmaster.devuan.org/devuan ascii-backports main
+
+deb http://pkgmaster.devuan.org/merged ascii main
+deb http://pkgmaster.devuan.org/merged ascii-security main
+deb http://pkgmaster.devuan.org/merged ascii-updates main
+deb http://pkgmaster.devuan.org/merged ascii-backports main
+
 #######################
 # Ubuntu Repos Bionic #
+#######################
+
+deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
+
+#######################
+# Ubuntu Repos Xenial #
 #######################
 
 deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
