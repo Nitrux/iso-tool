@@ -250,11 +250,51 @@ apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 cp /configs/sources.list.devuan /etc/apt/sources.list
 
+
+# -- Download and install libsystemd0 from Devuan.
+
+apt download libsystemd0=241-5~bpo9+1 &> /dev/null
+dpkg --force-all -iR libsystemd0_241-5~bpo9+1_amd64.deb &> /dev/null
+rm libsystemd0_241-5~bpo9+1_amd64.deb
+
+apt -yy --fix-broken-install
+
+libnih='
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
+'
+
+mkdir /libnih_debs
+
+for x in $libnih; do
+    wget -q -P /libnih_debs $x
+done
+
+dpkg -iR /libnih_debs &> /dev/null
+apt -yy --fix-broken install
+rm -r /libnih_debs
+
+
+# -- Use PolicyKit packages from Devuan.
+
+DEVUAN_POLKIT_PACKAGES='
+libpolkit-agent-1-0
+libpolkit-backend-1-0
+libpolkit-backend-consolekit-1-0
+libpolkit-gobject-1-0
+libpolkit-gobject-consolekit-1-0
+libpolkit-qt5-1-1=0.112.0-5
+libpolkit-qt-1-1==0.112.0-5
+policykit-1
+'
+
+apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+
 DEVUAN_PACKAGES='
-network-manager
-udev
-libsystemd0
-udisks2
+network-manager=1.6.2-3+devuan1.1
+libnm0=1.6.2-3+devuan1.1
+udisks2=2.1.8-1+devuan2
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
@@ -263,18 +303,28 @@ apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgr
 # -- Add OpenRC as init.
 
 printf "\n"
-printf "ADD OPENRC AS INIT."
+printf "ADD SYSVRC AS INIT."
 printf "\n"
 
 DEVUAN_INIT_PACKAGES='
 init
 init-system-helpers
-openrc
 sysvinit-core
 sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Install packages from Xenial.
+
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- Add /Applications to $PATH.
