@@ -250,99 +250,6 @@ printf "STAGE 1 COMPLETE."
 printf "\n"
 
 
-# -- Downgrade packages using Devuan.
-# -- Use sources.list.build.stage2 to add init from Devuan.
-
-cp /configs/sources.list.build.stage2 /etc/apt/sources.list
-apt -qq update &> /dev/null
-
-
-# -- Download and install libsystemd0 from Devuan.
-
-apt download libsystemd0=241-5~bpo9+1 &> /dev/null
-dpkg --force-all -iR libsystemd0_241-5~bpo9+1_amd64.deb &> /dev/null
-rm libsystemd0_241-5~bpo9+1_amd64.deb
-
-apt -yy --fix-broken install
-
-libnih='
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
-'
-
-mkdir /libnih_debs
-
-for x in $libnih; do
-    wget -q -P /libnih_debs $x
-done
-
-dpkg -iR /libnih_debs &> /dev/null
-apt -yy --fix-broken install
-rm -r /libnih_debs
-
-
-# -- Use PolicyKit packages from Devuan.
-
-DEVUAN_POLKIT_PACKAGES='
-libpolkit-agent-1-0
-libpolkit-backend-1-0
-libpolkit-backend-consolekit-1-0
-libpolkit-gobject-1-0
-libpolkit-gobject-consolekit-1-0
-libpolkit-qt5-1-1=0.112.0-5
-libpolkit-qt-1-1=0.112.0-5
-policykit-1
-'
-
-apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-
-
-DEVUAN_PACKAGES='
-network-manager=1.6.2-3+devuan1.1
-libnm0=1.6.2-3+devuan1.1
-udisks2=2.1.8-1+devuan2
-'
-
-apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-
-
-# -- Add SysV as init.
-
-printf "\n"
-printf "ADD SYSVRC AS INIT."
-printf "\n"
-
-DEVUAN_INIT_PACKAGES='
-init
-init-system-helpers
-sysv-rc
-sysvinit-core
-sysvinit-utils
-'
-
-apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-
-
-# -- Install packages from Xenial.
-
-XENIAL_PACKAGES='
-plymouth=0.9.2-3ubuntu13
-plymouth-label=0.9.2-3ubuntu13
-plymouth-themes=0.9.2-3ubuntu13
-'
-
-apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-
-# -- Reinstall nx-desktop metapackage.
-
-apt -yy install nx-desktop --no-install-recommends
-
-
-printf "\n"
-printf "STAGE 2 COMPLETE."
-printf "\n"
-
-
 # -- Add /Applications to $PATH.
 
 printf "\n"
@@ -559,6 +466,102 @@ update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 
 rm /bin/dummy.sh
+
+
+# -- Downgrade packages using Devuan.
+# -- Use sources.list.build.stage2 to add init from Devuan.
+
+cp /configs/sources.list.build.stage2 /etc/apt/sources.list
+apt -qq update &> /dev/null
+
+
+# -- Download and install libsystemd0 from Devuan.
+
+apt download libsystemd0=241-5~bpo9+1
+dpkg --force-all -iR libsystemd0_241-5~bpo9+1_amd64.deb
+rm libsystemd0_241-5~bpo9+1_amd64.deb
+
+apt -yy --fix-broken install
+
+libnih='
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
+'
+
+mkdir /libnih_debs
+
+for x in $libnih; do
+    wget -q -P /libnih_debs $x
+done
+
+dpkg -iR /libnih_debs &> /dev/null
+apt -yy --fix-broken install
+rm -r /libnih_debs
+
+
+# -- Use PolicyKit packages from Devuan.
+
+DEVUAN_POLKIT_PACKAGES='
+libpolkit-agent-1-0
+libpolkit-backend-1-0
+libpolkit-backend-consolekit-1-0
+libpolkit-gobject-1-0
+libpolkit-gobject-consolekit-1-0
+libpolkit-qt5-1-1=0.112.0-5
+libpolkit-qt-1-1=0.112.0-5
+policykit-1
+'
+
+apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends
+
+
+DEVUAN_PACKAGES='
+network-manager=1.6.2-3+devuan1.1
+libnm0=1.6.2-3+devuan1.1
+udisks2=2.1.8-1+devuan2
+'
+
+apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends
+
+
+# -- Add SysV as init.
+
+printf "\n"
+printf "ADD SYSVRC AS INIT."
+printf "\n"
+
+DEVUAN_INIT_PACKAGES='
+init
+init-system-helpers
+sysv-rc
+sysvinit-core
+sysvinit-utils
+'
+
+apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Install packages from Xenial.
+
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+ttf-ubuntu-font-family
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
+apt -yy -qq purge --remove dracut dracut-core kpartx pkg-config
+
+
+# -- Reinstall Nitrux metapackages.
+
+apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
+
+
+printf "\n"
+printf "STAGE 2 COMPLETE."
+printf "\n"
 
 
 # -- Clean the filesystem.
