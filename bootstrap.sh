@@ -430,25 +430,6 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 # sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
 
 
-# -- Use sources.list.nitrux for release.
-
-/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
-
-
-# -- Overwrite file so cupt doesn't complain.
-# -- Remove APT.
-# -- Update package index using cupt.
-#FIXME We probably need to provide our own cupt package which also does this.
-
-printf "\n"
-printf "REMOVE APT."
-printf "\n"
-
-/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
-cupt -q update
-
-
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -562,6 +543,25 @@ apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 printf "\n"
 printf "STAGE 2 COMPLETE."
 printf "\n"
+
+
+# -- Use sources.list.nitrux for release.
+
+/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+
+
+# -- Overwrite file so cupt doesn't complain.
+# -- Remove APT.
+# -- Update package index using cupt.
+#FIXME We probably need to provide our own cupt package which also does this.
+
+printf "\n"
+printf "REMOVE APT."
+printf "\n"
+
+/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
+cupt -q update
 
 
 # -- Clean the filesystem.
