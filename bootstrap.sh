@@ -59,9 +59,9 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
 
 
-# -- Use sources.list.build to build ISO.
+# -- Use sources.list.build.stage1 to build ISO.
 
-cp /configs/sources.list.build /etc/apt/sources.list
+cp /configs/sources.list.build.stage1 /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
@@ -245,10 +245,15 @@ apt -qq update &> /dev/null
 apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
-# -- Downgrade packages using Devuan.
-# -- Use sources.list.build to add init from Devuan.
+printf "\n"
+printf "STAGE 1 COMPLETE."
+printf "\n"
 
-cp /configs/sources.list.build /etc/apt/sources.list
+
+# -- Downgrade packages using Devuan.
+# -- Use sources.list.build.stage2 to add init from Devuan.
+
+cp /configs/sources.list.build.stage2 /etc/apt/sources.list
 
 
 # -- Download and install libsystemd0 from Devuan.
@@ -326,6 +331,11 @@ plymouth-themes=0.9.2-3ubuntu13
 '
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+
+printf "\n"
+printf "STAGE 2 COMPLETE."
+printf "\n"
 
 
 # -- Add /Applications to $PATH.
