@@ -40,6 +40,8 @@ apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/nul
 # -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
+# -- Add key for Devuan repositories #1.
+# -- Add key for Devuan repositories #2.
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
@@ -52,6 +54,9 @@ rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
@@ -78,29 +83,6 @@ apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy -qq purge --remove vlc &> /dev/null
 apt -yy -qq dist-upgrade &> /dev/null
-
-
-# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
-# -- firejail should be automatically used by the daemon to sandbox AppImages.
-#FIXME This should be put in our repository
-
-printf "\n"
-printf "INSTALLING APPIMAGE DAEMON."
-printf "\n"
-
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
-'
-
-mkdir /appimaged_deb
-
-for x in $appimgd; do
-    wget -q -P /appimaged_deb $x
-done
-
-dpkg -iR /appimaged_deb &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-rm -r /appimaged_deb
 
 
 # -- Install the kernel.
@@ -263,6 +245,38 @@ apt -qq update &> /dev/null
 apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
+# -- Downgrade packages using Devuan.
+# -- Use sources.list.devuan to add init from Devuan.
+
+cp /configs/sources.list.devuan /etc/apt/sources.list
+
+DEVUAN_PACKAGES='
+network-manager
+udev
+libsystemd0
+udisks2
+'
+
+apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Add OpenRC as init.
+
+printf "\n"
+printf "ADD OPENRC AS INIT."
+printf "\n"
+
+DEVUAN_INIT_PACKAGES='
+init
+init-system-helpers
+openrc
+sysvinit-core
+sysvinit-utils
+'
+
+apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+
 # -- Add /Applications to $PATH.
 
 printf "\n"
@@ -288,6 +302,8 @@ https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_development-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
+https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 '
 
 mkdir /Applications
@@ -302,7 +318,6 @@ mkdir -p /etc/skel/Applications
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.1-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://repo.nxos.org/appimages/vlc/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
@@ -394,7 +409,7 @@ cp /configs/vfio-pci.conf /etc/modprobe.d/
 cp /configs/vfio-pci-override-vga.sh /bin/
 cp /configs/dummy.sh /bin/
 
-chmod +x /bin/dummy.sh
+chmod +x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
@@ -436,10 +451,10 @@ sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
-# -- Decrease timeout for systemd start and stop services.
-
-sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
-sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
+# # -- Decrease timeout for systemd start and stop services.
+# 
+# sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
+# sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
 
 
 # -- Use sources.list.nitrux for release.
@@ -472,6 +487,7 @@ printf "\n"
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
