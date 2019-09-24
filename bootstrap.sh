@@ -263,7 +263,7 @@ apt download libsystemd0=241-5~bpo9+1 &> /dev/null
 dpkg --force-all -iR libsystemd0_241-5~bpo9+1_amd64.deb &> /dev/null
 rm libsystemd0_241-5~bpo9+1_amd64.deb
 
-apt -yy --fix-broken-install
+apt -yy --fix-broken install
 
 libnih='
 http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
@@ -301,9 +301,6 @@ DEVUAN_PACKAGES='
 network-manager=1.6.2-3+devuan1.1
 libnm0=1.6.2-3+devuan1.1
 udisks2=2.1.8-1+devuan2
-eudev
-udev
-libudev1
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
