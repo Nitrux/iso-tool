@@ -26,9 +26,7 @@ deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe mul
 # Ubuntu Repos Xenial #
 #######################
 
-deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu xenial main restricted universe multiverse
 
 ##################
 # KDE Neon Repos #

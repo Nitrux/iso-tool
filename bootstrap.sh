@@ -290,7 +290,7 @@ libpolkit-backend-consolekit-1-0
 libpolkit-gobject-1-0
 libpolkit-gobject-consolekit-1-0
 libpolkit-qt5-1-1=0.112.0-5
-libpolkit-qt-1-1==0.112.0-5
+libpolkit-qt-1-1=0.112.0-5
 policykit-1
 '
 
@@ -301,6 +301,9 @@ DEVUAN_PACKAGES='
 network-manager=1.6.2-3+devuan1.1
 libnm0=1.6.2-3+devuan1.1
 udisks2=2.1.8-1+devuan2
+eudev
+udev
+libudev1
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
@@ -332,6 +335,10 @@ plymouth-themes=0.9.2-3ubuntu13
 '
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+
+# -- Reinstall nx-desktop metapackage.
+
+apt -yy install nx-desktop --no-install-recommends
 
 
 printf "\n"
