@@ -48,7 +48,7 @@ UPDATE_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.zsync
 
 # -- Prepare the directory where the filesystem will be created.
 
-wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.4-base-amd64.tar.gz
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.3-base-amd64.tar.gz
 tar xf base.tar.gz -C $BUILD_DIR
 
 
