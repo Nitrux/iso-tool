@@ -33,8 +33,8 @@ wget
 xz-utils
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt update &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -72,12 +72,12 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq upgrade &> /dev/null
+apt update &> /dev/null
+apt -yy upgrade &> /dev/null
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
-apt -yy -qq purge --remove vlc &> /dev/null
-apt -yy -qq dist-upgrade &> /dev/null
+apt -yy purge --remove vlc &> /dev/null
+apt -yy dist-upgrade &> /dev/null
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -213,7 +213,7 @@ printf "UPDATE BASE PACKAGES."
 printf "\n"
 
 cp /configs/sources.list.eoan /etc/apt/sources.list
-apt -qq update
+apt update
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
@@ -259,8 +259,8 @@ xserver-xorg-video-radeon
 xserver-xorg-video-vmware
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+apt update &> /dev/null
+apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
@@ -458,7 +458,6 @@ printf "\n"
 
 /bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
-cupt -q update
 
 
 # -- Use XZ compression when creating the ISO.
@@ -490,8 +489,7 @@ casper
 lupin-casper
 '
 
-cupt -y -q purge ${REMOVE_PACKAGES//\\n/ }
-cupt -y -q clean &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
 
 
 printf "\n"
