@@ -564,7 +564,7 @@ udisks2
 network-manager
 '
 
-apt-mark hold ${PIN_PACKAGES_HOLD//\\n/ } &> /dev/null
+apt-mark hold ${PIN_PACKAGES_HOLD//\\n/ }
 
 
 # -- Mark packages as manual.
@@ -576,12 +576,15 @@ sysvinit-core
 libnm0
 '
 
-apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ } &> /dev/null
+apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 
 
 # -- Reinstall Nitrux metapackages.
 
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
+
+apt install plasma-nm kinfocenter latte-dock nx-clock-applet nx-networkmanagement-applet nx-notifications-applet nx-simplemenu-applet nx-systemtray-applet udisks2
+
 apt -yy --fix-broken install
 
 
