@@ -500,6 +500,7 @@ libpolkit-gobject-consolekit-1-0
 libpolkit-qt5-1-1=0.112.0-5
 libpolkit-qt-1-1=0.112.0-5
 policykit-1
+polkit-kde-agent-1=4:5.8.4-1
 '
 
 apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends
@@ -583,7 +584,7 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
 
-apt -yy install plasma-nm kinfocenter latte-dock nx-clock-applet nx-networkmanagement-applet nx-notifications-applet nx-simplemenu-applet nx-systemtray-applet network-manager=1.6.2-3+devuan1.1 udisks2=2.1.8-1+devuan2
+apt install latte-dock
 
 apt -yy --fix-broken install
 
