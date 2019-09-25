@@ -584,7 +584,7 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
 
-apt install latte-dock
+apt-cache policy network-manager
 
 apt -yy --fix-broken install
 
