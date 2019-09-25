@@ -33,8 +33,8 @@ wget
 xz-utils
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt update &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -77,12 +77,12 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq upgrade &> /dev/null
+apt update &> /dev/null
+apt -yy upgrade &> /dev/null
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
-apt -yy -qq purge --remove vlc &> /dev/null
-apt -yy -qq dist-upgrade &> /dev/null
+apt -yy purge --remove vlc &> /dev/null
+apt -yy dist-upgrade &> /dev/null
 
 
 # -- Install the kernel.
@@ -195,7 +195,7 @@ printf "UPDATE BASE PACKAGES."
 printf "\n"
 
 cp /configs/sources.list.eoan /etc/apt/sources.list
-apt -qq update
+apt update
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
@@ -241,8 +241,8 @@ xserver-xorg-video-radeon
 xserver-xorg-video-vmware
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+apt update &> /dev/null
+apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
@@ -455,7 +455,7 @@ printf "\n"
 # -- Use sources.list.build.stage2 to add init from Devuan.
 
 cp /configs/sources.list.build.stage2 /etc/apt/sources.list
-apt -qq update &> /dev/null
+apt update &> /dev/null
 
 
 # -- Download and install libsystemd0 from Devuan.
