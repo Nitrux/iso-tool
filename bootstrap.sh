@@ -35,6 +35,8 @@ xz-utils
 
 apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -78,6 +80,8 @@ apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -261,6 +265,8 @@ xserver-xorg-video-vmware
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add /Applications to $PATH.
