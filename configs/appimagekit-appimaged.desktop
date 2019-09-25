@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
 Name=appimaged
-Exec=appimaged
-Comment=Optional daemon to integrate AppImages with the desktop
+Exec=$HOME/$USER/.local/bin/appimaged
+Comment=Optional daemon to integrate AppImages
 Icon=appimaged
 Categories=Development;
 Terminal=false

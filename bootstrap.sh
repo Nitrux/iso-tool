@@ -268,7 +268,6 @@ APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_development-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
@@ -281,7 +280,9 @@ for x in $APPS_SYS; do
 done
 
 chmod +x /Applications/*
+
 mkdir -p /etc/skel/Applications
+mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.1-x86_64.AppImage
@@ -289,6 +290,7 @@ http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage
 https://repo.nxos.org/appimages/vlc/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -300,12 +302,14 @@ chmod +x /etc/skel/Applications/*
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/znx-gui_development-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/appimaged-x86_64.AppImage /Applications/appimaged
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
+mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+
 ls -l /Applications
 ls -l /etc/skel/Applications
+ls -l /etc/skel/.local/bin/
 
 
 # -- Add AppImage providers for appimage-cli-tool
@@ -333,7 +337,7 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
-cp /configs/appimaged.desktop /etc/xdg/autostart
+cp /configs/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 
 
 # -- Add vfio modules and files.
