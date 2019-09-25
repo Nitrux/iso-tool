@@ -442,7 +442,7 @@ update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 
 rm /bin/dummy.sh
-
+rm /usr/share/initramfs-tools/hooks/hook-scripts.sh
 
 printf "\n"
 printf "STAGE 1 COMPLETE."
@@ -509,6 +509,7 @@ DEVUAN_PACKAGES='
 network-manager=1.6.2-3+devuan1.1
 libnm0=1.6.2-3+devuan1.1
 udisks2=2.1.8-1+devuan2
+libudisks2-0=2.1.8-1+devuan2
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends
@@ -552,6 +553,30 @@ ttf-ubuntu-font-family
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
 apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
+
+
+# -- Put packages on hold.
+
+PIN_PACKAGES_HOLD='
+libpolkit-agent-1-0
+libpolkit-gobject-1-0
+udisks2
+network-manager
+'
+
+apt-mark hold ${PIN_PACKAGES_HOLD//\\n/ } &> /dev/null
+
+
+# -- Mark packages as manual.
+
+PIN_PACKAGES_MANUAL='
+libudev1
+libudisks2-0
+sysvinit-core
+libnm0
+'
+
+apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ } &> /dev/null
 
 
 # -- Reinstall Nitrux metapackages.
