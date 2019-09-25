@@ -266,12 +266,12 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
-https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_development-x86_64.AppImage
+https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
+https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 '
 
 mkdir /Applications
@@ -297,9 +297,10 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/znx-gui_development-x86_64.AppImage /Applications/znx-gui
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
+mv /Applications/appimaged-x86_64.AppImage /Applications/appimaged
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
@@ -332,6 +333,7 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
+cp /configs/appimaged.desktop /etc/xdg/autostart
 
 
 # -- Add vfio modules and files.
@@ -511,6 +513,7 @@ network-manager=1.6.2-3+devuan1.1
 libnm0=1.6.2-3+devuan1.1
 udisks2=2.1.8-1+devuan2
 libudisks2-0=2.1.8-1+devuan2
+openresolv
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
@@ -556,21 +559,13 @@ apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
 apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
 
 
-# -- Put packages on hold.
+# -- Mark packages as manual.
 
-PIN_PACKAGES_HOLD='
+PIN_PACKAGES_MANUAL='
 libpolkit-agent-1-0
 libpolkit-gobject-1-0
 udisks2
 network-manager
-'
-
-apt-mark hold ${PIN_PACKAGES_HOLD//\\n/ }
-
-
-# -- Mark packages as manual.
-
-PIN_PACKAGES_MANUAL='
 libudev1
 libudisks2-0
 sysvinit-core
@@ -583,10 +578,8 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 # -- Reinstall Nitrux metapackages.
 
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
-
-apt-cache policy network-manager
-
 apt -yy --fix-broken install
+apt -yy autoremove
 
 
 printf "\n"
@@ -608,9 +601,14 @@ printf "\n"
 printf "REMOVE APT."
 printf "\n"
 
+REMOVE_APT='
+apt 
+apt-utils 
+apt-transport-https
+'
+
 /bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
-cupt -q update
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ }
 
 
 # -- Clean the filesystem.
@@ -624,8 +622,7 @@ casper
 lupin-casper
 '
 
-cupt -y purge ${REMOVE_PACKAGES//\\n/ }
-cupt -y -q clean &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
 
 
 printf "\n"
