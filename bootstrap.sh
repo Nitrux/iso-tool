@@ -458,14 +458,20 @@ apt -qq update &> /dev/null
 
 # -- Download and install libsystemd0 from Devuan.
 
-apt download libsystemd0=241-5~bpo9+1
+libsystemd0='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libsystemd0_241-5~bpo9%2B1_amd64.deb
+'
 
-ls -l
+mkdir /libsystemd0_deb
 
-dpkg --force-all -iR /libsystemd0_241-5~bpo9+1_amd64.deb
-rm libsystemd0_241-5~bpo9+1_amd64.deb
+for x in $libsystemd0; do
+    wget -q -P /libsystemd0_deb $x
+done
 
+dpkg -iR /libsystemd0_deb &> /dev/null
 apt -yy --fix-broken install
+rm -r /libsystemd0_deb
+
 
 libnih='
 http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
