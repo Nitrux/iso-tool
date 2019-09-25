@@ -583,7 +583,7 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
 
-apt install plasma-nm kinfocenter latte-dock nx-clock-applet nx-networkmanagement-applet nx-notifications-applet nx-simplemenu-applet nx-systemtray-applet udisks2 network-manager=1.6.2-3+devuan1.1 udisks2=2.1.8-1+devuan2
+apt install plasma-nm kinfocenter latte-dock nx-clock-applet nx-networkmanagement-applet nx-notifications-applet nx-simplemenu-applet nx-systemtray-applet network-manager=1.6.2-3+devuan1.1 udisks2=2.1.8-1+devuan2
 
 apt -yy --fix-broken install
 
