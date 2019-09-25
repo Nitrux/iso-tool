@@ -513,7 +513,7 @@ udisks2=2.1.8-1+devuan2
 libudisks2-0=2.1.8-1+devuan2
 '
 
-apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- Add SysV as init.
