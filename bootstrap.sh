@@ -521,6 +521,7 @@ runit='
 http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
 http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
 http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
+http://ftp.us.debian.org/debian/pool/main/d/dh-sysuser/sysuser-helper_1.3.3_all.deb
 '
 
 mkdir /runit_deb
