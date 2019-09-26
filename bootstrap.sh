@@ -431,11 +431,11 @@ printf "STAGE 1 COMPLETE."
 printf "\n"
 
 
-# # -- Downgrade packages using Devuan.
-# # -- Use sources.list.build.stage2 to add init from Devuan.
-# 
-# cp /configs/sources.list.build.stage2 /etc/apt/sources.list
-# apt update &> /dev/null
+# -- Downgrade packages using Devuan.
+# -- Use sources.list.build.stage2 to add init from Devuan.
+
+cp /configs/sources.list.build.stage2 /etc/apt/sources.list
+apt update &> /dev/null
 # 
 # 
 # # -- Download and install libsystemd0 from Devuan.
