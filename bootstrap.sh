@@ -437,37 +437,15 @@ cp /configs/sources.list.build.stage2 /etc/apt/sources.list
 apt update &> /dev/null
 
 
-# -- Download and install libsystemd0 from Devuan.
+# -- Add libsystemd0, libnih1 and libnih-dbus1 from Devuan.
 
-libsystemd0='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libsystemd0_241-5~bpo9%2B1_amd64.deb
+DEVUAN_LIB_PACKAGES='
+libsystemd0=242-7
+libnih1=1.0.3-10+b4
+libnih-dbus1=1.0.3-10+b4
 '
 
-mkdir /libsystemd0_deb
-
-for x in $libsystemd0; do
-    wget -q -P /libsystemd0_deb $x
-done
-
-dpkg -iR /libsystemd0_deb
-apt -yy --fix-broken install
-rm -r /libsystemd0_deb
-
-
-libnih='
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
-'
-
-mkdir /libnih_debs
-
-for x in $libnih; do
-    wget -q -P /libnih_debs $x
-done
-
-dpkg -iR /libnih_debs
-apt -yy --fix-broken install
-rm -r /libnih_debs
+apt -yy install ${DEVUAN_LIB_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Use PolicyKit packages from Devuan.
@@ -510,29 +488,11 @@ init-system-helpers
 sysv-rc
 sysvinit-core
 sysvinit-utils
+runit
+runit-init
 '
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
-
-
-# -- Add runit to replace sysv-rc /sbin/init.
-
-runit='
-http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
-http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
-http://ftp.us.debian.org/debian/pool/main/d/dh-sysuser/sysuser-helper_1.3.3_all.deb
-http://ftp.us.debian.org/debian/pool/main/r/runit/getty-run_2.1.2-33_all.deb
-'
-
-mkdir /runit_deb
-
-for x in $runit; do
-    wget -q -P /runit_deb $x
-done
-
-dpkg -iR /runit_deb
-rm -r /runit_deb
 
 
 # -- Install packages from Xenial.
