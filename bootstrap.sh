@@ -525,7 +525,7 @@ ttf-ubuntu-font-family
 '
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
-apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
+# apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
 # 
 # 
 # # -- Mark packages as manual.
