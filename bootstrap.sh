@@ -285,7 +285,7 @@ mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.1-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.2-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
 https://repo.nxos.org/appimages/vlc/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
@@ -305,7 +305,7 @@ mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
-mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 ls -l /Applications
 ls -l /etc/skel/Applications
@@ -436,8 +436,7 @@ printf "\n"
 
 cp /configs/sources.list.build.stage2 /etc/apt/sources.list
 apt update &> /dev/null
-# 
-# 
+
 # # -- Download and install libsystemd0 from Devuan.
 # 
 # libsystemd0='
@@ -450,7 +449,7 @@ apt update &> /dev/null
 #     wget -q -P /libsystemd0_deb $x
 # done
 # 
-# dpkg -iR /libsystemd0_deb &> /dev/null
+# dpkg -iR /libsystemd0_deb
 # apt -yy --fix-broken install
 # rm -r /libsystemd0_deb
 # 
@@ -466,7 +465,7 @@ apt update &> /dev/null
 #     wget -q -P /libnih_debs $x
 # done
 # 
-# dpkg -iR /libnih_debs &> /dev/null
+# dpkg -iR /libnih_debs
 # apt -yy --fix-broken install
 # rm -r /libnih_debs
 # 
@@ -499,7 +498,7 @@ apt update &> /dev/null
 # apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 # 
 # 
-# # -- Add SysV as init.
+# # -- Add as SySV.
 # 
 # printf "\n"
 # printf "ADD SYSVRC AS INIT."
@@ -516,17 +515,17 @@ apt update &> /dev/null
 # apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 # 
 # 
-# # -- Install packages from Xenial.
-# 
-# XENIAL_PACKAGES='
-# plymouth=0.9.2-3ubuntu13
-# plymouth-label=0.9.2-3ubuntu13
-# plymouth-themes=0.9.2-3ubuntu13
-# ttf-ubuntu-font-family
-# '
-# 
-# apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
-# apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
+# -- Install packages from Xenial.
+
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+ttf-ubuntu-font-family
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
+apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
 # 
 # 
 # # -- Mark packages as manual.
@@ -538,6 +537,7 @@ apt update &> /dev/null
 # network-manager
 # libudev1
 # libudisks2-0
+# sysvinit-core
 # libnm0
 # '
 # 
@@ -550,11 +550,37 @@ apt update &> /dev/null
 # apt -yy --fix-broken install
 # apt -yy autoremove
 
+# # -- Add OpenRC
+#
+# printf "\n"
+# printf "ADD OPENRC AS INIT."
+# printf "\n"
+# 
+# openrc='
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
+# '
+# 
+# mkdir /openrc_deb
+# 
+# for x in $openrc; do
+#     wget -q -P /openrc_deb $x
+# done
+# 
+# dpkg -iR /openrc_deb
+# apt -yy autoremove
+# rm -r /openrc_deb
 
 # -- Add runit
 
+printf "\n"
+printf "ADD RUNIT AS INIT."
+printf "\n"
+
+
 RUNIT_PACKAGES='
-runit-init=2.1.2-33
+runit-sysv
 '
 
 apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
