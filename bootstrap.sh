@@ -557,7 +557,7 @@ RUNIT_PACKAGES='
 runit-init
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Check that init system is not systemd.
