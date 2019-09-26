@@ -504,36 +504,17 @@ printf "\n"
 printf "ADD INIT."
 printf "\n"
 
-# DEVUAN_INIT_PACKAGES='
-# init
-# init-system-helpers
-# sysv-rc
-# sysvinit-core
-# sysvinit-utils
-# '
-# 
-# apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
-
-
-# -- Add runit
-
-runit='
-http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
-http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
-http://ftp.us.debian.org/debian/pool/main/d/dh-sysuser/sysuser-helper_1.3.3_all.deb
+DEVUAN_INIT_PACKAGES='
+init
+init-system-helpers
+sysv-rc
+sysvinit-core
+sysvinit-utils
+runit
+runit-init
 '
 
-mkdir /runit_deb
-
-for x in $runit; do
-    wget -q -P /runit_deb $x
-done
-
-dpkg -iR /runit_deb
-apt -yy autoremove
-
-rm -r /runit_deb
+apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Install packages from Xenial.
@@ -558,6 +539,7 @@ udisks2
 network-manager
 libudev1
 libudisks2-0
+sysvinit-core
 libnm0
 '
 
