@@ -305,7 +305,7 @@ mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
-mv /etc/skel/Application/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 ls -l /Applications
 ls -l /etc/skel/Applications
@@ -424,7 +424,6 @@ ln -sv /bin/mksh /bin/sh
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
-rm /usr/share/initramfs-tools/hooks/hook-scripts.sh
 
 printf "\n"
 printf "STAGE 1 COMPLETE."
@@ -577,6 +576,7 @@ for x in $openrc; do
 done
 
 dpkg -iR /openrc_deb
+apt -yy autoremove
 
 rm -r /openrc_deb
 
