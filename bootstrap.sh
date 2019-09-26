@@ -554,7 +554,7 @@ printf "\n"
 # -- Add runit
 
 RUNIT_PACKAGES='
-runit-init
+runit-init=2.1.2-33
 '
 
 apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
