@@ -561,24 +561,24 @@ apt -yy --fix-broken install
 apt -yy autoremove
 
 
-# -- Add OpenRC
-
-openrc='
-http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
-'
-
-mkdir /openrc_deb
-
-for x in $openrc; do
-    wget -q -P /openrc_deb $x
-done
-
-dpkg -iR /openrc_deb
-apt -yy autoremove
-
-rm -r /openrc_deb
+# # -- Add OpenRC
+# 
+# openrc='
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
+# '
+# 
+# mkdir /openrc_deb
+# 
+# for x in $openrc; do
+#     wget -q -P /openrc_deb $x
+# done
+# 
+# dpkg -iR /openrc_deb
+# apt -yy autoremove
+# 
+# rm -r /openrc_deb
 
 
 printf "\n"
