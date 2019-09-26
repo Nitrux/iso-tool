@@ -483,12 +483,19 @@ printf "ADD INIT."
 printf "\n"
 
 DEVUAN_INIT_PACKAGES='
-init
-init-system-helpers
-sysv-rc
-sysvinit-utils
+cgmanager
+fgetty
+getty-run
+initscripts
+insserv
+libcgmanager0
 runit
+runit-helper
 runit-init
+startpar
+systemd-shim
+sysuser-helper
+sysv-rc
 '
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
