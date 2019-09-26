@@ -516,6 +516,25 @@ sysvinit-utils
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 
 
+# -- Replace SysV with OpenRC
+
+openrc='
+http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
+'
+
+mkdir /openrc_deb
+
+for x in $openrc; do
+    wget -q -P /openrc_deb $x
+done
+
+dpkg -iR /openrc_deb &> /dev/null
+apt -yy autoremove
+rm -r /openrc_deb
+
+
 # -- Check that init system is not systemd.
 
 printf "\n"
@@ -576,6 +595,8 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
+cat /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
@@ -583,7 +604,9 @@ cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05m
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 
-rm /bin/dummy.sh
+rm /bin/dummy.sh 
+
+cat /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 
 
 # -- Use sources.list.nitrux for release.
