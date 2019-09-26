@@ -498,7 +498,7 @@ openresolv
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Add init.
+# -- Add SysV init.
 
 printf "\n"
 printf "ADD INIT."
@@ -510,11 +510,29 @@ init-system-helpers
 sysv-rc
 sysvinit-core
 sysvinit-utils
-runit
-runit-init
 '
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
+
+
+# -- Add runit to replace sysv-rc /sbin/init.
+
+runit='
+http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
+http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
+http://ftp.us.debian.org/debian/pool/main/d/dh-sysuser/sysuser-helper_1.3.3_all.deb
+http://ftp.us.debian.org/debian/pool/main/r/runit/getty-run_2.1.2-33_all.deb
+'
+
+mkdir /runit_deb
+
+for x in $runit; do
+    wget -q -P /runit_deb $x
+done
+
+dpkg -iR /runit_deb
+rm -r /runit_deb
 
 
 # -- Install packages from Xenial.
@@ -551,26 +569,6 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
 apt -yy --fix-broken install
 apt -yy autoremove
-
-
-# # -- Add OpenRC
-# 
-# openrc='
-# http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
-# http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
-# http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
-# '
-# 
-# mkdir /openrc_deb
-# 
-# for x in $openrc; do
-#     wget -q -P /openrc_deb $x
-# done
-# 
-# dpkg -iR /openrc_deb
-# apt -yy autoremove
-# 
-# rm -r /openrc_deb
 
 
 # -- Check that init system is not systemd.
