@@ -450,9 +450,15 @@ for x in $libsystemd0; do
     wget -q -P /libsystemd0_deb $x
 done
 
-dpkg -iR /libsystemd0_deb &> /dev/null
+dpkg -iR /libsystemd0_deb
 apt -yy --fix-broken install
 rm -r /libsystemd0_deb
+
+
+libnih='
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
+'
 
 mkdir /libnih_debs
 
@@ -460,7 +466,7 @@ for x in $libnih; do
     wget -q -P /libnih_debs $x
 done
 
-dpkg -iR /libnih_debs &> /dev/null
+dpkg -iR /libnih_debs
 apt -yy --fix-broken install
 rm -r /libnih_debs
 
@@ -502,35 +508,12 @@ printf "\n"
 DEVUAN_INIT_PACKAGES='
 init
 init-system-helpers
+sysv-rc
 sysvinit-core
 sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
-
-
-# -- Add OpenRC
-
-openrc='
-http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
-'
-
-mkdir /openrc_deb
-
-for x in $openrc; do
-    wget -q -P /openrc_deb $x
-done
-
-dpkg -iR /openrc_deb &> /dev/null
-apt -yy --fix-broken install
-rm -r /openrc_deb
-
-libnih='
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
-'
 
 
 # -- Check that init system is not systemd.
@@ -577,6 +560,25 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
 apt -yy --fix-broken install
 apt -yy autoremove
+
+
+# -- Add OpenRC
+
+openrc='
+http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
+'
+
+mkdir /openrc_deb
+
+for x in $openrc; do
+    wget -q -P /openrc_deb $x
+done
+
+dpkg -iR /openrc_deb
+
+rm -r /openrc_deb
 
 
 printf "\n"
