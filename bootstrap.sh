@@ -581,6 +581,26 @@ apt -yy autoremove
 # rm -r /openrc_deb
 
 
+# -- Add runit
+
+runit='
+http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
+http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
+'
+
+mkdir /runit_deb
+
+for x in $runit; do
+    wget -q -P /runit_deb $x
+done
+
+dpkg -iR /runit_deb
+apt -yy autoremove
+
+rm -r /runit_deb
+
+
 printf "\n"
 printf "STAGE 2 COMPLETE."
 printf "\n"
