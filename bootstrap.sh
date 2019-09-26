@@ -498,31 +498,41 @@ openresolv
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Add as init.
+# -- Add init.
 
 printf "\n"
-printf "ADD SYSVRC AS INIT."
+printf "ADD INIT."
 printf "\n"
 
-DEVUAN_INIT_PACKAGES='
-init
-init-system-helpers
-sysv-rc
-sysvinit-core
-sysvinit-utils
+# DEVUAN_INIT_PACKAGES='
+# init
+# init-system-helpers
+# sysv-rc
+# sysvinit-core
+# sysvinit-utils
+# '
+# 
+# apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
+
+
+# -- Add runit
+
+runit='
+http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
+http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
 '
 
-apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
+mkdir /runit_deb
 
+for x in $runit; do
+    wget -q -P /runit_deb $x
+done
 
-# -- Check that init system is not systemd.
+dpkg -iR /runit_deb
+apt -yy autoremove
 
-printf "\n"
-printf "Check init link."
-printf "\n"
-
-init --version
-stat /sbin/init
+rm -r /runit_deb
 
 
 # -- Install packages from Xenial.
@@ -547,7 +557,6 @@ udisks2
 network-manager
 libudev1
 libudisks2-0
-sysvinit-core
 libnm0
 '
 
@@ -581,24 +590,14 @@ apt -yy autoremove
 # rm -r /openrc_deb
 
 
-# -- Add runit
+# -- Check that init system is not systemd.
 
-runit='
-http://ftp.us.debian.org/debian/pool/main/r/runit/runit_2.1.2-33_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/d/dh-runit/runit-helper_2.8.14_all.deb
-http://ftp.us.debian.org/debian/pool/main/r/runit/runit-init_2.1.2-33_all.deb
-'
+printf "\n"
+printf "Check init link."
+printf "\n"
 
-mkdir /runit_deb
-
-for x in $runit; do
-    wget -q -P /runit_deb $x
-done
-
-dpkg -iR /runit_deb
-apt -yy autoremove
-
-rm -r /runit_deb
+init --version
+stat /sbin/init
 
 
 printf "\n"
