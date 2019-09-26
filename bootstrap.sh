@@ -424,30 +424,6 @@ ln -sv /bin/mksh /bin/sh
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
-
-# # -- Decrease timeout for systemd start and stop services.
-# 
-# sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
-# sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
-
-
-# -- Use XZ compression when creating the ISO.
-# -- Add initramfs hook script.
-# -- Add the persistence and update the initramfs.
-#FIXME This should be put in a package.
-
-printf "\n"
-printf "UPDATE INITRAMFS."
-printf "\n"
-
-cp /configs/initramfs.conf /etc/initramfs-tools/
-cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
-
-rm /bin/dummy.sh
 rm /usr/share/initramfs-tools/hooks/hook-scripts.sh
 
 printf "\n"
@@ -589,6 +565,25 @@ apt -yy autoremove
 printf "\n"
 printf "STAGE 2 COMPLETE."
 printf "\n"
+
+
+# -- Use XZ compression when creating the ISO.
+# -- Add initramfs hook script.
+# -- Add the persistence and update the initramfs.
+#FIXME This should be put in a package.
+
+printf "\n"
+printf "UPDATE INITRAMFS."
+printf "\n"
+
+cp /configs/initramfs.conf /etc/initramfs-tools/
+cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+update-initramfs -u
+lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
+
+rm /bin/dummy.sh
 
 
 # -- Use sources.list.nitrux for release.
