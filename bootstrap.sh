@@ -483,6 +483,10 @@ printf "ADD INIT."
 printf "\n"
 
 DEVUAN_INIT_PACKAGES='
+init
+init-system-helpers
+sysv-rc
+sysvinit-utils
 runit
 runit-init
 '
