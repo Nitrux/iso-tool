@@ -483,11 +483,6 @@ printf "ADD INIT."
 printf "\n"
 
 DEVUAN_INIT_PACKAGES='
-init
-init-system-helpers
-sysv-rc
-sysvinit-core
-sysvinit-utils
 runit
 runit-init
 '
@@ -517,7 +512,6 @@ udisks2
 network-manager
 libudev1
 libudisks2-0
-sysvinit-core
 libnm0
 '
 
