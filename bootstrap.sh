@@ -443,6 +443,7 @@ DEVUAN_LIB_PACKAGES='
 libsystemd0=242-7
 libnih1=1.0.3-10+b4
 libnih-dbus1=1.0.3-10+b4
+libcgmanager0=0.36-2+devuan1
 '
 
 apt -yy install ${DEVUAN_LIB_PACKAGES//\\n/ } --no-install-recommends
@@ -488,10 +489,10 @@ fgetty
 getty-run
 initscripts
 insserv
-libcgmanager0
-runit
-runit-helper
-runit-init
+libcgmanager0 
+runit 
+runit-helper 
+runit-init 
 startpar
 systemd-shim
 sysuser-helper
