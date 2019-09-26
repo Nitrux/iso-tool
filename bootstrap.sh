@@ -305,7 +305,7 @@ mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
-mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /etc/skel/Application/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 ls -l /Applications
 ls -l /etc/skel/Applications
@@ -454,12 +454,6 @@ dpkg -iR /libsystemd0_deb &> /dev/null
 apt -yy --fix-broken install
 rm -r /libsystemd0_deb
 
-
-libnih='
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
-'
-
 mkdir /libnih_debs
 
 for x in $libnih; do
@@ -499,7 +493,7 @@ openresolv
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Add SysV as init.
+# -- Add as init.
 
 printf "\n"
 printf "ADD SYSVRC AS INIT."
@@ -508,7 +502,6 @@ printf "\n"
 DEVUAN_INIT_PACKAGES='
 init
 init-system-helpers
-sysv-rc
 sysvinit-core
 sysvinit-utils
 '
@@ -516,7 +509,7 @@ sysvinit-utils
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 
 
-# -- Replace SysV with OpenRC
+# -- Add OpenRC
 
 openrc='
 http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
@@ -531,8 +524,13 @@ for x in $openrc; do
 done
 
 dpkg -iR /openrc_deb &> /dev/null
-apt -yy autoremove
+apt -yy --fix-broken install
 rm -r /openrc_deb
+
+libnih='
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
+http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
+'
 
 
 # -- Check that init system is not systemd.
@@ -595,8 +593,6 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-cat /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
@@ -605,8 +601,6 @@ update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 
 rm /bin/dummy.sh 
-
-cat /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 
 
 # -- Use sources.list.nitrux for release.
