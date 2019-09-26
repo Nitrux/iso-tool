@@ -489,7 +489,6 @@ fgetty
 getty-run
 initscripts
 insserv
-libcgmanager0 
 runit 
 runit-helper 
 runit-init 
