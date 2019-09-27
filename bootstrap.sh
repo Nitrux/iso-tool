@@ -437,118 +437,22 @@ printf "\n"
 cp /configs/sources.list.build.stage2 /etc/apt/sources.list
 apt update &> /dev/null
 
-# # -- Download and install libsystemd0 from Devuan.
-# 
-# libsystemd0='
-# https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libsystemd0_241-5~bpo9%2B1_amd64.deb
-# '
-# 
-# mkdir /libsystemd0_deb
-# 
-# for x in $libsystemd0; do
-#     wget -q -P /libsystemd0_deb $x
-# done
-# 
-# dpkg -iR /libsystemd0_deb
-# apt -yy --fix-broken install
-# rm -r /libsystemd0_deb
-# 
-# 
-# libnih='
-# http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
-# http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
-# '
-# 
-# mkdir /libnih_debs
-# 
-# for x in $libnih; do
-#     wget -q -P /libnih_debs $x
-# done
-# 
-# dpkg -iR /libnih_debs
-# apt -yy --fix-broken install
-# rm -r /libnih_debs
-# 
-# 
-# # -- Use PolicyKit packages from Devuan.
-# 
-# DEVUAN_POLKIT_PACKAGES='
-# libpolkit-agent-1-0
-# libpolkit-backend-1-0
-# libpolkit-backend-consolekit-1-0
-# libpolkit-gobject-1-0
-# libpolkit-gobject-consolekit-1-0
-# libpolkit-qt5-1-1=0.112.0-5
-# libpolkit-qt-1-1=0.112.0-5
-# policykit-1
-# polkit-kde-agent-1=4:5.8.4-1
-# '
-# 
-# apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends
-# 
-# 
-# DEVUAN_PACKAGES='
-# network-manager=1.6.2-3+devuan1.1
-# libnm0=1.6.2-3+devuan1.1
-# udisks2=2.1.8-1+devuan2
-# libudisks2-0=2.1.8-1+devuan2
-# openresolv
-# '
-# 
-# apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-# 
-# 
-# # -- Add as SySV.
-# 
-# printf "\n"
-# printf "ADD SYSVRC AS INIT."
-# printf "\n"
-# 
-# DEVUAN_INIT_PACKAGES='
-# init
-# init-system-helpers
-# sysv-rc
-# sysvinit-core
-# sysvinit-utils
-# '
-# 
-# apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
-# 
-# 
-# -- Install packages from Xenial.
+# -- Add as SySV.
 
-XENIAL_PACKAGES='
-plymouth=0.9.2-3ubuntu13
-plymouth-label=0.9.2-3ubuntu13
-plymouth-themes=0.9.2-3ubuntu13
-ttf-ubuntu-font-family
+printf "\n"
+printf "ADD SYSVRC AS INIT."
+printf "\n"
+
+DEVUAN_INIT_PACKAGES='
+init
+init-system-helpers
+sysv-rc
+sysvinit-core
+sysvinit-utils
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
-# apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
-# 
-# 
-# # -- Mark packages as manual.
-# 
-# PIN_PACKAGES_MANUAL='
-# libpolkit-agent-1-0
-# libpolkit-gobject-1-0
-# udisks2
-# network-manager
-# libudev1
-# libudisks2-0
-# sysvinit-core
-# libnm0
-# '
-# 
-# apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
-# 
-# 
-# # -- Reinstall Nitrux metapackages.
-# 
-# apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
-# apt -yy --fix-broken install
-# apt -yy autoremove
+apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
+
 
 # # -- Add OpenRC
 #
@@ -572,18 +476,19 @@ apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
 # apt -yy autoremove
 # rm -r /openrc_deb
 
-# -- Add runit
 
-printf "\n"
-printf "ADD RUNIT AS INIT."
-printf "\n"
-
-
-RUNIT_PACKAGES='
-runit-sysv
-'
-
-apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
+# # -- Add runit
+# 
+# printf "\n"
+# printf "ADD RUNIT AS INIT."
+# printf "\n"
+# 
+# 
+# RUNIT_PACKAGES='
+# runit-sysv
+# '
+# 
+# apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Check that init system is not systemd.
