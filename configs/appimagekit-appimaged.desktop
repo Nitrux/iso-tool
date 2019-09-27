@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=appimaged
-Exec=$HOME/$USER/.local/bin/appimaged
+Exec=$HOME/.local/bin/appimaged
 Comment=Optional daemon to integrate AppImages
 Icon=appimaged
 Categories=Development;
