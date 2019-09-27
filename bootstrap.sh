@@ -221,6 +221,11 @@ apt update
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
+broadcom-sta-dkms
+dkms
+exfat-fuse
+exfat-utils
+go-mtpfs
 grub-common
 grub-efi-amd64
 grub-efi-amd64-bin
@@ -417,6 +422,7 @@ cp /configs/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "ADD OH MY ZSH."
