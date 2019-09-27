@@ -483,7 +483,7 @@ policykit-1
 polkit-kde-agent-1=4:5.8.4-1
 '
 
-apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
 DEVUAN_PACKAGES='
@@ -491,7 +491,6 @@ network-manager=1.6.2-3+devuan1.1
 libnm0=1.6.2-3+devuan1.1
 udisks2=2.1.8-1+devuan2
 libudisks2-0=2.1.8-1+devuan2
-openresolv
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
@@ -523,7 +522,7 @@ plymouth-themes=0.9.2-3ubuntu13
 ttf-ubuntu-font-family
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
 
 
