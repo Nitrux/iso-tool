@@ -212,68 +212,69 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
 
-# # -- Use sources.list.eoan to update packages
-# # -- Update X11, MESA, AMD microcode, and OpenSSH.
-# 
-# printf "\n"
-# printf "UPDATE BASE PACKAGES."
-# printf "\n"
-# 
-# cp /configs/sources.list.eoan /etc/apt/sources.list
-# 
-# UPGRADE_OS_PACKAGES='
-# amd64-microcode
-# broadcom-sta-dkms
-# dkms
-# exfat-fuse
-# exfat-utils
-# go-mtpfs
-# grub-common
-# grub-efi-amd64
-# grub-efi-amd64-bin
-# grub-efi-amd64-signed
-# grub2-common
-# i965-va-driver
-# initramfs-tools
-# initramfs-tools-bin
-# initramfs-tools-core
-# ipxe-qemu
-# libdrm-amdgpu1
-# libdrm-intel1
-# libdrm-radeon1
-# libva-drm2
-# libva-glx2
-# libva-x11-2
-# libva2
-# linux-firmware
-# mesa-va-drivers
-# mesa-vdpau-drivers
-# mesa-vulkan-drivers
-# openssh-client
-# openssl
-# ovmf
-# seabios
-# thunderbolt-tools
-# x11-session-utils
-# xinit
-# xserver-xorg
-# xserver-xorg-core
-# xserver-xorg-input-evdev
-# xserver-xorg-input-libinput
-# xserver-xorg-input-mouse
-# xserver-xorg-input-synaptics
-# xserver-xorg-input-wacom
-# xserver-xorg-video-amdgpu
-# xserver-xorg-video-intel
-# xserver-xorg-video-qxl
-# xserver-xorg-video-radeon
-# xserver-xorg-video-vmware
-# '
-# 
-# apt update &> /dev/null
-# apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
-# apt clean &> /dev/null
-# apt autoclean &> /dev/null
+# -- Use sources.list.eoan to update packages
+# -- Update X11, MESA, AMD microcode, and OpenSSH.
+
+printf "\n"
+printf "UPDATE MISC. PACKAGES."
+printf "\n"
+
+cp /configs/sources.list.eoan /etc/apt/sources.list
+
+UPGRADE_OS_PACKAGES='
+amd64-microcode
+broadcom-sta-dkms
+dkms
+exfat-fuse
+exfat-utils
+go-mtpfs
+grub-common
+grub-efi-amd64
+grub-efi-amd64-bin
+grub-efi-amd64-signed
+grub2-common
+i965-va-driver
+initramfs-tools
+initramfs-tools-bin
+initramfs-tools-core
+ipxe-qemu
+libdrm-amdgpu1
+libdrm-intel1
+libdrm-radeon1
+libva-drm2
+libva-glx2
+libva-x11-2
+libva2
+linux-firmware
+mesa-va-drivers
+mesa-vdpau-drivers
+mesa-vulkan-drivers
+openssh-client
+openssl
+openresolv
+ovmf
+seabios
+thunderbolt-tools
+x11-session-utils
+xinit
+xserver-xorg
+xserver-xorg-core
+xserver-xorg-input-evdev
+xserver-xorg-input-libinput
+xserver-xorg-input-mouse
+xserver-xorg-input-synaptics
+xserver-xorg-input-wacom
+xserver-xorg-video-amdgpu
+xserver-xorg-video-intel
+xserver-xorg-video-qxl
+xserver-xorg-video-radeon
+xserver-xorg-video-vmware
+'
+
+apt update &> /dev/null
+apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add /Applications to $PATH.
