@@ -21,10 +21,17 @@ deb https://repo.nxos.org/ubuntu/repos/nitrux-standard nxos main
 deb https://repo.nxos.org/ubuntu/repos/nitrux-hardware-drivers nxos main
 deb https://repo.nxos.org/ubuntu/repos/nomad-desktop nxos main
 
-
 ####################
 # Graphics Drivers #
 ####################
 
-deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main 
+deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main
+
+#################
+# XORG and Mesa #
+#################
+
+deb http://ppa.launchpad.net/ubuntu-x-swat/updates/ubuntu bionic main
+
+
 

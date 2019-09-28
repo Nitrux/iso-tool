@@ -42,6 +42,7 @@ apt autoclean &> /dev/null
 # -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
+# -- Add key for XORG PPA.
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
@@ -54,6 +55,8 @@ rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
@@ -219,60 +222,64 @@ printf "\n"
 cp /configs/sources.list.eoan /etc/apt/sources.list
 apt update
 
-UPGRADE_OS_PACKAGES='
-amd64-microcode
-broadcom-sta-dkms
-dkms
-exfat-fuse
-exfat-utils
-go-mtpfs
-grub-common
-grub-efi-amd64
-grub-efi-amd64-bin
-grub-efi-amd64-signed
-grub2-common
-i965-va-driver
-initramfs-tools
-initramfs-tools-bin
-initramfs-tools-core
-ipxe-qemu
-libdrm-amdgpu1
-libdrm-intel1
-libdrm-radeon1
-libva-drm2
-libva-glx2
-libva-x11-2
-libva2
-linux-firmware
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
-openssh-client
-openssl
-ovmf
-seabios
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
-'
+# UPGRADE_OS_PACKAGES='
+# amd64-microcode
+# broadcom-sta-dkms
+# dkms
+# exfat-fuse
+# exfat-utils
+# go-mtpfs
+# grub-common
+# grub-efi-amd64
+# grub-efi-amd64-bin
+# grub-efi-amd64-signed
+# grub2-common
+# i965-va-driver
+# initramfs-tools
+# initramfs-tools-bin
+# initramfs-tools-core
+# ipxe-qemu
+# libdrm-amdgpu1
+# libdrm-intel1
+# libdrm-radeon1
+# libva-drm2
+# libva-glx2
+# libva-x11-2
+# libva2
+# linux-firmware
+# mesa-va-drivers
+# mesa-vdpau-drivers
+# mesa-vulkan-drivers
+# openssh-client
+# openssl
+# ovmf
+# seabios
+# thunderbolt-tools
+# x11-session-utils
+# xinit
+# xserver-xorg
+# xserver-xorg-core
+# xserver-xorg-input-evdev
+# xserver-xorg-input-libinput
+# xserver-xorg-input-mouse
+# xserver-xorg-input-synaptics
+# xserver-xorg-input-wacom
+# xserver-xorg-video-amdgpu
+# xserver-xorg-video-intel
+# xserver-xorg-video-qxl
+# xserver-xorg-video-radeon
+# xserver-xorg-video-vmware
+# '
+# 
+# apt update &> /dev/null
+# apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+# apt clean &> /dev/null
+# apt autoclean &> /dev/null
 
 apt update &> /dev/null
-apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+apt -yy dist-upgrade
 apt clean &> /dev/null
 apt autoclean &> /dev/null
-
 
 # -- Add /Applications to $PATH.
 
@@ -298,7 +305,6 @@ https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
-https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_development-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 '
 
@@ -327,7 +333,6 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
-mv /Applications/znx-gui_development-x86_64.AppImage /Applications/znx-gui
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
@@ -342,6 +347,18 @@ printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
 cp /configs/appimage-providers.yaml /etc/
+
+
+# -- Add znx-gui.
+#FIXME We should include the AppImage but firejail prevents the use of sudo.
+
+printf "\n"
+printf "ADD ZNX_GUI."
+printf "\n"
+
+cp /configs/znx-gui.desktop /usr/share/applications
+wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
+chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
