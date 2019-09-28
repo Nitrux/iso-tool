@@ -1,0 +1,11 @@
+[Desktop Entry]	
+Name=ZNX GUI	
+GenericName=Operating System manager	
+Comment=Operating System manager.	
+Icon=znx-gui	
+Type=Application	
+Terminal=false	
+Exec=znx-gui	
+TryExec=znx-gui	
+Categories=Utility;System;	
+Keywords=deployer;live;
