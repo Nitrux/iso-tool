@@ -491,6 +491,7 @@ network-manager=1.6.2-3+devuan1.1
 libnm0=1.6.2-3+devuan1.1
 udisks2=2.1.8-1+devuan2
 libudisks2-0=2.1.8-1+devuan2
+libcgmanager0=0.36-2+devuan1
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
