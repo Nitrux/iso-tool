@@ -2,12 +2,12 @@
 # Devuan Repos #
 ################
 
-#deb http://pkgmaster.devuan.org/devuan ceres main
+deb http://pkgmaster.devuan.org/devuan ceres main
 
-#deb http://pkgmaster.devuan.org/devuan ascii main
-#deb http://pkgmaster.devuan.org/devuan ascii-security main
-#deb http://pkgmaster.devuan.org/devuan ascii-updates main
-#deb http://pkgmaster.devuan.org/devuan ascii-backports main
+deb http://pkgmaster.devuan.org/devuan ascii main
+deb http://pkgmaster.devuan.org/devuan ascii-security main
+deb http://pkgmaster.devuan.org/devuan ascii-updates main
+deb http://pkgmaster.devuan.org/devuan ascii-backports main
 
 #######################
 # Devuan Merged Repos #
@@ -15,10 +15,10 @@
 
 deb http://pkgmaster.devuan.org/merged ceres main
 
-deb http://pkgmaster.devuan.org/merged ascii main
-deb http://pkgmaster.devuan.org/merged ascii-security main
-deb http://pkgmaster.devuan.org/merged ascii-updates main
-deb http://pkgmaster.devuan.org/merged ascii-backports main
+#deb http://pkgmaster.devuan.org/merged ascii main
+#deb http://pkgmaster.devuan.org/merged ascii-security main
+#deb http://pkgmaster.devuan.org/merged ascii-updates main
+#deb http://pkgmaster.devuan.org/merged ascii-backports main
 
 #######################
 # Ubuntu Repos Bionic #
@@ -48,7 +48,6 @@ deb https://repo.nxos.org/ubuntu/repos/nitrux-minimal/ nxos main
 deb https://repo.nxos.org/ubuntu/repos/nitrux-standard nxos main
 deb https://repo.nxos.org/ubuntu/repos/nitrux-hardware-drivers nxos main
 deb https://repo.nxos.org/ubuntu/repos/nomad-desktop nxos main
-
 
 ####################
 # Graphics Drivers #
