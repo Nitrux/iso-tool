@@ -212,16 +212,15 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
 
-# -- Use sources.list.eoan to update packages
-# -- Update X11, MESA, AMD microcode, and OpenSSH.
-
-printf "\n"
-printf "UPDATE BASE PACKAGES."
-printf "\n"
-
-cp /configs/sources.list.eoan /etc/apt/sources.list
-apt update
-
+# # -- Use sources.list.eoan to update packages
+# # -- Update X11, MESA, AMD microcode, and OpenSSH.
+# 
+# printf "\n"
+# printf "UPDATE BASE PACKAGES."
+# printf "\n"
+# 
+# cp /configs/sources.list.eoan /etc/apt/sources.list
+# 
 # UPGRADE_OS_PACKAGES='
 # amd64-microcode
 # broadcom-sta-dkms
@@ -276,10 +275,6 @@ apt update
 # apt clean &> /dev/null
 # apt autoclean &> /dev/null
 
-apt update &> /dev/null
-apt -yy dist-upgrade
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 # -- Add /Applications to $PATH.
 
