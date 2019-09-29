@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 printf "\n"
 printf "STARTING BOOTSTRAP."
 printf "\n"
@@ -21,6 +23,7 @@ fuse
 gnupg2
 libarchive13
 libelf1
+libstartup-notification0
 localechooser-data
 lupin-casper
 phonon4qt5
@@ -28,16 +31,18 @@ phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
-libstartup-notification0
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt update &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add key for Neon repository.
 # -- Add key for our repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
+# -- Add key for XORG PPA.
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
@@ -51,13 +56,15 @@ rm neon.key
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
+
 
 # -- Use sources.list.build to build ISO.
 
 cp /configs/sources.list.build /etc/apt/sources.list
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
+# -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
 
 printf "\n"
 printf "INSTALLING DESKTOP."
@@ -70,12 +77,14 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq upgrade
-apt -yy -qq install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
+apt update &> /dev/null
+apt -yy upgrade &> /dev/null
+apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
-apt -yy -qq purge --remove vlc &> /dev/null
-apt -yy -qq dist-upgrade
+apt -yy purge --remove vlc &> /dev/null
+apt -yy dist-upgrade &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
@@ -102,7 +111,7 @@ rm -r /appimaged_deb
 
 
 # -- Install the kernel.
-#FIXME This should be put in a package.
+#FIXME This should be put in our repository
 
 printf "\n"
 printf "INSTALLING KERNEL."
@@ -110,10 +119,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-headers-5.2.11-050211_5.2.11-050211.201908290731_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-headers-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-image-unsigned-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.2.11/linux-modules-5.2.11-050211-lowlatency_5.2.11-050211.201908290731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301_5.3.1-050301.201909210632_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-image-unsigned-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-modules-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -136,7 +145,7 @@ printf "INSTALLING LINUXBREW."
 printf "\n"
 
 brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-17.18_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-29.31_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
@@ -154,7 +163,7 @@ rm -r /brew_deps
 
 
 # -- Add Window title plasmoid.
-#FIXME This should be included as a deb package downloaded from our repository.
+#FIXME This should be included as a deb package downloaded to our repository.
 
 printf "\n"
 printf "ADD WINDOW TITLE PLASMOID."
@@ -164,7 +173,7 @@ cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add missing firmware modules.
-#FIXME This files should be included in a package.
+#FIXME These files should be included in a package.
 
 printf "\n"
 printf "ADDING MISSING FIRMWARE."
@@ -174,6 +183,19 @@ fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
 '
 
 mkdir /fw_files
@@ -184,23 +206,28 @@ done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
 mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
 
 
 # -- Use sources.list.eoan to update packages
-# -- Update X11, Intel and AMD microcode, and OpenSSH.
+# -- Update X11, MESA, AMD microcode, and OpenSSH.
 
 printf "\n"
-printf "UPDATE BASE PACKAGES."
+printf "UPDATE MISC. PACKAGES."
 printf "\n"
 
 cp /configs/sources.list.eoan /etc/apt/sources.list
-apt -qq update
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
+broadcom-sta-dkms
+dkms
+exfat-fuse
+exfat-utils
+go-mtpfs
 grub-common
 grub-efi-amd64
 grub-efi-amd64-bin
@@ -224,6 +251,7 @@ mesa-vdpau-drivers
 mesa-vulkan-drivers
 openssh-client
 openssl
+openresolv
 ovmf
 seabios
 thunderbolt-tools
@@ -243,8 +271,10 @@ xserver-xorg-video-radeon
 xserver-xorg-video-vmware
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
+apt update &> /dev/null
+apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add /Applications to $PATH.
@@ -260,7 +290,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate and znx.
+# -- Rename AppImageUpdate, appimage-user-tool and znx.
 
 printf "\n"
 printf "ADD APPIMAGES."
@@ -271,6 +301,7 @@ https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
+https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 '
 
 mkdir /Applications
@@ -283,10 +314,9 @@ chmod +x /Applications/*
 mkdir -p /etc/skel/Applications
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.0-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.2-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://github.com/icflorescu/vlc-3-appimage/releases/download/3.0.3/VLC_media_player-x86_64.AppImage
+https://repo.nxos.org/appimages/vlc/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 '
@@ -300,6 +330,10 @@ chmod +x /etc/skel/Applications/*
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
 mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
+
+ls -l /Applications
+ls -l /etc/skel/Applications
 
 
 # -- Add AppImage providers for appimage-cli-tool
@@ -340,8 +374,9 @@ cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
 
+
 # -- Add vfio modules and files.
-#FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
+#FIXME This configuration should be included a in a package; replacing the default package like base-files.
 
 printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
@@ -399,12 +434,22 @@ cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/install-itch-io.sh /etc/skel/.config
 
 
-# -- Remove dash and use mksh as /bin/sh.
-# -- Use mksh as default shell for all users.
+# -- Add oh my zsh.
 #FIXME This should be put in a package.
 
 printf "\n"
-printf "REMOVE DASH AND USE MKSH."
+printf "ADD OH MY ZSH."
+printf "\n"
+
+git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
+
+
+# -- Remove dash and use mksh as /bin/sh.
+# -- Use zsh as default shell for all users.
+#FIXME This should be put in a package.
+
+printf "\n"
+printf "REMOVE DASH AND USE MKSH + ZSH."
 printf "\n"
 
 rm /bin/sh.distrib
@@ -412,8 +457,8 @@ rm /bin/sh.distrib
 ln -sv /bin/mksh /bin/sh
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
 
-sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
-sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
+sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
+sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
 # -- Decrease timeout for systemd start and stop services.
@@ -438,7 +483,6 @@ printf "\n"
 
 /bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
-cupt -q update
 
 
 # -- Use XZ compression when creating the ISO.
@@ -451,13 +495,10 @@ printf "UPDATE INITRAMFS."
 printf "\n"
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
-
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 update-initramfs -u
-
-lsinitramfs /boot/initrd.img-5.2.11-050211-lowlatency | grep vfio
+lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -473,8 +514,7 @@ casper
 lupin-casper
 '
 
-cupt -y -q purge ${REMOVE_PACKAGES//\\n/ }
-cupt -y -q clean &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
 
 
 printf "\n"
