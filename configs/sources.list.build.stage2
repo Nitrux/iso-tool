@@ -13,12 +13,12 @@ deb http://pkgmaster.devuan.org/devuan ascii-backports main
 # Devuan Merged Repos #
 #######################
 
-deb http://pkgmaster.devuan.org/merged ceres main
+# deb http://pkgmaster.devuan.org/merged ceres main
 
-#deb http://pkgmaster.devuan.org/merged ascii main
-#deb http://pkgmaster.devuan.org/merged ascii-security main
-#deb http://pkgmaster.devuan.org/merged ascii-updates main
-#deb http://pkgmaster.devuan.org/merged ascii-backports main
+deb http://pkgmaster.devuan.org/merged ascii main
+deb http://pkgmaster.devuan.org/merged ascii-security main
+deb http://pkgmaster.devuan.org/merged ascii-updates main
+deb http://pkgmaster.devuan.org/merged ascii-backports main
 
 #######################
 # Ubuntu Repos Bionic #
