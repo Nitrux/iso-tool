@@ -27,8 +27,6 @@ libelf1
 localechooser-data
 lupin-casper
 ovmf
-phonon4qt5
-phonon4qt5-backend-vlc
 seabios
 systemd-sysv
 network-manager
@@ -85,10 +83,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-headers-5.3.0-050300_5.3.0-050300.201909152230_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-headers-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-image-unsigned-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3/linux-modules-5.3.0-050300-generic_5.3.0-050300.201909152230_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306_5.3.6-050306.201910111731_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-image-unsigned-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-modules-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -157,7 +155,7 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
-https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 '
 
@@ -180,7 +178,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/znx_stable /Applications/znx
-mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 
 
 # -- Add AppImage providers for appimage-cli-tool
@@ -302,13 +300,13 @@ printf "UPDATE INITRAMFS."
 printf "\n"
 
 cp /configs/initramfs.conf /etc/initramfs-tools/
-
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+
 update-initramfs -u
 
-lsinitramfs /boot/initrd.img--5.3.0-050300-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.6-050306-generic | grep vfio
 
 rm /bin/dummy.sh
 
