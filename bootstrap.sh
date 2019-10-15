@@ -119,10 +119,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301_5.3.1-050301.201909210632_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-image-unsigned-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-modules-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306_5.3.6-050306.201910111731_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-image-unsigned-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-modules-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -299,7 +299,7 @@ printf "\n"
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/stable/znx_stable
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 '
@@ -329,7 +329,7 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx_stable /Applications/znx
-mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
 ls -l /Applications
