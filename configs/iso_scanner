@@ -1,0 +1,53 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	   echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+	prereqs)
+		   prereqs
+		   exit 0
+		   ;;
+esac
+
+. /scripts/casper-functions
+. /scripts/lupin-helpers
+
+iso_path=
+for x in $(cat /proc/cmdline); do
+	case ${x} in
+		ZNX_DEV_UUID=*)
+			znx_dev_uuid=${x#ZNX_DEV_UUID=}
+		;;
+
+		iso-scan/filename=*)
+			iso_path=${x#iso-scan/filename=}
+		;;
+	esac
+done
+
+if [ "$iso_path" ]; then
+	if mount -u ${x#ZNX_DEV_UUID=} isodevice /isodevice; then
+		echo "LIVEMEDIA=$iso_path" >> /conf/param.conf
+		echo "FOUNDDEV=$znx_dev_uuid" >> /conf/param.conf
+		if [ -f "${iso_path}" ]; then
+			echo "LIVEMEDIA_OFFSET=0" >> /conf/param.conf
+		fi
+
+	else
+		panic "
+Could not find the ISO $iso_path
+This could also happen if the file system is not clean because of an operating
+system crash, an interrupted boot process, an improper shutdown, or unplugging
+of a removable device without first unmounting or ejecting it.  To fix this,
+simply reboot into Windows, let it fully start, log in, run 'chkdsk /r', then
+gracefully shut down and reboot back into Windows. After this you should be
+able to reboot again and resume the installation.
+"
+	fi
+fi
