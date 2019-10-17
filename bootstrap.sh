@@ -329,7 +329,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/znx_development/Applications/znx
+mv /Applications/znx_development /Applications/znx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
