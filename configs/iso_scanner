@@ -31,10 +31,15 @@ for x in $(cat /proc/cmdline); do
 	esac
 done
 
+_find_dev () {
+	lsblk -no PATH,PARTUUID $1 | grep $2 | cut -d ' ' -f 1
+}
+
+
 if [ "$iso_path" ]; then
-	if mount -u ${x#ZNX_DEV_UUID=} isodevice /isodevice; then
+	if mount $(_find_dev $znx_dev_uuid) isodevice /isodevice; then
 		echo "LIVEMEDIA=$iso_path" >> /conf/param.conf
-		echo "FOUNDDEV=$znx_dev_uuid" >> /conf/param.conf
+		echo "FOUNDDEV=$(_find_dev $znx_dev_uuid)" >> /conf/param.conf
 		if [ -f "${iso_path}" ]; then
 			echo "LIVEMEDIA_OFFSET=0" >> /conf/param.conf
 		fi
