@@ -499,7 +499,7 @@ printf "\n"
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
