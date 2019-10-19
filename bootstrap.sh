@@ -54,8 +54,8 @@ apt-key add neon.key > /dev/null
 rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
@@ -119,10 +119,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306_5.3.6-050306.201910111731_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-image-unsigned-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-modules-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307_5.3.7-050307.201910180652_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-image-unsigned-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-modules-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -254,6 +254,7 @@ openssl
 openresolv
 ovmf
 seabios
+sudo
 thunderbolt-tools
 x11-session-utils
 xinit
@@ -498,10 +499,10 @@ printf "\n"
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.6-050306-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
 
 rm /bin/dummy.sh
 
