@@ -37,7 +37,7 @@ _find_dev () {
 
 
 if [ "$iso_path" ]; then
-	if mount $(_find_dev $znx_dev_uuid) isodevice /isodevice; then
+	if mount  -t btrfs $(_find_dev $znx_dev_uuid) isodevice /isodevice; then
 		echo "LIVEMEDIA=$iso_path" >> /conf/param.conf
 		echo "FOUNDDEV=$(_find_dev $znx_dev_uuid)" >> /conf/param.conf
 		if [ -f "${iso_path}" ]; then
