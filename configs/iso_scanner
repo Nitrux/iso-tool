@@ -32,7 +32,7 @@ for x in $(cat /proc/cmdline); do
 done
 
 _find_dev () {
-	lsblk -no PATH,PARTUUID $1 | grep $2 | cut -d ' ' -f 1
+	lsblk -no PATH,UUID | grep $1 | cut -d ' ' -f 1
 }
 
 
