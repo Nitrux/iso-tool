@@ -25,7 +25,7 @@ libarchive13
 libelf1
 libstartup-notification0
 localechooser-data
-loclales
+locales
 lupin-casper
 phonon4qt5
 phonon4qt5-backend-vlc
