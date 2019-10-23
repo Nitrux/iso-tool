@@ -25,6 +25,7 @@ libarchive13
 libelf1
 libstartup-notification0
 localechooser-data
+loclales
 lupin-casper
 phonon4qt5
 phonon4qt5-backend-vlc
@@ -270,6 +271,16 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
+language-pack-de
+language-pack-de-base
+language-pack-en
+language-pack-en-base
+language-pack-es
+language-pack-es-base
+language-pack-fr
+language-pack-fr-base
+language-pack-pt
+language-pack-pt-base
 '
 
 apt update &> /dev/null
@@ -298,7 +309,7 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-development/znx_development
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
@@ -329,7 +340,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/znx_development /Applications/znx
+mv /Applications/znx_master /Applications/znx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
@@ -490,6 +501,7 @@ printf "\n"
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
+# -- Add znx_dev_uuid parameter.
 #FIXME This should be put in a package.
 
 printf "\n"
@@ -499,7 +511,7 @@ printf "\n"
 cp /configs/initramfs.conf /etc/initramfs-tools/
 cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
