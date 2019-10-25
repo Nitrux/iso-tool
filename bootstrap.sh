@@ -285,6 +285,7 @@ language-pack-pt-base
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
