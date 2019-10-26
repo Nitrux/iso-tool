@@ -376,8 +376,8 @@ chmod +x /bin/znx-gui
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
-# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts.
-# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts.
+# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
+# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -480,6 +480,7 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
 # -- Decrease timeout for systemd start and stop services.
+#FIXME This should be put in a package.
 
 sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
