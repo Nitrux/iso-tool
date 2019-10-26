@@ -329,7 +329,7 @@ mkdir -p /etc/skel/Applications
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.2-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.29.1-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 '
@@ -376,6 +376,8 @@ chmod +x /bin/znx-gui
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
+# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts.
+# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -387,6 +389,8 @@ cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
+/bin/cp /configs/Trolltech.conf /etc/xdg/Trolltech.conf
+/bin/cp /configs/plasmanotifyrc /etc/xdg/plasmanotifyrc
 
 
 # -- Add vfio modules and files.
