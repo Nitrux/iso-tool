@@ -53,6 +53,7 @@ apt-key add neon.key > /dev/null
 rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
+
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
@@ -94,10 +95,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301_5.3.1-050301.201909210632_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-headers-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-image-unsigned-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.1/linux-modules-5.3.1-050301-generic_5.3.1-050301.201909210632_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307_5.3.7-050307.201910180652_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-image-unsigned-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-modules-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -187,6 +188,7 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
 
+
 # -- Use sources.list.eoan to update packages
 # -- Update X11, MESA, AMD microcode, and OpenSSH.
 
@@ -199,6 +201,11 @@ apt update
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
+broadcom-sta-dkms
+dkms
+exfat-fuse
+exfat-utils
+go-mtpfs
 grub-common
 grub-efi-amd64
 grub-efi-amd64-bin
@@ -222,8 +229,10 @@ mesa-vdpau-drivers
 mesa-vulkan-drivers
 openssh-client
 openssl
+openresolv
 ovmf
 seabios
+sudo
 thunderbolt-tools
 x11-session-utils
 xinit
@@ -239,6 +248,16 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
+language-pack-de
+language-pack-de-base
+language-pack-en
+language-pack-en-base
+language-pack-es
+language-pack-es-base
+language-pack-fr
+language-pack-fr-base
+language-pack-pt
+language-pack-pt-base
 '
 
 apt update &> /dev/null
@@ -265,12 +284,12 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/stable/znx_stable
-https://github.com/Nitrux/znx-gui/releases/download/continuous/znx-gui_development-x86_64.AppImage
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
+https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://repo.nxos.org/appimages/appimage-user-tool-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 '
 
 mkdir /Applications
@@ -287,7 +306,7 @@ mkdir -p /etc/skel/.local/bin
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.2-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
-https://repo.nxos.org/appimages/vlc/VLC-3.0.0.gitfeb851a.glibc2.17-x86-64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
@@ -299,10 +318,10 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/znx_stable /Applications/znx
-mv /Applications/znx-gui_development-x86_64.AppImage /Applications/znx-gui
+mv /Applications/znx_master /Applications/znx
+mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/appimage-user-tool-x86_64.AppImage /Applications/app
+mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
 mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
@@ -327,6 +346,8 @@ cp /configs/appimage-providers.yaml /etc/
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
 # -- Add appimaged launcher to autostart.
+# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
+# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -339,6 +360,8 @@ cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/vmetal.desktop /usr/share/applications
 cp /configs/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
+/bin/cp /configs/Trolltech.conf /etc/xdg/Trolltech.conf
+/bin/cp /configs/plasmanotifyrc /etc/xdg/plasmanotifyrc
 
 
 # -- Add vfio modules and files.
@@ -512,6 +535,42 @@ sysvinit-utils
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 
+# # -- Add OpenRC as init.
+#
+# printf "\n"
+# printf "ADD OPENRC AS INIT."
+# printf "\n"
+# 
+# openrc='
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
+# http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
+# '
+# 
+# mkdir /openrc_deb
+# 
+# for x in $openrc; do
+#     wget -q -P /openrc_deb $x
+# done
+# 
+# dpkg -iR /openrc_deb
+# apt -yy autoremove
+# rm -r /openrc_deb
+
+
+# # -- Add runit as init.
+# 
+# printf "\n"
+# printf "ADD RUNIT AS INIT."
+# printf "\n"
+# 
+# 
+# RUNIT_PACKAGES='
+# runit-sysv
+# '
+# 
+# apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
+
 
 # -- Install packages from Xenial.
 
@@ -549,60 +608,6 @@ apt -yy --fix-broken install
 apt -yy autoremove
 
 
-# # -- Add as SySV.
-# 
-# printf "\n"
-# printf "ADD SYSVRC AS INIT."
-# printf "\n"
-# 
-# DEVUAN_INIT_PACKAGES='
-# init
-# init-system-helpers
-# sysv-rc
-# sysvinit-core
-# sysvinit-utils
-# '
-# 
-# apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
-
-
-# # -- Add OpenRC
-#
-# printf "\n"
-# printf "ADD OPENRC AS INIT."
-# printf "\n"
-# 
-# openrc='
-# http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
-# http://ftp.us.debian.org/debian/pool/main/o/openrc/libeinfo1_0.40.3-1_amd64.deb
-# http://ftp.us.debian.org/debian/pool/main/o/openrc/librc1_0.40.3-1_amd64.deb
-# '
-# 
-# mkdir /openrc_deb
-# 
-# for x in $openrc; do
-#     wget -q -P /openrc_deb $x
-# done
-# 
-# dpkg -iR /openrc_deb
-# apt -yy autoremove
-# rm -r /openrc_deb
-
-
-# # -- Add runit
-# 
-# printf "\n"
-# printf "ADD RUNIT AS INIT."
-# printf "\n"
-# 
-# 
-# RUNIT_PACKAGES='
-# runit-sysv
-# '
-# 
-# apt -yy install ${RUNIT_PACKAGES//\\n/ } --no-install-recommends
-
-
 # -- Check that init system is not systemd.
 
 printf "\n"
@@ -616,25 +621,6 @@ stat /sbin/init
 printf "\n"
 printf "STAGE 2 COMPLETE."
 printf "\n"
-
-
-# -- Use XZ compression when creating the ISO.
-# -- Add initramfs hook script.
-# -- Add the persistence and update the initramfs.
-#FIXME This should be put in a package.
-
-printf "\n"
-printf "UPDATE INITRAMFS."
-printf "\n"
-
-cp /configs/initramfs.conf /etc/initramfs-tools/
-cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.1-050301-generic | grep vfio
-
-rm /bin/dummy.sh
 
 
 # -- Use sources.list.nitrux for release.
@@ -659,6 +645,27 @@ apt-transport-https
 
 /bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ }
+
+
+# -- Use XZ compression when creating the ISO.
+# -- Add initramfs hook script.
+# -- Add the persistence and update the initramfs.
+#FIXME This should be put in a package.
+
+printf "\n"
+printf "UPDATE INITRAMFS."
+printf "\n"
+
+cp /configs/initramfs.conf /etc/initramfs-tools/
+cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
+cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+
+update-initramfs -u
+lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
+
+rm /bin/dummy.sh
 
 
 # -- Clean the filesystem.
