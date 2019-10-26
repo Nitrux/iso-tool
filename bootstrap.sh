@@ -83,10 +83,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306_5.3.6-050306.201910111731_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-headers-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-image-unsigned-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.6/linux-modules-5.3.6-050306-generic_5.3.6-050306.201910111731_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307_5.3.7-050307.201910180652_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-image-unsigned-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-modules-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -101,6 +101,71 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
+# -- Install linuxbrew-wrapper.
+#FIXME This package should be included in a metapackage.
+
+printf "\n"
+printf "INSTALLING LINUXBREW."
+printf "\n"
+
+brewd='
+http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-29.31_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
+'
+
+mkdir /brew_deps
+
+for x in $brewd; do
+    wget -q -P /brew_deps $x
+done
+
+dpkg -iR /brew_deps &> /dev/null
+apt -yy --fix-broken install
+rm -r /brew_deps
+
+
+# -- Add missing firmware modules.
+#FIXME These files should be included in a package.
+
+printf "\n"
+printf "ADDING MISSING FIRMWARE."
+printf "\n"
+
+fw='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+'
+
+mkdir /fw_files
+
+for x in $fw; do
+    wget -q -P /fw_files $x
+done
+
+mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
+mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
+mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+
+rm -r /fw_files
+
+
 # -- Use sources.list.eoan to update packages
 # -- Update X11, Intel and AMD microcode, and OpenSSH.
 
@@ -112,6 +177,18 @@ cp /configs/sources.list.eoan /etc/apt/sources.list
 apt -qq update
 
 UPGRADE_OS_PACKAGES='
+amd64-microcode
+broadcom-sta-dkms
+dkms
+exfat-fuse
+exfat-utils
+go-mtpfs
+grub-common
+grub-efi-amd64
+grub-efi-amd64-bin
+grub-efi-amd64-signed
+grub2-common
+i965-va-driver
 initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
@@ -120,18 +197,41 @@ libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
 libva-drm2
+libva-glx2
 libva-x11-2
 libva2
 linux-firmware
+mesa-va-drivers
+mesa-vdpau-drivers
+mesa-vulkan-drivers
 openssh-client
 openssl
+openresolv
 ovmf
 seabios
+sudo
+thunderbolt-tools
+x11-session-utils
+xinit
+xserver-xorg
+xserver-xorg-core
+xserver-xorg-input-evdev
+xserver-xorg-input-libinput
+xserver-xorg-input-mouse
+xserver-xorg-input-synaptics
+xserver-xorg-input-wacom
+xserver-xorg-video-amdgpu
+xserver-xorg-video-intel
+xserver-xorg-video-qxl
+xserver-xorg-video-radeon
+xserver-xorg-video-vmware
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
-apt -yy -qq autoremove
+apt update &> /dev/null
+apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add /Applications to $PATH.
@@ -154,9 +254,10 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/stable/znx_stable
+https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
+https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/vmetal
+https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 '
 
 mkdir /Applications
@@ -182,6 +283,7 @@ mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 
 
 # -- Add AppImage providers for appimage-cli-tool
+#FIXME These fixes should be included in a package.
 
 printf "\n"
 printf "ADD APPIMAGE PROVIDERS."
@@ -191,9 +293,6 @@ cp /configs/appimage-providers.yaml /etc/
 
 
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-# -- Add kservice menu item for Dolphin for AppImageUpdate.
-# -- Add policykit file for KDialog.
-# -- Add VMetal desktop launcher.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -249,12 +348,22 @@ cp /configs/dummy.sh /bin/
 chmod +x /bin/dummy.sh
 
 
-# -- Remove dash and use mksh as /bin/sh.
-# -- Use mksh as default shell for all users.
+# -- Add oh my zsh.
 #FIXME This should be put in a package.
 
 printf "\n"
-printf "REMOVE DASH AND USE MKSH."
+printf "ADD OH MY ZSH."
+printf "\n"
+
+git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
+
+
+# -- Remove dash and use mksh as /bin/sh.
+# -- Use zsh as default shell for all users.
+#FIXME This should be put in a package.
+
+printf "\n"
+printf "REMOVE DASH AND USE MKSH + ZSH."
 printf "\n"
 
 rm /bin/sh.distrib
@@ -262,11 +371,12 @@ rm /bin/sh.distrib
 ln -sv /bin/mksh /bin/sh
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
 
-sed -i 's+SHELL=/bin/sh+SHELL=/bin/mksh+g' /etc/default/useradd
-sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/mksh+g' /etc/adduser.conf
+sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
+sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
 # -- Decrease timeout for systemd start and stop services.
+#FIXME This should be put in a package.
 
 sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
@@ -288,7 +398,6 @@ printf "\n"
 
 /bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
-cupt -q update
 
 
 # -- Use XZ compression when creating the ISO.
@@ -305,8 +414,7 @@ cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05m
 # cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-
-lsinitramfs /boot/initrd.img-5.3.6-050306-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -322,8 +430,7 @@ casper
 lupin-casper
 '
 
-cupt -y -q purge ${REMOVE_PACKAGES//\\n/ }
-cupt -y -q clean &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
 
 
 printf "\n"
