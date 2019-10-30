@@ -378,6 +378,7 @@ chmod +x /bin/znx-gui
 # -- Add VMetal desktop launcher.
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
+# -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -391,6 +392,7 @@ cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions
 cp /configs/vmetal.desktop /usr/share/applications
 /bin/cp /configs/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/plasmanotifyrc /etc/xdg/plasmanotifyrc
+rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 
 
 # -- Add vfio modules and files.
