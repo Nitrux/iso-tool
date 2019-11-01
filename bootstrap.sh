@@ -24,12 +24,8 @@ gnupg2
 language-pack-en
 language-pack-en-base
 libarchive13
-libc-dev-bin
-libc6-dev
 libelf1
 libstartup-notification0
-linux-libc-dev
-linuxbrew-wrapper
 localechooser-data
 locales
 lupin-casper
@@ -231,7 +227,6 @@ mesa-vdpau-drivers
 mesa-vulkan-drivers
 openssh-client
 openssl
-openresolv
 ovmf
 seabios
 sudo
@@ -260,14 +255,18 @@ language-pack-fr
 language-pack-fr-base
 language-pack-pt
 language-pack-pt-base
-linux-libc-dev
-libc6-dev
+'
+
+ADD_BREW_PACKAGES='
 libc-dev-bin
+libc6-dev
+linux-libc-dev
 linuxbrew-wrapper
 '
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
