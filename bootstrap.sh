@@ -199,7 +199,7 @@ printf "\n"
 printf "UPDATE MISC. PACKAGES."
 printf "\n"
 
-cp /configs/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
