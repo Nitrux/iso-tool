@@ -477,6 +477,7 @@ printf "\n"
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https &> /dev/null
 
 
+# -- Strip kernel modules.
 # -- Use XZ compression when creating the initramfs
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -487,6 +488,7 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
+find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
