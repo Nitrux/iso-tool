@@ -466,6 +466,7 @@ systemctl mask avahi-daemon.service
 systemctl disable cupsd.service
 systemctl disable cupsd-browsed.service
 systemctl disable NetworkManager-wait-online.service
+systemctl disable keyboard-setup.service
 
 
 # -- Fix for broken udev rules (yes, it is broken by default).
@@ -488,8 +489,14 @@ printf "\n"
 printf "REMOVE APT."
 printf "\n"
 
+REMOVE_APT='
+apt 
+apt-utils 
+apt-transport-https
+'
+
 /bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
 
 
 # -- Strip kernel modules.
