@@ -377,6 +377,7 @@ systemctl mask avahi-daemon.service
 systemctl disable cupsd.service
 systemctl disable cupsd-browsed.service
 systemctl disable NetworkManager-wait-online.service
+systemctl disable keyboard-setup.service
 
 
 # -- Fix for broken udev rules (yes, it is broken by default).
