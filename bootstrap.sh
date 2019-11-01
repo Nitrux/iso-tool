@@ -25,12 +25,9 @@ language-pack-en
 language-pack-en-base
 libarchive13
 libelf1
-libstartup-notification0
 localechooser-data
 locales
 lupin-casper
-phonon4qt5
-phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
@@ -84,112 +81,9 @@ apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
-# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
-# -- firejail should be automatically used by the daemon to sandbox AppImages.
-#FIXME This should be put in our repository
-
-printf "\n"
-printf "INSTALLING APPIMAGE DAEMON."
-printf "\n"
-
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
-'
-
-mkdir /appimaged_deb
-
-for x in $appimgd; do
-    wget -q -P /appimaged_deb $x
-done
-
-dpkg -iR /appimaged_deb &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-rm -r /appimaged_deb
-
-
-# -- Install the kernel.
-#FIXME This should be put in our repository
-
-printf "\n"
-printf "INSTALLING KERNEL."
-printf "\n"
-
-
-kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-'
-
-mkdir /latest_kernel
-
-for x in $kfiles; do
-printf "$x"
-    wget -q -P /latest_kernel $x
-done
-
-dpkg -iR /latest_kernel &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /latest_kernel
-
-
-# -- Add Window title plasmoid.
-#FIXME This should be included as a deb package downloaded to our repository.
-
-printf "\n"
-printf "ADD WINDOW TITLE PLASMOID."
-printf "\n"
-
-cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
-
-
-# -- Add missing firmware modules.
-#FIXME These files should be included in a package.
-
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
-
-fw='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
-'
-
-mkdir /fw_files
-
-for x in $fw; do
-    wget -q -P /fw_files $x
-done
-
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-
-rm -r /fw_files
-
-
-# -- Use sources.list.eoan to update packages
-# -- Update X11, MESA, AMD microcode, and OpenSSH.
+# -- Use sources.list.eoan to update packages and install brew.
 
 printf "\n"
 printf "UPDATE MISC. PACKAGES."
@@ -270,6 +164,98 @@ apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
+#FIXME This should be put in our repository.
+
+printf "\n"
+printf "INSTALLING APPIMAGE DAEMON."
+printf "\n"
+
+appimgd='
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
+'
+
+mkdir /appimaged_deb
+
+for x in $appimgd; do
+    wget -q -P /appimaged_deb $x
+done
+
+dpkg -iR /appimaged_deb &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+rm -r /appimaged_deb
+
+
+# -- Install the kernel.
+#FIXME This should be put in our repository.
+
+printf "\n"
+printf "INSTALLING KERNEL."
+printf "\n"
+
+
+kfiles='
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+'
+
+mkdir /latest_kernel
+
+for x in $kfiles; do
+printf "$x"
+    wget -q -P /latest_kernel $x
+done
+
+dpkg -iR /latest_kernel &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /latest_kernel
+
+
+# -- No apt usage past this point. -- #
+
+
+# -- Add missing firmware modules.
+#FIXME These files should be included in a package.
+
+printf "\n"
+printf "ADDING MISSING FIRMWARE."
+printf "\n"
+
+fw='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+'
+
+mkdir /fw_files
+
+for x in $fw; do
+    wget -q -P /fw_files $x
+done
+
+mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
+mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
+mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+
+rm -r /fw_files
 
 
 # -- Add /Applications to $PATH.
@@ -361,6 +347,8 @@ chmod +x /bin/znx-gui
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
+# -- Add Window title plasmoid.
+#FIXME This should be included as a deb package downloaded to our repository.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -375,6 +363,7 @@ cp /configs/other/vmetal.desktop /usr/share/applications
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
+cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add vfio modules and files.
@@ -488,7 +477,7 @@ printf "\n"
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https &> /dev/null
 
 
-# -- Use XZ compression when creating the ISO.
+# -- Use XZ compression when creating the initramfs
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
 # -- Add znx_dev_uuid parameter.
