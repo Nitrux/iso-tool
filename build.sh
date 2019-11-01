@@ -77,7 +77,7 @@ cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/ini
 (while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
-mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -no-progress -b 1M
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -Xdict-size 100% -no-progress -b 1M 
 
 
 # -- Write the commit hash that generated the image.
@@ -97,8 +97,8 @@ git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
 mkiso \
 	-V "NITRUX" \
-	-g $CONFIG_DIR/grub.cfg \
-	-g $CONFIG_DIR/loopback.cfg \
+	-g $CONFIG_DIR/files/grub.cfg \
+	-g $CONFIG_DIR/files/loopback.cfg \
 	-t grub-theme/nitrux \
 	$ISO_DIR $OUTPUT_DIR/$IMAGE
 

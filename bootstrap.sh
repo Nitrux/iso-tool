@@ -22,21 +22,24 @@ dhcpcd5
 fuse
 gnupg2
 ipxe-qemu
+language-pack-en
+language-pack-en-base
 libarchive13
 libelf1
 localechooser-data
+locales
 lupin-casper
+network-manager
 ovmf
 seabios
 systemd-sysv
-network-manager
 user-setup
 wget
 xz-utils
 '
 
-apt -qq update &> /dev/null
-apt -yy -qq install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt update &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for our repository.
@@ -52,10 +55,10 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 # -- Use sources.list.build to build ISO.
 
-cp /configs/sources.list.build /etc/apt/sources.list
+cp /configs/files/sources.list.build /etc/apt/sources.list
 
 
-# -- Update packages list and install packages. Install Nomad Desktop meta package and base-files package avoiding recommended packages.
+# -- Update packages list and install packages.
 
 printf "\n"
 printf "INSTALLING DESKTOP."
@@ -67,107 +70,15 @@ nitrux-standard
 nitrux-hardware-drivers
 '
 
-apt -qq update &> /dev/null
+apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
-apt -yy -qq purge --remove vlc &> /dev/null
+apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
 
 
-# -- Install the kernel.
-
-printf "\n"
-printf "INSTALLING KERNEL."
-printf "\n"
-
-
-kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307_5.3.7-050307.201910180652_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-image-unsigned-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-modules-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-'
-
-mkdir /latest_kernel
-
-for x in $kfiles; do
-printf "$x"
-    wget -q -P /latest_kernel $x
-done
-
-dpkg -iR /latest_kernel &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /latest_kernel
-
-
-# -- Install linuxbrew-wrapper.
-#FIXME This package should be included in a metapackage.
-
-printf "\n"
-printf "INSTALLING LINUXBREW."
-printf "\n"
-
-brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-29.31_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
-'
-
-mkdir /brew_deps
-
-for x in $brewd; do
-    wget -q -P /brew_deps $x
-done
-
-dpkg -iR /brew_deps &> /dev/null
-apt -yy --fix-broken install
-rm -r /brew_deps
-
-
-# -- Add missing firmware modules.
-#FIXME These files should be included in a package.
-
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
-
-fw='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
-'
-
-mkdir /fw_files
-
-for x in $fw; do
-    wget -q -P /fw_files $x
-done
-
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-
-rm -r /fw_files
-
-
 # -- Use sources.list.eoan to update packages
-# -- Update X11, Intel and AMD microcode, and OpenSSH.
 
 printf "\n"
 printf "UPDATE BASE PACKAGES."
@@ -227,11 +138,86 @@ xserver-xorg-video-radeon
 xserver-xorg-video-vmware
 '
 
+ADD_BREW_PACKAGES='
+libc-dev-bin
+libc6-dev
+linux-libc-dev
+linuxbrew-wrapper
+'
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+# -- Install the kernel.
+
+printf "\n"
+printf "INSTALLING KERNEL."
+printf "\n"
+
+
+kfiles='
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb	
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+'
+
+mkdir /latest_kernel
+
+for x in $kfiles; do
+printf "$x"
+    wget -q -P /latest_kernel $x
+done
+
+dpkg -iR /latest_kernel &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /latest_kernel
+
+# -- No apt usage past this point. -- #
+
+
+# -- Add missing firmware modules.
+#FIXME These files should be included in a package.
+
+printf "\n"
+printf "ADDING MISSING FIRMWARE."
+printf "\n"
+
+fw='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+'
+
+mkdir /fw_files
+
+for x in $fw; do
+    wget -q -P /fw_files $x
+done
+
+mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
+mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
+mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+
+rm -r /fw_files
 
 
 # -- Add /Applications to $PATH.
@@ -247,7 +233,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate and znx.
+# -- Rename AppImageUpdate, appimage-user-tool and znx.
 
 printf "\n"
 printf "ADD APPIMAGES."
@@ -255,7 +241,6 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
-https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 '
@@ -278,8 +263,11 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/znx_stable /Applications/znx
+mv /Applications/znx_master /Applications/znx
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
+
+ls -l /Applications
 
 
 # -- Add AppImage providers for appimage-cli-tool
@@ -289,7 +277,7 @@ printf "\n"
 printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
-cp /configs/appimage-providers.yaml /etc/
+cp /configs/files/appimage-providers.yaml /etc/
 
 
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
@@ -299,11 +287,11 @@ printf "\n"
 printf "ADD MISC. FIXES."
 printf "\n"
 
-cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 
 
 # -- Add vfio modules and files.
-#FIXME This configuration should be included a in a package; replacing the defaul package like base-files.
+#FIXME This configuration should be included a in a package; replacing the default package like base-files.
 
 printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
@@ -329,21 +317,21 @@ echo "vfio_iommu_type1" >> /etc/modules
 echo "vfio_pci" >> /etc/modules
 echo "vfio_pci ids=" >> /etc/modules
 
-cp /configs/asound.conf /etc/
-cp /configs/asound.conf /etc/skel/.asoundrc
+cp /configs/files/asound.conf /etc/
+cp /configs/files/asound.conf /etc/skel/.asoundrc
 
-cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
-cp /configs/amdgpu.conf /etc/modprobe.d/
-cp /configs/i915.conf /etc/modprobe.d/
-cp /configs/kvm.conf /etc/modprobe.d/
-cp /configs/nvidia.conf /etc/modprobe.d/
-cp /configs/qemu-system-x86.conf /etc/modprobe.d
-cp /configs/vfio_pci.conf /etc/modprobe.d/
-cp /configs/vfio-pci.conf /etc/modprobe.d/
+cp /configs/files/amdgpu.conf /etc/modprobe.d/
+cp /configs/files/i915.conf /etc/modprobe.d/
+cp /configs/files/kvm.conf /etc/modprobe.d/
+cp /configs/files/nvidia.conf /etc/modprobe.d/
+cp /configs/files/qemu-system-x86.conf /etc/modprobe.d
+cp /configs/files/vfio_pci.conf /etc/modprobe.d/
+cp /configs/files/vfio-pci.conf /etc/modprobe.d/
 
-cp /configs/vfio-pci-override-vga.sh /bin/
-cp /configs/dummy.sh /bin/
+cp /configs/scripts/vfio-pci-override-vga.sh /bin/
+cp /configs/scripts/dummy.sh /bin/
 
 chmod +x /bin/dummy.sh
 
@@ -382,9 +370,24 @@ sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
 
 
+# -- Disable systemd services not deemed necessary.
+# -- use 'mask' to fully disable them.r
+
+systemctl mask avahi-daemon.service
+systemctl disable cupsd.service
+systemctl disable cupsd-browsed.service
+systemctl disable NetworkManager-wait-online.service
+
+
+# -- Fix for broken udev rules (yes, it is broken by default).
+#FIXME This should be put in a package.
+
+sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
+
+
 # -- Use sources.list.nitrux for release.
 
-/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- Overwrite file so cupt doesn't complain.
@@ -396,8 +399,14 @@ printf "\n"
 printf "REMOVE APT."
 printf "\n"
 
-/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
+REMOVE_APT='
+apt 
+apt-utils 
+apt-transport-https
+'
+
+/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
 
 
 # -- Use XZ compression when creating the ISO.
@@ -408,10 +417,11 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-cp /configs/initramfs.conf /etc/initramfs-tools/
-cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;	
+cp /configs/files/initramfs.conf /etc/initramfs-tools/
+cp /configs/files/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+cat /configs/files/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+# cp /configs/files/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
@@ -430,7 +440,7 @@ casper
 lupin-casper
 '
 
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 
 
 printf "\n"
