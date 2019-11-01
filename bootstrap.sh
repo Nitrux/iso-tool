@@ -459,6 +459,21 @@ sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
 
 
+# -- Disable systemd services not deemed necessary.
+# -- use 'mask' to fully disable them.r
+
+systemctl mask avahi-daemon.service
+systemctl disable cupsd.service
+systemctl disable cupsd-browsed.service
+systemctl disable NetworkManager-wait-online.service
+
+
+# -- Fix for broken udev rules (yes, it is broken by default).
+#FIXME This should be put in a package.
+
+sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
+
+
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
