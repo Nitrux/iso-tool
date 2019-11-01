@@ -21,9 +21,15 @@ casper
 dhcpcd5
 fuse
 gnupg2
+language-pack-en
+language-pack-en-base
 libarchive13
+libc-dev-bin
+libc6-dev
 libelf1
 libstartup-notification0
+linux-libc-dev
+linuxbrew-wrapper
 localechooser-data
 locales
 lupin-casper
@@ -36,8 +42,6 @@ xz-utils
 
 apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -62,7 +66,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 # -- Use sources.list.build to build ISO.
 
-cp /configs/sources.list.build /etc/apt/sources.list
+cp /configs/files/sources.list.build /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
@@ -79,11 +83,11 @@ nx-desktop
 '
 
 apt update &> /dev/null
-apt -yy upgrade &> /dev/null
+apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
-apt -yy dist-upgrade &> /dev/null
+apt -yy dist-upgrade
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -120,10 +124,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307_5.3.7-050307.201910180652_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-image-unsigned-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-modules-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -138,31 +142,6 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- Install linuxbrew-wrapper.
-#FIXME This package should be included in a metapackage.
-
-printf "\n"
-printf "INSTALLING LINUXBREW."
-printf "\n"
-
-brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-29.31_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
-'
-
-mkdir /brew_deps
-
-for x in $brewd; do
-    wget -q -P /brew_deps $x
-done
-
-dpkg -iR /brew_deps &> /dev/null
-apt -yy --fix-broken install
-rm -r /brew_deps
-
-
 # -- Add Window title plasmoid.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -170,7 +149,7 @@ printf "\n"
 printf "ADD WINDOW TITLE PLASMOID."
 printf "\n"
 
-cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
+cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add missing firmware modules.
@@ -281,6 +260,10 @@ language-pack-fr
 language-pack-fr-base
 language-pack-pt
 language-pack-pt-base
+linux-libc-dev
+libc6-dev
+libc-dev-bin
+linuxbrew-wrapper
 '
 
 apt update &> /dev/null
@@ -356,7 +339,7 @@ printf "\n"
 printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
-cp /configs/appimage-providers.yaml /etc/
+cp /configs/files/appimage-providers.yaml /etc/
 
 
 # -- Add znx-gui.
@@ -366,7 +349,7 @@ printf "\n"
 printf "ADD ZNX_GUI."
 printf "\n"
 
-cp /configs/znx-gui.desktop /usr/share/applications
+cp /configs/other/znx-gui.desktop /usr/share/applications
 wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
 chmod +x /bin/znx-gui
 
@@ -385,13 +368,13 @@ printf "\n"
 printf "ADD MISC. FIXES."
 printf "\n"
 
-cp /configs/sddm.conf /etc
-cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
-cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
-cp /configs/vmetal.desktop /usr/share/applications
-/bin/cp /configs/Trolltech.conf /etc/xdg/Trolltech.conf
-/bin/cp /configs/plasmanotifyrc /etc/xdg/plasmanotifyrc
+cp /configs/files/sddm.conf /etc
+cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/files/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
+cp /configs/other/vmetal.desktop /usr/share/applications
+/bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
+/bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 
 
@@ -422,21 +405,21 @@ echo "vfio_iommu_type1" >> /etc/modules
 echo "vfio_pci" >> /etc/modules
 echo "vfio_pci ids=" >> /etc/modules
 
-cp /configs/asound.conf /etc/
-cp /configs/asound.conf /etc/skel/.asoundrc
+cp /configs/files/asound.conf /etc/
+cp /configs/files/asound.conf /etc/skel/.asoundrc
 
-cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
-cp /configs/amdgpu.conf /etc/modprobe.d/
-cp /configs/i915.conf /etc/modprobe.d/
-cp /configs/kvm.conf /etc/modprobe.d/
-cp /configs/nvidia.conf /etc/modprobe.d/
-cp /configs/qemu-system-x86.conf /etc/modprobe.d
-cp /configs/vfio_pci.conf /etc/modprobe.d/
-cp /configs/vfio-pci.conf /etc/modprobe.d/
+cp /configs/files/amdgpu.conf /etc/modprobe.d/
+cp /configs/files/i915.conf /etc/modprobe.d/
+cp /configs/files/kvm.conf /etc/modprobe.d/
+cp /configs/files/nvidia.conf /etc/modprobe.d/
+cp /configs/files/qemu-system-x86.conf /etc/modprobe.d
+cp /configs/files/vfio_pci.conf /etc/modprobe.d/
+cp /configs/files/vfio-pci.conf /etc/modprobe.d/
 
-cp /configs/vfio-pci-override-vga.sh /bin/
-cp /configs/dummy.sh /bin/
+cp /configs/scripts/vfio-pci-override-vga.sh /bin/
+cp /configs/scripts/dummy.sh /bin/
 
 chmod +x /bin/dummy.sh
 
@@ -450,8 +433,8 @@ printf "\n"
 
 
 mkdir -p /etc/skel/.local/share/applications
-cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
-cp /configs/install-itch-io.sh /etc/skel/.config
+cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
+cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
@@ -490,7 +473,7 @@ sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/sy
 
 # -- Use sources.list.nitrux for release.
 
-/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- Overwrite file so cupt doesn't complain.
@@ -502,8 +485,8 @@ printf "\n"
 printf "REMOVE APT."
 printf "\n"
 
-/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https
+/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path apt apt-utils apt-transport-https &> /dev/null
 
 
 # -- Use XZ compression when creating the ISO.
@@ -516,13 +499,13 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-cp /configs/initramfs.conf /etc/initramfs-tools/
-cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+cp /configs/files/initramfs.conf /etc/initramfs-tools/
+cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+# cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.8-050308-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -538,7 +521,7 @@ casper
 lupin-casper
 '
 
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 
 
 printf "\n"
