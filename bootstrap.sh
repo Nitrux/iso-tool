@@ -21,13 +21,13 @@ casper
 dhcpcd5
 fuse
 gnupg2
+language-pack-en
+language-pack-en-base
 libarchive13
 libelf1
-libstartup-notification0
 localechooser-data
+locales
 lupin-casper
-phonon4qt5
-phonon4qt5-backend-vlc
 user-setup
 wget
 xz-utils
@@ -62,7 +62,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev
 
 # -- Use sources.list.build.stage1 to build ISO.
 
-cp /configs/sources.list.build.stage1 /etc/apt/sources.list
+cp /configs/files/sources.list.build.stage1 /etc/apt/sources.list
 
 
 # -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
@@ -79,11 +79,94 @@ nx-desktop
 '
 
 apt update &> /dev/null
-apt -yy upgrade &> /dev/null
+apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
-apt -yy dist-upgrade &> /dev/null
+apt -yy dist-upgrade
+
+
+# -- Use sources.list.eoan to update packages and install brew.
+
+printf "\n"
+printf "UPDATE MISC. PACKAGES."
+printf "\n"
+
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
+
+UPGRADE_OS_PACKAGES='
+amd64-microcode
+broadcom-sta-dkms
+dkms
+exfat-fuse
+exfat-utils
+go-mtpfs
+grub-common
+grub-efi-amd64
+grub-efi-amd64-bin
+grub-efi-amd64-signed
+grub2-common
+i965-va-driver
+initramfs-tools
+initramfs-tools-bin
+initramfs-tools-core
+ipxe-qemu
+libdrm-amdgpu1
+libdrm-intel1
+libdrm-radeon1
+libva-drm2
+libva-glx2
+libva-x11-2
+libva2
+linux-firmware
+mesa-va-drivers
+mesa-vdpau-drivers
+mesa-vulkan-drivers
+openssh-client
+openssl
+ovmf
+seabios
+sudo
+thunderbolt-tools
+x11-session-utils
+xinit
+xserver-xorg
+xserver-xorg-core
+xserver-xorg-input-evdev
+xserver-xorg-input-libinput
+xserver-xorg-input-mouse
+xserver-xorg-input-synaptics
+xserver-xorg-input-wacom
+xserver-xorg-video-amdgpu
+xserver-xorg-video-intel
+xserver-xorg-video-qxl
+xserver-xorg-video-radeon
+xserver-xorg-video-vmware
+language-pack-de
+language-pack-de-base
+language-pack-en
+language-pack-en-base
+language-pack-es
+language-pack-es-base
+language-pack-fr
+language-pack-fr-base
+language-pack-pt
+language-pack-pt-base
+'
+
+ADD_BREW_PACKAGES='
+libc-dev-bin
+libc6-dev
+linux-libc-dev
+linuxbrew-wrapper
+'
+
+apt update &> /dev/null
+apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt -yy --fix-broken install
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install the kernel.
@@ -95,10 +178,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307_5.3.7-050307.201910180652_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-headers-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-image-unsigned-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.7/linux-modules-5.3.7-050307-generic_5.3.7-050307.201910180652_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -113,39 +196,7 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- Install linuxbrew-wrapper.
-#FIXME This package should be included in a metapackage.
-
-printf "\n"
-printf "INSTALLING LINUXBREW."
-printf "\n"
-
-brewd='
-http://mirrors.kernel.org/ubuntu/pool/main/l/linux/linux-libc-dev_5.0.0-29.31_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6-dev_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-dev-bin_2.29-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/multiverse/l/linuxbrew-wrapper/linuxbrew-wrapper_20180923-1_all.deb
-'
-
-mkdir /brew_deps
-
-for x in $brewd; do
-    wget -q -P /brew_deps $x
-done
-
-dpkg -iR /brew_deps &> /dev/null
-apt -yy --fix-broken install
-rm -r /brew_deps
-
-
-# -- Add Window title plasmoid.
-#FIXME This should be included as a deb package downloaded to our repository.
-
-printf "\n"
-printf "ADD WINDOW TITLE PLASMOID."
-printf "\n"
-
-cp -a /configs/org.kde.windowtitle /usr/share/plasma/plasmoids
+# -- No apt usage past this point. -- #
 
 
 # -- Add missing firmware modules.
@@ -186,82 +237,6 @@ mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
-
-
-
-# -- Use sources.list.eoan to update packages
-# -- Update X11, MESA, AMD microcode, and OpenSSH.
-
-printf "\n"
-printf "UPDATE BASE PACKAGES."
-printf "\n"
-
-cp /configs/sources.list.eoan /etc/apt/sources.list
-apt update
-
-UPGRADE_OS_PACKAGES='
-amd64-microcode
-broadcom-sta-dkms
-dkms
-exfat-fuse
-exfat-utils
-go-mtpfs
-grub-common
-grub-efi-amd64
-grub-efi-amd64-bin
-grub-efi-amd64-signed
-grub2-common
-i965-va-driver
-initramfs-tools
-initramfs-tools-bin
-initramfs-tools-core
-ipxe-qemu
-libdrm-amdgpu1
-libdrm-intel1
-libdrm-radeon1
-libva-drm2
-libva-glx2
-libva-x11-2
-libva2
-linux-firmware
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
-openssh-client
-openssl
-openresolv
-ovmf
-seabios
-sudo
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
-language-pack-de
-language-pack-de-base
-language-pack-en
-language-pack-en-base
-language-pack-es
-language-pack-es-base
-language-pack-fr
-language-pack-fr-base
-language-pack-pt
-language-pack-pt-base
-'
-
-apt update &> /dev/null
-apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade
 
 
 # -- Add /Applications to $PATH.
@@ -305,7 +280,7 @@ mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.2-x86_64.AppImage
-http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/Waterfox-latest-x86_64.AppImage
+http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
@@ -337,7 +312,7 @@ printf "\n"
 printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
-cp /configs/appimage-providers.yaml /etc/
+cp /configs/files/appimage-providers.yaml /etc/
 
 
 # -- Add config for SDDM.
@@ -348,20 +323,25 @@ cp /configs/appimage-providers.yaml /etc/
 # -- Add appimaged launcher to autostart.
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
+# -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
+# -- Add Window title plasmoid.
 #FIXME These fixes should be included in a package.
+#FIXME This should be included as a deb package downloaded to our repository.
 
 printf "\n"
 printf "ADD MISC. FIXES."
 printf "\n"
 
-cp /configs/sddm.conf /etc
-cp /configs/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
-cp /configs/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
-cp /configs/vmetal.desktop /usr/share/applications
-cp /configs/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
-/bin/cp /configs/Trolltech.conf /etc/xdg/Trolltech.conf
-/bin/cp /configs/plasmanotifyrc /etc/xdg/plasmanotifyrc
+cp /configs/files/sddm.conf /etc
+cp /configs/files.10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
+cp /configs/other/vmetal.desktop /usr/share/applications
+cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
+/bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
+/bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
+rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
+cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 
 
 # -- Add vfio modules and files.
@@ -391,21 +371,21 @@ echo "vfio_iommu_type1" >> /etc/modules
 echo "vfio_pci" >> /etc/modules
 echo "vfio_pci ids=" >> /etc/modules
 
-cp /configs/asound.conf /etc/
-cp /configs/asound.conf /etc/skel/.asoundrc
+cp /configs/files/asound.conf /etc/
+cp /configs/files/asound.conf /etc/skel/.asoundrc
 
-cp /configs/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
-cp /configs/amdgpu.conf /etc/modprobe.d/
-cp /configs/i915.conf /etc/modprobe.d/
-cp /configs/kvm.conf /etc/modprobe.d/
-cp /configs/nvidia.conf /etc/modprobe.d/
-cp /configs/qemu-system-x86.conf /etc/modprobe.d
-cp /configs/vfio_pci.conf /etc/modprobe.d/
-cp /configs/vfio-pci.conf /etc/modprobe.d/
+cp /configs/files/amdgpu.conf /etc/modprobe.d/
+cp /configs/files/i915.conf /etc/modprobe.d/
+cp /configs/files/kvm.conf /etc/modprobe.d/
+cp /configs/files/nvidia.conf /etc/modprobe.d/
+cp /configs/files/qemu-system-x86.conf /etc/modprobe.d
+cp /configs/files/vfio_pci.conf /etc/modprobe.d/
+cp /configs/files/vfio-pci.conf /etc/modprobe.d/
 
-cp /configs/vfio-pci-override-vga.sh /bin/
-cp /configs/dummy.sh /bin/
+cp /configs/scripts/vfio-pci-override-vga.sh /bin/
+cp /configs/scripts/dummy.sh /bin/
 
 chmod +x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
 
@@ -419,8 +399,8 @@ printf "\n"
 
 
 mkdir -p /etc/skel/.local/share/applications
-cp /configs/install.itch.io.desktop /etc/skel/.local/share/applications
-cp /configs/install-itch-io.sh /etc/skel/.config
+cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
+cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
@@ -456,7 +436,7 @@ printf "\n"
 # -- Downgrade packages using Devuan.
 # -- Use sources.list.build.stage2 to add init from Devuan.
 
-cp /configs/sources.list.build.stage2 /etc/apt/sources.list
+cp /configs/files/sources.list.build.stage2 /etc/apt/sources.list
 apt update &> /dev/null
 
 # -- Download and install libsystemd0 from Devuan.
@@ -625,7 +605,7 @@ printf "\n"
 
 # -- Use sources.list.nitrux for release.
 
-/bin/cp /configs/sources.list.nitrux /etc/apt/sources.list
+/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- Overwrite file so cupt doesn't complain.
@@ -643,10 +623,11 @@ apt-utils
 apt-transport-https
 '
 
-/bin/cp -a /configs/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ }
 
 
+# -- Strip kernel modules.
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -656,14 +637,15 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-cp /configs/initramfs.conf /etc/initramfs-tools/
-cp /configs/hook-scripts.sh /usr/share/initramfs-tools/hooks/
+find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+cp /configs/files/initramfs.conf /etc/initramfs-tools/
+cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
-cat /configs/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-# cp /configs/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
+cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
+# cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.8-050308-generic | grep vfio
 
 rm /bin/dummy.sh
 
