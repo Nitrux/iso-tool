@@ -196,9 +196,6 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- No apt usage past this point. -- #
-
-
 # -- Add missing firmware modules.
 #FIXME These files should be included in a package.
 
@@ -351,8 +348,8 @@ printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
 printf "\n"
 
-echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio-pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
@@ -373,21 +370,11 @@ echo "vfio_pci ids=" >> /etc/modules
 
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
-
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /usr/bin/
 
-cp /configs/files/amdgpu.conf /etc/modprobe.d/
-cp /configs/files/i915.conf /etc/modprobe.d/
-cp /configs/files/kvm.conf /etc/modprobe.d/
-cp /configs/files/nvidia.conf /etc/modprobe.d/
-cp /configs/files/qemu-system-x86.conf /etc/modprobe.d
-cp /configs/files/vfio_pci.conf /etc/modprobe.d/
-cp /configs/files/vfio-pci.conf /etc/modprobe.d/
-
-cp /configs/scripts/vfio-pci-override-vga.sh /bin/
-cp /configs/scripts/dummy.sh /bin/
-
-chmod +x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
+chmod +x /usr/bin/dummy.sh /usr/bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
@@ -603,6 +590,9 @@ printf "STAGE 2 COMPLETE."
 printf "\n"
 
 
+# -- No apt usage past this point. -- #
+
+
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
@@ -639,15 +629,17 @@ printf "\n"
 
 find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
+
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
+
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.8-050308-generic | grep vfio
 
-rm /bin/dummy.sh
+rm /usr/bin/dummy.sh
 
 
 # -- Clean the filesystem.
