@@ -42,7 +42,7 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=test_build_$(printf $TRAVIS_BRANCH | sed 's/master/stable/').iso
+IMAGE=test_build_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64.iso
 UPDATE_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.zsync
 
 
