@@ -398,16 +398,8 @@ cp /configs/files/asound.conf /etc/skel/.asoundrc
 
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 
-cp /configs/files/amdgpu.conf /etc/modprobe.d/
-cp /configs/files/i915.conf /etc/modprobe.d/
-cp /configs/files/kvm.conf /etc/modprobe.d/
-cp /configs/files/nvidia.conf /etc/modprobe.d/
-cp /configs/files/qemu-system-x86.conf /etc/modprobe.d
-cp /configs/files/vfio_pci.conf /etc/modprobe.d/
-cp /configs/files/vfio-pci.conf /etc/modprobe.d/
-
-cp /configs/scripts/vfio-pci-override-vga.sh /bin/
-cp /configs/scripts/dummy.sh /bin/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
 
 chmod +x /bin/dummy.sh
 
@@ -460,7 +452,7 @@ sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/sy
 
 
 # -- Disable systemd services not deemed necessary.
-# -- use 'mask' to fully disable them.r
+# -- use 'mask' to fully disable them.
 
 systemctl mask avahi-daemon.service
 systemctl disable cupsd.service
