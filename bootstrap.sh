@@ -395,9 +395,7 @@ echo "vfio_pci ids=" >> /etc/modules
 
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
-
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-
 cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
 cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
 
