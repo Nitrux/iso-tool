@@ -276,7 +276,7 @@ mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.2-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
 http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
@@ -348,8 +348,8 @@ printf "\n"
 printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
 printf "\n"
 
-echo "install vfio-pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
@@ -372,9 +372,9 @@ cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /usr/bin/
+cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
 
-chmod +x /usr/bin/dummy.sh /usr/bin/vfio-pci-override-vga.sh
+chmod +x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
@@ -630,17 +630,15 @@ printf "\n"
 
 find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
-
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
-
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.8-050308-generic | grep vfio
 
-rm /usr/bin/dummy.sh
+rm /bin/dummy.sh
 
 
 # -- Clean the filesystem.
