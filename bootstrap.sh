@@ -545,6 +545,7 @@ for x in $dpkg_appimage; do
 done
 
 mv /dpkg_bin/dpkg-1.19.7-x86_64.AppImage /dpkg_bin/dpkg
+chmod +x /dpkg_bin/dpkg
 /dpkg_bin/./dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_DPKG/\\n/ }
 rm -r /dpkg_bin
 
