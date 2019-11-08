@@ -530,24 +530,7 @@ lupin-casper
 
 # -- Use AppImage to remove dpkg
 
-REMOVE_DPKG='
-dpkg
-'
-
-dpkg_appimage='
-https://github.com/UriHerrera/storage/raw/master/AppImages/dpkg-1.19.7-x86_64.AppImage
-'
-
-mkdir /dpkg_bin
-
-for x in $dpkg_appimage; do
-    wget -q -P /dpkg_bin $x
-done
-
-mv /dpkg_bin/dpkg-1.19.7-x86_64.AppImage /dpkg_bin/dpkg
-chmod +x /dpkg_bin/dpkg
-/dpkg_bin/./dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_DPKG/\\n/ }
-rm -r /dpkg_bin
+/configs/scripts./rm-dpkg.sh
 
 
 printf "\n"
