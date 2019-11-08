@@ -7,7 +7,6 @@ REMOVE_FILES='
 /etc/cron.daily/dpkg
 /etc/dpkg
 /etc/apt
-/etc/dpkg/dpkg.cfg
 /etc/logrotate.d/alternatives
 /etc/logrotate.d/dpkg
 /sbin/start-stop-daemon
@@ -20,8 +19,7 @@ REMOVE_FILES='
 /usr/bin/dpkg-statoverride
 /usr/bin/dpkg-trigger
 /usr/bin/update-alternatives
-/usr/share/doc/dpkg/changelog.Debian.gz
-/usr/share/doc/dpkg/copyright
+/usr/share/doc/dpkg/
 /usr/share/dpkg/
 /usr/share/lintian/overrides/dpkg
 /usr/share/polkit-1/actions/org.dpkg.pkexec.update-alternatives.policy

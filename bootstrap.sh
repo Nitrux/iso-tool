@@ -528,7 +528,10 @@ lupin-casper
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 
 
-# -- Use script to remove dpkg
+# -- No dpkg usage past this point. -- #
+
+
+# -- Use script to remove dpkg.
 
 /configs/scripts/./rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
