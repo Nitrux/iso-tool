@@ -530,7 +530,7 @@ lupin-casper
 
 # -- Use AppImage to remove dpkg
 
-/configs/scripts./rm-dpkg.sh
+/configs/scripts/./rm-dpkg.sh
 
 
 printf "\n"
