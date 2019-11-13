@@ -90,7 +90,7 @@ echo "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
 
 # -- Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/18946af0ad7d1859b5e19de71a700391fa1b3f80/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
@@ -100,8 +100,7 @@ mkiso \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
 	-t grub-theme/nitrux \
-	$ISO_DIR \
-	$OUTPUT_DIR/$IMAGE
+	$ISO_DIR $OUTPUT_DIR/$IMAGE
 
 
 # -- Calculate the checksum.
