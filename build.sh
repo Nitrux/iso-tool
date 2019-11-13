@@ -100,7 +100,8 @@ mkiso \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
 	-t grub-theme/nitrux \
-	$ISO_DIR $OUTPUT_DIR/$IMAGE
+	$ISO_DIR \
+	$OUTPUT_DIR/$IMAGE
 
 
 # -- Calculate the checksum.
