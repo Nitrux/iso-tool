@@ -197,10 +197,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-headers-5.3.11-050311_5.3.11-050311.201911121635_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-headers-5.3.11-050311-generic_5.3.11-050311.201911121635_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-image-unsigned-5.3.11-050311-generic_5.3.11-050311.201911121635_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-modules-5.3.11-050311-generic_5.3.11-050311.201911121635_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -278,7 +278,7 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
+https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-739d988-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
@@ -309,7 +309,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/znx_master /Applications/znx
+mv /Applications/znx-master-739d988-x86_64.AppImage /Applications/znx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
@@ -502,14 +502,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.11-050311-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.8-050308-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.11-050311-generic | grep vfio
 
 rm /bin/dummy.sh
 
