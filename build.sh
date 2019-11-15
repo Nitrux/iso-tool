@@ -90,7 +90,7 @@ echo "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
 
 # -- Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/18946af0ad7d1859b5e19de71a700391fa1b3f80/mkiso
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
