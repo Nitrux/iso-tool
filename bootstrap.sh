@@ -328,12 +328,13 @@ chmod +x /bin/znx-gui
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
+# -- Add appimaged launcher to autostart.
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
 # -- Add Window title plasmoid.
-#FIXME This should be included as a deb package downloaded to our repository.
 #FIXME These fixes should be included in a package.
+#FIXME This should be included as a deb package downloaded to our repository.
 
 printf "\n"
 printf "ADD MISC. FIXES."
@@ -344,6 +345,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
+cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
