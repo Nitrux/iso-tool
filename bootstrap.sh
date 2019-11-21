@@ -34,14 +34,15 @@ xz-utils
 '
 
 apt update &> /dev/null
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
 # -- Add key for our repository.
-# -- Add key for the Proprietary Graphics Drivers PPA.
 # -- Add key for Devuan repositories #1.
 # -- Add key for Devuan repositories #2.
+# -- Add key for the Proprietary Graphics Drivers PPA.
+# -- Add key for XORG PPA.
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
@@ -54,10 +55,11 @@ rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
 # -- Use sources.list.build.stage1 to build ISO.
@@ -178,10 +180,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312_5.3.12-050312.201911201137_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-image-unsigned-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-modules-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -256,12 +258,12 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
+https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
 https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
+https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 '
 
 mkdir /Applications
@@ -290,9 +292,10 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/znx_master /Applications/znx
-mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
+mv /Applications/znx-master-x86_64.AppImage /Applications/znx
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
+mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
@@ -330,7 +333,7 @@ printf "ADD MISC. FIXES."
 printf "\n"
 
 cp /configs/files/sddm.conf /etc
-cp /configs/files.10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
@@ -352,6 +355,7 @@ echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/mo
 echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
 echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
@@ -361,6 +365,7 @@ echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
+echo "radeon" >> /etc/initramfs-tools/modules
 echo "i915" >> /etc/initramfs-tools/modules
 
 echo "vfio" >> /etc/modules
@@ -371,7 +376,7 @@ echo "vfio_pci ids=" >> /etc/modules
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
 cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
 
 chmod +x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
@@ -619,7 +624,7 @@ apt-transport-https
 
 
 # -- Strip kernel modules.
-# -- Use XZ compression when creating the ISO.
+# -- Use GZIP compression when creating the initramfs.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
 #FIXME This should be put in a package.
@@ -628,7 +633,7 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.12-050312-genericc/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
@@ -636,7 +641,7 @@ cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bo
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.8-050308-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.12-050312-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -653,6 +658,15 @@ lupin-casper
 '
 
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ }
+
+
+# -- No dpkg usage past this point. -- #
+
+
+# -- Use script to remove dpkg.
+
+/configs/scripts/./rm-dpkg.sh
+rm /configs/scripts/rm-dpkg.sh
 
 
 printf "\n"
