@@ -172,7 +172,7 @@ apt autoclean &> /dev/null
 
 
 # -- Install the kernel.
-#FIXME This should be put in our repository
+#FIXME This should be put in our repository.
 
 printf "\n"
 printf "INSTALLING KERNEL."
