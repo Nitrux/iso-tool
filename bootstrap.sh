@@ -166,28 +166,6 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
-#FIXME This should be put in our repository.
-
-printf "\n"
-printf "INSTALLING APPIMAGE DAEMON."
-printf "\n"
-
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git0f1c320.travis214_amd64.deb
-'
-
-mkdir /appimaged_deb
-
-for x in $appimgd; do
-    wget -q -P /appimaged_deb $x
-done
-
-dpkg -iR /appimaged_deb &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-rm -r /appimaged_deb
-
-
 # -- Install the kernel.
 #FIXME This should be put in our repository.
 
@@ -292,7 +270,9 @@ for x in $APPS_SYS; do
 done
 
 chmod +x /Applications/*
+
 mkdir -p /etc/skel/Applications
+mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
@@ -300,6 +280,7 @@ http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -314,8 +295,11 @@ mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
+mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+
 ls -l /Applications
 ls -l /etc/skel/Applications
+ls -l /etc/skel/.local/bin/
 
 
 # -- Add AppImage providers for appimage-cli-tool
@@ -357,7 +341,7 @@ printf "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/other/appimagekit-appimaged.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
