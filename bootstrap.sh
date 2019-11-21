@@ -197,10 +197,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-headers-5.3.11-050311_5.3.11-050311.201911121635_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-headers-5.3.11-050311-generic_5.3.11-050311.201911121635_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-image-unsigned-5.3.11-050311-generic_5.3.11-050311.201911121635_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.11/linux-modules-5.3.11-050311-generic_5.3.11-050311.201911121635_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312_5.3.12-050312.201911201137_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-image-unsigned-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-modules-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -357,7 +357,7 @@ printf "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/files/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
+cp /configs/other/appimagekit-appimaged.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
@@ -492,7 +492,7 @@ apt-transport-https
 
 
 # -- Strip kernel modules.
-# -- Use XZ compression when creating the initramfs
+# -- Use GZIP compression when creating the initramfs.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
 # -- Add znx_dev_uuid parameter.
@@ -502,14 +502,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.11-050311-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.12-050312-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.11-050311-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.12-050312-generic | grep vfio
 
 rm /bin/dummy.sh
 
