@@ -175,10 +175,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312_5.3.12-050312.201911201137_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-image-unsigned-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-modules-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-headers-5.4.0-050400_5.4.0-050400.201911242031_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-headers-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-image-unsigned-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-modules-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -488,14 +488,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.12-050312-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.0-050400-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.12-050312-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.4.0-050400-generic | grep vfio
 
 rm /bin/dummy.sh
 
