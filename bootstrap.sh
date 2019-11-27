@@ -202,7 +202,7 @@ printf "INSTALLING APPIMAGE DAEMON."
 printf "\n"
 
 appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git05c4438.travis209_amd64.deb
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git0f1c320.travis214_amd64.deb
 '
 
 mkdir /appimaged_deb
