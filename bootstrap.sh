@@ -160,9 +160,13 @@ linux-libc-dev
 linuxbrew-wrapper
 '
 
+ADD_NPM_PACKAGES='
+npm
+'
+
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } ${ADD_NPM_PACKAGES//\\n/ }--no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -258,7 +262,7 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
+https://github.com/Nitrux/znx/releases/download/continuous-development/znx-development-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
@@ -292,7 +296,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/znx-master-x86_64.AppImage /Applications/znx
+mv /Applications/znx-development-x86_64.AppImage /Applications/znx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
@@ -336,6 +340,7 @@ chmod +x /bin/znx-gui
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
 # -- Add Window title plasmoid.
 # -- Add welcome wizard to app menu.
+# -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -354,6 +359,7 @@ cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
+cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
 
 
 # -- Add vfio modules and files.
@@ -437,12 +443,20 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 # -- Decrease timeout for systemd start and stop services.
 #FIXME This should be put in a package.
 
+printf "\n"
+printf "DECREASE TIMEOUT FOR SYSTEMD SERVICES."
+printf "\n"
+
 sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
 
 
 # -- Disable systemd services not deemed necessary.
 # -- use 'mask' to fully disable them.
+
+printf "\n"
+printf "DISABLE SYSTEMD SERVICES."
+printf "\n"
 
 systemctl mask avahi-daemon.service
 systemctl disable cupsd.service
@@ -462,7 +476,6 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
-# -- Overwrite file so cupt doesn't complain.
 # -- Remove APT.
 # -- Update package index using cupt.
 #FIXME We probably need to provide our own cupt package which also does this.
@@ -477,7 +490,6 @@ apt-utils
 apt-transport-https
 '
 
-/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
 
 
@@ -504,6 +516,15 @@ lsinitramfs /boot/initrd.img-5.3.13-050313-generic | grep vfio
 rm /bin/dummy.sh
 
 
+# -- Add nativefier
+
+printf "\n"
+printf "ADD NATIVEFIER."
+printf "\n"
+
+npm install nativefier -g
+
+
 # -- Clean the filesystem.
 
 printf "\n"
@@ -522,6 +543,10 @@ lupin-casper
 
 
 # -- Use script to remove dpkg.
+
+printf "\n"
+printf "REMOVE DPKG."
+printf "\n"
 
 /configs/scripts/./rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
