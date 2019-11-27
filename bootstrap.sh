@@ -97,6 +97,7 @@ broadcom-sta-dkms
 dkms
 exfat-fuse
 exfat-utils
+firejail
 go-mtpfs
 grub-common
 grub-efi-amd64
