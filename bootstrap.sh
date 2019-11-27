@@ -98,6 +98,7 @@ dkms
 exfat-fuse
 exfat-utils
 firejail
+firejail-profiles
 go-mtpfs
 grub-common
 grub-efi-amd64
