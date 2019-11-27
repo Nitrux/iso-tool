@@ -359,6 +359,7 @@ cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
+mkdir -p /etc/skel/.local/share/{icons,hicolor,128x128,apps}
 cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
 
 
@@ -519,10 +520,12 @@ rm /bin/dummy.sh
 # -- Add nativefier
 
 printf "\n"
-printf "ADD NATIVEFIER."
+printf "ADD NPM INSTALL WITHOUT SUDO."
 printf "\n"
 
-npm install nativefier -g
+mkdir /etc/skel/.npm-packages
+cp /configs/files/npmrc /etc/skel/.npmrc
+npm install -g nativefier
 
 
 # -- Clean the filesystem.
