@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=NX Welcome Wizard
+GenericName=Welcome Wizard
+Comment=Nitrux Welecome Wizard.
+Icon=nx-welcome-wizard
+Type=Application
+Terminal=false
+Exec=nx-welcome-wizard
+TryExec=nx-welcome-wizard
+Categories=Utility;System;
+Keywords=welcome;wizard;
