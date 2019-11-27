@@ -520,13 +520,12 @@ rm /bin/dummy.sh
 # -- Add nativefier
 
 printf "\n"
-printf "ADD NPM INSTALL WITHOUT SUDO."
+printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
 printf "\n"
 
 mkdir /etc/skel/.npm-packages
 cp /configs/files/npmrc /etc/skel/.npmrc
 npm install npm@latest -g
-npm install nativefier -g
 
 
 # -- Clean the filesystem.
