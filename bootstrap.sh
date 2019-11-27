@@ -177,10 +177,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-headers-5.4.0-050400_5.4.0-050400.201911242031_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-headers-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-image-unsigned-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-modules-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313_5.3.13-050313.201911240840_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-image-unsigned-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-modules-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -193,29 +193,6 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
-
-
-# -- Install AppImage daemon. AppImages that are downloaded to the dirs monitored by the daemon should be integrated automatically.
-# -- firejail should be automatically used by the daemon to sandbox AppImages.
-#FIXME This should be put in our repository
-
-printf "\n"
-printf "INSTALLING APPIMAGE DAEMON."
-printf "\n"
-
-appimgd='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged_1-alpha-git0f1c320.travis214_amd64.deb
-'
-
-mkdir /appimaged_deb
-
-for x in $appimgd; do
-    wget -q -P /appimaged_deb $x
-done
-
-dpkg -iR /appimaged_deb &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-rm -r /appimaged_deb
 
 
 # -- No apt usage past this point. -- #
@@ -305,6 +282,7 @@ https://github.com/UriHerrera/storage/raw/master/AppImages/firefox-70.0.1-x86_64
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
 for x in $APPS_USR; do
@@ -319,7 +297,7 @@ mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
-# mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 ls -l /Applications
 ls -l /etc/skel/Applications
@@ -370,7 +348,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
-# cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
+cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
@@ -514,14 +492,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.4.0-050400-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.13-050313-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.0-050400-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.13-050313-generic | grep vfio
 
 rm /bin/dummy.sh
 
