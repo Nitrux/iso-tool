@@ -526,7 +526,6 @@ printf "\n"
 mkdir /etc/skel/.npm-packages
 cp /configs/files/npmrc /etc/skel/.npmrc
 npm install npm@latest -g
-exec $SHELL
 npm install nativefier -g
 
 
