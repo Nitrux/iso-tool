@@ -298,6 +298,7 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx-development-x86_64.AppImage /Applications/znx
+mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
@@ -318,14 +319,14 @@ printf "\n"
 cp /configs/files/appimage-providers.yaml /etc/
 
 
-# # -- Add znx-gui.
-# #FIXME We should include the AppImage but firejail prevents the use of sudo.
-# 
-# printf "\n"
-# printf "ADD ZNX_GUI."
-# printf "\n"
-# 
-# cp /configs/other/znx-gui.desktop /usr/share/applications
+# -- Add znx-gui.
+#FIXME We should include the AppImage but firejail prevents the use of sudo.
+
+printf "\n"
+printf "ADD ZNX_GUI."
+printf "\n"
+
+cp /configs/other/znx-gui.desktop /usr/share/applications
 # wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
 # chmod +x /bin/znx-gui
 
