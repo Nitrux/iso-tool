@@ -267,6 +267,7 @@ https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
+https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -317,16 +318,16 @@ printf "\n"
 cp /configs/files/appimage-providers.yaml /etc/
 
 
-# -- Add znx-gui.
-#FIXME We should include the AppImage but firejail prevents the use of sudo.
-
-printf "\n"
-printf "ADD ZNX_GUI."
-printf "\n"
-
-cp /configs/other/znx-gui.desktop /usr/share/applications
-wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
-chmod +x /bin/znx-gui
+# # -- Add znx-gui.
+# #FIXME We should include the AppImage but firejail prevents the use of sudo.
+# 
+# printf "\n"
+# printf "ADD ZNX_GUI."
+# printf "\n"
+# 
+# cp /configs/other/znx-gui.desktop /usr/share/applications
+# wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
+# chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
