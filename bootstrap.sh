@@ -323,7 +323,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 #FIXME We should include the AppImage but firejail prevents the use of sudo.
 
 printf "\n"
-printf "ADD ZNX_GUI."
+printf "ADD ZNX_GUI DESKTOP LAUNCHER."
 printf "\n"
 
 cp /configs/other/znx-gui.desktop /usr/share/applications
@@ -414,6 +414,29 @@ printf "\n"
 mkdir -p /etc/skel/.local/share/applications
 cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/scripts/install-itch-io.sh /etc/skel/.config
+
+
+# -- Add configuration for npm to install packages in home and without sudo and update it.
+
+printf "\n"
+printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
+printf "\n"
+
+mkdir /etc/skel/.npm-packages
+cp /configs/files/npmrc /etc/skel/.npmrc
+npm install npm@latest -g
+
+
+# -- Add nativefier launcher.
+#FIXME This should be in a package.
+
+printf "\n"
+printf "ADD NATIVEFIER LAUNCHER."
+printf "\n"
+
+
+cp /configs/other/install.nativefier.desktop /etc/skel/.local/share/applications
+cp /configs/scripts/install-nativefier.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
@@ -517,17 +540,6 @@ update-initramfs -u
 lsinitramfs /boot/initrd.img-5.3.13-050313-generic | grep vfio
 
 rm /bin/dummy.sh
-
-
-# -- Add nativefier
-
-printf "\n"
-printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
-printf "\n"
-
-mkdir /etc/skel/.npm-packages
-cp /configs/files/npmrc /etc/skel/.npmrc
-npm install npm@latest -g
 
 
 # -- Clean the filesystem.
