@@ -435,7 +435,7 @@ printf "ADD NATIVEFIER LAUNCHER."
 printf "\n"
 
 
-cp /configs/other/install.nativefier.desktop /etc/skel/.local/share/applications
+cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
 cp /configs/scripts/install-nativefier.sh /etc/skel/.config
 
 
