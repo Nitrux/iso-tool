@@ -262,7 +262,7 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-development/znx-development-x86_64.AppImage
+https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
@@ -297,7 +297,7 @@ done
 chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/znx-development-x86_64.AppImage /Applications/znx
+mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
