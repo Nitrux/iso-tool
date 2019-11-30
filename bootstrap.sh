@@ -160,10 +160,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308_5.3.8-050308.201910290940_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-headers-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-image-unsigned-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb	
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.8/linux-modules-5.3.8-050308-generic_5.3.8-050308.201910290940_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313_5.3.13-050313.201911240840_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-image-unsigned-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-modules-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -176,6 +176,7 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
+
 
 # -- No apt usage past this point. -- #
 
@@ -240,7 +241,7 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-stable/znx_master
+https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 '
@@ -263,7 +264,7 @@ done
 
 chmod +x /etc/skel/Applications/*
 
-mv /Applications/znx_master /Applications/znx
+mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 
@@ -301,6 +302,7 @@ echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/mo
 echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "vfio" >> /etc/initramfs-tools/modules
 echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
@@ -310,6 +312,7 @@ echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
+echo "radeon" >> /etc/initramfs-tools/modules
 echo "i915" >> /etc/initramfs-tools/modules
 
 echo "vfio" >> /etc/modules
@@ -319,19 +322,9 @@ echo "vfio_pci ids=" >> /etc/modules
 
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
-
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-
-cp /configs/files/amdgpu.conf /etc/modprobe.d/
-cp /configs/files/i915.conf /etc/modprobe.d/
-cp /configs/files/kvm.conf /etc/modprobe.d/
-cp /configs/files/nvidia.conf /etc/modprobe.d/
-cp /configs/files/qemu-system-x86.conf /etc/modprobe.d
-cp /configs/files/vfio_pci.conf /etc/modprobe.d/
-cp /configs/files/vfio-pci.conf /etc/modprobe.d/
-
-cp /configs/scripts/vfio-pci-override-vga.sh /bin/
-cp /configs/scripts/dummy.sh /bin/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
 
 chmod +x /bin/dummy.sh
 
@@ -371,7 +364,7 @@ sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/sy
 
 
 # -- Disable systemd services not deemed necessary.
-# -- use 'mask' to fully disable them.r
+# -- use 'mask' to fully disable them.
 
 systemctl mask avahi-daemon.service
 systemctl disable cupsd.service
@@ -406,7 +399,6 @@ apt-utils
 apt-transport-https
 '
 
-/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
 
 
@@ -418,14 +410,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.8-050308-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;	
+find /lib/modules/5.3.13-050313-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;	
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/files/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/files/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/files/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.7-050307-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.13-050313-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -442,6 +434,19 @@ lupin-casper
 '
 
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
+
+
+# -- No dpkg usage past this point. -- #
+
+
+# -- Use script to remove dpkg.
+
+printf "\n"
+printf "REMOVE DPKG."
+printf "\n"
+
+/configs/scripts/./rm-dpkg.sh
+rm /configs/scripts/rm-dpkg.sh
 
 
 printf "\n"
