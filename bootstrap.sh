@@ -164,9 +164,13 @@ ADD_NPM_PACKAGES='
 npm
 '
 
+ADD_MISC_PACKAGES='
+gnome-keyring
+'
+
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } ${ADD_NPM_PACKAGES//\\n/ }--no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
