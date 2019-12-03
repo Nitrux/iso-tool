@@ -50,6 +50,11 @@ printf "\n"
 printf "ADD REPOSITORY KEYS."
 printf "\n"
 
+wget -q https://archive.neon.kde.org/public.key -O neon.key
+	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+	apt-key add neon.key > /dev/null
+	rm neon.key
+
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
@@ -71,7 +76,7 @@ nitrux-standard
 nitrux-hardware-drivers
 calamares-settings-nitrux
 sddm
-plasma
+plasma-workspace
 dolphin
 kate
 konsole
