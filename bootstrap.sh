@@ -289,6 +289,7 @@ APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Index-x86_64_fe8483.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
