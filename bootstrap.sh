@@ -23,7 +23,6 @@ fuse
 gnupg2
 calamares
 isolinux
-ipxe-qemu
 language-pack-en
 language-pack-en-base
 libarchive13
@@ -32,8 +31,8 @@ localechooser-data
 locales
 lupin-casper
 network-manager
-ovmf
-seabios
+phonon4qt5
+phonon4qt5-backend-vlc
 systemd-sysv
 user-setup
 wget
@@ -111,7 +110,6 @@ i965-va-driver
 initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
-ipxe-qemu
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
