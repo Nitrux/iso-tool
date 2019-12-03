@@ -21,6 +21,8 @@ casper
 dhcpcd5
 fuse
 gnupg2
+calamares
+isolinux
 ipxe-qemu
 language-pack-en
 language-pack-en-base
@@ -68,6 +70,12 @@ DESKTOP_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
+calamares-settings-nitrux
+sddm
+plasma
+dolphin
+kate
+konsole
 '
 
 apt update &> /dev/null
