@@ -96,6 +96,7 @@ chmod +x /bin/mkiso
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
 mkiso \
+	-b \
 	-V "NITRUX" \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
