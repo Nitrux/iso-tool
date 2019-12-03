@@ -118,8 +118,6 @@ mesa-vulkan-drivers
 openssh-client
 openssl
 openresolv
-ovmf
-seabios
 sudo
 thunderbolt-tools
 x11-session-utils
@@ -138,15 +136,8 @@ xserver-xorg-video-radeon
 xserver-xorg-video-vmware
 '
 
-ADD_BREW_PACKAGES='
-libc-dev-bin
-libc6-dev
-linux-libc-dev
-linuxbrew-wrapper
-'
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -221,66 +212,6 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
 
-# -- Add /Applications to $PATH.
-
-printf "\n"
-printf "ADD /APPLICATIONS TO PATH."
-printf "\n"
-
-printf "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
-sed -i "/env_reset/d" /etc/sudoers
-
-
-# -- Add system AppImages.
-# -- Create /Applications directory for users.
-# -- Rename AppImageUpdate, appimage-user-tool and znx.
-
-printf "\n"
-printf "ADD APPIMAGES."
-printf "\n"
-
-APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
-'
-
-mkdir /Applications
-
-for x in $APPS_SYS; do
-    wget -q -P /Applications $x
-done
-
-chmod +x /Applications/*
-mkdir -p /etc/skel/Applications
-
-APPS_USR='
-'
-
-for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
-done
-
-chmod +x /etc/skel/Applications/*
-
-mv /Applications/znx-master-x86_64.AppImage /Applications/znx
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
-mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
-
-ls -l /Applications
-
-
-# -- Add AppImage providers for appimage-cli-tool
-#FIXME These fixes should be included in a package.
-
-printf "\n"
-printf "ADD APPIMAGE PROVIDERS."
-printf "\n"
-
-cp /configs/files/appimage-providers.yaml /etc/
-
-
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 #FIXME These fixes should be included in a package.
 
@@ -289,44 +220,6 @@ printf "ADD MISC. FIXES."
 printf "\n"
 
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-
-
-# -- Add vfio modules and files.
-#FIXME This configuration should be included a in a package; replacing the default package like base-files.
-
-printf "\n"
-printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
-printf "\n"
-
-echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
-echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
-echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
-echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
-echo "vfio" >> /etc/initramfs-tools/modules
-echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
-echo "vfio_virqfd" >> /etc/initramfs-tools/modules
-echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
-echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
-echo "vfio_pci" >> /etc/initramfs-tools/modules
-echo "nvidia" >> /etc/initramfs-tools/modules
-echo "amdgpu" >> /etc/initramfs-tools/modules
-echo "radeon" >> /etc/initramfs-tools/modules
-echo "i915" >> /etc/initramfs-tools/modules
-
-echo "vfio" >> /etc/modules
-echo "vfio_iommu_type1" >> /etc/modules
-echo "vfio_pci" >> /etc/modules
-echo "vfio_pci ids=" >> /etc/modules
-
-cp /configs/files/asound.conf /etc/
-cp /configs/files/asound.conf /etc/skel/.asoundrc
-cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
-
-chmod +x /bin/dummy.sh
 
 
 # -- Add oh my zsh.
@@ -384,24 +277,6 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
-# -- Overwrite file so cupt doesn't complain.
-# -- Remove APT.
-# -- Update package index using cupt.
-#FIXME We probably need to provide our own cupt package which also does this.
-
-printf "\n"
-printf "REMOVE APT."
-printf "\n"
-
-REMOVE_APT='
-apt 
-apt-utils 
-apt-transport-https
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
-
-
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -411,42 +286,11 @@ printf "UPDATE INITRAMFS."
 printf "\n"
 
 find /lib/modules/5.3.13-050313-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;	
-cp /configs/files/initramfs.conf /etc/initramfs-tools/
-cp /configs/files/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-cat /configs/files/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-# cp /configs/files/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.13-050313-generic | grep vfio
-
-rm /bin/dummy.sh
-
-
-# -- Clean the filesystem.
-
-printf "\n"
-printf "REMOVE CASPER."
-printf "\n"
-
-REMOVE_PACKAGES='
-casper
-lupin-casper
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 
 
 # -- No dpkg usage past this point. -- #
-
-
-# -- Use script to remove dpkg.
-
-printf "\n"
-printf "REMOVE DPKG."
-printf "\n"
-
-/configs/scripts/./rm-dpkg.sh
-rm /configs/scripts/rm-dpkg.sh
 
 
 printf "\n"
