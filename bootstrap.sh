@@ -32,9 +32,6 @@ localechooser-data
 locales
 lupin-casper
 network-manager
-phonon4qt5
-phonon4qt5-backend-vlc
-systemd-sysv
 user-setup
 wget
 xz-utils
@@ -92,7 +89,7 @@ printf "\n"
 printf "UPDATE BASE PACKAGES."
 printf "\n"
 
-cp /configs/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
 apt -qq update
 
 UPGRADE_OS_PACKAGES='
@@ -228,7 +225,11 @@ printf "\n"
 printf "ADD MISC. FIXES."
 printf "\n"
 
+cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
+/bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
+/bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
+rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 
 
 # -- Add oh my zsh.
@@ -293,8 +294,6 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
-
-find /lib/modules/5.3.13-050313-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;	
 
 update-initramfs -u
 
