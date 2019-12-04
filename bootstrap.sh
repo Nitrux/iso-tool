@@ -21,6 +21,8 @@ casper
 dhcpcd5
 fuse
 gnupg2
+grub-pc
+grub-pc-bin
 calamares
 language-pack-en
 language-pack-en-base
