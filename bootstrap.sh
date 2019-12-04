@@ -23,6 +23,7 @@ fuse
 gnupg2
 calamares
 isolinux
+syslinux-utils
 language-pack-en
 language-pack-en-base
 libarchive13
