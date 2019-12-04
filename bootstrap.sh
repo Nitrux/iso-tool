@@ -19,6 +19,7 @@ apt-utils
 ca-certificates
 calamares
 casper
+cupt
 dhcpcd5
 fuse
 gnupg2
@@ -95,6 +96,7 @@ apt -qq update
 UPGRADE_OS_PACKAGES='
 amd64-microcode
 broadcom-sta-dkms
+cupt
 dkms
 exfat-fuse
 exfat-utils
@@ -157,10 +159,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313_5.3.13-050313.201911240840_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-image-unsigned-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-modules-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-headers-5.4.1-050401_5.4.1-050401.201911290555_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-headers-5.4.1-050401-generic_5.4.1-050401.201911290555_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-image-unsigned-5.4.1-050401-generic_5.4.1-050401.201911290555_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-modules-5.4.1-050401-generic_5.4.1-050401.201911290555_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -285,6 +287,26 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 # -- Use sources.list.nitrux for release.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+
+
+# -- Overwrite file so cupt doesn't complain.
+# -- Remove APT.
+# -- Update package index using cupt.
+#FIXME We probably need to provide our own cupt package which also does this.
+
+printf "\n"
+printf "REMOVE APT."
+printf "\n"
+
+REMOVE_APT='
+apt 
+apt-utils 
+apt-transport-https
+'
+
+/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
+cupt update
 
 
 # -- Use XZ compression when creating the ISO.

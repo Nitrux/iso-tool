@@ -43,7 +43,6 @@ CONFIG_DIR=$PWD/configs
 # -- The name of the ISO image.
 
 IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64.iso
-UPDATE_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.zsync
 
 
 # -- Prepare the directory where the filesystem will be created.
@@ -80,14 +79,6 @@ mkdir -p $ISO_DIR/casper
 mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -Xdict-size 100% -no-progress -b 1M 
 
 
-# -- Write the commit hash that generated the image.
-
-printf "UPDATE_URL $UPDATE_URL" >> $ISO_DIR/.INFO
-printf "\n" >> $ISO_DIR/.INFO
-printf "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
-printf "\n" >> $ISO_DIR/.INFO
-
-
 # -- Generate the ISO image.
 
 wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/grub-bios/mkiso
@@ -104,22 +95,9 @@ mkiso \
 	$ISO_DIR $OUTPUT_DIR/$IMAGE
 
 
-# -- Embed the update information in the image.
-
-printf "zsync|$UPDATE_URL" | dd of=$OUTPUT_DIR/$IMAGE bs=1 seek=33651 count=512 conv=notrunc
-
-
 # -- Calculate the checksum.
 
 sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/${IMAGE%.iso}.sha256sum
-
-
-# -- Generate the zsync file.
-
-zsyncmake \
-	$OUTPUT_DIR/$IMAGE \
-	-u ${UPDATE_URL/.zsync}.iso \
-	-o $OUTPUT_DIR/${IMAGE%.iso}.zsync
 
 
 # -- Upload the ISO image.
