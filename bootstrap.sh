@@ -17,13 +17,13 @@ BASIC_PACKAGES='
 apt-transport-https
 apt-utils
 ca-certificates
+calamares
 casper
 dhcpcd5
 fuse
 gnupg2
 grub-pc
 grub-pc-bin
-calamares
 language-pack-en
 language-pack-en-base
 libarchive13
@@ -75,12 +75,7 @@ DESKTOP_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
-calamares-settings-nitrux
-sddm
-plasma-workspace
-dolphin
-kate
-konsole
+nx-desktop-legacy
 '
 
 apt update &> /dev/null
@@ -111,6 +106,8 @@ grub-common
 grub-efi-amd64
 grub-efi-amd64-bin
 grub-efi-amd64-signed
+grub-pc
+grub-pc-bin
 grub2-common
 i965-va-driver
 initramfs-tools
@@ -127,9 +124,9 @@ linux-firmware
 mesa-va-drivers
 mesa-vdpau-drivers
 mesa-vulkan-drivers
+openresolv
 openssh-client
 openssl
-openresolv
 sudo
 thunderbolt-tools
 x11-session-utils
