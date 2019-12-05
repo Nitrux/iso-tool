@@ -74,7 +74,6 @@ nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
 nx-desktop-legacy
-latte-dock
 '
 
 apt update &> /dev/null
@@ -83,6 +82,30 @@ apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
+
+
+# -- Install the shell.
+
+printf "\n"
+printf "INSTALLING LIQUIDSHELL."
+printf "\n"
+
+
+liquidshell_deb='
+https://github.com/UriHerrera/storage/raw/master/Debs/apps/liquidshell_1.5-1_amd64.deb
+'
+
+mkdir /liquidshell_files
+
+for x in $liquidshell_deb; do
+printf "$x"
+    wget -q -P /liquidshell_files $x
+done
+
+dpkg -iR /liquidshell_files &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /liquidshell_files
+
 
 
 # -- Use sources.list.eoan to update packages
@@ -287,8 +310,10 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 
 
 # -- Use sources.list.nitrux for release.
+# -- Add Ubuntu Bionic repository.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+/bin/cp /configs/files/sources.list.ubuntu/etc/apt/sources.list.d/ubuntu-repos.list
 
 
 # -- Overwrite file so cupt doesn't complain.
