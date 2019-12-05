@@ -74,6 +74,7 @@ nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
 nx-desktop-legacy
+latte-dock
 '
 
 apt update &> /dev/null
