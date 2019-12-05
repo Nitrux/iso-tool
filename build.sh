@@ -76,7 +76,7 @@ cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/ini
 (while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
-mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp xz -Xdict-size 100% -no-progress -b 1M 
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 1M 
 
 
 # -- Generate the ISO image.
