@@ -123,6 +123,7 @@ linux-firmware
 mesa-va-drivers
 mesa-vdpau-drivers
 mesa-vulkan-drivers
+mpv
 openresolv
 openssh-client
 openssl
