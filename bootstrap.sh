@@ -107,7 +107,6 @@ dpkg --configure -a &> /dev/null
 rm -r /liquidshell_files
 
 
-
 # -- Use sources.list.eoan to update packages
 
 printf "\n"
@@ -120,10 +119,12 @@ apt -qq update
 UPGRADE_OS_PACKAGES='
 amd64-microcode
 broadcom-sta-dkms
+calamares
 cupt
 dkms
 exfat-fuse
 exfat-utils
+firefox
 go-mtpfs
 grub-common
 grub-efi-amd64
@@ -245,7 +246,12 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 rm -r /fw_files
 
 
+# -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
+# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
+# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
+# -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
+# -- Add liquidshell to autostart.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -257,6 +263,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
+cp /configs/other/org.kde.liquidshell.desktop /etc/skel/autostart
 
 
 # -- Add oh my zsh.
