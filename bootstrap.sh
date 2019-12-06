@@ -263,7 +263,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-cp /configs/other/org.kde.liquidshell.desktop /etc/skel/autostart
+cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart/
 
 
 # -- Add oh my zsh.
