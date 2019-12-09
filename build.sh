@@ -26,8 +26,8 @@ printf "$x"
     wget -q -P /latest_xorriso $x
 done
 
-dpkg -iR /latest_xorriso/ &> /dev/null
-dpkg --configure -a &> /dev/null
+dpkg -iR /latest_xorriso/
+dpkg --configure -a
 rm -r /latest_xorriso
 
 
@@ -42,7 +42,9 @@ CONFIG_DIR=$PWD/configs
 
 # -- The name of the ISO image.
 
-IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64.iso
+IMAGE=test_build_$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64.iso
+UPDATE_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.zsync
+HASH_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.md5sum
 
 
 # -- Prepare the directory where the filesystem will be created.
@@ -76,18 +78,24 @@ cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/ini
 (while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
-mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 1M 
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 16384
+
+
+# -- Write relevant data to the image.
+
+echo "UPDATE_URL $UPDATE_URL" >> $ISO_DIR/.INFO
+echo "HASH_URL $HASH_URL" >> $ISO_DIR/.INFO
+echo "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
 
 
 # -- Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/grub-bios/mkiso
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
 mkiso \
-	-b \
 	-V "NITRUX" \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
@@ -97,7 +105,15 @@ mkiso \
 
 # -- Calculate the checksum.
 
-sha256sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/${IMAGE%.iso}.sha256sum
+md5sum $OUTPUT_DIR/$IMAGE > $OUTPUT_DIR/${IMAGE%.iso}.md5sum
+
+
+# -- Generate the zsync file.
+
+zsyncmake \
+	$OUTPUT_DIR/$IMAGE \
+	-u ${UPDATE_URL%.zsync}.iso \
+	-o $OUTPUT_DIR/${IMAGE%.iso}.zsync
 
 
 # -- Upload the ISO image.
