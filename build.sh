@@ -7,16 +7,16 @@ set -xe
 # -- Update xorriso and grub.
 
 xorriso='
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/libburn4_1.5.0-1_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/libisoburn1_1.5.0-1build1_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/libisofs6_1.5.0-1_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/libreadline8_8.0-1_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/libtinfo6_6.1%2B20181013-2ubuntu2_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/readline-common_8.0-1_all.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/readline-common_8.0-1_all.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/grub-common_2.04-1ubuntu12_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/grub-efi-amd64_2.04-1ubuntu12_amd64.deb
-https://github.com/UriHerrera/storage/raw/master/Debs/xorriso/grub2-common_2.04-1ubuntu12_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/libburn4_1.5.0-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/libisoburn1_1.5.0-1build1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/libisofs6_1.5.0-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso//libreadline8_8.0-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/libtinfo6_6.1%2B20181013-2ubuntu2_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/readline-common_8.0-1_all.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/readline-common_8.0-1_all.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/grub-common_2.04-1ubuntu12_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/grub-efi-amd64_2.04-1ubuntu12_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/xorriso/grub2-common_2.04-1ubuntu12_amd64.deb
 '
 
 mkdir /latest_xorriso
