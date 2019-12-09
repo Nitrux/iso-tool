@@ -102,6 +102,8 @@ broadcom-sta-dkms
 dkms
 exfat-fuse
 exfat-utils
+firejail
+firejail-profiles
 go-mtpfs
 grub-common
 grub-efi-amd64
@@ -163,9 +165,17 @@ linux-libc-dev
 linuxbrew-wrapper
 '
 
+ADD_NPM_PACKAGES='
+npm
+'
+
+ADD_MISC_PACKAGES='
+gnome-keyring
+'
+
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -180,10 +190,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312_5.3.12-050312.201911201137_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-headers-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-image-unsigned-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.12/linux-modules-5.3.12-050312-generic_5.3.12-050312.201911201137_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-headers-5.3.15-050315_5.3.15-050315.201912041733_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-headers-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-image-unsigned-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-modules-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -259,11 +269,11 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
+https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -279,8 +289,9 @@ mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
-http://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
+https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Index-x86_64_fe8483.AppImage
 https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
 https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
@@ -294,8 +305,8 @@ chmod +x /etc/skel/Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx-master-x86_64.AppImage /Applications/znx
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
@@ -315,6 +326,18 @@ printf "\n"
 cp /configs/files/appimage-providers.yaml /etc/
 
 
+# -- Add znx-gui.
+#FIXME We should include the AppImage but firejail prevents the use of sudo.
+
+printf "\n"
+printf "ADD ZNX_GUI DESKTOP LAUNCHER."
+printf "\n"
+
+cp /configs/other/znx-gui.desktop /usr/share/applications
+# wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
+# chmod +x /bin/znx-gui
+
+
 # -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
 # -- Add kservice menu item for Dolphin for AppImageUpdate.
@@ -325,6 +348,8 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
 # -- Add Window title plasmoid.
+# -- Add welcome wizard to app menu.
+# -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -342,6 +367,9 @@ cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
+cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
+mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
+cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
 
 
 # -- Add vfio modules and files.
@@ -393,6 +421,29 @@ printf "\n"
 mkdir -p /etc/skel/.local/share/applications
 cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
 cp /configs/scripts/install-itch-io.sh /etc/skel/.config
+
+
+# -- Add configuration for npm to install packages in home and without sudo and update it.
+
+printf "\n"
+printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
+printf "\n"
+
+mkdir /etc/skel/.npm-packages
+cp /configs/files/npmrc /etc/skel/.npmrc
+npm install npm@latest -g
+
+
+# -- Add nativefier launcher.
+#FIXME This should be in a package.
+
+printf "\n"
+printf "ADD NATIVEFIER LAUNCHER."
+printf "\n"
+
+
+cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
+cp /configs/scripts/install-nativefier.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
@@ -605,7 +656,6 @@ printf "\n"
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
-# -- Overwrite file so cupt doesn't complain.
 # -- Remove APT.
 # -- Update package index using cupt.
 #FIXME We probably need to provide our own cupt package which also does this.
@@ -620,7 +670,6 @@ apt-utils
 apt-transport-https
 '
 
-/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
 
 
@@ -635,7 +684,7 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.12-050312-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.15-050315-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
@@ -643,7 +692,7 @@ cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bo
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.12-050312-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.15-050315-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -666,6 +715,10 @@ lupin-casper
 
 
 # -- Use script to remove dpkg.
+
+printf "\n"
+printf "REMOVE DPKG."
+printf "\n"
 
 /configs/scripts/./rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
