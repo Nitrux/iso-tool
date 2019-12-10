@@ -112,11 +112,10 @@ printf "ADD LIQUIDSHELL CONFIG."
 printf "\n"
 
 
-cp /configs/other/liquidshell-session.desktop /usr/share/xsessions/
-cp /configs/scripts/start_liquidshell /usr/bin/start_liquidshell
 mkdir -p /usr/share/liquidshell/style/
 cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
 cp /configs/files/liquidshellrc /etc/skel/.config/
+cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
 
 
 # -- Use sources.list.eoan to update packages
