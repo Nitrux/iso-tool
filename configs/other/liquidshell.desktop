@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=XSession
-Exec=/usr/bin/liquidshell -stylesheet /usr/share/liquidshell/style/stylesheet.qss
-TryExec=/usr/bin/liquidshell -stylesheet /usr/share/liquidshell/style/stylesheet.qss
-DesktopNames=liquidshell
-Name=liquidshell
-Comment=liquidshell by KDE modified by Nitrux.
-X-KDE-PluginInfo-Version=5.17.4

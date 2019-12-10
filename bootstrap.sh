@@ -108,13 +108,14 @@ rm -r /liquidshell_files
 
 
 printf "\n"
-printf "ADD LIQUIDSHELL SESSION AND CONFIG."
+printf "ADD LIQUIDSHELL CONFIG."
 printf "\n"
 
 
-cp /configs/other/liquidshell.desktop /usr/share/xsessions/
+cp /configs/other/liquidshell-session.desktop /usr/share/xsessions/
+cp /configs/scripts/start_liquidshell /usr/bin/start_liquidshell
 mkdir -p /usr/share/liquidshell/style/
-cp /configs/files/stylesheet.qss /usr/share/liquidshell/style/
+cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
 cp /configs/files/liquidshellrc /etc/skel/.config/
 
 
@@ -262,7 +263,6 @@ rm -r /fw_files
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
-# -- Add liquidshell to autostart.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
