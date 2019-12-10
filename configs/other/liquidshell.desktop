@@ -2,8 +2,6 @@
 Type=XSession
 Exec=/usr/bin/liquidshell -stylesheet /usr/share/liquidshell/style/stylesheet.qss
 TryExec=/usr/bin/liquidshell -stylesheet /usr/share/liquidshell/style/stylesheet.qss
-Exec=/usr/bin/kwin_x11
-TryExec=/usr/bin/kwin_x11
 DesktopNames=liquidshell
 Name=liquidshell
 Comment=liquidshell by KDE modified by Nitrux.

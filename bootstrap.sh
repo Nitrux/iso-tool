@@ -112,9 +112,9 @@ printf "ADD LIQUIDSHELL SESSION AND CONFIG."
 printf "\n"
 
 
-cp /configs/other/liquidshell-session.desktop /usr/share/xsessions/
-mkdir -p /usr/share/liquidshell/theme/style/
-cp /configs/files/stylesheet.qss /usr/share/liquidshell/theme/style/
+cp /configs/other/liquidshell.desktop /usr/share/xsessions/
+mkdir -p /usr/share/liquidshell/style/
+cp /configs/files/stylesheet.qss /usr/share/liquidshell/style/
 cp /configs/files/liquidshellrc /etc/skel/.config/
 
 
