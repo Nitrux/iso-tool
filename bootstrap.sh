@@ -111,7 +111,7 @@ printf "\n"
 printf "ADD LIQUIDSHELL CONFIG."
 printf "\n"
 
-
+cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
 mkdir -p /usr/share/liquidshell/style/
 cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
 cp /configs/files/liquidshellrc /etc/skel/.config/

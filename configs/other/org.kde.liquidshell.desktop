@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Liquid Desktop Workspace
-Exec=liquidshell -stylesheet /usr/share/liquidshell/style/stylesheet-dark.qss
+Exec=startliquidshell
 Icon=start-here
 Comment=
 
