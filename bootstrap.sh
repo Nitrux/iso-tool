@@ -107,6 +107,17 @@ dpkg --configure -a &> /dev/null
 rm -r /liquidshell_files
 
 
+printf "\n"
+printf "ADD LIQUIDSHELL SESSION AND CONFIG."
+printf "\n"
+
+
+cp /configs/other/liquidshell-session.desktop /usr/share/xsessions/
+mkdir -p /usr/share/liquidshell/theme/style/
+cp /configs/files/stylesheet.qss /usr/share/liquidshell/theme/style/
+cp /configs/files/liquidshellrc /etc/skel/.config/
+
+
 # -- Use sources.list.eoan to update packages
 
 printf "\n"
@@ -263,8 +274,6 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart/
-cp /configs/files/stylesheet.qss /etc/skel/.config/stylesheet.qss
 
 
 # -- Add oh my zsh.
