@@ -83,13 +83,13 @@ apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
 
 
-# -- Use sources.list.eoan to update packages and install brew.
+# -- Use sources.list.focal to update packages and install brew.
 
 printf "\n"
 printf "UPDATE MISC. PACKAGES."
 printf "\n"
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
