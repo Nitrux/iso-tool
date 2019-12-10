@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=liquidshell
+Exec=liquidshell -stylesheet ~/.config/stylesheet.qss
 X-DBUS-StartupType=Unique
 Name=Liquid Desktop Workspace
 Name[ca]=Espai de treball de l'escriptori Liquid

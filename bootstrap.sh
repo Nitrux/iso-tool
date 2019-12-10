@@ -92,7 +92,7 @@ printf "\n"
 
 
 liquidshell_deb='
-https://github.com/UriHerrera/storage/raw/master/Debs/apps/liquidshell_1.5-1_amd64.deb
+https://github.com/UriHerrera/storage/raw/master/Debs/apps/liquidshell_1.5-nxos-1_amd64.deb
 '
 
 mkdir /liquidshell_files
@@ -264,6 +264,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart/
+cp /configs/files/stylesheet.qss /etc/skel/.config/stylesheet.qss
 
 
 # -- Add oh my zsh.
