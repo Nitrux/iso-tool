@@ -262,6 +262,7 @@ rm -r /fw_files
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
+# -- Delete Calamares default desktop launcher.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -273,6 +274,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
+rm /usr/share/applications/calamares.desktop
 
 
 # -- Add oh my zsh.
