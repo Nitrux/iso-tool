@@ -23,6 +23,8 @@ http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-21ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/e/efivar/libefiboot1_37-2ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/e/efivar/libefivar1_37-2ubuntu2_amd64.deb
 '
 
 mkdir /latest_xorriso
@@ -32,7 +34,7 @@ printf "$x"
     wget -q -P /latest_xorriso $x
 done
 
-dpkg -i --force-all /latest_xorriso/
+dpkg -iR --force-all /latest_xorriso/
 dpkg --configure -a
 rm -r /latest_xorriso
 
