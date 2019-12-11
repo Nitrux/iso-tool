@@ -370,6 +370,7 @@ cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
+rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 
 
 # -- Add vfio modules and files.
