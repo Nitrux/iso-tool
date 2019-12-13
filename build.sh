@@ -78,7 +78,7 @@ mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progres
 
 # -- Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/UriHerrera/tools/grub-bios/mkiso
+wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/grub-bios/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
