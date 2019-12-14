@@ -7,24 +7,28 @@ set -xe
 # -- Update xorriso and grub.
 
 xorriso='
-http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/xorriso_1.5.0-1build1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/libisoburn1_1.5.0-1build1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/libb/libburn/libburn4_1.5.0-1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisofs/libisofs6_1.5.0-1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/r/readline/libreadline8_8.0-1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/r/readline/readline-common_8.0-1_all.deb
-http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64_2.04-1ubuntu14_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64-bin_2.04-1ubuntu14_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2-signed/grub-efi-amd64-signed_1.131+2.04-1ubuntu14_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.04-1ubuntu14_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-common_2.04-1ubuntu14_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-21ubuntu1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/e/efivar/libefiboot1_37-2ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/e/efivar/libefivar1_37-2ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-21ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2-signed/grub-efi-amd64-signed_1.131+2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-common_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64-bin_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-pc-bin_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-pc_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/r/readline/libreadline8_8.0-1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/r/readline/readline-common_8.0-1_all.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/g/grub2/grub2_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/libb/libburn/libburn4_1.5.0-1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/libisoburn1_1.5.0-1build1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/xorriso_1.5.0-1build1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisofs/libisofs6_1.5.0-1_amd64.deb
 
 '
 
