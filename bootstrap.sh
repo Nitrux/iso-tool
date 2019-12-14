@@ -286,7 +286,7 @@ mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Index-x86_64_fe8483.AppImage
