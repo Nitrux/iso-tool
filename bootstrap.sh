@@ -128,7 +128,6 @@ apt -qq update
 UPGRADE_OS_PACKAGES='
 amd64-microcode
 broadcom-sta-dkms
-cupt
 dkms
 exfat-fuse
 exfat-utils
