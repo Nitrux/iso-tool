@@ -23,7 +23,6 @@ cupt
 dhcpcd5
 fuse
 gnupg2
-grub-pc
 grub-pc-bin
 language-pack-en
 language-pack-en-base
@@ -33,6 +32,7 @@ localechooser-data
 locales
 lupin-casper
 network-manager
+squashfs-tools
 user-setup
 wget
 xz-utils
@@ -138,10 +138,8 @@ exfat-utils
 firefox
 go-mtpfs
 grub-common
-grub-efi-amd64
 grub-efi-amd64-bin
 grub-efi-amd64-signed
-grub-pc
 grub-pc-bin
 grub2-common
 i965-va-driver
@@ -196,10 +194,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-headers-5.4.1-050401_5.4.1-050401.201911290555_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-headers-5.4.1-050401-generic_5.4.1-050401.201911290555_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-image-unsigned-5.4.1-050401-generic_5.4.1-050401.201911290555_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.1/linux-modules-5.4.1-050401-generic_5.4.1-050401.201911290555_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-headers-5.4.3-050403_5.4.3-050403.201912130841_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-headers-5.4.3-050403-generic_5.4.3-050403.201912130841_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-image-unsigned-5.4.3-050403-generic_5.4.3-050403.201912130841_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-modules-5.4.3-050403-generic_5.4.3-050403.201912130841_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -331,7 +329,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 # -- Add Ubuntu Bionic repository.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-/bin/cp /configs/files/sources.list.ubuntu/etc/apt/sources.list.d/ubuntu-repos.list
+/bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
 
 
 # -- Overwrite file so cupt doesn't complain.
