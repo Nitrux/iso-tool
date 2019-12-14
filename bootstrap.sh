@@ -18,7 +18,6 @@ apt-transport-https
 apt-utils
 ca-certificates
 casper
-cupt
 dhcpcd5
 fuse
 gnupg2
@@ -330,24 +329,24 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 /bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
 
 
-# -- Overwrite file so cupt doesn't complain.
-# -- Remove APT.
-# -- Update package index using cupt.
-#FIXME We probably need to provide our own cupt package which also does this.
-
-printf "\n"
-printf "REMOVE APT."
-printf "\n"
-
-REMOVE_APT='
-apt 
-apt-utils 
-apt-transport-https
-'
-
-/bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
-cupt update
+# # -- Overwrite file so cupt doesn't complain.
+# # -- Remove APT.
+# # -- Update package index using cupt.
+# #FIXME We probably need to provide our own cupt package which also does this.
+# 
+# printf "\n"
+# printf "REMOVE APT."
+# printf "\n"
+# 
+# REMOVE_APT='
+# apt 
+# apt-utils 
+# apt-transport-https
+# '
+# 
+# /bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
+# /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
+# cupt update
 
 
 # -- Use XZ compression when creating the ISO.
