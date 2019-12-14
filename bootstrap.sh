@@ -185,10 +185,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-headers-5.3.15-050315_5.3.15-050315.201912041733_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-headers-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-image-unsigned-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-modules-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.16/linux-headers-5.3.16-050316_5.3.16-050316.201912130343_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.16/linux-headers-5.3.16-050316-generic_5.3.16-050316.201912130343_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.16/linux-image-unsigned-5.3.16-050316-generic_5.3.16-050316.201912130343_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.16/linux-modules-5.3.16-050316-generic_5.3.16-050316.201912130343_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -349,6 +349,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
+# -- Use script to restart latte-dock on login to load icon cache properly.
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -370,6 +371,7 @@ cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
+cp /configs/script/startnx.sh /bin/startnx
 
 
 # -- Add vfio modules and files.
@@ -537,14 +539,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.15-050315-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.16-050316-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.15-050315-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.16-050316-generic | grep vfio
 
 rm /bin/dummy.sh
 
