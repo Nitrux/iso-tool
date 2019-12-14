@@ -21,10 +21,10 @@ http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi_2.04-1ubuntu14_amd64
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-pc-bin_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-pc_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.04-1ubuntu14_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/g/grub2/grub2_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/r/readline/libreadline8_8.0-1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/r/readline/readline-common_8.0-1_all.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/g/grub2/grub2_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/libb/libburn/libburn4_1.5.0-1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/libisoburn1_1.5.0-1build1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/xorriso_1.5.0-1build1_amd64.deb
