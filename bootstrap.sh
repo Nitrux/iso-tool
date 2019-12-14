@@ -176,13 +176,15 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
+# -- No apt usage past this point. -- #
+
+
 # -- Install the kernel.
 #FIXME This should be put in our repository.
 
 printf "\n"
 printf "INSTALLING KERNEL."
 printf "\n"
-
 
 kfiles='
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.16/linux-headers-5.3.16-050316_5.3.16-050316.201912130343_all.deb
@@ -203,7 +205,33 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- No apt usage past this point. -- #
+# -- Install Maui apps Debs.
+# -- Add custom launchers for Maui apps.
+#FIXME This should be put in our repository.
+
+printf "\n"
+printf "INSTALLING MAUI APPS."
+printf "\n"
+
+mauipkgs='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-0.1.1-Linux.deb
+'
+
+mkdir /maui_debs
+
+for x in $mauipkgs; do
+	wget -q -P /maui_debs $x
+done
+
+dpkg -iR /maui_debs &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /maui_debs
+
+/bin/cp /configs/other/org.kde.* /usr/share/applications
 
 
 # -- Add missing firmware modules.
@@ -289,9 +317,6 @@ APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Index-x86_64_fe8483.AppImage
-https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
