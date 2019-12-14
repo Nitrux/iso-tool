@@ -2,8 +2,8 @@ sudo: required
 script:
 - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 6B05F25D762E3157 > /dev/null
 - wget -q -O - https://www.mongodb.org/static/pgp/server-3.2.pub | sudo apt-key add - > /dev/null
-- sudo apt-get -qq update > /dev/null
-- sudo apt-get -yy -qq install util-linux squashfs-tools zsync xorriso grub2 grub-common grub2-common grub-pc grub-pc-bin grub-efi grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed sshpass mtools --no-install-recommends
+- sudo apt-get -qq update
+- sudo apt-get -yy install util-linux squashfs-tools zsync xorriso grub2 grub-common grub2-common grub-pc grub-pc-bin grub-efi grub-efi-amd64 grub-efi-amd64-bin grub-efi-amd64-signed sshpass mtools --no-install-recommends
 - sudo bash build.sh
 branches:
   except:
