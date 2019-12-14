@@ -18,7 +18,6 @@ http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-common_2.04-1ubuntu14_am
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64-bin_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi_2.04-1ubuntu14_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-pc-bin_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/g/grub2/grub2_2.04-1ubuntu14_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
