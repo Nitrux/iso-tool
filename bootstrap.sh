@@ -17,7 +17,6 @@ BASIC_PACKAGES='
 apt-transport-https
 apt-utils
 ca-certificates
-calamares
 casper
 cupt
 dhcpcd5
@@ -130,7 +129,6 @@ apt -qq update
 UPGRADE_OS_PACKAGES='
 amd64-microcode
 broadcom-sta-dkms
-calamares
 cupt
 dkms
 exfat-fuse
