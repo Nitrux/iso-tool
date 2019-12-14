@@ -30,6 +30,7 @@ http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/libisoburn1_1.5.0
 http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/xorriso_1.5.0-1build1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisofs/libisofs6_1.5.0-1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/universe/j/jigit/libjte1_1.21-1ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.30-0ubuntu2_all.deb
 '
 
 mkdir /latest_xorriso
