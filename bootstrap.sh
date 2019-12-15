@@ -87,13 +87,13 @@ calamares-settings-nitrux
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
-apt -yy install ${CALAMARES_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-apt-mark manual ${PIN_PACKAGES//\\n/ }
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt -yy dist-upgrade
 
+apt -yy install ${CALAMARES_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+apt-mark hold ${PIN_PACKAGES//\\n/ }
 
 # -- Install the shell.
 
