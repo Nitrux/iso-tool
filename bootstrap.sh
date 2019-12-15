@@ -76,6 +76,11 @@ nx-desktop-legacy
 
 CALAMARES_PACKAGES='
 calamares=3.1.12-1
+calamares-settings-nitrux=1.1.17
+'
+
+PIN_PACKAGES='
+calamares
 calamares-settings-nitrux
 '
 
@@ -83,7 +88,7 @@ apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-apt-mark manual ${CALAMARES_PACKAGES//\\n/ }
+apt-mark manual ${PIN_PACKAGES//\\n/ }
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
