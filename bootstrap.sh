@@ -76,7 +76,7 @@ nx-desktop-legacy
 
 CALAMARES_PACKAGES='
 calamares
-calamares-settings-lubuntu
+calamares-settings-nitrux
 '
 
 apt update &> /dev/null
