@@ -80,6 +80,7 @@ apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
+apt -yy autoremove
 apt -yy dist-upgrade
 
 
@@ -179,6 +180,7 @@ xserver-xorg-video-vmware
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -327,6 +329,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 /bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
+/bin/cp /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-repos.list
 
 
 # # -- Overwrite file so cupt doesn't complain.
