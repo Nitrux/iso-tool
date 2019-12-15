@@ -72,6 +72,7 @@ nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
 nx-desktop-legacy
+calamares=3.1.12-1
 calamares-settings-nitrux
 '
 
