@@ -72,6 +72,7 @@ nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
 nx-desktop-legacy
+calamares-settings-nitrux
 '
 
 apt update &> /dev/null
