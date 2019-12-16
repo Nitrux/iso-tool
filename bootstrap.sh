@@ -189,6 +189,10 @@ shim-signed
 
 MISC_PACKAGES='
 calamares-settings-ubuntu-common
+libreoffice
+inkscape
+gimp
+kdenlive
 '
 
 apt update &> /dev/null
@@ -367,9 +371,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 # cupt update
 
 
-# -- Use XZ compression when creating the ISO.
-# -- Add initramfs hook script.
-# -- Add the persistence and update the initramfs.
+# -- Update initramfs.
 
 
 printf "\n"
