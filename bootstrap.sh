@@ -68,9 +68,9 @@ printf "INSTALLING DESKTOP."
 printf "\n"
 
 DESKTOP_PACKAGES='
-nitrux-minimal
-nitrux-standard
-nitrux-hardware-drivers
+nitrux-minimal-legacy
+nitrux-standard-legacy
+nitrux-hardware-drivers-legacy
 nx-desktop-legacy
 '
 
