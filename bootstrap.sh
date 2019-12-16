@@ -34,6 +34,8 @@ squashfs-tools
 user-setup
 wget
 xz-utils
+shim
+shim-signed
 '
 
 apt update &> /dev/null
@@ -179,10 +181,17 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
+shim
+shim-signed
+'
+
+MISC_PACKAGES='
+calamares-settings-ubuntu-common
 '
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
