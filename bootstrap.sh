@@ -36,6 +36,8 @@ wget
 xz-utils
 shim
 shim-signed
+btrfs-tools
+btrfs-progs
 '
 
 apt update &> /dev/null
@@ -368,6 +370,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 # -- Use XZ compression when creating the ISO.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
+
 
 printf "\n"
 printf "UPDATE INITRAMFS."
