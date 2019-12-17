@@ -321,10 +321,14 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
 # -- Decrease timeout for systemd start and stop services.
+# -- Decrease the time to "raise a network interface". Default is FIVE MINUTES!?.
 #FIXME This should be put in a package.
 
 sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
+
+mkdir -p /etc/systemd/system/networking.service.d/
+bash -c 'echo -e "[Service]\nTimeoutStartSec=20sec" > /etc/systemd/system/networking.service.d/timeout.conf'
 
 
 # -- Disable systemd services not deemed necessary.
