@@ -301,17 +301,6 @@ https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_6
 https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 '
 
-mkdir /Applications
-
-for x in $APPS_SYS; do
-    wget -q -P /Applications $x
-done
-
-chmod +x /Applications/*
-
-mkdir -p /etc/skel/Applications
-mkdir -p /etc/skel/.local/bin
-
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
@@ -319,11 +308,17 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
-for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
+mkdir /Applications
+
+for x in $APPS_SYS; do
+    wget -q -P /Applications $x
 done
 
-chmod +x /etc/skel/Applications/*
+for x in $APPS_USR; do
+    wget -q -P /Applications $x
+done
+
+chmod +x /Applications/*
 
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx-master-x86_64.AppImage /Applications/znx
@@ -332,11 +327,13 @@ mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
-mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /Applications/LibreOffice-6.3.4-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
+
+mv /Applications/appimaged-x86_64.AppImage /Applications/appimaged
 
 ls -l /Applications
-ls -l /etc/skel/Applications
-ls -l /etc/skel/.local/bin/
 
 
 # -- Add AppImage providers for appimage-cli-tool
@@ -346,18 +343,6 @@ printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
 cp /configs/files/appimage-providers.yaml /etc/
-
-
-# -- Add znx-gui.
-#FIXME We should include the AppImage but firejail prevents the use of sudo.
-
-printf "\n"
-printf "ADD ZNX_GUI DESKTOP LAUNCHER."
-printf "\n"
-
-cp /configs/other/znx-gui.desktop /usr/share/applications
-# wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
-# chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
@@ -373,6 +358,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
+# -- Add znx-gui desktop launcher.
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -392,8 +378,8 @@ rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
-cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
+cp /configs/other/znx-gui.desktop /usr/share/applications
 
 
 # -- Add vfio modules and files.
