@@ -309,6 +309,8 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 '
 
 mkdir /Applications
+mkdir -p /etc/skel/Applications
+mkdir -p /etc/skel/.local/bin
 
 for x in $APPS_SYS; do
     wget -q -P /Applications $x
@@ -331,9 +333,10 @@ mv /Applications/LibreOffice-6.3.4-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
 mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
 
-mv /Applications/appimaged-x86_64.AppImage /Applications/appimaged
+mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 ls -l /Applications
+ls -l /etc/skel/.local/bin/
 
 
 # -- Add AppImage providers for appimage-cli-tool
