@@ -92,7 +92,8 @@ apt -yy autoremove
 apt -yy dist-upgrade
 
 
-# -- Install the shell.
+# -- Install liquidshell.
+#FIXME These files should be included in a package.
 
 printf "\n"
 printf "INSTALLING LIQUIDSHELL."
