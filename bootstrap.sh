@@ -294,18 +294,21 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
+https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
 APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
+https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
+https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -322,18 +325,21 @@ done
 
 chmod +x /Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
+
+mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 mv /Applications/LibreOffice-6.3.4-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/kdenlive-19.04.3b-x86_64.appimage /Applications/kdenlive
+mv /Applications/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
-
-mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
