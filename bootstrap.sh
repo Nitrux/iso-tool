@@ -226,7 +226,6 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-0.1.1
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-0.1.1-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-0.1.1-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-0.1.1-Linux.deb
 '
 
 mkdir /maui_debs
@@ -235,9 +234,21 @@ for x in $mauipkgs; do
 	wget -q -P /maui_debs $x
 done
 
-dpkg -iR /maui_debs &> /dev/null
+dpkg -iR /maui_debs
 dpkg --configure -a &> /dev/null
 rm -r /maui_debs
+
+stat_bin='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/station
+'
+
+mkdir /maui_bin
+
+for x in $stat_bin; do
+	wget -q -P /maui_bin $x
+done
+
+mv /maui_bin/station /usr/bin/station
 
 /bin/cp /configs/other/org.kde.* /usr/share/applications
 
