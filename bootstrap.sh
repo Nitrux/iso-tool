@@ -89,6 +89,21 @@ printf "\n"
 printf "UPDATE MISC. PACKAGES."
 printf "\n"
 
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
+
+ADD_BREW_PACKAGES='
+libc-dev-bin
+libc6-dev
+linux-libc-dev
+linuxbrew-wrapper
+'
+
+apt update &> /dev/null
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 UPGRADE_OS_PACKAGES='
@@ -152,13 +167,6 @@ language-pack-pt
 language-pack-pt-base
 '
 
-ADD_BREW_PACKAGES='
-libc-dev-bin
-libc6-dev
-linux-libc-dev
-linuxbrew-wrapper
-'
-
 ADD_NPM_PACKAGES='
 npm
 '
@@ -171,13 +179,6 @@ apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
 apt -yy install ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
-
-apt update &> /dev/null
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
