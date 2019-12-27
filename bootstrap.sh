@@ -243,13 +243,9 @@ stat_bin='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/station
 '
 
-mkdir /maui_bin
-
 for x in $stat_bin; do
-	wget -q -P /maui_bin $x
+	wget -q -P /usr/bin/ $x
 done
-
-mv /maui_bin/station /usr/bin/station
 
 /bin/cp /configs/other/org.kde.* /usr/share/applications
 
