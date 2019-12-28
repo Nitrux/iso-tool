@@ -83,13 +83,28 @@ apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
 
 
-# -- Use sources.list.eoan to update packages and install brew.
+# -- Use sources.list.focal to update packages and install brew.
 
 printf "\n"
 printf "UPDATE MISC. PACKAGES."
 printf "\n"
 
 cp /configs/files/sources.list.eoan /etc/apt/sources.list
+
+ADD_BREW_PACKAGES='
+libc-dev-bin
+libc6-dev
+linux-libc-dev
+linuxbrew-wrapper
+'
+
+apt update &> /dev/null
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 UPGRADE_OS_PACKAGES='
 amd64-microcode
@@ -101,7 +116,6 @@ firejail
 firejail-profiles
 go-mtpfs
 grub-common
-grub-efi-amd64
 grub-efi-amd64-bin
 grub-efi-amd64-signed
 grub2-common
@@ -153,13 +167,6 @@ language-pack-pt
 language-pack-pt-base
 '
 
-ADD_BREW_PACKAGES='
-libc-dev-bin
-libc6-dev
-linux-libc-dev
-linuxbrew-wrapper
-'
-
 ADD_NPM_PACKAGES='
 npm
 '
@@ -170,10 +177,13 @@ gnome-keyring
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+# -- No apt usage past this point. -- #
 
 
 # -- Install the kernel.
@@ -183,12 +193,11 @@ printf "\n"
 printf "INSTALLING KERNEL."
 printf "\n"
 
-
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313_5.3.13-050313.201911240840_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-headers-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-image-unsigned-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.13/linux-modules-5.3.13-050313-generic_5.3.13-050313.201911240840_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-headers-5.3.18-050318_5.3.18-050318.201912181133_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-headers-5.3.18-050318-generic_5.3.18-050318.201912181133_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-image-unsigned-5.3.18-050318-generic_5.3.18-050318.201912181133_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-modules-5.3.18-050318-generic_5.3.18-050318.201912181133_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -203,7 +212,34 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- No apt usage past this point. -- #
+# -- Install Maui apps Debs.
+# -- Add custom launchers for Maui apps.
+#FIXME This should be put in our repository.
+
+printf "\n"
+printf "INSTALLING MAUI APPS."
+printf "\n"
+
+mauipkgs='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-0.1.1-Linux.deb
+'
+
+mkdir /maui_debs
+
+for x in $mauipkgs; do
+	wget -q -P /maui_debs $x
+done
+
+dpkg -iR /maui_debs
+dpkg --configure -a &> /dev/null
+rm -r /maui_debs
+
+/bin/cp /configs/other/org.kde.* /usr/share/applications
 
 
 # -- Add missing firmware modules.
@@ -267,51 +303,54 @@ printf "\n"
 
 APPS_SYS='
 https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
+https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
+'
+
+APPS_USR='
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
+https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
+https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
+https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 '
 
 mkdir /Applications
+mkdir -p /etc/skel/Applications
+mkdir -p /etc/skel/.local/bin
 
 for x in $APPS_SYS; do
     wget -q -P /Applications $x
 done
 
-chmod +x /Applications/*
-
-mkdir -p /etc/skel/Applications
-mkdir -p /etc/skel/.local/bin
-
-APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
-https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Index-x86_64_fe8483.AppImage
-https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
-'
-
 for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
+    wget -q -P /Applications $x
 done
 
-chmod +x /etc/skel/Applications/*
+chmod +x /Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
-mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+
+mv /Applications/LibreOffice-6.3.4-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/kdenlive-19.04.3b-x86_64.appimage /Applications/kdenlive
+mv /Applications/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage /Applications/gimp
+mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
+mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
 
 ls -l /Applications
-ls -l /etc/skel/Applications
 ls -l /etc/skel/.local/bin/
 
 
@@ -322,18 +361,6 @@ printf "ADD APPIMAGE PROVIDERS."
 printf "\n"
 
 cp /configs/files/appimage-providers.yaml /etc/
-
-
-# -- Add znx-gui.
-#FIXME We should include the AppImage but firejail prevents the use of sudo.
-
-printf "\n"
-printf "ADD ZNX_GUI DESKTOP LAUNCHER."
-printf "\n"
-
-cp /configs/other/znx-gui.desktop /usr/share/applications
-# wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
-# chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
@@ -348,6 +375,8 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 # -- Add Window title plasmoid.
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
+# -- Delete KDE Connect unnecessary menu entries.
+# -- Add znx-gui desktop launcher.
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -367,7 +396,8 @@ rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
-cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
+rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
+cp /configs/other/znx-gui.desktop /usr/share/applications
 
 
 # -- Add vfio modules and files.
@@ -535,14 +565,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.13-050313-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.3.18-050318-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.13-050313-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.3.18-050318-generic | grep vfio
 
 rm /bin/dummy.sh
 
