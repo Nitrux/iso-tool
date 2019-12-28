@@ -239,14 +239,6 @@ dpkg -iR /maui_debs
 dpkg --configure -a &> /dev/null
 rm -r /maui_debs
 
-stat_bin='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/station
-'
-
-for x in $stat_bin; do
-	wget -q -P /usr/bin/ $x
-done
-
 /bin/cp /configs/other/org.kde.* /usr/share/applications
 
 
