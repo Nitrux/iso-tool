@@ -227,6 +227,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-0.1.1
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-0.1.1-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-0.1.1-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-0.1.1-Linux.deb
 '
 
 mkdir /maui_debs
