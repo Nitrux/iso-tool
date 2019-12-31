@@ -83,9 +83,16 @@ calamares
 calamares-settings-nitrux
 '
 
+MISC_PACKAGES_BIONIC='
+libreoffice
+inkscape
+gimp
+kdenlive
+'
+
 apt update &> /dev/null
 apt -yy upgrade
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
@@ -190,10 +197,6 @@ shim-signed
 
 MISC_PACKAGES='
 calamares-settings-ubuntu-common
-libreoffice
-inkscape
-gimp
-kdenlive
 '
 
 apt update &> /dev/null
