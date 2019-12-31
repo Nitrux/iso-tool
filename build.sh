@@ -46,6 +46,11 @@ BUILD_DIR=$(mktemp -d)
 ISO_DIR=$(mktemp -d)
 OUTPUT_DIR=$(mktemp -d)
 
+		#	Possible fix for broken post-installation logins.
+
+		chmod a+x $BUILD_DIR
+
+
 CONFIG_DIR=$PWD/configs
 
 
