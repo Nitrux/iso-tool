@@ -76,6 +76,7 @@ nitrux-minimal-legacy
 nitrux-standard-legacy
 nitrux-hardware-drivers-legacy
 nx-desktop-legacy
+base-files=11.0.98.1+nitrux-legacy
 '
 
 CALAMARES_PACKAGES='
@@ -88,11 +89,14 @@ libreoffice
 inkscape
 gimp
 kdenlive
+firejail
+firejail-profiles
 '
 
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends
+apt-mark hold base-files
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
@@ -150,6 +154,8 @@ dkms
 exfat-fuse
 exfat-utils
 firefox
+firejail
+firejail-profiles
 go-mtpfs
 grub-common
 grub-efi-amd64-bin
@@ -216,10 +222,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-headers-5.4.3-050403_5.4.3-050403.201912130841_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-headers-5.4.3-050403-generic_5.4.3-050403.201912130841_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-image-unsigned-5.4.3-050403-generic_5.4.3-050403.201912130841_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.3/linux-modules-5.4.3-050403-generic_5.4.3-050403.201912130841_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-headers-5.4.10-050410_5.4.10-050410.202001091038_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-headers-5.4.10-050410-generic_5.4.10-050410.202001091038_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-image-unsigned-5.4.10-050410-generic_5.4.10-050410.202001091038_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-modules-5.4.10-050410-generic_5.4.10-050410.202001091038_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -275,6 +281,39 @@ mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
+
+# -- Add system AppImages.
+# -- Create /Applications directory for users.
+# -- Rename AppImageUpdate, appimage-user-tool and znx.
+
+printf "\n"
+printf "ADD APPIMAGES."
+printf "\n"
+
+APPS_SYS='
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
+'
+
+APPS_USR='
+'
+
+mkdir /Applications
+mkdir -p /etc/skel/Applications
+mkdir -p /etc/skel/.local/bin
+
+for x in $APPS_SYS; do
+    wget -q -P /Applications $x
+done
+
+for x in $APPS_USR; do
+    wget -q -P /Applications $x
+done
+
+chmod +x /Applications/*
+
+mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+
+ls -l /etc/skel/.local/bin/
 
 
 # -- Add config for SDDM.
