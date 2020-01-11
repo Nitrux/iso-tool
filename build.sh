@@ -104,6 +104,7 @@ mkiso \
 	-b \
 	-e \
 	-V "NITRUX" \
+	-r "${TRAVIS_COMMIT:0:7}" \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
 	-t grub-theme/nitrux \
