@@ -76,6 +76,7 @@ nitrux-minimal-legacy
 nitrux-standard-legacy
 nitrux-hardware-drivers-legacy
 nx-desktop-legacy
+base-files=11.0.98.1+nitrux-legacy
 '
 
 CALAMARES_PACKAGES='
@@ -92,11 +93,12 @@ kdenlive
 
 apt update &> /dev/null
 apt -yy upgrade
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends
+apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends --allow-downgrades
 apt -yy --fix-broken install
 apt -yy purge --remove vlc
 apt -yy dist-upgrade
 apt -yy autoremove
+apt-mark hold base-files
 
 
 # -- Install liquidshell.
