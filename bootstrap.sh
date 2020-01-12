@@ -96,11 +96,11 @@ firejail-profiles
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends
-apt-mark hold base-files
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt -yy dist-upgrade
+apt-mark hold base-files
 
 
 # -- Install liquidshell.
