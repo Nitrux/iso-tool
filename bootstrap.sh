@@ -319,6 +319,7 @@ https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
+https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -350,6 +351,7 @@ mv /Applications/kdenlive-19.04.3b-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
 mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
