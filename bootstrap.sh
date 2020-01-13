@@ -88,6 +88,7 @@ libreoffice
 inkscape
 gimp
 kdenlive
+lmms
 '
 
 BASE_FILES_PKG='
