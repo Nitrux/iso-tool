@@ -359,6 +359,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
 # -- Delete Calamares default desktop launcher.
+# -- Replace appimage-installer.desktop file.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -371,6 +372,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 rm /usr/share/applications/calamares.desktop
+/bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop
 
 
 # -- Add oh my zsh.

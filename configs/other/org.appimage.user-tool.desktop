@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=appimage-installer
+Comment=Manage AppImages on your system and uses appimagehub.com as source
+TryExec=app
+Exec=app %F
+Icon=appimage_logo
+Categories=Utility;
+Terminal=true
+NoDisplay=true
