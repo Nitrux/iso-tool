@@ -294,13 +294,13 @@ printf "ADDING APPIMAGE-INSTALLER."
 printf "\n"
 
 
-app-deb='
+app_deb='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/appimage-installer_1.0.2-ubuntu-bionic-git20191214.b4fc9bf_amd64.deb
 '
 
 mkdir /appimage_installer
 
-for x in $app-deb; do
+for x in $app_deb; do
 printf "$x"
     wget -q -P /appimage_installer $x
 done
