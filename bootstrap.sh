@@ -286,6 +286,30 @@ mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
 
+
+# -- Add appimage-installer.
+
+printf "\n"
+printf "ADDING APPIMAGE-INSTALLER."
+printf "\n"
+
+
+app-deb='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/appimage-installer_1.0.2-ubuntu-bionic-git20191214.b4fc9bf_amd64.deb
+'
+
+mkdir /appimage_installer
+
+for x in $app-deb; do
+printf "$x"
+    wget -q -P /appimage_installer $x
+done
+
+dpkg -iR /appimage_installer &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /appimage_installer
+
+
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
 # -- Rename AppImageUpdate, appimage-user-tool and znx.
@@ -318,6 +342,15 @@ chmod +x /Applications/*
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 ls -l /etc/skel/.local/bin/
+
+
+# -- Add AppImage providers for appimage-cli-tool
+
+printf "\n"
+printf "ADD APPIMAGE PROVIDERS."
+printf "\n"
+
+cp /configs/files/appimage-providers.yaml /etc/
 
 
 # -- Add config for SDDM.
