@@ -380,6 +380,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
+# -- Create directory for pacman cache.
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -401,6 +402,10 @@ cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
+mkdir -p /var/lib/pacman/
+mkdir -p /etc/pacman.d/
+cp /configs/files/pacman.conf /etc/
+cp /configs/files/mirrorlist /etc/pacman.d/
 
 
 # -- Add vfio modules and files.
