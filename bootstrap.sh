@@ -381,6 +381,8 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
 # -- Create directory for pacman cache.
+# -- Create directory for pacman repository list.
+# --
 #FIXME These fixes should be included in a package.
 #FIXME This should be included as a deb package downloaded to our repository.
 
@@ -404,8 +406,7 @@ rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/application
 cp /configs/other/znx-gui.desktop /usr/share/applications
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
-cp /configs/files/pacman.conf /etc/
-cp /configs/files/mirrorlist /etc/pacman.d/
+cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
 
 
 # -- Add vfio modules and files.
