@@ -176,6 +176,7 @@ npm
 
 ADD_MISC_PACKAGES='
 gnome-keyring
+ncurses-term
 '
 
 apt update &> /dev/null
