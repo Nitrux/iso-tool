@@ -166,6 +166,8 @@ language-pack-fr-base
 language-pack-pt
 language-pack-pt-base
 fontconfig
+zsh
+mksh
 '
 
 ADD_NPM_PACKAGES='
