@@ -165,6 +165,7 @@ language-pack-fr
 language-pack-fr-base
 language-pack-pt
 language-pack-pt-base
+fontconfig
 '
 
 ADD_NPM_PACKAGES='
