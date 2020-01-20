@@ -227,10 +227,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-headers-5.4.10-050410_5.4.10-050410.202001091038_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-headers-5.4.10-050410-generic_5.4.10-050410.202001091038_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-image-unsigned-5.4.10-050410-generic_5.4.10-050410.202001091038_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.10/linux-modules-5.4.10-050410-generic_5.4.10-050410.202001091038_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-headers-5.4.13-050413_5.4.13-050413.202001171431_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-headers-5.4.13-050413-generic_5.4.13-050413.202001171431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-image-unsigned-5.4.13-050413-generic_5.4.13-050413.202001171431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-modules-5.4.13-050413-generic_5.4.13-050413.202001171431_amd64.deb
 '
 
 mkdir /latest_kernel
