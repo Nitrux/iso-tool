@@ -361,6 +361,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
 # -- Delete Calamares default desktop launcher.
 # -- Replace appimage-installer.desktop file.
+# -- Delete KDE Connect unnecessary menu entries.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -374,6 +375,7 @@ cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 rm /usr/share/applications/calamares.desktop
 /bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop
+rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 
 
 # -- Add oh my zsh.
