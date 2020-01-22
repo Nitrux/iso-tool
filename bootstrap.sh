@@ -242,7 +242,7 @@ for x in $mauipkgs; do
 done
 
 dpkg -iR /maui_debs
-dpkg --configure -a &> /dev/null
+dpkg --configure -a
 rm -r /maui_debs
 
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop} /usr/share/applications
