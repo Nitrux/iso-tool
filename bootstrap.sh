@@ -168,6 +168,7 @@ language-pack-pt-base
 fontconfig
 zsh
 mksh
+libglib2.0-0
 '
 
 ADD_NPM_PACKAGES='
@@ -177,6 +178,7 @@ npm
 ADD_MISC_PACKAGES='
 gnome-keyring
 ncurses-term
+libslirp0
 '
 
 apt update &> /dev/null
