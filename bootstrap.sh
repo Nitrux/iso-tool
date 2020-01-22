@@ -248,7 +248,7 @@ dpkg -iR /maui_debs
 dpkg --configure -a
 rm -r /maui_debs
 
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop} /usr/share/applications
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop} /usr/share/applications
 whereis index buho nota vvave station pix
 
 
