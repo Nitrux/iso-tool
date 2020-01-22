@@ -169,6 +169,7 @@ fontconfig
 zsh
 mksh
 libglib2.0-0
+libglib2.0-bin
 '
 
 ADD_NPM_PACKAGES='
