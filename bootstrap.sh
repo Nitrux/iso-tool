@@ -227,10 +227,11 @@ printf "\n"
 mauipkgs='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-0.1.1-Linux.deb
 '
 
