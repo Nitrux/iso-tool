@@ -9,10 +9,10 @@ set -xe
 xorriso='
 http://mirrors.kernel.org/ubuntu/pool/main/e/efivar/libefiboot1_37-2ubuntu2_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/e/efivar/libefivar1_37-2ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-21ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-25ubuntu1_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu3_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-common_2.04-1ubuntu16_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64-bin_2.04-1ubuntu16_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.04-1ubuntu16_amd64.deb
