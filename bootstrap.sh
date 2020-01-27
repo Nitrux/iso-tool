@@ -112,7 +112,6 @@ apt autoclean &> /dev/null
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 UPGRADE_OS_PACKAGES='
-amd64-microcode
 broadcom-sta-dkms
 dkms
 exfat-fuse
@@ -186,6 +185,7 @@ apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
 apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
