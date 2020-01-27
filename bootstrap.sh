@@ -178,13 +178,13 @@ npm
 
 ADD_MISC_PACKAGES='
 gnome-keyring
-ncurses-term
 libslirp0
 '
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
