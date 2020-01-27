@@ -9,6 +9,6 @@ Terminal=false
 Type=Application
 Categories=Qt;KDE;System;TerminalEmulator;
 StartupNotify=true
-Icon=utilities-terminal
+Icon=maui-station
 # Generic name with translations
 GenericName=Terminal Emulator
