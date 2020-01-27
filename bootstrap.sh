@@ -75,6 +75,10 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
+ADD_NPM_PACKAGES='
+npm
+'
+
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
@@ -100,6 +104,7 @@ linuxbrew-wrapper
 
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -172,10 +177,6 @@ libglib2.0-0
 libglib2.0-bin
 '
 
-ADD_NPM_PACKAGES='
-npm
-'
-
 ADD_MISC_PACKAGES='
 gnome-keyring
 libslirp0
@@ -183,7 +184,6 @@ libslirp0
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
 apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
