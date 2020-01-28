@@ -174,6 +174,9 @@ zsh
 mksh
 libglib2.0-0
 libglib2.0-bin
+lsb-base
+libmagic1
+libmagic-mgc
 '
 
 ADD_MISC_PACKAGES='
