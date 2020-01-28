@@ -2,7 +2,7 @@
 
 # -- Exit on errors.
 
-set -x
+set -xe
 
 # -- Update xorriso and grub.
 

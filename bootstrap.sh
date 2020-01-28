@@ -413,6 +413,7 @@ cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
+cp -a /configs/other/org.kde.video /usr/share/plasma/wallpapers
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
