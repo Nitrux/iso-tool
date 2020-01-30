@@ -280,6 +280,16 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_vcn.bin
 '
 
 mkdir /fw_files
@@ -290,8 +300,9 @@ done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
 mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
+mv /fw_files/renoir_*.bin /lib/firmware/amdgpu/
 
 rm -r /fw_files
 
