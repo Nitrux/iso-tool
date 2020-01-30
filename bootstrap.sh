@@ -141,13 +141,13 @@ cp /configs/files/liquidshellrc /etc/skel/.config/
 cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
 
 
-# -- Use sources.list.eoan to update packages
+# -- Use sources.list.focal to update packages
 
 printf "\n"
 printf "UPDATE BASE PACKAGES."
 printf "\n"
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 apt -qq update
 
 UPGRADE_OS_PACKAGES='
