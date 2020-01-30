@@ -92,7 +92,7 @@ lmms
 '
 
 BASE_FILES_PKG='
-base-files=11.0.98.1+nitrux-legacy
+base-files=11.0.98.3+nitrux-legacy
 '
 
 apt update &> /dev/null
