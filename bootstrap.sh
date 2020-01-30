@@ -204,10 +204,10 @@ printf "INSTALLING KERNEL."
 printf "\n"
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.15/linux-headers-5.4.15-050415_5.4.15-050415.202001261031_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.15/linux-headers-5.4.15-050415-generic_5.4.15-050415.202001261031_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.15/linux-image-unsigned-5.4.15-050415-generic_5.4.15-050415.202001261031_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.15/linux-modules-5.4.15-050415-generic_5.4.15-050415.202001261031_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-headers-5.5.0-050500_5.5.0-050500.202001262030_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-headers-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-image-unsigned-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-modules-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -584,14 +584,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.4.15-050415-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.5.0-050500-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.15-050415-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.5.0-050500-generic | grep vfio
 
 rm /bin/dummy.sh
 
