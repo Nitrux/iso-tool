@@ -253,7 +253,7 @@ dpkg --configure -a
 rm -r /maui_debs
 
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
-whereis index buho nota vvave station pix
+whereis index buho nota vvave station pix contacts
 
 
 # -- Add missing firmware modules.
@@ -326,7 +326,7 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 '
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.4.0-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
@@ -358,7 +358,7 @@ mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
-mv /Applications/LibreOffice-6.3.4-x86_64.AppImage /Applications/libreoffice
+mv /Applications/LibreOffice-6.4.0-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
 mv /Applications/kdenlive-19.04.3b-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage /Applications/gimp
@@ -396,8 +396,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Create directory for pacman cache.
 # -- Create directory for pacman repository list.
 # --
-#FIXME These fixes should be included in a package.
-#FIXME This should be included as a deb package downloaded to our repository.
+#FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
 printf "ADD MISC. FIXES."
@@ -543,10 +542,7 @@ printf "DISABLE SYSTEMD SERVICES."
 printf "\n"
 
 systemctl mask avahi-daemon.service
-systemctl disable cupsd.service
-systemctl disable cupsd-browsed.service
-systemctl disable NetworkManager-wait-online.service
-systemctl disable keyboard-setup.service
+systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online.service keyboard-setup.service
 
 
 # -- Fix for broken udev rules (yes, it is broken by default).
