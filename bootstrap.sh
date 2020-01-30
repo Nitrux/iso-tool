@@ -227,10 +227,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-headers-5.4.13-050413_5.4.13-050413.202001171431_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-headers-5.4.13-050413-generic_5.4.13-050413.202001171431_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-image-unsigned-5.4.13-050413-generic_5.4.13-050413.202001171431_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.13/linux-modules-5.4.13-050413-generic_5.4.13-050413.202001171431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-headers-5.5.0-050500_5.5.0-050500.202001262030_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-headers-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-image-unsigned-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-modules-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -272,6 +272,16 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_vcn.bin
 '
 
 mkdir /fw_files
