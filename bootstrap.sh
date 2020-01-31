@@ -422,7 +422,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Add znx-gui desktop launcher.
 # -- Create directory for pacman cache.
 # -- Create directory for pacman repository list.
-# --
+# -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -447,6 +447,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
 cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
+rm /usr/share/applications/org.kde.kinfocenter.desktop
 
 
 # -- Add vfio modules and files.
