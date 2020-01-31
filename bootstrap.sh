@@ -195,8 +195,21 @@ apt autoclean &> /dev/null
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
+UPDATE_KF5_PACKAGES='
+latte-dock
+ark
+kinfocenter
+systemsettings
+kcalc
+sddm
+qpdfview
+kdeconnect
+kmenuedit
+'
+
+
 apt update &> /dev/null
-apt upgrade -yy
+apt -yy install ${UPDATE_KF5_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
