@@ -198,7 +198,6 @@ cp /configs/files/sources.list.build.update /etc/apt/sources.list
 UPDATE_KF5_PACKAGES='
 latte-dock
 ark
-kinfocenter
 systemsettings
 kcalc
 sddm
