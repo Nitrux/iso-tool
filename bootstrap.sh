@@ -89,6 +89,7 @@ inkscape
 gimp
 kdenlive
 lmms
+partitionmanager
 '
 
 BASE_FILES_PKG='
