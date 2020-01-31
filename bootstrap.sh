@@ -193,6 +193,21 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
+
+apt update &> /dev/null
+apt upgrade -yy
+apt -yy --fix-broken install
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Use sources.list.nitrux for release.
+
+/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+
+
 # -- No apt usage past this point. -- #
 
 
@@ -560,11 +575,6 @@ systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online
 #FIXME This should be put in a package.
 
 sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
-
-
-# -- Use sources.list.nitrux for release.
-
-/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- Remove APT.
