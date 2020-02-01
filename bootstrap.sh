@@ -607,14 +607,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.5.0-050500-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.16-05041-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.5.0-050500-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.4.16-05041-generic | grep vfio
 
 rm /bin/dummy.sh
 
