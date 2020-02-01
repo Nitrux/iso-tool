@@ -447,7 +447,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
 cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
-rm /usr/share/applications/org.kde.kinfocenter.desktop
+/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 
 
 # -- Add vfio modules and files.
