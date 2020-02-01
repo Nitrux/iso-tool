@@ -75,6 +75,10 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
+ADD_NPM_PACKAGES='
+npm
+'
+
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
@@ -100,6 +104,7 @@ linuxbrew-wrapper
 
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -107,13 +112,13 @@ apt autoclean &> /dev/null
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 UPGRADE_OS_PACKAGES='
-amd64-microcode
 broadcom-sta-dkms
 dkms
 exfat-fuse
 exfat-utils
 firejail
 firejail-profiles
+fontconfig
 go-mtpfs
 grub-common
 grub-efi-amd64-bin
@@ -124,17 +129,33 @@ initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
 ipxe-qemu
+language-pack-de
+language-pack-de-base
+language-pack-en
+language-pack-en-base
+language-pack-es
+language-pack-es-base
+language-pack-fr
+language-pack-fr-base
+language-pack-pt
+language-pack-pt-base
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
+libglib2.0-0
+libglib2.0-bin
+libmagic-mgc
+libmagic1
 libva-drm2
 libva-glx2
 libva-x11-2
 libva2
 linux-firmware
+lsb-base
 mesa-va-drivers
 mesa-vdpau-drivers
 mesa-vulkan-drivers
+mksh
 openssh-client
 openssl
 ovmf
@@ -155,32 +176,37 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
-language-pack-de
-language-pack-de-base
-language-pack-en
-language-pack-en-base
-language-pack-es
-language-pack-es-base
-language-pack-fr
-language-pack-fr-base
-language-pack-pt
-language-pack-pt-base
-'
-
-ADD_NPM_PACKAGES='
-npm
+zsh
 '
 
 ADD_MISC_PACKAGES='
 gnome-keyring
+libslirp0
 '
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
+
+
+apt update &> /dev/null
+apt -yy upgrade --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Use sources.list.nitrux for release.
+
+/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- No apt usage past this point. -- #
@@ -194,10 +220,10 @@ printf "INSTALLING KERNEL."
 printf "\n"
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-headers-5.3.18-050318_5.3.18-050318.201912181133_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-headers-5.3.18-050318-generic_5.3.18-050318.201912181133_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-image-unsigned-5.3.18-050318-generic_5.3.18-050318.201912181133_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.18/linux-modules-5.3.18-050318-generic_5.3.18-050318.201912181133_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-headers-5.4.16-050416_5.4.16-050416.202001300040_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-headers-5.4.16-050416-generic_5.4.16-050416.202001300040_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-image-unsigned-5.4.16-050416-generic_5.4.16-050416.202001300040_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-modules-5.4.16-050416-generic_5.4.16-050416.202001300040_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -223,11 +249,13 @@ printf "\n"
 mauipkgs='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-0.1.1-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-0.1.1-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
 '
 
 mkdir /maui_debs
@@ -237,10 +265,11 @@ for x in $mauipkgs; do
 done
 
 dpkg -iR /maui_debs
-dpkg --configure -a &> /dev/null
+dpkg --configure -a
 rm -r /maui_debs
 
-/bin/cp /configs/other/org.kde.* /usr/share/applications
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
+whereis index buho nota vvave station pix contacts
 
 
 # -- Add missing firmware modules.
@@ -267,6 +296,16 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_vcn.bin
 '
 
 mkdir /fw_files
@@ -277,8 +316,9 @@ done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
 mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
+mv /fw_files/renoir_*.bin /lib/firmware/amdgpu/
 
 rm -r /fw_files
 
@@ -313,12 +353,13 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 '
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.4-x86_64.AppImage
+http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.4.0-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
+https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -344,12 +385,13 @@ mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
-mv /Applications/LibreOffice-6.3.4-x86_64.AppImage /Applications/libreoffice
+mv /Applications/LibreOffice-6.4.0-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
 mv /Applications/kdenlive-19.04.3b-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
 mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
@@ -378,8 +420,10 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
-#FIXME These fixes should be included in a package.
-#FIXME This should be included as a deb package downloaded to our repository.
+# -- Create directory for pacman cache.
+# -- Create directory for pacman repository list.
+# -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
+#FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
 printf "ADD MISC. FIXES."
@@ -395,10 +439,15 @@ cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
+cp -a /configs/other/org.kde.video /usr/share/plasma/wallpapers
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
+mkdir -p /var/lib/pacman/
+mkdir -p /etc/pacman.d/
+cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
+/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 
 
 # -- Add vfio modules and files.
@@ -521,21 +570,13 @@ printf "DISABLE SYSTEMD SERVICES."
 printf "\n"
 
 systemctl mask avahi-daemon.service
-systemctl disable cupsd.service
-systemctl disable cupsd-browsed.service
-systemctl disable NetworkManager-wait-online.service
-systemctl disable keyboard-setup.service
+systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online.service keyboard-setup.service
 
 
 # -- Fix for broken udev rules (yes, it is broken by default).
 #FIXME This should be put in a package.
 
 sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
-
-
-# -- Use sources.list.nitrux for release.
-
-/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- Remove APT.
@@ -566,14 +607,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.3.18-050318-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.16-050416-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.18-050318-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.4.16-050416-generic | grep vfio
 
 rm /bin/dummy.sh
 
