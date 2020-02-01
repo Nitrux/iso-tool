@@ -607,7 +607,7 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.4.16-05041-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.16-050416-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
