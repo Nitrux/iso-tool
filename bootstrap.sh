@@ -75,13 +75,15 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-ADD_NPM_PACKAGES='
-npm
+ADD_MISC_KF5_PKGS='
+libkf5texteditor-bin
+ktexteditor-data
 '
 
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_MISC_KF5_PKGS//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
@@ -102,11 +104,23 @@ linux-libc-dev
 linuxbrew-wrapper
 '
 
+ADD_NPM_PACKAGES='
+npm
+'
+
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+# -- Delete 'travis' folder that holds npm cache during build.
+
+rm -r /home/travis
+
+
+# -- Update packages using sources.list.focal.
 
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
@@ -210,6 +224,7 @@ apt autoclean &> /dev/null
 
 
 # -- No apt usage past this point. -- #
+#WARNING
 
 
 # -- Install the kernel.
@@ -357,7 +372,7 @@ APPS_USR='
 http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.4.0-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
-https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
+https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20200130-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
@@ -425,6 +440,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Create directory for pacman cache.
 # -- Create directory for pacman repository list.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
+# -- Create link for PNX porgrams to be able to use MESA. (This is a workaround, and it needs to be fixed in PNX).
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -450,6 +466,7 @@ mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
 cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
 
 
 # -- Add vfio modules and files.
@@ -636,7 +653,7 @@ lupin-casper
 
 
 # -- No dpkg usage past this point. -- #
-
+#WARNING
 
 # -- Use script to remove dpkg.
 
