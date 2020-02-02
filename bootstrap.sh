@@ -105,6 +105,8 @@ apt -yy dist-upgrade
 apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
 apt -yy autoremove
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install liquidshell.
@@ -149,10 +151,8 @@ printf "UPDATE BASE PACKAGES."
 printf "\n"
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
-apt -qq update
 
 UPGRADE_OS_PACKAGES='
-amd64-microcode
 broadcom-sta-dkms
 dkms
 exfat-fuse
@@ -205,15 +205,28 @@ shim
 shim-signed
 '
 
-MISC_PACKAGES='
+ADD_MISC_PACKAGES='
 calamares-settings-ubuntu-common
 firejail
 firejail-profiles
+gnome-keyring
+libslirp0
 '
 
 apt update &> /dev/null
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${MISC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy --fix-broken install
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
+
+
+apt update &> /dev/null
+apt -yy upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
@@ -228,10 +241,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-headers-5.5.0-050500_5.5.0-050500.202001262030_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-headers-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-image-unsigned-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5/linux-modules-5.5.0-050500-generic_5.5.0-050500.202001262030_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-headers-5.4.17-050417_5.4.17-050417.202002011032_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-headers-5.4.17-050417-generic_5.4.17-050417.202002011032_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-image-unsigned-5.4.17-050417-generic_5.4.17-050417.202002011032_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-modules-5.4.17-050417-generic_5.4.17-050417.202002011032_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -247,6 +260,7 @@ rm -r /latest_kernel
 
 
 # -- No apt usage past this point. -- #
+#WARNING
 
 
 # -- Add missing firmware modules.
@@ -293,8 +307,9 @@ done
 
 mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
 mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
 mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
+mv /fw_files/renoir_*.bin /lib/firmware/amdgpu/
 
 rm -r /fw_files
 
@@ -320,6 +335,17 @@ done
 dpkg -iR /appimage_installer &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /appimage_installer
+
+
+# -- Add /Applications to $PATH.
+
+printf "\n"
+printf "ADD /APPLICATIONS TO PATH."
+printf "\n"
+
+printf "PATH=$PATH:/Applications\n" > /etc/environment
+sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
+sed -i "/env_reset/d" /etc/sudoers
 
 
 # -- Add system AppImages.
@@ -373,6 +399,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Delete Calamares default desktop launcher.
 # -- Replace appimage-installer.desktop file.
 # -- Delete KDE Connect unnecessary menu entries.
+# -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -387,6 +414,20 @@ rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 rm /usr/share/applications/calamares.desktop
 /bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
+/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+
+
+# -- Add itch.io store launcher.
+#FIXME This should be in a package.
+
+printf "\n"
+printf "ADD ITCH.IO LAUNCHER."
+printf "\n"
+
+
+mkdir -p /etc/skel/.local/share/applications
+cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
+cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
@@ -431,10 +472,7 @@ bash -c 'echo -e "[Service]\nTimeoutStartSec=20sec" > /etc/systemd/system/networ
 # -- use 'mask' to fully disable them.
 
 systemctl mask avahi-daemon.service
-systemctl disable cupsd.service
-systemctl disable cupsd-browsed.service
-systemctl disable NetworkManager-wait-online.service
-systemctl disable keyboard-setup.service
+systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online.service keyboard-setup.service
 
 
 # -- Fix for broken udev rules (yes, it is broken by default).
@@ -443,32 +481,11 @@ systemctl disable keyboard-setup.service
 sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
 
 
-# -- Use sources.list.nitrux for release.
-# -- Add Ubuntu Bionic repository.
+# -- Use sources.list.nitrux, sources.list.neon and sources.list.ubuntu for release.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 /bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
 /bin/cp /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-repos.list
-
-
-# # -- Overwrite file so cupt doesn't complain.
-# # -- Remove APT.
-# # -- Update package index using cupt.
-# #FIXME We probably need to provide our own cupt package which also does this.
-# 
-# printf "\n"
-# printf "REMOVE APT."
-# printf "\n"
-# 
-# REMOVE_APT='
-# apt 
-# apt-utils 
-# apt-transport-https
-# '
-# 
-# /bin/cp -a /configs/files/50command-not-found /etc/apt/apt.conf.d/50command-not-found
-# /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
-# cupt update
 
 
 # -- Update initramfs.
@@ -482,7 +499,7 @@ update-initramfs -u
 
 
 # -- No dpkg usage past this point. -- #
-
+#WARNING
 
 printf "\n"
 printf "EXITING BOOTSTRAP."

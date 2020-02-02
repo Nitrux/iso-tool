@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=itch-io
+Name=Install itch.io — Game Store
+Exec=~/.config/install-itch-io.sh
+Categories=Utility;
