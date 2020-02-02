@@ -173,6 +173,7 @@ initramfs-tools-core
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
+libmagic1
 libva-drm2
 libva-glx2
 libva-x11-2
@@ -222,8 +223,9 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-cp /configs/files/sources.list.build.update /etc/apt/sources.list
+# -- Upgrade KDE packages.
 
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
 apt update &> /dev/null
 apt -yy upgrade --only-upgrade --no-install-recommends
@@ -486,6 +488,8 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 /bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
 /bin/cp /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-repos.list
+
+apt update  &> /dev/null
 
 
 # -- Update initramfs.
