@@ -437,10 +437,8 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
-# -- Create directory for pacman cache.
-# -- Create directory for pacman repository list.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
-# -- Create link for PNX porgrams to be able to use MESA. (This is a workaround, and it needs to be fixed in PNX).
+# -- Add Pacman configuration file and Arch Linux mirrorlist for PNX.
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -462,11 +460,21 @@ cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
+/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
+
+# -- Workarounds for PNX.
+#FIXME
+
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
-cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
-/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+
 ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
+ln -sv /home/.pnx/usr/lib/pulseaudio /usr/lib/pulseaudio
+ln -sv /home/.pnx/usr/lib/gdk-pixbuf-2.0 /usr/lib/gdk-pixbuf-2.0
+ln -sv /home/.pnx/usr/lib/gs-plugins-13 /usr/lib/gs-plugins-13
+ln -sv /home/.pnx/usr/lib/liblmdb.so /usr/lib/liblmdb.so
+ln -sv /home/.pnx/usr/lib/systemd /usr/lib/systemd
 
 
 # -- Add vfio modules and files.
