@@ -196,6 +196,7 @@ zsh
 ADD_MISC_PACKAGES='
 gnome-keyring
 libslirp0
+cataclysm-dda-sdl
 '
 
 apt update &> /dev/null
@@ -439,6 +440,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Add Pacman configuration file and Arch Linux mirrorlist for PNX.
+# -- Remove htop desktop launcher.
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -462,6 +464,7 @@ rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/application
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
+rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop
 
 # -- Workarounds for PNX.
 #FIXME
