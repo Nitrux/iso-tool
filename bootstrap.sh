@@ -190,6 +190,7 @@ zsh
 ADD_MISC_PACKAGES='
 gnome-keyring
 libslirp0
+nsnake
 '
 
 apt update &> /dev/null
@@ -458,7 +459,7 @@ rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/application
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
-rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop
+rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 
 # -- Workarounds for PNX.
 #FIXME These need to be fixed in PNX.
