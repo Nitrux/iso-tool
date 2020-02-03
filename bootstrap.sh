@@ -115,13 +115,7 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Delete 'travis' folder that holds npm cache during build.
-
-rm -r /home/travis
-
-
 # -- Update packages using sources.list.focal.
-
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
@@ -208,8 +202,9 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-cp /configs/files/sources.list.build.update /etc/apt/sources.list
+# -- Upgrade KF5 libs.
 
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
 apt update &> /dev/null
 apt -yy upgrade --only-upgrade --no-install-recommends
@@ -352,7 +347,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate, appimage-user-tool and znx.
+# -- Rename AppImages for easy access from the terminal.
 
 printf "\n"
 printf "ADD APPIMAGES."
@@ -467,7 +462,7 @@ cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacm
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop
 
 # -- Workarounds for PNX.
-#FIXME
+#FIXME These need to be fixed in PNX.
 
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
@@ -532,6 +527,8 @@ cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add configuration for npm to install packages in home and without sudo and update it.
+# -- Delete 'travis' folder that holds npm cache during build.
+#FIXME This should be in a package.
 
 printf "\n"
 printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
@@ -540,6 +537,7 @@ printf "\n"
 mkdir /etc/skel/.npm-packages
 cp /configs/files/npmrc /etc/skel/.npmrc
 npm install npm@latest -g
+rm -r /home/travis
 
 
 # -- Add nativefier launcher.
