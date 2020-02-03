@@ -325,13 +325,12 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/renoir_*.bin /lib/firmware/amdgpu/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
+
+ls -l /lib/firmware/amdgpu/
 
 
 # -- Add /Applications to $PATH.
@@ -434,7 +433,6 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
-# -- Add Pacman configuration file and Arch Linux mirrorlist for PNX.
 # -- Remove htop desktop launcher.
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
@@ -458,7 +456,6 @@ mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
-cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 
 # -- Workarounds for PNX.
@@ -466,6 +463,9 @@ rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/
 
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
+
+cp /configs/files/pacman.conf /etc
+cp /configs/files/mirrorlist /etc/pacman.d
 
 ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
 ln -sv /home/.pnx/usr/lib/pulseaudio /usr/lib/pulseaudio
