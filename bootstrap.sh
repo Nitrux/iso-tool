@@ -458,8 +458,13 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 
+
 # -- Workarounds for PNX.
 #FIXME These need to be fixed in PNX.
+
+printf "\n"
+printf "ADD WORKAROUNDS FOR PNX."
+printf "\n"
 
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
