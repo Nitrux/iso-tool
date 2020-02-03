@@ -190,7 +190,6 @@ zsh
 ADD_MISC_PACKAGES='
 gnome-keyring
 libslirp0
-cataclysm-dda-sdl
 '
 
 apt update &> /dev/null
