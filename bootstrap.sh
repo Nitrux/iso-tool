@@ -468,9 +468,11 @@ printf "\n"
 
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
+mkdir -p /usr/share/pacman/keyrings
 
 cp /configs/files/pacman.conf /etc
 cp /configs/files/mirrorlist /etc/pacman.d
+cp /configs/other/pacman/* /usr/share/pacman/keyrings
 
 ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
 ln -sv /home/.pnx/usr/lib/pulseaudio /usr/lib/pulseaudio
