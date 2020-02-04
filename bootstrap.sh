@@ -483,6 +483,7 @@ ln -sv /home/.pnx/usr/lib/systemd /usr/lib/systemd
 ln -sv /home/.pnx/usr/lib/samba /usr/lib/samba
 ln -sv /home/.pnx/usr/lib/girepository-1.0 /usr/lib/girepository-1.0
 ln -sv /home/.pnx/usr/share/tracker /usr/share/tracker
+ln -sv /home/.pnx/usr/lib/tracker-2.0 /usr/lib/tracker-2.0
 ln -sv /home/.pnx/usr/lib/WebKitNetworkProcess /usr/lib/WebKitNetworkProcess
 ln -sv /home/.pnx/usr/lib/epiphany /usr/lib/epiphany
 ln -sv /home/.pnx/usr/lib/opera /usr/lib/opera
