@@ -433,7 +433,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
-# -- Remove htop desktop launcher.
+# -- Remove htop and nsnake desktop launcher.
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -457,6 +457,7 @@ rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/application
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
+ln -sv /usr/games/nsnake /bin/nsnake
 
 
 # -- Workarounds for PNX.
