@@ -2,6 +2,9 @@
 
 set -x
 
+export LANG=C
+export LC_ALL=C
+
 printf "\n"
 printf "STARTING BOOTSTRAP."
 printf "\n"
