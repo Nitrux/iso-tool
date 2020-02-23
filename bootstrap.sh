@@ -10,30 +10,6 @@ printf "STARTING BOOTSTRAP."
 printf "\n"
 
 
-# -- Update libc.
-
-libc='
-http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-25ubuntu1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu3_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.30-0ubuntu3_all.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/q/qt5-style-kvantum/qt5-style-kvantum-themes_0.14.1+repack-1_all.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/q/qt5-style-kvantum/qt5-style-kvantum_0.14.1+repack-1_amd64.deb
-'
-
-mkdir /libc_pkgs
-
-for x in $libc; do
-printf "$x"
-    wget -q -P /libc_pkgs $x
-done
-
-dpkg -iR --force-all /libc_pkgs
-dpkg --configure -a
-rm -r /libc_pkgs
-
-
 # -- Install basic packages.
 
 printf "\n"
@@ -62,6 +38,30 @@ xz-utils
 
 apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+
+
+# -- Update libc.
+
+libc_pkgs='
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-25ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu3_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.30-0ubuntu3_all.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/q/qt5-style-kvantum/qt5-style-kvantum-themes_0.14.1+repack-1_all.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/q/qt5-style-kvantum/qt5-style-kvantum_0.14.1+repack-1_amd64.deb
+'
+
+mkdir /libc_debs
+
+for x in $libc_pkgs; do
+printf "$x"
+    wget -q -P /libc_debs $x
+done
+
+dpkg -iR --force-all /libc_debs
+dpkg --configure -a
+rm -r /libc_debs
 
 
 # -- Add key for Neon repository.
