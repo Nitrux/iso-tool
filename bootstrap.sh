@@ -10,6 +10,28 @@ printf "STARTING BOOTSTRAP."
 printf "\n"
 
 
+# -- Update libc.
+
+libc='
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/gcc-9-base_9.2.1-25ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu3_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.30-0ubuntu3_all.deb
+'
+
+mkdir /libc_pkgs
+
+for x in $libc; do
+printf "$x"
+    wget -q -P /libc_pkgs $x
+done
+
+dpkg -iR --force-all /libc_pkgs
+dpkg --configure -a
+rm -r /libc_pkgs
+
+
 # -- Install basic packages.
 
 printf "\n"
@@ -75,7 +97,7 @@ DESKTOP_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
-qt5-style-kvantum
+nx-desktop
 '
 
 ADD_MISC_KF5_PKGS='
