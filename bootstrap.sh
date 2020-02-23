@@ -18,6 +18,8 @@ http://mirrors.kernel.org/ubuntu/pool/main/g/gcc-9/libgcc1_9.2.1-21ubuntu1_amd64
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc-bin_2.30-0ubuntu3_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/libc6_2.30-0ubuntu3_amd64.deb
 http://mirrors.kernel.org/ubuntu/pool/main/g/glibc/locales_2.30-0ubuntu3_all.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/q/qt5-style-kvantum/qt5-style-kvantum-themes_0.14.1+repack-1_all.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/q/qt5-style-kvantum/qt5-style-kvantum_0.14.1+repack-1_amd64.deb
 '
 
 mkdir /libc_pkgs
