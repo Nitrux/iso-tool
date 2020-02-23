@@ -75,7 +75,7 @@ DESKTOP_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
-nx-desktop
+qt5-style-kvantum
 '
 
 ADD_MISC_KF5_PKGS='
