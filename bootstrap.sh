@@ -61,6 +61,7 @@ done
 
 dpkg -iR --force-all /libc_debs
 dpkg --configure -a
+apt --fix-broken install
 rm -r /libc_debs
 
 
