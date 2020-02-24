@@ -73,6 +73,7 @@ gcc-10-base
 libc-bin
 libc6
 libgcc1
+libgcc-s1
 locales
 qt5-style-kvantum
 qt5-style-kvantum-themes
