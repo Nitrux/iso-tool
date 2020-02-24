@@ -73,6 +73,7 @@ qt5-style-kvantum
 qt5-style-kvantum-themes
 '
 
+apt update &> /dev/null
 apt -yy install ${KVANTUM_PKGS//\\n/ } --no-install-recommends
 
 
