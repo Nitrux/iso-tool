@@ -234,7 +234,20 @@ apt autoclean &> /dev/null
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
+HOLD_KWIN_PKGS='
+kwin-addons 
+kwin-common
+kwin-data
+kwin-x11
+libkwin4-effect-builtins1
+libkwineffects12
+libkwinglutils12
+libkwinxrenderutils12
+qml-module-org-kde-kwindowsystem
+'
+
 apt update &> /dev/null
+apt-mark hold ${HOLD_KWIN_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
