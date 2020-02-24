@@ -241,12 +241,12 @@ calamares-settings-ubuntu-common
 firejail
 firejail-profiles
 gnome-keyring
+libc6-dev
+libc6-i386
 libslirp0
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-libc6-i386
-libc6-dev
 '
 
 apt update &> /dev/null
