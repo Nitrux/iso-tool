@@ -260,14 +260,28 @@ apt autoclean &> /dev/null
 
 # -- Upgrade KDE packages for latte.
 
-#cp /configs/files/sources.list.build.update /etc/apt/sources.list
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
-#apt update &> /dev/null
-#apt -yy upgrade --only-upgrade --no-install-recommends
-#apt -yy --fix-broken install
-#apt -yy autoremove
-#apt clean &> /dev/null
-#apt autoclean &> /dev/null
+HOLD_KWIN_PKGS='
+kwin-addons 
+kwin-common
+kwin-data
+kwin-style-breeze
+kwin-x11
+libkwin4-effect-builtins1
+libkwineffects12
+libkwinglutils12
+libkwinxrenderutils12
+qml-module-org-kde-kwindowsystem
+'
+
+apt update &> /dev/null
+apt-mark hold  ${HOLD_KWIN_PKGS//\\n/ }
+apt -yy upgrade --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install the kernel.
