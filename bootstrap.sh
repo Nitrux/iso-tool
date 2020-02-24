@@ -260,14 +260,14 @@ apt autoclean &> /dev/null
 
 # -- Upgrade KDE packages for latte.
 
-cp /configs/files/sources.list.build.update /etc/apt/sources.list
+#cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
-apt update &> /dev/null
-apt -yy upgrade --only-upgrade --no-install-recommends
-apt -yy --fix-broken install
-apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+#apt update &> /dev/null
+#apt -yy upgrade --only-upgrade --no-install-recommends
+#apt -yy --fix-broken install
+#apt -yy autoremove
+#apt clean &> /dev/null
+#apt autoclean &> /dev/null
 
 
 # -- Install the kernel.
