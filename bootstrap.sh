@@ -72,9 +72,12 @@ printf "\n"
 UPDATE_LIBC_KVANTUM='
 gcc-10-base
 libc-bin
+libc-dev-bin
 libc6
-libgcc1
+libc6-dev
 libgcc-s1
+libgcc1
+linux-libc-dev
 locales
 qt5-style-kvantum
 qt5-style-kvantum-themes
@@ -126,9 +129,6 @@ printf "\n"
 cp /configs/files/sources.list.eoan /etc/apt/sources.list
 
 ADD_BREW_PACKAGES='
-libc-dev-bin
-libc6-dev
-linux-libc-dev
 linuxbrew-wrapper
 '
 
@@ -175,7 +175,6 @@ language-pack-fr
 language-pack-fr-base
 language-pack-pt
 language-pack-pt-base
-libc6
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
