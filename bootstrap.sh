@@ -340,13 +340,12 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/renoir_*.bin /lib/firmware/amdgpu/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
+
+ls -l /lib/firmware/amdgpu/
 
 
 # -- Add appimage-installer.
@@ -385,7 +384,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate, appimage-user-tool and znx.
+# -- Rename AppImages for easy access from the terminal.
 
 printf "\n"
 printf "ADD APPIMAGES."
@@ -524,7 +523,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 /bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
 /bin/cp /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-repos.list
 
-apt update  &> /dev/null
+apt update &> /dev/null
 
 
 # -- Update initramfs.
