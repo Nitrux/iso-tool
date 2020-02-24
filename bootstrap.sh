@@ -125,6 +125,7 @@ base-files=11.0.98.4+nitrux-legacy
 '
 
 apt update &> /dev/null
+apt -yy --fix-broken install
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
