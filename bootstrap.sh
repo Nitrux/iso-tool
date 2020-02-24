@@ -266,7 +266,6 @@ HOLD_KWIN_PKGS='
 kwin-addons 
 kwin-common
 kwin-data
-kwin-style-breeze
 kwin-x11
 libkwin4-effect-builtins1
 libkwineffects12
