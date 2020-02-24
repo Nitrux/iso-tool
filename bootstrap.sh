@@ -462,6 +462,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
+# -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -486,6 +487,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
 
 
 # -- Workarounds for PNX.
