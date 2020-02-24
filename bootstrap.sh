@@ -437,6 +437,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
+# -- Add stanza for APT to prevent the installation of dash.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -453,6 +454,7 @@ rm /usr/share/applications/calamares.desktop
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
+cp /configs/files/preferences /etc/apt/preferences
 
 
 # -- Add itch.io store launcher.
