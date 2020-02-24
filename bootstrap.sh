@@ -272,10 +272,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-headers-5.4.17-050417_5.4.17-050417.202002011032_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-headers-5.4.17-050417-generic_5.4.17-050417.202002011032_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-image-unsigned-5.4.17-050417-generic_5.4.17-050417.202002011032_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.17/linux-modules-5.4.17-050417-generic_5.4.17-050417.202002011032_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421_5.4.21-050421.202002191431_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-image-unsigned-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-modules-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -431,6 +431,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Replace appimage-installer.desktop file.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
+# -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 #FIXME These fixes should be included in a package.
 
 printf "\n"
@@ -446,6 +447,7 @@ rm /usr/share/applications/calamares.desktop
 /bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
 
 
 # -- Add itch.io store launcher.
