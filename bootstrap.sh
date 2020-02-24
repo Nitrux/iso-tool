@@ -65,16 +65,25 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 printf "\n"
-printf "INSTALLING KVANTUM."
+printf "INSTALLING KVANTUM AND GLIB."
 printf "\n"
 
-KVANTUM_PKGS='
+UPDATE_LIBC_KVANTUM='
+gcc-10-base
+libc-bin
+libc6
+libgcc1
+locales
 qt5-style-kvantum
 qt5-style-kvantum-themes
 '
 
 apt update &> /dev/null
-apt -yy install ${KVANTUM_PKGS//\\n/ } --no-install-recommends
+apt download ${UPDATE_LIBC_KVANTUM//\\n/ } --no-install-recommends
+dpkg --force-all -i *.deb
+rm *.deb
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Use sources.list.build to build ISO.
@@ -95,18 +104,14 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-ADD_MISC_KF5_PKGS='
-libkf5texteditor-bin
-ktexteditor-data
-'
-
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
-apt -yy install ${ADD_MISC_KF5_PKGS//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Use sources.list.eaon to update packages and install brew.
