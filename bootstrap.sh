@@ -198,6 +198,7 @@ i965-va-driver
 initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
+libc6
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
