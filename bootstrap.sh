@@ -241,6 +241,10 @@ firejail
 firejail-profiles
 gnome-keyring
 libslirp0
+plasma-discover
+plasma-discover-backend-flatpak
+plasma-discover-backend-snap
+
 '
 
 apt update &> /dev/null
