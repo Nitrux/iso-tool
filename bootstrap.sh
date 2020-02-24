@@ -220,7 +220,6 @@ ADD_MISC_PACKAGES='
 gnome-keyring
 libslirp0
 nsnake
-qml-module-qtquick-shapes
 '
 
 apt update &> /dev/null
