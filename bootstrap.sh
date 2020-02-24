@@ -200,6 +200,8 @@ initramfs-tools
 initramfs-tools-bin
 initramfs-tools-core
 libc6
+libc6-i386
+libc6-dev
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
@@ -245,7 +247,6 @@ libslirp0
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-
 '
 
 apt update &> /dev/null
@@ -257,7 +258,7 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Upgrade KDE packages.
+# -- Upgrade KDE packages for latte.
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
