@@ -61,6 +61,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
 # -- Use sources.list.focal to install kvantum.
+#FIXME We need to provide these packages from a repository of ours.
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
@@ -174,6 +175,7 @@ language-pack-fr
 language-pack-fr-base
 language-pack-pt
 language-pack-pt-base
+libc6
 libdrm-amdgpu1
 libdrm-intel1
 libdrm-radeon1
@@ -212,7 +214,6 @@ xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
 zsh
-libc6
 '
 
 ADD_MISC_PACKAGES='
@@ -230,7 +231,7 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Upgrade KF5 libs.
+# -- Upgrade KF5 libs for latte.
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
@@ -252,7 +253,7 @@ apt autoclean &> /dev/null
 
 
 # -- Install the kernel.
-#FIXME This should be put in our repository.
+#FIXME This should be synced to our repository.
 
 printf "\n"
 printf "INSTALLING KERNEL."
@@ -279,22 +280,22 @@ rm -r /latest_kernel
 
 # -- Install Maui apps Debs.
 # -- Add custom launchers for Maui apps.
-#FIXME This should be put in our repository.
+#FIXME This should be synced to our repository.
 
 printf "\n"
 printf "INSTALLING MAUI APPS."
 printf "\n"
 
 mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
 '
 
 mkdir /maui_debs
@@ -655,7 +656,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 
 # -- Remove APT.
 # -- Update package index using cupt.
-#FIXME We probably need to provide our own cupt package which also does this.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "REMOVE APT."
