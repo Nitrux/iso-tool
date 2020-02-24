@@ -60,6 +60,34 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 
+# -- Use sources.list.focal to install kvantum.
+#FIXME We need to provide these packages from a repository of ours.
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+printf "\n"
+printf "INSTALLING KVANTUM AND GLIB."
+printf "\n"
+
+UPDATE_LIBC_KVANTUM='
+gcc-10-base
+libc-bin
+libc6
+libgcc1
+libgcc-s1
+locales
+qt5-style-kvantum
+qt5-style-kvantum-themes
+'
+
+apt update &> /dev/null
+apt download ${UPDATE_LIBC_KVANTUM//\\n/ } --no-install-recommends
+dpkg --force-all -i *.deb
+rm *.deb
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
 # -- Use sources.list.build to build ISO.
 
 cp /configs/files/sources.list.build /etc/apt/sources.list

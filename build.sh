@@ -102,9 +102,11 @@ chmod +x /bin/mkiso
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
 mkiso \
+	-V "NITRUX" \
 	-b \
 	-e \
-	-V "NITRUX" \
+	-u "$UPDATE_URL" \
+	-s "$HASH_URL" \
 	-r "${TRAVIS_COMMIT:0:7}" \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
