@@ -16,6 +16,8 @@ printf "\n"
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
+btrfs-progs
+btrfs-tools
 ca-certificates
 casper
 dhcpcd5
@@ -30,14 +32,12 @@ localechooser-data
 locales
 lupin-casper
 network-manager
+shim
+shim-signed
 squashfs-tools
 user-setup
 wget
 xz-utils
-shim
-shim-signed
-btrfs-tools
-btrfs-progs
 '
 
 apt update &> /dev/null
