@@ -449,6 +449,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Replace appimage-installer.desktop file.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
+# -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Add stanza for APT to prevent the installation of dash.
 #FIXME These fixes should be included in a package.
@@ -466,6 +467,8 @@ rm /usr/share/applications/calamares.desktop
 /bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
+ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
 cp /configs/files/preferences /etc/apt/preferences
 
