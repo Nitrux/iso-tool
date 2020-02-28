@@ -117,11 +117,7 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_BIONIC='
-libreoffice
-inkscape
-gimp
 kdenlive
-lmms
 partitionmanager
 '
 
@@ -245,10 +241,14 @@ ADD_MISC_PACKAGES='
 calamares-settings-ubuntu-common
 firejail
 firejail-profiles
+gimp
 gnome-keyring
+inkscape
 libc6-dev
 libc6-i386
+libreoffice
 libslirp0
+lmms
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
