@@ -288,6 +288,10 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
+# -- No apt usage past this point. -- #
+#WARNING
+
+
 # -- Install the kernel.
 
 printf "\n"
@@ -346,10 +350,6 @@ rm -r /maui_debs
 
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
 whereis index buho nota vvave station pix contacts
-
-
-# -- No apt usage past this point. -- #
-#WARNING
 
 
 # -- Add missing firmware modules.
