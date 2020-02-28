@@ -221,6 +221,8 @@ mpv
 openresolv
 openssh-client
 openssl
+shim
+shim-signed
 sudo
 thunderbolt-tools
 x11-session-utils
@@ -237,8 +239,6 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
-shim
-shim-signed
 '
 
 ADD_MISC_PACKAGES='
