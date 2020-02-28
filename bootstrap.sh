@@ -117,6 +117,8 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_BIONIC='
+libreoffice
+inkscape
 kdenlive
 partitionmanager
 '
@@ -243,10 +245,8 @@ firejail
 firejail-profiles
 gimp
 gnome-keyring
-inkscape
 libc6-dev
 libc6-i386
-libreoffice
 libslirp0
 lmms
 plasma-discover
@@ -296,10 +296,10 @@ printf "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421_5.4.21-050421.202002191431_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-image-unsigned-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-modules-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423_5.4.23-050423.202002281329_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-image-unsigned-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-modules-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -312,6 +312,40 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
+
+
+# -- Install Maui apps Debs.
+# -- Add custom launchers for Maui apps.
+#FIXME This should be synced to our repository.
+
+printf "\n"
+printf "INSTALLING MAUI APPS."
+printf "\n"
+
+mauipkgs='
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
+'
+
+mkdir /maui_debs
+
+for x in $mauipkgs; do
+	wget -q -P /maui_debs $x
+done
+
+dpkg -iR /maui_debs
+dpkg --configure -a
+rm -r /maui_debs
+
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
+whereis index buho nota vvave station pix contacts
 
 
 # -- No apt usage past this point. -- #
