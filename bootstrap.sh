@@ -274,10 +274,10 @@ printf "INSTALLING KERNEL."
 printf "\n"
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.22/linux-headers-5.4.22-050422_5.4.22-050422.202002240833_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.22/linux-headers-5.4.22-050422-generic_5.4.22-050422.202002240833_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.22/linux-image-unsigned-5.4.22-050422-generic_5.4.22-050422.202002240833_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.22/linux-modules-5.4.22-050422-generic_5.4.22-050422.202002240833_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423_5.4.23-050423.202002281329_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-image-unsigned-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-modules-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
 '
 
 mkdir /latest_kernel
