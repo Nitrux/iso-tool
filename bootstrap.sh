@@ -70,11 +70,13 @@ printf "INSTALLING KVANTUM AND GLIB."
 printf "\n"
 
 UPDATE_LIBC_KVANTUM='
+fuse3
 gcc-10-base
 libc-bin
 libc-dev-bin
 libc6
 libc6-dev
+libfuse3-3
 libgcc-s1
 libgcc1
 linux-libc-dev
