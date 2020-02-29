@@ -117,6 +117,7 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_BIONIC='
+libreoffice
 kdenlive
 partitionmanager
 '
@@ -254,6 +255,7 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
+libreoffice
 '
 
 ADD_MISC_PACKAGES='
@@ -262,6 +264,7 @@ firejail
 firejail-profiles
 gimp
 gnome-keyring
+inkscape
 libc6-dev
 libc6-i386
 libslirp0
@@ -269,8 +272,6 @@ lmms
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-libreoffice-base
-inkscape
 '
 
 apt update &> /dev/null
