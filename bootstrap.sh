@@ -2,6 +2,9 @@
 
 set -x
 
+export LANG=C
+export LC_ALL=C
+
 printf "\n"
 printf "STARTING BOOTSTRAP."
 printf "\n"
@@ -57,6 +60,39 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
+# -- Use sources.list.focal to install kvantum.
+#FIXME We need to provide these packages from a repository of ours.
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+printf "\n"
+printf "INSTALLING KVANTUM AND GLIB."
+printf "\n"
+
+UPDATE_LIBC_KVANTUM='
+fuse3
+gcc-10-base
+libc-bin
+libc-dev-bin
+libc6
+libc6-dev
+libfuse3-3
+libgcc-s1
+libgcc1
+linux-libc-dev
+locales
+qt5-style-kvantum
+qt5-style-kvantum-themes
+'
+
+apt update &> /dev/null
+apt download ${UPDATE_LIBC_KVANTUM//\\n/ } --no-install-recommends
+dpkg --force-all -i *.deb
+rm *.deb
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
 # -- Use sources.list.build to build ISO.
 
 cp /configs/files/sources.list.build /etc/apt/sources.list
@@ -75,19 +111,18 @@ nitrux-hardware-drivers
 nx-desktop
 '
 
-ADD_NPM_PACKAGES='
-npm
-'
-
 apt update &> /dev/null
+apt -yy --fix-broken install
 apt -yy upgrade
 apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy dist-upgrade
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
-# -- Use sources.list.focal to update packages and install brew.
+# -- Use sources.list.eaon to update packages and install brew.
 
 printf "\n"
 printf "UPDATE MISC. PACKAGES."
@@ -96,10 +131,11 @@ printf "\n"
 cp /configs/files/sources.list.eoan /etc/apt/sources.list
 
 ADD_BREW_PACKAGES='
-libc-dev-bin
-libc6-dev
-linux-libc-dev
 linuxbrew-wrapper
+'
+
+ADD_NPM_PACKAGES='
+npm
 '
 
 apt update &> /dev/null
@@ -108,6 +144,8 @@ apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
+
+# -- Update packages using sources.list.focal.
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
@@ -182,6 +220,7 @@ zsh
 ADD_MISC_PACKAGES='
 gnome-keyring
 libslirp0
+nsnake
 '
 
 apt update &> /dev/null
@@ -193,10 +232,24 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
+# -- Upgrade KF5 libs for latte.
+
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
+HOLD_KWIN_PKGS='
+kwin-addons 
+kwin-common
+kwin-data
+kwin-x11
+libkwin4-effect-builtins1
+libkwineffects12
+libkwinglutils12
+libkwinxrenderutils12
+qml-module-org-kde-kwindowsystem
+'
 
 apt update &> /dev/null
+apt-mark hold ${HOLD_KWIN_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
@@ -210,20 +263,21 @@ apt autoclean &> /dev/null
 
 
 # -- No apt usage past this point. -- #
+#WARNING
 
 
 # -- Install the kernel.
-#FIXME This should be put in our repository.
+#FIXME This should be synced to our repository.
 
 printf "\n"
 printf "INSTALLING KERNEL."
 printf "\n"
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-headers-5.4.16-050416_5.4.16-050416.202001300040_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-headers-5.4.16-050416-generic_5.4.16-050416.202001300040_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-image-unsigned-5.4.16-050416-generic_5.4.16-050416.202001300040_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.16/linux-modules-5.4.16-050416-generic_5.4.16-050416.202001300040_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423_5.4.23-050423.202002281329_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-image-unsigned-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-modules-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -240,22 +294,22 @@ rm -r /latest_kernel
 
 # -- Install Maui apps Debs.
 # -- Add custom launchers for Maui apps.
-#FIXME This should be put in our repository.
+#FIXME This should be synced to our repository.
 
 printf "\n"
 printf "INSTALLING MAUI APPS."
 printf "\n"
 
 mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
 '
 
 mkdir /maui_debs
@@ -314,13 +368,12 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/renoir_*.bin /lib/firmware/amdgpu/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
+
+ls -l /lib/firmware/amdgpu/
 
 
 # -- Add /Applications to $PATH.
@@ -336,7 +389,7 @@ sed -i "/env_reset/d" /etc/sudoers
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate, appimage-user-tool and znx.
+# -- Rename AppImages for easy access from the terminal.
 
 printf "\n"
 printf "ADD APPIMAGES."
@@ -347,16 +400,17 @@ https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86
 https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/pnx-1.0.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
 https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
 '
 
 APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.4.0-x86_64.AppImage
+https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
-https://files.kde.org/kdenlive/release/kdenlive-19.04.3b-x86_64.appimage
-https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage
+https://files.kde.org/kdenlive/release/kdenlive-19.12.2c-x86_64.appimage
+https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200227-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
@@ -380,15 +434,16 @@ mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
+mv /Applications/pnx-1.0.0-x86_64.AppImage /Applications/pnx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
 mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
 
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
-mv /Applications/LibreOffice-6.4.0-x86_64.AppImage /Applications/libreoffice
+mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
-mv /Applications/kdenlive-19.04.3b-x86_64.appimage /Applications/kdenlive
-mv /Applications/GIMP_AppImage-git-2.10.15-20191219-x86_64.AppImage /Applications/gimp
+mv /Applications/kdenlive-19.12.2c-x86_64.appimage /Applications/kdenlive
+mv /Applications/GIMP_AppImage-git-2.10.19-20200227-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
 mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
 mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
@@ -420,9 +475,9 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
-# -- Create directory for pacman cache.
-# -- Create directory for pacman repository list.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
+# -- Remove htop and nsnake desktop launcher.
+# -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 #FIXME These fixes should be included in a deb package downloaded to our repository.
 
 printf "\n"
@@ -444,10 +499,41 @@ cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
+/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
+ln -sv /usr/games/nsnake /bin/nsnake
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
+
+
+# -- Workarounds for PNX.
+#FIXME These need to be fixed in PNX.
+
+printf "\n"
+printf "ADD WORKAROUNDS FOR PNX."
+printf "\n"
+
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
-cp /configs/files/{pacman.conf,mirrorlist} /etc/ && mv /etc/mirrorlist /etc/pacman.d/
-/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+mkdir -p /usr/share/pacman/keyrings
+
+cp /configs/files/pacman.conf /etc
+cp /configs/files/mirrorlist /etc/pacman.d
+cp /configs/other/pacman/* /usr/share/pacman/keyrings
+
+ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
+ln -sv /home/.pnx/usr/lib/pulseaudio /usr/lib/pulseaudio
+ln -sv /home/.pnx/usr/lib/gdk-pixbuf-2.0 /usr/lib/gdk-pixbuf-2.0
+ln -sv /home/.pnx/usr/lib/gs-plugins-13 /usr/lib/gs-plugins-13
+ln -sv /home/.pnx/usr/lib/liblmdb.so /usr/lib/liblmdb.so
+ln -sv /home/.pnx/usr/lib/systemd /usr/lib/systemd
+ln -sv /home/.pnx/usr/lib/samba /usr/lib/samba
+ln -sv /home/.pnx/usr/lib/girepository-1.0 /usr/lib/girepository-1.0
+ln -sv /home/.pnx/usr/share/tracker /usr/share/tracker
+ln -sv /home/.pnx/usr/lib/tracker-2.0 /usr/lib/tracker-2.0
+ln -sv /home/.pnx/usr/lib/WebKitNetworkProcess /usr/lib/WebKitNetworkProcess
+ln -sv /home/.pnx/usr/lib/epiphany /usr/lib/epiphany
+ln -sv /home/.pnx/usr/lib/opera /usr/lib/opera
+ln -sv /home/.pnx/usr/lib/firefox /usr/lib/firefox
 
 
 # -- Add vfio modules and files.
@@ -502,6 +588,8 @@ cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add configuration for npm to install packages in home and without sudo and update it.
+# -- Delete 'travis' folder that holds npm cache during build.
+#FIXME This should be in a package.
 
 printf "\n"
 printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
@@ -510,6 +598,7 @@ printf "\n"
 mkdir /etc/skel/.npm-packages
 cp /configs/files/npmrc /etc/skel/.npmrc
 npm install npm@latest -g
+rm -r /home/travis
 
 
 # -- Add nativefier launcher.
@@ -581,7 +670,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 
 # -- Remove APT.
 # -- Update package index using cupt.
-#FIXME We probably need to provide our own cupt package which also does this.
+#FIXME This should be put in a package.
 
 printf "\n"
 printf "REMOVE APT."
@@ -607,14 +696,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.4.16-050416-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.23-050423-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.16-050416-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.4.23-050423-generic | grep vfio
 
 rm /bin/dummy.sh
 
@@ -634,7 +723,7 @@ lupin-casper
 
 
 # -- No dpkg usage past this point. -- #
-
+#WARNING
 
 # -- Use script to remove dpkg.
 
