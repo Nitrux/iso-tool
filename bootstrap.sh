@@ -176,6 +176,25 @@ cp /configs/files/liquidshellrc /etc/skel/.config/
 cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
 
 
+# -- Install modified bup deb package.
+#FIXME This should be synced to our repository.
+
+bup_deb='
+https://github.com/UriHerrera/storage/raw/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_pkg
+
+for x in $bup_deb; do
+printf "$x"
+    wget -q -P /bup_pkg $x
+done
+
+dpkg -iR /bup_pkg
+dpkg --configure -a &> /dev/null
+rm -r /bup_pkg
+
+
 # -- Use sources.list.focal to update packages
 
 printf "\n"
@@ -252,6 +271,8 @@ lmms
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
+libreoffice
+inkscape
 '
 
 apt update &> /dev/null
