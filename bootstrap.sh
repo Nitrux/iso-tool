@@ -274,10 +274,10 @@ printf "INSTALLING KERNEL."
 printf "\n"
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423_5.4.23-050423.202002281329_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-image-unsigned-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-modules-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421_5.4.21-050421.202002191431_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-image-unsigned-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-modules-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -360,10 +360,6 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_pfp.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_rlc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_sdma.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_vcn.bin
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/vfio.ko
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/vfio_iommu_type1.ko
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/vfio_virqfd.ko
-https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/pci/vfio-pci.ko
 '
 
 mkdir /fw_files
@@ -374,9 +370,6 @@ done
 
 cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
 cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
-cp /fw_files/{vfio.ko,vfio_iommu_type1.ko,vfio_virqfd.ko} /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/vfio/
-mkdir -p /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/vfio/pci
-cp /fw_files/vfio-pci.ko /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/vfio/pci
 
 rm -r /fw_files
 
@@ -701,14 +694,14 @@ printf "\n"
 printf "UPDATE INITRAMFS."
 printf "\n"
 
-find /lib/modules/5.4.23-050423-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.21-050421-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.23-050423-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 rm /bin/dummy.sh
 
