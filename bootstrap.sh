@@ -117,6 +117,9 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_BIONIC='
+plasma-discover
+plasma-discover-backend-flatpak
+plasma-discover-backend-snap
 kdenlive
 partitionmanager
 '
@@ -268,9 +271,6 @@ libc6-i386
 libslirp0
 libreoffice
 lmms
-plasma-discover
-plasma-discover-backend-flatpak
-plasma-discover-backend-snap
 '
 
 apt update &> /dev/null
@@ -443,6 +443,7 @@ done
 
 dpkg -iR /appimage_installer &> /dev/null
 dpkg --configure -a &> /dev/null
+apt -yy --fix-broken install
 rm -r /appimage_installer
 
 
