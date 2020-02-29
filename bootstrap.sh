@@ -380,8 +380,6 @@ cp /fw_files/vfio-pci.ko /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/v
 
 rm -r /fw_files
 
-ls -l /lib/firmware/amdgpu/
-
 
 # -- Add /Applications to $PATH.
 
