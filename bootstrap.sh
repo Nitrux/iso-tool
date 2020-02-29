@@ -117,8 +117,6 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_BIONIC='
-libreoffice
-inkscape
 kdenlive
 partitionmanager
 '
