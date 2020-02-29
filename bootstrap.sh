@@ -124,7 +124,7 @@ partitionmanager
 '
 
 BASE_FILES_PKG='
-base-files=11.0.98.4+nitrux-legacy
+base-files=11.0.98.6+nitrux-legacy
 '
 
 apt update &> /dev/null
@@ -142,7 +142,7 @@ apt autoclean &> /dev/null
 
 
 # -- Install liquidshell.
-#FIXME These files should be included in a package.
+#FIXME This should be synced to our repository.
 
 printf "\n"
 printf "INSTALLING LIQUIDSHELL."
@@ -293,6 +293,7 @@ apt autoclean &> /dev/null
 
 
 # -- Install the kernel.
+#FIXME This should be synced to our repository.
 
 printf "\n"
 printf "INSTALLING KERNEL."
