@@ -269,7 +269,7 @@ lmms
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-libreoffice
+libreoffice-base
 inkscape
 '
 
