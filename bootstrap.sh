@@ -274,6 +274,7 @@ plasma-discover-backend-snap
 '
 
 apt update &> /dev/null
+apt -yy --fix-broken install
 apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
 apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
