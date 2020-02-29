@@ -117,7 +117,6 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_BIONIC='
-libreoffice
 kdenlive
 partitionmanager
 '
@@ -255,7 +254,6 @@ xserver-xorg-video-intel
 xserver-xorg-video-qxl
 xserver-xorg-video-radeon
 xserver-xorg-video-vmware
-libreoffice
 '
 
 ADD_MISC_PACKAGES='
@@ -268,6 +266,7 @@ inkscape
 libc6-dev
 libc6-i386
 libslirp0
+libreoffice
 lmms
 plasma-discover
 plasma-discover-backend-flatpak
