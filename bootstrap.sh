@@ -360,6 +360,10 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_pfp.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_rlc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_sdma.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/vfio.ko
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/vfio_iommu_type1.ko
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/vfio_virqfd.ko
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/kernel_modules/vfio/pci/vfio-pci.ko
 '
 
 mkdir /fw_files
@@ -370,6 +374,9 @@ done
 
 cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
 cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+cp /fw_files/{vfio.ko,vfio_iommu_type1.ko,vfio_virqfd.ko} /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/vfio/
+mkdir -p /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/vfio/pci
+cp /fw_files/vfio-pci.ko /usr/lib/modules/5.4.23-050423-generic/kernel/drivers/vfio/pci
 
 rm -r /fw_files
 
