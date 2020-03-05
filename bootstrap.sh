@@ -394,7 +394,7 @@ printf "ADD APPIMAGES."
 printf "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/znx-master-x86_64.AppImage
 https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
