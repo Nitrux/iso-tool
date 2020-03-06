@@ -78,18 +78,38 @@ cp /configs/files/sources.list.build /etc/apt/sources.list
 cp /configs/files/preferences /etc/apt/preferences
 
 printf "\n"
-printf "INSTALLING DESKTOP."
+printf "INSTALLING BASE SYSTEM."
 printf "\n"
 
-NITRUX_PACKAGES='
+NITRUX_BASE_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
 '
 
 apt update &> /dev/null
-apt -yy install ${NITRUX_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Add NX Desktop metapackage.
+
+printf "\n"
+printf "INSTALLING DESKTOP."
+printf "\n"
+
+cp /configs/files/sources.list.build.update /etc/apt/sources.list
+
+NX_DESKTOP_PKG='
+nx-desktop
+'
+
+apt update &> /dev/null
+apt -yy --fix-broken install
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -109,22 +129,6 @@ linuxbrew-wrapper
 
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
-# -- Add NX Desktop metapackage.
-
-cp /configs/files/sources.list.build.update /etc/apt/sources.list
-
-NX_DESKTOP_PKG='
-nx-desktop
-'
-
-apt update &> /dev/null
-apt -yy --fix-broken install
-apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
-apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
