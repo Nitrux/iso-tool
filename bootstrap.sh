@@ -113,7 +113,7 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Upgrade KF5 libs for Latte Dock and hold KDE packages.
+# -- Add NX Desktop metapackage.
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
