@@ -44,6 +44,7 @@ libarchive13
 libelf1
 localechooser-data
 lupin-casper
+systemd-sysv
 user-setup
 wget
 xz-utils
@@ -71,7 +72,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
-# -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
+# -- Update packages list and install packages.
 # -- Block installation of libsensors4.
 
 cp /configs/files/sources.list.build /etc/apt/sources.list
@@ -164,8 +165,8 @@ printf "$x"
     wget -q -P /latest_kernel $x
 done
 
-dpkg -iR /latest_kernel &> /dev/null
-dpkg --configure -a &> /dev/null
+dpkg -iR /latest_kernel
+dpkg --configure -a
 rm -r /latest_kernel
 
 
