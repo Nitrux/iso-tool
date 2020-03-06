@@ -128,13 +128,11 @@ libkwineffects12
 libkwinglutils12
 libkwinxrenderutils12
 qml-module-org-kde-kwindowsystem
-plasma-workspace
-libkf5prison5
 '
 
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
-apt -yy upgrade --only-upgrade --no-install-recommends
+apt -yy dist-upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
