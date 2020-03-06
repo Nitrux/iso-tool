@@ -97,7 +97,7 @@ apt autoclean &> /dev/null
 #FIXME We need to provide these packages from a repository of ours.
 
 printf "\n"
-printf "ADD BREW AND NPM PACKAGES."
+printf "ADD BREW PACKAGE."
 printf "\n"
 
 cp /configs/files/sources.list.eoan /etc/apt/sources.list
@@ -106,13 +106,8 @@ ADD_BREW_PACKAGES='
 linuxbrew-wrapper
 '
 
-ADD_NPM_PACKAGES='
-npm
-'
-
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
-apt -yy install ${ADD_NPM_PACKAGES//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
