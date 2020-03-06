@@ -104,6 +104,7 @@ cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
 NX_DESKTOP_PKG='
 plasma-pa=4:5.18.2-0ubuntu1
+nx-desktop
 '
 
 apt update &> /dev/null
