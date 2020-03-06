@@ -103,7 +103,7 @@ printf "\n"
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
 NX_DESKTOP_PKG='
-plasma-pa
+plasma-pa=4:5.18.2-0ubuntu1
 '
 
 apt update &> /dev/null
