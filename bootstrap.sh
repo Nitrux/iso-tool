@@ -10,6 +10,23 @@ printf "STARTING BOOTSTRAP."
 printf "\n"
 
 
+# -- Use sources.list.focal and update bionic base to focal.
+# -- WARNING
+
+printf "\n"
+printf "UPDATING OS BASE."
+printf "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+apt update &> /dev/null
+apt -yy --fix-broken install
+apt -yy dist-upgrade --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
 # -- Install basic packages.
 
 printf "\n"
@@ -22,28 +39,22 @@ apt-utils
 ca-certificates
 casper
 dhcpcd5
-fuse
 gnupg2
-language-pack-en
-language-pack-en-base
 libarchive13
 libelf1
 localechooser-data
-locales
 lupin-casper
 user-setup
 wget
 xz-utils
 '
 
-apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
-# -- Add key for our repository.
+# -- Add key for Nitrux repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
-# -- Add key for XORG PPA.
 
 printf "\n"
 printf "ADD REPOSITORY KEYS."
@@ -57,54 +68,18 @@ rm neon.key
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
-
-
-# -- Use sources.list.focal to install kvantum.
-#FIXME We need to provide these packages from a repository of ours.
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-printf "\n"
-printf "INSTALLING KVANTUM AND GLIB."
-printf "\n"
-
-UPDATE_LIBC_KVANTUM='
-fuse3
-gcc-10-base
-libc-bin
-libc-dev-bin
-libc6
-libc6-dev
-libfuse3-3
-libgcc-s1
-libgcc1
-linux-libc-dev
-locales
-qt5-style-kvantum
-qt5-style-kvantum-themes
-'
-
-apt update &> /dev/null
-apt download ${UPDATE_LIBC_KVANTUM//\\n/ } --no-install-recommends
-dpkg --force-all -i *.deb
-rm *.deb
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Use sources.list.build to build ISO.
+# -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
 
 cp /configs/files/sources.list.build /etc/apt/sources.list
-
-
-# -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
 
 printf "\n"
 printf "INSTALLING DESKTOP."
 printf "\n"
 
-DESKTOP_PACKAGES='
+NITRUX_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
@@ -112,20 +87,17 @@ nx-desktop
 '
 
 apt update &> /dev/null
-apt -yy --fix-broken install
-apt -yy upgrade
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install &> /dev/null
+apt -yy install ${NITRUX_PACKAGES//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
-apt -yy dist-upgrade
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Use sources.list.eaon to update packages and install brew.
+# -- Use sources.list.eaon to update packages and install brew and npm.
+#FIXME We need to provide these packages from a repository of ours.
 
 printf "\n"
-printf "UPDATE MISC. PACKAGES."
+printf "ADD BREW AND NPM PACKAGES."
 printf "\n"
 
 cp /configs/files/sources.list.eoan /etc/apt/sources.list
@@ -145,94 +117,7 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Update packages using sources.list.focal.
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-UPGRADE_OS_PACKAGES='
-broadcom-sta-dkms
-dkms
-exfat-fuse
-exfat-utils
-firejail
-firejail-profiles
-fontconfig
-go-mtpfs
-grub-common
-grub-efi-amd64-bin
-grub-efi-amd64-signed
-grub2-common
-i965-va-driver
-initramfs-tools
-initramfs-tools-bin
-initramfs-tools-core
-ipxe-qemu
-language-pack-de
-language-pack-de-base
-language-pack-en
-language-pack-en-base
-language-pack-es
-language-pack-es-base
-language-pack-fr
-language-pack-fr-base
-language-pack-pt
-language-pack-pt-base
-libdrm-amdgpu1
-libdrm-intel1
-libdrm-radeon1
-libglib2.0-0
-libglib2.0-bin
-libmagic-mgc
-libmagic1
-libva-drm2
-libva-glx2
-libva-x11-2
-libva2
-linux-firmware
-lsb-base
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
-mksh
-openssh-client
-openssl
-ovmf
-seabios
-sudo
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
-zsh
-'
-
-ADD_MISC_PACKAGES='
-gnome-keyring
-libslirp0
-nsnake
-'
-
-apt update &> /dev/null
-apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
-apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
-# -- Upgrade KF5 libs for latte.
+# -- Upgrade KF5 libs for Latte Dock and hold KWin.
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
@@ -478,7 +363,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
-#FIXME These fixes should be included in a deb package downloaded to our repository.
+#FIXME These fixes should be in a package.
 
 printf "\n"
 printf "ADD MISC. FIXES."
@@ -668,23 +553,6 @@ systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online
 sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
 
 
-# -- Remove APT.
-# -- Update package index using cupt.
-#FIXME This should be put in a package.
-
-printf "\n"
-printf "REMOVE APT."
-printf "\n"
-
-REMOVE_APT='
-apt 
-apt-utils 
-apt-transport-https
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
-
-
 # -- Strip kernel modules.
 # -- Use GZIP compression when creating the initramfs.
 # -- Add initramfs hook script.
@@ -708,6 +576,23 @@ lsinitramfs /boot/initrd.img-5.4.21-050421-generic | grep vfio
 rm /bin/dummy.sh
 
 
+# -- Remove APT.
+# -- Update package index using cupt.
+#FIXME This should be put in a package.
+
+printf "\n"
+printf "REMOVE APT."
+printf "\n"
+
+REMOVE_APT='
+apt 
+apt-utils 
+apt-transport-https
+'
+
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
+
+
 # -- Clean the filesystem.
 
 printf "\n"
@@ -724,6 +609,7 @@ lupin-casper
 
 # -- No dpkg usage past this point. -- #
 #WARNING
+
 
 # -- Use script to remove dpkg.
 
