@@ -72,8 +72,10 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 # -- Use sources.list.build to build ISO.
 # -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
+# -- Block installation of libsensors4.
 
 cp /configs/files/sources.list.build /etc/apt/sources.list
+cp /configs/files/preferences /etc/apt/preferences
 
 printf "\n"
 printf "INSTALLING DESKTOP."
@@ -116,7 +118,7 @@ apt autoclean &> /dev/null
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
-HOLD_KWIN_PKGS='
+HOLD_KDE_PKGS='
 kwin-addons 
 kwin-common
 kwin-data
@@ -126,10 +128,12 @@ libkwineffects12
 libkwinglutils12
 libkwinxrenderutils12
 qml-module-org-kde-kwindowsystem
+plasma-workspace
+libkf5prison5
 '
 
 apt update &> /dev/null
-apt-mark hold ${HOLD_KWIN_PKGS//\\n/ }
+apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
