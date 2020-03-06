@@ -136,6 +136,7 @@ apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
+apt -yy dist-upgrade --only-upgrade --no-install-recommends
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
