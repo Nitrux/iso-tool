@@ -85,7 +85,6 @@ NITRUX_PACKAGES='
 nitrux-minimal
 nitrux-standard
 nitrux-hardware-drivers
-nx-desktop
 '
 
 apt update &> /dev/null
@@ -118,22 +117,13 @@ apt autoclean &> /dev/null
 
 cp /configs/files/sources.list.build.update /etc/apt/sources.list
 
-HOLD_KDE_PKGS='
-kwin-addons 
-kwin-common
-kwin-data
-kwin-x11
-libkwin4-effect-builtins1
-libkwineffects12
-libkwinglutils12
-libkwinxrenderutils12
-qml-module-org-kde-kwindowsystem
+NX_DESKTOP_PKG='
+nx-desktop
 '
 
 apt update &> /dev/null
-apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
-apt -yy dist-upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
