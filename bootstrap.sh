@@ -127,7 +127,7 @@ printf "\n"
 
 cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
 
-HOLD_KWIN_PKGS='
+HOLD_KDE_PKGS='
 kwin-addons 
 kwin-common
 kwin-data
@@ -137,10 +137,11 @@ libkwineffects12
 libkwinglutils12
 libkwinxrenderutils12
 qml-module-org-kde-kwindowsystem
+libphonon4qt5-4
 '
 
 apt update &> /dev/null
-apt-mark hold ${HOLD_KWIN_PKGS//\\n/ }
+apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
