@@ -39,12 +39,15 @@ apt-utils
 ca-certificates
 casper
 dhcpcd5
+fuse
 gnupg2
+language-pack-en
+language-pack-en-base
 libarchive13
 libelf1
 localechooser-data
+locales
 lupin-casper
-systemd-sysv
 user-setup
 wget
 xz-utils
