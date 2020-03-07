@@ -75,10 +75,9 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 
 # -- Use sources.list.build to build ISO.
-# -- Update packages list and install packages.
 # -- Block installation of libsensors4.
 
-cp /configs/files/sources.list.build /etc/apt/sources.list
+cp /configs/files/sources.list.base /etc/apt/sources.list
 cp /configs/files/preferences /etc/apt/preferences
 
 printf "\n"
@@ -94,6 +93,7 @@ nitrux-hardware-drivers
 apt update &> /dev/null
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -101,10 +101,10 @@ apt autoclean &> /dev/null
 # -- Add NX Desktop metapackage.
 
 printf "\n"
-printf "INSTALLING DESKTOP."
+printf "INSTALLING DESKTOP PACKAGES."
 printf "\n"
 
-cp /configs/files/sources.list.build.update /etc/apt/sources.list
+cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
 NX_DESKTOP_PKG='
 plasma-pa=4:5.18.2-0ubuntu1
@@ -114,6 +114,35 @@ nx-desktop
 apt update &> /dev/null
 apt -yy --fix-broken install &> /dev/null
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Upgrade KF5 libs for Latte Dock.
+
+printf "\n"
+printf "UPGRADING DESKTOP PACKAGES."
+printf "\n"
+
+cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
+
+HOLD_KWIN_PKGS='
+kwin-addons 
+kwin-common
+kwin-data
+kwin-x11
+libkwin4-effect-builtins1
+libkwineffects12
+libkwinglutils12
+libkwinxrenderutils12
+qml-module-org-kde-kwindowsystem
+'
+
+apt update &> /dev/null
+apt-mark hold ${HOLD_KWIN_PKGS//\\n/ }
+apt -yy upgrade --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -207,6 +236,29 @@ rm -r /maui_debs
 whereis index buho nota vvave station pix contacts
 
 
+# -- Install bup and kup-backup.
+#FIXME This should be synced to our repository.
+
+printf "\n"
+printf "INSTALLING KUP."
+printf "\n"
+
+kup_bup_pkgs='
+http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build2_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $kup_bup_pkgs; do
+	wget -q -P /bup_debs $x
+done
+
+dpkg -iR /bup_debs &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /bup_debs
+
+
 # -- Add missing firmware modules.
 #FIXME These files should be included in a package.
 
@@ -288,7 +340,7 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 APPS_USR='
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
-https://files.kde.org/kdenlive/release/kdenlive-19.12.2c-x86_64.appimage
+https://files.kde.org/kdenlive/release/kdenlive-19.12.3-x86_64.appimage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200227-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
