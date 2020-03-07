@@ -39,7 +39,6 @@ apt-utils
 ca-certificates
 casper
 dhcpcd5
-fuse
 gnupg2
 language-pack-en
 language-pack-en-base
@@ -48,6 +47,7 @@ libelf1
 localechooser-data
 locales
 lupin-casper
+systemd-sysv
 user-setup
 wget
 xz-utils
@@ -168,8 +168,8 @@ printf "$x"
     wget -q -P /latest_kernel $x
 done
 
-dpkg -iR /latest_kernel
-dpkg --configure -a
+dpkg -iR /latest_kernel &> /dev/null
+dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
@@ -199,8 +199,8 @@ for x in $mauipkgs; do
 	wget -q -P /maui_debs $x
 done
 
-dpkg -iR /maui_debs
-dpkg --configure -a
+dpkg -iR /maui_debs &> /dev/null
+dpkg --configure -a &> /dev/null
 rm -r /maui_debs
 
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
