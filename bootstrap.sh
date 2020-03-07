@@ -91,6 +91,7 @@ nitrux-hardware-drivers
 '
 
 apt update &> /dev/null
+apt -yy upgrade
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
@@ -436,7 +437,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
-rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.iBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 
 
 # -- Workarounds for PNX.
