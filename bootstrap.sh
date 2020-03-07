@@ -436,7 +436,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
-rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedkestop.iBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.iBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 
 
 # -- Workarounds for PNX.
