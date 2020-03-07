@@ -34,7 +34,7 @@ xorriso
 '
 
 apt update &> /dev/null
-apt -yy install ${XORRISO_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${XORRISO_PACKAGES//\\n/ } --only-upgrade --no-install-recommends &> /dev/null
 
 
 # -- Prepare the directories for the build.
@@ -74,11 +74,14 @@ rm -rf $BUILD_DIR/configs
 # -- Copy the kernel and initramfs to $ISO_DIR.
 
 mkdir -p $ISO_DIR/boot
-
 ls -l $BUILD_DIR/boot
 
-cp $(echo $BUILD_DIR/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
-cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
+# -- BUG vmlinuz and initrd are not moved to / they're put and left at /boot
+
+cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
+cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
+
+ls -l $BUILD_DIR/
 
 
 # -- Compress the root filesystem.

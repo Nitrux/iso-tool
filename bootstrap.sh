@@ -20,9 +20,9 @@ printf "\n"
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 apt update &> /dev/null
-apt -yy --fix-broken install
-apt -yy dist-upgrade --only-upgrade --no-install-recommends
-apt -yy --fix-broken install
+apt -yy --fix-broken install &> /dev/null
+apt -yy dist-upgrade --only-upgrade --no-install-recommends &> /dev/null
+apt -yy --fix-broken install &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -53,7 +53,7 @@ wget
 xz-utils
 '
 
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -92,7 +92,7 @@ nitrux-hardware-drivers
 '
 
 apt update &> /dev/null
-apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -112,7 +112,7 @@ nx-desktop
 '
 
 apt update &> /dev/null
-apt -yy --fix-broken install
+apt -yy --fix-broken install &> /dev/null
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove
 apt clean &> /dev/null
@@ -133,7 +133,7 @@ linuxbrew-wrapper
 '
 
 apt update &> /dev/null
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
