@@ -376,7 +376,7 @@ mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
-mv /Applications/kdenlive-19.12.2c-x86_64.appimage /Applications/kdenlive
+mv /Applications/kdenlive-19.12.3-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-git-2.10.19-20200227-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
 mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
@@ -436,7 +436,7 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
-rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedkestop.iBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 
 
 # -- Workarounds for PNX.
