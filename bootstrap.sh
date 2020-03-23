@@ -463,12 +463,17 @@ ln -sv /home/.pnx/usr/lib/liblmdb.so /usr/lib/liblmdb.so
 ln -sv /home/.pnx/usr/lib/systemd /usr/lib/systemd
 ln -sv /home/.pnx/usr/lib/samba /usr/lib/samba
 ln -sv /home/.pnx/usr/lib/girepository-1.0 /usr/lib/girepository-1.0
-ln -sv /home/.pnx/usr/share/tracker /usr/share/tracker
 ln -sv /home/.pnx/usr/lib/tracker-2.0 /usr/lib/tracker-2.0
 ln -sv /home/.pnx/usr/lib/WebKitNetworkProcess /usr/lib/WebKitNetworkProcess
 ln -sv /home/.pnx/usr/lib/epiphany /usr/lib/epiphany
 ln -sv /home/.pnx/usr/lib/opera /usr/lib/opera
 ln -sv /home/.pnx/usr/lib/firefox /usr/lib/firefox
+ln -sv /home/.pnx/usr/share/tracker /usr/share/tracker
+ln -sv /home/.pnx/usr/share/xonotic /usr/share/xonotic
+
+mkdir -p /usr/lib/zsh/5.8/zsh/
+
+ln -sv /home/.pnx/usr/lib/zsh/5.8/zsh/datetime.so /usr/lib/zsh/5.8/zsh/datetime.so
 
 
 # -- Add vfio modules and files.
