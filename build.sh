@@ -64,11 +64,7 @@ tar xf base.tar.gz -C $BUILD_DIR
 wget -qO /bin/runch https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 
-cp -r bootstrap.sh configs $BUILD_DIR/
-
-runch $BUILD_DIR bootstrap.sh || true
-
-rm -rf $BUILD_DIR/configs $BUILD_DIR/bootstrap.sh
+cat bootstrap.sh | runch $BUILD_DIR sh || true
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
