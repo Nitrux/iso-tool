@@ -61,8 +61,6 @@ tar xf base.tar.gz -C $BUILD_DIR
 
 # -- Populate $BUILD_DIR.
 
-ls -l
-
 wget -qO /bin/runch https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 

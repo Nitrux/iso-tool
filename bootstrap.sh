@@ -9,6 +9,7 @@ echo -e "\n"
 echo -e "STARTING BOOTSTRAP."
 echo -e "\n"
 
+ls -l
 
 # -- Use sources.list.focal and update bionic base to focal.
 # -- WARNING
