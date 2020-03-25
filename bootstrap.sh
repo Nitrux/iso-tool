@@ -5,17 +5,17 @@ set -x
 export LANG=C
 export LC_ALL=C
 
-printf "\n"
-printf "STARTING BOOTSTRAP."
-printf "\n"
+echo -e "\n"
+echo -e "STARTING BOOTSTRAP."
+echo -e "\n"
 
 
 # -- Use sources.list.focal and update bionic base to focal.
 # -- WARNING
 
-printf "\n"
-printf "UPDATING OS BASE."
-printf "\n"
+echo -e "\n"
+echo -e "UPDATING OS BASE."
+echo -e "\n"
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
 
@@ -29,9 +29,9 @@ apt autoclean &> /dev/null
 
 # -- Install basic packages.
 
-printf "\n"
-printf "INSTALLING BASIC PACKAGES."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING BASIC PACKAGES."
+echo -e "\n"
 
 BASIC_PACKAGES='
 apt-transport-https
@@ -60,12 +60,12 @@ apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 # -- Add key for Nitrux repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
 
-printf "\n"
-printf "ADD REPOSITORY KEYS."
-printf "\n"
+echo -e "\n"
+echo -e "ADD REPOSITORY KEYS."
+echo -e "\n"
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
-printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
 apt-key add neon.key > /dev/null
 rm neon.key
 
@@ -80,9 +80,9 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 cp /configs/files/sources.list.base /etc/apt/sources.list
 cp /configs/files/preferences /etc/apt/preferences
 
-printf "\n"
-printf "INSTALLING BASE SYSTEM."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING BASE SYSTEM."
+echo -e "\n"
 
 NITRUX_BASE_PACKAGES='
 nitrux-minimal
@@ -101,9 +101,9 @@ apt autoclean &> /dev/null
 
 # -- Add NX Desktop metapackage.
 
-printf "\n"
-printf "INSTALLING DESKTOP PACKAGES."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING DESKTOP PACKAGES."
+echo -e "\n"
 
 cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
@@ -121,14 +121,14 @@ apt autoclean &> /dev/null
 
 # -- Upgrade KF5 libs for Latte Dock.
 
-printf "\n"
-printf "UPGRADING DESKTOP PACKAGES."
-printf "\n"
+echo -e "\n"
+echo -e "UPGRADING DESKTOP PACKAGES."
+echo -e "\n"
 
 cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
 
 HOLD_KDE_PKGS='
-kwin-addons 
+kwin-addons
 kwin-common
 kwin-data
 kwin-x11
@@ -152,9 +152,9 @@ apt autoclean &> /dev/null
 # -- Use sources.list.eaon to update packages and install brew and npm.
 #FIXME We need to provide these packages from a repository of ours.
 
-printf "\n"
-printf "ADD BREW PACKAGE."
-printf "\n"
+echo -e "\n"
+echo -e "ADD BREW PACKAGE."
+echo -e "\n"
 
 cp /configs/files/sources.list.eoan /etc/apt/sources.list
 
@@ -180,9 +180,9 @@ apt autoclean &> /dev/null
 # -- Install the kernel.
 #FIXME This should be synced to our repository.
 
-printf "\n"
-printf "INSTALLING KERNEL."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING KERNEL."
+echo -e "\n"
 
 kfiles='
 https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421_5.4.21-050421.202002191431_all.deb
@@ -194,7 +194,7 @@ https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-modules-5.4.21-0504
 mkdir /latest_kernel
 
 for x in $kfiles; do
-printf "$x"
+echo -e "$x"
     wget -q -P /latest_kernel $x
 done
 
@@ -207,9 +207,9 @@ rm -r /latest_kernel
 # -- Add custom launchers for Maui apps.
 #FIXME This should be synced to our repository.
 
-printf "\n"
-printf "INSTALLING MAUI APPS."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING MAUI APPS."
+echo -e "\n"
 
 mauipkgs='
 https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
@@ -240,9 +240,9 @@ whereis index buho nota vvave station pix contacts
 # -- Install bup and kup-backup.
 #FIXME This should be synced to our repository.
 
-printf "\n"
-printf "INSTALLING KUP."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING KUP."
+echo -e "\n"
 
 kup_bup_pkgs='
 http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build2_amd64.deb
@@ -263,9 +263,9 @@ rm -r /bup_debs
 # -- Add missing firmware modules.
 #FIXME These files should be included in a package.
 
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
+echo -e "\n"
+echo -e "ADDING MISSING FIRMWARE."
+echo -e "\n"
 
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
@@ -310,11 +310,11 @@ rm -r /fw_files
 
 # -- Add /Applications to $PATH.
 
-printf "\n"
-printf "ADD /APPLICATIONS TO PATH."
-printf "\n"
+echo -e "\n"
+echo -e "ADD /APPLICATIONS TO PATH."
+echo -e "\n"
 
-printf "PATH=$PATH:/Applications\n" > /etc/environment
+echo -e "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
@@ -323,9 +323,9 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Create /Applications directory for users.
 # -- Rename AppImages for easy access from the terminal.
 
-printf "\n"
-printf "ADD APPIMAGES."
-printf "\n"
+echo -e "\n"
+echo -e "ADD APPIMAGES."
+echo -e "\n"
 
 APPS_SYS='
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/znx-master-x86_64.AppImage
@@ -388,9 +388,9 @@ ls -l /etc/skel/.local/bin/
 
 # -- Add AppImage providers for appimage-cli-tool
 
-printf "\n"
-printf "ADD APPIMAGE PROVIDERS."
-printf "\n"
+echo -e "\n"
+echo -e "ADD APPIMAGE PROVIDERS."
+echo -e "\n"
 
 cp /configs/files/appimage-providers.yaml /etc/
 
@@ -414,9 +414,9 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 #FIXME These fixes should be in a package.
 
-printf "\n"
-printf "ADD MISC. FIXES."
-printf "\n"
+echo -e "\n"
+echo -e "ADD MISC. FIXES."
+echo -e "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
@@ -442,9 +442,9 @@ rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.I
 # -- Workarounds for PNX.
 #FIXME These need to be fixed in PNX.
 
-printf "\n"
-printf "ADD WORKAROUNDS FOR PNX."
-printf "\n"
+echo -e "\n"
+echo -e "ADD WORKAROUNDS FOR PNX."
+echo -e "\n"
 
 mkdir -p /var/lib/pacman/
 mkdir -p /etc/pacman.d/
@@ -478,9 +478,9 @@ ln -sv /home/.pnx/usr/lib/zsh/5.8/zsh/datetime.so /usr/lib/zsh/5.8/zsh/datetime.
 # -- Add vfio modules and files.
 #FIXME This configuration should be included a in a package; replacing the default package like base-files.
 
-printf "\n"
-printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
-printf "\n"
+echo -e "\n"
+echo -e "ADD VFIO ENABLEMENT AND CONFIGURATION."
+echo -e "\n"
 
 echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
@@ -516,9 +516,9 @@ chmod +x /bin/dummy.sh
 # -- Add itch.io store launcher.
 #FIXME This should be in a package.
 
-printf "\n"
-printf "ADD ITCH.IO LAUNCHER."
-printf "\n"
+echo -e "\n"
+echo -e "ADD ITCH.IO LAUNCHER."
+echo -e "\n"
 
 
 mkdir -p /etc/skel/.local/share/applications
@@ -530,9 +530,9 @@ cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 # -- Delete 'travis' folder that holds npm cache during build.
 #FIXME This should be in a package.
 
-printf "\n"
-printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
-printf "\n"
+echo -e "\n"
+echo -e "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
+echo -e "\n"
 
 mkdir /etc/skel/.npm-packages
 cp /configs/files/npmrc /etc/skel/.npmrc
@@ -543,9 +543,9 @@ rm -r /home/travis
 # -- Add nativefier launcher.
 #FIXME This should be in a package.
 
-printf "\n"
-printf "ADD NATIVEFIER LAUNCHER."
-printf "\n"
+echo -e "\n"
+echo -e "ADD NATIVEFIER LAUNCHER."
+echo -e "\n"
 
 
 cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
@@ -555,9 +555,9 @@ cp /configs/scripts/install-nativefier.sh /etc/skel/.config
 # -- Add oh my zsh.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "ADD OH MY ZSH."
-printf "\n"
+echo -e "\n"
+echo -e "ADD OH MY ZSH."
+echo -e "\n"
 
 git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
 
@@ -566,9 +566,9 @@ git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
 # -- Use zsh as default shell for all users.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "REMOVE DASH AND USE MKSH + ZSH."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE DASH AND USE MKSH + ZSH."
+echo -e "\n"
 
 rm /bin/sh.distrib
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
@@ -582,9 +582,9 @@ sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 # -- Decrease timeout for systemd start and stop services.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "DECREASE TIMEOUT FOR SYSTEMD SERVICES."
-printf "\n"
+echo -e "\n"
+echo -e "DECREASE TIMEOUT FOR SYSTEMD SERVICES."
+echo -e "\n"
 
 sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
 sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
@@ -593,9 +593,9 @@ sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/sy
 # -- Disable systemd services not deemed necessary.
 # -- use 'mask' to fully disable them.
 
-printf "\n"
-printf "DISABLE SYSTEMD SERVICES."
-printf "\n"
+echo -e "\n"
+echo -e "DISABLE SYSTEMD SERVICES."
+echo -e "\n"
 
 systemctl mask avahi-daemon.service
 systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online.service keyboard-setup.service
@@ -614,9 +614,9 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 # -- Add znx_dev_uuid parameter.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "UPDATE INITRAMFS."
-printf "\n"
+echo -e "\n"
+echo -e "UPDATE INITRAMFS."
+echo -e "\n"
 
 find /lib/modules/5.4.21-050421-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
@@ -634,13 +634,13 @@ rm /bin/dummy.sh
 # -- Update package index using cupt.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "REMOVE APT."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE APT."
+echo -e "\n"
 
 REMOVE_APT='
-apt 
-apt-utils 
+apt
+apt-utils
 apt-transport-https
 '
 
@@ -649,9 +649,9 @@ apt-transport-https
 
 # -- Clean the filesystem.
 
-printf "\n"
-printf "REMOVE CASPER."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE CASPER."
+echo -e "\n"
 
 REMOVE_PACKAGES='
 casper
@@ -667,14 +667,14 @@ lupin-casper
 
 # -- Use script to remove dpkg.
 
-printf "\n"
-printf "REMOVE DPKG."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE DPKG."
+echo -e "\n"
 
 /configs/scripts/./rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
 
 
-printf "\n"
-printf "EXITING BOOTSTRAP."
-printf "\n"
+echo -e "\n"
+echo -e "EXITING BOOTSTRAP."
+echo -e "\n"
