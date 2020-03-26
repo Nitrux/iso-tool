@@ -51,6 +51,7 @@ systemd-sysv
 user-setup
 wget
 xz-utils
+grub-efi-amd64-bin
 '
 
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
