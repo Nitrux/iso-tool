@@ -34,7 +34,7 @@ xorriso
 '
 
 apt update &> /dev/null
-apt -yy install ${XORRISO_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${XORRISO_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Prepare the directories for the build.
