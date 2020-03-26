@@ -355,11 +355,11 @@ mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
 for x in $APPS_SYS; do
-    wget -q -P /Applications $x
+    wget -P /Applications $x
 done
 
 for x in $APPS_USR; do
-    wget -q -P /Applications $x
+    wget -P /Applications $x
 done
 
 chmod +x /Applications/*
