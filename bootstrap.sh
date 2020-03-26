@@ -9,7 +9,6 @@ echo -e "\n"
 echo -e "STARTING BOOTSTRAP."
 echo -e "\n"
 
-ls -l
 
 # -- Use sources.list.focal and update bionic base to focal.
 # -- WARNING
@@ -109,7 +108,7 @@ echo -e "\n"
 cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
 NX_DESKTOP_PKG='
-nx-desktop
+plasma-pa
 '
 
 apt update &> /dev/null
