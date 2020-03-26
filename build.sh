@@ -81,7 +81,7 @@ ls -l $BUILD_DIR/boot
 cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
 cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
 
-ls -l $BUILD_DIR/
+ls -l $ISO_DIR/boot/
 
 
 # -- Compress the root filesystem.
