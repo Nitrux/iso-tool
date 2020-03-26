@@ -109,7 +109,7 @@ cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
 NX_DESKTOP_PKG='
 plasma-pa=4:5.18.3-0ubuntu1
-plasma-workspace=4:5.18.3-0xneon+18.04+bionic+build61
+xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
 nx-desktop
 '
 
