@@ -72,16 +72,15 @@ rm -rf $BUILD_DIR/configs
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
+# -- BUG vmlinuz and initrd are not moved to / they're put and left at /boot
 
 mkdir -p $ISO_DIR/boot
-ls -l $BUILD_DIR/boot
-
-# -- BUG vmlinuz and initrd are not moved to / they're put and left at /boot
 
 cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
 cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
 
 ls -l $ISO_DIR/boot/
+ls -l $BUILD_DIR/boot/grub/
 
 
 # -- Compress the root filesystem.
