@@ -79,9 +79,6 @@ mkdir -p $ISO_DIR/boot
 cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
 cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
 
-ls -l $ISO_DIR/boot/
-ls -l $BUILD_DIR/boot/grub/
-
 
 # -- Compress the root filesystem.
 

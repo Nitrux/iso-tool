@@ -51,14 +51,9 @@ systemd-sysv
 user-setup
 wget
 xz-utils
-grub-common
-grub-efi-amd64-bin
-grub-pc
-grub-pc-bin
-grub2-common
 '
 
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
@@ -680,6 +675,12 @@ echo -e "\n"
 
 /configs/scripts/./rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
+
+
+# -- Put this file here?
+
+mkdir -p /boot/grub/x86_64-efi
+cp /usr/lib/grub/x86_64-efi/linuxefi.mod /boot/grub/x86_64-efi
 
 
 echo -e "\n"
