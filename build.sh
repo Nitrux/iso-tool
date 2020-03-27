@@ -82,8 +82,8 @@ cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boo
 
 # -- Put this file here?
 
-mkdir -p /boot/grub/x86_64-efi
-cp /usr/lib/grub/x86_64-efi/linuxefi.mod /boot/grub/x86_64-efi
+mkdir -p $ISO_DIR/boot/grub/x86_64-efi
+cp /usr/lib/grub/x86_64-efi/linuxefi.mod $ISO_DIR/boot/grub/x86_64-efi
 
 
 # -- Compress the root filesystem.
