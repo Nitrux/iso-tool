@@ -80,6 +80,12 @@ cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/bo
 cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
 
 
+# -- Put this file here?
+
+mkdir -p /boot/grub/x86_64-efi
+cp /usr/lib/grub/x86_64-efi/linuxefi.mod /boot/grub/x86_64-efi
+
+
 # -- Compress the root filesystem.
 
 (while :; do sleep 300; printf "."; done) &

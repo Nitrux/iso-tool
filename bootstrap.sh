@@ -677,12 +677,6 @@ echo -e "\n"
 rm /configs/scripts/rm-dpkg.sh
 
 
-# -- Put this file here?
-
-mkdir -p /boot/grub/x86_64-efi
-cp /usr/lib/grub/x86_64-efi/linuxefi.mod /boot/grub/x86_64-efi
-
-
 echo -e "\n"
 echo -e "EXITING BOOTSTRAP."
 echo -e "\n"
