@@ -142,14 +142,14 @@ qml-module-org-kde-kwindowsystem
 libphonon4qt5-4
 '
 
-UPDT_KDE_PKGS='
+DWNGR_KDE_PKGS='
 latte-dock=0.9.9+p18.04+git20200328.0224-0
 '
 
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
-apt -yy install ${UPDT_KDE_PKGS//\\n/} --only-upgrade --no-install-recommends
+apt -yy install ${DWNGR_KDE_PKGS//\\n/} --allow-downgrades --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
