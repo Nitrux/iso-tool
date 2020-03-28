@@ -219,14 +219,14 @@ echo -e "INSTALLING MAUI APPS."
 echo -e "\n"
 
 mauipkgs='
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
 '
 
