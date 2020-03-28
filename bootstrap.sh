@@ -143,7 +143,7 @@ libphonon4qt5-4
 '
 
 UPDT_KDE_PKGS='
-latte-dock=0.9.9-0xneon+18.04+bionic+build31
+latte-dock=0.9.9+p18.04+git20200328.0224-0
 '
 
 apt update &> /dev/null
