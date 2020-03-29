@@ -130,6 +130,15 @@ echo -e "\n"
 cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
 
 HOLD_KDE_PKGS='
+kwin-addons
+kwin-common
+kwin-data
+kwin-x11
+libkwin4-effect-builtins1
+libkwineffects12
+libkwinglutils12
+libkwinxrenderutils12
+qml-module-org-kde-kwindowsystem
 libphonon4qt5-4
 '
 
@@ -341,7 +350,7 @@ https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_6
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://files.kde.org/kdenlive/release/kdenlive-19.12.3-x86_64.appimage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200328-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.32.0-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
