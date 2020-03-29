@@ -340,7 +340,7 @@ APPS_USR='
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://files.kde.org/kdenlive/release/kdenlive-19.12.3-x86_64.appimage
-https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200227-x86_64.AppImage
+https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200328-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.32.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
@@ -374,9 +374,9 @@ mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
 mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
 mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
-mv /Applications/kdenlive-19.12.3-x86_64.appimage /Applications/kdenlive
-mv /Applications/GIMP_AppImage-git-2.10.19-20200227-x86_64.AppImage /Applications/gimp
-mv /Applications/mpv-0.30.0-x86_64.AppImage /Applications/mpv
+mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
+mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
+mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
 mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
 mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
 
