@@ -110,16 +110,7 @@ cp /configs/files/sources.list.desktop /etc/apt/sources.list
 NX_DESKTOP_PKG='
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
-kwin-addons=4:5.18.2-0xneon+18.04+bionic+build49
-kdeplasma-addons-data=4:5.18.2-0xneon+18.04+bionic+build49
-kwin-common=4:5.18.2-0xneon+18.04+bionic+build64
-kwin-data=4:5.18.2-0xneon+18.04+bionic+build64
-kwin-x11=4:5.18.2-0xneon+18.04+bionic+build64
-libkwin4-effect-builtins1=4:5.18.2-0xneon+18.04+bionic+build64
-libkwineffects12=4:5.18.2-0xneon+18.04+bionic+build64
-libkwinglutils12=4:5.18.2-0xneon+18.04+bionic+build64
-libkwinxrenderutils12=4:5.18.2-0xneon+18.04+bionic+build64
-qml-module-org-kde-kwindowsystem=5.67.0-0xneon+18.04+bionic+build53
+latte-dock=0.9.9-0xneon+18.04+bionic+build31
 nx-desktop
 '
 
@@ -150,16 +141,12 @@ libkwinglutils12
 libkwinxrenderutils12
 qml-module-org-kde-kwindowsystem
 libphonon4qt5-4
-'
-
-DWNGR_KDE_PKGS='
-latte-dock=0.9.9+p18.04+git20200328.0224-0
+latte-dock
 '
 
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy upgrade --only-upgrade --no-install-recommends
-apt -yy install ${DWNGR_KDE_PKGS//\\n/} --allow-downgrades --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
