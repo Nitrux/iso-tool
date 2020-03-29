@@ -110,6 +110,15 @@ cp /configs/files/sources.list.desktop /etc/apt/sources.list
 NX_DESKTOP_PKG='
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
+kwin-addons=4:5.18.3-0ubuntu1
+kwin-common=4:5.18.3-0ubuntu1
+kwin-data=4:5.18.3-0ubuntu1
+kwin-x11=4:5.18.3-0ubuntu1
+libkwin4-effect-builtins1=4:5.18.3-0ubuntu1
+libkwineffects12=4:5.18.3-0ubuntu1
+libkwinglutils12=4:5.18.3-0ubuntu1
+libkwinxrenderutils12=4:5.18.3-0ubuntu1
+qml-module-org-kde-kwindowsystem=4:5.18.3-0ubuntu1
 nx-desktop
 '
 
