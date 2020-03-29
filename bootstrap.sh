@@ -130,15 +130,6 @@ echo -e "\n"
 cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
 
 HOLD_KDE_PKGS='
-kwin-addons
-kwin-common
-kwin-data
-kwin-x11
-libkwin4-effect-builtins1
-libkwineffects12
-libkwinglutils12
-libkwinxrenderutils12
-qml-module-org-kde-kwindowsystem
 libphonon4qt5-4
 '
 
