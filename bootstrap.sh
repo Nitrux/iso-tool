@@ -141,12 +141,15 @@ libkwinglutils12
 libkwinxrenderutils12
 qml-module-org-kde-kwindowsystem
 libphonon4qt5-4
+'
+
+UPD_KDE_PKGS='
 latte-dock
 '
 
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
-apt -yy upgrade --only-upgrade --no-install-recommends
+apt -yy install ${UPD_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null

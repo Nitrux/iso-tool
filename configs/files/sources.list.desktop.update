@@ -18,4 +18,4 @@ deb http://archive.ubuntu.com/ubuntu focal-updates main restricted universe mult
 # KDE Neon Repos #
 ##################
 
-deb http://archive.neon.kde.org/stable bionic main
+deb http://archive.neon.kde.org/unstable bionic main
