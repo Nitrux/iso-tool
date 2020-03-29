@@ -144,7 +144,7 @@ libphonon4qt5-4
 '
 
 UPD_KDE_PKGS='
-latte-dock
+latte-dock=0.9.9+p18.04+git20200328.0224-0
 '
 
 apt update &> /dev/null
