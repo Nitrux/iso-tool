@@ -296,7 +296,6 @@ kde-spectacle
 kde-style-breeze
 kdeconnect
 kdenetwork-filesharing
-kinit
 kio
 kio-extras
 kio-extras-data
@@ -305,14 +304,12 @@ kpackagetool5
 kscreen
 ktexteditor-data
 ktexteditor-katepart
-kwayland-data
 kwin-style-breeze
 plasma-nm plasma-thunderbolt
 polkit-kde-agent-1
 powerdevil
 powerdevil-data
 print-manager
-qml-module-org-kde-activities
 qml-module-org-kde-bluezqt
 '
 
