@@ -118,7 +118,7 @@ libkwin4-effect-builtins1=4:5.18.3-0ubuntu1
 libkwineffects12=4:5.18.3-0ubuntu1
 libkwinglutils12=4:5.18.3-0ubuntu1
 libkwinxrenderutils12=4:5.18.3-0ubuntu1
-qml-module-org-kde-kwindowsystem=4:5.18.3-0ubuntu1
+qml-module-org-kde-kwindowsystem=5.67.0-0xneon+18.04+bionic+build53
 nx-desktop
 '
 
