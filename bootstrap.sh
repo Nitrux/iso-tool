@@ -145,6 +145,21 @@ libphonon4qt5-4
 
 UPD_KDE_PKGS='
 latte-dock=0.9.9+p18.04+git20200328.0224-0
+qml-module-org-kde-draganddrop
+qml-module-org-kde-kcm
+qml-module-org-kde-kconfig
+qml-module-org-kde-kcoreaddons
+qml-module-org-kde-kholidays
+qml-module-org-kde-kio
+qml-module-org-kde-kirigami2
+qml-module-org-kde-kquickcontrols
+qml-module-org-kde-kquickcontrolsaddons
+qml-module-org-kde-newstuff
+qml-module-org-kde-people
+qml-module-org-kde-qqc2desktopstyle
+qml-module-org-kde-quickcharts
+qml-module-org-kde-solid
+qml-module-org-kde-userfeedback
 '
 
 apt update &> /dev/null
