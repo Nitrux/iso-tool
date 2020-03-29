@@ -110,7 +110,7 @@ cp /configs/files/sources.list.desktop /etc/apt/sources.list
 NX_DESKTOP_PKG='
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
-kwin-addons=4:5.18.2-0xneon+18.04+bionic+build64
+kwin-addons=4:5.18.2-0xneon+18.04+bionic+build49
 kwin-common=4:5.18.2-0xneon+18.04+bionic+build64
 kwin-data=4:5.18.2-0xneon+18.04+bionic+build64
 kwin-x11=4:5.18.2-0xneon+18.04+bionic+build64
