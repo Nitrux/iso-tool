@@ -285,6 +285,35 @@ libkf5windowsystem5
 libkf5xmlgui-bin
 libkf5xmlgui-data 
 libkf5xmlgui5
+ark
+gtk3-engines-breeze
+kcalc
+kde-config-gtk-style
+kde-config-plymouth
+kde-config-screenlocker
+kde-config-sddm
+kde-spectacle
+kde-style-breeze
+kdeconnect
+kdenetwork-filesharing
+kinit
+kio
+kio-extras
+kio-extras-data
+kmenuedit
+kpackagetool5
+kscreen
+ktexteditor-data
+ktexteditor-katepart
+kwayland-data
+kwin-style-breeze
+plasma-nm plasma-thunderbolt
+polkit-kde-agent-1
+powerdevil
+powerdevil-data
+print-manager
+qml-module-org-kde-activities
+qml-module-org-kde-bluezqt
 '
 
 apt update &> /dev/null
