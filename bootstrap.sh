@@ -287,27 +287,13 @@ libkf5xmlgui-data
 libkf5xmlgui5
 ark
 kcalc
-kde-config-gtk-style
-kde-config-plymouth
-kde-config-screenlocker
-kde-config-sddm
 kde-spectacle
-kde-style-breeze
 kdeconnect
-kdenetwork-filesharing
-kio
-kio-extras
-kio-extras-data
 kmenuedit
 kscreen
-ktexteditor-data
-ktexteditor-katepart
-plasma-nm plasma-thunderbolt
 polkit-kde-agent-1
 powerdevil
 powerdevil-data
-print-manager
-qml-module-org-kde-bluezqt
 '
 
 apt update &> /dev/null
