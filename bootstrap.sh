@@ -568,6 +568,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
+# -- Copy offline documentation to desktop folder.
 #FIXME These fixes should be in a package.
 
 echo -e "\n"
@@ -593,7 +594,9 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
-cp /configs/other/*.pdf /etc/skel/Desktop
+mkdir -p /etc/skel/Desktop
+cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
+cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
 
 
 # -- Workarounds for PNX.
