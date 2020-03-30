@@ -74,7 +74,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 
-# -- Use sources.list.build to build ISO.
+# -- Use sources.list.base to build ISO.
 # -- Block installation of libsensors4.
 
 cp /configs/files/sources.list.base /etc/apt/sources.list
