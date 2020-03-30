@@ -8,7 +8,7 @@ set -x
 # -- Use sources.list.focal to update xorriso and GRUB.
 #WARNING
 
-wget -O /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/dev-test/configs/files/sources.list.focal
+wget -O /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
 
 XORRISO_PACKAGES='
 gcc-10-base
