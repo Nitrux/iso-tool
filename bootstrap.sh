@@ -791,7 +791,6 @@ rm /bin/dummy.sh
 
 
 # -- Remove APT.
-# -- Update package index using cupt.
 #FIXME This should be put in a package.
 
 echo -e "\n"
