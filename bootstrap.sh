@@ -286,7 +286,6 @@ libkf5xmlgui-bin
 libkf5xmlgui-data 
 libkf5xmlgui5
 ark
-gtk3-engines-breeze
 kcalc
 kde-config-gtk-style
 kde-config-plymouth
@@ -300,11 +299,9 @@ kio
 kio-extras
 kio-extras-data
 kmenuedit
-kpackagetool5
 kscreen
 ktexteditor-data
 ktexteditor-katepart
-kwin-style-breeze
 plasma-nm plasma-thunderbolt
 polkit-kde-agent-1
 powerdevil
