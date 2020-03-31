@@ -160,13 +160,21 @@ ksysguard-data=4:5.18.3-0ubuntu1
 ksysguardd=4:5.18.3-0ubuntu1
 '
 
+OTHER_MISC_PKGS='
+firefox
+inkscape
+lmms
+gimp
+libreoffice
+'
+
 NX_DESKTOP_PKG='
 nx-desktop-legacy
 '
 
 apt update &> /dev/null
 apt -yy --fix-broken install
-apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${OTHER_MISC_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
@@ -595,7 +603,6 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Enable GRUB parameter for disk encryption with Calamares.
-#BUG # -- Add nsswitch.conf. This file is empty for some reason?.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -615,7 +622,6 @@ rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
-cp /configs/files/nsswitch.conf /etc/nsswitch.conf
 
 
 # -- Add itch.io store launcher.
