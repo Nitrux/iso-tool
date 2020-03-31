@@ -98,7 +98,6 @@ done
 apt update &> /dev/null 
 dpkg -iR /bup_debs
 apt -yy --fix-broken install
-dpkg -iR /bup_debs
 dpkg --configure -a
 rm -r /bup_debs
 
