@@ -73,9 +73,11 @@ chmod +x /bin/runch
 
 cp -r configs $BUILD_DIR/
 
+cat $BUILD_DIR/etc/nsswitch.conf
+
 cat bootstrap.sh | runch $BUILD_DIR bash || true
 
-cat $CONFIG_DIR/configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
+cat configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
 
 cat $BUILD_DIR/etc/nsswitch.conf
 
