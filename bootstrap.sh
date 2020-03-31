@@ -595,6 +595,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Enable GRUB parameter for disk encryption with Calamares.
+#BUG # -- Add nsswitch.conf. This file is empty for some reason?.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
