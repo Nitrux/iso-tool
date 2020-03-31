@@ -115,6 +115,8 @@ xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
 ksysguard=4:5.18.3-0ubuntu1
 ksysguard-data=4:5.18.3-0ubuntu1
 ksysguardd=4:5.18.3-0ubuntu1
+python-cairo
+python-gi-cairo
 '
 
 CALAMARES_PACKAGES='
