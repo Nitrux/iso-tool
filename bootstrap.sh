@@ -112,10 +112,6 @@ BASE_FILES_PKG='
 base-files=11.1.0+nitrux-legacy
 '
 
-NX_DESKTOP_PKG='
-nx-desktop-legacy
-'
-
 CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
@@ -134,6 +130,10 @@ xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
 ksysguard=4:5.18.3-0ubuntu1
 ksysguard-data=4:5.18.3-0ubuntu1
 ksysguardd=4:5.18.3-0ubuntu1
+'
+
+NX_DESKTOP_PKG='
+nx-desktop-legacy
 '
 
 
@@ -155,8 +155,6 @@ for x in $bup_deb_pkg; do
 done
 
 dpkg -iR /bup_debs
-dpkg --configure -a
-rm -r /bup_debs
 
 
 apt update &> /dev/null
@@ -170,6 +168,9 @@ apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
+
+dpkg --configure -a
+rm -r /bup_debs
 
 # -- Upgrade KF5 libs for Latte Dock.
 
