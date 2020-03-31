@@ -109,8 +109,7 @@ echo -e "\n"
 cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
 NX_DESKTOP_PKG='
-latte-dock=0.9.9-0xneon+18.04+bionic+build31
-nx-desktop
+nx-desktop-legacy
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
 '
