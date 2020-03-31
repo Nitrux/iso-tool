@@ -166,6 +166,7 @@ rm -r /bup_debs
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
