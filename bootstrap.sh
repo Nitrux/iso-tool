@@ -100,6 +100,28 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
+# -- Install bup.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING BUP."
+echo -e "\n"
+
+bup_pkg='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $bup_pkg; do
+	wget -q -P /bup_debs $x
+done
+
+dpkg -iR /bup_debs &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /bup_debs
+
+
 # -- Add NX Desktop metapackage.
 
 echo -e "\n"
@@ -112,11 +134,15 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
+ksysgyard=4:5.18.3-0ubuntu1
+ksysguard-data=4:5.18.3-0ubuntu1
+ksysguardd=4:5.18.3-0ubuntu1
 '
 
 CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
+cryptsetup
 '
 
 MISC_PACKAGES_KDE='
@@ -390,29 +416,6 @@ rm -r /maui_debs
 whereis index buho nota vvave station pix contacts
 
 
-# -- Install bup and kup-backup.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING KUP."
-echo -e "\n"
-
-kup_bup_pkgs='
-http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build2_amd64.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_debs
-
-for x in $kup_bup_pkgs; do
-	wget -q -P /bup_debs $x
-done
-
-dpkg -iR /bup_debs &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /bup_debs
-
-
 # -- Install liquidshell.
 #FIXME This should be synced to our repository.
 
@@ -585,6 +588,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
+# -- Enable GRUB parameter for disk encryption with Calamares.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -603,6 +607,7 @@ rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/application
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
+cp /configs/files/grub /etc/default/grub
 
 
 # -- Add itch.io store launcher.
