@@ -9,3 +9,7 @@ Pin-Priority: -1
 Package: xterm
 Pin: release *
 Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
+Pin-Priority: -1
