@@ -36,6 +36,7 @@ echo -e "\n"
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
+btrfs-progs
 ca-certificates
 casper
 dhcpcd5
@@ -48,6 +49,7 @@ libelf1
 localechooser-data
 locales
 lupin-casper
+squashfs-tools
 systemd-sysv
 user-setup
 wget
@@ -424,6 +426,7 @@ done
 
 dpkg -iR /maui_debs &> /dev/null
 dpkg --configure -a &> /dev/null
+apt-mark hold qml-module-qmltermwidget
 rm -r /maui_debs
 
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
