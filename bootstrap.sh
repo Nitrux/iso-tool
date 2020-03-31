@@ -672,7 +672,7 @@ sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", 
 # -- Use sources.list.nitrux, sources.list.neon and sources.list.ubuntu for release.
 
 /bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-/bin/cp /configs/files/sources.list.ubuntu /etc/apt/sources.list.d/ubuntu-repos.list
+/bin/cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-repos.list
 /bin/cp /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-repos.list
 
 apt update &> /dev/null
