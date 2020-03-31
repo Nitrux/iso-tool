@@ -626,9 +626,7 @@ rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
-/bin/cp -av /configs/files/nsswitch.conf /etc/nsswitch.conf
-
-cat /etc/nsswitch.conf
+/bin/cp -av /configs/files/nsswitch.conf /etc/nsswitch.conf && cat /etc/nsswitch.conf
 
 
 # -- Add itch.io store launcher.

@@ -47,6 +47,7 @@ OUTPUT_DIR=$(mktemp -d)
 #	Possible fix for broken post-installation logins.
 #WARNING
 #FIXME
+#BUG
 
 chmod a+x $BUILD_DIR
 
@@ -76,6 +77,7 @@ cat bootstrap.sh | runch $BUILD_DIR bash || true
 
 rm -rf $BUILD_DIR/configs
 
+cat $BUILD_DIR/etc/nsswitch.conf
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
 # -- BUG vmlinuz and initrd are not moved to / they're put and left at /boot
@@ -87,6 +89,9 @@ cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boo
 
 
 # -- Put this file here?.
+#WARNING
+#FIXME
+#BUG
 
 mkdir -p $ISO_DIR/boot/grub/x86_64-efi
 cp /usr/lib/grub/x86_64-efi/linuxefi.mod $ISO_DIR/boot/grub/x86_64-efi
