@@ -134,7 +134,7 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
-ksysgyard=4:5.18.3-0ubuntu1
+ksysguard=4:5.18.3-0ubuntu1
 ksysguard-data=4:5.18.3-0ubuntu1
 ksysguardd=4:5.18.3-0ubuntu1
 '
