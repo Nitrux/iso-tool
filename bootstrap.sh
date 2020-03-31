@@ -138,6 +138,11 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 '
 
+apt update &> /dev/null
+apt -yy --fix-broken install
+apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
+
+
 # -- Install bup.
 #FIXME This should be synced to our repository.
 
@@ -159,9 +164,6 @@ dpkg -iR /bup_debs
 dpkg --configure -a
 rm -r /bup_debs
 
-apt update &> /dev/null
-apt -yy --fix-broken install
-apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy purge --remove vlc &> /dev/null
