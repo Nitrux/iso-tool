@@ -95,32 +95,9 @@ nitrux-standard-legacy
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
-apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
-
-
-# -- Install bup.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING BUP."
-echo -e "\n"
-
-bup_deb_pkg='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_debs
-
-for x in $bup_deb_pkg; do
-	wget -P /bup_debs $x
-done
-
-dpkg -iR /bup_debs
-dpkg --configure -a
-rm -r /bup_debs
 
 
 # -- Add NX Desktop metapackage.
@@ -159,11 +136,35 @@ BASE_FILES_PKG='
 base-files=11.1.0+nitrux-legacy
 '
 
+
+# -- Install bup.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING BUP."
+echo -e "\n"
+
+bup_deb_pkg='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $bup_deb_pkg; do
+	wget -P /bup_debs $x
+done
+
+dpkg -iR /bup_debs
+dpkg --configure -a
+rm -r /bup_debs
+
+
 apt update &> /dev/null
-apt -yy --fix-broken install &> /dev/null
+apt -yy --fix-broken install
 apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
+apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
