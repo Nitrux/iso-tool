@@ -39,6 +39,7 @@ apt-utils
 ca-certificates
 casper
 dhcpcd5
+fuse3
 gnupg2
 language-pack-en
 language-pack-en-base
@@ -117,7 +118,7 @@ for x in $bup_pkg; do
 	wget -q -P /bup_debs $x
 done
 
-dpkg -iR /bup_debs &> /dev/null
+dpkg -iR /bup_debs
 dpkg --configure -a &> /dev/null
 rm -r /bup_debs
 
