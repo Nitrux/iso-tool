@@ -55,7 +55,7 @@ xz-utils
 usrmerge
 '
 
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -74,6 +74,32 @@ rm neon.key
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+
+
+# -- Install bup.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING BUP."
+echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+bup_deb_pkg='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $bup_deb_pkg; do
+	wget -P /bup_debs $x
+done
+
+apt update &> /dev/null 
+dpkg -iR /bup_debs
+apt -yy --fix-broken install
+dpkg --configure -a
+rm -r /bup_debs
 
 
 # -- Use sources.list.base to build ISO.
@@ -97,7 +123,7 @@ base-files=11.1.0+nitrux-legacy
 '
 
 apt update &> /dev/null
-apt -yy upgrade
+apt -yy upgrade &> /dev/null
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades &> /dev/null
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
@@ -138,39 +164,10 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 '
 
-ABSURD_PYTHON_PKGS='
-python-cairo
-python-gi-cairo
-'
-
 apt update &> /dev/null
 apt -yy --fix-broken install
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
-
-
-# -- Install bup.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING BUP."
-echo -e "\n"
-
-bup_deb_pkg='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_debs
-
-for x in $bup_deb_pkg; do
-	wget -P /bup_debs $x
-done
-
-dpkg -iR /bup_debs
-dpkg --configure -a
-rm -r /bup_debs
-
 apt -yy --fix-broken install
-apt -yy install ${ABSURD_PYTHON_PKGS//\\n/ } --no-install-recommends
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
