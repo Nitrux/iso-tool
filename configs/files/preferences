@@ -5,3 +5,11 @@ Pin-Priority: -1
 Package: dash
 Pin: release *
 Pin-Priority: -1
+
+Package: bup
+Pin: release *
+Pin-Priority: -1
+
+Package: xterm
+Pin: release *
+Pin-Priority: -1
