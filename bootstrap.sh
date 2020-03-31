@@ -121,7 +121,8 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_KDE='
-kdenlive=4:19.12.3-0xneon+18.04+bionic+build55
+kdenlive
+libqt5webkit5
 partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
