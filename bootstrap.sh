@@ -92,12 +92,13 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3
 mkdir /bup_debs
 
 for x in $bup_deb_pkg; do
-	wget -P /bup_debs $x
+	wget -q -P /bup_debs $x
 done
 
 apt update &> /dev/null 
 dpkg -iR /bup_debs
 apt -yy --fix-broken install
+dpkg -iR /bup_debs
 dpkg --configure -a
 rm -r /bup_debs
 
@@ -166,9 +167,8 @@ nx-desktop-legacy
 
 apt update &> /dev/null
 apt -yy --fix-broken install
-apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
+apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
-apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
