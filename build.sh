@@ -75,9 +75,11 @@ cp -r configs $BUILD_DIR/
 
 cat bootstrap.sh | runch $BUILD_DIR bash || true
 
-rm -rf $BUILD_DIR/configs
+cat $CONFIG_DIR/configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
 
 cat $BUILD_DIR/etc/nsswitch.conf
+
+rm -rf $BUILD_DIR/configs
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
 # -- BUG vmlinuz and initrd are not moved to / they're put and left at /boot
