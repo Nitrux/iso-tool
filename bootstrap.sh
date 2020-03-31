@@ -92,9 +92,15 @@ nitrux-minimal-legacy
 nitrux-standard-legacy
 '
 
+BASE_FILES_PKG='
+base-files=11.1.0+nitrux-legacy
+'
+
 apt update &> /dev/null
 apt -yy upgrade
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades &> /dev/null
+apt-mark hold ${BASE_FILES_PKG//\\n/ }
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -131,10 +137,6 @@ echo -e "\n"
 
 cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
-BASE_FILES_PKG='
-base-files=11.1.0+nitrux-legacy
-'
-
 CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
@@ -161,10 +163,9 @@ nx-desktop-legacy
 
 apt update &> /dev/null
 apt -yy --fix-broken install
-apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
-apt-mark hold ${BASE_FILES_PKG//\\n/ }
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy --fix-broken install
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
@@ -346,7 +347,7 @@ qml-module-org-kde-userfeedback
 '
 
 apt update &> /dev/null
-apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
+apt-mark hold ${HOLD_KDE_PKGS//\\n/ } &> /dev/null
 apt -yy install ${UPD_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
