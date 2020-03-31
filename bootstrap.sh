@@ -161,8 +161,8 @@ apt update &> /dev/null
 apt -yy --fix-broken install
 apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
-apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
