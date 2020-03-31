@@ -138,6 +138,11 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 '
 
+ABSURD_PYTHON_PKGS='
+python-cairo
+python-gi-cairo
+'
+
 apt update &> /dev/null
 apt -yy --fix-broken install
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
@@ -164,8 +169,8 @@ dpkg -iR /bup_debs
 dpkg --configure -a
 rm -r /bup_debs
 
-apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
+apt -yy install ${ABSURD_PYTHON_PKGS//\\n/ } --no-install-recommends
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
