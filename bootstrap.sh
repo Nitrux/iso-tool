@@ -122,7 +122,7 @@ calamares-settings-nitrux
 
 MISC_PACKAGES_KDE='
 kdenlive
-libqt5webkit5
+libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build42
 partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
