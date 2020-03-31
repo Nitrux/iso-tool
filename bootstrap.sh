@@ -51,6 +51,7 @@ systemd-sysv
 user-setup
 wget
 xz-utils
+usrmerge
 '
 
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
