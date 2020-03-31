@@ -108,18 +108,18 @@ echo -e "\n"
 echo -e "INSTALLING BUP."
 echo -e "\n"
 
-bup_pkg='
+bup_deb_pkg='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
 '
 
 mkdir /bup_debs
 
-for x in $bup_pkg; do
-	wget -q -P /bup_debs $x
+for x in $bup_deb_pkg; do
+	wget -P /bup_debs $x
 done
 
 dpkg -iR /bup_debs
-dpkg --configure -a &> /dev/null
+dpkg --configure -a
 rm -r /bup_debs
 
 
