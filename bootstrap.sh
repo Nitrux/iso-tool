@@ -2,28 +2,44 @@
 
 set -x
 
-printf "\n"
-printf "STARTING BOOTSTRAP."
-printf "\n"
+export LANG=C
+export LC_ALL=C
+
+echo -e "\n"
+echo -e "STARTING BOOTSTRAP."
+echo -e "\n"
+
+
+# -- Use sources.list.focal and update bionic base to focal.
+# -- WARNING
+
+echo -e "\n"
+echo -e "UPDATING OS BASE."
+echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+apt update &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+apt -yy dist-upgrade --only-upgrade --no-install-recommends &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install basic packages.
 
-printf "\n"
-printf "INSTALLING BASIC PACKAGES."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING BASIC PACKAGES."
+echo -e "\n"
 
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
-btrfs-progs
-btrfs-tools
 ca-certificates
 casper
 dhcpcd5
-fuse
 gnupg2
-grub-pc-bin
 language-pack-en
 language-pack-en-base
 libarchive13
@@ -31,84 +47,72 @@ libelf1
 localechooser-data
 locales
 lupin-casper
-network-manager
-shim
-shim-signed
-squashfs-tools
+systemd-sysv
 user-setup
 wget
 xz-utils
+usrmerge
 '
 
-apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
-# -- Add key for our repository.
+# -- Add key for Neon repository.
+# -- Add key for Nitrux repository.
 # -- Add key for the Proprietary Graphics Drivers PPA.
 
-printf "\n"
-printf "ADD REPOSITORY KEYS."
-printf "\n"
+echo -e "\n"
+echo -e "ADD REPOSITORY KEYS."
+echo -e "\n"
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
-	printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-	apt-key add neon.key > /dev/null
-	rm neon.key
+echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+apt-key add neon.key > /dev/null
+rm neon.key
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
+
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 
-# -- Use sources.list.focal to install kvantum.
-#FIXME We need to provide these packages from a repository of ours.
+# -- Use sources.list.base to build ISO.
+# -- Block installation of libsensors4.
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list
+cp /configs/files/sources.list.base /etc/apt/sources.list
+cp /configs/files/preferences /etc/apt/preferences
 
-printf "\n"
-printf "INSTALLING KVANTUM AND GLIB."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING BASE SYSTEM."
+echo -e "\n"
 
-UPDATE_LIBC_KVANTUM='
-fuse3
-gcc-10-base
-libc-bin
-libc-dev-bin
-libc6
-libc6-dev
-libfuse3-3
-libgcc-s1
-libgcc1
-linux-libc-dev
-locales
-qt5-style-kvantum
-qt5-style-kvantum-themes
+NITRUX_BASE_PACKAGES='
+nitrux-hardware-drivers-legacy
+nitrux-minimal-legacy
+nitrux-standard-legacy
 '
 
 apt update &> /dev/null
-apt download ${UPDATE_LIBC_KVANTUM//\\n/ } --no-install-recommends
-dpkg --force-all -i *.deb
-rm *.deb
+apt -yy upgrade
+apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy purge --remove vlc &> /dev/null
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Use sources.list.build to build ISO.
+# -- Add NX Desktop metapackage.
 
-cp /configs/files/sources.list.build /etc/apt/sources.list
+echo -e "\n"
+echo -e "INSTALLING DESKTOP PACKAGES."
+echo -e "\n"
 
+cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
-# -- Update packages list and install packages.
-
-printf "\n"
-printf "INSTALLING DESKTOP."
-printf "\n"
-
-DESKTOP_PACKAGES='
-nitrux-minimal-legacy
-nitrux-standard-legacy
-nitrux-hardware-drivers-legacy
-nx-desktop-legacy
+NX_DESKTOP_PKG='
+latte-dock=0.9.9-0xneon+18.04+bionic+build31
+nx-desktop
+plasma-pa=4:5.18.3-0ubuntu1
+xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
 '
 
 CALAMARES_PACKAGES='
@@ -116,179 +120,38 @@ calamares
 calamares-settings-nitrux
 '
 
-MISC_PACKAGES_BIONIC='
+MISC_PACKAGES_KDE='
+kdenlive
+partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-kdenlive
-partitionmanager
 '
 
 BASE_FILES_PKG='
-base-files=11.0.98.6+nitrux-legacy
+base-files=11.1.0+nitrux-legacy
 '
 
 apt update &> /dev/null
-apt -yy --fix-broken install
-apt -yy upgrade
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_BIONIC//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
-apt -yy purge --remove vlc
-apt -yy dist-upgrade
+apt -yy --fix-broken install &> /dev/null
 apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
-apt -yy autoremove
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
-# -- Install liquidshell.
-#FIXME This should be synced to our repository.
-
-printf "\n"
-printf "INSTALLING LIQUIDSHELL."
-printf "\n"
-
-
-liquidshell_deb='
-https://github.com/UriHerrera/storage/raw/master/Debs/apps/liquidshell_1.5-nxos-1_amd64.deb
-'
-
-mkdir /liquidshell_files
-
-for x in $liquidshell_deb; do
-printf "$x"
-    wget -q -P /liquidshell_files $x
-done
-
-dpkg -iR /liquidshell_files &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /liquidshell_files
-
-
-printf "\n"
-printf "ADD LIQUIDSHELL CONFIG."
-printf "\n"
-
-cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
-mkdir -p /usr/share/liquidshell/style/
-cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
-cp /configs/files/liquidshellrc /etc/skel/.config/
-cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
-
-
-# -- Install modified bup deb package.
-#FIXME This should be synced to our repository.
-
-bup_deb='
-https://github.com/UriHerrera/storage/raw/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_pkg
-
-for x in $bup_deb; do
-printf "$x"
-    wget -q -P /bup_pkg $x
-done
-
-dpkg -iR /bup_pkg
-dpkg --configure -a &> /dev/null
-rm -r /bup_pkg
-
-
-# -- Use sources.list.focal to update packages
-
-printf "\n"
-printf "UPDATE BASE PACKAGES."
-printf "\n"
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-UPGRADE_OS_PACKAGES='
-broadcom-sta-dkms
-dkms
-exfat-fuse
-exfat-utils
-firefox
-firejail
-firejail-profiles
-go-mtpfs
-grub-common
-grub-efi-amd64-bin
-grub-efi-amd64-signed
-grub-pc-bin
-grub2-common
-i965-va-driver
-initramfs-tools
-initramfs-tools-bin
-initramfs-tools-core
-libc6
-libdrm-amdgpu1
-libdrm-intel1
-libdrm-radeon1
-libmagic1
-libva-drm2
-libva-glx2
-libva-x11-2
-libva2
-linux-firmware
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
-mpv
-openresolv
-openssh-client
-openssl
-shim
-shim-signed
-sudo
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
-'
-
-ADD_MISC_PACKAGES='
-calamares-settings-ubuntu-common
-firejail
-firejail-profiles
-gimp
-gnome-keyring
-inkscape
-libc6-dev
-libc6-i386
-libslirp0
-libreoffice
-lmms
-'
-
-apt update &> /dev/null
-apt -yy --fix-broken install
-apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } --no-install-recommends
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Upgrade KDE packages for latte.
+# -- Upgrade KF5 libs for Latte Dock.
 
-cp /configs/files/sources.list.build.update /etc/apt/sources.list
+echo -e "\n"
+echo -e "UPGRADING DESKTOP PACKAGES."
+echo -e "\n"
 
-HOLD_KWIN_PKGS='
-kwin-addons 
+cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
+
+HOLD_KDE_PKGS='
+kwin-addons
 kwin-common
 kwin-data
 kwin-x11
@@ -296,12 +159,166 @@ libkwin4-effect-builtins1
 libkwineffects12
 libkwinglutils12
 libkwinxrenderutils12
+libphonon4qt5-4
 qml-module-org-kde-kwindowsystem
 '
 
+UPD_KDE_PKGS='
+ark
+kcalc
+kde-spectacle
+kdeconnect
+kmenuedit
+kscreen
+latte-dock=0.9.9+p18.04+git20200328.0224-0
+libkf5activities5
+libkf5activitiesstats1
+libkf5archive5
+libkf5attica5
+libkf5auth-data
+libkf5auth5
+libkf5authcore5
+libkf5baloo5
+libkf5balooengine5
+libkf5bluezqt-data
+libkf5bluezqt6
+libkf5bookmarks-data
+libkf5bookmarks5
+libkf5calendarevents5
+libkf5codecs-data
+libkf5codecs5
+libkf5completion-data
+libkf5completion5
+libkf5config-data
+libkf5configcore5
+libkf5configgui5
+libkf5configwidgets-data
+libkf5configwidgets5
+libkf5contacts-data
+libkf5contacts5
+libkf5coreaddons-data
+libkf5coreaddons5
+libkf5crash5
+libkf5dbusaddons-data
+libkf5dbusaddons5
+libkf5declarative-data
+libkf5declarative5
+libkf5dnssd-data
+libkf5dnssd5
+libkf5doctools5
+libkf5emoticons-data
+libkf5emoticons5
+libkf5filemetadata-data
+libkf5filemetadata3
+libkf5globalaccel-bin
+libkf5globalaccel-data
+libkf5globalaccel5
+libkf5globalaccelprivate5
+libkf5guiaddons5
+libkf5holidays-data
+libkf5holidays5
+libkf5i18n-data
+libkf5i18n5
+libkf5iconthemes-data
+libkf5iconthemes5
+libkf5idletime5
+libkf5itemmodels5
+libkf5itemviews-data
+libkf5itemviews5
+libkf5jobwidgets-data
+libkf5jobwidgets5
+libkf5kcmutils-data
+libkf5kcmutils5
+libkf5kdelibs4support-data
+libkf5kdelibs4support5
+libkf5kiocore5
+libkf5kiofilewidgets5
+libkf5kiogui5
+libkf5kiontlm5
+libkf5kiowidgets5
+libkf5kipi-data
+libkf5kipi32.0.0
+libkf5kirigami2-5
+libkf5modemmanagerqt6
+libkf5networkmanagerqt6
+libkf5newstuff-data
+libkf5newstuff5
+libkf5newstuffcore5
+libkf5notifications-data
+libkf5notifications5
+libkf5notifyconfig-data
+libkf5notifyconfig5
+libkf5package-data
+libkf5package5
+libkf5parts-data
+libkf5parts5
+libkf5people-data
+libkf5people5
+libkf5peoplebackend5
+libkf5peoplewidgets5
+libkf5plasma5
+libkf5plasmaquick5
+libkf5prison5
+libkf5pty-data
+libkf5pty5
+libkf5pulseaudioqt2
+libkf5purpose-bin
+libkf5purpose5
+libkf5quickaddons5
+libkf5runner5
+libkf5service-bin
+libkf5service-data
+libkf5service5
+libkf5solid5
+libkf5solid5-data
+libkf5sonnet5-data
+libkf5sonnetcore5
+libkf5sonnetui5
+libkf5style5
+libkf5su-bin
+libkf5su-data
+libkf5su5
+libkf5syntaxhighlighting-data
+libkf5syntaxhighlighting5
+libkf5texteditor-bin
+libkf5texteditor5
+libkf5textwidgets-data
+libkf5textwidgets5
+libkf5threadweaver5
+libkf5wallet-data
+libkf5wallet5
+libkf5waylandclient5
+libkf5waylandserver5
+libkf5widgetsaddons-data
+libkf5widgetsaddons5
+libkf5windowsystem-data
+libkf5windowsystem5
+libkf5xmlgui-bin
+libkf5xmlgui-data
+libkf5xmlgui5
+polkit-kde-agent-1
+powerdevil
+powerdevil-data
+qml-module-org-kde-draganddrop
+qml-module-org-kde-kcm
+qml-module-org-kde-kconfig
+qml-module-org-kde-kcoreaddons
+qml-module-org-kde-kholidays
+qml-module-org-kde-kio
+qml-module-org-kde-kirigami2
+qml-module-org-kde-kquickcontrols
+qml-module-org-kde-kquickcontrolsaddons
+qml-module-org-kde-newstuff
+qml-module-org-kde-people
+qml-module-org-kde-qqc2desktopstyle
+qml-module-org-kde-quickcharts
+qml-module-org-kde-solid
+qml-module-org-kde-userfeedback
+'
+
 apt update &> /dev/null
-apt-mark hold  ${HOLD_KWIN_PKGS//\\n/ }
-apt -yy upgrade --only-upgrade --no-install-recommends
+apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
+apt -yy install ${UPD_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
@@ -315,22 +332,22 @@ apt autoclean &> /dev/null
 # -- Install the kernel.
 #FIXME This should be synced to our repository.
 
-printf "\n"
-printf "INSTALLING KERNEL."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING KERNEL."
+echo -e "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423_5.4.23-050423.202002281329_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-headers-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-image-unsigned-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.23/linux-modules-5.4.23-050423-generic_5.4.23-050423.202002281329_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-headers-5.5.13-050513_5.5.13-050513.202003251631_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-headers-5.5.13-050513-generic_5.5.13-050513.202003251631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-image-unsigned-5.5.13-050513-generic_5.5.13-050513.202003251631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-modules-5.5.13-050513-generic_5.5.13-050513.202003251631_amd64.deb
 '
 
 mkdir /latest_kernel
 
 for x in $kfiles; do
-printf "$x"
+echo -e "$x"
     wget -q -P /latest_kernel $x
 done
 
@@ -343,19 +360,19 @@ rm -r /latest_kernel
 # -- Add custom launchers for Maui apps.
 #FIXME This should be synced to our repository.
 
-printf "\n"
-printf "INSTALLING MAUI APPS."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING MAUI APPS."
+echo -e "\n"
 
 mauipkgs='
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
 '
 
@@ -365,20 +382,78 @@ for x in $mauipkgs; do
 	wget -q -P /maui_debs $x
 done
 
-dpkg -iR /maui_debs
-dpkg --configure -a
+dpkg -iR /maui_debs &> /dev/null
+dpkg --configure -a &> /dev/null
 rm -r /maui_debs
 
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
 whereis index buho nota vvave station pix contacts
 
 
+# -- Install bup and kup-backup.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING KUP."
+echo -e "\n"
+
+kup_bup_pkgs='
+http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build2_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $kup_bup_pkgs; do
+	wget -q -P /bup_debs $x
+done
+
+dpkg -iR /bup_debs &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /bup_debs
+
+
+# -- Install liquidshell.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING LIQUIDSHELL."
+echo -e "\n"
+
+
+liquidshell_deb='
+https://github.com/UriHerrera/storage/raw/master/Debs/apps/liquidshell_1.5-nxos-1_amd64.deb
+'
+
+mkdir /liquidshell_files
+
+for x in $liquidshell_deb; do
+echo -e "$x"
+    wget -q -P /liquidshell_files $x
+done
+
+dpkg -iR /liquidshell_files &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /liquidshell_files
+
+
+echo -e "\n"
+echo -e "ADD LIQUIDSHELL CONFIG."
+echo -e "\n"
+
+cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
+mkdir -p /usr/share/liquidshell/style/
+cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
+cp /configs/files/liquidshellrc /etc/skel/.config/
+cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
+
+
 # -- Add missing firmware modules.
 #FIXME These files should be included in a package.
 
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
+echo -e "\n"
+echo -e "ADDING MISSING FIRMWARE."
+echo -e "\n"
 
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
@@ -420,14 +495,12 @@ cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
 
-ls -l /lib/firmware/amdgpu/
-
 
 # -- Add appimage-installer.
 
-printf "\n"
-printf "ADDING APPIMAGE-INSTALLER."
-printf "\n"
+echo -e "\n"
+echo -e "ADDING APPIMAGE-INSTALLER."
+echo -e "\n"
 
 
 app_deb='
@@ -437,7 +510,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/appimage-i
 mkdir /appimage_installer
 
 for x in $app_deb; do
-printf "$x"
+echo -e "$x"
     wget -q -P /appimage_installer $x
 done
 
@@ -449,11 +522,11 @@ rm -r /appimage_installer
 
 # -- Add /Applications to $PATH.
 
-printf "\n"
-printf "ADD /APPLICATIONS TO PATH."
-printf "\n"
+echo -e "\n"
+echo -e "ADD /APPLICATIONS TO PATH."
+echo -e "\n"
 
-printf "PATH=$PATH:/Applications\n" > /etc/environment
+echo -e "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
@@ -462,9 +535,9 @@ sed -i "/env_reset/d" /etc/sudoers
 # -- Create /Applications directory for users.
 # -- Rename AppImages for easy access from the terminal.
 
-printf "\n"
-printf "ADD APPIMAGES."
-printf "\n"
+echo -e "\n"
+echo -e "ADD APPIMAGES."
+echo -e "\n"
 
 APPS_SYS='
 https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
@@ -494,9 +567,9 @@ ls -l /etc/skel/.local/bin/
 
 # -- Add AppImage providers for appimage-cli-tool
 
-printf "\n"
-printf "ADD APPIMAGE PROVIDERS."
-printf "\n"
+echo -e "\n"
+echo -e "ADD APPIMAGE PROVIDERS."
+echo -e "\n"
 
 cp /configs/files/appimage-providers.yaml /etc/
 
@@ -512,12 +585,11 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
-# -- Add stanza for APT to prevent the installation of dash.
 #FIXME These fixes should be included in a package.
 
-printf "\n"
-printf "ADD MISC. FIXES."
-printf "\n"
+echo -e "\n"
+echo -e "ADD MISC. FIXES."
+echo -e "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
@@ -530,16 +602,15 @@ rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/application
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
 ln -sv /usr/games/nsnake /bin/nsnake
-rm /usr/share/applications/ibus-setup* /usr/share/applications/org.kde.plasma.emojier.desktop
-cp /configs/files/preferences /etc/apt/preferences
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 
 
 # -- Add itch.io store launcher.
 #FIXME This should be in a package.
 
-printf "\n"
-printf "ADD ITCH.IO LAUNCHER."
-printf "\n"
+echo -e "\n"
+echo -e "ADD ITCH.IO LAUNCHER."
+echo -e "\n"
 
 
 mkdir -p /etc/skel/.local/share/applications
@@ -550,9 +621,9 @@ cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 # -- Add oh my zsh.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "ADD OH MY ZSH."
-printf "\n"
+echo -e "\n"
+echo -e "ADD OH MY ZSH."
+echo -e "\n"
 
 git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
 
@@ -561,9 +632,9 @@ git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
 # -- Use zsh as default shell for all users.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "REMOVE DASH AND USE MKSH + ZSH."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE DASH AND USE MKSH + ZSH."
+echo -e "\n"
 
 rm /bin/sh.distrib
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
@@ -610,9 +681,9 @@ apt update &> /dev/null
 # -- Update initramfs.
 
 
-printf "\n"
-printf "UPDATE INITRAMFS."
-printf "\n"
+echo -e "\n"
+echo -e "UPDATE INITRAMFS."
+echo -e "\n"
 
 update-initramfs -u
 
@@ -620,6 +691,6 @@ update-initramfs -u
 # -- No dpkg usage past this point. -- #
 #WARNING
 
-printf "\n"
-printf "EXITING BOOTSTRAP."
-printf "\n"
+echo -e "\n"
+echo -e "EXITING BOOTSTRAP."
+echo -e "\n"
