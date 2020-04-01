@@ -146,6 +146,7 @@ CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
 cryptsetup
+lvm2
 '
 
 MISC_PACKAGES_KDE='
@@ -213,6 +214,7 @@ kdeconnect
 kmenuedit
 kscreen
 latte-dock=0.9.9+p18.04+git20200328.0224-0
+libarchive13
 libkf5activities5
 libkf5activitiesstats1
 libkf5archive5
