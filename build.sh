@@ -73,13 +73,16 @@ chmod +x /bin/runch
 
 cp -r configs $BUILD_DIR/
 
-cat $BUILD_DIR/etc/nsswitch.conf
-
 cat bootstrap.sh | runch $BUILD_DIR bash || true
 
-cat configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
 
-cat $BUILD_DIR/etc/nsswitch.conf
+# -- The file nsswitch.conf is not empty before entering the chroot and neither is it empty when inside the chroot but it becomes empty after
+# -- exiting the chroot resulting in a failed resolution of the hostname when using sudo after booting the ISO.
+#WARNING
+#FIXME
+#BUG
+
+cat configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
 
 rm -rf $BUILD_DIR/configs
 
