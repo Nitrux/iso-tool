@@ -606,7 +606,6 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Enable GRUB parameter for disk encryption with Calamares.
-#BUG # -- Add nsswitch.conf. This file is empty for some reason?.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -626,7 +625,6 @@ rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
-/bin/cp -av /configs/files/nsswitch.conf /etc/nsswitch.conf && cat /etc/nsswitch.conf
 
 
 # -- Add itch.io store launcher.
