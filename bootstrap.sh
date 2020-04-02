@@ -16,6 +16,8 @@ echo -e "\n"
 echo -e "INSTALLING BASIC PACKAGES."
 echo -e "\n"
 
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
+
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
@@ -34,7 +36,7 @@ user-setup
 wget
 xz-utils
 '
-
+apt update
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
