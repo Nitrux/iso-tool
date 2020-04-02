@@ -130,7 +130,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-nx-desktop
+latte-dock
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
