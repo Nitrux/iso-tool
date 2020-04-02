@@ -414,6 +414,7 @@ done
 
 dpkg -iR /bup_debs &> /dev/null
 dpkg --configure -a &> /dev/null
+apt -yy --fix-broken install
 rm -r /bup_debs
 
 
