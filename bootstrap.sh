@@ -106,7 +106,7 @@ sysvinit-core
 sysvinit-utils
 '
 
-apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends
+apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- Check that init system is not systemd.
