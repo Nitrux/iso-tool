@@ -742,7 +742,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libsystemd
 mkdir /libs_deb_pkgs
 
 for x in $libs_debs; do
-	wget -q -P /maui_debs $x
+	wget -q -P /libs_deb_pkgs $x
 done
 
 dpkg --force-all -iR /libs_deb_pkgs
@@ -753,14 +753,14 @@ rm -r /libs_deb_pkgs
 # -- Use PolicyKit packages from Devuan.
 
 DEVUAN_POLKIT_PKGS='
-libpolkit-agent-1-0
-libpolkit-backend-1-0
-libpolkit-backend-consolekit-1-0
-libpolkit-gobject-1-0
-libpolkit-gobject-consolekit-1-0
+libpolkit-agent-1-0=0.105-25+devuan8
+libpolkit-backend-1-0=0.105-25+devuan8
+libpolkit-backend-consolekit-1-0=0.105-25+devuan8
+libpolkit-gobject-1-0=0.105-25+devuan8
+libpolkit-gobject-consolekit-1-0=0.105-25+devuan8
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
-policykit-1
+policykit-1=0.105-25+devuan8
 polkit-kde-agent-1=4:5.14.5-1
 '
 
