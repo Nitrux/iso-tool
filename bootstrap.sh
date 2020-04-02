@@ -87,13 +87,19 @@ cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 
 
-NITRUX_BASE_PACKAGES='
+GRUB_PACKAGES='
 grub-efi-amd64-signed=1+2.04+5
 grub-efi-amd64-bin=2.04-5
 '
 
+NITRUX_BASE_PACKAGES='
+nitrux-hardware-drivers
+nitrux-minimal
+nitrux-standard
+'
+
 apt update
-apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy autoremove
 
 
@@ -114,6 +120,7 @@ apt=2.0.1
 '
 
 apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends
+apt -yy autoremove
 
 
 # -- Use PolicyKit packages from Devuan.
@@ -177,7 +184,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-
+latte-dock
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
