@@ -71,7 +71,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2836CB0A8AC93F7A > /dev/null
 
 
-# -- Use sources.list.devuan and update bionic base to devuan.
+# -- Use sources.list.devuan and update bionic base to Devuan.
 # -- WARNING
 
 echo -e "\n"
@@ -103,7 +103,7 @@ apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } --no-inst
 apt -yy autoremove
 
 
-# -- Use elogind packages.
+# -- Use elogind packages from Devuan.
 
 ELOGIND_PKGS='
 libpam-elogind
@@ -184,7 +184,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-latte-dock
+nx-desktop
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
