@@ -98,6 +98,33 @@ apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy autoremove
 
 
+# -- Use PolicyKit packages from Devuan.
+
+DEVUAN_POLKIT_PKGS='
+libpolkit-agent-1-0=0.105-25+devuan8
+libpolkit-backend-1-0=0.105-25+devuan8
+libpolkit-backend-consolekit-1-0=0.105-25+devuan8
+libpolkit-gobject-1-0=0.105-25+devuan8
+libpolkit-gobject-consolekit-1-0=0.105-25+devuan8
+libpolkit-qt-1-1=0.112.0-6
+libpolkit-qt5-1-1=0.112.0-6
+policykit-1=0.105-25+devuan8
+polkit-kde-agent-1=4:5.14.5-1
+'
+
+apt -yy install ${DEVUAN_POLKIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+
+
+DEVUAN_NM_UD2='
+libnm0=1.14.6-2+deb10u1
+libudisks2-0=2.8.4-1+devuan4
+network-manager=1.14.6-2+deb10u1
+udisks2=2.8.4-1+devuan4
+'
+
+apt -yy install ${DEVUAN_NM_UD2//\\n/ } --no-install-recommends --allow-downgrades
+
+
 # -- Add SysV as init.
 
 echo -e "\n"
@@ -132,8 +159,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-libkf5configwidgets5=5.68.0-0xneon+18.04+bionic+build39
-libkf5authcore5=5.68.0-0xneon+18.04+bionic+build35
+latte-dock
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
