@@ -38,8 +38,6 @@ xz-utils
 '
 apt update
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -66,7 +64,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 > /dev/null
-
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev/null
 
 
 # -- Use sources.list.devuan and update bionic base to devuan.
@@ -84,8 +82,6 @@ apt update
 apt -yy --fix-broken install
 apt -yy dist-upgrade --only-upgrade --no-install-recommends 
 apt -yy --fix-broken install
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Block installation of libsensors4.
@@ -106,8 +102,6 @@ apt update
 apt -yy upgrade
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Add SysV as init.
