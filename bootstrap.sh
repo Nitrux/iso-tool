@@ -111,7 +111,7 @@ NX_DESKTOP_PKG='
 nx-desktop
 '
 
-MISC_DESKTOP_PKGS='
+MISC_PACKAGES_KDE='
 latte-dock=0.9.9-0xneon+18.04+bionic+build31
 plasma-pa=4:5.18.3-0ubuntu1
 xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
@@ -119,7 +119,7 @@ xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
 
 apt update &> /dev/null
 apt -yy --fix-broken install &> /dev/null
-apt -yy install ${MISC_DESKTOP_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
