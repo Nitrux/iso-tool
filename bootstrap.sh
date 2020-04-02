@@ -68,7 +68,7 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev/null
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8AC93F7A > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2836CB0A8AC93F7A > /dev/null
 
 
 # -- Use sources.list.devuan and update bionic base to devuan.
