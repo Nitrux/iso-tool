@@ -88,7 +88,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 
 
 NITRUX_BASE_PACKAGES='
-grub-efi-amd64-signed=1+2.04+5a
+grub-efi-amd64-signed=1+2.04+5
 grub-efi-amd64-bin=2.04-5
 '
 
