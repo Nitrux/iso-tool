@@ -10,6 +10,34 @@ echo -e "STARTING BOOTSTRAP."
 echo -e "\n"
 
 
+# -- Install basic packages.
+
+echo -e "\n"
+echo -e "INSTALLING BASIC PACKAGES."
+echo -e "\n"
+
+BASIC_PACKAGES='
+apt-transport-https
+apt-utils
+ca-certificates
+casper
+dhcpcd5
+gnupg2
+language-pack-en
+language-pack-en-base
+libarchive13
+libelf1
+localechooser-data
+locales
+lupin-casper
+user-setup
+wget
+xz-utils
+'
+
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+
+
 # -- Add key for Neon repository.
 # -- Add key for Nitrux repository.
 # -- Add key for Devuan repositories #1.
@@ -48,34 +76,6 @@ apt -yy dist-upgrade --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
-
-
-# -- Install basic packages.
-
-echo -e "\n"
-echo -e "INSTALLING BASIC PACKAGES."
-echo -e "\n"
-
-BASIC_PACKAGES='
-apt-transport-https
-apt-utils
-ca-certificates
-casper
-dhcpcd5
-gnupg2
-language-pack-en
-language-pack-en-base
-libarchive13
-libelf1
-localechooser-data
-locales
-lupin-casper
-user-setup
-wget
-xz-utils
-'
-
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Use sources files to build ISO.
