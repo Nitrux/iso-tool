@@ -1,0 +1,55 @@
+#!/bin/sh
+
+PREREQ=""
+
+prereqs()
+{
+	   echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+	prereqs)
+		   prereqs
+		   exit 0
+		   ;;
+esac
+
+. /scripts/casper-functions
+. /scripts/lupin-helpers
+
+iso_path=
+for x in $(cat /proc/cmdline); do
+	case ${x} in
+		ZNX_DEV_UUID=*)
+			znx_dev_uuid=${x#ZNX_DEV_UUID=}
+		;;
+
+		iso-scan/filename=*)
+			iso_path=${x#iso-scan/filename=}
+		;;
+	esac
+done
+
+_find_dev () {
+	lsblk -no PATH,UUID | grep $1 | cut -d ' ' -f 1
+}
+
+
+if [ "$iso_path" ]; then
+	if mount  -t btrfs $(_find_dev $znx_dev_uuid) isodevice /isodevice; then
+		echo "LIVEMEDIA=$iso_path" >> /conf/param.conf
+		echo "FOUNDDEV=$(_find_dev $znx_dev_uuid)" >> /conf/param.conf
+		if [ -f "${iso_path}" ]; then
+			echo "LIVEMEDIA_OFFSET=0" >> /conf/param.conf
+		fi
+
+	else
+		panic "
+Could not find the ISO $iso_path
+This could also happen if the file system is not clean because of an operating
+system crash, an interrupted boot process, an improper shutdown, or unplugging
+of a removable device without first unmounting or ejecting it.
+"
+	fi
+fi

@@ -1,0 +1,70 @@
+################
+# Devuan Repos #
+################
+
+deb http://pkgmaster.devuan.org/devuan ceres main
+
+deb http://pkgmaster.devuan.org/devuan ascii main
+deb http://pkgmaster.devuan.org/devuan ascii-security main
+deb http://pkgmaster.devuan.org/devuan ascii-updates main
+deb http://pkgmaster.devuan.org/devuan ascii-backports main
+
+deb http://pkgmaster.devuan.org/devuan chimaera main
+deb http://pkgmaster.devuan.org/devuan chimaera-updates main
+
+deb http://pkgmaster.devuan.org/devuan beowulf main
+deb http://pkgmaster.devuan.org/devuan beowulf-updates main
+
+#######################
+# Devuan Merged Repos #
+#######################
+
+# deb http://pkgmaster.devuan.org/merged ceres main
+
+deb http://pkgmaster.devuan.org/merged ascii main
+deb http://pkgmaster.devuan.org/merged ascii-security main
+deb http://pkgmaster.devuan.org/merged ascii-updates main
+deb http://pkgmaster.devuan.org/merged ascii-backports main
+
+deb http://pkgmaster.devuan.org/merged beowulf main
+deb http://pkgmaster.devuan.org/merged beowulf-updates main
+
+#######################
+# Ubuntu Repos Focal  #
+#######################
+
+deb http://archive.ubuntu.com/ubuntu focal main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu focal-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu focal-updates main restricted universe multiverse
+
+#######################
+# Ubuntu Repos Bionic #
+#######################
+
+deb http://archive.ubuntu.com/ubuntu bionic main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-security main restricted universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted universe multiverse
+
+#######################
+# Ubuntu Repos Xenial #
+#######################
+
+deb http://archive.ubuntu.com/ubuntu xenial main restricted universe multiverse
+
+##################
+# KDE Neon Repos #
+##################
+
+deb http://archive.neon.kde.org/user bionic main
+
+################
+# Nitrux Repos #
+################
+
+deb https://repo.nxos.org/nitrux nitrux main
+
+####################
+# Graphics Drivers #
+####################
+
+deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu bionic main 

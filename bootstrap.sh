@@ -2,16 +2,36 @@
 
 set -x
 
-printf "\n"
-printf "STARTING BOOTSTRAP."
-printf "\n"
+export LANG=C
+export LC_ALL=C
+
+echo -e "\n"
+echo -e "STARTING BOOTSTRAP."
+echo -e "\n"
+
+
+# -- Use sources.list.focal and update bionic base to focal.
+# -- WARNING
+
+echo -e "\n"
+echo -e "UPDATING OS BASE."
+echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+apt update &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+apt -yy dist-upgrade --only-upgrade --no-install-recommends &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Install basic packages.
 
-printf "\n"
-printf "INSTALLING BASIC PACKAGES."
-printf "\n"
+echo -e "\n"
+echo -e "INSTALLING BASIC PACKAGES."
+echo -e "\n"
 
 BASIC_PACKAGES='
 apt-transport-https
@@ -19,7 +39,6 @@ apt-utils
 ca-certificates
 casper
 dhcpcd5
-fuse
 gnupg2
 language-pack-en
 language-pack-en-base
@@ -33,23 +52,21 @@ wget
 xz-utils
 '
 
-apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
-# -- Add key for our repository.
+# -- Add key for Nitrux repository.
 # -- Add key for Devuan repositories #1.
 # -- Add key for Devuan repositories #2.
 # -- Add key for the Proprietary Graphics Drivers PPA.
-# -- Add key for XORG PPA.
 
-printf "\n"
-printf "ADD REPOSITORY KEYS."
-printf "\n"
+echo -e "\n"
+echo -e "ADD REPOSITORY KEYS."
+echo -e "\n"
 
 wget -q https://archive.neon.kde.org/public.key -O neon.key
-printf "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
+echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
 apt-key add neon.key > /dev/null
 rm neon.key
 
@@ -59,147 +76,281 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AF1CDFA9 > /dev/null
 
 
-# -- Use sources.list.build.stage1 to build ISO.
+# -- Use sources.list.base to build ISO.
+# -- Block installation of libsensors4.
 
-cp /configs/files/sources.list.build.stage1 /etc/apt/sources.list
+cp /configs/files/sources.list.base /etc/apt/sources.list
+cp /configs/files/preferences /etc/apt/preferences
 
+echo -e "\n"
+echo -e "INSTALLING BASE SYSTEM."
+echo -e "\n"
 
-# -- Update packages list and install packages. Install nx-desktop meta package and base-files package avoiding recommended packages.
-
-printf "\n"
-printf "INSTALLING DESKTOP."
-printf "\n"
-
-DESKTOP_PACKAGES='
+NITRUX_BASE_PACKAGES='
+nitrux-hardware-drivers
 nitrux-minimal
 nitrux-standard
-nitrux-hardware-drivers
-nx-desktop
 '
 
 apt update &> /dev/null
 apt -yy upgrade
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install &> /dev/null
+apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt -yy purge --remove vlc &> /dev/null
-apt -yy dist-upgrade
-
-
-# -- Use sources.list.eoan to update packages and install brew.
-
-printf "\n"
-printf "UPDATE MISC. PACKAGES."
-printf "\n"
-
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
-
-UPGRADE_OS_PACKAGES='
-amd64-microcode
-broadcom-sta-dkms
-dkms
-exfat-fuse
-exfat-utils
-firejail
-firejail-profiles
-go-mtpfs
-grub-common
-grub-efi-amd64
-grub-efi-amd64-bin
-grub-efi-amd64-signed
-grub2-common
-i965-va-driver
-initramfs-tools
-initramfs-tools-bin
-initramfs-tools-core
-ipxe-qemu
-libdrm-amdgpu1
-libdrm-intel1
-libdrm-radeon1
-libva-drm2
-libva-glx2
-libva-x11-2
-libva2
-linux-firmware
-mesa-va-drivers
-mesa-vdpau-drivers
-mesa-vulkan-drivers
-openssh-client
-openssl
-ovmf
-seabios
-sudo
-thunderbolt-tools
-x11-session-utils
-xinit
-xserver-xorg
-xserver-xorg-core
-xserver-xorg-input-evdev
-xserver-xorg-input-libinput
-xserver-xorg-input-mouse
-xserver-xorg-input-synaptics
-xserver-xorg-input-wacom
-xserver-xorg-video-amdgpu
-xserver-xorg-video-intel
-xserver-xorg-video-qxl
-xserver-xorg-video-radeon
-xserver-xorg-video-vmware
-language-pack-de
-language-pack-de-base
-language-pack-en
-language-pack-en-base
-language-pack-es
-language-pack-es-base
-language-pack-fr
-language-pack-fr-base
-language-pack-pt
-language-pack-pt-base
-'
-
-ADD_BREW_PACKAGES='
-libc-dev-bin
-libc6-dev
-linux-libc-dev
-linuxbrew-wrapper
-'
-
-ADD_NPM_PACKAGES='
-npm
-'
-
-ADD_MISC_PACKAGES='
-gnome-keyring
-'
-
-apt update &> /dev/null
-apt -yy install ${UPGRADE_OS_PACKAGES//\\n/ } --only-upgrade --no-install-recommends
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } ${ADD_NPM_PACKAGES//\\n/ } ${ADD_MISC_PACKAGES//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
+# -- Add NX Desktop metapackage.
+
+echo -e "\n"
+echo -e "INSTALLING DESKTOP PACKAGES."
+echo -e "\n"
+
+cp /configs/files/sources.list.desktop /etc/apt/sources.list
+
+NX_DESKTOP_PKG='
+latte-dock=0.9.9-0xneon+18.04+bionic+build31
+nx-desktop
+plasma-pa=4:5.18.3-0ubuntu1
+xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
+'
+
+apt update &> /dev/null
+apt -yy --fix-broken install &> /dev/null
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Upgrade KF5 libs for Latte Dock.
+
+echo -e "\n"
+echo -e "UPGRADING DESKTOP PACKAGES."
+echo -e "\n"
+
+cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
+
+HOLD_KDE_PKGS='
+kwin-addons
+kwin-common
+kwin-data
+kwin-x11
+libkwin4-effect-builtins1
+libkwineffects12
+libkwinglutils12
+libkwinxrenderutils12
+libphonon4qt5-4
+qml-module-org-kde-kwindowsystem
+'
+
+UPD_KDE_PKGS='
+ark
+kcalc
+kde-spectacle
+kdeconnect
+kmenuedit
+kscreen
+latte-dock=0.9.9+p18.04+git20200328.0224-0
+libkf5activities5
+libkf5activitiesstats1
+libkf5archive5
+libkf5attica5
+libkf5auth-data
+libkf5auth5
+libkf5authcore5
+libkf5baloo5
+libkf5balooengine5
+libkf5bluezqt-data
+libkf5bluezqt6
+libkf5bookmarks-data
+libkf5bookmarks5
+libkf5calendarevents5
+libkf5codecs-data
+libkf5codecs5
+libkf5completion-data
+libkf5completion5
+libkf5config-data
+libkf5configcore5
+libkf5configgui5
+libkf5configwidgets-data
+libkf5configwidgets5
+libkf5contacts-data
+libkf5contacts5
+libkf5coreaddons-data
+libkf5coreaddons5
+libkf5crash5
+libkf5dbusaddons-data
+libkf5dbusaddons5
+libkf5declarative-data
+libkf5declarative5
+libkf5dnssd-data
+libkf5dnssd5
+libkf5doctools5
+libkf5emoticons-data
+libkf5emoticons5
+libkf5filemetadata-data
+libkf5filemetadata3
+libkf5globalaccel-bin
+libkf5globalaccel-data
+libkf5globalaccel5
+libkf5globalaccelprivate5
+libkf5guiaddons5
+libkf5holidays-data
+libkf5holidays5
+libkf5i18n-data
+libkf5i18n5
+libkf5iconthemes-data
+libkf5iconthemes5
+libkf5idletime5
+libkf5itemmodels5
+libkf5itemviews-data
+libkf5itemviews5
+libkf5jobwidgets-data
+libkf5jobwidgets5
+libkf5kcmutils-data
+libkf5kcmutils5
+libkf5kdelibs4support-data
+libkf5kdelibs4support5
+libkf5kiocore5
+libkf5kiofilewidgets5
+libkf5kiogui5
+libkf5kiontlm5
+libkf5kiowidgets5
+libkf5kipi-data
+libkf5kipi32.0.0
+libkf5kirigami2-5
+libkf5modemmanagerqt6
+libkf5networkmanagerqt6
+libkf5newstuff-data
+libkf5newstuff5
+libkf5newstuffcore5
+libkf5notifications-data
+libkf5notifications5
+libkf5notifyconfig-data
+libkf5notifyconfig5
+libkf5package-data
+libkf5package5
+libkf5parts-data
+libkf5parts5
+libkf5people-data
+libkf5people5
+libkf5peoplebackend5
+libkf5peoplewidgets5
+libkf5plasma5
+libkf5plasmaquick5
+libkf5prison5
+libkf5pty-data
+libkf5pty5
+libkf5pulseaudioqt2
+libkf5purpose-bin
+libkf5purpose5
+libkf5quickaddons5
+libkf5runner5
+libkf5service-bin
+libkf5service-data
+libkf5service5
+libkf5solid5
+libkf5solid5-data
+libkf5sonnet5-data
+libkf5sonnetcore5
+libkf5sonnetui5
+libkf5style5
+libkf5su-bin
+libkf5su-data
+libkf5su5
+libkf5syntaxhighlighting-data
+libkf5syntaxhighlighting5
+libkf5texteditor-bin
+libkf5texteditor5
+libkf5textwidgets-data
+libkf5textwidgets5
+libkf5threadweaver5
+libkf5wallet-data
+libkf5wallet5
+libkf5waylandclient5
+libkf5waylandserver5
+libkf5widgetsaddons-data
+libkf5widgetsaddons5
+libkf5windowsystem-data
+libkf5windowsystem5
+libkf5xmlgui-bin
+libkf5xmlgui-data
+libkf5xmlgui5
+polkit-kde-agent-1
+powerdevil
+powerdevil-data
+qml-module-org-kde-draganddrop
+qml-module-org-kde-kcm
+qml-module-org-kde-kconfig
+qml-module-org-kde-kcoreaddons
+qml-module-org-kde-kholidays
+qml-module-org-kde-kio
+qml-module-org-kde-kirigami2
+qml-module-org-kde-kquickcontrols
+qml-module-org-kde-kquickcontrolsaddons
+qml-module-org-kde-newstuff
+qml-module-org-kde-people
+qml-module-org-kde-qqc2desktopstyle
+qml-module-org-kde-quickcharts
+qml-module-org-kde-solid
+qml-module-org-kde-userfeedback
+'
+
+apt update &> /dev/null
+apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
+apt -yy install ${UPD_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
+apt -yy --fix-broken install
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Use sources.list.eaon to update packages and install brew and npm.
+#FIXME We need to provide these packages from a repository of ours.
+
+echo -e "\n"
+echo -e "ADD BREW PACKAGE."
+echo -e "\n"
+
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
+
+ADD_BREW_PACKAGES='
+linuxbrew-wrapper
+'
+
+apt update &> /dev/null
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Use sources.list.nitrux for release.
+
+/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+
+
 # -- Install the kernel.
-#FIXME This should be put in our repository.
+#FIXME This should be synced to our repository.
 
-printf "\n"
-printf "INSTALLING KERNEL."
-printf "\n"
-
+echo -e "\n"
+echo -e "INSTALLING KERNEL."
+echo -e "\n"
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-headers-5.3.15-050315_5.3.15-050315.201912041733_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-headers-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-image-unsigned-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.3.15/linux-modules-5.3.15-050315-generic_5.3.15-050315.201912041733_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421_5.4.21-050421.202002191431_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-image-unsigned-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-modules-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
 '
 
 mkdir /latest_kernel
 
 for x in $kfiles; do
-printf "$x"
+echo -e "$x"
     wget -q -P /latest_kernel $x
 done
 
@@ -208,12 +359,69 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
+# -- Install Maui apps Debs.
+# -- Add custom launchers for Maui apps.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING MAUI APPS."
+echo -e "\n"
+
+mauipkgs='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
+'
+
+mkdir /maui_debs
+
+for x in $mauipkgs; do
+	wget -q -P /maui_debs $x
+done
+
+dpkg -iR /maui_debs &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /maui_debs
+
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
+whereis index buho nota vvave station pix contacts
+
+
+# -- Install bup and kup-backup.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING KUP."
+echo -e "\n"
+
+kup_bup_pkgs='
+http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build2_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $kup_bup_pkgs; do
+	wget -q -P /bup_debs $x
+done
+
+dpkg -iR /bup_debs &> /dev/null
+dpkg --configure -a &> /dev/null
+rm -r /bup_debs
+
+
 # -- Add missing firmware modules.
 #FIXME These files should be included in a package.
 
-printf "\n"
-printf "ADDING MISSING FIRMWARE."
-printf "\n"
+echo -e "\n"
+echo -e "ADDING MISSING FIRMWARE."
+echo -e "\n"
 
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
@@ -232,6 +440,16 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_vcn.bin
 '
 
 mkdir /fw_files
@@ -240,102 +458,97 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-mv /fw_files/vega20_ta.bin /lib/firmware/amdgpu/
-mv /fw_files/raven_kicker_rlc.bin /lib/firmware/amdgpu/
-mv /fw_files/navi10_*.bin /lib/firmware/amdgpu/
-mv /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
 
 rm -r /fw_files
 
 
 # -- Add /Applications to $PATH.
 
-printf "\n"
-printf "ADD /APPLICATIONS TO PATH."
-printf "\n"
+echo -e "\n"
+echo -e "ADD /APPLICATIONS TO PATH."
+echo -e "\n"
 
-printf "PATH=$PATH:/Applications\n" > /etc/environment
+echo -e "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
 
 
 # -- Add system AppImages.
 # -- Create /Applications directory for users.
-# -- Rename AppImageUpdate, appimage-user-tool and znx.
+# -- Rename AppImages for easy access from the terminal.
 
-printf "\n"
-printf "ADD APPIMAGES."
-printf "\n"
+echo -e "\n"
+echo -e "ADD APPIMAGES."
+echo -e "\n"
 
 APPS_SYS='
-https://github.com/Nitrux/znx/releases/download/continuous-master/znx-master-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/znx-master-x86_64.AppImage
+https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
 https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/pnx-1.0.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
-https://github.com/Hackerl/Wine_Appimage/releases/download/continuous/Wine-x86_64-ubuntu.latest.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
+https://github.com/ferion11/Proton_Appimage/releases/download/continuous/proton-linux-x86-v4.2-PlayOnLinux-x86_64.AppImage
+https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
+'
+
+APPS_USR='
+https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
+https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
+https://files.kde.org/kdenlive/release/kdenlive-19.12.3-x86_64.appimage
+https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200323-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
+https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
+https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
 
 mkdir /Applications
+mkdir -p /etc/skel/Applications
+mkdir -p /etc/skel/.local/bin
 
 for x in $APPS_SYS; do
     wget -q -P /Applications $x
 done
 
-chmod +x /Applications/*
-
-mkdir -p /etc/skel/Applications
-mkdir -p /etc/skel/.local/bin
-
-APPS_USR='
-http://libreoffice.soluzioniopen.com/stable/basic/LibreOffice-6.3.3-x86_64.AppImage
-https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Index-x86_64_fe8483.AppImage
-https://repo.nxos.org/appimages/maui-pix/Pix-x86_64.AppImage
-https://repo.nxos.org/appimages/buho/Buho-70c0ff7-x86_64.AppImage
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
-'
-
 for x in $APPS_USR; do
-    wget -q -P /etc/skel/Applications $x
+    wget -q -P /Applications $x
 done
 
-chmod +x /etc/skel/Applications/*
+chmod +x /Applications/*
 
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
-mv /Applications/Wine-x86_64-ubuntu.latest.AppImage /Applications/wine
+mv /Applications/pnx-1.0.0-x86_64.AppImage /Applications/pnx
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
+mv /Applications/proton-linux-x86-v4.2-PlayOnLinux-x86_64.AppImage /Applications/wine
 
-mv /etc/skel/Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+ln -sv /Applications/wine /Applications/wineserver
+
+mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
+
+mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
+mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
+mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
+mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
 
 ls -l /Applications
-ls -l /etc/skel/Applications
 ls -l /etc/skel/.local/bin/
 
 
 # -- Add AppImage providers for appimage-cli-tool
 
-printf "\n"
-printf "ADD APPIMAGE PROVIDERS."
-printf "\n"
+echo -e "\n"
+echo -e "ADD APPIMAGE PROVIDERS."
+echo -e "\n"
 
 cp /configs/files/appimage-providers.yaml /etc/
-
-
-# -- Add znx-gui.
-#FIXME We should include the AppImage but firejail prevents the use of sudo.
-
-printf "\n"
-printf "ADD ZNX_GUI DESKTOP LAUNCHER."
-printf "\n"
-
-cp /configs/other/znx-gui.desktop /usr/share/applications
-# wget -q -O /bin/znx-gui https://raw.githubusercontent.com/UriHerrera/storage/master/Scripts/znx-gui
-# chmod +x /bin/znx-gui
 
 
 # -- Add config for SDDM.
@@ -350,12 +563,17 @@ cp /configs/other/znx-gui.desktop /usr/share/applications
 # -- Add Window title plasmoid.
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
-#FIXME These fixes should be included in a package.
-#FIXME This should be included as a deb package downloaded to our repository.
+# -- Delete KDE Connect unnecessary menu entries.
+# -- Add znx-gui desktop launcher.
+# -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
+# -- Remove htop and nsnake desktop launcher.
+# -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
+# -- Copy offline documentation to desktop folder.
+#FIXME These fixes should be in a package.
 
-printf "\n"
-printf "ADD MISC. FIXES."
-printf "\n"
+echo -e "\n"
+echo -e "ADD MISC. FIXES."
+echo -e "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
@@ -367,18 +585,62 @@ cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
 cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
+cp -a /configs/other/org.kde.video /usr/share/plasma/wallpapers
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
-cp /configs/other/appimagekit_9bc78f4f736b1666c4f9b30bf7c69cd2_waterfox.png /etc/skel/.local/share/icons/hicolor/128x128/apps/
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
+cp /configs/other/znx-gui.desktop /usr/share/applications
+/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
+rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
+ln -sv /usr/games/nsnake /bin/nsnake
+rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
+mkdir -p /etc/skel/Desktop
+cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
+cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+
+
+# -- Workarounds for PNX.
+#FIXME These need to be fixed in PNX.
+
+echo -e "\n"
+echo -e "ADD WORKAROUNDS FOR PNX."
+echo -e "\n"
+
+mkdir -p /var/lib/pacman/
+mkdir -p /etc/pacman.d/
+mkdir -p /usr/share/pacman/keyrings
+
+cp /configs/files/pacman.conf /etc
+cp /configs/files/mirrorlist /etc/pacman.d
+cp -r /configs/other/pacman/* /usr/share/pacman/keyrings
+
+ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
+ln -sv /home/.pnx/usr/lib/pulseaudio /usr/lib/pulseaudio
+ln -sv /home/.pnx/usr/lib/gdk-pixbuf-2.0 /usr/lib/gdk-pixbuf-2.0
+ln -sv /home/.pnx/usr/lib/gs-plugins-13 /usr/lib/gs-plugins-13
+ln -sv /home/.pnx/usr/lib/liblmdb.so /usr/lib/liblmdb.so
+ln -sv /home/.pnx/usr/lib/systemd /usr/lib/systemd
+ln -sv /home/.pnx/usr/lib/samba /usr/lib/samba
+ln -sv /home/.pnx/usr/lib/girepository-1.0 /usr/lib/girepository-1.0
+ln -sv /home/.pnx/usr/lib/tracker-2.0 /usr/lib/tracker-2.0
+ln -sv /home/.pnx/usr/lib/WebKitNetworkProcess /usr/lib/WebKitNetworkProcess
+ln -sv /home/.pnx/usr/lib/epiphany /usr/lib/epiphany
+ln -sv /home/.pnx/usr/lib/opera /usr/lib/opera
+ln -sv /home/.pnx/usr/lib/firefox /usr/lib/firefox
+ln -sv /home/.pnx/usr/share/tracker /usr/share/tracker
+ln -sv /home/.pnx/usr/share/xonotic /usr/share/xonotic
+
+mkdir -p /usr/lib/zsh/5.8/zsh/
+
+ln -sv /home/.pnx/usr/lib/zsh/5.8/zsh/datetime.so /usr/lib/zsh/5.8/zsh/datetime.so
 
 
 # -- Add vfio modules and files.
 #FIXME This configuration should be included a in a package; replacing the default package like base-files.
 
-printf "\n"
-printf "ADD VFIO ENABLEMENT AND CONFIGURATION."
-printf "\n"
+echo -e "\n"
+echo -e "ADD VFIO ENABLEMENT AND CONFIGURATION."
+echo -e "\n"
 
 echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
@@ -414,9 +676,9 @@ chmod +x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
 # -- Add itch.io store launcher.
 #FIXME This should be in a package.
 
-printf "\n"
-printf "ADD ITCH.IO LAUNCHER."
-printf "\n"
+echo -e "\n"
+echo -e "ADD ITCH.IO LAUNCHER."
+echo -e "\n"
 
 
 mkdir -p /etc/skel/.local/share/applications
@@ -425,22 +687,25 @@ cp /configs/scripts/install-itch-io.sh /etc/skel/.config
 
 
 # -- Add configuration for npm to install packages in home and without sudo and update it.
+# -- Delete 'travis' folder that holds npm cache during build.
+#FIXME This should be in a package.
 
-printf "\n"
-printf "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
-printf "\n"
+echo -e "\n"
+echo -e "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
+echo -e "\n"
 
 mkdir /etc/skel/.npm-packages
 cp /configs/files/npmrc /etc/skel/.npmrc
 npm install npm@latest -g
+rm -r /home/travis
 
 
 # -- Add nativefier launcher.
 #FIXME This should be in a package.
 
-printf "\n"
-printf "ADD NATIVEFIER LAUNCHER."
-printf "\n"
+echo -e "\n"
+echo -e "ADD NATIVEFIER LAUNCHER."
+echo -e "\n"
 
 
 cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
@@ -450,9 +715,9 @@ cp /configs/scripts/install-nativefier.sh /etc/skel/.config
 # -- Add oh my zsh.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "ADD OH MY ZSH."
-printf "\n"
+echo -e "\n"
+echo -e "ADD OH MY ZSH."
+echo -e "\n"
 
 git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
 
@@ -461,9 +726,9 @@ git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
 # -- Use zsh as default shell for all users.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "REMOVE DASH AND USE MKSH + ZSH."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE DASH AND USE MKSH + ZSH."
+echo -e "\n"
 
 rm /bin/sh.distrib
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
@@ -473,49 +738,33 @@ ln -sv /bin/mksh /bin/sh
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
-printf "\n"
-printf "STAGE 1 COMPLETE."
-printf "\n"
+
+echo -e "\n"
+echo -e "ADDING INIT PACKAGES."
+echo -e "\n"
 
 
 # -- Downgrade packages using Devuan.
-# -- Use sources.list.build.stage2 to add init from Devuan.
+# -- Use sources.list.build.devuan to add init from Devuan.
 
-cp /configs/files/sources.list.build.stage2 /etc/apt/sources.list
+cp /configs/files/sources.list.build.devuan /etc/apt/sources.list
 apt update &> /dev/null
 
 
-# -- Download and install libsystemd0 from Devuan.
+# -- Download and install libsystemd0 and libnih.
 
-libsystemd0='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libsystemd0_241-5~bpo9%2B1_amd64.deb
+DEVUAN_PKGS='
+libnih-dbus1=1.0.3-10+b2
+libnih1=1.0.3-10+b2
+libsystemd0=241-7~deb10u3
 '
 
-mkdir /libsystemd0_deb
-
-for x in $libsystemd0; do
-    wget -q -P /libsystemd0_deb $x
-done
-
-dpkg -iR /libsystemd0_deb &> /dev/null
-apt -yy --fix-broken install
-rm -r /libsystemd0_deb
-
-
-libnih='
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih1_1.0.3-10+b4_amd64.deb
-http://ftp.us.debian.org/debian/pool/main/libn/libnih/libnih-dbus1_1.0.3-10+b4_amd64.deb
-'
-
-mkdir /libnih_debs
-
-for x in $libnih; do
-    wget -q -P /libnih_debs $x
-done
-
-dpkg -iR /libnih_debs &> /dev/null
-apt -yy --fix-broken install
-rm -r /libnih_debs
+mkdir /devuan/debs
+apt download ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends
+mv *.deb /devuan_debs
+dpkg --force-all -iR /devuan_debs
+dpkg --configure -a
+rm -rf /devuan_debs/
 
 
 # -- Use PolicyKit packages from Devuan.
@@ -526,20 +775,20 @@ libpolkit-backend-1-0
 libpolkit-backend-consolekit-1-0
 libpolkit-gobject-1-0
 libpolkit-gobject-consolekit-1-0
-libpolkit-qt5-1-1=0.112.0-5
-libpolkit-qt-1-1=0.112.0-5
+libpolkit-qt-1-1=0.112.0-6
+libpolkit-qt5-1-1=0.112.0-6
 policykit-1
-polkit-kde-agent-1=4:5.8.4-1
+polkit-kde-agent-1=4:5.14.5-1
 '
 
 apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
 DEVUAN_PACKAGES='
-network-manager=1.6.2-3+devuan1.1
-libnm0=1.6.2-3+devuan1.1
-udisks2=2.1.8-1+devuan2
-libudisks2-0=2.1.8-1+devuan2
+libnm0=1.14.6-2+deb10u1
+libudisks2-0=2.8.4-1+devuan4
+network-manager=1.14.6-2+deb10u1
+udisks2=2.8.4-1+devuan4
 '
 
 apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
@@ -547,9 +796,9 @@ apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgr
 
 # -- Add SysV as init.
 
-printf "\n"
-printf "ADD SYSVRC AS INIT."
-printf "\n"
+echo -e "\n"
+echo -e "ADD SYSVRC AS INIT."
+echo -e "\n"
 
 DEVUAN_INIT_PACKAGES='
 init
@@ -561,11 +810,12 @@ sysvinit-utils
 
 apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 
+
 # # -- Add OpenRC as init.
 #
-# printf "\n"
-# printf "ADD OPENRC AS INIT."
-# printf "\n"
+# echo -e "\n"
+# echo -e "ADD OPENRC AS INIT."
+# echo -e "\n"
 # 
 # openrc='
 # http://ftp.us.debian.org/debian/pool/main/o/openrc/openrc_0.40.3-1_amd64.deb
@@ -586,9 +836,9 @@ apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
 
 # # -- Add runit as init.
 # 
-# printf "\n"
-# printf "ADD RUNIT AS INIT."
-# printf "\n"
+# echo -e "\n"
+# echo -e "ADD RUNIT AS INIT."
+# echo -e "\n"
 # 
 # 
 # RUNIT_PACKAGES='
@@ -608,20 +858,33 @@ ttf-ubuntu-font-family
 '
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
-apt -yy purge --remove dracut dracut-core kpartx pkg-config systemd systemd-sysv
+
+
+# -- Remove sytemd packages and other misc. packages.
+
+REMOVE_PKGS='
+dracut
+dracut-core
+kpartx
+pkg-config
+systemd
+systemd-sysv
+'
+
+apt -yy purge --remove  ${XENIAL_PACKAGES//\\n/ }
 
 
 # -- Mark packages as manual.
 
 PIN_PACKAGES_MANUAL='
+libnm0
 libpolkit-agent-1-0
 libpolkit-gobject-1-0
-udisks2
-network-manager
 libudev1
 libudisks2-0
+network-manager
 sysvinit-core
-libnm0
+udisks2
 '
 
 apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
@@ -629,49 +892,28 @@ apt-mark manual ${PIN_PACKAGES_MANUAL//\\n/ }
 
 # -- Reinstall Nitrux metapackages.
 
-apt -yy install ${DESKTOP_PACKAGES//\\n/ } --no-install-recommends --reinstall
+apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends --reinstall
 apt -yy --fix-broken install
 apt -yy autoremove
 
 
 # -- Check that init system is not systemd.
 
-printf "\n"
-printf "Check init link."
-printf "\n"
+echo -e "\n"
+echo -e "CHECK INIT LINK."
+echo -e "\n"
 
 init --version
 stat /sbin/init
 
 
-printf "\n"
-printf "STAGE 2 COMPLETE."
-printf "\n"
+echo -e "\n"
+echo -e "ADDING INIT PACKAGES COMPLETE."
+echo -e "\n"
 
 
 # -- No apt usage past this point. -- #
-
-
-# -- Use sources.list.nitrux for release.
-
-/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-
-
-# -- Remove APT.
-# -- Update package index using cupt.
-#FIXME We probably need to provide our own cupt package which also does this.
-
-printf "\n"
-printf "REMOVE APT."
-printf "\n"
-
-REMOVE_APT='
-apt 
-apt-utils 
-apt-transport-https
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
+#WARNING
 
 
 # -- Strip kernel modules.
@@ -681,28 +923,43 @@ apt-transport-https
 # -- Add znx_dev_uuid parameter.
 #FIXME This should be put in a package.
 
-printf "\n"
-printf "UPDATE INITRAMFS."
-printf "\n"
+echo -e "\n"
+echo -e "UPDATE INITRAMFS."
+echo -e "\n"
 
-find /lib/modules/5.3.15-050315-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
+find /lib/modules/5.4.21-050421-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
-chmod +x /usr/share/initramfs-tools/hooks/hook-scripts.sh
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.3.15-050315-generic | grep vfio
+lsinitramfs /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 rm /bin/dummy.sh
 
 
+# -- Remove APT.
+#FIXME This should be put in a package.
+
+echo -e "\n"
+echo -e "REMOVE APT."
+echo -e "\n"
+
+REMOVE_APT='
+apt
+apt-utils
+apt-transport-https
+'
+
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
+
+
 # -- Clean the filesystem.
 
-printf "\n"
-printf "REMOVE CASPER."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE CASPER."
+echo -e "\n"
 
 REMOVE_PACKAGES='
 casper
@@ -713,18 +970,19 @@ lupin-casper
 
 
 # -- No dpkg usage past this point. -- #
+#WARNING
 
 
 # -- Use script to remove dpkg.
 
-printf "\n"
-printf "REMOVE DPKG."
-printf "\n"
+echo -e "\n"
+echo -e "REMOVE DPKG."
+echo -e "\n"
 
 /configs/scripts/./rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
 
 
-printf "\n"
-printf "EXITING BOOTSTRAP."
-printf "\n"
+echo -e "\n"
+echo -e "EXITING BOOTSTRAP."
+echo -e "\n"

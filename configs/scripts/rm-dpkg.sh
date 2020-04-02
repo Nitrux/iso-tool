@@ -9,7 +9,6 @@ REMOVE_FILES='
 /etc/apt
 /etc/logrotate.d/alternatives
 /etc/logrotate.d/dpkg
-/sbin/start-stop-daemon
 /usr/bin/dpkg
 /usr/bin/dpkg-deb
 /usr/bin/dpkg-divert
@@ -30,4 +29,5 @@ rm -r ${REMOVE_FILES//\\n/ }
 
 
 exit 0
+
 

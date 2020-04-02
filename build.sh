@@ -2,33 +2,39 @@
 
 # -- Exit on errors.
 
-set -xe
+set -x
 
-# -- Update xorriso and grub.
 
-xorriso='
-http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/xorriso_1.5.0-1build1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisoburn/libisoburn1_1.5.0-1build1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/libb/libburn/libburn4_1.5.0-1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/universe/libi/libisofs/libisofs6_1.5.0-1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/r/readline/libreadline8_8.0-1_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/r/readline/readline-common_8.0-1_all.deb
-http://mirrors.kernel.org/ubuntu/pool/main/n/ncurses/libtinfo6_6.1+20181013-2ubuntu2_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-efi-amd64-bin_2.02-2ubuntu8_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub-common_2.02-2ubuntu8_amd64.deb
-http://mirrors.kernel.org/ubuntu/pool/main/g/grub2/grub2-common_2.02-2ubuntu8_amd64.deb
+# -- Use sources.list.focal to update xorriso and GRUB.
+#WARNING
+
+wget -O /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
+
+XORRISO_PACKAGES='
+gcc-10-base
+grub-common
+grub-efi-amd64-bin
+grub-pc
+grub-pc-bin
+grub2-common
+libburn4
+libc-bin
+libc6
+libefiboot1
+libefivar1
+libgcc1
+libisoburn1
+libisofs6
+libjte1
+libreadline8
+libtinfo6
+locales
+readline-common
+xorriso
 '
 
-mkdir /latest_xorriso
-
-for x in $xorriso; do
-printf "$x"
-    wget -q -P /latest_xorriso $x
-done
-
-dpkg -iR /latest_xorriso/
-dpkg --configure -a
-rm -r /latest_xorriso
+apt update &> /dev/null
+apt -yy install ${XORRISO_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Prepare the directories for the build.
@@ -49,7 +55,7 @@ HASH_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.md5sum
 
 # -- Prepare the directory where the filesystem will be created.
 
-wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.3-base-amd64.tar.gz
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.4-base-amd64.tar.gz
 tar xf base.tar.gz -C $BUILD_DIR
 
 
@@ -60,17 +66,35 @@ chmod +x /bin/runch
 
 cp -r configs $BUILD_DIR/
 
-runch $BUILD_DIR -s bootstrap.sh || true
+cat bootstrap.sh | runch $BUILD_DIR bash || true
+
+# -- The file nsswitch.conf is not empty before entering the chroot and neither is it empty when inside the chroot but it becomes empty after
+# -- exiting the chroot resulting in a failed resolution of the hostname when using sudo after booting the ISO.
+#WARNING
+#FIXME
+#BUG
+
+cat configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
 
 rm -rf $BUILD_DIR/configs
 
 
 # -- Copy the kernel and initramfs to $ISO_DIR.
+# -- BUG vmlinuz and initrd are not moved to / they're put and left at /boot
 
 mkdir -p $ISO_DIR/boot
 
-cp $(echo $BUILD_DIR/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
-cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
+cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/kernel
+cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
+
+
+# -- Put this file here?.
+#WARNING
+#FIXME
+#BUG
+
+mkdir -p $ISO_DIR/boot/grub/x86_64-efi
+cp /usr/lib/grub/x86_64-efi/linuxefi.mod $ISO_DIR/boot/grub/x86_64-efi
 
 
 # -- Compress the root filesystem.
@@ -79,13 +103,6 @@ cp $(echo $BUILD_DIR/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/ini
 
 mkdir -p $ISO_DIR/casper
 mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 16384
-
-
-# -- Write relevant data to the image.
-
-echo "UPDATE_URL $UPDATE_URL" >> $ISO_DIR/.INFO
-echo "HASH_URL $HASH_URL" >> $ISO_DIR/.INFO
-echo "VERSION ${TRAVIS_COMMIT:0:7}" >> $ISO_DIR/.INFO
 
 
 # -- Generate the ISO image.
@@ -97,6 +114,11 @@ git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
 mkiso \
 	-V "NITRUX" \
+	-b \
+	-e \
+	-u "$UPDATE_URL" \
+	-s "$HASH_URL" \
+	-r "${TRAVIS_COMMIT:0:7}" \
 	-g $CONFIG_DIR/files/grub.cfg \
 	-g $CONFIG_DIR/files/loopback.cfg \
 	-t grub-theme/nitrux \
