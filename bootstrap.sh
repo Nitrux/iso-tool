@@ -733,23 +733,21 @@ apt update &> /dev/null
 
 # -- Download and install libsystemd0 and libnih.
 
-DEVUAN_PKGS='
+DEVUAN_MISC_PKGS='
 libnih-dbus1=1.0.3-10+b2
 libnih1=1.0.3-10+b2
 libsystemd0=241-7~deb10u3
 '
 
-mkdir /devuan/debs
-apt download ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends
-mv *.deb /devuan_debs
-dpkg --force-all -iR /devuan_debs
+apt download ${DEVUAN_PKGS/\\n/ } --no-install-recommends
+dpkg --force-all -i lib*.deb
 dpkg --configure -a
-rm -rf /devuan_debs/
+rm lib*.deb
 
 
 # -- Use PolicyKit packages from Devuan.
 
-DEVUAN_POLKIT_PACKAGES='
+DEVUAN_POLKIT_PKGS='
 libpolkit-agent-1-0
 libpolkit-backend-1-0
 libpolkit-backend-consolekit-1-0
@@ -761,17 +759,17 @@ policykit-1
 polkit-kde-agent-1=4:5.14.5-1
 '
 
-apt -yy install ${DEVUAN_POLKIT_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${DEVUAN_POLKIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 
 
-DEVUAN_PACKAGES='
+DEVUAN_NM_UD2='
 libnm0=1.14.6-2+deb10u1
 libudisks2-0=2.8.4-1+devuan4
 network-manager=1.14.6-2+deb10u1
 udisks2=2.8.4-1+devuan4
 '
 
-apt -yy install ${DEVUAN_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${DEVUAN_NM_UD2//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- Add SysV as init.
@@ -780,7 +778,7 @@ echo -e "\n"
 echo -e "ADD SYSVRC AS INIT."
 echo -e "\n"
 
-DEVUAN_INIT_PACKAGES='
+DEVUAN_INIT_PKGS='
 init
 init-system-helpers
 sysv-rc
@@ -788,7 +786,7 @@ sysvinit-core
 sysvinit-utils
 '
 
-apt -yy install ${DEVUAN_INIT_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends
 
 
 # # -- Add OpenRC as init.
@@ -851,7 +849,7 @@ systemd
 systemd-sysv
 '
 
-apt -yy purge --remove  ${XENIAL_PACKAGES//\\n/ }
+apt -yy purge --remove  ${REMOVE_PKGS//\\n/ }
 
 
 # -- Mark packages as manual.
