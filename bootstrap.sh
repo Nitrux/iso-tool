@@ -47,6 +47,7 @@ apt autoclean &> /dev/null
 # -- Add key for Devuan repositories #1.
 # -- Add key for Devuan repositories #2.
 # -- Add key for the Proprietary Graphics Drivers PPA.
+# -- Add key for Ubuntu repository.
 
 echo -e "\n"
 echo -e "ADD REPOSITORY KEYS."
@@ -63,6 +64,9 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
 
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 > /dev/null
+
 
 
 # -- Use sources.list.devuan and update bionic base to devuan.
