@@ -88,9 +88,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 
 
 NITRUX_BASE_PACKAGES='
-nitrux-hardware-drivers
-nitrux-minimal
-nitrux-standard
+grub-efi-amd64-signed
 '
 
 apt update
@@ -170,7 +168,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-latte-dock
+
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
