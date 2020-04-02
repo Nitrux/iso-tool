@@ -180,7 +180,7 @@ libphonon4qt5-4
 qml-module-org-kde-kwindowsystem
 '
 
-UPD_KDE_PKGS='
+UPDT_KDE_PKGS='
 ark
 kcalc
 kde-spectacle
@@ -336,7 +336,7 @@ qml-module-org-kde-userfeedback
 
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ } &> /dev/null
-apt -yy install ${UPD_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${UPDT_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
@@ -442,32 +442,6 @@ mkdir -p /usr/share/liquidshell/style/
 cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
 cp /configs/files/liquidshellrc /etc/skel/.config/
 cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
-
-
-# -- Install bup.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING BUP."
-echo -e "\n"
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-bup_deb_pkg='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_debs
-
-for x in $bup_deb_pkg; do
-	wget -q -P /bup_debs $x
-done
-
-apt update &> /dev/null 
-dpkg -iR /bup_debs
-apt -yy --fix-broken install
-dpkg --configure -a
-rm -r /bup_debs
 
 
 # -- Add missing firmware modules.
