@@ -733,16 +733,21 @@ apt update &> /dev/null
 
 # -- Download and install libsystemd0 and libnih.
 
-DEVUAN_MISC_PKGS='
-libnih-dbus1=1.0.3-10+b2
-libnih1=1.0.3-10+b2
-libsystemd0=241-7~deb10u3
+libs_debs='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libnih-dbus1_1.0.3-10+b5_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libnih1_1.0.3-10+b5_amd64.deb
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/libsystemd0_245.2-1_amd64.deb
 '
 
-apt download ${DEVUAN_PKGS/\\n/ } --no-install-recommends
-dpkg --force-all -i lib*.deb
+mkdir /libs_deb_pkgs
+
+for x in $libs_debs; do
+	wget -q -P /maui_debs $x
+done
+
+dpkg --force-all -iR /libs_deb_pkgs
 dpkg --configure -a
-rm lib*.deb
+rm -r /libs_deb_pkgs
 
 
 # -- Use PolicyKit packages from Devuan.
