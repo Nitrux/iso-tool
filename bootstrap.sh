@@ -153,7 +153,6 @@ apt update &> /dev/null
 apt -yy --fix-broken install
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${OTHER_MISC_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
-apt -yy purge --remove vlc &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
