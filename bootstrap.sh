@@ -133,7 +133,7 @@ echo -e "\n"
 
 NX_DESKTOP_PKG='
 libkf5configwidgets5=5.68.0-0xneon+18.04+bionic+build39
-libkf5authcore5=5.68.0-0xneon+18.04+bionic+build39
+libkf5authcore5=5.68.0-0xneon+18.04+bionic+build35
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
