@@ -19,12 +19,15 @@ deb http://pkgmaster.devuan.org/devuan beowulf-updates main
 # Devuan Merged Repos #
 #######################
 
-# deb http://pkgmaster.devuan.org/merged ceres main
+deb http://pkgmaster.devuan.org/merged ceres main
 
 deb http://pkgmaster.devuan.org/merged ascii main
 deb http://pkgmaster.devuan.org/merged ascii-security main
 deb http://pkgmaster.devuan.org/merged ascii-updates main
 deb http://pkgmaster.devuan.org/merged ascii-backports main
+
+deb http://pkgmaster.devuan.org/merged chimaera main
+deb http://pkgmaster.devuan.org/merged chimaera-updates main
 
 deb http://pkgmaster.devuan.org/merged beowulf main
 deb http://pkgmaster.devuan.org/merged beowulf-updates main
