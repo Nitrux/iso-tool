@@ -45,7 +45,8 @@ apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 # -- Add key for Devuan repositories #1.
 # -- Add key for Devuan repositories #2.
 # -- Add key for the Proprietary Graphics Drivers PPA.
-# -- Add key for Ubuntu repository.
+# -- Add key for Ubuntu repositories #1.
+# -- Add key for Ubuntu repositories #2.
 
 echo -e "\n"
 echo -e "ADD REPOSITORY KEYS."
@@ -77,6 +78,7 @@ echo -e "\n"
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
 cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
+cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 
 
 NITRUX_BASE_PACKAGES='
@@ -97,8 +99,8 @@ echo -e "ADD SYSVRC AS INIT."
 echo -e "\n"
 
 DEVUAN_INIT_PKGS='
-init
-init-system-helpers
+init=1.56+nmu1+devuan2
+init-system-helpers=1.56+nmu1+devuan2
 sysv-rc
 sysvinit-core
 sysvinit-utils
@@ -189,7 +191,6 @@ ln -sv /bin/mksh /bin/sh
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 
 
-# -- Strip kernel modules.
 # -- Use GZIP compression when creating the initramfs.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -200,7 +201,6 @@ echo -e "\n"
 echo -e "UPDATE INITRAMFS."
 echo -e "\n"
 
-find /lib/modules/5.4.21-050421-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
