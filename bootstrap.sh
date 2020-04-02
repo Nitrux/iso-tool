@@ -401,7 +401,7 @@ echo -e "INSTALLING KUP."
 echo -e "\n"
 
 kup_bup_pkgs='
-http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build2_amd64.deb
+http://mirrors.kernel.org/ubuntu/pool/universe/k/kup-backup/kup-backup_0.7.1+dfsg-1build3_amd64.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
 '
 
@@ -411,8 +411,9 @@ for x in $kup_bup_pkgs; do
 	wget -q -P /bup_debs $x
 done
 
-dpkg -iR /bup_debs &> /dev/null
+dpkg -iR /bup_deb &> /dev/null
 dpkg --configure -a &> /dev/null
+apt -yy --fix-broken install
 rm -r /bup_debs
 
 
