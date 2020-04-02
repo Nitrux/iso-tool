@@ -88,7 +88,8 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 
 
 NITRUX_BASE_PACKAGES='
-grub-efi-amd64-signed
+grub-efi-amd64-signed=1+2.04+5a
+grub-efi-amd64-bin=2.04-5
 '
 
 apt update
@@ -102,9 +103,17 @@ ELOGIND_PKGS='
 libpam-elogind
 libelogind0
 elogind
+uuid-runtime=2.34-0.1+devuan1
+util-linux=2.34-0.1+devuan1
+libprocps6=2:3.3.12-3+devuan2.1
+bsdutils=1:2.34-0.1+devuan1
 '
 
-apt -yy install ${ELOGIND_PKGS//\\n/ } --no-install-recommends
+APT_PKGS='
+apt=2.0.1
+'
+
+apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends
 
 
 # -- Use PolicyKit packages from Devuan.
@@ -112,9 +121,9 @@ apt -yy install ${ELOGIND_PKGS//\\n/ } --no-install-recommends
 DEVUAN_POLKIT_PKGS='
 libpolkit-agent-1-0=0.105-25+devuan8
 libpolkit-backend-1-0=0.105-25+devuan8
-libpolkit-backend-consolekit-1-0=0.105-25+devuan8
+libpolkit-backend-elogind-1-0=0.105-25+devuan8
 libpolkit-gobject-1-0=0.105-25+devuan8
-libpolkit-gobject-consolekit-1-0=0.105-25+devuan8
+libpolkit-gobject-elogind-1-0=0.105-25+devuan8
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
 policykit-1=0.105-25+devuan8
