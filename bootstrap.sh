@@ -47,6 +47,7 @@ apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 # -- Add key for the Proprietary Graphics Drivers PPA.
 # -- Add key for Ubuntu repositories #1.
 # -- Add key for Ubuntu repositories #2.
+# -- Add key for Kubuntu Backports PPA.
 
 echo -e "\n"
 echo -e "ADD REPOSITORY KEYS."
@@ -67,6 +68,8 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev/null
 
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8AC93F7A > /dev/null
+
 
 # -- Use sources.list.devuan and update bionic base to devuan.
 # -- WARNING
@@ -79,6 +82,7 @@ cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
 cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
+cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 
 
 NITRUX_BASE_PACKAGES='
@@ -119,9 +123,17 @@ init --version
 stat /sbin/init
 
 
+# -- Add NX Desktop metapackage.
+
 echo -e "\n"
-echo -e "ADDING INIT PACKAGES COMPLETE."
+echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
+
+NX_DESKTOP_PKG='
+nx-desktop
+'
+
+apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 
 
 # -- No apt usage past this point. -- #
@@ -163,6 +175,44 @@ echo -e "\n"
 echo -e "PATH=$PATH:/Applications\n" > /etc/environment
 sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
 sed -i "/env_reset/d" /etc/sudoers
+
+
+# -- Add vfio modules and files.
+#FIXME This configuration should be included a in a package; replacing the default package like base-files.
+
+echo -e "\n"
+echo -e "ADD VFIO ENABLEMENT AND CONFIGURATION."
+echo -e "\n"
+
+echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "vfio" >> /etc/initramfs-tools/modules
+echo "vfio_iommu_type1" >> /etc/initramfs-tools/modules
+echo "vfio_virqfd" >> /etc/initramfs-tools/modules
+echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
+echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
+echo "vfio_pci" >> /etc/initramfs-tools/modules
+echo "nvidia" >> /etc/initramfs-tools/modules
+echo "amdgpu" >> /etc/initramfs-tools/modules
+echo "radeon" >> /etc/initramfs-tools/modules
+echo "i915" >> /etc/initramfs-tools/modules
+
+echo "vfio" >> /etc/modules
+echo "vfio_iommu_type1" >> /etc/modules
+echo "vfio_pci" >> /etc/modules
+echo "vfio_pci ids=" >> /etc/modules
+
+cp /configs/files/asound.conf /etc/
+cp /configs/files/asound.conf /etc/skel/.asoundrc
+cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
+
+chmod a+x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
 
 
 # -- Add oh my zsh.
