@@ -38,6 +38,8 @@ xz-utils
 '
 apt update
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -70,7 +72,9 @@ echo -e "\n"
 echo -e "UPDATING OS BASE."
 echo -e "\n"
 
-cp /configs/files/sources.list.devuan /etc/apt/sources.list
+cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
+cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 
 apt update
 apt -yy --fix-broken install
@@ -80,11 +84,8 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Use sources files to build ISO.
 # -- Block installation of libsensors4.
 
-cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
 cp /configs/files/preferences /etc/apt/preferences
 
 echo -e "\n"
