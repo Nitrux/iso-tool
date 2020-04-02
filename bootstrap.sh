@@ -131,7 +131,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-plasma-desktop
+libqt5core5a=5.14.1+dfsg-0+xneon+18.04+bionic+build81
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
