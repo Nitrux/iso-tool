@@ -36,8 +36,8 @@ user-setup
 wget
 xz-utils
 '
-apt update
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt update &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -71,26 +71,13 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev
 # -- WARNING
 
 echo -e "\n"
-echo -e "UPDATING OS BASE."
+echo -e "INSTALLING BASE SYSTEM."
 echo -e "\n"
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
 cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 
-apt update
-apt -yy --fix-broken install
-apt -yy dist-upgrade --only-upgrade --no-install-recommends 
-apt -yy --fix-broken install
-
-
-# -- Block installation of libsensors4.
-
-cp /configs/files/preferences /etc/apt/preferences
-
-echo -e "\n"
-echo -e "INSTALLING BASE SYSTEM."
-echo -e "\n"
 
 NITRUX_BASE_PACKAGES='
 nitrux-hardware-drivers
@@ -99,7 +86,6 @@ nitrux-standard
 '
 
 apt update
-apt -yy upgrade
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy autoremove
 
