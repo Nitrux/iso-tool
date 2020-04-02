@@ -84,6 +84,7 @@ cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.lis
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 
 
 NITRUX_BASE_PACKAGES='
@@ -131,7 +132,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-libqt5core5a=5.14.1+dfsg-0+xneon+18.04+bionic+build81
+nx-desktop
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
