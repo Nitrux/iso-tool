@@ -35,9 +35,6 @@ lupin-casper
 user-setup
 wget
 xz-utils
-rng-tools
-bluez
-open-vm-tools
 '
 
 apt update &> /dev/null
