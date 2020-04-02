@@ -132,56 +132,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-kdenetwork-filesharing
-frameworkintegration
-baloo-kf5
-bluedevil
-kde-cli-tools
-kde-config-gtk-style
-kde-config-plymouth
-kde-config-screenlocker
-kde-config-sddm
-kde-style-breeze
-khotkeys
-kio
-kio-extras
-kscreen
-kwin
-kwin-addons
-kwin-style-breeze
-plasma-framework
-plasma-nm
-plasma-pa
-plasma-vault
-polkit-kde-agent-1
-powerdevil
-print-manager
-user-manager
-ark
-kcalc
-kde-spectacle
-kinfocenter
-sddm
-systemsettings
-kup-backup
-kdeconnect
-kmenuedit
-ktexteditor-katepart
-latte-dock
-libkf5texteditor-bin
-nx-audio-applet
-nx-clock-applet
-nx-firewall
-nx-networkmanagement-applet
-nx-notifications-applet
-nx-simplemenu-applet
-nx-systemtray-applet
-fuse3
-fwupd
-fwupdate
-libslirp0=4.1.0-2
-udisks2
-upower
+libkf5configwidgets5=5.68.0-0xneon+18.04+bionic+build39
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
