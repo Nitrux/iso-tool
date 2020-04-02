@@ -98,6 +98,17 @@ apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy autoremove
 
 
+# -- Use elogind packages.
+
+ELOGIND_PKGS='
+libpam-elogind
+libelogind0
+elogind
+'
+
+apt -yy install ${ELOGIND_PKGS//\\n/ } --no-install-recommends
+
+
 # -- Use PolicyKit packages from Devuan.
 
 DEVUAN_POLKIT_PKGS='
@@ -109,7 +120,7 @@ libpolkit-gobject-consolekit-1-0=0.105-25+devuan8
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
 policykit-1=0.105-25+devuan8
-polkit-kde-agent-1=4:5.14.5-1
+polkit-kde-agent-1=4:5.17.5-2
 '
 
 apt -yy install ${DEVUAN_POLKIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
