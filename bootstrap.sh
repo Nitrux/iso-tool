@@ -179,7 +179,7 @@ nx-systemtray-applet
 fuse3
 fwupd
 fwupdate
-libslirp0 but it is not installable
+libslirp0=4.1.0-2
 udisks2
 upower
 '
