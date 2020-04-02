@@ -163,6 +163,7 @@ latte-dock
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy --fix-broken install
 
 
 # -- No apt usage past this point. -- #
