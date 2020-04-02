@@ -132,7 +132,56 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-nx-desktop
+kdenetwork-filesharing
+frameworkintegration
+baloo-kf5
+bluedevil
+kde-cli-tools
+kde-config-gtk-style
+kde-config-plymouth
+kde-config-screenlocker
+kde-config-sddm
+kde-style-breeze
+khotkeys
+kio
+kio-extras
+kscreen
+kwin
+kwin-addons
+kwin-style-breeze
+plasma-framework
+plasma-nm
+plasma-pa
+plasma-vault
+polkit-kde-agent-1
+powerdevil
+print-manager
+user-manager
+ark
+kcalc
+kde-spectacle
+kinfocenter
+sddm
+systemsettings
+kup-backup
+kdeconnect
+kmenuedit
+ktexteditor-katepart
+latte-dock
+libkf5texteditor-bin
+nx-audio-applet
+nx-clock-applet
+nx-firewall
+nx-networkmanagement-applet
+nx-notifications-applet
+nx-simplemenu-applet
+nx-systemtray-applet
+fuse3
+fwupd
+fwupdate
+libslirp0 but it is not installable
+udisks2
+upower
 '
 
 apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
