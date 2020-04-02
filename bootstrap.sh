@@ -78,32 +78,6 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 
 
-# -- Install bup.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING BUP."
-echo -e "\n"
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-bup_deb_pkg='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_debs
-
-for x in $bup_deb_pkg; do
-	wget -q -P /bup_debs $x
-done
-
-apt update &> /dev/null 
-dpkg -iR /bup_debs
-apt -yy --fix-broken install
-dpkg --configure -a
-rm -r /bup_debs
-
-
 # -- Use sources.list.base to build ISO.
 # -- Block installation of libsensors4.
 
@@ -468,6 +442,32 @@ mkdir -p /usr/share/liquidshell/style/
 cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
 cp /configs/files/liquidshellrc /etc/skel/.config/
 cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
+
+
+# -- Install bup.
+#FIXME This should be synced to our repository.
+
+echo -e "\n"
+echo -e "INSTALLING BUP."
+echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+bup_deb_pkg='
+https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
+'
+
+mkdir /bup_debs
+
+for x in $bup_deb_pkg; do
+	wget -q -P /bup_debs $x
+done
+
+apt update &> /dev/null 
+dpkg -iR /bup_debs
+apt -yy --fix-broken install
+dpkg --configure -a
+rm -r /bup_debs
 
 
 # -- Add missing firmware modules.
