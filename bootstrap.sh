@@ -85,6 +85,7 @@ cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
 
 GRUB_PACKAGES='
@@ -121,6 +122,18 @@ apt=2.0.1
 
 apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends
 apt -yy autoremove
+
+
+# -- Install Plymouth packages from Xenial.
+
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+ttf-ubuntu-font-family
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- Use PolicyKit packages from Devuan.
@@ -187,7 +200,11 @@ NX_DESKTOP_PKG='
 nx-desktop
 '
 
-apt -yy install ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+MISC_KDE_PKGS='
+plasma-pa=4:5.17.5-2
+'
+
+apt -yy install ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
