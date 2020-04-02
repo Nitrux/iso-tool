@@ -397,29 +397,6 @@ rm -r /maui_debs
 whereis index buho nota vvave station pix contacts
 
 
-# -- Install bup.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING BUP."
-echo -e "\n"
-
-bup_pkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/bup_0.29-3_amd64.modfied.deb
-'
-
-mkdir /bup_debs
-
-for x in $bup_pkgs; do
-	wget -q -P /bup_debs $x
-done
-
-dpkg -iR /bup_debs &> /dev/null
-apt -yy --fix-broken install
-dpkg --configure -a
-rm -r /bup_debs
-
-
 # -- Add missing firmware modules.
 #FIXME These files should be included in a package.
 
