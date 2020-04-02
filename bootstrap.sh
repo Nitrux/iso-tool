@@ -35,9 +35,13 @@ lupin-casper
 user-setup
 wget
 xz-utils
+rng-tools
+bluez
+open-vm-tools
 '
+
 apt update &> /dev/null
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
