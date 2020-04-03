@@ -206,7 +206,7 @@ plasma-pa=4:5.17.5-2
 '
 
 MISC_DEVUAN_PKGS='
-avahi-daemon=500
+avahi-daemon=0.7-5
 rng-tools=5-1
 open-vm-tools=2:11.0.5-4
 pulseaudio-module-bluetooth=13.0-5
