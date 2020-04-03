@@ -215,6 +215,7 @@ libpulse0=13.0-5
 pulseaudio=13.0-5
 libpulse-mainloop-glib0=13.0-5
 pulseaudio-utils=13.0-5
+libpulsedsp=13.0-5
 '
 
 apt -yy install ${MISC_DEVUAN_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
