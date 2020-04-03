@@ -205,7 +205,15 @@ MISC_KDE_PKGS='
 plasma-pa=4:5.17.5-2
 '
 
-apt -yy install ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+MISC_DEVUAN_PKGS='
+avahi-daemon=500
+rng-tools=5-1
+open-vm-tools=2:11.0.5-4
+pulseaudio-module-bluetooth=13.0-5
+bluez=5.50-1.2
+'
+
+apt -yy install ${MISC_DEVUAN_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
