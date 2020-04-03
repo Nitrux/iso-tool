@@ -213,6 +213,7 @@ pulseaudio-module-bluetooth=13.0-5
 bluez=5.50-1.2
 libpulse0=13.0-5
 pulseaudio=13.0-5
+libpulse-mainloop-glib0=13.0-5
 '
 
 apt -yy install ${MISC_DEVUAN_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
