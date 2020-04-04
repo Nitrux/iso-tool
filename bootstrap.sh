@@ -206,7 +206,6 @@ plasma-pa=4:5.17.5-2
 '
 
 MISC_DEVUAN_PKGS='
-avahi-daemon=0.7-5
 libpulse0=13.0-5
 pulseaudio=13.0-5
 libpulse-mainloop-glib0=13.0-5
