@@ -175,25 +175,27 @@ echo -e "ADD OPENRC AS INIT."
 echo -e "\n"
 
 DEVUAN_INIT_PKGS='
-openrc
 bootchart2
-policycoreutils
-sysvinit-utils
-init-system-helpers
 cgmanager
 fgetty
 getty-run
+init-system-helpers
 initscripts
+openrc
+policycoreutils
 startpar
+sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Replacing sysv-rc by OpenRC.
+# -- OpenRC configuration.
 
 ln -sv /sbin/openrc-init /sbin/init
-sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
+# sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
+
+insserv umountfs mountkernfs umountroot mountdevsubfs
 
 
 # -- Check that init system is not systemd.
