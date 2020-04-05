@@ -176,6 +176,9 @@ echo -e "\n"
 
 DEVUAN_INIT_PKGS='
 openrc
+bootchart2
+sysvinit-core
+policycoreutils
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
