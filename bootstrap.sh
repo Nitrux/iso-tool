@@ -100,7 +100,7 @@ nitrux-minimal
 nitrux-standard
 '
 
-apt update
+apt update &> /dev/null
 apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy autoremove
 
@@ -404,7 +404,7 @@ qml-module-org-kde-solid
 qml-module-org-kde-userfeedback
 '
 
-apt update
+apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy install ${UPDT_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
@@ -797,6 +797,7 @@ ln -sv /bin/mksh /bin/sh
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
 
 sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
+sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
 # -- Use GZIP compression when creating the initramfs.
