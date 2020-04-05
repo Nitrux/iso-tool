@@ -189,7 +189,7 @@ apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downg
 
 ln -sv /sbin/openrc-init /sbin/init
 for file in /etc/rc0.d/K*; do s=`basename $(readlink "$file")` ; /etc/init.d/$s stop; done
-sed -i 's/#rc_parallel="NO"/rc_parallel="YES"' /etc/rc.conf
+sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
 
 
 # -- Check that init system is not systemd.
