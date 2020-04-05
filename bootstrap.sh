@@ -180,6 +180,11 @@ bootchart2
 policycoreutils
 sysvinit-utils
 init-system-helpers
+cgmanager
+fgetty
+getty-run
+initscripts
+startpar
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
