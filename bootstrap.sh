@@ -178,9 +178,19 @@ DEVUAN_INIT_PKGS='
 openrc
 bootchart2
 policycoreutils
+sysvinit-utils
+init-system-helpers
+sysv-rc
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Replacing sysv-rc by OpenRC.
+
+ln -sv /sbin/openrc-init /sbin/init
+for file in /etc/rc0.d/K*; do s=`basename $(readlink "$file")` ; /etc/init.d/$s stop; done
+sed -i 's/#rc_parallel="NO"/rc_parallel="YES"' /etc/rc.conf
 
 
 # -- Check that init system is not systemd.
@@ -191,10 +201,6 @@ echo -e "\n"
 
 init --version
 stat /sbin/init
-
-
-# -- Replacing sysv-rc by OpenRC.
-for file in /etc/rc0.d/K*; do s=`basename $(readlink "$file")` ; /etc/init.d/$s stop; done
 
 
 # -- Add NX Desktop metapackage.
