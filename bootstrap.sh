@@ -171,15 +171,11 @@ apt -yy install ${DEVUAN_NM_UD2//\\n/ } --no-install-recommends --allow-downgrad
 # -- Add SysV as init.
 
 echo -e "\n"
-echo -e "ADD SYSVRC AS INIT."
+echo -e "ADD OPENRC AS INIT."
 echo -e "\n"
 
 DEVUAN_INIT_PKGS='
-init=1.56+nmu1+devuan2
-init-system-helpers=1.56+nmu1+devuan2
-sysv-rc
-sysvinit-core
-sysvinit-utils
+openrc
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
