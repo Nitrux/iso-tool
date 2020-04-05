@@ -177,7 +177,6 @@ echo -e "\n"
 DEVUAN_INIT_PKGS='
 openrc
 bootchart2
-sysvinit-core
 policycoreutils
 '
 
@@ -192,6 +191,10 @@ echo -e "\n"
 
 init --version
 stat /sbin/init
+
+
+# -- Replacing sysv-rc by OpenRC.
+for file in /etc/rc0.d/K*; do s=`basename $(readlink "$file")` ; /etc/init.d/$s stop; done
 
 
 # -- Add NX Desktop metapackage.
