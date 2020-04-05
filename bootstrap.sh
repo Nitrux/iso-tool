@@ -100,8 +100,12 @@ nitrux-minimal
 nitrux-standard
 '
 
+NITRUX_BF_PKG='
+base-files
+'
+
 apt update &> /dev/null
-apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } ${NITRUX_BF_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove
 
 
@@ -205,7 +209,7 @@ MISC_KDE_PKGS='
 plasma-pa=4:5.17.5-2
 '
 
-MISC_DEVUAN_PKGS='
+DEVUAN_PULSE_PKGS='
 libpulse0=13.0-5
 pulseaudio=13.0-5
 libpulse-mainloop-glib0=13.0-5
@@ -213,7 +217,7 @@ pulseaudio-utils=13.0-5
 libpulsedsp=13.0-5
 '
 
-apt -yy install ${MISC_DEVUAN_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
