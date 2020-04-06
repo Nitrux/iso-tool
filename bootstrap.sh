@@ -193,7 +193,7 @@ apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downg
 
 # -- OpenRC configuration.
 
-ln -sv /sbin/openrc-init /sbin/init
+rm /sbin/init && ln -sv /sbin/openrc-init /sbin/init
 sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
 
 insserv umountfs  
