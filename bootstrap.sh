@@ -185,27 +185,20 @@ openrc
 policycoreutils
 startpar
 sysvinit-utils
+sysvinit-core
 '
 
-DEVUAN_INIT_MISC='
-sysv-rc
-'
-
-apt -yy install ${DEVUAN_INIT_MISC//\\n/ } --no-install-recommends
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- OpenRC configuration.
 
-ln -sv /sbin/openrc-init /sbin/init
 sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
 
 insserv umountfs  
 insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
-
-for n in `seq 1 6`; do ln -s agetty agetty.tty$n; rc-config add agetty.tty$n default; done
 
 
 # -- Check that init system is not systemd.
