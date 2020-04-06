@@ -191,15 +191,15 @@ sysvinit-core
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# # -- OpenRC configuration.
-# 
-# ln -sv /sbin/openrc-init /sbin/init
-# # sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
-# 
-# insserv umountfs  
-# insserv mountkernfs.sh
-# insserv umountroot
-# insserv mountdevsubfs.sh
+# -- OpenRC configuration.
+
+ln -sv /sbin/openrc-init /sbin/init
+sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
+
+insserv umountfs  
+insserv mountkernfs.sh
+insserv umountroot
+insserv mountdevsubfs.sh
 
 
 # -- Check that init system is not systemd.
