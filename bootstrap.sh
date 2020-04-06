@@ -195,11 +195,13 @@ apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downg
 ln -sv /sbin/openrc-init /sbin/init
 # sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
 
-ls -l  /etc/init.d/
+insserv umountfs  
+insserv mountkernfs
+insserv umountroot
+insserv mountdevsubfs.sh
 
-insserv umountfs mountkernfs umountroot mountdevsubfs
 
-dpkg-reconfigure -phigh -a 
+dpkg-reconfigure --all 
 
 
 # -- Check that init system is not systemd.
