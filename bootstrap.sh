@@ -188,7 +188,6 @@ sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
-dpkg-reconfigure -phigh -a
 
 
 # -- OpenRC configuration.
@@ -199,6 +198,8 @@ ln -sv /sbin/openrc-init /sbin/init
 ls -l  /etc/init.d/
 
 insserv umountfs mountkernfs umountroot mountdevsubfs
+
+dpkg-reconfigure -phigh -a 
 
 
 # -- Check that init system is not systemd.
