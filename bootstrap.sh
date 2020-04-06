@@ -168,7 +168,7 @@ udisks2=2.8.4-1+devuan4
 apt -yy install ${DEVUAN_NM_UD2//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Add SysV as init.
+# -- Add OpenRC as init.
 
 echo -e "\n"
 echo -e "ADD OPENRC AS INIT."
@@ -194,6 +194,8 @@ apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downg
 
 ln -sv /sbin/openrc-init /sbin/init
 # sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
+
+ls -l  /etc/init.d/
 
 insserv umountfs mountkernfs umountroot mountdevsubfs
 
