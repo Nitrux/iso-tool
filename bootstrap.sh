@@ -188,6 +188,7 @@ sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+dpkg-reconfigure -phigh -a
 
 
 # -- OpenRC configuration.
