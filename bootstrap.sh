@@ -196,12 +196,9 @@ ln -sv /sbin/openrc-init /sbin/init
 # sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
 
 insserv umountfs  
-insserv mountkernfs
+insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
-
-
-dpkg-reconfigure --all 
 
 
 # -- Check that init system is not systemd.
