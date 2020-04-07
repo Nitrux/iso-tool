@@ -35,6 +35,11 @@ lupin-casper
 user-setup
 wget
 xz-utils
+systemd
+avahi-daemon
+bluez
+open-vm-tools
+rng-tools
 '
 
 apt update &> /dev/null
@@ -72,11 +77,10 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2836CB0A8AC93F7A > /dev/null
 
 
-# -- Use sources.list.devuan and update bionic base to Devuan.
-# -- WARNING
+# -- Copy sources.list files.
 
 echo -e "\n"
-echo -e "INSTALLING BASE SYSTEM."
+echo -e "ADD SOURCES FILES."
 echo -e "\n"
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
@@ -88,28 +92,14 @@ cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
-
-GRUB_PACKAGES='
-grub-efi-amd64-signed=1+2.04+5
-grub-efi-amd64-bin=2.04-5
-'
-
-NITRUX_BASE_PACKAGES='
-nitrux-hardware-drivers
-nitrux-minimal
-nitrux-standard
-'
-
-NITRUX_BF_PKG='
-base-files
-'
-
 apt update &> /dev/null
-apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } ${NITRUX_BF_PKG//\\n/ } --no-install-recommends
-apt -yy autoremove
 
 
 # -- Use elogind packages from Devuan.
+
+echo -e "\n"
+echo -e "ADD ELOGIND."
+echo -e "\n"
 
 ELOGIND_PKGS='
 libpam-elogind
@@ -123,25 +113,28 @@ bsdutils=1:2.34-0.1+devuan1
 
 APT_PKGS='
 apt=2.0.1
+apt-transport-https=2.0.1
+apt-utils=2.0.1
 '
 
-apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends
+REMOVE_SYSTEMD_PKGS='
+libpam-systemd
+systemd
+systemd-sysv
+libsystemd0
+'
+
+apt -yy purge --remove ${REMOVE_SYSTEMD_PKGS//\\n/ }
 apt -yy autoremove
-
-
-# -- Install Plymouth packages from Xenial.
-
-XENIAL_PACKAGES='
-plymouth=0.9.2-3ubuntu13
-plymouth-label=0.9.2-3ubuntu13
-plymouth-themes=0.9.2-3ubuntu13
-ttf-ubuntu-font-family
-'
-
-apt -yy install ${XENIAL_PACKAGES//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy --fix-broken install
 
 
 # -- Use PolicyKit packages from Devuan.
+
+echo -e "\n"
+echo -e "ADD POLICYKIT."
+echo -e "\n"
 
 DEVUAN_POLKIT_PKGS='
 libpolkit-agent-1-0=0.105-25+devuan8
@@ -191,6 +184,16 @@ sysvinit-core
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 
 
+# -- Check that init system is not systemd.
+
+echo -e "\n"
+echo -e "CHECK INIT LINK."
+echo -e "\n"
+
+init --version
+stat /sbin/init
+
+
 # -- OpenRC configuration.
 
 sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
@@ -200,15 +203,29 @@ insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
 
-
-# -- Check that init system is not systemd.
+# -- Install base system metapackages.
 
 echo -e "\n"
-echo -e "CHECK INIT LINK."
+echo -e "INSTALLING BASE SYSTEM."
 echo -e "\n"
 
-init --version
-stat /sbin/init
+
+GRUB_PACKAGES='
+grub-efi-amd64-signed=1+2.04+5
+grub-efi-amd64-bin=2.04-5
+'
+
+NITRUX_BASE_PACKAGES='
+nitrux-hardware-drivers
+nitrux-minimal
+nitrux-standard
+'
+
+NITRUX_BF_PKG='
+base-files
+'
+
+apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } ${NITRUX_BF_PKG//\\n/ } --no-install-recommends
 
 
 # -- Add NX Desktop metapackage.
@@ -223,6 +240,7 @@ nx-desktop-sysv
 
 MISC_KDE_PKGS='
 plasma-pa=4:5.17.5-2
+bluedevil
 '
 
 DEVUAN_PULSE_PKGS='
@@ -231,9 +249,17 @@ pulseaudio=13.0-5
 libpulse-mainloop-glib0=13.0-5
 pulseaudio-utils=13.0-5
 libpulsedsp=13.0-5
+pulseaudio-module-bluetooth=13.0-5
 '
 
-apt -yy install ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+ttf-ubuntu-font-family
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
