@@ -40,7 +40,6 @@ avahi-daemon
 bluez
 open-vm-tools
 rng-tools
-pulseaudio-module-bluetooth
 '
 
 apt update &> /dev/null
@@ -122,10 +121,10 @@ systemd-sysv
 libsystemd0
 '
 
-apt -yy remove ${REMOVE_SYSTEMD_PKGS//\\n/ }
-apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends
-apt -yy --fix-broken install
+apt -yy purge --remove ${REMOVE_SYSTEMD_PKGS//\\n/ }
 apt -yy autoremove
+apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy --fix-broken install
 
 
 # -- Use PolicyKit packages from Devuan.
@@ -231,6 +230,7 @@ pulseaudio=13.0-5
 libpulse-mainloop-glib0=13.0-5
 pulseaudio-utils=13.0-5
 libpulsedsp=13.0-5
+pulseaudio-module-bluetooth
 '
 
 XENIAL_PACKAGES='
