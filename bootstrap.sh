@@ -35,6 +35,12 @@ lupin-casper
 user-setup
 wget
 xz-utils
+systemd-sysv
+avahi-daemon
+bluez
+open-vm-tools
+rng-tools
+pulseaudio-module-bluetooth
 '
 
 apt update &> /dev/null
