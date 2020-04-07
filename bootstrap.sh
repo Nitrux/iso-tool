@@ -190,7 +190,7 @@ echo -e "\n"
 echo -e "CHECK INIT LINK."
 echo -e "\n"
 
-init --version
+rm /sbin/init && ln -sv /sbin/openrc-init /sbin/init
 stat /sbin/init
 
 
@@ -203,8 +203,10 @@ insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
 
+mkdir -p /etc/conf.d
 cp /configs/files/xdm /etc/conf.d/xdm
 rc-update add xdm default
+
 
 # -- Install base system metapackages.
 
