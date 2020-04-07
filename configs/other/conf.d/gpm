@@ -1,0 +1,8 @@
+#------------------------------------------------------------------------------
+# Modified Calculate Utilities 3.6.4.11
+# Processed template files:
+# /var/lib/layman/calculate/profiles/templates/3.6/2_ac_install_merge/sys-libs/gpm/gpm
+# For modify this file, create /etc/conf.d/gpm.clt template.
+#------------------------------------------------------------------------------
+MOUSE=imps2
+MOUSEDEV=/dev/psaux

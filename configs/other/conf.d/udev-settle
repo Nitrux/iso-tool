@@ -1,0 +1,5 @@
+# /etc/conf.d/udev-settle: config file for udev-settle
+
+# Timeout in seconds to wait for processing of uevents at boot.
+# There should be no need to change this.
+#udev_settle_timeout=120

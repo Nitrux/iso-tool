@@ -201,10 +201,11 @@ insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
 
-ln -sv /etc/init.d/ /etc/conf.d
+for i in /lib/rc/{s,}bin/*; do ln -sf /sbin/rc $i; done
+
+cp -a /configs/other/conf.d /etc
 
 rc-update
-rc-status
 
 
 # -- Install base system metapackages.

@@ -1,0 +1,9 @@
+#------------------------------------------------------------------------------
+# Modified Calculate Utilities 3.6.7
+# Processed template files:
+# /var/db/repos/calculate/profiles/templates/3.6/6_ac_builder_squash/1_setup/sys-apps/openrc/conf.d/hostname
+# For modify this file, create /run/calculate/mount/distros_CLD_amd64/etc/conf.d/hostname.clt template.
+#------------------------------------------------------------------------------
+
+rc_before="net.lo"
+hostname="calculate"

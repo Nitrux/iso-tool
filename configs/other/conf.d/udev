@@ -1,0 +1,16 @@
+#------------------------------------------------------------------------------
+# Modified Calculate Utilities 3.6.5.8
+# Processed template files:
+# /var/lib/layman/calculate/profiles/templates/3.6/2_ac_install_merge/sys-fs/udev-init-scripts/conf.d.udev
+# For modify this file, create /etc/conf.d/udev.clt template.
+#------------------------------------------------------------------------------
+# /etc/conf.d/udev: config file for udev
+
+# Add extra command line options to udevd, use with care
+# udevd --help for possible values
+#udev_opts=""
+
+# Run udevd --debug and write output to /run/udevdebug.log
+# Should not be kept on as it fills diskspace slowly
+#udev_debug="YES"
+rc_want="hostname"

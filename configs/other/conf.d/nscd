@@ -1,0 +1,9 @@
+#------------------------------------------------------------------------------
+# Modified Calculate Utilities 3.6.5.8
+# Processed template files:
+# /var/lib/layman/calculate/profiles/templates/3.6/2_ac_install_merge/sys-libs/glibc/conf.d.nscd
+# For modify this file, create /etc/conf.d/nscd.clt template.
+#------------------------------------------------------------------------------
+
+rc_use="!net logger root"
+rc_before="dbus xdm"

@@ -1,0 +1,27 @@
+#------------------------------------------------------------------------------
+# Modified Calculate Utilities 3.6.7
+# Processed template files:
+# /var/db/repos/calculate/profiles/templates/3.6/6_ac_builder_squash/1_setup/sys-apps/openrc/conf.d/hwclock
+# For modify this file, create /run/calculate/mount/distros_CLD_amd64/etc/conf.d/hwclock.clt template.
+#------------------------------------------------------------------------------
+# Set CLOCK to "UTC" if your Hardware Clock is set to UTC (also known as
+# Greenwich Mean Time).  If that clock is set to the local time, then
+# set CLOCK to "local".  Note that if you dual boot with Windows, then
+# you should set it to "local".
+clock="local"
+
+# If you want the hwclock script to set the system time (software clock)
+# to match the current hardware clock during bootup, leave this
+# commented out.
+# However, you can set this to "NO" if you are running a modern kernel
+# and using NTP to synchronize your system clock.
+#clock_hctosys="YES"
+
+# If you do not want to set the hardware clock to the current system
+# time (software clock) during shutdown, set this to no.
+#clock_systohc="YES"
+
+# If you wish to pass any other arguments to hwclock during bootup,
+# you may do so here. Alpha users may wish to use --arc or --srm here.
+clock_args=""
+clock_systohc="NO"
