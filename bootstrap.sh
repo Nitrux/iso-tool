@@ -734,9 +734,10 @@ echo -e "\n"
 echo -e "ADD VFIO ENABLEMENT AND CONFIGURATION."
 echo -e "\n"
 
-echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio-pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep nouveau pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
@@ -747,6 +748,7 @@ echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
+echo "nouveau" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
 echo "radeon" >> /etc/initramfs-tools/modules
 echo "i915" >> /etc/initramfs-tools/modules
@@ -759,10 +761,10 @@ echo "vfio_pci ids=" >> /etc/modules
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
 
-chmod a+x /bin/vfio-pci-override-vga.sh
+chmod a+x /usr/bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
