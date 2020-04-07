@@ -156,6 +156,7 @@ libnm0=1.14.6-2+deb10u1
 libudisks2-0=2.8.4-1+devuan4
 network-manager=1.14.6-2+deb10u1
 udisks2=2.8.4-1+devuan4
+init-system-helpers=1.56+nmu1+devuan2
 '
 
 apt -yy install ${DEVUAN_NM_UD2//\\n/ } --no-install-recommends --allow-downgrades
@@ -171,7 +172,6 @@ DEVUAN_INIT_PKGS='
 bootchart2
 fgetty
 getty-run
-init-system-helpers
 initscripts
 openrc
 policycoreutils
