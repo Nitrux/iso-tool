@@ -93,6 +93,7 @@ cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
+apt update &> /dev/null
 
 # -- Use elogind packages from Devuan.
 
@@ -207,9 +208,7 @@ NITRUX_BF_PKG='
 base-files
 '
 
-apt update &> /dev/null
 apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } ${NITRUX_BF_PKG//\\n/ } --no-install-recommends
-apt -yy autoremove
 
 
 # -- Add NX Desktop metapackage.
