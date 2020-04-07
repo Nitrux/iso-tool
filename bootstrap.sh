@@ -224,6 +224,7 @@ nx-desktop-sysv
 
 MISC_KDE_PKGS='
 plasma-pa=4:5.17.5-2
+bluedevil
 '
 
 DEVUAN_PULSE_PKGS='
