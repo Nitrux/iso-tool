@@ -762,7 +762,7 @@ cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
 cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
 cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
 
-chmod a+x /bin/dummy.sh /bin/vfio-pci-override-vga.sh
+chmod a+x /bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
