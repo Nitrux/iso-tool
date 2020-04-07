@@ -201,8 +201,6 @@ insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
 
-for i in /lib/rc/{s,}bin/*; do ln -sf /sbin/rc $i; done
-
 cp -a /configs/other/conf.d /etc
 
 rc-update
