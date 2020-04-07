@@ -35,7 +35,7 @@ lupin-casper
 user-setup
 wget
 xz-utils
-systemd-sysv
+systemd
 avahi-daemon
 bluez
 open-vm-tools
