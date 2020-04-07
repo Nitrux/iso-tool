@@ -201,9 +201,9 @@ insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
 
-mkdir -p /etc/conf.d
-cp /configs/scripts/xdm /etc/conf.d/xdm
-rc-update add xdm default
+ln -sv /etc/init.d/ /etc/conf.d
+
+rc-update
 rc-status
 
 
