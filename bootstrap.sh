@@ -169,7 +169,6 @@ echo -e "\n"
 
 DEVUAN_INIT_PKGS='
 bootchart2
-cgmanager
 fgetty
 getty-run
 init-system-helpers
@@ -178,7 +177,6 @@ openrc
 policycoreutils
 startpar
 sysvinit-utils
-sysvinit-core
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
@@ -190,7 +188,7 @@ echo -e "\n"
 echo -e "CHECK INIT LINK."
 echo -e "\n"
 
-rm /sbin/init && ln -sv /sbin/openrc-init /sbin/init
+ln -sv /sbin/openrc-init /sbin/init
 stat /sbin/init
 
 
@@ -204,8 +202,9 @@ insserv umountroot
 insserv mountdevsubfs.sh
 
 mkdir -p /etc/conf.d
-cp /configs/files/xdm /etc/conf.d/xdm
+cp /configs/scripts/xdm /etc/conf.d/xdm
 rc-update add xdm default
+rc-status
 
 
 # -- Install base system metapackages.
