@@ -112,6 +112,8 @@ bsdutils=1:2.34-0.1+devuan1
 
 APT_PKGS='
 apt=2.0.1
+apt-transport-https=2.0.1
+apt-utils=2.0.1
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -230,7 +232,7 @@ pulseaudio=13.0-5
 libpulse-mainloop-glib0=13.0-5
 pulseaudio-utils=13.0-5
 libpulsedsp=13.0-5
-pulseaudio-module-bluetooth
+pulseaudio-module-bluetooth=13.0-5
 '
 
 XENIAL_PACKAGES='
