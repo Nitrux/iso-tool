@@ -847,7 +847,7 @@ cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bo
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.21-050421-generic | grep vfio
+lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 rm /bin/dummy.sh
 
