@@ -16,4 +16,5 @@ esac
 # Begin real processing below this line
 
  copy_exec /usr/bin/vfio-pci-override-vga.sh /usr/bin/vfio-pci-override-vga.sh
- 
+ copy_exec /usr/bin/lspci /usr/bin/lspci
+ copy_exec /usr/bin/lsblk /usr/bin/lsblk
