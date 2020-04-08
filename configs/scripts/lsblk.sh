@@ -15,4 +15,4 @@ esac
  . /usr/share/initramfs-tools/hook-functions
 # Begin real processing below this line
 
- copy_exec /usr/bin/lspci /usr/bin/lspci
+ copy_exec /bin/lsblk /bin

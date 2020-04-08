@@ -844,7 +844,7 @@ echo -e "UPDATE INITRAMFS."
 echo -e "\n"
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
-cp /configs/scripts/{hook-scripts.sh,hook-scripts_2.sh,hook-scripts_3.sh} /usr/share/initramfs-tools/hooks/
+cp /configs/scripts/{vfios.sh,lspci.sh,lsblk.sh} /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
