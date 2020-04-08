@@ -870,18 +870,18 @@ apt-transport-https
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
 
 
-# # -- Clean the filesystem.
-# 
-# echo -e "\n"
-# echo -e "REMOVE CASPER."
-# echo -e "\n"
-# 
-# REMOVE_PACKAGES='
-# casper
-# lupin-casper
-# '
-# 
-# /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
+# -- Clean the filesystem.
+
+echo -e "\n"
+echo -e "REMOVE CASPER."
+echo -e "\n"
+
+REMOVE_PACKAGES='
+casper
+lupin-casper
+'
+
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 
 
 # -- No dpkg usage past this point. -- #
