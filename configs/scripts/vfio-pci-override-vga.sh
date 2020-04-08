@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -x
+
 for i in $(find /sys/devices/pci* -name boot_vga); do
         GPU=$(dirname $i)
         
