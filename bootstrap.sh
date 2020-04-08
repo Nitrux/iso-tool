@@ -833,20 +833,6 @@ sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
-# -- Clean the filesystem.
-
-echo -e "\n"
-echo -e "REMOVE CASPER."
-echo -e "\n"
-
-REMOVE_PACKAGES='
-casper
-lupin-casper
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
-
-
 # -- Use GZIP compression when creating the initramfs.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -882,6 +868,20 @@ apt-transport-https
 '
 
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_APT//\\n/ } &> /dev/null
+
+
+# # -- Clean the filesystem.
+# 
+# echo -e "\n"
+# echo -e "REMOVE CASPER."
+# echo -e "\n"
+# 
+# REMOVE_PACKAGES='
+# casper
+# lupin-casper
+# '
+# 
+# /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path ${REMOVE_PACKAGES//\\n/ } &> /dev/null
 
 
 # -- No dpkg usage past this point. -- #
