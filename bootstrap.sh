@@ -70,9 +70,7 @@ echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.k
 apt-key add neon.key > /dev/null
 rm neon.key
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 1118213C > /dev/null
 
 
 # -- Use sources.list.base to build ISO.
