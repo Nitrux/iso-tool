@@ -111,8 +111,8 @@ nx-desktop
 
 MISC_PACKAGES_KDE='
 latte-dock=0.9.9-0xneon+18.04+bionic+build31
-plasma-pa=4:5.18.3-0ubuntu1
-xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
+plasma-pa=4:5.18.4.1-0ubuntu1
+xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
 '
 
 apt update &> /dev/null
@@ -151,7 +151,7 @@ kde-spectacle
 kdeconnect
 kmenuedit
 kscreen
-latte-dock=0.9.9+p18.04+git20200401.0016-0
+latte-dock=0.9.9+p18.04+git20200413.0203-0
 libarchive13
 libkf5activities5
 libkf5activitiesstats1
