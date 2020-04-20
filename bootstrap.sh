@@ -299,7 +299,7 @@ kde-spectacle
 kdeconnect
 kmenuedit
 kscreen
-latte-dock=0.9.11+p18.04+git20200414.1528-0
+latte-dock=0.9.9+p18.04+git20200413.0203-0
 libarchive13
 libkf5activities5
 libkf5activitiesstats1
