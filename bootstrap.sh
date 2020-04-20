@@ -95,6 +95,15 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 apt update &> /dev/null
 
 
+# -- Use Glib package from Devuan.
+
+GLIB_PKG='
+libc6=2.30-4
+'
+
+apt -yy install ${GLIB_PKG//\\n/ } --no-install-recommends --allow-downgrades
+
+
 # -- Use elogind packages from Devuan.
 
 echo -e "\n"
@@ -197,8 +206,8 @@ echo -e "\n"
 
 
 GRUB_PACKAGES='
-grub-efi-amd64-signed=1+2.04+5
-grub-efi-amd64-bin=2.04-5
+grub-efi-amd64-signed
+grub-efi-amd64-bin
 '
 
 NITRUX_BASE_PACKAGES='
