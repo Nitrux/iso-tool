@@ -120,6 +120,8 @@ CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
 cryptsetup
+cryptsetup-run
+cryptmount
 lvm2
 '
 
@@ -130,11 +132,11 @@ partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-plasma-pa=4:5.18.3-0ubuntu1
-xdg-desktop-portal-kde=5.18.2-0xneon+18.04+bionic+build63
-ksysguard=4:5.18.3-0ubuntu1
-ksysguard-data=4:5.18.3-0ubuntu1
-ksysguardd=4:5.18.3-0ubuntu1
+plasma-pa=4:5.18.4.1-0ubuntu1
+xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
+ksysguard=4:5.18.4.1-0ubuntu1
+ksysguard-data=4:5.18.4.1-0ubuntu1
+ksysguardd=4:5.18.4.1-0ubuntu1
 '
 
 OTHER_MISC_PKGS='
@@ -158,190 +160,6 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Upgrade KF5 libs for Latte Dock.
-
-echo -e "\n"
-echo -e "UPGRADING DESKTOP PACKAGES."
-echo -e "\n"
-
-cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
-
-HOLD_KDE_PKGS='
-kwin-addons
-kwin-common
-kwin-data
-kwin-x11
-libkwin4-effect-builtins1
-libkwineffects12
-libkwinglutils12
-libkwinxrenderutils12
-libphonon4qt5-4
-qml-module-org-kde-kwindowsystem
-'
-
-UPDT_KDE_PKGS='
-ark
-kcalc
-kde-spectacle
-kdeconnect
-kmenuedit
-kscreen
-latte-dock=0.9.9+p18.04+git20200328.0224-0
-libarchive13
-libkf5activities5
-libkf5activitiesstats1
-libkf5archive5
-libkf5attica5
-libkf5auth-data
-libkf5auth5
-libkf5authcore5
-libkf5baloo5
-libkf5balooengine5
-libkf5bluezqt-data
-libkf5bluezqt6
-libkf5bookmarks-data
-libkf5bookmarks5
-libkf5calendarevents5
-libkf5codecs-data
-libkf5codecs5
-libkf5completion-data
-libkf5completion5
-libkf5config-data
-libkf5configcore5
-libkf5configgui5
-libkf5configwidgets-data
-libkf5configwidgets5
-libkf5contacts-data
-libkf5contacts5
-libkf5coreaddons-data
-libkf5coreaddons5
-libkf5crash5
-libkf5dbusaddons-data
-libkf5dbusaddons5
-libkf5declarative-data
-libkf5declarative5
-libkf5dnssd-data
-libkf5dnssd5
-libkf5doctools5
-libkf5emoticons-data
-libkf5emoticons5
-libkf5filemetadata-data
-libkf5filemetadata3
-libkf5globalaccel-bin
-libkf5globalaccel-data
-libkf5globalaccel5
-libkf5globalaccelprivate5
-libkf5guiaddons5
-libkf5holidays-data
-libkf5holidays5
-libkf5i18n-data
-libkf5i18n5
-libkf5iconthemes-data
-libkf5iconthemes5
-libkf5idletime5
-libkf5itemmodels5
-libkf5itemviews-data
-libkf5itemviews5
-libkf5jobwidgets-data
-libkf5jobwidgets5
-libkf5kcmutils-data
-libkf5kcmutils5
-libkf5kdelibs4support-data
-libkf5kdelibs4support5
-libkf5kiocore5
-libkf5kiofilewidgets5
-libkf5kiogui5
-libkf5kiontlm5
-libkf5kiowidgets5
-libkf5kipi-data
-libkf5kipi32.0.0
-libkf5kirigami2-5
-libkf5modemmanagerqt6
-libkf5networkmanagerqt6
-libkf5newstuff-data
-libkf5newstuff5
-libkf5newstuffcore5
-libkf5notifications-data
-libkf5notifications5
-libkf5notifyconfig-data
-libkf5notifyconfig5
-libkf5package-data
-libkf5package5
-libkf5parts-data
-libkf5parts5
-libkf5people-data
-libkf5people5
-libkf5peoplebackend5
-libkf5peoplewidgets5
-libkf5plasma5
-libkf5plasmaquick5
-libkf5prison5
-libkf5pty-data
-libkf5pty5
-libkf5pulseaudioqt2
-libkf5purpose-bin
-libkf5purpose5
-libkf5quickaddons5
-libkf5runner5
-libkf5service-bin
-libkf5service-data
-libkf5service5
-libkf5solid5
-libkf5solid5-data
-libkf5sonnet5-data
-libkf5sonnetcore5
-libkf5sonnetui5
-libkf5style5
-libkf5su-bin
-libkf5su-data
-libkf5su5
-libkf5syntaxhighlighting-data
-libkf5syntaxhighlighting5
-libkf5texteditor-bin
-libkf5texteditor5
-libkf5textwidgets-data
-libkf5textwidgets5
-libkf5threadweaver5
-libkf5wallet-data
-libkf5wallet5
-libkf5waylandclient5
-libkf5waylandserver5
-libkf5widgetsaddons-data
-libkf5widgetsaddons5
-libkf5windowsystem-data
-libkf5windowsystem5
-libkf5xmlgui-bin
-libkf5xmlgui-data
-libkf5xmlgui5
-polkit-kde-agent-1
-powerdevil
-powerdevil-data
-qml-module-org-kde-draganddrop
-qml-module-org-kde-kcm
-qml-module-org-kde-kconfig
-qml-module-org-kde-kcoreaddons
-qml-module-org-kde-kholidays
-qml-module-org-kde-kio
-qml-module-org-kde-kirigami2
-qml-module-org-kde-kquickcontrols
-qml-module-org-kde-kquickcontrolsaddons
-qml-module-org-kde-newstuff
-qml-module-org-kde-people
-qml-module-org-kde-qqc2desktopstyle
-qml-module-org-kde-quickcharts
-qml-module-org-kde-solid
-qml-module-org-kde-userfeedback
-'
-
-apt update &> /dev/null
-apt-mark hold ${HOLD_KDE_PKGS//\\n/ } &> /dev/null
-apt -yy install ${UPDT_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
-apt -yy --fix-broken install
-apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
 # -- No apt usage past this point. -- #
 #WARNING
 
@@ -355,10 +173,10 @@ echo -e "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-headers-5.5.13-050513_5.5.13-050513.202003251631_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-headers-5.5.13-050513-generic_5.5.13-050513.202003251631_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-image-unsigned-5.5.13-050513-generic_5.5.13-050513.202003251631_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5.13/linux-modules-5.5.13-050513-generic_5.5.13-050513.202003251631_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-headers-5.6.5-050605_5.6.5-050605.202004171629_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-headers-5.6.5-050605-generic_5.6.5-050605.202004171629_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-image-unsigned-5.6.5-050605-generic_5.6.5-050605.202004171629_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-modules-5.6.5-050605-generic_5.6.5-050605.202004171629_amd64.deb
 '
 
 mkdir /latest_kernel
