@@ -399,6 +399,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove htop and nsnake desktop launcher.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Enable GRUB parameter for disk encryption with Calamares.
+# -- Hide ecnryption checkbox from Calamares UI.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -418,6 +419,7 @@ rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
+sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/+g' /etc/calamares/modules/partition.conf
 
 
 # -- Add itch.io store launcher.
@@ -500,7 +502,7 @@ echo -e "\n"
 echo -e "UPDATE INITRAMFS."
 echo -e "\n"
 
-update-initramfs -u -k all
+update-initramfs -u
 
 
 # -- No dpkg usage past this point. -- #
