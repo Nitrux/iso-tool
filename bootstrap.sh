@@ -206,8 +206,9 @@ echo -e "\n"
 
 
 GRUB_PACKAGES='
-grub-efi-amd64-signed
-grub-efi-amd64-bin
+grub-efi-amd64-signed=1+2.04+5
+grub-efi-amd64-bin=2.04-5
+grub-common=2.04-5
 '
 
 NITRUX_BASE_PACKAGES='
