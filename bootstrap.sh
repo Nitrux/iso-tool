@@ -500,7 +500,7 @@ echo -e "\n"
 echo -e "UPDATE INITRAMFS."
 echo -e "\n"
 
-update-initramfs -u
+update-initramfs -u -k all
 
 
 # -- No dpkg usage past this point. -- #
