@@ -1,7 +1,4 @@
-#!/bin/sh
+#! /bin/sh
 
--set x
-
-[ -d /home/user ] || adduser -m user
-
-exit 0
+adduser -G wheel -m user
+printf '%s\n%s\n' 'nitrux' 'nitrux' | passwd user
