@@ -776,6 +776,7 @@ cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-
 cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
 
 chmod a+x /usr/bin/vfio-pci-override-vga.sh
+ls -l /usr/bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
@@ -855,7 +856,7 @@ echo -e "UPDATE INITRAMFS."
 echo -e "\n"
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
-cp /configs/scripts/{vfio.sh,lspci.sh,lsblk.sh} /usr/share/initramfs-tools/hooks/
+cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
