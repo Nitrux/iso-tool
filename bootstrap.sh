@@ -313,154 +313,7 @@ UPDT_KDE_PKGS='
 ark
 kcalc
 kde-spectacle
-kdeconnect
-kmenuedit
-kscreen
-latte-dock=0.9.9+p18.04+git20200413.0203-0
-libarchive13
-libkf5activities5
-libkf5activitiesstats1
-libkf5archive5
-libkf5attica5
-libkf5auth-data
-libkf5auth5
-libkf5authcore5
-libkf5baloo5
-libkf5balooengine5
-libkf5bluezqt-data
-libkf5bluezqt6
-libkf5bookmarks-data
-libkf5bookmarks5
-libkf5calendarevents5
-libkf5codecs-data
-libkf5codecs5
-libkf5completion-data
-libkf5completion5
-libkf5config-data
-libkf5configcore5
-libkf5configgui5
-libkf5configwidgets-data
-libkf5configwidgets5
-libkf5contacts-data
-libkf5contacts5
-libkf5coreaddons-data
-libkf5coreaddons5
-libkf5crash5
-libkf5dbusaddons-data
-libkf5dbusaddons5
-libkf5declarative-data
-libkf5declarative5
-libkf5dnssd-data
-libkf5dnssd5
-libkf5doctools5
-libkf5emoticons-data
-libkf5emoticons5
-libkf5filemetadata-data
-libkf5filemetadata3
-libkf5globalaccel-bin
-libkf5globalaccel-data
-libkf5globalaccel5
-libkf5globalaccelprivate5
-libkf5guiaddons5
-libkf5holidays-data
-libkf5holidays5
-libkf5i18n-data
-libkf5i18n5
-libkf5iconthemes-data
-libkf5iconthemes5
-libkf5idletime5
-libkf5itemmodels5
-libkf5itemviews-data
-libkf5itemviews5
-libkf5jobwidgets-data
-libkf5jobwidgets5
-libkf5kcmutils-data
-libkf5kcmutils5
-libkf5kdelibs4support-data
-libkf5kdelibs4support5
-libkf5kiocore5
-libkf5kiofilewidgets5
-libkf5kiogui5
-libkf5kiontlm5
-libkf5kiowidgets5
-libkf5kipi-data
-libkf5kipi32.0.0
-libkf5kirigami2-5
-libkf5modemmanagerqt6
-libkf5networkmanagerqt6
-libkf5newstuff-data
-libkf5newstuff5
-libkf5newstuffcore5
-libkf5notifications-data
-libkf5notifications5
-libkf5notifyconfig-data
-libkf5notifyconfig5
-libkf5package-data
-libkf5package5
-libkf5parts-data
-libkf5parts5
-libkf5people-data
-libkf5people5
-libkf5peoplebackend5
-libkf5peoplewidgets5
-libkf5plasma5
-libkf5plasmaquick5
-libkf5prison5
-libkf5pty-data
-libkf5pty5
-libkf5pulseaudioqt2
-libkf5purpose-bin
-libkf5purpose5
-libkf5quickaddons5
-libkf5runner5
-libkf5service-bin
-libkf5service-data
-libkf5service5
-libkf5solid5
-libkf5solid5-data
-libkf5sonnet5-data
-libkf5sonnetcore5
-libkf5sonnetui5
-libkf5style5
-libkf5su-bin
-libkf5su-data
-libkf5su5
-libkf5syntaxhighlighting-data
-libkf5syntaxhighlighting5
-libkf5texteditor-bin
-libkf5texteditor5
-libkf5textwidgets-data
-libkf5textwidgets5
-libkf5threadweaver5
-libkf5wallet-data
-libkf5wallet5
-libkf5waylandclient5
-libkf5waylandserver5
-libkf5widgetsaddons-data
-libkf5widgetsaddons5
-libkf5windowsystem-data
-libkf5windowsystem5
-libkf5xmlgui-bin
-libkf5xmlgui-data
-libkf5xmlgui5
-polkit-kde-agent-1
-powerdevil
-powerdevil-data
-qml-module-org-kde-draganddrop
-qml-module-org-kde-kcm
-qml-module-org-kde-kconfig
-qml-module-org-kde-kcoreaddons
-qml-module-org-kde-kholidays
-qml-module-org-kde-kio
-qml-module-org-kde-kirigami2
-qml-module-org-kde-kquickcontrols
-qml-module-org-kde-kquickcontrolsaddons
-qml-module-org-kde-newstuff
-qml-module-org-kde-people
-qml-module-org-kde-qqc2desktopstyle
-qml-module-org-kde-quickcharts
-qml-module-org-kde-solid
-qml-module-org-kde-userfeedback
+latte-dock
 '
 
 apt update &> /dev/null
@@ -762,9 +615,10 @@ echo -e "\n"
 echo -e "ADD VFIO ENABLEMENT AND CONFIGURATION."
 echo -e "\n"
 
-echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio-pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep nouveau pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
@@ -775,6 +629,7 @@ echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
+echo "nouveau" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
 echo "radeon" >> /etc/initramfs-tools/modules
 echo "i915" >> /etc/initramfs-tools/modules
@@ -787,10 +642,10 @@ echo "vfio_pci ids=" >> /etc/modules
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
 
-chmod a+x /bin/vfio-pci-override-vga.sh
+cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
+chmod a+x /usr/bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
@@ -875,9 +730,7 @@ cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bo
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.21-050421-generic | grep vfio
-
-rm /bin/dummy.sh
+lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 
 # -- Remove APT.
