@@ -570,6 +570,7 @@ rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.I
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+cp /configs/scripts/add-live-user.sh /usr/bin && chmod a+x /usr/bin/add-live-user.sh
 
 
 # -- Workarounds for PNX.

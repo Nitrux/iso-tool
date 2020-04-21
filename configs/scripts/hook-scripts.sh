@@ -22,3 +22,5 @@ esac
  copy_exec /usr/bin/find /usr/bin
  copy_exec /usr/bin/lspci /usr/bin
  copy_exec /sbin/modprobe /sbin
+ copy_exec /usr/sbin/adduser /usr/sbin
+ copy_exec /usr/bin/add-live-user.sh /usr/bin
