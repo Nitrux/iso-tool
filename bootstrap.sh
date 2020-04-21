@@ -778,17 +778,6 @@ cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
 chmod a+x /usr/bin/vfio-pci-override-vga.sh
 
 
-# #    Copy binaries and its dependencies to appdir.
-# 
-# wget -q https://raw.githubusercontent.com/Nitrux/tools/master/execs
-# wget -q https://raw.githubusercontent.com/Nitrux/tools/master/copier
-# 
-# chmod +x copier
-# chmod +x execs
-# 
-# ./copier /usr/bin/ $(./execs /configs/scripts/vfio-pci-override-vga.sh)
-
-
 # -- Add itch.io store launcher.
 #FIXME This should be in a package.
 
