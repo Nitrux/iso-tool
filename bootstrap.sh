@@ -95,6 +95,15 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 apt update &> /dev/null
 
 
+# -- Use Glib package from Devuan.
+
+GLIB_PKG='
+libc6=2.30-4
+'
+
+apt -yy install ${GLIB_PKG//\\n/ } --no-install-recommends --allow-downgrades
+
+
 # -- Use elogind packages from Devuan.
 
 echo -e "\n"
@@ -216,6 +225,7 @@ echo -e "\n"
 GRUB_PACKAGES='
 grub-efi-amd64-signed=1+2.04+5
 grub-efi-amd64-bin=2.04-5
+grub-common=2.04-5
 '
 
 NITRUX_BASE_PACKAGES='
@@ -306,7 +316,7 @@ kde-spectacle
 kdeconnect
 kmenuedit
 kscreen
-latte-dock=0.9.11+p18.04+git20200414.1528-0
+latte-dock=0.9.9+p18.04+git20200413.0203-0
 libarchive13
 libkf5activities5
 libkf5activitiesstats1
@@ -501,14 +511,14 @@ echo -e "INSTALLING MAUI APPS."
 echo -e "\n"
 
 mauipkgs='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/vvave-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
+https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
 https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
 '
 
