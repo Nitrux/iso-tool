@@ -107,13 +107,13 @@ apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends --allow-downgra
 # -- Use elogind packages from Devuan.
 
 echo -e "\n"
-echo -e "ADD ELOGIND."
+echo -e "ADD CONSOLEKIT."
 echo -e "\n"
 
-ELOGIND_PKGS='
+CONSOLEKIT_PKGS='
 libpam-elogind
 libelogind0
-elogind
+consolekit
 uuid-runtime=2.34-0.1+devuan1
 util-linux=2.34-0.1+devuan1
 libprocps6=2:3.3.12-3+devuan2.1
@@ -148,9 +148,9 @@ echo -e "\n"
 DEVUAN_POLKIT_PKGS='
 libpolkit-agent-1-0=0.105-25+devuan8
 libpolkit-backend-1-0=0.105-25+devuan8
-libpolkit-backend-elogind-1-0=0.105-25+devuan8
+libpolkit-backend-consolekit-1-0=0.105-25+devuan8
 libpolkit-gobject-1-0=0.105-25+devuan8
-libpolkit-gobject-elogind-1-0=0.105-25+devuan8
+libpolkit-gobject-consolekit-0=0.105-25+devuan8
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
 policykit-1=0.105-25+devuan8
@@ -178,13 +178,7 @@ echo -e "ADD OPENRC AS INIT."
 echo -e "\n"
 
 DEVUAN_INIT_PKGS='
-bootchart2
-fgetty
-initscripts
 openrc
-policycoreutils
-startpar
-sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
