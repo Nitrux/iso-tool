@@ -234,9 +234,18 @@ cp -av /etc/init.d/bootlogs /etc/runlevels/recovery/bootlogs
 cp -av /etc/init.d/killprocs /etc/runlevels/recovery/killprocs
 cp -av /etc/init.d/single /etc/runlevels/recovery/single
 
+cp -av /etc/init.d/bootmisc.sh /etc/runlevels/sysinit/brightness
 cp -av /etc/init.d/brightness /etc/runlevels/sysinit/brightness
+cp -av /etc/init.d/checkfs.sh /etc/runlevels/sysinit/checkfs.sh
+cp -av /etc/init.d/checkroot-bootclean.sh /etc/runlevels/sysinit/checkroot-bootclean.sh
 cp -av /etc/init.d/eudev /etc/runlevels/sysinit/eudev
+cp -av /etc/init.d/hostname /etc/runlevels/sysinit/hostname
 cp -av /etc/init.d/mount-configfs /etc/runlevels/sysinit/mount-configfs
+cp -av /etc/init.d/mountall-bootclean.sh /etc/runlevels/sysinit/mountall-bootclean.sh
+cp -av /etc/init.d/mountall.sh /etc/runlevels/sysinit/mountall.sh
+cp -av /etc/init.d/mountdevsufs.sh /etc/runlevels/sysinit/mountdevsufs.sh
+cp -av /etc/init.d/mountkernfs.sh /etc/runlevels/sysinit/mountkernfs.sh
+cp -av /etc/init.d/mountnfs.sh /etc/runlevels/sysinit/mountnfs.sh
 cp -av /etc/init.d/selinux-autorelabel /etc/runlevels/sysinit/selinux-autorelabel
 cp -av /etc/init.d/urandom /etc/runlevels/sysinit/urandom
 
