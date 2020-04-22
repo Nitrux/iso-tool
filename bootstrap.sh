@@ -256,6 +256,10 @@ plasma-pa=4:5.17.5-2
 bluedevil
 '
 
+MISC_SYS_PKGS='
+systemctl
+'
+
 DEVUAN_PULSE_PKGS='
 libpulse0=13.0-5
 pulseaudio=13.0-5
@@ -272,7 +276,7 @@ plymouth-themes=0.9.2-3ubuntu13
 ttf-ubuntu-font-family
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${MISC_SYS_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
@@ -590,7 +594,6 @@ rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.I
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
-cp /configs/scripts/add-live-user.sh /usr/bin && chmod a+x /usr/bin/add-live-user.sh
 
 
 # -- Workarounds for PNX.
