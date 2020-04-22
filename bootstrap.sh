@@ -210,9 +210,10 @@ insserv mountkernfs.sh
 insserv umountroot
 insserv mountdevsubfs.sh
 
-# cp -a /configs/other/conf.d /etc
+cp -a /configs/other/conf.d /etc
 
-rc-update
+rc-update add NetworkManager default
+rc-update add sddm default
 
 
 # -- Install base system metapackages.
