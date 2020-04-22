@@ -356,6 +356,7 @@ echo -e "\n"
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/tgl_dmc_ver2_04.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
@@ -370,6 +371,24 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_ce_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_me_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec2_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_pfp_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_vcn.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
@@ -388,8 +407,8 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
-cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,navi14*_.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/{bxt_huc_ver01_8_2893.bin,tgl_dmc_ver2_04.bin} /lib/firmware/i915/
 
 rm -r /fw_files
 
