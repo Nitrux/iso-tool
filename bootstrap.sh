@@ -600,23 +600,21 @@ cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
 # -- Repair broken links. These links are broken (why?).
 #FIXME
 
-ls -l /etc/init.d/
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 
 /bin/rm -f /etc/runlevels/default/* /etc/runlevels/nonetwork/* /etc/runlevels/off/* /etc/runlevels/recovery/* /etc/runlevels/sysinit/*
 
-ls -l /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-
-/bin/cp /etc/init.d/{acpi-support,acpid,avahi-daemon,bluetooth,bootchart-done,bootlogs,console-setup.sh,cron,cups,dbus,dhcpd,dnsmasq,elogind,havaged,irqbalance,network-manager,open-vm-tools,plymouth,preload,pulseaudio-enable-autospawn,rc.local,rmnologin,rng-tools,rsync,rsyslog,sddm,uuid} /etc/runlevels/default/
+/bin/cp /etc/init.d/{acpi-support,acpid,avahi-daemon,bluetooth,bootchart-done,bootlogs,console-setup.sh,cron,cups,dbus,dhcpcd,dnsmasq,elogind,haveged,irqbalance,network-manager,open-vm-tools,plymouth,preload,pulseaudio-enable-autospawn,rc.local,rmnologin,rng-tools,rsync,rsyslog,sddm,uuidd} /etc/runlevels/default/
 
 /bin/cp /etc/init.d/rc.local /etc/runlevels/nonetwork/local
 
-/bin/cp /etc/init.d/{savecache,sendsigs,umountfs,umountfs.sh,umountroot} /etc/runlevels/off
+/bin/cp /etc/init.d/{savecache,sendsigs,umountfs,umountnfs.sh,umountroot} /etc/runlevels/off
 
-/bin/cp {bootchart-done,bootlogs,killprocs,single} /etc/runlevels/recovery
+/bin/cp /etc/init.d/{bootchart-done,bootlogs,killprocs,single} /etc/runlevels/recovery
 
-/bin/cp {alsa-utils,apparmor,bootmisc.sh,brightness,checkfs.sh,checkroot-bootclean.sh,checkroot.sh,eudev,hostname.sh,hwclock.sh,keyboard-setup.sh,kmod,mount-configfs,mountall-bootclean.sh,mountall.sh,mountdevsubfs.sh,mountkernfs.sh,mountfs-bootclean.sh,mountnfs.sh,networking,plymouth-log,procps,selinux-autorelabel,ufw,urandom,x11-common} /etc/runlevels/sysinit
+/bin/cp /etc/init.d/{alsa-utils,apparmor,bootmisc.sh,brightness,checkfs.sh,checkroot-bootclean.sh,checkroot.sh,eudev,hostname.sh,hwclock.sh,keyboard-setup.sh,kmod,mount-configfs,mountall-bootclean.sh,mountall.sh,mountdevsubfs.sh,mountkernfs.sh,mountfs-bootclean.sh,mountnfs.sh,networking,plymouth-log,procps,selinux-autorelabel,ufw,urandom,x11-common} /etc/runlevels/sysinit
 
-ls -l /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 
 rc-update add savecache off
 rc-update -u
