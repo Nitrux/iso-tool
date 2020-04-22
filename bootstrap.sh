@@ -186,6 +186,7 @@ openrc
 policycoreutils
 startpar
 sysvinit-utils
+sysv-rc
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
@@ -334,20 +335,6 @@ gcc-10-base
 
 apt update &> /dev/null
 apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
-
-
-# -- Add systemctl.
-
-MISC_SYS_PKGS='
-systemctl
-'
-
-apt -yy install ${MISC_SYS_PKGS//\\n/ } --no-install-recommends
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
-ln -s /usr/bin/systemctl /bin/systemctl
 
 
 # -- No apt usage past this point. -- #
