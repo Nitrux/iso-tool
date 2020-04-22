@@ -207,30 +207,43 @@ sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
 
 cp -a /configs/other/conf.d /etc
 
-ln -svf /etc/init.d/acpi-support /etc/runlevels/default/acpi-support
-ln -svf /etc/init.d/bootchart-done /etc/runlevels/default/bootchart-done
-ln -svf /etc/init.d/bootlog /etc/runlevels/default/bootlogs
-ln -svf /etc/init.d/elogind /etc/runlevels/default/elogind
-ln -svf /etc/init.d/rc.local /etc/runlevels/default/rc.local
-ln -svf /etc/init.d/rmnologin /etc/runlevels/default/rmnologin
-ln -svf /etc/rc.local /etc/runlevels/default/nonetwork/local
-ln -svf /etc/init.d/savecache /etc/runlevels/off/savecache
-ln -svf /etc/init.d/sendsigs /etc/runlevels/off/sendsigs
-ln -svf /etc/init.d/savecache /etc/runlevels/off/savecache
-ln -svf /etc/init.d/umountfs /etc/runlevels/off/umountfs
-ln -svf /etc/init.d/umountfs.sh /etc/runlevels/off/umountfs.sh
-ln -svf /etc/init.d/umountroot /etc/runlevels/off/umountroot
-ln -svf /etc/init.d/bootchart-done /etc/runlevels/recovery/bootchart-done
-ln -svf /etc/init.d/bootlogs /etc/runlevels/recovery/bootlogs
-ln -svf /etc/init.d/killprocs /etc/runlevels/recovery/killprocs
-ln -svf /etc/init.d/single /etc/runlevels/recovery/single
-ln -svf /etc/init.d/brightness /etc/runlevels/sysinit/brightness
-ln -svf /etc/init.d/eudev /etc/runlevels/sysinit/eudev
-ln -svf /etc/init.d/mount-configfs /etc/runlevels/sysinit/mount-configfs
-ln -svf /etc/init.d/selinux-autorelabel /etc/runlevels/sysinit/selinux-autorelabel
-ln -svf /etc/init.d/urandom /etc/runlevels/sysinit/urandom
+
+# -- Repair broken links. These links are broken (why?).
+#FIXME
+
+
+
+cp -av /etc/init.d/acpi-support /etc/runlevels/default/acpi-support
+cp -av /etc/init.d/bootchart-done /etc/runlevels/default/bootchart-done
+cp -av /etc/init.d/bootlog /etc/runlevels/default/bootlogs
+cp -av /etc/init.d/elogind /etc/runlevels/default/elogind
+cp -av /etc/init.d/rc.local /etc/runlevels/default/rc.local
+cp -av /etc/init.d/rmnologin /etc/runlevels/default/rmnologin
+
+cp -av /etc/rc.local /etc/runlevels/nonetwork/local
+
+cp -av /etc/init.d/savecache /etc/runlevels/off/savecache
+cp -av /etc/init.d/sendsigs /etc/runlevels/off/sendsigs
+cp -av /etc/init.d/savecache /etc/runlevels/off/savecache
+cp -av /etc/init.d/umountfs /etc/runlevels/off/umountfs
+cp -av /etc/init.d/umountfs.sh /etc/runlevels/off/umountfs.sh
+cp -av /etc/init.d/umountroot /etc/runlevels/off/umountroot
+
+cp -av /etc/init.d/bootchart-done /etc/runlevels/recovery/bootchart-done
+cp -av /etc/init.d/bootlogs /etc/runlevels/recovery/bootlogs
+cp -av /etc/init.d/killprocs /etc/runlevels/recovery/killprocs
+cp -av /etc/init.d/single /etc/runlevels/recovery/single
+
+cp -av /etc/init.d/brightness /etc/runlevels/sysinit/brightness
+cp -av /etc/init.d/eudev /etc/runlevels/sysinit/eudev
+cp -av /etc/init.d/mount-configfs /etc/runlevels/sysinit/mount-configfs
+cp -av /etc/init.d/selinux-autorelabel /etc/runlevels/sysinit/selinux-autorelabel
+cp -av /etc/init.d/urandom /etc/runlevels/sysinit/urandom
+
+ls -l /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 
 rc-update
+
 
 # -- Install base system metapackages.
 
