@@ -180,13 +180,11 @@ echo -e "\n"
 DEVUAN_INIT_PKGS='
 bootchart2
 fgetty
-getty-run
 initscripts
 openrc
 policycoreutils
 startpar
 sysvinit-utils
-sysv-rc
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades

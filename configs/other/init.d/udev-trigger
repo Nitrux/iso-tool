@@ -1,0 +1,96 @@
+#!/sbin/openrc-run
+# Copyright 2014 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+description="udev Coldplug all Devices"
+
+udevmonitor_log=/run/udevmonitor.log
+udevmonitor_pid=/run/udevmonitor.pid
+
+depend()
+{
+	need udev
+	provide dev
+	keyword -lxc -systemd-nspawn -vserver
+}
+
+start_pre()
+{
+	if yesno "${udev_monitor:-no}"; then
+		einfo "Running udevadm monitor ${udev_monitor_opts} to log all events"
+		start-stop-daemon --start --stdout "${udevmonitor_log}" \
+			--make-pidfile --pidfile "${udevmonitor_pid}" \
+			--background --exec /bin/udevadm -- monitor ${udev_monitor_opts}
+	fi
+	return 0
+}
+
+display_hotplugged_services()
+{
+	local svcfile= svc= services=
+	for svcfile in "${RC_SVCDIR}"/hotplugged/*; do
+		svc="${svcfile##*/}"
+		[ -x "${svcfile}" ] || continue
+
+		services="${services} ${svc}"
+	done
+	[ -n "${services}" ] && einfo "Device initiated services:${HILITE}${services}${NORMAL}"
+	return 0
+}
+
+start_post()
+{
+	if yesno "${udev_monitor:-no}"; then
+		if yesno "${udev_monitor_keep_running:-no}"; then
+			ewarn "udevmonitor is still writing into ${udevmonitor_log}"
+		else
+			einfo "Stopping udevmonitor: Log is in ${udevmonitor_log}"
+			start-stop-daemon --stop --pidfile "${udevmonitor_pid}" \
+				--exec /bin/udevadm
+		fi
+	fi
+	display_hotplugged_services
+	return 0
+}
+
+# This is here because some software expects /dev/root to exist.
+# For more information, see this bug:
+# https://bugs.gentoo.org/show_bug.cgi?id=438380
+dev_root_link()
+{
+	local RULESDIR=/run/udev/rules.d
+	[ -d $RULESDIR ] || mkdir -p $RULESDIR
+	eval $(udevadm info --export --export-prefix=ROOT_ --device-id-of-file=/ ||
+		true)
+	[ "$ROOT_MAJOR" -a "$ROOT_MINOR" ] || return 0
+
+	# btrfs filesystems have bogus major/minor numbers
+	[ "$ROOT_MAJOR" != 0 ] || return 0
+
+	echo 'ACTION=="add|change", SUBSYSTEM=="block", ENV{MAJOR}=="'$ROOT_MAJOR'", ENV{MINOR}=="'$ROOT_MINOR'", SYMLINK+="root"' > $RULESDIR/61-dev-root-link.rules
+	return 0
+}
+
+start()
+{
+	if yesno ${rc_dev_root_symlink:-yes}; then
+		ebegin "Generating a rule to create a /dev/root symlink"
+		dev_root_link
+		eend $?
+	fi
+
+	get_bootparam "nocoldplug" && rc_coldplug="no"
+	if ! yesno ${rc_coldplug:-${RC_COLDPLUG:-yes}}; then
+		einfo "Setting /dev permissions and symbolic links"
+		udevadm trigger --attr-match=dev --action=add
+		udevadm trigger --subsystem-match=net --action=add
+		rc=$?
+		ewarn "Skipping udev coldplug sequence"
+		return $rc
+	fi
+
+	ebegin "Populating /dev with existing devices through uevents"
+	udevadm trigger --type=subsystems --action=add
+	udevadm trigger --type=devices --action=add
+	eend $?
+}
