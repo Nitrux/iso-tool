@@ -312,7 +312,7 @@ echo -e "\n"
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
-GLIBC_2_30_PKG='
+GLIBC_2_31_PKG='
 libc-bin
 libc6
 locales
@@ -323,7 +323,7 @@ gcc-10-base
 '
 
 apt update &> /dev/null
-apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends
+apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
