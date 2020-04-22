@@ -179,7 +179,6 @@ echo -e "\n"
 
 DEVUAN_INIT_PKGS='
 init=1.56+nmu1+devuan2
-init-system-helpers=1.56+nmu1+devuan2
 sysv-rc
 sysvinit-core
 sysvinit-utils
