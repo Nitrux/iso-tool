@@ -95,13 +95,13 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 apt update &> /dev/null
 
 
-# -- Use Glib package from Devuan.
+# -- Use Glibc package from Devuan.
 
-GLIB_PKG='
+GLIBC_2_30_PKG='
 libc6=2.30-4
 '
 
-apt -yy install ${GLIB_PKG//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends --allow-downgrades
 
 
 # -- Use elogind packages from Devuan.
@@ -267,8 +267,6 @@ echo -e "ADD BREW PACKAGE."
 echo -e "\n"
 
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Upgrade KF5 libs for Latte Dock.
@@ -304,6 +302,28 @@ apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy install ${UPDT_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
+
+
+# -- Upgrade Glibc.
+
+echo -e "\n"
+echo -e "UPGRADING GLIBC PACKAGES."
+echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+GLIBC_2_30_PKG='
+libc-bin
+libc6
+locales
+libcrypt1
+libgcc1
+libgcc-s1
+gcc-10-base
+'
+
+apt update &> /dev/null
+apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
