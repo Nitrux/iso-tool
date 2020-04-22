@@ -230,6 +230,7 @@ ln -svf /etc/init.d/mount-configfs /etc/runlevels/sysinit/mount-configfs
 ln -svf /etc/init.d/selinux-autorelabel /etc/runlevels/sysinit/selinux-autorelabel
 ln -svf /etc/init.d/urandom /etc/runlevels/sysinit/urandom
 
+rc-update
 
 # -- Install base system metapackages.
 
