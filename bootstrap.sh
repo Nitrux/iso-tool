@@ -256,10 +256,6 @@ plasma-pa=4:5.17.5-2
 bluedevil
 '
 
-MISC_SYS_PKGS='
-systemctl
-'
-
 DEVUAN_PULSE_PKGS='
 libpulse0=13.0-5
 pulseaudio=13.0-5
@@ -276,7 +272,7 @@ plymouth-themes=0.9.2-3ubuntu13
 ttf-ubuntu-font-family
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${MISC_SYS_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
@@ -345,6 +341,15 @@ gcc-10-base
 
 apt update &> /dev/null
 apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
+
+
+# -- Add systemctl.
+
+MISC_SYS_PKGS='
+systemctl
+'
+
+apt -yy install ${MISC_SYS_PKGS//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
