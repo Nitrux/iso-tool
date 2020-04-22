@@ -211,47 +211,45 @@ cp -a /configs/other/conf.d /etc
 # -- Repair broken links. These links are broken (why?).
 #FIXME
 
+rm /etc/runlevels/default/acpi-support && ln -sv /etc/init.d/acpi-support /etc/runlevels/default/acpi-support
+rm /etc/runlevels/default/bootchart-done && ln -sv /etc/init.d/bootchart-done /etc/runlevels/default/bootchart-done
+rm /etc/runlevels/default/bootlogs && ln -sv /etc/init.d/bootlog /etc/runlevels/default/bootlogs
+rm /etc/runlevels/default/elogind && ln -sv /etc/init.d/elogind /etc/runlevels/default/elogind
+rm /etc/runlevels/default/rc.local && ln -sv /etc/init.d/rc.local /etc/runlevels/default/rc.local
+rm /etc/runlevels/default/rmnologin && ln -sv /etc/init.d/rmnologin /etc/runlevels/default/rmnologin
 
+rm /etc/runlevels/nonetwork/local && ln -sv /etc/rc.local /etc/runlevels/nonetwork/local
 
-cp -av /etc/init.d/acpi-support /etc/runlevels/default/acpi-support
-cp -av /etc/init.d/bootchart-done /etc/runlevels/default/bootchart-done
-cp -av /etc/init.d/bootlog /etc/runlevels/default/bootlogs
-cp -av /etc/init.d/elogind /etc/runlevels/default/elogind
-cp -av /etc/init.d/rc.local /etc/runlevels/default/rc.local
-cp -av /etc/init.d/rmnologin /etc/runlevels/default/rmnologin
+rm /etc/runlevels/off/savecache && ln -sv /etc/init.d/savecache /etc/runlevels/off/savecache
+rm /etc/runlevels/off/sendsigs && ln -sv /etc/init.d/sendsigs /etc/runlevels/off/sendsigs
+rm /etc/runlevels/off/savecache && ln -sv /etc/init.d/savecache /etc/runlevels/off/savecache
+rm /etc/runlevels/off/umountfs && ln -sv /etc/init.d/umountfs /etc/runlevels/off/umountfs
+rm /etc/runlevels/off/umountfs.sh && ln -sv /etc/init.d/umountfs.sh /etc/runlevels/off/umountfs.sh
+rm /etc/runlevels/off/umountroot && ln -sv /etc/init.d/umountroot /etc/runlevels/off/umountroot
 
-cp -av /etc/rc.local /etc/runlevels/nonetwork/local
+rm /etc/runlevels/recovery/bootchart-done && ln -sv /etc/init.d/bootchart-done /etc/runlevels/recovery/bootchart-done
+rm /etc/runlevels/recovery/bootlogs && ln -sv /etc/init.d/bootlogs /etc/runlevels/recovery/bootlogs
+rm /etc/runlevels/recovery/killprocs && ln -sv /etc/init.d/killprocs /etc/runlevels/recovery/killprocs
+rm /etc/runlevels/recovery/single && ln -sv /etc/init.d/single /etc/runlevels/recovery/single
 
-cp -av /etc/init.d/savecache /etc/runlevels/off/savecache
-cp -av /etc/init.d/sendsigs /etc/runlevels/off/sendsigs
-cp -av /etc/init.d/savecache /etc/runlevels/off/savecache
-cp -av /etc/init.d/umountfs /etc/runlevels/off/umountfs
-cp -av /etc/init.d/umountfs.sh /etc/runlevels/off/umountfs.sh
-cp -av /etc/init.d/umountroot /etc/runlevels/off/umountroot
-
-cp -av /etc/init.d/bootchart-done /etc/runlevels/recovery/bootchart-done
-cp -av /etc/init.d/bootlogs /etc/runlevels/recovery/bootlogs
-cp -av /etc/init.d/killprocs /etc/runlevels/recovery/killprocs
-cp -av /etc/init.d/single /etc/runlevels/recovery/single
-
-cp -av /etc/init.d/bootmisc.sh /etc/runlevels/sysinit/brightness
-cp -av /etc/init.d/brightness /etc/runlevels/sysinit/brightness
-cp -av /etc/init.d/checkfs.sh /etc/runlevels/sysinit/checkfs.sh
-cp -av /etc/init.d/checkroot-bootclean.sh /etc/runlevels/sysinit/checkroot-bootclean.sh
-cp -av /etc/init.d/eudev /etc/runlevels/sysinit/eudev
-cp -av /etc/init.d/hostname /etc/runlevels/sysinit/hostname
-cp -av /etc/init.d/mount-configfs /etc/runlevels/sysinit/mount-configfs
-cp -av /etc/init.d/mountall-bootclean.sh /etc/runlevels/sysinit/mountall-bootclean.sh
-cp -av /etc/init.d/mountall.sh /etc/runlevels/sysinit/mountall.sh
-cp -av /etc/init.d/mountdevsufs.sh /etc/runlevels/sysinit/mountdevsufs.sh
-cp -av /etc/init.d/mountkernfs.sh /etc/runlevels/sysinit/mountkernfs.sh
-cp -av /etc/init.d/mountnfs.sh /etc/runlevels/sysinit/mountnfs.sh
-cp -av /etc/init.d/selinux-autorelabel /etc/runlevels/sysinit/selinux-autorelabel
-cp -av /etc/init.d/urandom /etc/runlevels/sysinit/urandom
+rm /etc/runlevels/sysinit/brightness && ln -sv /etc/init.d/bootmisc.sh /etc/runlevels/sysinit/brightness
+rm /etc/runlevels/sysinit/brightness && ln -sv /etc/init.d/brightness /etc/runlevels/sysinit/brightness
+rm /etc/runlevels/sysinit/checkfs.sh && ln -sv /etc/init.d/checkfs.sh /etc/runlevels/sysinit/checkfs.sh
+rm /etc/runlevels/sysinit/checkroot-bootclean.sh && ln -sv /etc/init.d/checkroot-bootclean.sh /etc/runlevels/sysinit/checkroot-bootclean.sh
+rm /etc/runlevels/sysinit/eudev && ln -sv /etc/init.d/eudev /etc/runlevels/sysinit/eudev
+rm /etc/runlevels/sysinit/hostname && ln -sv /etc/init.d/hostname /etc/runlevels/sysinit/hostname
+rm /etc/runlevels/sysinit/mount-configfs && ln -sv /etc/init.d/mount-configfs /etc/runlevels/sysinit/mount-configfs
+rm /etc/runlevels/sysinit/mountall-bootclean.sh && ln -sv /etc/init.d/mountall-bootclean.sh /etc/runlevels/sysinit/mountall-bootclean.sh
+rm /etc/runlevels/sysinit/mountall.sh && ln -sv /etc/init.d/mountall.sh /etc/runlevels/sysinit/mountall.sh
+rm /etc/runlevels/sysinit/mountdevsufs.sh && ln -sv /etc/init.d/mountdevsufs.sh /etc/runlevels/sysinit/mountdevsufs.sh
+rm /etc/runlevels/sysinit/mountkernfs.sh && ln -sv /etc/init.d/mountkernfs.sh /etc/runlevels/sysinit/mountkernfs.sh
+rm /etc/runlevels/sysinit/mountnfs.sh && ln -sv /etc/init.d/mountnfs.sh /etc/runlevels/sysinit/mountnfs.sh
+rm /etc/runlevels/sysinit/selinux-autorelabel && ln -sv /etc/init.d/selinux-autorelabel /etc/runlevels/sysinit/selinux-autorelabel
+rm /etc/runlevels/sysinit/urandom && ln -sv /etc/init.d/urandom /etc/runlevels/sysinit/urandom
 
 ls -l /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 
-rc-update
+rc-update -u
 
 
 # -- Install base system metapackages.
