@@ -135,7 +135,7 @@ libsystemd0
 
 apt -yy purge --remove ${REMOVE_SYSTEMD_PKGS//\\n/ }
 apt -yy autoremove
-apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${CONSOLEKIT_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 apt -yy --fix-broken install
 
 
