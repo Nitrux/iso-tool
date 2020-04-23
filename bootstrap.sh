@@ -155,7 +155,13 @@ policykit-1=0.105-25+devuan0~bpo2+1
 polkit-kde-agent-1=4:5.17.5-2
 '
 
+HOLD_POLKIT_PKGS='
+libpolkit-agent-1-0
+policykit-1
+'
+
 apt -yy install ${DEVUAN_POLKIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+apt-mark hold ${DEVUAN_POLKIT_PKGS//\\n/ }
 
 
 DEVUAN_NM_UD2='
