@@ -149,11 +149,11 @@ DEVUAN_POLKIT_PKGS='
 libpolkit-agent-1-0=0.105-25+devuan0~bpo2+1
 libpolkit-backend-1-0=0.105-25+devuan0~bpo2+1
 libpolkit-backend-consolekit-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-gobject-1-0=0.105-25+devuan8
+libpolkit-gobject-1-0=0.105-25+devuan0~bpo2+1
 libpolkit-gobject-1-0-consolekit=0.105-25+devuan0~bpo2+1
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
-policykit-1=0.105-25+devuan8
+policykit-1=0.105-25+devuan0~bpo2+1
 polkit-kde-agent-1=4:5.17.5-2
 '
 
