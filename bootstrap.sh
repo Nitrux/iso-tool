@@ -111,7 +111,6 @@ echo -e "ADD CONSOLEKIT."
 echo -e "\n"
 
 CONSOLEKIT_PKGS='
-libpam-elogind
 libelogind0
 consolekit
 uuid-runtime=2.34-0.1+devuan1
@@ -127,7 +126,6 @@ apt-utils=2.0.1+devuan1
 '
 
 REMOVE_SYSTEMD_PKGS='
-libpam-systemd
 systemd
 systemd-sysv
 libsystemd0
@@ -178,7 +176,13 @@ echo -e "ADD OPENRC AS INIT."
 echo -e "\n"
 
 DEVUAN_INIT_PKGS='
+bootchart2
+fgetty
+initscripts
 openrc
+policycoreutils
+startpar
+sysvinit-utils
 '
 
 apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
