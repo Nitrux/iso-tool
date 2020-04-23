@@ -104,7 +104,7 @@ libc6=2.30-4
 apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends --allow-downgrades
 
 
-# -- Use elogind packages from Devuan.
+# -- Use consolekit packages from Devuan.
 
 echo -e "\n"
 echo -e "ADD CONSOLEKIT."
