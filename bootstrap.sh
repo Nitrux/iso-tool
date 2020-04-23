@@ -206,8 +206,6 @@ stat /sbin/init
 
 # -- OpenRC configuration.
 
-sed -i 's/#rc_parallel="NO"/rc_parallel="YES"/g' /etc/rc.conf
-
 cp -a /configs/other/conf.d /etc
 
 
