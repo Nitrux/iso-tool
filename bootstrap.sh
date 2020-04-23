@@ -107,12 +107,12 @@ apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends --allow-downgra
 # -- Use consolekit packages from Devuan.
 
 echo -e "\n"
-echo -e "ADD CONSOLEKIT."
+echo -e "ADD ELOGIND."
 echo -e "\n"
 
-CONSOLEKIT_PKGS='
+ELOGIND_PKGS='
 libelogind0
-consolekit
+elogind
 uuid-runtime=2.34-0.1+devuan1
 util-linux=2.34-0.1+devuan1
 libprocps6=2:3.3.12-3+devuan2.1
@@ -133,7 +133,7 @@ libsystemd0
 
 apt -yy purge --remove ${REMOVE_SYSTEMD_PKGS//\\n/ }
 apt -yy autoremove
-apt -yy install ${CONSOLEKIT_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
 apt -yy --fix-broken install
 
 
@@ -146,9 +146,9 @@ echo -e "\n"
 DEVUAN_POLKIT_PKGS='
 libpolkit-agent-1-0=0.105-25+devuan0~bpo2+1
 libpolkit-backend-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-backend-consolekit-1-0=0.105-25+devuan0~bpo2+1
+libpolkit-backend-elogind-1-0=0.105-25+devuan0~bpo2+1
 libpolkit-gobject-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-gobject-1-0-consolekit=0.105-25+devuan0~bpo2+1
+libpolkit-gobject-1-0-elogind=0.105-25+devuan0~bpo2+1
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
 policykit-1=0.105-25+devuan0~bpo2+1
@@ -309,10 +309,107 @@ kcalc
 kde-spectacle
 latte-dock
 '
+UPDT_KF5_LIBS='
+libkf5activities5
+libkf5activitiesstats1
+libkf5archive5
+libkf5attica5
+libkf5auth-data
+libkf5auth5
+libkf5authcore5
+libkf5bluezqt-data
+libkf5bluezqt6
+libkf5bookmarks-data
+libkf5bookmarks5
+libkf5calendarevents5
+libkf5completion-data
+libkf5completion5
+libkf5config-data
+libkf5configcore5
+libkf5configgui5
+libkf5configwidgets-data
+libkf5configwidgets5
+libkf5contacts-data
+libkf5contacts5
+libkf5coreaddons-data
+libkf5coreaddons5
+libkf5crash5
+libkf5dbusaddons-data
+libkf5dbusaddons5
+libkf5declarative-data
+libkf5declarative5
+libkf5dnssd-data
+libkf5dnssd5
+libkf5doctools5
+libkf5emoticons-data
+libkf5emoticons5
+libkf5filemetadata-data
+libkf5filemetadata3
+libkf5globalaccel-bin
+libkf5globalaccel-data
+libkf5globalaccel5
+libkf5globalaccelprivate5
+libkf5guiaddons5
+libkf5holidays-data
+libkf5holidays5
+libkf5i18n-data
+libkf5i18n5
+libkf5iconthemes-data
+libkf5iconthemes5
+libkf5idletime5
+libkf5itemmodels5
+libkf5itemviews-data
+libkf5itemviews5
+libkf5jobwidgets-data
+libkf5jobwidgets5
+libkf5kdelibs4support-data
+libkf5kdelibs4support5
+libkf5kipi-data
+libkf5kipi32.0.0
+libkf5kirigami2-5
+libkf5newstuff-data
+libkf5newstuff5
+libkf5newstuffcore5
+libkf5notifications-data
+libkf5notifications5
+libkf5notifyconfig-data
+libkf5notifyconfig5
+libkf5package-data
+libkf5package5
+libkf5parts-data
+libkf5parts5
+libkf5plasma5
+libkf5plasmaquick5
+libkf5purpose-bin
+libkf5purpose5
+libkf5quickaddons5
+libkf5runner5
+libkf5service-bin
+libkf5service-data
+libkf5service5
+libkf5style5
+libkf5su-bin
+libkf5su-data
+libkf5su5
+libkf5syntaxhighlighting-data
+libkf5syntaxhighlighting5
+libkf5texteditor-bin
+libkf5texteditor5
+libkf5textwidgets-data
+libkf5textwidgets5
+libkf5threadweaver5
+libkf5waylandclient5
+libkf5waylandserver5
+libkf5widgetsaddons-data
+libkf5widgetsaddons5
+libkf5xmlgui-bin
+libkf5xmlgui-data
+libkf5xmlgui5
+'
 
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
-apt -yy install ${UPDT_KDE_PKGS//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${UPDT_KDE_PKGS//\\n/ } ${UPDT_KF5_LIBS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 
@@ -336,7 +433,7 @@ gcc-10-base
 '
 
 apt update &> /dev/null
-apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
+apt -yy install ${GLIBC_2_31_PKG//\\n/ } --only-upgrade --no-install-recommends
 
 
 # -- No apt usage past this point. -- #
@@ -413,6 +510,7 @@ echo -e "\n"
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/tgl_dmc_ver2_04.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
@@ -427,6 +525,24 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_ce_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_me_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec2_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_pfp_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_vcn.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
@@ -445,8 +561,8 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
-cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,navi14*_.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/{bxt_huc_ver01_8_2893.bin,tgl_dmc_ver2_04.bin} /lib/firmware/i915/
 
 rm -r /fw_files
 
