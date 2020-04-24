@@ -148,7 +148,7 @@ UPDT_KDE_PKGS='
 ark
 kcalc
 kde-spectacle
-latte-dock=0.9.9+p18.04+git20200413.0203-0
+latte-dock
 '
 
 UPDT_KF5_LIBS='
