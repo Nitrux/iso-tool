@@ -111,6 +111,8 @@ libgdk-pixbuf2.0-dev
 
 OTHER_MISC_PKGS='
 tmate
+lsb-core
+gamemode
 '
 
 apt update &> /dev/null
