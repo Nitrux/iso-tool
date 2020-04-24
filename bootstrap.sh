@@ -115,7 +115,7 @@ tmate
 
 apt update &> /dev/null
 apt -yy --fix-broken install &> /dev/null
-apt -yy install ${OTHER_MISC_PKGS//\\n/ }  ${APPIMAGE_BUILDER_DEPS//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ } ${APPIMAGE_BUILDER_DEPS//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
