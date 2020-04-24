@@ -122,7 +122,6 @@ apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
-pip3 install appimage-builder
 
 # -- Upgrade KF5 libs for Latte Dock.
 
@@ -668,12 +667,10 @@ cp /configs/scripts/install-nativefier.sh /etc/skel/.config
 #FIXME This should be in a package.
 
 echo -e "\n"
-echo -e "ADD APPIMAGE-BUILDER LAUNCHER."
+echo -e "ADD APPIMAGE-BUILDER."
 echo -e "\n"
 
-
-cp /configs/other/install.appimage-builder.desktop /etc/skel/.config/autostart/
-cp /configs/scripts/install-appimage-builder.sh /etc/skel/.config
+pip3 install appimage-builder
 
 
 # -- Add oh my zsh.
