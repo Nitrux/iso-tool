@@ -40,7 +40,7 @@ usrmerge
 '
 
 apt update &> /dev/null
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
 # -- Add key for Neon repository.
@@ -104,7 +104,7 @@ xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
 apt update &> /dev/null
 apt -yy --fix-broken install &> /dev/null
 apt -yy install ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
-apt -yy autoremove
+apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -281,7 +281,10 @@ libgdk-pixbuf2.0-dev
 '
 
 apt update &> /dev/null
-apt install ${APPIMAGEBUILDER_DEPS//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${APPIMAGEBUILDER_DEPS//\\n/ } --no-install-recommends &> /dev/null
+apt -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- Add tmate.
@@ -294,7 +297,8 @@ TMATE_PKG='
 tmate
 '
 
-apt install ${TMATE_PKG//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${TMATE_PKG//\\n/ } --no-install-recommends &> /dev/null
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
