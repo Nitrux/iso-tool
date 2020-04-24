@@ -90,7 +90,7 @@ nitrux-standard
 '
 
 apt update &> /dev/null
-apt -yy upgrade
+apt -yy upgrade &> /dev/null
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 apt -yy autoremove
 apt clean &> /dev/null
@@ -252,14 +252,14 @@ libkf5xmlgui5
 apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy install ${UPDT_KDE_PKGS//\\n/ } ${UPDT_KF5_LIBS//\\n/ } --only-upgrade --no-install-recommends
-apt -yy --fix-broken install
-apt -yy autoremove
+apt -yy --fix-broken install &> /dev/null
+apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-# -- Use sources.list.eaon to update packages and install brew and npm.
-#FIXME We need to provide these packages from a repository of ours.
+# -- Use sources.list.eaon to update packages and install brew.
+#FIXME We need to provide a package.
 
 echo -e "\n"
 echo -e "ADD BREW PACKAGE."
@@ -273,6 +273,47 @@ linuxbrew-wrapper
 
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt clean &> /dev/null
+apt autoclean &> /dev/null
+
+
+# -- Add appimage-builder.
+#FIXME We need to provide this in a package.
+
+echo -e "\n"
+echo -e "ADD APPIMAGEBUILDER."
+echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
+
+APPIMAGEBUILDER_DEPS='
+python3-pip 
+python3-setuptools 
+patchelf 
+desktop-file-utils 
+libgdk-pixbuf2.0-dev
+'
+
+PIP3_PKG='
+appimage-builder
+'
+
+apt update &> /dev/null
+apt install ${APPIMAGEBUILDER_DEPS//\\n/ } --no-install-recommends &> /dev/null
+pip3 install ${PIP3_PKG//\\n/ }
+
+
+# -- Add tmate.
+
+echo -e "\n"
+echo -e "ADD TMATE."
+echo -e "\n"
+
+TMATE_PKG='
+tmate
+'
+
+apt install ${TMATE_PKG//\\n/ } --no-install-recommends &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -451,6 +492,7 @@ https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
+https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -486,6 +528,7 @@ mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
 mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
 mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
+mv /Applications/appimagetool-x86_64.AppImage /Applications/appimagetool
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
