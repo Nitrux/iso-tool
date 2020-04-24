@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=
+Name=Install appimage-builder
+Exec=~/.config/install-appimage-builder.sh
+Categories=Utility;
+

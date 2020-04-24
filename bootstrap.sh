@@ -10,28 +10,13 @@ echo -e "STARTING BOOTSTRAP."
 echo -e "\n"
 
 
-# -- Use sources.list.focal and update bionic base to focal.
-# -- WARNING
-
-echo -e "\n"
-echo -e "UPDATING OS BASE."
-echo -e "\n"
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-apt update &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-apt -yy dist-upgrade --only-upgrade --no-install-recommends &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
 # -- Install basic packages.
 
 echo -e "\n"
 echo -e "INSTALLING BASIC PACKAGES."
 echo -e "\n"
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 BASIC_PACKAGES='
 apt-transport-https
@@ -54,6 +39,7 @@ xz-utils
 usrmerge
 '
 
+apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
@@ -281,7 +267,7 @@ apt autoclean &> /dev/null
 #FIXME We need to provide this in a package.
 
 echo -e "\n"
-echo -e "ADD APPIMAGEBUILDER."
+echo -e "ADD APPIMAGE-BUILDER DEPS."
 echo -e "\n"
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list
@@ -294,13 +280,8 @@ desktop-file-utils
 libgdk-pixbuf2.0-dev
 '
 
-PIP3_PKG='
-appimage-builder
-'
-
 apt update &> /dev/null
 apt install ${APPIMAGEBUILDER_DEPS//\\n/ } --no-install-recommends &> /dev/null
-pip3 install ${PIP3_PKG//\\n/ }
 
 
 # -- Add tmate.
@@ -702,6 +683,18 @@ echo -e "\n"
 
 cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
 cp /configs/scripts/install-nativefier.sh /etc/skel/.config
+
+
+# -- Add appimage-builder launcher.
+#FIXME This should be in a package.
+
+echo -e "\n"
+echo -e "ADD APPIMAGE-BUILDER LAUNCHER."
+echo -e "\n"
+
+
+cp /configs/other/install.appimage-builder.desktop /etc/skel/.config/autostart/
+cp /configs/scripts/install-appimage-builder.sh /etc/skel/.config
 
 
 # -- Add oh my zsh.
