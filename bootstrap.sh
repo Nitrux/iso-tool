@@ -101,9 +101,21 @@ plasma-pa=4:5.18.4.1-0ubuntu1
 xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
 '
 
+APPIMAGE_BUILDER_DEPS='
+python3-pip 
+python3-setuptools 
+patchelf 
+desktop-file-utils 
+libgdk-pixbuf2.0-dev
+'
+
+OTHER_MISC_PKGS='
+tmate
+'
+
 apt update &> /dev/null
 apt -yy --fix-broken install &> /dev/null
-apt -yy install ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ }  ${APPIMAGE_BUILDER_DEPS//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -259,46 +271,6 @@ linuxbrew-wrapper
 
 apt update &> /dev/null
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
-# -- Add appimage-builder.
-#FIXME We need to provide this in a package.
-
-echo -e "\n"
-echo -e "ADD APPIMAGE-BUILDER DEPS."
-echo -e "\n"
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-APPIMAGEBUILDER_DEPS='
-python3-pip 
-python3-setuptools 
-patchelf 
-desktop-file-utils 
-libgdk-pixbuf2.0-dev
-'
-
-apt update &> /dev/null
-apt -yy install ${APPIMAGEBUILDER_DEPS//\\n/ } --no-install-recommends &> /dev/null
-apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
-# -- Add tmate.
-
-echo -e "\n"
-echo -e "ADD TMATE."
-echo -e "\n"
-
-TMATE_PKG='
-tmate
-'
-
-apt -yy install ${TMATE_PKG//\\n/ } --no-install-recommends &> /dev/null
-apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
