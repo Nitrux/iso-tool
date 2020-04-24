@@ -2,13 +2,13 @@
 
 set -eu -o pipefail 
 
-# -- Install appimage-builder.
+# -- Install appimage-builder to $HOME.
 
-pip3 appimage-builder
+pip3 install --user appimage-builder
 
 # -- Check if appimage-builder exists then delete script file.
 
-[ -f /usr/local/bin/appimage-builder ] && rm ~/.config/install-appimage-builder.sh ~/.local/share/applications/install.appaimge-builder.desktop
+[ -d ~/.local/bin/appimage-builder ] && rm ~/.config/install-appimage-builder.sh ~/.local/share/applications/install.appaimge-builder.desktop
 
 exit
 
