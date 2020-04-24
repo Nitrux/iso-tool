@@ -548,6 +548,7 @@ rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.I
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+ln -sv ~/.local/bin/appaimge-builder /usr/bin/appimage-builder
 
 
 # -- Workarounds for PNX.

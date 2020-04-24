@@ -10,5 +10,9 @@ pip3 install --user appimage-builder
 
 [ -f ~/.local/bin/appimage-builder ] && rm ~/.config/install-appimage-builder.sh ~/.local/share/applications/install.appaimge-builder.desktop
 
+# -- Refresh shell cache.
+
+hash appimage-builder
+
 exit
 
