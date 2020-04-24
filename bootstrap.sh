@@ -122,6 +122,7 @@ apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
+pip3 install appimage-builder
 
 # -- Upgrade KF5 libs for Latte Dock.
 
