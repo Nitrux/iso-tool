@@ -419,8 +419,23 @@ libgcc-s1
 gcc-10-base
 '
 
+OTHER_MISC_PKGS='
+gamemode
+tmate
+lsb-core
+'
+
+APPIMAGE_BUILDER_DEPS='
+python3-pip 
+python3-setuptools 
+patchelf 
+desktop-file-utils 
+libgdk-pixbuf2.0-dev
+'
+
 apt update &> /dev/null
 apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ } ${APPIMAGE_BUILDER_DEPS//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -804,6 +819,16 @@ echo -e "\n"
 
 cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
 cp /configs/scripts/install-nativefier.sh /etc/skel/.config
+
+
+# -- Add appimage-builder launcher.
+#FIXME This should be in a package.
+
+echo -e "\n"
+echo -e "ADD APPIMAGE-BUILDER."
+echo -e "\n"
+
+pip3 install appimage-builder
 
 
 # -- Add oh my zsh.
