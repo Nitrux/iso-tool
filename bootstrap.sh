@@ -101,14 +101,6 @@ plasma-pa=4:5.18.4.1-0ubuntu1
 xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
 '
 
-APPIMAGE_BUILDER_DEPS='
-python3-pip 
-python3-setuptools 
-patchelf 
-desktop-file-utils 
-libgdk-pixbuf2.0-dev
-'
-
 OTHER_MISC_PKGS='
 tmate
 lsb-core
@@ -117,7 +109,7 @@ gamemode
 
 apt update &> /dev/null
 apt -yy --fix-broken install &> /dev/null
-apt -yy install ${OTHER_MISC_PKGS//\\n/ } ${APPIMAGE_BUILDER_DEPS//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy autoremove &> /dev/null
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -321,28 +313,33 @@ echo -e "INSTALLING MAUI APPS."
 echo -e "\n"
 
 mauipkgs='
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5735/artifacts/download
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5736/artifacts/download
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5737/artifacts/download
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5738/artifacts/download
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5739/artifacts/download
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5740/artifacts/download
+https://www.opencode.net/ab0027/maui-builds/-/jobs/5741/artifacts/download
 '
 
-mkdir /maui_debs
+mkdir /maui_pkgs
 
 for x in $mauipkgs; do
 	wget -q -P /maui_debs $x
 done
 
-dpkg -iR /maui_debs &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /maui_debs
+unzip /maui_pkgs/*
+mv /maui_debs/*.AppImage /Applications
+rm -r /maui_pkgs
 
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
+mv /Applications/index-*.AppImage /Applications/index
+mv /Applications/buho-*.AppImage /Applications/buho
+mv /Applications/nota-*.AppImage /Applications/nota
+mv /Applications/vvave-*.AppImage /Applications/vvave
+mv /Applications/station-*.AppImage /Applications/station
+mv /Applications/pix-*.AppImage /Applications/pix
+mv /Applications/contacts-*.AppImage /Applications/contacts
+
 whereis index buho nota vvave station pix contacts
 
 
@@ -451,7 +448,6 @@ https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
 https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
-https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 '
 
 mkdir /Applications
@@ -468,26 +464,25 @@ done
 
 chmod +x /Applications/*
 
-mv /Applications/znx-master-x86_64.AppImage /Applications/znx
-mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
+mv /Applications/znx-*-x86_64.AppImage /Applications/znx
+mv /Applications/znx-gui_*-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
-mv /Applications/pnx-1.0.0-x86_64.AppImage /Applications/pnx
+mv /Applications/pnx-*-x86_64.AppImage /Applications/pnx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
-mv /Applications/proton-linux-x86-v4.2-PlayOnLinux-x86_64.AppImage /Applications/wine
+mv /Applications/proton-*-x86_64.AppImage /Applications/wine
 
 ln -sv /Applications/wine /Applications/wineserver
 
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
-mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
-mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/LibreOffice-*-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-*-x86_64.AppImage /Applications/waterfox
 mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
-mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
-mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
-mv /Applications/appimagetool-x86_64.AppImage /Applications/appimagetool
+mv /Applications/Inkscape-*-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-*-x86_64.AppImage /Applications/lmms
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
@@ -548,6 +543,51 @@ rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.I
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+
+
+# -- Implement New FHS.
+#FIXME Replace with kernel patch and userland tool.
+
+
+mkdir -p /Core/Boot
+mkdir -p /Core/Boot/ESP
+mkdir -p /Core/System/Deployments
+mkdir -p /Devices
+mkdir -p /Devices/Removable
+mkdir -p /System/Binaries/
+mkdir -p /System/Binaries/Optional
+mkdir -p /System/Configuration
+mkdir -p /System/DevicesFS
+mkdir -p /System/Libraries
+mkdir -p /System/Mount/Filesystems
+mkdir -p /System/Processes
+mkdir -p /System/Runtime
+mkdir -p /System/Server/Services
+mkdir -p /System/TempFS
+mkdir -p /System/Variable
+mkdir -p /Users/
+
+mount --bind /boot/ /Core/Boot
+mount --bind /cdrom/ /Core/Boot/ESP
+mount --bind /dev/ /Devices
+mount --bind /etc/ /System/Configuration
+mount --bind /home/ /Users
+mount --bind /isodevice/ /Core/System/Deployments
+mount --bind /media/ /Devices/Removable
+mount --bind /mnt/ /System/Mount/Filesystems
+mount --bind /opt/ /System/Binaries/Optional
+mount --bind /proc/ /System/Processes
+mount --bind /run/ /System/Runtime
+mount --bind /srv/ /System/Server/Services
+mount --bind /sys/ /System/DevicesFS
+mount --bind /tmp/ /System/TempFS
+mount --bind /usr/bin /System/Binaries
+mount --bind /usr/lib /System/Libraries
+mount --bind /usr/share /System/Resources/Shared
+mount --bind /var/ /System/Variable
+
+
+cp /configs/files/hidden /.hidden
 
 
 # -- Workarounds for PNX.
@@ -661,16 +701,6 @@ echo -e "\n"
 
 cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
 cp /configs/scripts/install-nativefier.sh /etc/skel/.config
-
-
-# -- Add appimage-builder launcher.
-#FIXME This should be in a package.
-
-echo -e "\n"
-echo -e "ADD APPIMAGE-BUILDER."
-echo -e "\n"
-
-pip3 install appimage-builder
 
 
 # -- Add oh my zsh.
