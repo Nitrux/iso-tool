@@ -325,7 +325,7 @@ https://www.opencode.net/ab0027/maui-builds/-/jobs/5741/artifacts/download
 mkdir /maui_pkgs
 
 for x in $mauipkgs; do
-	wget -q -P /maui_debs $x
+	wget -q -P /maui_pkgs $x
 done
 
 unzip /maui_pkgs/*
@@ -554,7 +554,7 @@ mkdir -p /Core/Boot/ESP
 mkdir -p /Core/System/Deployments
 mkdir -p /Devices
 mkdir -p /Devices/Removable
-mkdir -p /System/Binaries/
+mkdir -p /System/Binaries
 mkdir -p /System/Binaries/Optional
 mkdir -p /System/Configuration
 mkdir -p /System/DevicesFS
@@ -567,24 +567,21 @@ mkdir -p /System/TempFS
 mkdir -p /System/Variable
 mkdir -p /Users/
 
-mount --bind /boot/ /Core/Boot
-mount --bind /cdrom/ /Core/Boot/ESP
-mount --bind /dev/ /Devices
-mount --bind /etc/ /System/Configuration
-mount --bind /home/ /Users
-mount --bind /isodevice/ /Core/System/Deployments
-mount --bind /media/ /Devices/Removable
-mount --bind /mnt/ /System/Mount/Filesystems
-mount --bind /opt/ /System/Binaries/Optional
-mount --bind /proc/ /System/Processes
-mount --bind /run/ /System/Runtime
-mount --bind /srv/ /System/Server/Services
-mount --bind /sys/ /System/DevicesFS
-mount --bind /tmp/ /System/TempFS
-mount --bind /usr/bin /System/Binaries
-mount --bind /usr/lib /System/Libraries
-mount --bind /usr/share /System/Resources/Shared
-mount --bind /var/ /System/Variable
+# mount --bind /boot /Core/Boot
+# mount --bind /dev /Devices
+# mount --bind /etc /System/Configuration
+# mount --bind /home /Users
+# mount --bind /mnt /System/Mount/Filesystems
+# mount --bind /opt /System/Binaries/Optional
+# mount --bind /proc /System/Processes
+# mount --bind /run /System/Runtime
+# mount --bind /srv /System/Server/Services
+# mount --bind /sys /System/DevicesFS
+# mount --bind /tmp /System/TempFS
+# mount --bind /usr/bin /System/Binaries
+# mount --bind /usr/lib /System/Libraries
+# mount --bind /usr/share /System/Resources/Shared
+# mount --bind /var /System/Variable
 
 
 cp /configs/files/hidden /.hidden
