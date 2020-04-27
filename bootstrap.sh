@@ -449,52 +449,6 @@ ls -l /Applications
 ls -l /etc/skel/.local/bin/
 
 
-# -- Install Maui apps Debs.
-# -- Add custom launchers for Maui apps.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING MAUI APPS."
-echo -e "\n"
-
-mauipkgs='
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5735/artifacts/download
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5736/artifacts/download
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5737/artifacts/download
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5738/artifacts/download
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5739/artifacts/download
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5740/artifacts/download
-https://www.opencode.net/ab0027/maui-builds/-/jobs/5741/artifacts/download
-'
-
-mkdir /maui_pkgs
-
-for x in $mauipkgs; do
-	wget -q -P /maui_pkgs $x
-done
-
-unzip maui_pkgs/download -d maui_pkgs
-unzip maui_pkgs/download.1 -d maui_pkgs
-unzip maui_pkgs/download.2 -d maui_pkgs
-unzip maui_pkgs/download.3 -d maui_pkgs
-unzip maui_pkgs/download.4 -d maui_pkgs
-unzip maui_pkgs/download.5 -d maui_pkgs
-unzip maui_pkgs/download.6 -d maui_pkgs
-
-mv /maui_pkgs/*.AppImage /Applications
-rm -r /maui_pkgs
-
-mv /Applications/index-*.AppImage /Applications/index
-mv /Applications/buho-*.AppImage /Applications/buho
-mv /Applications/nota-*.AppImage /Applications/nota
-mv /Applications/vvave-*.AppImage /Applications/vvave
-mv /Applications/station-*.AppImage /Applications/station
-mv /Applications/pix-*.AppImage /Applications/pix
-mv /Applications/contacts-*.AppImage /Applications/contacts
-
-whereis index buho nota vvave station pix contacts
-
-
 # -- Add AppImage providers for appimage-cli-tool
 
 echo -e "\n"
