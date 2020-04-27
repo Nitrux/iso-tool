@@ -328,7 +328,14 @@ for x in $mauipkgs; do
 	wget -q -P /maui_pkgs $x
 done
 
-unzip /maui_pkgs/*
+unzip /maui_pkgs/download
+unzip /maui_pkgs/download.1
+unzip /maui_pkgs/download.2
+unzip /maui_pkgs/download.3
+unzip /maui_pkgs/download.4
+unzip /maui_pkgs/download.4
+unzip /maui_pkgs/download.5
+unzip /maui_pkgs/download.6
 mv /maui_pkgs/*.AppImage /Applications
 rm -r /maui_pkgs
 
