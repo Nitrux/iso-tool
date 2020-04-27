@@ -329,7 +329,7 @@ for x in $mauipkgs; do
 done
 
 unzip /maui_pkgs/*
-mv /maui_debs/*.AppImage /Applications
+mv /maui_pkgs/*.AppImage /Applications
 rm -r /maui_pkgs
 
 mv /Applications/index-*.AppImage /Applications/index
