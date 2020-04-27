@@ -460,22 +460,22 @@ cp /configs/files/appimage-providers.yaml /etc/
 
 # -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-# -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
 # -- Add appimaged launcher to autostart.
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
-# -- Add Window title plasmoid.
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
+# -- Link nsnake binary to /usr/bin.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Copy offline documentation to desktop folder.
+# -- Add Maui app launchers.
 #FIXME These fixes should be in a package.
 
 echo -e "\n"
@@ -484,26 +484,24 @@ echo -e "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
 cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
-cp -a /configs/other/org.kde.video /usr/share/plasma/wallpapers
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
-ln -sv /usr/games/nsnake /bin/nsnake
+ln -sv /usr/games/nsnake /usr/bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
 
 
 # -- Implement New FHS.

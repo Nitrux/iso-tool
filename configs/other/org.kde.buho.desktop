@@ -2,7 +2,7 @@
 Name=Buho
 Comment=Note taking app
 TryExec=buho
-Exec=buho %U -style breeze
+Exec=buho %U -style maui-style
 Terminal=false
 Type=Application
 Categories=Qt;Utilities;KDE;
