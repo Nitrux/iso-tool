@@ -411,7 +411,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
 
-mkdir /Applications
+mkdir -p /Applications
 mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 

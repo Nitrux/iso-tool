@@ -77,6 +77,7 @@ LATEST_PIPELINE_ID=$($gitlab project-pipeline list --project-id 918 | head -n 1 
 LATEST_JOBS=$($gitlab project-pipeline-job list --project-id 918 --pipeline-id $LATEST_PIPELINE_ID | grep -Ev "^$" | tr -d "id: ")
 
 mkdir -p maui_pkgs
+mkdir -p $BUILD_DIR/Applications
 
 pushd maui_pkgs
     for i in $LATEST_JOBS; do
@@ -92,6 +93,8 @@ pushd maui_pkgs
     mv station-*amd64*.AppImage $BUILD_DIR/Applications/station
     mv pix-*amd64*.AppImage $BUILD_DIR/Applications/pix
     mv contacts-*amd64*.AppImage $BUILD_DIR/Applications/contacts
+    
+    ls -l $BUILD_DIR/Applications
 popd
 
 rm -rf maui_pkgs
