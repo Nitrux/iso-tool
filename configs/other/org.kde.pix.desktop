@@ -2,7 +2,7 @@
 Name=Pix
 Comment=Image gallery viewer
 TryExec=pix
-Exec=pix %U -style breeze
+Exec=pix %U -style maui-style
 Terminal=false
 Type=Application
 Categories=Qt;Graphics;Viewer;KDE;

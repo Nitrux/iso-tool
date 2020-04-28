@@ -265,6 +265,10 @@ echo -e "\n"
 echo -e "ADD BREW PACKAGE."
 echo -e "\n"
 
+ADD_BREW_PACKAGES='
+linuxbrew-wrapper
+'
+
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 
 
@@ -422,7 +426,6 @@ gcc-10-base
 OTHER_MISC_PKGS='
 gamemode
 tmate
-lsb-core
 '
 
 apt update &> /dev/null
