@@ -425,17 +425,9 @@ tmate
 lsb-core
 '
 
-APPIMAGE_BUILDER_DEPS='
-python3-pip 
-python3-setuptools 
-patchelf 
-desktop-file-utils 
-libgdk-pixbuf2.0-dev
-'
-
 apt update &> /dev/null
 apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
-apt -yy install ${OTHER_MISC_PKGS//\\n/ } ${APPIMAGE_BUILDER_DEPS//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -468,40 +460,6 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
-
-
-# -- Install Maui apps Debs.
-# -- Add custom launchers for Maui apps.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING MAUI APPS."
-echo -e "\n"
-
-mauipkgs='
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-'
-
-mkdir /maui_debs
-
-for x in $mauipkgs; do
-	wget -q -P /maui_debs $x
-done
-
-dpkg -iR /maui_debs &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /maui_debs
-
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
-whereis index buho nota vvave station pix contacts
 
 
 # -- Add missing firmware modules.
@@ -611,7 +569,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
 
-mkdir /Applications
+mkdir -p /Applications
 mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
@@ -660,22 +618,22 @@ cp /configs/files/appimage-providers.yaml /etc/
 
 # -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-# -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
 # -- Add appimaged launcher to autostart.
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
-# -- Add Window title plasmoid.
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
+# -- Link nsnake binary to /usr/bin.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Copy offline documentation to desktop folder.
+# -- Add Maui app launchers.
 #FIXME These fixes should be in a package.
 
 echo -e "\n"
@@ -684,26 +642,24 @@ echo -e "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
 cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
-cp -a /configs/other/org.kde.video /usr/share/plasma/wallpapers
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
-ln -sv /usr/games/nsnake /bin/nsnake
+ln -sv /usr/games/nsnake /usr/bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
 
 
 # -- Workarounds for PNX.
@@ -819,16 +775,6 @@ echo -e "\n"
 
 cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
 cp /configs/scripts/install-nativefier.sh /etc/skel/.config
-
-
-# -- Add appimage-builder launcher.
-#FIXME This should be in a package.
-
-echo -e "\n"
-echo -e "ADD APPIMAGE-BUILDER."
-echo -e "\n"
-
-pip3 install appimage-builder
 
 
 # -- Add oh my zsh.

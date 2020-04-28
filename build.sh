@@ -61,6 +61,45 @@ tar xf base.tar.gz -C $BUILD_DIR
 
 # -- Populate $BUILD_DIR.
 
+### Download Maui AppImages
+echo "[global]
+default = opencode
+
+[opencode]
+url = http://www.opencode.net/
+private_token = $OPENCODE_API_TOKEN
+api_version = 4
+" > /tmp/python-gitlab.cfg
+
+gitlab=$(echo "$(which gitlab) -c /tmp/python-gitlab.cfg")
+
+LATEST_PIPELINE_ID=$($gitlab project-pipeline list --project-id 918 | head -n 1 | tr -d 'id: ')
+LATEST_JOBS=$($gitlab project-pipeline-job list --project-id 918 --pipeline-id $LATEST_PIPELINE_ID | grep -Ev "^$" | tr -d "id: ")
+
+mkdir -p maui_pkgs
+mkdir -p $BUILD_DIR/Applications
+
+pushd maui_pkgs
+    for i in $LATEST_JOBS; do
+        curl --output artifacts.zip --header "PRIVATE-TOKEN: $OPENCODE_API_TOKEN" "https://www.opencode.net/api/v4/projects/918/jobs/$i/artifacts"
+        unzip artifacts.zip
+        rm artifacts.zip
+    done
+    
+    mv index-*amd64*.AppImage $BUILD_DIR/Applications/index
+    mv buho-*amd64*.AppImage $BUILD_DIR/Applications/buho
+    mv nota-*amd64*.AppImage $BUILD_DIR/Applications/nota
+    mv vvave-*amd64*.AppImage $BUILD_DIR/Applications/vvave
+    mv station-*amd64*.AppImage $BUILD_DIR/Applications/station
+    mv pix-*amd64*.AppImage $BUILD_DIR/Applications/pix
+    mv contacts-*amd64*.AppImage $BUILD_DIR/Applications/contacts
+    
+    ls -l $BUILD_DIR/Applications
+popd
+
+rm -rf maui_pkgs
+###
+
 wget -qO /bin/runch https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 
@@ -68,13 +107,6 @@ cp -r configs $BUILD_DIR/
 
 cat bootstrap.sh | runch $BUILD_DIR bash || true
 
-# -- The file nsswitch.conf is not empty before entering the chroot and neither is it empty when inside the chroot but it becomes empty after
-# -- exiting the chroot resulting in a failed resolution of the hostname when using sudo after booting the ISO.
-#WARNING
-#FIXME
-#BUG
-
-cat configs/files/nsswitch.conf >> $BUILD_DIR/etc/nsswitch.conf
 
 rm -rf $BUILD_DIR/configs
 
@@ -88,10 +120,7 @@ cp $(echo $BUILD_DIR/boot/vmlinuz* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/bo
 cp $(echo $BUILD_DIR/boot/initrd* | tr ' ' '\n' | sort | tail -n 1) $ISO_DIR/boot/initramfs
 
 
-# -- Put this file here?.
-#WARNING
-#FIXME
-#BUG
+# -- WARNING FIXME BUG This file isn't copied during the chroot.
 
 mkdir -p $ISO_DIR/boot/grub/x86_64-efi
 cp /usr/lib/grub/x86_64-efi/linuxefi.mod $ISO_DIR/boot/grub/x86_64-efi
