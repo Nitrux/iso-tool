@@ -111,7 +111,6 @@ echo -e "ADD ELOGIND."
 echo -e "\n"
 
 ELOGIND_PKGS='
-libpam-elogind
 libelogind0
 elogind
 uuid-runtime=2.34-0.1+devuan1
@@ -127,7 +126,6 @@ apt-utils=2.0.1+devuan1
 '
 
 REMOVE_SYSTEMD_PKGS='
-libpam-systemd
 systemd
 systemd-sysv
 libsystemd0
