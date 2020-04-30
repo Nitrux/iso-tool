@@ -144,16 +144,18 @@ echo -e "ADD POLICYKIT."
 echo -e "\n"
 
 DEVUAN_POLKIT_PKGS='
-libpolkit-agent-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-backend-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-backend-elogind-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-gobject-1-0=0.105-25+devuan0~bpo2+1
-libpolkit-gobject-1-0-elogind=0.105-25+devuan0~bpo2+1
+libpolkit-agent-1-0=0.105-25+devuan8
+libpolkit-backend-1-0=0.105-25+devuan8
+libpolkit-backend-elogind-1-0=0.105-25+devuan8
+libpolkit-gobject-1-0=0.105-25+devuan8
+libpolkit-gobject-elogind-1-0=0.105-25+devuan8
 libpolkit-qt-1-1=0.112.0-6
 libpolkit-qt5-1-1=0.112.0-6
-policykit-1=0.105-25+devuan0~bpo2+1
+policykit-1=0.105-25+devuan8
 polkit-kde-agent-1=4:5.17.5-2
 '
+
+# -- Only necessary for OpenRC.
 
 HOLD_POLKIT_PKGS='
 libpolkit-agent-1-0
@@ -277,6 +279,10 @@ echo -e "\n"
 echo -e "ADD BREW PACKAGE."
 echo -e "\n"
 
+ADD_BREW_PACKAGES='
+linuxbrew-wrapper
+'
+
 apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 
 
@@ -307,6 +313,7 @@ kcalc
 kde-spectacle
 latte-dock
 '
+
 UPDT_KF5_LIBS='
 libkf5activities5
 libkf5activitiesstats1
@@ -430,8 +437,16 @@ libgcc-s1
 gcc-10-base
 '
 
+OTHER_MISC_PKGS='
+gamemode
+tmate
+'
+
 apt update &> /dev/null
-apt -yy install ${GLIBC_2_31_PKG//\\n/ } --only-upgrade --no-install-recommends
+apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ } --no-install-recommends
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 # -- No apt usage past this point. -- #
@@ -462,40 +477,6 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
-
-
-# -- Install Maui apps Debs.
-# -- Add custom launchers for Maui apps.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING MAUI APPS."
-echo -e "\n"
-
-mauipkgs='
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-'
-
-mkdir /maui_debs
-
-for x in $mauipkgs; do
-	wget -q -P /maui_debs $x
-done
-
-dpkg -iR /maui_debs &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /maui_debs
-
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
-whereis index buho nota vvave station pix contacts
 
 
 # -- Add missing firmware modules.
@@ -605,7 +586,7 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0
 https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
 '
 
-mkdir /Applications
+mkdir -p /Applications
 mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
@@ -620,24 +601,24 @@ done
 chmod +x /Applications/*
 
 mv /Applications/znx-master-x86_64.AppImage /Applications/znx
-mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
+mv /Applications/znx-gui_*-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
-mv /Applications/pnx-1.0.0-x86_64.AppImage /Applications/pnx
+mv /Applications/pnx-*-x86_64.AppImage /Applications/pnx
 mv /Applications/vmetal-free-amd64 /Applications/vmetal
-mv /Applications/proton-linux-x86-v4.2-PlayOnLinux-x86_64.AppImage /Applications/wine
+mv /Applications/proton-*-x86_64.AppImage /Applications/wine
 
 ln -sv /Applications/wine /Applications/wineserver
 
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
-mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
-mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/LibreOffice-*-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-*-x86_64.AppImage /Applications/waterfox
 mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
-mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
-mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
+mv /Applications/Inkscape-*-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-*-x86_64.AppImage /Applications/lmms
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
@@ -654,22 +635,23 @@ cp /configs/files/appimage-providers.yaml /etc/
 
 # -- Add config for SDDM.
 # -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-# -- Add kservice menu item for Dolphin for AppImageUpdate.
 # -- Add policykit file for KDialog.
 # -- Add VMetal desktop launcher.
 # -- Add appimaged launcher to autostart.
 # -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
 # -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
 # -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
-# -- Add Window title plasmoid.
 # -- Add welcome wizard to app menu.
 # -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
 # -- Delete KDE Connect unnecessary menu entries.
 # -- Add znx-gui desktop launcher.
 # -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
 # -- Remove htop and nsnake desktop launcher.
+# -- Link nsnake binary to /usr/bin.
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Copy offline documentation to desktop folder.
+# -- Add Maui app launchers.
+# -- Add missing environment variables.
 #FIXME These fixes should be in a package.
 
 echo -e "\n"
@@ -678,26 +660,26 @@ echo -e "\n"
 
 cp /configs/files/sddm.conf /etc
 cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/other/appimageupdate.desktop /usr/share/kservices5/ServiceMenus/
 cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
 cp /configs/other/vmetal.desktop /usr/share/applications
 cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
 /bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-cp -a /configs/other/org.kde.windowtitle /usr/share/plasma/plasmoids
-cp -a /configs/other/org.kde.video /usr/share/plasma/wallpapers
 cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
 mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
 rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
 cp /configs/other/znx-gui.desktop /usr/share/applications
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
-ln -sv /usr/games/nsnake /bin/nsnake
+ln -sv /usr/games/nsnake /usr/bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
+echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
+echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
 
 
 # -- Repair broken files generated by OpenRC postinst script.
