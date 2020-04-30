@@ -586,13 +586,13 @@ done
 
 chmod +x /Applications/*
 
-mv /Applications/LibreOffice-*-x86_64.AppImage /Applications/libreoffice
-mv /Applications/waterfox-*-x86_64.AppImage /Applications/waterfox
-mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
-mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
-mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
-mv /Applications/Inkscape-*-x86_64.AppImage /Applications/inkscape
-mv /Applications/lmms-*-x86_64.AppImage /Applications/lmms
+mv /Applications/znx-master-x86_64.AppImage /Applications/znx
+mv /Applications/znx-gui_*-x86_64.AppImage /Applications/znx-gui
+mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
+mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
+mv /Applications/pnx-*-x86_64.AppImage /Applications/pnx
+mv /Applications/vmetal-free-amd64 /Applications/vmetal
+mv /Applications/proton-*-x86_64.AppImage /Applications/wine
 
 ln -sv /Applications/wine /Applications/wineserver
 
@@ -637,6 +637,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Copy offline documentation to desktop folder.
 # -- Add Maui app launchers.
+# -- Add missing environment variables.
 #FIXME These fixes should be in a package.
 
 echo -e "\n"
@@ -663,6 +664,8 @@ mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
+echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
+echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
 
 
 # -- Workarounds for PNX.
