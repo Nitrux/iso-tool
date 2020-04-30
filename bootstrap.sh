@@ -425,7 +425,7 @@ done
 
 chmod +x /Applications/*
 
-mv /Applications/znx-*-x86_64.AppImage /Applications/znx
+mv /Applications/znx-master-x86_64.AppImage /Applications/znx
 mv /Applications/znx-gui_*-x86_64.AppImage /Applications/znx-gui
 mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
 mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
