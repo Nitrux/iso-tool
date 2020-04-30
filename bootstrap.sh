@@ -396,7 +396,7 @@ libkf5xmlgui-data
 libkf5xmlgui5
 '
 
-apt update &> /dev/null
+apt update
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy install ${UPDT_KDE_PKGS//\\n/ } ${UPDT_KF5_LIBS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
