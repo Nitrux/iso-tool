@@ -586,25 +586,25 @@ done
 
 chmod +x /Applications/*
 
-mv /Applications/znx-master-x86_64.AppImage /Applications/znx
-mv /Applications/znx-gui_master-x86_64.AppImage /Applications/znx-gui
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
-mv /Applications/pnx-1.0.0-x86_64.AppImage /Applications/pnx
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
-mv /Applications/proton-linux-x86-v4.2-PlayOnLinux-x86_64.AppImage /Applications/wine
+mv /Applications/LibreOffice-*-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-*-x86_64.AppImage /Applications/waterfox
+mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
+mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
+mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
+mv /Applications/Inkscape-*-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-*-x86_64.AppImage /Applications/lmms
 
 ln -sv /Applications/wine /Applications/wineserver
 
 mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 
-mv /Applications/LibreOffice-fresh.basic-x86_64.AppImage /Applications/libreoffice
-mv /Applications/waterfox-classic-latest-x86_64.AppImage /Applications/waterfox
+mv /Applications/LibreOffice-*-x86_64.AppImage /Applications/libreoffice
+mv /Applications/waterfox-*-x86_64.AppImage /Applications/waterfox
 mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
 mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
 mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
-mv /Applications/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage /Applications/inkscape
-mv /Applications/lmms-1.2.1-linux-x86_64.AppImage /Applications/lmms
+mv /Applications/Inkscape-*-x86_64.AppImage /Applications/inkscape
+mv /Applications/lmms-*-x86_64.AppImage /Applications/lmms
 
 ls -l /Applications
 ls -l /etc/skel/.local/bin/
