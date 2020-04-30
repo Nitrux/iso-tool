@@ -55,7 +55,7 @@ HASH_URL=http://repo.nxos.org:8000/${IMAGE%.iso}.md5sum
 
 # -- Prepare the directory where the filesystem will be created.
 
-wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.4-base-amd64.tar.gz
 tar xf base.tar.gz -C $BUILD_DIR
 
 
@@ -106,6 +106,7 @@ chmod +x /bin/runch
 cp -r configs $BUILD_DIR/
 
 cat bootstrap.sh | runch $BUILD_DIR bash || true
+
 
 rm -rf $BUILD_DIR/configs
 

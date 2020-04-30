@@ -16,7 +16,7 @@ echo -e "\n"
 echo -e "INSTALLING BASIC PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list
+cp /configs/files/sources.list.eoan /etc/apt/sources.list
 
 BASIC_PACKAGES='
 apt-transport-https
@@ -32,20 +32,28 @@ libelf1
 localechooser-data
 locales
 lupin-casper
-systemd-sysv
 user-setup
 wget
 xz-utils
-usrmerge
+systemd
+avahi-daemon
+bluez
+open-vm-tools
+rng-tools
 '
 
 apt update &> /dev/null
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
 # -- Add key for Nitrux repository.
+# -- Add key for Devuan repositories #1.
+# -- Add key for Devuan repositories #2.
 # -- Add key for the Proprietary Graphics Drivers PPA.
+# -- Add key for Ubuntu repositories #1.
+# -- Add key for Ubuntu repositories #2.
+# -- Add key for Kubuntu Backports PPA.
 
 echo -e "\n"
 echo -e "ADD REPOSITORY KEYS."
@@ -56,18 +64,149 @@ echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.k
 apt-key add neon.key > /dev/null
 rm neon.key
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 1118213C > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev/null
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2836CB0A8AC93F7A > /dev/null
 
 
-# -- Use sources.list.base to build ISO.
-# -- Block installation of libsensors4.
+# -- Copy sources.list files.
 
-cp /configs/files/sources.list.base /etc/apt/sources.list
-cp /configs/files/preferences /etc/apt/preferences
+echo -e "\n"
+echo -e "ADD SOURCES FILES."
+echo -e "\n"
+
+cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
+cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
+cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
+# cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
+cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+
+apt update &> /dev/null
+
+
+# -- Use Glibc package from Devuan.
+
+GLIBC_2_30_PKG='
+libc6=2.30-4
+'
+
+apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Use elogind packages from Devuan.
+
+echo -e "\n"
+echo -e "ADD ELOGIND."
+echo -e "\n"
+
+ELOGIND_PKGS='
+libelogind0
+elogind
+uuid-runtime=2.34-0.1+devuan1
+util-linux=2.34-0.1+devuan1
+libprocps6=2:3.3.12-3+devuan2.1
+bsdutils=1:2.34-0.1+devuan1
+'
+
+APT_PKGS='
+apt=2.0.1+devuan1
+apt-transport-https=2.0.1+devuan1
+apt-utils=2.0.1+devuan1
+'
+
+REMOVE_SYSTEMD_PKGS='
+systemd
+systemd-sysv
+libsystemd0
+'
+
+apt -yy purge --remove ${REMOVE_SYSTEMD_PKGS//\\n/ }
+apt -yy autoremove
+apt -yy install ${ELOGIND_PKGS//\\n/ } ${APT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+apt -yy --fix-broken install
+
+
+# -- Use PolicyKit packages from Devuan.
+
+echo -e "\n"
+echo -e "ADD POLICYKIT."
+echo -e "\n"
+
+DEVUAN_POLKIT_PKGS='
+libpolkit-agent-1-0=0.105-25+devuan8
+libpolkit-backend-1-0=0.105-25+devuan8
+libpolkit-backend-elogind-1-0=0.105-25+devuan8
+libpolkit-gobject-1-0=0.105-25+devuan8
+libpolkit-gobject-elogind-1-0=0.105-25+devuan8
+libpolkit-qt-1-1=0.112.0-6
+libpolkit-qt5-1-1=0.112.0-6
+policykit-1=0.105-25+devuan8
+polkit-kde-agent-1=4:5.17.5-2
+'
+
+apt -yy install ${DEVUAN_POLKIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+
+
+DEVUAN_NM_UD2='
+libnm0=1.14.6-2+deb10u1
+libudisks2-0=2.8.4-1+devuan4
+network-manager=1.14.6-2+deb10u1
+udisks2=2.8.4-1+devuan4
+init-system-helpers=1.56+nmu1+devuan2
+'
+
+apt -yy install ${DEVUAN_NM_UD2//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Add SysV as init.
+
+echo -e "\n"
+echo -e "ADD SYSV AS INIT."
+echo -e "\n"
+
+DEVUAN_INIT_PKGS='
+init=1.56+nmu1+devuan2
+sysv-rc
+sysvinit-core
+sysvinit-utils
+'
+
+apt -yy install ${DEVUAN_INIT_PKGS//\\n/ } --no-install-recommends --allow-downgrades
+
+
+# -- Check that init system is not systemd.
+
+echo -e "\n"
+echo -e "CHECK INIT LINK."
+echo -e "\n"
+
+init --version
+stat /sbin/init
+
+
+# -- Install base system metapackages.
 
 echo -e "\n"
 echo -e "INSTALLING BASE SYSTEM."
 echo -e "\n"
+
+
+GRUB_PACKAGES='
+grub-efi-amd64-signed=1+2.04+5
+grub-efi-amd64-bin=2.04-5
+grub-common=2.04-5
+'
 
 NITRUX_BASE_PACKAGES='
 nitrux-hardware-drivers
@@ -75,12 +214,11 @@ nitrux-minimal
 nitrux-standard
 '
 
-apt update &> /dev/null
-apt -yy upgrade &> /dev/null
-apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
-apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+NITRUX_BF_PKG='
+base-files
+'
+
+apt -yy install ${GRUB_PACKAGES//\\n/ } ${NITRUX_BASE_PACKAGES//\\n/ } ${NITRUX_BF_PKG//\\n/ } --no-install-recommends
 
 
 # -- Add NX Desktop metapackage.
@@ -89,39 +227,56 @@ echo -e "\n"
 echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.desktop /etc/apt/sources.list
-
 NX_DESKTOP_PKG='
-nx-desktop
+nx-desktop-sysv
 '
 
-MISC_PACKAGES_KDE='
-latte-dock=0.9.9-0xneon+18.04+bionic+build31
-plasma-pa=4:5.18.4.1-0ubuntu1
-xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
+MISC_KDE_PKGS='
+plasma-pa=4:5.17.5-2
+bluedevil
 '
 
-OTHER_MISC_PKGS='
-tmate
-lsb-core
-gamemode
+DEVUAN_PULSE_PKGS='
+libpulse0=13.0-5
+pulseaudio=13.0-5
+libpulse-mainloop-glib0=13.0-5
+pulseaudio-utils=13.0-5
+libpulsedsp=13.0-5
+pulseaudio-module-bluetooth=13.0-5
 '
 
-apt update &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-apt -yy install ${OTHER_MISC_PKGS//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
-apt -yy autoremove &> /dev/null
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+ttf-ubuntu-font-family
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy --fix-broken install
+
+
+# -- Use sources.list.eaon to update packages and install brew.
+#FIXME We need to provide these packages from a repository of ours.
+
+echo -e "\n"
+echo -e "ADD BREW PACKAGE."
+echo -e "\n"
+
+ADD_BREW_PACKAGES='
+linuxbrew-wrapper
+'
+
+apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Upgrade KF5 libs for Latte Dock.
 
 echo -e "\n"
-echo -e "UPGRADING DESKTOP PACKAGES."
+echo -e "UPGRADING KDE PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.desktop.update /etc/apt/sources.list
+cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 
 HOLD_KDE_PKGS='
 kwin-addons
@@ -140,7 +295,7 @@ UPDT_KDE_PKGS='
 ark
 kcalc
 kde-spectacle
-latte-dock=0.9.11+p18.04+git20200430.0017-0
+latte-dock
 '
 
 UPDT_KF5_LIBS='
@@ -241,37 +396,41 @@ libkf5xmlgui-data
 libkf5xmlgui5
 '
 
-apt update &> /dev/null
+apt update
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy install ${UPDT_KDE_PKGS//\\n/ } ${UPDT_KF5_LIBS//\\n/ } --only-upgrade --no-install-recommends
-apt -yy --fix-broken install &> /dev/null
-apt -yy autoremove &> /dev/null
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+apt -yy --fix-broken install
+apt -yy autoremove
 
 
-# -- Use sources.list.eaon to update packages and install brew.
-#FIXME We need to provide a package.
+# -- Upgrade Glibc.
 
 echo -e "\n"
-echo -e "ADD BREW PACKAGE."
+echo -e "UPGRADING GLIBC PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
-ADD_BREW_PACKAGES='
-linuxbrew-wrapper
+GLIBC_2_31_PKG='
+libc-bin
+libc6
+locales
+libcrypt1
+libgcc1
+libgcc-s1
+gcc-10-base
+'
+
+OTHER_MISC_PKGS='
+gamemode
+tmate
 '
 
 apt update &> /dev/null
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
+apt -yy install ${OTHER_MISC_PKGS//\\n/ } --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
-
-
-# -- Use sources.list.nitrux for release.
-
-/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 
 
 # -- No apt usage past this point. -- #
@@ -476,6 +635,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Copy offline documentation to desktop folder.
 # -- Add Maui app launchers.
+# -- Add missing environment variables.
 #FIXME These fixes should be in a package.
 
 echo -e "\n"
@@ -502,48 +662,8 @@ mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
-
-
-# -- Implement New FHS.
-#FIXME Replace with kernel patch and userland tool.
-
-
-mkdir -p /Core/Boot
-mkdir -p /Core/Boot/ESP
-mkdir -p /Core/System/Deployments
-mkdir -p /Devices
-mkdir -p /Devices/Removable
-mkdir -p /System/Binaries
-mkdir -p /System/Binaries/Optional
-mkdir -p /System/Configuration
-mkdir -p /System/DevicesFS
-mkdir -p /System/Libraries
-mkdir -p /System/Mount/Filesystems
-mkdir -p /System/Processes
-mkdir -p /System/Runtime
-mkdir -p /System/Server/Services
-mkdir -p /System/TempFS
-mkdir -p /System/Variable
-mkdir -p /Users/
-
-# mount --bind /boot /Core/Boot
-# mount --bind /dev /Devices
-# mount --bind /etc /System/Configuration
-# mount --bind /home /Users
-# mount --bind /mnt /System/Mount/Filesystems
-# mount --bind /opt /System/Binaries/Optional
-# mount --bind /proc /System/Processes
-# mount --bind /run /System/Runtime
-# mount --bind /srv /System/Server/Services
-# mount --bind /sys /System/DevicesFS
-# mount --bind /tmp /System/TempFS
-# mount --bind /usr/bin /System/Binaries
-# mount --bind /usr/lib /System/Libraries
-# mount --bind /usr/share /System/Resources/Shared
-# mount --bind /var /System/Variable
-
-
-cp /configs/files/hidden /.hidden
+echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
+echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
 
 
 # -- Workarounds for PNX.
@@ -589,9 +709,10 @@ echo -e "\n"
 echo -e "ADD VFIO ENABLEMENT AND CONFIGURATION."
 echo -e "\n"
 
-echo "install vfio-pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
-echo "install vfio_pci /bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio-pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
+echo "install vfio_pci /usr/bin/vfio-pci-override-vga.sh" >> /etc/initramfs-tools/modules
 echo "softdep nvidia pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
+echo "softdep nouveau pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep amdgpu pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep radeon pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
 echo "softdep i915 pre: vfio vfio_pci" >> /etc/initramfs-tools/modules
@@ -602,6 +723,7 @@ echo "options vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci ids=" >> /etc/initramfs-tools/modules
 echo "vfio_pci" >> /etc/initramfs-tools/modules
 echo "nvidia" >> /etc/initramfs-tools/modules
+echo "nouveau" >> /etc/initramfs-tools/modules
 echo "amdgpu" >> /etc/initramfs-tools/modules
 echo "radeon" >> /etc/initramfs-tools/modules
 echo "i915" >> /etc/initramfs-tools/modules
@@ -614,10 +736,10 @@ echo "vfio_pci ids=" >> /etc/modules
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-cp /configs/scripts/{vfio-pci-override-vga.sh,dummy.sh} /bin/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
 
-chmod +x /bin/dummy.sh
+cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
+chmod a+x /usr/bin/vfio-pci-override-vga.sh
 
 
 # -- Add itch.io store launcher.
@@ -686,35 +808,6 @@ sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
 sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
 
 
-# -- Decrease timeout for systemd start and stop services.
-#FIXME This should be put in a package.
-
-echo -e "\n"
-echo -e "DECREASE TIMEOUT FOR SYSTEMD SERVICES."
-echo -e "\n"
-
-sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
-sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
-
-
-# -- Disable systemd services not deemed necessary.
-# -- use 'mask' to fully disable them.
-
-echo -e "\n"
-echo -e "DISABLE SYSTEMD SERVICES."
-echo -e "\n"
-
-systemctl mask avahi-daemon.service
-systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online.service keyboard-setup.service
-
-
-# -- Fix for broken udev rules (yes, it is broken by default).
-#FIXME This should be put in a package.
-
-sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
-
-
-# -- Strip kernel modules.
 # -- Use GZIP compression when creating the initramfs.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
@@ -725,16 +818,13 @@ echo -e "\n"
 echo -e "UPDATE INITRAMFS."
 echo -e "\n"
 
-find /lib/modules/5.4.21-050421-generic/ -iname "*.ko" -exec strip --strip-unneeded {} \;
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs /boot/initrd.img-5.4.21-050421-generic | grep vfio
-
-rm /bin/dummy.sh
+lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 
 # -- Remove APT.
