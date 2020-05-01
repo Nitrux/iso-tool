@@ -219,9 +219,9 @@ echo -e "\n"
 
 
 GRUB_PACKAGES='
-grub-efi-amd64-signed=1+2.04+5
-grub-efi-amd64-bin=2.04-5
-grub-common=2.04-5
+grub-efi-amd64-signed=1+2.04+7
+grub-efi-amd64-bin=2.04-7
+grub-common=2.04-7
 '
 
 NITRUX_BASE_PACKAGES='
@@ -425,7 +425,7 @@ echo -e "\n"
 echo -e "UPGRADING GLIBC PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
 GLIBC_2_31_PKG='
 libc-bin
@@ -577,7 +577,7 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 '
 
 APPS_USR='
-https://files.kde.org/kdenlive/release/kdenlive-19.12.3-x86_64.appimage
+https://files.kde.org/kdenlive/release/kdenlive-20.04.0-x86_64.appimage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200323-x86_64.AppImage
@@ -701,7 +701,6 @@ ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlev
 
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 
-rc-update add savecache off
 rc-update -u
 
 
