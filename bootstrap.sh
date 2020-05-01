@@ -70,6 +70,11 @@ cp -av /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-user-repo.l
 apt -qq update
 
 
+# -- Block installation of some packages.
+
+cp /configs/files/preferences /etc/apt/preferences
+
+
 # -- Install base meta-packages.
 
 echo -e "\n"
