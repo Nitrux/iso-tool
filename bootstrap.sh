@@ -25,7 +25,7 @@ btrfs-progs
 ca-certificates
 casper
 dhcpcd5
-fuse3
+fuse
 gnupg2
 language-pack-en
 language-pack-en-base
