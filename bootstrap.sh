@@ -203,9 +203,9 @@ echo -e "\n"
 
 
 GRUB_PACKAGES='
-grub-efi-amd64-signed=1+2.04+5
-grub-efi-amd64-bin=2.04-5
-grub-common=2.04-5
+grub-efi-amd64-signed=1+2.04+7
+grub-efi-amd64-bin=2.04-7
+grub-common=2.04-7
 '
 
 NITRUX_BASE_PACKAGES='
@@ -409,7 +409,7 @@ echo -e "\n"
 echo -e "UPGRADING GLIBC PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
 GLIBC_2_31_PKG='
 libc-bin
