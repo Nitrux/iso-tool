@@ -16,6 +16,8 @@ echo -e "\n"
 echo -e "INSTALLING BASIC PACKAGES."
 echo -e "\n"
 
+cp /configs/files/sources.list.bionic /etc/apt/sources.list
+
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
@@ -40,6 +42,7 @@ xz-utils
 usrmerge
 '
 
+apt update &> /dev/null
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
 
 
