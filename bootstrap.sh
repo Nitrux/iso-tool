@@ -10,23 +10,6 @@ echo -e "STARTING BOOTSTRAP."
 echo -e "\n"
 
 
-# -- Use sources.list.focal and update bionic base to focal.
-# -- WARNING
-
-echo -e "\n"
-echo -e "UPDATING OS BASE."
-echo -e "\n"
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
-apt update &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-apt -yy dist-upgrade --only-upgrade --no-install-recommends &> /dev/null
-apt -yy --fix-broken install &> /dev/null
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
-
 # -- Install basic packages.
 
 echo -e "\n"
@@ -82,7 +65,6 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
 # -- Block installation of libsensors4.
 
 cp /configs/files/sources.list.base /etc/apt/sources.list
-cp /configs/files/preferences /etc/apt/preferences
 
 echo -e "\n"
 echo -e "INSTALLING BASE SYSTEM."
@@ -95,7 +77,7 @@ nitrux-standard-legacy
 '
 
 BASE_FILES_PKG='
-base-files=11.1.0+nitrux-legacy
+base-files=11.1.2+nitrux-legacy
 '
 
 apt update &> /dev/null
@@ -127,16 +109,10 @@ lvm2
 
 MISC_PACKAGES_KDE='
 kdenlive
-libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build42
 partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-plasma-pa=4:5.18.4.1-0ubuntu1
-xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
-ksysguard=4:5.18.4.1-0ubuntu1
-ksysguard-data=4:5.18.4.1-0ubuntu1
-ksysguardd=4:5.18.4.1-0ubuntu1
 '
 
 OTHER_MISC_PKGS='
@@ -173,10 +149,10 @@ echo -e "\n"
 
 
 kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-headers-5.6.5-050605_5.6.5-050605.202004171629_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-headers-5.6.5-050605-generic_5.6.5-050605.202004171629_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-image-unsigned-5.6.5-050605-generic_5.6.5-050605.202004171629_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.6.5/linux-modules-5.6.5-050605-generic_5.6.5-050605.202004171629_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-headers-5.4.28-050428_5.4.28-050428.202003250833_all.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-headers-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-image-unsigned-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
+https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-modules-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
 '
 
 mkdir /latest_kernel
@@ -189,41 +165,6 @@ done
 dpkg -iR /latest_kernel &> /dev/null
 dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
-
-
-# -- Install Maui apps Debs.
-# -- Add custom launchers for Maui apps.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING MAUI APPS."
-echo -e "\n"
-
-mauipkgs='
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/mauikit/mauikit-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/buho/buho-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/contacts/contacts-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/index/index-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/nota/nota-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/pix/pix-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/station/station-1.0.0-Linux.deb
-https://raw.githubusercontent.com/mauikit/release-pkgs/master/vvave/vvave-1.0.0-Linux.deb
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/libs/qml-module-qmltermwidget_0.1+git20180903-1_amd64.deb
-'
-
-mkdir /maui_debs
-
-for x in $mauipkgs; do
-	wget -q -P /maui_debs $x
-done
-
-dpkg -iR /maui_debs &> /dev/null
-dpkg --configure -a &> /dev/null
-apt-mark hold qml-module-qmltermwidget
-rm -r /maui_debs
-
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
-whereis index buho nota vvave station pix contacts
 
 
 # -- Install liquidshell.
@@ -271,6 +212,7 @@ echo -e "\n"
 fw='
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/vega20_ta.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/bxt_huc_ver01_8_2893.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/tgl_dmc_ver2_04.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/raven_kicker_rlc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_asd.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_ce.bin
@@ -285,6 +227,24 @@ https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sdma1.b
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_smc.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_sos.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi10_vcn.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_asd.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_ce.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_ce_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_gpu_info.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_me.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_me_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec2.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_mec2_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_pfp.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_pfp_wks.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_rlc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sdma.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sdma1.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_smc.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_sos.bin
+https://raw.githubusercontent.com/UriHerrera/storage/master/Files/navi14_vcn.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_asd.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_ce.bin
 https://raw.githubusercontent.com/UriHerrera/storage/master/Files/renoir_gpu_info.bin
@@ -303,8 +263,8 @@ for x in $fw; do
     wget -q -P /fw_files $x
 done
 
-cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,renoir_*.bin} /lib/firmware/amdgpu/
-cp /fw_files/bxt_huc_ver01_8_2893.bin /lib/firmware/i915/
+cp /fw_files/{vega20_ta.bin,raven_kicker_rlc.bin,navi10_*.bin,navi14*_.bin,renoir_*.bin} /lib/firmware/amdgpu/
+cp /fw_files/{bxt_huc_ver01_8_2893.bin,tgl_dmc_ver2_04.bin} /lib/firmware/i915/
 
 rm -r /fw_files
 
@@ -359,7 +319,7 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 APPS_USR='
 '
 
-mkdir /Applications
+mkdir -p /Applications
 mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
@@ -400,6 +360,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
 # -- Enable GRUB parameter for disk encryption with Calamares.
 # -- Hide ecnryption checkbox from Calamares UI.
+# -- Add Maui app launchers.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -420,6 +381,7 @@ ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/+g' /etc/calamares/modules/partition.conf
+/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
 
 
 # -- Add itch.io store launcher.
