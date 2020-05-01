@@ -16,8 +16,6 @@ echo -e "\n"
 echo -e "INSTALLING BASIC PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list
-
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
@@ -37,10 +35,9 @@ lupin-casper
 squashfs-tools
 systemd-sysv
 user-setup
+usrmerge
 wget
 xz-utils
-usrmerge
-qt5-style-kvantum
 '
 
 apt update
@@ -60,15 +57,20 @@ echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.k
 apt-key add neon.key > /dev/null
 rm neon.key
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 1118213C > /dev/null
 
 
-# -- Use sources.list.base to build ISO.
-# -- Block installation of libsensors4.
+# -- Use sources.list.nitrux, sources.list.neon and sources.list.ubuntu for release.
 
-cp /configs/files/sources.list.base /etc/apt/sources.list
+cp -av /configs/files/sources.list.nitrux /etc/apt/sources.list
+cp -av /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+cp -av /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+cp -av /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-user-repo.list
+
+apt -qq update
+
+
+# -- Install base meta-packages.
 
 echo -e "\n"
 echo -e "INSTALLING BASE SYSTEM."
@@ -84,7 +86,6 @@ BASE_FILES_PKG='
 base-files=11.1.2+nitrux-legacy
 '
 
-apt update
 apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
 apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
@@ -95,8 +96,6 @@ apt-mark hold ${BASE_FILES_PKG//\\n/ }
 echo -e "\n"
 echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
-
-cp /configs/files/sources.list.desktop /etc/apt/sources.list
 
 CALAMARES_PACKAGES='
 calamares
@@ -112,6 +111,12 @@ partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
+plasma-pa=4:5.18.4.1-0ubuntu1
+xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
+ksysguard=4:5.18.4.1-0ubuntu1
+ksysguard-data=4:5.18.4.1-0ubuntu1
+ksysguardd=4:5.18.4.1-0ubuntu1
+libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 '
 
 OTHER_MISC_PKGS='
@@ -126,8 +131,6 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 '
 
-apt update
-apt -yy --fix-broken install
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${OTHER_MISC_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
@@ -288,7 +291,6 @@ done
 
 dpkg -iR /appimage_installer &> /dev/null
 dpkg --configure -a &> /dev/null
-apt -yy --fix-broken install
 rm -r /appimage_installer
 
 
@@ -445,15 +447,6 @@ systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online
 #FIXME This should be put in a package.
 
 sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
-
-
-# -- Use sources.list.nitrux, sources.list.neon and sources.list.ubuntu for release.
-
-/bin/cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-/bin/cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-repos.list
-/bin/cp /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-repos.list
-
-apt update &> /dev/null
 
 
 # -- Update initramfs.
