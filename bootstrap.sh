@@ -561,7 +561,7 @@ https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86
 '
 
 APPS_USR='
-https://files.kde.org/kdenlive/release/kdenlive-19.12.3-x86_64.appimage
+https://files.kde.org/kdenlive/release/kdenlive-20.04.0-x86_64.appimage
 https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
 https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
 https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200323-x86_64.AppImage
