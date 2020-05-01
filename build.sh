@@ -59,7 +59,7 @@ IMAGE=nitrux-$(printf $TRAVIS_BRANCH | sed 's/master/stable/')-amd64.iso
 
 # -- Prepare the directory where the filesystem will be created.
 
-wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-20.04-base-amd64.tar.gz
+wget -O base.tar.gz -q http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
 tar xf base.tar.gz -C $BUILD_DIR
 
 
