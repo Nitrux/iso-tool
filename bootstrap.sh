@@ -244,7 +244,7 @@ echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
 NX_DESKTOP_PKG='
-nx-desktop-sysv
+nx-desktop
 '
 
 MISC_KDE_PKGS='
