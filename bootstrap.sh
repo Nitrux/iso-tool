@@ -101,7 +101,6 @@ CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
 cryptsetup
-cryptsetup-run
 cryptmount
 lvm2
 '
