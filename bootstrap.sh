@@ -16,7 +16,7 @@ echo -e "\n"
 echo -e "INSTALLING BASIC PACKAGES."
 echo -e "\n"
 
-cp /configs/files/sources.list.bionic /etc/apt/sources.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 BASIC_PACKAGES='
 apt-transport-https
@@ -25,7 +25,7 @@ btrfs-progs
 ca-certificates
 casper
 dhcpcd5
-fuse
+fuse3
 gnupg2
 language-pack-en
 language-pack-en-base
@@ -40,6 +40,7 @@ user-setup
 wget
 xz-utils
 usrmerge
+qt5-style-kvantum
 '
 
 apt update
