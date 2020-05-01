@@ -125,6 +125,7 @@ inkscape
 lmms
 gimp
 libreoffice
+libreoffice-gtk3
 '
 
 NX_DESKTOP_PKG='
@@ -291,6 +292,7 @@ done
 
 dpkg -iR /appimage_installer &> /dev/null
 dpkg --configure -a &> /dev/null
+apt -yy --fix-broken install
 rm -r /appimage_installer
 
 
