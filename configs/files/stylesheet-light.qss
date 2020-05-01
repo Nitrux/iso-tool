@@ -8,9 +8,9 @@ DesktopPanel
   border-right: none;
   border-left: none;
   border-bottom: none;
-  padding: 8px 6px 8px 6px;
-  min-height: 30px;
-  max-height: 30px;
+  padding: 4px 6px 4px 6px;
+  min-height: 34px;
+  max-height: 34px;
 }
 
 ClockWidget QLabel#time
