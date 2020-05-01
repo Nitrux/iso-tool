@@ -42,8 +42,8 @@ xz-utils
 usrmerge
 '
 
-apt update &> /dev/null
-apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
+apt update
+apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Add key for Neon repository.
@@ -83,14 +83,10 @@ BASE_FILES_PKG='
 base-files=11.1.2+nitrux-legacy
 '
 
-apt update &> /dev/null
-apt -yy upgrade &> /dev/null
-apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends &> /dev/null
-apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades &> /dev/null
+apt update
+apt -yy install ${NITRUX_BASE_PACKAGES//\\n/ } --no-install-recommends
+apt -yy install ${BASE_FILES_PKG//\\n/ } --allow-downgrades
 apt-mark hold ${BASE_FILES_PKG//\\n/ }
-apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
 
 
 # -- Add NX Desktop metapackage.
@@ -130,7 +126,7 @@ NX_DESKTOP_PKG='
 nx-desktop-legacy
 '
 
-apt update &> /dev/null
+apt update
 apt -yy --fix-broken install
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${OTHER_MISC_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
