@@ -381,7 +381,7 @@ rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/
 ln -sv /usr/games/nsnake /bin/nsnake
 rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
-sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/+g' /etc/calamares/modules/partition.conf
+sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop,org.kde.contacts.desktop} /usr/share/applications
 
 
