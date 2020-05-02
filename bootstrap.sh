@@ -40,7 +40,7 @@ wget
 xz-utils
 '
 
-apt update
+apt -qq update
 apt -yy install ${BASIC_PACKAGES//\\n/ } --no-install-recommends
 
 
@@ -117,7 +117,6 @@ partitionmanager
 plasma-discover
 plasma-discover-backend-flatpak
 plasma-discover-backend-snap
-plasma-pa=4:5.18.4.1-0ubuntu1
 xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
 ksysguard=4:5.18.4.1-0ubuntu1
 ksysguard-data=4:5.18.4.1-0ubuntu1
@@ -345,117 +344,20 @@ mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
 ls -l /etc/skel/.local/bin/
 
 
-# -- Add AppImage providers for appimage-cli-tool
-
-echo -e "\n"
-echo -e "ADD APPIMAGE PROVIDERS."
-echo -e "\n"
-
-cp /configs/files/appimage-providers.yaml /etc/
-
-
-# -- Add config for SDDM.
-# -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
-# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
-# -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
-# -- Delete Calamares default desktop launcher.
-# -- Replace appimage-installer.desktop file.
-# -- Delete KDE Connect unnecessary menu entries.
-# -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
-# -- Remove htop and nsnake desktop launcher.
-# -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
-# -- Enable GRUB parameter for disk encryption with Calamares.
-# -- Hide ecnryption checkbox from Calamares UI.
-# -- Add Maui app launchers.
-# -- Overwrite kwinrc to disable translucency.
+# -- Changes specific to this image. If they cna be put in a package do so.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
 echo -e "ADD MISC. FIXES."
 echo -e "\n"
 
-cp /configs/files/sddm.conf /etc
-cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-/bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
-/bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
-rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-rm /usr/share/applications/calamares.desktop
-/bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop
-rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
+/bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop 
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
-rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
-ln -sv /usr/games/nsnake /bin/nsnake
-rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
 cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop} /usr/share/applications
-/bin/cp /configs/files/kwinrc /etc/skel/xdg
+/bin/cp /configs/files/kwinrc /etc/skel/xdg/kwinrc
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
-
-
-# -- Add itch.io store launcher.
-#FIXME This should be in a package.
-
-echo -e "\n"
-echo -e "ADD ITCH.IO LAUNCHER."
-echo -e "\n"
-
-
-mkdir -p /etc/skel/.local/share/applications
-cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
-cp /configs/scripts/install-itch-io.sh /etc/skel/.config
-
-
-# -- Add oh my zsh.
-#FIXME This should be put in a package.
-
-echo -e "\n"
-echo -e "ADD OH MY ZSH."
-echo -e "\n"
-
-git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
-
-
-# -- Remove dash and use mksh as /bin/sh.
-# -- Use zsh as default shell for all users.
-#FIXME This should be put in a package.
-
-echo -e "\n"
-echo -e "REMOVE DASH AND USE MKSH + ZSH."
-echo -e "\n"
-
-rm /bin/sh.distrib
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
-ln -sv /bin/mksh /bin/sh
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
-
-sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
-sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
-
-
-# -- Decrease timeout for systemd start and stop services.
-# -- Decrease the time to "raise a network interface". Default is FIVE MINUTES!?.
-#FIXME This should be put in a package.
-
-sed -i 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=5s/g' /etc/systemd/system.conf
-sed -i 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=5s/g' /etc/systemd/system.conf
-
-mkdir -p /etc/systemd/system/networking.service.d/
-bash -c 'echo -e "[Service]\nTimeoutStartSec=20sec" > /etc/systemd/system/networking.service.d/timeout.conf'
-
-
-# -- Disable systemd services not deemed necessary.
-# -- use 'mask' to fully disable them.
-
-systemctl mask avahi-daemon.service
-systemctl disable cupsd.service cupsd-browsed.service NetworkManager-wait-online.service keyboard-setup.service
-
-
-# -- Fix for broken udev rules (yes, it is broken by default).
-#FIXME This should be put in a package.
-
-sed -i 's/ACTION!="add", GOTO="libmtp_rules_end"/ACTION!="bind", ACTION!="add", GOTO="libmtp_rules_end"/g' /lib/udev/rules.d/69-libmtp.rules
+sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
 
 
 # -- Update initramfs.
