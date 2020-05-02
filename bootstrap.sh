@@ -368,6 +368,7 @@ cp /configs/files/appimage-providers.yaml /etc/
 # -- Enable GRUB parameter for disk encryption with Calamares.
 # -- Hide ecnryption checkbox from Calamares UI.
 # -- Add Maui app launchers.
+# -- Overwrite kwinrc to disable translucency.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -389,6 +390,8 @@ rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.I
 cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 /bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop} /usr/share/applications
+/bin/cp /configs/files/kwinrc /etc/skel/xdg
+sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 
 
 # -- Add itch.io store launcher.
