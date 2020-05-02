@@ -351,6 +351,7 @@ echo -e "\n"
 echo -e "ADD MISC. FIXES."
 echo -e "\n"
 
+/bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
 /bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop 
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 cp /configs/files/grub /etc/default/grub
