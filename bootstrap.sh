@@ -105,18 +105,9 @@ echo -e "\n"
 CALAMARES_PACKAGES='
 calamares
 calamares-settings-nitrux
-cryptsetup
-cryptsetup-run
-cryptmount
-lvm2
 '
 
 MISC_PACKAGES_KDE='
-kdenlive
-partitionmanager
-plasma-discover
-plasma-discover-backend-flatpak
-plasma-discover-backend-snap
 xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
 ksysguard=4:5.18.4.1-0ubuntu1
 ksysguard-data=4:5.18.4.1-0ubuntu1
@@ -124,22 +115,13 @@ ksysguardd=4:5.18.4.1-0ubuntu1
 libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 '
 
-OTHER_MISC_PKGS='
-firefox
-inkscape
-lmms
-gimp
-libreoffice-writer
-libreoffice-impress
-libreoffice-calc
-libreoffice-gtk3
-'
 
 NX_DESKTOP_PKG='
 nx-desktop-legacy
+nx-desktop-apps-legacy
 '
 
-apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${OTHER_MISC_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 apt clean &> /dev/null
