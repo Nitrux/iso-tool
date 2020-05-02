@@ -95,8 +95,7 @@ pushd maui_pkgs
     mv vvave-*amd64*.AppImage $BUILD_DIR/Applications/vvave
     mv station-*amd64*.AppImage $BUILD_DIR/Applications/station
     mv pix-*amd64*.AppImage $BUILD_DIR/Applications/pix
-    mv contacts-*amd64*.AppImage $BUILD_DIR/Applications/contacts
-    
+        
     ls -l $BUILD_DIR/Applications
 popd
 
@@ -133,7 +132,7 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $ISO_DIR/boot/grub/x86_64-efi
 (while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
-mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 524288
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 1048576
 
 
 # -- Generate the ISO image.
