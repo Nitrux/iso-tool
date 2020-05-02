@@ -207,10 +207,6 @@ echo -e "ADD LIQUIDSHELL CONFIG."
 echo -e "\n"
 
 cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
-mkdir -p /usr/share/liquidshell/style/
-cp /configs/files/{stylesheet-light.qss,stylesheet-dark.qss} /usr/share/liquidshell/style/
-cp /configs/files/liquidshellrc /etc/skel/.config/
-cp /configs/other/org.kde.liquidshell.desktop /etc/skel/.config/autostart
 
 
 # -- Add missing firmware modules.
