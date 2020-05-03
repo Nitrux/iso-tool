@@ -92,7 +92,6 @@ pushd maui_pkgs
     mv vvave-*amd64*.AppImage $BUILD_DIR/Applications/vvave
     mv station-*amd64*.AppImage $BUILD_DIR/Applications/station
     mv pix-*amd64*.AppImage $BUILD_DIR/Applications/pix
-    mv contacts-*amd64*.AppImage $BUILD_DIR/Applications/contacts
     
     ls -l $BUILD_DIR/Applications
 popd
