@@ -190,51 +190,6 @@ echo -e "\n"
 cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
 
 
-# -- Add /Applications to $PATH.
-
-echo -e "\n"
-echo -e "ADD /APPLICATIONS TO PATH."
-echo -e "\n"
-
-echo -e "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
-sed -i "/env_reset/d" /etc/sudoers
-
-
-# -- Add system AppImages.
-# -- Create /Applications directory for users.
-# -- Rename AppImages for easy access from the terminal.
-
-echo -e "\n"
-echo -e "ADD APPIMAGES."
-echo -e "\n"
-
-APPS_SYS='
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
-'
-
-APPS_USR='
-'
-
-mkdir -p /Applications
-mkdir -p /etc/skel/Applications
-mkdir -p /etc/skel/.local/bin
-
-for x in $APPS_SYS; do
-    wget -q -P /Applications $x
-done
-
-for x in $APPS_USR; do
-    wget -q -P /Applications $x
-done
-
-chmod +x /Applications/*
-
-mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
-
-ls -l /etc/skel/.local/bin/
-
-
 # -- Changes specific to this image. If they cna be put in a package do so.
 #FIXME These fixes should be included in a package.
 
