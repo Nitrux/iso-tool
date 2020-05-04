@@ -456,7 +456,7 @@ mkdir /latest_kernel
 
 for x in $kfiles; do
 echo -e "$x"
-    wget -q -P /latest_kernel $x
+	wget -q -P /latest_kernel $x
 done
 
 dpkg -iR /latest_kernel &> /dev/null
@@ -509,11 +509,11 @@ mkdir -p /etc/skel/Applications
 mkdir -p /etc/skel/.local/bin
 
 for x in $APPS_SYS; do
-    wget -q -P /Applications $x
+	wget -q -P /Applications $x
 done
 
 for x in $APPS_USR; do
-    wget -q -P /Applications $x
+	wget -q -P /Applications $x
 done
 
 chmod +x /Applications/*
@@ -551,19 +551,19 @@ _latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r |
 mkdir maui_pkgs
 
 (
-    cd maui_pkgs
-    /tmp/mc cp -r "nx/maui/nightly/$_latest" ./
-    
-    mv index-*amd64*.AppImage /Applications/index
-    mv buho-*amd64*.AppImage /Applications/buho
-    mv nota-*amd64*.AppImage /Applications/nota
-    mv vvave-*amd64*.AppImage /Applications/vvave
-    mv station-*amd64*.AppImage /Applications/station
-    mv pix-*amd64*.AppImage /Applications/pix
-    
-    chmod +x /Applications/*
-    
-    ls -l /Applications
+	cd maui_pkgs
+	/tmp/mc cp -r "nx/maui/nightly/$_latest" ./
+
+	mv index-*amd64*.AppImage /Applications/index
+	mv buho-*amd64*.AppImage /Applications/buho
+	mv nota-*amd64*.AppImage /Applications/nota
+	mv vvave-*amd64*.AppImage /Applications/vvave
+	mv station-*amd64*.AppImage /Applications/station
+	mv pix-*amd64*.AppImage /Applications/pix
+
+	chmod +x /Applications/*
+
+	ls -l /Applications
 )
 
 rm -r ./maui_pkgs
