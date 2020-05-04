@@ -542,6 +542,34 @@ ls -l /Applications
 ls -l /etc/skel/.local/bin/
 
 
+# -- Add MAUI Appimages
+
+wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+chmod +x /tmp/mc
+/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+_latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
+mkdir maui_pkgs
+
+(
+    cd maui_pkgs
+    /tmp/mc cp -r "nx/maui/nightly/$_latest" ./
+    
+    mv index-*amd64*.AppImage /Applications/index
+    mv buho-*amd64*.AppImage /Applications/buho
+    mv nota-*amd64*.AppImage /Applications/nota
+    mv vvave-*amd64*.AppImage /Applications/vvave
+    mv station-*amd64*.AppImage /Applications/station
+    mv pix-*amd64*.AppImage /Applications/pix
+    
+    chmod +x /Applications/*
+    
+    ls -l /Applications
+)
+
+rm -r ./maui_pkgs
+rm -r /tmp/mc
+
+
 # -- Add AppImage providers for appimage-cli-tool
 
 echo -e "\n"
