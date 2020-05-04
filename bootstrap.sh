@@ -190,30 +190,6 @@ echo -e "\n"
 cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
 
 
-# -- Add appimage-installer.
-
-echo -e "\n"
-echo -e "ADDING APPIMAGE-INSTALLER."
-echo -e "\n"
-
-
-app_deb='
-https://raw.githubusercontent.com/UriHerrera/storage/master/Debs/apps/appimage-installer_1.0.2-ubuntu-bionic-git20191214.b4fc9bf_amd64.deb
-'
-
-mkdir /appimage_installer
-
-for x in $app_deb; do
-echo -e "$x"
-    wget -q -P /appimage_installer $x
-done
-
-dpkg -iR /appimage_installer &> /dev/null
-dpkg --configure -a &> /dev/null
-apt -yy --fix-broken install
-rm -r /appimage_installer
-
-
 # -- Add /Applications to $PATH.
 
 echo -e "\n"
