@@ -70,7 +70,7 @@ chmod +x /bin/runch
 
 cp -r configs $BUILD_DIR/
 
-./download_maui_apps.sh
+bash download_maui_apps.sh
 
 cat bootstrap.sh | runch $BUILD_DIR bash || true
 
