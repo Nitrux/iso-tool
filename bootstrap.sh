@@ -160,6 +160,7 @@ rm -r /latest_kernel
 dpkg -iR /maui_debs
 rm -r /maui_debs
 
+
 # -- Changes specific to this image. If they can be put in a package do so.
 #FIXME These fixes should be included in a package.
 
