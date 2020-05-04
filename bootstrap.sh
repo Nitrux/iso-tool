@@ -52,12 +52,7 @@ echo -e "\n"
 echo -e "ADD REPOSITORY KEYS."
 echo -e "\n"
 
-wget -q https://archive.neon.kde.org/public.key -O neon.key
-echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-apt-key add neon.key > /dev/null
-rm neon.key
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 1118213C > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 1118213C 55751E5D > /dev/null
 
 
 # -- Use sources.list.nitrux, sources.list.neon and sources.list.ubuntu for release.
@@ -113,6 +108,7 @@ ksysguard=4:5.18.4.1-0ubuntu1
 ksysguard-data=4:5.18.4.1-0ubuntu1
 ksysguardd=4:5.18.4.1-0ubuntu1
 libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
+liquidshell
 '
 
 
@@ -159,38 +155,12 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- Install liquidshell.
-#FIXME This should be synced to our repository.
+# -- Install Maui apps.
 
-echo -e "\n"
-echo -e "INSTALLING LIQUIDSHELL."
-echo -e "\n"
+dpkg -iR /maui_debs
+rm -r /maui_debs
 
-
-liquidshell_deb='
-https://github.com/UriHerrera/storage/raw/master/Debs/apps/liquidshell_1.5-nxos-1_amd64.deb
-'
-
-mkdir /liquidshell_files
-
-for x in $liquidshell_deb; do
-echo -e "$x"
-    wget -q -P /liquidshell_files $x
-done
-
-dpkg -iR /liquidshell_files &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /liquidshell_files
-
-
-echo -e "\n"
-echo -e "ADD LIQUIDSHELL CONFIG."
-echo -e "\n"
-
-cp /configs/scripts/startliquidshell.sh /bin/startliquidshell
-
-
-# -- Changes specific to this image. If they cna be put in a package do so.
+# -- Changes specific to this image. If they can be put in a package do so.
 #FIXME These fixes should be included in a package.
 
 echo -e "\n"
@@ -198,7 +168,6 @@ echo -e "ADD MISC. FIXES."
 echo -e "\n"
 
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
-/bin/cp /configs/other/org.appimage.user-tool.desktop /usr/share/applications/org.appimage.user-tool.desktop 
 /bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 /bin/cp /configs/files/kwinrc /etc/xdg/kwinrc
 cp /configs/files/grub /etc/default/grub
@@ -208,7 +177,6 @@ sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantu
 
 
 # -- Update initramfs.
-
 
 echo -e "\n"
 echo -e "UPDATE INITRAMFS."
