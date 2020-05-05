@@ -64,17 +64,7 @@ echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.k
 apt-key add neon.key > /dev/null
 rm neon.key
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA > /dev/null
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 541922FB > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys BB23C00C61FC752C > /dev/null
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1118213C > /dev/null
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 > /dev/null
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C > /dev/null
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2836CB0A8AC93F7A > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 541922FB BB23C00C61FC752C 1118213C 3B4FE6ACC0B21F32 871920D1991BC93C 2836CB0A8AC93F7A > /dev/null
 
 
 # -- Copy sources.list files.
@@ -87,10 +77,10 @@ cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
 cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
-# cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+# cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt update &> /dev/null
 
