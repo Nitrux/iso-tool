@@ -157,7 +157,7 @@ rm -r /latest_kernel
 
 # -- Add MAUI Appimages
 
-wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
 _latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
@@ -189,7 +189,7 @@ cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
-sed -i 's/Icon=accessories-text-editor/Icon=maui-nota' /usr/applications/org.kde.nota.desktop
+sed -i 's/Icon=accessories-text-editor/Icon=maui-nota/' /usr/applications/org.kde.nota.desktop
 
 
 # -- Update initramfs.
