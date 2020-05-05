@@ -120,8 +120,12 @@ nx-desktop-apps-legacy
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+
+
+# -- Make sure to refresh appstream cache.
+
+appstreamcli refresh --force
+apt -qq update
 
 
 # -- No apt usage past this point. -- #

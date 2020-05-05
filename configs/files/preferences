@@ -13,3 +13,23 @@ Pin-Priority: -1
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
+
+Package: base-files
+Pin: release *
+Pin-Priority: -1
+
+Package: ksysguard
+Pin: release *
+Pin-Priority: -1
+
+Package: ksysguard-data
+Pin: release *
+Pin-Priority: -1
+
+Package: ksysguardd
+Pin: release *
+Pin-Priority: -1
+
+Package: libqt5webkit5
+Pin: release *
+Pin-Priority: -1
