@@ -128,6 +128,23 @@ appstreamcli refresh --force
 apt -qq update
 
 
+# -- Upgrade KDE apps.
+
+cp -av /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
+
+apt -qq update
+
+UPDT_KDE_PKGS='
+kdenlive
+'
+
+apt -yy install ${UPDT_KDE_PKGS//\\n/ } --only-upgrade
+
+rm /etc/apt/sources.list.d/neon-unstable-repo.list
+
+apt -qq update
+
+
 # -- No apt usage past this point. -- #
 #WARNING
 
