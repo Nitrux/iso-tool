@@ -115,7 +115,6 @@ liquidshell
 NX_DESKTOP_PKG='
 nx-desktop-legacy
 nx-desktop-apps-legacy
-nitrux-repository-settings
 '
 
 apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
