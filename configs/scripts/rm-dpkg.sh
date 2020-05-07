@@ -22,6 +22,8 @@ REMOVE_FILES='
 /usr/share/dpkg/
 /usr/share/lintian/overrides/dpkg
 /usr/share/polkit-1/actions/org.dpkg.pkexec.update-alternatives.policy
+/var/lib/apt/lists
+/var/cache/apt
 '
 
 rm -r ${REMOVE_FILES//\\n/ }
