@@ -92,7 +92,7 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $ISO_DIR/boot/grub/x86_64-efi
 (while :; do sleep 300; printf "."; done) &
 
 mkdir -p $ISO_DIR/casper
-mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp gzip -no-progress -b 16384
+mksquashfs $BUILD_DIR $ISO_DIR/casper/filesystem.squashfs -comp lz4 -no-progress -b 16384
 
 
 # -- Generate the ISO image.

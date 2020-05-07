@@ -21,6 +21,8 @@ cp /configs/files/sources.list.eoan /etc/apt/sources.list
 BASIC_PACKAGES='
 apt-transport-https
 apt-utils
+avahi-daemon
+bluez
 ca-certificates
 casper
 dhcpcd5
@@ -32,14 +34,12 @@ libelf1
 localechooser-data
 locales
 lupin-casper
+open-vm-tools
+rng-tools
+systemd
 user-setup
 wget
 xz-utils
-systemd
-avahi-daemon
-bluez
-open-vm-tools
-rng-tools
 '
 
 apt update &> /dev/null
@@ -88,7 +88,7 @@ apt update &> /dev/null
 # -- Use Glibc package from Devuan.
 
 GLIBC_2_30_PKG='
-libc6=2.30-4
+libc6=2.30-7
 '
 
 apt -yy install ${GLIBC_2_30_PKG//\\n/ } --no-install-recommends --allow-downgrades
@@ -219,6 +219,7 @@ echo -e "\n"
 
 NX_DESKTOP_PKG='
 nx-desktop
+nx-desktop-apps
 '
 
 MISC_KDE_PKGS='
@@ -244,20 +245,6 @@ ttf-ubuntu-font-family
 
 apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
-
-
-# -- Use sources.list.eaon to update packages and install brew.
-#FIXME We need to provide these packages from a repository of ours.
-
-echo -e "\n"
-echo -e "ADD BREW PACKAGE."
-echo -e "\n"
-
-ADD_BREW_PACKAGES='
-linuxbrew-wrapper
-'
-
-apt -yy install ${ADD_BREW_PACKAGES//\\n/ } --no-install-recommends
 
 
 # -- Upgrade KF5 libs for Latte Dock.
@@ -386,11 +373,10 @@ libkf5xmlgui-data
 libkf5xmlgui5
 '
 
-apt update
+apt update &> /dev/null
 apt-mark hold ${HOLD_KDE_PKGS//\\n/ }
 apt -yy install ${UPDT_KDE_PKGS//\\n/ } ${UPDT_KF5_LIBS//\\n/ } --only-upgrade --no-install-recommends
 apt -yy --fix-broken install
-apt -yy autoremove
 
 
 # -- Upgrade Glibc.
@@ -420,6 +406,7 @@ linux-firmware
 apt update &> /dev/null
 apt -yy install ${GLIBC_2_31_PKG//\\n/ } --no-install-recommends
 apt -yy install ${OTHER_MISC_PKGS//\\n/ } --no-install-recommends
+apt -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -454,84 +441,6 @@ dpkg --configure -a &> /dev/null
 rm -r /latest_kernel
 
 
-# -- Add /Applications to $PATH.
-
-echo -e "\n"
-echo -e "ADD /APPLICATIONS TO PATH."
-echo -e "\n"
-
-echo -e "PATH=$PATH:/Applications\n" > /etc/environment
-sed -i "s|secure_path\=.*$|secure_path=\"$PATH:/Applications\"|g" /etc/sudoers
-sed -i "/env_reset/d" /etc/sudoers
-
-
-# -- Add system AppImages.
-# -- Create /Applications directory for users.
-# -- Rename AppImages for easy access from the terminal.
-
-echo -e "\n"
-echo -e "ADD APPIMAGES."
-echo -e "\n"
-
-APPS_SYS='
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/znx-master-x86_64.AppImage
-https://github.com/Nitrux/znx-gui/releases/download/continuous-stable/znx-gui_master-x86_64.AppImage
-https://github.com/AppImage/AppImageUpdate/releases/download/continuous/AppImageUpdate-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/appimage-cli-tool-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/pnx-1.0.0-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/Binaries/vmetal-free-amd64
-https://github.com/ferion11/Proton_Appimage/releases/download/continuous/proton-linux-x86-v4.2-PlayOnLinux-x86_64.AppImage
-https://github.com/AppImage/appimaged/releases/download/continuous/appimaged-x86_64.AppImage
-'
-
-APPS_USR='
-https://files.kde.org/kdenlive/release/kdenlive-20.04.0-x86_64.appimage
-https://libreoffice.soluzioniopen.com/stable/fresh/LibreOffice-fresh.basic-x86_64.AppImage
-https://download.opensuse.org/repositories/home:/hawkeye116477:/waterfox/AppImage/waterfox-classic-latest-x86_64.AppImage
-https://github.com/aferrero2707/gimp-appimage/releases/download/continuous/GIMP_AppImage-git-2.10.19-20200323-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/mpv-0.30.0-x86_64.AppImage
-https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/Inkscape-0.92.3+68.glibc2.15-x86_64.AppImage
-https://github.com/LMMS/lmms/releases/download/v1.2.1/lmms-1.2.1-linux-x86_64.AppImage
-'
-
-mkdir -p /Applications
-mkdir -p /etc/skel/Applications
-mkdir -p /etc/skel/.local/bin
-
-for x in $APPS_SYS; do
-	wget -q -P /Applications $x
-done
-
-for x in $APPS_USR; do
-	wget -q -P /Applications $x
-done
-
-chmod +x /Applications/*
-
-mv /Applications/znx-master-x86_64.AppImage /Applications/znx
-mv /Applications/znx-gui_*-x86_64.AppImage /Applications/znx-gui
-mv /Applications/AppImageUpdate-x86_64.AppImage /Applications/appimageupdate
-mv /Applications/appimage-cli-tool-x86_64.AppImage /Applications/app
-mv /Applications/pnx-*-x86_64.AppImage /Applications/pnx
-mv /Applications/vmetal-free-amd64 /Applications/vmetal
-mv /Applications/proton-*-x86_64.AppImage /Applications/wine
-
-ln -sv /Applications/wine /Applications/wineserver
-
-mv /Applications/appimaged-x86_64.AppImage /etc/skel/.local/bin/appimaged
-
-mv /Applications/LibreOffice-*-x86_64.AppImage /Applications/libreoffice
-mv /Applications/waterfox-*-x86_64.AppImage /Applications/waterfox
-mv /Applications/kdenlive-*-x86_64.appimage /Applications/kdenlive
-mv /Applications/GIMP_AppImage-*-x86_64.AppImage /Applications/gimp
-mv /Applications/mpv-*-x86_64.AppImage /Applications/mpv
-mv /Applications/Inkscape-*-x86_64.AppImage /Applications/inkscape
-mv /Applications/lmms-*-x86_64.AppImage /Applications/lmms
-
-ls -l /Applications
-ls -l /etc/skel/.local/bin/
-
-
 # -- Add MAUI Appimages
 
 wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
@@ -560,98 +469,59 @@ rm -r ./maui_pkgs
 rm -r /tmp/mc
 
 
-# -- Add AppImage providers for appimage-cli-tool
-
-echo -e "\n"
-echo -e "ADD APPIMAGE PROVIDERS."
-echo -e "\n"
-
-cp /configs/files/appimage-providers.yaml /etc/
-
-
-# -- Add config for SDDM.
-# -- Add fix for https://bugs.launchpad.net/ubuntu/+source/network-manager/+bug/1638842.
-# -- Add policykit file for KDialog.
-# -- Add VMetal desktop launcher.
-# -- Add appimaged launcher to autostart.
-# -- Overwrite Qt settings file. This file was IN a package but caused installation conflicts with kio-extras.
-# -- Overwrite Plasma 5 notification positioning. This file was IN a package but caused installation conflicts with plasma-workspace.
-# -- For a strange reason, the Breeze cursors override some of our cursor assets. Delete them from the system to avoid this.
-# -- Add welcome wizard to app menu.
-# -- Waterfox-current AppImage is missing an icon the menu, add it for the default user.
-# -- Delete KDE Connect unnecessary menu entries.
-# -- Add znx-gui desktop launcher.
-# -- Remove Kinfocenter desktop launcher. The SAME package installs both, the KCM AND the standalone app (why?).
-# -- Remove htop and nsnake desktop launcher.
-# -- Link nsnake binary to /usr/bin.
-# -- Remove ibus-setup desktop launcher and the flipping emojier launcher.
-# -- Copy offline documentation to desktop folder.
-# -- Add Maui app launchers.
-# -- Add missing environment variables.
-#FIXME These fixes should be in a package.
+# -- Changes specific to this image. If they can be put in a package do so.
+#FIXME These fixes should be included in a package.
 
 echo -e "\n"
 echo -e "ADD MISC. FIXES."
 echo -e "\n"
 
-cp /configs/files/sddm.conf /etc
-cp /configs/files/10-globally-managed-devices.conf /etc/NetworkManager/conf.d/
-cp /configs/files/org.freedesktop.policykit.kdialog.policy /usr/share/polkit-1/actions/
-cp /configs/other/vmetal.desktop /usr/share/applications
-cp /configs/other/appimagekit-appimaged.desktop /etc/skel/.config/autostart/
-/bin/cp /configs/files/Trolltech.conf /etc/xdg/Trolltech.conf
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
-rm -R /usr/share/icons/breeze_cursors /usr/share/icons/Breeze_Snow
-cp /configs/other/nx-welcome-wizard.desktop /usr/share/applications
-mkdir -p /etc/skel/.local/share/icons/hicolor/128x128/apps
-rm /usr/share/applications/org.kde.kdeconnect.sms.desktop /usr/share/applications/org.kde.kdeconnect_open.desktop /usr/share/applications/org.kde.kdeconnect.app.desktop
-cp /configs/other/znx-gui.desktop /usr/share/applications
-/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
-rm /usr/share/applications/htop.desktop /usr/share/applications/mc.desktop /usr/share/applications/mcedit.desktop /usr/share/applications/nsnake.desktop
-ln -sv /usr/games/nsnake /usr/bin/nsnake
-rm /usr/share/applications/ibus-setup* /usr/share/applications/org.freedesktop.IBus* /usr/share/applications/org.kde.plasma.emojier.desktop /usr/share/applications/info.desktop
-mkdir -p /etc/skel/Desktop
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
-/bin/cp /configs/other/{org.kde.buho.desktop,org.kde.index.desktop,org.kde.nota.desktop,org.kde.pix.desktop,org.kde.station.desktop,org.kde.vvave.desktop} /usr/share/applications
-echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
-echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
+rm -r /home/travis
 
 
-# -- Workarounds for PNX.
-#FIXME These need to be fixed in PNX.
+# -- Implement New FHS.
+#FIXME Replace with kernel patch and userland tool.
 
-echo -e "\n"
-echo -e "ADD WORKAROUNDS FOR PNX."
-echo -e "\n"
 
-mkdir -p /var/lib/pacman/
-mkdir -p /etc/pacman.d/
-mkdir -p /usr/share/pacman/keyrings
+mkdir -p /Core/Boot
+mkdir -p /Core/Boot/ESP
+mkdir -p /Core/System/Deployments
+mkdir -p /Devices
+mkdir -p /Devices/Removable
+mkdir -p /System/Binaries
+mkdir -p /System/Binaries/Optional
+mkdir -p /System/Configuration
+mkdir -p /System/DevicesFS
+mkdir -p /System/Libraries
+mkdir -p /System/Mount/Filesystems
+mkdir -p /System/Processes
+mkdir -p /System/Runtime
+mkdir -p /System/Server/Services
+mkdir -p /System/TempFS
+mkdir -p /System/Variable
+mkdir -p /Users/
 
-cp /configs/files/pacman.conf /etc
-cp /configs/files/mirrorlist /etc/pacman.d
-cp -r /configs/other/pacman/* /usr/share/pacman/keyrings
+# mount --bind /boot /Core/Boot
+# mount --bind /dev /Devices
+# mount --bind /etc /System/Configuration
+# mount --bind /home /Users
+# mount --bind /mnt /System/Mount/Filesystems
+# mount --bind /opt /System/Binaries/Optional
+# mount --bind /proc /System/Processes
+# mount --bind /run /System/Runtime
+# mount --bind /srv /System/Server/Services
+# mount --bind /sys /System/DevicesFS
+# mount --bind /tmp /System/TempFS
+# mount --bind /usr/bin /System/Binaries
+# mount --bind /usr/lib /System/Libraries
+# mount --bind /usr/share /System/Resources/Shared
+# mount --bind /var /System/Variable
 
-ln -sv /home/.pnx/usr/lib/dri /usr/lib/dri
-ln -sv /home/.pnx/usr/lib/pulseaudio /usr/lib/pulseaudio
-ln -sv /home/.pnx/usr/lib/gdk-pixbuf-2.0 /usr/lib/gdk-pixbuf-2.0
-ln -sv /home/.pnx/usr/lib/gs-plugins-13 /usr/lib/gs-plugins-13
-ln -sv /home/.pnx/usr/lib/liblmdb.so /usr/lib/liblmdb.so
-ln -sv /home/.pnx/usr/lib/systemd /usr/lib/systemd
-ln -sv /home/.pnx/usr/lib/samba /usr/lib/samba
-ln -sv /home/.pnx/usr/lib/girepository-1.0 /usr/lib/girepository-1.0
-ln -sv /home/.pnx/usr/lib/tracker-2.0 /usr/lib/tracker-2.0
-ln -sv /home/.pnx/usr/lib/WebKitNetworkProcess /usr/lib/WebKitNetworkProcess
-ln -sv /home/.pnx/usr/lib/epiphany /usr/lib/epiphany
-ln -sv /home/.pnx/usr/lib/opera /usr/lib/opera
-ln -sv /home/.pnx/usr/lib/firefox /usr/lib/firefox
-ln -sv /home/.pnx/usr/share/tracker /usr/share/tracker
-ln -sv /home/.pnx/usr/share/xonotic /usr/share/xonotic
 
-mkdir -p /usr/lib/zsh/5.8/zsh/
-
-ln -sv /home/.pnx/usr/lib/zsh/5.8/zsh/datetime.so /usr/lib/zsh/5.8/zsh/datetime.so
+cp /configs/files/hidden /.hidden
 
 
 # -- Add vfio modules and files.
@@ -694,73 +564,7 @@ cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
 chmod a+x /usr/bin/vfio-pci-override-vga.sh
 
 
-# -- Add itch.io store launcher.
-#FIXME This should be in a package.
-
-echo -e "\n"
-echo -e "ADD ITCH.IO LAUNCHER."
-echo -e "\n"
-
-
-mkdir -p /etc/skel/.local/share/applications
-cp /configs/other/install.itch.io.desktop /etc/skel/.local/share/applications
-cp /configs/scripts/install-itch-io.sh /etc/skel/.config
-
-
-# -- Add configuration for npm to install packages in home and without sudo and update it.
-# -- Delete 'travis' folder that holds npm cache during build.
-#FIXME This should be in a package.
-
-echo -e "\n"
-echo -e "ADD NPM INSTALL WITHOUT SUDO AND UPDATE IT."
-echo -e "\n"
-
-mkdir /etc/skel/.npm-packages
-cp /configs/files/npmrc /etc/skel/.npmrc
-npm install npm@latest -g
-rm -r /home/travis
-
-
-# -- Add nativefier launcher.
-#FIXME This should be in a package.
-
-echo -e "\n"
-echo -e "ADD NATIVEFIER LAUNCHER."
-echo -e "\n"
-
-
-cp /configs/other/install.nativefier.desktop /etc/skel/.config/autostart/
-cp /configs/scripts/install-nativefier.sh /etc/skel/.config
-
-
-# -- Add oh my zsh.
-#FIXME This should be put in a package.
-
-echo -e "\n"
-echo -e "ADD OH MY ZSH."
-echo -e "\n"
-
-git clone https://github.com/robbyrussell/oh-my-zsh.git /etc/skel/.oh-my-zsh
-
-
-# -- Remove dash and use mksh as /bin/sh.
-# -- Use zsh as default shell for all users.
-#FIXME This should be put in a package.
-
-echo -e "\n"
-echo -e "REMOVE DASH AND USE MKSH + ZSH."
-echo -e "\n"
-
-rm /bin/sh.distrib
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
-ln -sv /bin/mksh /bin/sh
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path dash &> /dev/null
-
-sed -i 's+SHELL=/bin/sh+SHELL=/bin/zsh+g' /etc/default/useradd
-sed -i 's+DSHELL=/bin/bash+DSHELL=/bin/zsh+g' /etc/adduser.conf
-
-
-# -- Use GZIP compression when creating the initramfs.
+# -- Use LZ4 compression when creating the initramfs.
 # -- Add initramfs hook script.
 # -- Add the persistence and update the initramfs.
 # -- Add znx_dev_uuid parameter.
