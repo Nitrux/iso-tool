@@ -379,10 +379,10 @@ apt -yy install ${UPDT_KDE_PKGS//\\n/ } ${UPDT_KF5_LIBS//\\n/ } --only-upgrade -
 apt -yy --fix-broken install
 
 
-# -- Upgrade Glibc.
+# -- Upgrade and install misc. packages.
 
 echo -e "\n"
-echo -e "UPGRADING MISC. PACKAGES."
+echo -e "UPGRADING/INSTALLING MISC. PACKAGES."
 echo -e "\n"
 
 cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
@@ -442,6 +442,9 @@ rm -r /latest_kernel
 
 
 # -- Add MAUI Appimages
+echo -e "\n"
+echo -e "ADD MAUI APPS."
+echo -e "\n"
 
 wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
@@ -485,6 +488,9 @@ rm -r /home/travis
 # -- Implement New FHS.
 #FIXME Replace with kernel patch and userland tool.
 
+echo -e "\n"
+echo -e "NEW FHS."
+echo -e "\n"
 
 mkdir -p /Core/Boot
 mkdir -p /Core/Boot/ESP
@@ -519,7 +525,6 @@ mkdir -p /Users/
 # mount --bind /usr/lib /System/Libraries
 # mount --bind /usr/share /System/Resources/Shared
 # mount --bind /var /System/Variable
-
 
 cp /configs/files/hidden /.hidden
 
