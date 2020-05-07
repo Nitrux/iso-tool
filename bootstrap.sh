@@ -104,9 +104,6 @@ calamares-settings-nitrux
 
 MISC_PACKAGES_KDE='
 xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
-ksysguard=4:5.18.4.1-0ubuntu1
-ksysguard-data=4:5.18.4.1-0ubuntu1
-ksysguardd=4:5.18.4.1-0ubuntu1
 libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 liquidshell
 '
