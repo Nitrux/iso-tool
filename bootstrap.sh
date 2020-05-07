@@ -59,12 +59,7 @@ echo -e "\n"
 echo -e "ADD REPOSITORY KEYS."
 echo -e "\n"
 
-wget -q https://archive.neon.kde.org/public.key -O neon.key
-echo -e "ee86878b3be00f5c99da50974ee7c5141a163d0e00fccb889398f1a33e112584 neon.key" | sha256sum -c &&
-apt-key add neon.key > /dev/null
-rm neon.key
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1B69B2DA 541922FB BB23C00C61FC752C 1118213C 3B4FE6ACC0B21F32 871920D1991BC93C 2836CB0A8AC93F7A > /dev/null
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 55751E5D 1B69B2DA 541922FB BB23C00C61FC752C 1118213C 3B4FE6ACC0B21F32 871920D1991BC93C 2836CB0A8AC93F7A > /dev/null
 
 
 # -- Copy sources.list files.
@@ -446,7 +441,7 @@ echo -e "\n"
 echo -e "ADD MAUI APPS."
 echo -e "\n"
 
-wget https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
 _latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
