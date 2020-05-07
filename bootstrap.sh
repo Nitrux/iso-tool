@@ -475,6 +475,8 @@ echo -e "ADD MISC. FIXES."
 echo -e "\n"
 
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
+echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
+echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
 cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
 cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
 rm -r /home/travis
