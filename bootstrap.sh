@@ -146,33 +146,6 @@ apt -qq update
 #WARNING
 
 
-# -- Install the kernel.
-#FIXME This should be synced to our repository.
-
-echo -e "\n"
-echo -e "INSTALLING KERNEL."
-echo -e "\n"
-
-
-kfiles='
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-headers-5.4.28-050428_5.4.28-050428.202003250833_all.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-headers-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-image-unsigned-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
-https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.28/linux-modules-5.4.28-050428-generic_5.4.28-050428.202003250833_amd64.deb
-'
-
-mkdir /latest_kernel
-
-for x in $kfiles; do
-echo -e "$x"
-    wget -q -P /latest_kernel $x
-done
-
-dpkg -iR /latest_kernel &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -r /latest_kernel
-
-
 # -- Add MAUI Appimages
 
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
