@@ -40,6 +40,7 @@ systemd
 user-setup
 wget
 xz-utils
+ufw
 '
 
 apt update &> /dev/null
@@ -233,16 +234,12 @@ plasma-pa=4:5.17.5-2
 bluedevil
 '
 
-MISC_DESKTOP_PKGS='
-ufw=0.36-0ubuntu0.18.04.1
-'
-
 NX_DESKTOP_PKG='
 nx-desktop
 nx-desktop-apps
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${MISC_DESKTOP_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
