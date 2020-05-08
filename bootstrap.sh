@@ -212,14 +212,11 @@ echo -e "\n"
 echo -e "INSTALLING DESKTOP PACKAGES."
 echo -e "\n"
 
-NX_DESKTOP_PKG='
-nx-desktop
-nx-desktop-apps
-'
-
-MISC_KDE_PKGS='
-plasma-pa=4:5.17.5-2
-bluedevil
+XENIAL_PACKAGES='
+plymouth=0.9.2-3ubuntu13
+plymouth-label=0.9.2-3ubuntu13
+plymouth-themes=0.9.2-3ubuntu13
+ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
@@ -231,14 +228,21 @@ libpulsedsp=13.0-5
 pulseaudio-module-bluetooth=13.0-5
 '
 
-XENIAL_PACKAGES='
-plymouth=0.9.2-3ubuntu13
-plymouth-label=0.9.2-3ubuntu13
-plymouth-themes=0.9.2-3ubuntu13
-ttf-ubuntu-font-family
+MISC_KDE_PKGS='
+plasma-pa=4:5.17.5-2
+bluedevil
 '
 
-apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+MISC_DESKTOP_PKGS='
+ufw=0.36-0ubuntu0.18.04.1
+'
+
+NX_DESKTOP_PKG='
+nx-desktop
+nx-desktop-apps
+'
+
+apt -yy install ${XENIAL_PACKAGES//\\n/ } ${DEVUAN_PULSE_PKGS//\\n/ } ${MISC_KDE_PKGS//\\n/ } ${NX_DESKTOP_PKG//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 
 
@@ -395,6 +399,7 @@ gcc-10-base
 OTHER_MISC_PKGS='
 gamemode
 tmate
+linux-aws
 linux-firmware
 '
 
