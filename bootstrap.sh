@@ -426,7 +426,7 @@ puts "ADDING MAUI APPS."
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-_latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
+_latest=$(/tmp/mc ls nx/maui/stable | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
 mkdir maui_pkgs
 
 (
