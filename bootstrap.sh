@@ -563,8 +563,8 @@ update-initramfs -u
 lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 
-	Remove APT.
-#FIXME This should be put in a package.
+#	Remove APT.
+#	FIXME: This should be put in a package.
 
 puts "REMOVING APT."
 
@@ -577,7 +577,7 @@ REMOVE_APT='
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_APT &> /dev/null
 
 
-	Clean the filesystem.
+#	Clean the filesystem.
 
 puts "REMOVING CASPER."
 
@@ -589,15 +589,15 @@ REMOVE_PACKAGES='
 /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_PACKAGES &> /dev/null
 
 
-	No dpkg usage past this point. -- #
-#WARNING
+#	WARNING:
+#	No dpkg usage past this point.
 
 
-	Use script to remove dpkg.
+#	Use script to remove dpkg.
 
 puts "REMOVING DPKG."
 
-/configs/scripts/./rm-dpkg.sh
+/configs/scripts/rm-dpkg.sh
 rm /configs/scripts/rm-dpkg.sh
 
 
