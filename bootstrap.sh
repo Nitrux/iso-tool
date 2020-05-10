@@ -43,8 +43,8 @@ BASIC_PACKAGES='
 	ufw
 '
 
-apt update &> /dev/null
-apt -q -yy install $BASIC_PACKAGES --no-install-recommends
+apt -qq update &> /dev/null
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES --no-install-recommends
 
 
 #	Add key for Neon repository.
@@ -82,7 +82,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt update &> /dev/null
+apt -qq update &> /dev/null
 
 
 #	Use Glibc package from Devuan.
@@ -91,7 +91,7 @@ GLIBC_2_30_PKG='
 	libc6=2.30-7
 '
 
-apt -q -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
 
 
 #	Use elogind packages from Devuan.
@@ -119,10 +119,10 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-apt -q -yy purge --remove $REMOVE_SYSTEMD_PKGS
-apt -q -yy autoremove
-apt -q -yy install $ELOGIND_PKGS $APT_PKGS --no-install-recommends --allow-downgrades
-apt -q -yy --fix-broken install
+apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
+apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $APT_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
 #	Use PolicyKit packages from Devuan.
@@ -149,7 +149,7 @@ DEVUAN_NM_UD2='
 	init-system-helpers=1.56+nmu1+devuan2
 '
 
-apt -q -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Add SysV as init.
@@ -163,7 +163,7 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-apt -q -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Check that init system is not systemd.
@@ -195,7 +195,7 @@ NITRUX_BF_PKG='
 	base-files
 '
 
-apt -q -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
 
 
 #	Add NX Desktop metapackage.
@@ -228,8 +228,8 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps
 '
 
-apt -q -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends
-apt -q -yy --fix-broken install
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
 #	Upgrade KF5 libs for Latte Dock.
@@ -356,10 +356,10 @@ UPDT_KF5_LIBS='
 	libkf5xmlgui5
 '
 
-apt update &> /dev/null
+apt -qq update &> /dev/null
 apt-mark hold $HOLD_KDE_PKGS
-apt -q -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS --only-upgrade --no-install-recommends
-apt -q -yy --fix-broken install
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS --only-upgrade --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
 #	Upgrade and install misc. packages.
@@ -384,9 +384,9 @@ OTHER_MISC_PKGS='
 	linux-firmware
 '
 
-apt update &> /dev/null
-apt -q -yy install $GLIBC_2_31_PKG $OTHER_MISC_PKGS --no-install-recommends
-apt -q -yy autoremove
+apt -qq update &> /dev/null
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_31_PKG $OTHER_MISC_PKGS --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -431,6 +431,9 @@ mkdir maui_pkgs
 
 (
 	cd maui_pkgs
+	
+	ls -l /tmp/mc cp -r "nx/maui/stable/$_latest"
+	
 	/tmp/mc cp -r "nx/maui/stable/$_latest" ./
 
 	mv index-*amd64*.AppImage /Applications/index
