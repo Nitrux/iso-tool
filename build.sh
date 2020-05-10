@@ -2,7 +2,7 @@
 
 #	Exit on errors.
 
-set -xe
+set -e
 
 
 #	base image URL.
@@ -39,7 +39,7 @@ XORRISO_PACKAGES='
 '
 
 apt update &> /dev/null
-apt -yy install $XORRISO_PACKAGES --no-install-recommends
+apt -q -yy install $XORRISO_PACKAGES --no-install-recommends
 
 
 #	Prepare the directories for the build.
