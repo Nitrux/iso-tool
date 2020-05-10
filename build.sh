@@ -76,15 +76,14 @@ runch \
 
 
 #	Copy the kernel and initramfs to $iso_dir.
-#	BUG: vmlinuz and initrd are not moved to / they're put and left at /boot
+#	BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
 mkdir -p $iso_dir/boot
 
-#	using 'mv' probably fixes the bug mentioned above (if i understand it well).
+cp $(echo $build_dir/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/kernel
+cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/initramfs
 
-mv $(echo $build_dir/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/kernel
-mv $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/initramfs
-
+rm -f $build_dir/boot/*
 
 #	WARNING FIXME BUG: This file isn't copied during the chroot.
 
@@ -94,7 +93,7 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 
 #	Compress the root filesystem.
 
-( while :; do sleep 300; printf "."; done ) &
+( while :; do sleep 300; printf ".\n"; done ) &
 
 mkdir -p $iso_dir/casper
 mksquashfs $build_dir $iso_dir/casper/filesystem.squashfs -comp lz4 -no-progress -b 16384
