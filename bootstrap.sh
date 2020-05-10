@@ -44,7 +44,7 @@ BASIC_PACKAGES='
 '
 
 apt update &> /dev/null
-apt -yy install $BASIC_PACKAGES --no-install-recommends
+apt -q -yy install $BASIC_PACKAGES --no-install-recommends
 
 
 #	Add key for Neon repository.
@@ -91,7 +91,7 @@ GLIBC_2_30_PKG='
 	libc6=2.30-7
 '
 
-apt -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
+apt -q -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
 
 
 #	Use elogind packages from Devuan.
@@ -119,10 +119,10 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-apt -yy purge --remove $REMOVE_SYSTEMD_PKGS
-apt -yy autoremove
-apt -yy install $ELOGIND_PKGS $APT_PKGS --no-install-recommends --allow-downgrades
-apt -yy --fix-broken install
+apt -q -yy purge --remove $REMOVE_SYSTEMD_PKGS
+apt -q -yy autoremove
+apt -q -yy install $ELOGIND_PKGS $APT_PKGS --no-install-recommends --allow-downgrades
+apt -q -yy --fix-broken install
 
 
 #	Use PolicyKit packages from Devuan.
@@ -149,7 +149,7 @@ DEVUAN_NM_UD2='
 	init-system-helpers=1.56+nmu1+devuan2
 '
 
-apt -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
+apt -q -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Add SysV as init.
@@ -163,7 +163,7 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-apt -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
+apt -q -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Check that init system is not systemd.
@@ -195,7 +195,7 @@ NITRUX_BF_PKG='
 	base-files
 '
 
-apt -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
+apt -q -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
 
 
 #	Add NX Desktop metapackage.
@@ -228,8 +228,8 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps
 '
 
-apt -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends
-apt -yy --fix-broken install
+apt -q -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends
+apt -q -yy --fix-broken install
 
 
 #	Upgrade KF5 libs for Latte Dock.
@@ -358,8 +358,8 @@ UPDT_KF5_LIBS='
 
 apt update &> /dev/null
 apt-mark hold $HOLD_KDE_PKGS
-apt -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS --only-upgrade --no-install-recommends
-apt -yy --fix-broken install
+apt -q -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS --only-upgrade --no-install-recommends
+apt -q -yy --fix-broken install
 
 
 #	Upgrade and install misc. packages.
@@ -385,8 +385,8 @@ OTHER_MISC_PKGS='
 '
 
 apt update &> /dev/null
-apt -yy install $GLIBC_2_31_PKG $OTHER_MISC_PKGS --no-install-recommends
-apt -yy autoremove
+apt -q -yy install $GLIBC_2_31_PKG $OTHER_MISC_PKGS --no-install-recommends
+apt -q -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -433,7 +433,7 @@ mkdir maui_pkgs
 	cd maui_pkgs
 	/tmp/mc cp -r "nx/maui/stable/$_latest" ./
 
-	mkdir /Appications
+	mkdir /Applications
 
 	mv index-*amd64*.AppImage /Applications/index
 	mv buho-*amd64*.AppImage /Applications/buho
