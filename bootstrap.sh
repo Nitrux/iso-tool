@@ -433,8 +433,6 @@ mkdir maui_pkgs
 	cd maui_pkgs
 	/tmp/mc cp -r "nx/maui/stable/$_latest" ./
 
-	mkdir /Applications
-
 	mv index-*amd64*.AppImage /Applications/index
 	mv buho-*amd64*.AppImage /Applications/buho
 	mv nota-*amd64*.AppImage /Applications/nota
