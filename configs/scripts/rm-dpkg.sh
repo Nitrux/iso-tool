@@ -1,7 +1,5 @@
 #! /bin/bash
 
-set -x
-
 REMOVE_FILES='
 /etc/alternatives/README
 /etc/cron.daily/dpkg
