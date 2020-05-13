@@ -2,6 +2,7 @@
 bin
 boot
 cdrom
+configs
 dev
 etc
 home
