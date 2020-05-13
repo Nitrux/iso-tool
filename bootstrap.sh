@@ -422,7 +422,7 @@ mkdir maui_pkgs
 (
 	cd maui_pkgs
 
-	_apps=$(mc ls nx/maui/stable/ | grep -Eo "\w*/")
+	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
 	
 	for i in $_apps; do
         _branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
