@@ -393,9 +393,9 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_31_PKG $OTHER_MISC_PKGS --no-ins
 puts "INSTALL KERNEL."
 
 INSTALL_KERNEL='
-	linux-image-unsigned-5.4.21-050421-generic 
-	linux-modules-5.4.21-050421-generic 
-	linux-headers-5.4.21-050421 
+	linux-image-unsigned-5.4.21-050421-generic
+	linux-modules-5.4.21-050421-generic
+	linux-headers-5.4.21-050421
 	linux-headers-5.4.21-050421-generic
 '
 
@@ -421,7 +421,7 @@ mkdir maui_pkgs
 
 (
 	cd maui_pkgs
-	
+
 	/tmp/mc cp -r "nx/maui/nightly/$_latest" ./
 
 	mv index-*amd64*.AppImage /Applications/index
@@ -437,7 +437,7 @@ mkdir maui_pkgs
 )
 
 rm -r \
-	./maui_pkgs \
+	maui_pkgs \
 	/tmp/mc
 
 
@@ -462,23 +462,24 @@ rm -r /home/travis
 
 puts "CREATING NEW FHS."
 
-mkdir -p /Core/Boot
-mkdir -p /Core/Boot/ESP
-mkdir -p /Core/System/Deployments
-mkdir -p /Devices
-mkdir -p /Devices/Removable
-mkdir -p /System/Binaries
-mkdir -p /System/Binaries/Optional
-mkdir -p /System/Configuration
-mkdir -p /System/DevicesFS
-mkdir -p /System/Libraries
-mkdir -p /System/Mount/Filesystems
-mkdir -p /System/Processes
-mkdir -p /System/Runtime
-mkdir -p /System/Server/Services
-mkdir -p /System/TempFS
-mkdir -p /System/Variable
-mkdir -p /Users/
+mkdir -p \
+	/Core/Boot \
+	/Core/Boot/ESP \
+	/Core/System/Deployments \
+	/Devices \
+	/Devices/Removable \
+	/System/Binaries \
+	/System/Binaries/Optional \
+	/System/Configuration \
+	/System/DevicesFS \
+	/System/Libraries \
+	/System/Mount/Filesystems \
+	/System/Processes \
+	/System/Runtime \
+	/System/Server/Services \
+	/System/TempFS \
+	/System/Variable \
+	/Users/
 
 # ln -sf /boot /System/Boot
 # ln -sf /dev /Devices
