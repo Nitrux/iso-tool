@@ -386,6 +386,20 @@ OTHER_MISC_PKGS='
 
 apt -qq update &> /dev/null
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_31_PKG $OTHER_MISC_PKGS --no-install-recommends
+
+
+#	Install the kernel.
+
+puts "INSTALL KERNEL."
+
+INSTALL_KERNEL='
+	linux-image-unsigned-5.4.21-050421-generic 
+	linux-modules-5.4.21-050421-generic 
+	linux-headers-5.4.21-050421 
+	linux-headers-5.4.21-050421-generic
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL $OTHER_MISC_PKGS --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -393,30 +407,6 @@ apt autoclean &> /dev/null
 
 #	WARNING:
 #	No apt usage past this point.
-
-
-#	Install the kernel.
-#	FIXME: This should be synced to our repository.
-
-puts "INSTALLING KERNEL."
-
-kfiles='
-	https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421_5.4.21-050421.202002191431_all.deb
-	https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-headers-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
-	https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-image-unsigned-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
-	https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4.21/linux-modules-5.4.21-050421-generic_5.4.21-050421.202002191431_amd64.deb
-'
-
-mkdir /latest_kernel
-
-for x in $kfiles; do
-	echo "$x"
-	wget -q -P /latest_kernel "$x"
-done
-
-dpkg -iR /latest_kernel &> /dev/null
-dpkg --configure -a &> /dev/null
-rm -rf /latest_kernel
 
 
 #	Add MAUI Appimages.
