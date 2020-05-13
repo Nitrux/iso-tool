@@ -1,5 +1,6 @@
 #! /bin/bash
 
+set -x
 
 export LANG=C
 export LC_ALL=C
@@ -486,17 +487,6 @@ mkdir -p \
 	/System/TempFS \
 	/System/Variable \
 	/Users/
-
-# ln -sf /boot /System/Boot
-# ln -sf /dev /Devices
-# ln -sf /etc /System/Configuration
-# ln -sf /home /Users
-# ln -sf /opt /System/Binaries/Optional
-# ln -sf /sys /System/DevicesFS
-# ln -sf /tmp /System/TempFS
-# ln -sf /usr/bin /System/Binaries
-# ln -sf /usr/lib /System/Libraries
-# ln -sf /usr/share /System/Resources/Shared
 
 cp /configs/files/hidden /.hidden
 
