@@ -421,12 +421,12 @@ mkdir maui_pkgs
 	cd maui_pkgs
 
 	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
-	
+
 	for i in $_apps; do
         _branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
         /tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
 	done
-	
+
 	mv index-*amd64*.AppImage /Applications/index
 	mv buho-*amd64*.AppImage /Applications/buho
 	mv nota-*amd64*.AppImage /Applications/nota
