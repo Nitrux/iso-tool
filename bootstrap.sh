@@ -87,7 +87,7 @@ apt -qq update &> /dev/null
 #	Use Glibc package from Devuan.
 
 GLIBC_2_30_PKG='
-	libc6=2.30-7
+	libc6=2.30-8
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
