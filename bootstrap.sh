@@ -103,9 +103,14 @@ calamares-settings-nitrux
 '
 
 MISC_PACKAGES_KDE='
-xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build65
+xdg-desktop-portal-kde=5.18.4.1-0xneon+18.04+bionic+build66
 libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 liquidshell
+'
+
+OTHER_MISC_PACKAGES='
+virtualbox-guest-dkms
+virtualbox-guest-x11
 '
 
 
@@ -114,7 +119,7 @@ nx-desktop-legacy
 nx-desktop-apps-legacy
 '
 
-apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
+apt -yy install ${CALAMARES_PACKAGES//\\n/ } ${MISC_PACKAGES_KDE//\\n/ } ${OTHER_MISC_PACKAGES//\\n/ } ${NX_DESKTOP_PKG//\\n/ } --no-install-recommends
 apt -yy --fix-broken install
 apt -yy autoremove
 
