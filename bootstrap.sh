@@ -405,24 +405,58 @@ apt autoclean &> /dev/null
 #	No apt usage past this point.
 
 
+# #	Add MAUI Appimages.
+# 
+# puts "ADDING MAUI APPS (STABLE)."
+# 
+# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+# chmod +x /tmp/mc
+# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+# mkdir maui_pkgs
+# 
+# (
+# 	cd maui_pkgs
+# 
+# 	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
+# 
+# 	for i in $_apps; do
+#         _branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
+#         /tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
+# 	done
+# 
+# 	mv index-*amd64*.AppImage /Applications/index
+# 	mv buho-*amd64*.AppImage /Applications/buho
+# 	mv nota-*amd64*.AppImage /Applications/nota
+# 	mv vvave-*amd64*.AppImage /Applications/vvave
+# 	mv station-*amd64*.AppImage /Applications/station
+# 	mv pix-*amd64*.AppImage /Applications/pix
+# 
+# 	chmod +x /Applications/*
+# 
+# 	ls -l /Applications
+# )
+# 
+# /tmp/mc config host rm nx
+# 
+# rm -r \
+# 	maui_pkgs \
+# 	/tmp/mc
+
+
 #	Add MAUI Appimages.
 
-puts "ADDING MAUI APPS."
+puts "ADDING MAUI APPS (NIGHTLY)."
 
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+_latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
 mkdir maui_pkgs
 
 (
 	cd maui_pkgs
 
-	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
-
-	for i in $_apps; do
-        _branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
-        /tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
-	done
+	/tmp/mc cp -r "nx/maui/nightly/$_latest" ./
 
 	mv index-*amd64*.AppImage /Applications/index
 	mv buho-*amd64*.AppImage /Applications/buho
@@ -435,8 +469,6 @@ mkdir maui_pkgs
 
 	ls -l /Applications
 )
-
-/tmp/mc config host rm nx
 
 rm -r \
 	maui_pkgs \
