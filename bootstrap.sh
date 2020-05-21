@@ -134,7 +134,6 @@ DEVUAN_POLKIT_PKGS='
 	libpolkit-backend-elogind-1-0=0.105-25+devuan8
 	libpolkit-gobject-1-0=0.105-25+devuan8
 	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt-1-1=0.112.0-6
 	libpolkit-qt5-1-1=0.112.0-6
 	policykit-1=0.105-25+devuan8
 	polkit-kde-agent-1=4:5.17.5-2
@@ -385,6 +384,7 @@ OTHER_MISC_PKGS='
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
 	docker.io
+	libpolkit-qt5-1-1
 '
 
 apt -qq update &> /dev/null
