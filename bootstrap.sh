@@ -355,9 +355,13 @@ UPDT_KF5_LIBS='
 	libkf5xmlgui5
 '
 
+UPDT_MISC_LIBS='
+	libpolkit-qt5-1-1
+'
+
 apt -qq update &> /dev/null
 apt-mark hold $HOLD_KDE_PKGS
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS --only-upgrade --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
