@@ -262,6 +262,9 @@ UPDT_KF5_LIBS='
 	libkf5activitiesstats1
 	libkf5archive5
 	libkf5attica5
+	libkf5auth-data
+	libkf5auth5
+	libkf5authcore5
 	libkf5bluezqt-data
 	libkf5bluezqt6
 	libkf5bookmarks-data
@@ -369,9 +372,9 @@ GLIBC_2_31_PKG='
 	libc6
 	locales
 	libcrypt1
-	libgcc1
-	libgcc-s1
-	gcc-10-base
+	libgcc1=1:10.1.0-1
+	libgcc-s1=10.1.0-1
+	gcc-10-base=10.1.0-1
 '
 
 OTHER_MISC_PKGS='
