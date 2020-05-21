@@ -202,9 +202,10 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NIT
 puts "INSTALLING DESKTOP PACKAGES."
 
 XENIAL_PACKAGES='
-	plymouth=0.9.2-3ubuntu13
-	plymouth-label=0.9.2-3ubuntu13
-	plymouth-themes=0.9.2-3ubuntu13
+	plymouth=0.9.2-3ubuntu13.5
+	plymouth-label=0.9.2-3ubuntu13.5
+	plymouth-themes=0.9.2-3ubuntu13.5
+	libplymouth4=0.9.2-3ubuntu13.5
 	ttf-ubuntu-font-family
 '
 
@@ -227,7 +228,7 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
