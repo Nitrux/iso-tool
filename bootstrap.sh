@@ -69,7 +69,7 @@ cp -av /configs/files/sources.list.neon /etc/apt/sources.list.d/neon-user-repo.l
 apt -qq update
 
 
-#   Block installation of some packages.
+#	Block installation of some packages.
 
 cp /configs/files/preferences /etc/apt/preferences
 
@@ -124,13 +124,13 @@ apt -yy --fix-broken install
 apt -yy autoremove
 
 
-#   Make sure to refresh appstream cache.
+#	Make sure to refresh appstream cache.
 
 appstreamcli refresh --force
 apt -qq update
 
 
-#    Upgrade KDE apps.
+#	Upgrade KDE apps.
 
 puts "UPGRADING KDE PACKAGES."
 
@@ -153,8 +153,8 @@ apt -qq update
 #	No apt usage past this point.
 
 
-# -- Changes specific to this image. If they can be put in a package do so.
-#FIXME These fixes should be included in a package.
+#	Changes specific to this image. If they can be put in a package do so.
+#	FIXME These fixes should be included in a package.
 
 puts "ADDING MISC. FIXES."
 
@@ -167,7 +167,7 @@ sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantu
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
 
 
-# -- Update initramfs.
+#	Update initramfs.
 
 puts "UPDATING THE INITRAMFS."
 
