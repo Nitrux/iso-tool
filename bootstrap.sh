@@ -371,9 +371,6 @@ GLIBC_2_31_PKG='
 	libc-bin
 	libc6
 	locales
-	libgcc1=1:10.1.0-1
-	libgcc-s1=10.1.0-1
-	gcc-10-base=10.1.0-1
 '
 
 OTHER_MISC_PKGS='
