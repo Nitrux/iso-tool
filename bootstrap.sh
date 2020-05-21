@@ -378,6 +378,9 @@ OTHER_MISC_PKGS='
 	gamemode
 	tmate
 	linux-firmware
+	virtualbox-guest-dkms
+	virtualbox-guest-x11
+	docker.io
 '
 
 apt -qq update &> /dev/null
