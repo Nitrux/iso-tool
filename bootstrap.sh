@@ -401,7 +401,7 @@ INSTALL_KERNEL='
 	linux-headers-5.4.21-050421-generic
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL $OTHER_MISC_PKGS --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
