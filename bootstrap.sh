@@ -384,7 +384,6 @@ OTHER_MISC_PKGS='
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
 	docker.io
-	libpolkit-qt5-1-1
 '
 
 apt -qq update &> /dev/null
