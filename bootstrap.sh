@@ -371,7 +371,7 @@ puts "UPGRADING/INSTALLING MISC. PACKAGES."
 
 cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
-GLIBC_2_31_PKG='
+UPDT_GLBIC_PKGS='
 	libc-bin
 	libc6
 	locales
@@ -387,7 +387,7 @@ OTHER_MISC_PKGS='
 '
 
 apt -qq update &> /dev/null
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_31_PKG --only-upgrade
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
