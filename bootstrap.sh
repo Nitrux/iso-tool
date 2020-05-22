@@ -384,6 +384,7 @@ OTHER_MISC_PKGS='
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
 	docker.io
+	flatpak
 '
 
 apt -qq update &> /dev/null
