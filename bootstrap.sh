@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 export LANG=C
 export LC_ALL=C
 
@@ -42,7 +44,7 @@ BASIC_PACKAGES='
 	ufw
 '
 
-apt -qq update &> /dev/null
+apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES --no-install-recommends
 
 
@@ -81,7 +83,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt -qq update &> /dev/null
+apt -qq update
 
 
 #	Use Glibc package from Devuan.
@@ -359,7 +361,7 @@ UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
 '
 
-apt -qq update &> /dev/null
+apt -qq update
 apt-mark hold $HOLD_KDE_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
@@ -387,7 +389,7 @@ OTHER_MISC_PKGS='
 	flatpak
 '
 
-apt -qq update &> /dev/null
+apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
