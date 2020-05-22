@@ -106,7 +106,7 @@ ELOGIND_PKGS='
 	bsdutils=1:2.34-0.1+devuan1
 '
 
-APT_PKGS='
+UPDT_APT_PKGS='
 	apt=2.0.2+devuan1
 	apt-transport-https=2.0.2+devuan1
 	apt-utils=2.0.2+devuan1
@@ -120,7 +120,7 @@ REMOVE_SYSTEMD_PKGS='
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $APT_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
