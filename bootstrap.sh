@@ -42,6 +42,7 @@ BASIC_PACKAGES='
 	wget
 	xz-utils
 	ufw
+	git
 '
 
 apt -qq update
