@@ -226,6 +226,7 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop
+	nx-desktop-settings
 	nx-desktop-apps
 '
 
