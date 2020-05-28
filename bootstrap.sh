@@ -223,6 +223,7 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 	bluedevil
 	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
+	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
 '
 
 NX_DESKTOP_PKG='
