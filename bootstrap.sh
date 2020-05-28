@@ -42,6 +42,7 @@ BASIC_PACKAGES='
 	wget
 	xz-utils
 	ufw
+	cgroupfs-mount
 '
 
 apt -qq update
@@ -389,7 +390,6 @@ OTHER_MISC_PKGS='
 	virtualbox-guest-x11
 	docker.io
 	flatpak
-	cgroupfs-mount
 '
 
 apt -qq update
