@@ -22,8 +22,6 @@ esac
 log_begin_msg "$DESCRIPTION"
 
 cat > $FSTAB <<EOF
-/boot /Core/Boot none defaults,bind 0 0
-/cdrom /Core/Boot/ESP none defaults,bind 0 0
 /dev /Devices none defaults,bind 0 0
 /etc /System/Configuration none defaults,bind 0 0
 /home /Users none defaults,bind 0 0
@@ -35,7 +33,6 @@ cat > $FSTAB <<EOF
 /run /System/Runtime none defaults,bind 0 0
 /srv /System/Server/Services none defaults,bind 0 0
 /sys /System/DevicesFS none defaults,bind 0 0
-/tmp /System/TempFS none defaults,bind 0 0
 /usr/bin  /System/Binaries none defaults,bind 0 0
 /usr/lib  /System/Libraries none defaults,bind 0 0
 /usr/share  /System/Resources/Shared none defaults,bind 0 0

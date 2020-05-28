@@ -222,6 +222,7 @@ DEVUAN_PULSE_PKGS='
 MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 	bluedevil
+	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
 '
 
 NX_DESKTOP_PKG='
@@ -518,8 +519,6 @@ rm -r /home/travis
 puts "CREATING NEW FHS."
 
 mkdir -p \
-	/Core/Boot \
-	/Core/Boot/ESP \
 	/Core/System/Deployments \
 	/Devices \
 	/Devices/Removable \
@@ -531,8 +530,8 @@ mkdir -p \
 	/System/Mount/Filesystems \
 	/System/Processes \
 	/System/Runtime \
+	/System/Resources/Shared \
 	/System/Server/Services \
-	/System/TempFS \
 	/System/Variable \
 	/Users/
 
