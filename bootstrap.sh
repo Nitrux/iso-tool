@@ -389,7 +389,7 @@ OTHER_MISC_PKGS='
 	virtualbox-guest-x11
 	docker.io
 	flatpak
-	cgroupsfs-mount
+	cgroupfs-mount
 '
 
 apt -qq update
