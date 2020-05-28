@@ -1,5 +1,7 @@
 #! /bin/bash
 
+set -x
+
 export LANG=C
 export LC_ALL=C
 
@@ -24,6 +26,7 @@ BASIC_PACKAGES='
 	bluez
 	ca-certificates
 	casper
+	cgroupfs-mount
 	dhcpcd5
 	gnupg2
 	language-pack-en
@@ -40,10 +43,9 @@ BASIC_PACKAGES='
 	wget
 	xz-utils
 	ufw
-	git
 '
 
-apt -qq update &> /dev/null
+apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES --no-install-recommends
 
 
@@ -82,7 +84,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt -qq update &> /dev/null
+apt -qq update
 
 
 #	Use Glibc package from Devuan.
@@ -229,11 +231,12 @@ DEVUAN_PULSE_PKGS='
 MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 	bluedevil
+	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
+	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
 '
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	nx-desktop-settings
 	nx-desktop-apps
 '
 
@@ -369,7 +372,7 @@ UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
 '
 
-apt -qq update &> /dev/null
+apt -qq update
 apt-mark hold $HOLD_KDE_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
@@ -390,14 +393,19 @@ UPDT_GLBIC_PKGS='
 OTHER_MISC_PKGS='
 	gamemode
 	tmate
-	linux-firmware
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
 	docker.io
+	flatpak
 '
 
-apt -qq update &> /dev/null
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
+UPDT_MISC_PKGS='
+	cgroupfs-mount
+	linux-firmware
+'
+
+apt -qq update
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
@@ -467,13 +475,17 @@ puts "ADDING MAUI APPS (NIGHTLY)."
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-_latest=$(/tmp/mc ls nx/maui/nightly | grep -Po "\d{4}-\d{2}-\d{2}/" | sort -r | head -n 1)
+_latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
 mkdir maui_pkgs
 
 (
 	cd maui_pkgs
 
-	/tmp/mc cp -r "nx/maui/nightly/$_latest" ./
+	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+
+	for i in $_packages; do
+		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+	done
 
 	mv index-*amd64*.AppImage /Applications/index
 	mv buho-*amd64*.AppImage /Applications/buho
@@ -486,6 +498,8 @@ mkdir maui_pkgs
 
 	ls -l /Applications
 )
+
+/tmp/mc config host rm nx
 
 rm -r \
 	maui_pkgs \
@@ -540,8 +554,6 @@ rc-update -u
 puts "CREATING NEW FHS."
 
 mkdir -p \
-	/Core/Boot \
-	/Core/Boot/ESP \
 	/Core/System/Deployments \
 	/Devices \
 	/Devices/Removable \
@@ -553,8 +565,8 @@ mkdir -p \
 	/System/Mount/Filesystems \
 	/System/Processes \
 	/System/Runtime \
+	/System/Resources/Shared \
 	/System/Server/Services \
-	/System/TempFS \
 	/System/Variable \
 	/Users/
 

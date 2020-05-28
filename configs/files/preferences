@@ -5,3 +5,7 @@ Pin-Priority: -1
 Package: dash
 Pin: release *
 Pin-Priority: -1
+
+Package: ufw
+Pin: release *
+Pin-Priority: -1

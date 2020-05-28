@@ -1,7 +1,0 @@
-[Desktop Entry]
-Type=Application
-Terminal=false
-Icon=
-Name=Install Nativefier
-Exec=~/.config/install-nativefier.sh
-Categories=Utility;
