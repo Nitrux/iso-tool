@@ -26,6 +26,7 @@ BASIC_PACKAGES='
 	bluez
 	ca-certificates
 	casper
+	cgroupfs-mount
 	dhcpcd5
 	gnupg2
 	language-pack-en
@@ -42,7 +43,6 @@ BASIC_PACKAGES='
 	wget
 	xz-utils
 	ufw
-	cgroupfs-mount
 '
 
 apt -qq update
@@ -385,15 +385,19 @@ UPDT_GLBIC_PKGS='
 OTHER_MISC_PKGS='
 	gamemode
 	tmate
-	linux-firmware
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
 	docker.io
 	flatpak
 '
 
+UPDT_MISC_PKGS='
+	cgroupfs-mount
+	linux-firmware
+'
+
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
