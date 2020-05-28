@@ -1,0 +1,19 @@
+#!/sbin/openrc-run
+# Copyright 2014 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+
+depend()
+{
+	need udev
+	after udev-trigger
+	provide dev-settle
+	keyword -lxc -systemd-nspawn -vserver
+}
+
+start()
+{
+	ebegin "Waiting for uevents to be processed"
+	udevadm settle \
+		${udev_settle_timeout:+--timeout=}$udev_settle_timeout
+	eend $?
+}

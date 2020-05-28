@@ -1,0 +1,89 @@
+#!/sbin/openrc-run
+# Copyright 2008-2016 Mir Calculate. http://www.calculate-linux.org
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+
+depend() {
+	use localmount
+	after bootmisc consolefont modules netmount
+	after readahead-list ypbind autofs openvpn gpm lircmd
+	after cupsd fbcondecor sshd cron wicd
+	before xdm
+	after acpid consolekit hald xfs
+	keyword -timeout -docker -lxc -systemd-nspawn -vserver
+}
+
+variable_value()
+{
+	/usr/libexec/calculate/cl-variable --value $*
+}
+
+start() {
+	# Mount remote Samba filesystems.
+	# Identifing domain server by cl-client variables
+	OUT=$(variable_value client.cl_remote_host client.cl_remote_host_live client.cl_remote_pw main.cl_template_location)
+	local SERVER="$(echo "$OUT" | sed -n '1p')"
+	local SERVERLIVE="$(echo "$OUT" | sed -n '2p')"
+	local SERVERPW="$(echo "$OUT" | sed -n '3p')"
+	local TEMPLATES="$(echo "$OUT" | sed -n '4p')"
+	[[ -z $SERVERLIVE ]] && SERVERLIVE=$SERVER
+
+	if [[ -n $SERVERLIVE ]]
+	then 
+		ebegin "Mounting domain resources"
+
+		local NET_CONF=`variable_value install.os_install_net_conf`
+		if [[ $NET_CONF = "networkmanager" ]] && type qdbus &>/dev/null
+		then
+			for COUNT in $( seq 0 32 )
+			do
+				# https://developer.gnome.org/NetworkManager/stable/nm-dbus-types.html
+				NET_STATE=`qdbus --system org.freedesktop.NetworkManager /org/freedesktop/NetworkManager org.freedesktop.NetworkManager.state`
+				if [[ $NET_STATE = 40 ]]
+				then
+					ping -w4 -i0.5 -c3 $SERVERLIVE &>/dev/null && break || sleep 0.5
+				else
+					[[ $NET_STATE = 20 && $COUNT -lt 16 ]] && sleep 0.5 || break
+				fi
+			done
+		else
+			for COUNT in $( seq 0 24 )
+			do
+				ping -w4 -i0.5 -c3 $SERVERLIVE &>/dev/null && break || sleep 0.5
+			done
+		fi
+		if [[ -z $SERVER ]]
+		then
+			LANG=C /usr/bin/cl-client -T ${TEMPLATES/,remote/} $SERVERLIVE && res=$? &&
+				/usr/bin/cl-setup-system -T remote &>/dev/null
+		else
+			LANG=C /usr/bin/cl-client --mount
+		fi
+		res=$?
+		eend $res "Some samba remote resources to mount"
+	else
+		true
+	fi
+
+}
+
+stop(){
+	ebegin "Unmount domain resources"
+	[[ $( mount | grep ' /var/calculate/remote ' ) ]] &&
+		umount /var/calculate/remote
+	[[ $( mount | grep '/var/calculate/client-home on /home ' ) ]] &&
+		umount /home
+	eend 0
+}
+
+# vim:ts=4
