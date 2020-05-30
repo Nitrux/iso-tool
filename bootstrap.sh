@@ -147,7 +147,7 @@ DEVUAN_NM_UD2='
 	libudisks2-0=2.8.4-1+devuan4
 	network-manager=1.14.6-2+deb10u1
 	udisks2=2.8.4-1+devuan4
-	init-system-helpers=1.56+nmu1+devuan3
+	init-system-helpers=1.57+devuan1
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
