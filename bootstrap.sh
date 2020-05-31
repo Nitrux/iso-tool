@@ -145,9 +145,9 @@ DEVUAN_POLKIT_PKGS='
 
 DEVUAN_NM_UD2='
 	libnm0=1.14.6-2+deb10u1
-	libudisks2-0=2.8.4-1+devuan4
+	libudisks2-0=2.8.4-2+devuan1
 	network-manager=1.14.6-2+deb10u1
-	udisks2=2.8.4-1+devuan4
+	udisks2=2.8.4-2+devuan1
 	init-system-helpers=1.57+devuan1
 '
 
