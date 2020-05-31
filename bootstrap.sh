@@ -43,6 +43,7 @@ BASIC_PACKAGES='
 	wget
 	xz-utils
 	ufw
+	libxvmc1
 '
 
 apt -qq update
