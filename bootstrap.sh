@@ -398,6 +398,7 @@ OTHER_MISC_PKGS='
 	virtualbox-guest-x11
 	docker.io
 	flatpak
+	fakeroot
 '
 
 UPDT_MISC_PKGS='
