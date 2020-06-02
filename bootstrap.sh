@@ -111,10 +111,10 @@ puts "ADDING ELOGIND."
 ELOGIND_PKGS='
 	libelogind0
 	elogind
-	uuid-runtime=2.34-0.1+devuan1
-	util-linux=2.34-0.1+devuan1
+	uuid-runtime=2.35.2-2+devuan1
+	util-linux=2.35.2-2+devuan1
 	libprocps6=2:3.3.12-3+devuan2.1
-	bsdutils=1:2.34-0.1+devuan1
+	bsdutils=1:2.35.2-2+devuan1
 '
 
 UPDT_APT_PKGS='
@@ -300,18 +300,6 @@ UPDT_MISC_PKGS='
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
-
-
-#	Install the kernel.
-
-puts "INSTALL KERNEL."
-
-INSTALL_KERNEL='
-	linux-oem-20.04
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
