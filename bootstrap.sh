@@ -45,8 +45,6 @@ BASIC_PACKAGES='
 	ufw
 	libxvmc1
 	btrfs-progs
-	squashfs-tools
-	lvm2
 '
 
 apt -qq update
