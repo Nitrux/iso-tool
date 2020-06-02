@@ -320,6 +320,7 @@ puts "REMOVE SOURCES FILES."
 
 rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
+
 #	Make sure to refresh appstream cache.
 
 appstreamcli refresh --force
