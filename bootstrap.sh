@@ -290,6 +290,7 @@ OTHER_MISC_PKGS='
 	tmate
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
+	linux-oem.20.04
 '
 
 UPDT_MISC_PKGS='
