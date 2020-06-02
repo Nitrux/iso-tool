@@ -85,6 +85,7 @@ cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt -qq update
@@ -271,13 +272,12 @@ UPDT_MISC_LIBS='
 apt -qq update
 apt-mark hold $HOLD_KDE_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
 #	Upgrade and install misc. packages.
 
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
-
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
 UPDT_GLBIC_PKGS='
 	libc-bin
@@ -290,7 +290,6 @@ OTHER_MISC_PKGS='
 	tmate
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
-	linux-oem-20.04
 '
 
 UPDT_MISC_PKGS='
@@ -300,7 +299,6 @@ UPDT_MISC_PKGS='
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
