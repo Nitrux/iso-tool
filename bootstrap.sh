@@ -326,7 +326,6 @@ apt autoclean &> /dev/null
 puts "ADDING MISC. FIXES."
 
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
-/bin/cp /configs/other/org.kde.kinfocenter.desktop /usr/share/applications/org.kde.kinfocenter.desktop
 /bin/cp /configs/files/kwinrc /etc/xdg/kwinrc
 cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
@@ -335,6 +334,8 @@ sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantu
 
 
 puts "UPDATING THE INITRAMFS."
+
+cp /configs/files/initramfs.conf /etc/initramfs-tools/
 
 update-initramfs -u
 
