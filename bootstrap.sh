@@ -85,7 +85,6 @@ cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-focal-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt -qq update
@@ -184,6 +183,20 @@ init --version
 stat /sbin/init
 
 
+# 	Install minimal metapackage.
+
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+NITRUX_MIN_PACKAGE='
+	nitrux-minimal-legacy
+'
+
+apt -qq update
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_MIN_PACKAGE --no-install-recommends
+
+rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
@@ -197,7 +210,6 @@ GRUB_PACKAGES='
 
 NITRUX_BASE_PACKAGES='
 	nitrux-hardware-drivers-legacy
-	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
 
@@ -270,7 +282,6 @@ UPDT_MISC_LIBS='
 '
 
 apt -qq update
-apt-mark hold $HOLD_KDE_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
@@ -301,6 +312,18 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-u
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+#	Remove unnecessary sources.list files.
+
+puts "REMOVE SOURCES FILES."
+
+rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+
+#	Make sure to refresh appstream cache.
+
+appstreamcli refresh --force
+apt -qq update
 
 
 #	WARNING:
