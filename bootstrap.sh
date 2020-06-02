@@ -252,7 +252,7 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	nx-desktop-apps-legacy
+	nx-desktop-apps-legacy-sysv
 '
 
 CALAMARES_PACKAGES='
