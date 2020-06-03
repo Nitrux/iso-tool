@@ -286,6 +286,8 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 #	Upgrade and install misc. packages.
 
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
+
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
 
 UPDT_GLBIC_PKGS='
