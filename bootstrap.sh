@@ -185,7 +185,7 @@ stat /sbin/init
 
 # 	Install minimal metapackage.
 
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-focal-repo.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
 NITRUX_MIN_PACKAGE='
 	nitrux-minimal-legacy
@@ -342,6 +342,7 @@ cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
+sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
 
 
 puts "UPDATING THE INITRAMFS."
