@@ -46,6 +46,7 @@ BASIC_PACKAGES='
 	libxvmc1
 	btrfs-progs
 	dictionaries-common
+	locales-all
 '
 
 apt -qq update
