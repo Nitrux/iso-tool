@@ -264,7 +264,7 @@ INITRAMFS_PKGS='
 	initramfs-tools
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PACKAGES --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $CALAMARES_PACKAGES --no-install-recommends --allow-downgrades
 apt -yy install --reinstall -oDebug::pkgAcquire::Worker=1 $INITRAMFS_PKGS
 
 #	Upgrade KF5 libs for Latte Dock.
