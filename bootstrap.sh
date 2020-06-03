@@ -45,6 +45,7 @@ BASIC_PACKAGES='
 	ufw
 	libxvmc1
 	btrfs-progs
+	console-setup
 '
 
 apt -qq update
@@ -341,6 +342,8 @@ cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
+
+cat /etc/default/console-setup
 
 
 puts "UPDATING THE INITRAMFS."
