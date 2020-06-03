@@ -45,7 +45,6 @@ BASIC_PACKAGES='
 	ufw
 	libxvmc1
 	btrfs-progs
-	console-setup
 '
 
 apt -qq update
@@ -261,10 +260,12 @@ CALAMARES_PACKAGES='
 	calamares-settings-nitrux
 '
 
+INITRAMFS_PKGS='
+	initramfs-tools
+'
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PACKAGES --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
-
+apt -yy install --reinstall -oDebug:: $INITRAMFS_PKGS
 
 #	Upgrade KF5 libs for Latte Dock.
 
@@ -342,8 +343,6 @@ cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
-
-cat /etc/default/console-setup
 
 
 puts "UPDATING THE INITRAMFS."
