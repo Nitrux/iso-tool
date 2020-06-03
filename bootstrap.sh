@@ -45,6 +45,7 @@ BASIC_PACKAGES='
 	ufw
 	libxvmc1
 	btrfs-progs
+	dictionaries-common
 '
 
 apt -qq update
