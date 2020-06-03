@@ -251,16 +251,16 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKG='
-	nx-desktop-legacy-sysv
+	nx-desktop-legacy
 	nx-desktop-apps-legacy-sysv
 '
 
-CALAMARES_PACKAGES='
+CALAMARES_PKGS='
 	calamares
 	calamares-settings-nitrux
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PACKAGES --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Upgrade KF5 libs for Latte Dock.
