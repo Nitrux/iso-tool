@@ -451,8 +451,6 @@ mkdir maui_pkgs
 		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
 	done
 
-	ls -l 
-
  	mv ${_branch}/index-*amd64*.AppImage /Applications/index
  	mv ${_branch}/buho-*amd64*.AppImage /Applications/buho
  	mv ${_branch}/nota-*amd64*.AppImage /Applications/nota
