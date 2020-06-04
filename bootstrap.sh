@@ -208,6 +208,7 @@ GRUB_PACKAGES='
 	grub-efi-amd64-signed=1+2.04+7
 	grub-efi-amd64-bin=2.04-7
 	grub-common=2.04-7
+	grub2-common=2.04-7
 '
 
 NITRUX_BASE_PACKAGES='
@@ -320,7 +321,7 @@ apt autoclean &> /dev/null
 
 puts "REMOVE SOURCES FILES."
 
-rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list /etc/apt/sources.list.d/ubuntu-xenial-repo.list /etc/apt/sources.list.d/neon-unstable-repo.list
+rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list /etc/apt/sources.list.d/ubuntu-xenial-repo.list /etc/apt/sources.list.d/ubuntu-groovy-repo.list /etc/apt/sources.list.d/neon-unstable-repo.list
 
 
 #	Make sure to refresh appstream cache.
