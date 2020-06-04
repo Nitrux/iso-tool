@@ -1,0 +1,10 @@
+#------------------------------------------------------------------------------
+# Modified Calculate Utilities 3.6.5.8
+# Processed template files:
+# /var/lib/layman/calculate/profiles/templates/3.6/2_ac_install_merge/sys-apps/openrc/killprocs
+# For modify this file, create /etc/conf.d/killprocs.clt template.
+#------------------------------------------------------------------------------
+# If you wish to pass any options to killall5 during shutdown,
+# you should do so here.
+killall5_opts=""
+
