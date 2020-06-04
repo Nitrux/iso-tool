@@ -448,7 +448,7 @@ mkdir maui_pkgs
 
 	for i in $_apps; do
 		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
-		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
+		/tmp/mc cp -r nx/maui/stable/${i}${_branch} .
 	done
  
  	mv index-*amd64*.AppImage /Applications/index

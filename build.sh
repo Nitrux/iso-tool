@@ -86,6 +86,7 @@ cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/bo
 
 rm -f $build_dir/boot/*
 
+
 #	WARNING FIXME BUG: This file isn't copied during the chroot.
 
 mkdir -p $iso_dir/boot/grub/x86_64-efi
