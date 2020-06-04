@@ -356,6 +356,9 @@ sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantu
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
 sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
 
+ln -svf /boot/initrd.img-5* /initrd.img
+ln -svf /boot/vmlinuz-5* /vmlinuz
+
 
 puts "UPDATING THE INITRAMFS."
 

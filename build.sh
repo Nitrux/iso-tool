@@ -95,9 +95,6 @@ rm \
 	$build_dir/boot/vmlinuz \
 	$build_dir/boot/initrd.img
 
-ln -svf $build_dir/boot/initrd.img-5* $build_dir/initrd.img
-ln -svf $build_dir/boot/vmlinuz-5* $build_dir/vmlinuz
-
 #rm -f $build_dir/boot/*
 
 
