@@ -444,7 +444,7 @@ mkdir maui_pkgs
 (
 	cd maui_pkgs
 
-	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
 
 	for i in $_apps; do
 		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
