@@ -48,6 +48,8 @@ build_dir=$(mktemp -d)
 iso_dir=$(mktemp -d)
 output_dir=$(mktemp -d)
 
+chmod a+x $BUILD_DIR
+
 config_dir=$PWD/configs
 
 
