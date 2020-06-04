@@ -24,30 +24,31 @@ BASIC_PACKAGES='
 	apt-utils
 	avahi-daemon
 	bluez
+	btrfs-progs
 	ca-certificates
 	casper
 	cgroupfs-mount
 	dhcpcd5
+	dictionaries-common
+	efibootmgr
 	gnupg2
 	language-pack-en
 	language-pack-en-base
 	libarchive13
 	libelf1
+	libxvmc1
 	localechooser-data
 	locales
+	locales-all
 	lupin-casper
 	open-vm-tools
 	rng-tools
+	squashfs-tools
 	systemd
+	ufw
 	user-setup
 	wget
 	xz-utils
-	ufw
-	libxvmc1
-	btrfs-progs
-	dictionaries-common
-	locales-all
-	squashfs-tools
 '
 
 apt -qq update
