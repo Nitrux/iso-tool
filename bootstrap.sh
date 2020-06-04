@@ -47,6 +47,7 @@ BASIC_PACKAGES='
 	btrfs-progs
 	dictionaries-common
 	locales-all
+	squashfs-tools
 '
 
 apt -qq update
@@ -338,9 +339,15 @@ apt -qq update
 puts "ADDING MISC. FIXES."
 
 /bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
+
 /bin/cp /configs/files/kwinrc /etc/xdg/kwinrc
+
 cp /configs/files/grub /etc/default/grub
+
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
+sed -i 's/systemd: true/systemd: false/g' /etc/calamares/modules/machineid.conf
+sed -i 's/restartNowCommand: "systemctl -i reboot"/restartNowCommand: "reboot"/g' /etc/calamares/modules/finished.conf
+
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
 sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
