@@ -86,7 +86,21 @@ mkdir -p $iso_dir/boot
 cp $(echo $build_dir/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/kernel
 cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/initramfs
 
+
+#	Remove chroot host kernel from $build_dir.
+#	BUG: vmlinuz and initrd links are not created in $build_dir/; they're left at $build_dir/boot
+
+rm \
+	$build_dir/boot/initrd.img-$(uname -r) \
+	$build_dir/boot/vmlinuz \
+	$build_dir/boot/initrd.img
+
+ln -sv \
+	$build_dir/boot/initrd.img-5* /initrd.img
+	$build_dir/boot/vmlinuz-5* /vmlinuz
+
 #rm -f $build_dir/boot/*
+
 
 #	WARNING FIXME BUG: This file isn't copied during the chroot.
 
