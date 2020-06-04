@@ -209,6 +209,7 @@ GRUB_PACKAGES='
 	grub-efi-amd64-bin=2.04-7
 	grub-common=2.04-7
 	grub2-common=2.04-7
+	shim-signed=1.33+15+1533136590.3beb971-7
 '
 
 NITRUX_BASE_PACKAGES='
@@ -348,6 +349,8 @@ cp /configs/files/grub /etc/default/grub
 sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
 sed -i 's/systemd: true/systemd: false/g' /etc/calamares/modules/machineid.conf
 sed -i 's/restartNowCommand: "systemctl -i reboot"/restartNowCommand: "reboot"/g' /etc/calamares/modules/finished.conf
+sed -i 's/    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict grub-efi-amd64-signed/#    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict grub-efi-amd64-signed/g'
+sed -i 's/    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict shim-signed/#    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict shim-signed/g'
 
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
 sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
