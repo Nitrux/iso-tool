@@ -453,12 +453,12 @@ mkdir maui_pkgs
 
 	ls -l 
 
- 	mv index-*amd64*.AppImage /Applications/index
- 	mv buho-*amd64*.AppImage /Applications/buho
- 	mv nota-*amd64*.AppImage /Applications/nota
- 	mv vvave-*amd64*.AppImage /Applications/vvave
- 	mv station-*amd64*.AppImage /Applications/station
- 	mv pix-*amd64*.AppImage /Applications/pix
+ 	mv ${_branch}/index-*amd64*.AppImage /Applications/index
+ 	mv ${_branch}/buho-*amd64*.AppImage /Applications/buho
+ 	mv ${_branch}/nota-*amd64*.AppImage /Applications/nota
+ 	mv ${_branch}/vvave-*amd64*.AppImage /Applications/vvave
+ 	mv ${_branch}/station-*amd64*.AppImage /Applications/station
+ 	mv ${_branch}/pix-*amd64*.AppImage /Applications/pix
  
  	chmod +x /Applications/*
  
