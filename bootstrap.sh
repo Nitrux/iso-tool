@@ -448,9 +448,11 @@ mkdir maui_pkgs
 
 	for i in $_apps; do
 		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
-		/tmp/mc cp -r nx/maui/stable/${i}${_branch} .
+		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
 	done
- 
+
+	ls -l 
+
  	mv index-*amd64*.AppImage /Applications/index
  	mv buho-*amd64*.AppImage /Applications/buho
  	mv nota-*amd64*.AppImage /Applications/nota
@@ -470,7 +472,7 @@ mkdir maui_pkgs
  	/tmp/mc
 
 
-#	Add MAUI Appimages.
+##	Add MAUI Appimages.
 #
 #puts "ADDING MAUI APPS (NIGHTLY)."
 #
