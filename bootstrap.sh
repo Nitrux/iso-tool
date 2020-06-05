@@ -122,7 +122,7 @@ ELOGIND_PKGS='
 	elogind
 	uuid-runtime=2.35.2-2+devuan1
 	util-linux=2.35.2-2+devuan1
-	libprocps6=2:3.3.12-3+devuan2.1
+	libprocps7
 	bsdutils=1:2.35.2-2+devuan1
 '
 
