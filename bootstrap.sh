@@ -32,6 +32,11 @@ BASIC_PACKAGES='
 	dictionaries-common
 	efibootmgr
 	gnupg2
+	grub-common
+	grub-efi-amd64
+	grub-efi-amd64-bin
+	grub-efi-amd64-signed
+	grub2-common
 	language-pack-en
 	language-pack-en-base
 	libarchive13
@@ -43,18 +48,13 @@ BASIC_PACKAGES='
 	lupin-casper
 	open-vm-tools
 	rng-tools
+	shim-signed
 	squashfs-tools
 	systemd
 	ufw
 	user-setup
 	wget
 	xz-utils
-	grub-efi-amd64-signed
-	grub-efi-amd64-bin
-	grub-efi-amd64
-	grub2-common
-	grub-common
-	shim-signed
 '
 
 apt -qq update

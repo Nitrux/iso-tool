@@ -4,10 +4,10 @@
 
 deb http://pkgmaster.devuan.org/devuan ceres main
 
-deb http://pkgmaster.devuan.org/devuan ascii main
-deb http://pkgmaster.devuan.org/devuan ascii-security main
-deb http://pkgmaster.devuan.org/devuan ascii-updates main
-deb http://pkgmaster.devuan.org/devuan ascii-backports main
+#deb http://pkgmaster.devuan.org/devuan ascii main
+#deb http://pkgmaster.devuan.org/devuan ascii-security main
+#deb http://pkgmaster.devuan.org/devuan ascii-updates main
+#deb http://pkgmaster.devuan.org/devuan ascii-backports main
 
 deb http://pkgmaster.devuan.org/devuan chimaera main
 deb http://pkgmaster.devuan.org/devuan chimaera-updates main
@@ -21,10 +21,10 @@ deb http://pkgmaster.devuan.org/devuan beowulf-updates main
 
 deb http://pkgmaster.devuan.org/merged ceres main
 
-deb http://pkgmaster.devuan.org/merged ascii main
-deb http://pkgmaster.devuan.org/merged ascii-security main
-deb http://pkgmaster.devuan.org/merged ascii-updates main
-deb http://pkgmaster.devuan.org/merged ascii-backports main
+#deb http://pkgmaster.devuan.org/merged ascii main
+#deb http://pkgmaster.devuan.org/merged ascii-security main
+#deb http://pkgmaster.devuan.org/merged ascii-updates main
+#deb http://pkgmaster.devuan.org/merged ascii-backports main
 
 deb http://pkgmaster.devuan.org/merged chimaera main
 deb http://pkgmaster.devuan.org/merged chimaera-updates main
