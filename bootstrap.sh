@@ -192,7 +192,7 @@ init --version
 stat /sbin/init
 
 
-# 	Install GRUB and minimal metapackage.
+# 	Install minimal metapackage.
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
