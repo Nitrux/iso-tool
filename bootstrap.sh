@@ -49,7 +49,6 @@ BASIC_PACKAGES='
 	user-setup
 	wget
 	xz-utils
-	grub-common
 '
 
 apt -qq update
@@ -187,16 +186,25 @@ init --version
 stat /sbin/init
 
 
-# 	Install minimal metapackage.
+# 	Install GRUB and minimal metapackage.
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+GRUB_PACKAGES='
+	grub-efi-amd64-signed=1.142+2.04-1ubuntu26
+	grub-efi-amd64-bin=2.04-1ubuntu26
+	grub-efi-amd64=2.04-1ubuntu26
+	grub2-common=2.04-1ubuntu26
+	shim-signed=1.40.3+15+1533136590.3beb971-0ubuntu1
+'
 
 NITRUX_MIN_PACKAGE='
 	nitrux-minimal-legacy
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_MIN_PACKAGE --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_MIN_PACKAGE --no-install-recommends
+
 
 rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
@@ -204,14 +212,6 @@ rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
-
-
-GRUB_PACKAGES='
-	grub-efi-amd64-signed=1.93.16+2.02-2ubuntu8.15
-	grub-efi-amd64-bin=2.02-2ubuntu8.15
-	grub2-common=2.02-2ubuntu8.15
-	shim-signed=1.37~18.04.3+15+1533136590.3beb971-0ubuntu1
-'
 
 NITRUX_BASE_PACKAGES='
 	nitrux-hardware-drivers-legacy
@@ -222,7 +222,7 @@ NITRUX_BF_PKG='
 	base-files=11.1.3+nitrux-legacy
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
 
 
 #	Add NX Desktop metapackage.
