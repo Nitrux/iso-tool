@@ -195,6 +195,7 @@ GRUB_PACKAGES='
 	grub-efi-amd64-bin=2.04-1ubuntu26
 	grub-efi-amd64=2.04-1ubuntu26
 	grub2-common=2.04-1ubuntu26
+	grub-common=2.04-1ubuntu26
 	shim-signed=1.40.3+15+1533136590.3beb971-0ubuntu1
 '
 
@@ -204,9 +205,8 @@ NITRUX_MIN_PACKAGE='
 
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_MIN_PACKAGE --no-install-recommends
-
-
 rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
+apt -qq update
 
 
 #	Install base system metapackages.
