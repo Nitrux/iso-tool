@@ -49,6 +49,12 @@ BASIC_PACKAGES='
 	user-setup
 	wget
 	xz-utils
+	grub-efi-amd64-signed
+	grub-efi-amd64-bin
+	grub-efi-amd64
+	grub2-common
+	grub-common
+	shim-signed
 '
 
 apt -qq update
@@ -190,21 +196,12 @@ stat /sbin/init
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
-GRUB_PACKAGES='
-	grub-efi-amd64-signed=1.142+2.04-1ubuntu26
-	grub-efi-amd64-bin=2.04-1ubuntu26
-	grub-efi-amd64=2.04-1ubuntu26
-	grub2-common=2.04-1ubuntu26
-	grub-common=2.04-1ubuntu26
-	shim-signed=1.40.3+15+1533136590.3beb971-0ubuntu1
-'
-
 NITRUX_MIN_PACKAGE='
 	nitrux-minimal-legacy
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_MIN_PACKAGE --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_MIN_PACKAGE --no-install-recommends
 rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
 apt -qq update
 
