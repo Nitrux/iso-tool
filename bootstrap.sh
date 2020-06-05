@@ -208,6 +208,7 @@ puts "INSTALLING BASE SYSTEM."
 GRUB_PACKAGES='
 	grub-efi-amd64-signed=1.93.16+2.02-2ubuntu8.15
 	grub-efi-amd64-bin=2.02-2ubuntu8.15
+	grub-efi-amd64=2.02-2ubuntu8.15
 	grub-common=2.02-2ubuntu8.15
 	grub2-common=2.02-2ubuntu8.15
 	shim-signed=1.37~18.04.3+15+1533136590.3beb971-0ubuntu1
