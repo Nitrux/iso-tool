@@ -88,11 +88,6 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 apt -qq update
 
 
-#	Block installation of some packages.
-
-cp /configs/files/preferences /etc/apt/preferences
-
-
 #	Use Glibc package from Devuan.
 
 GLIBC_2_30_PKG='
@@ -239,6 +234,7 @@ MISC_KDE_PKGS='
 	bluedevil
 	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
 	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
+	libkf5itemmodels5=5.70.0-0xneon+18.04+bionic+build31
 '
 
 NX_DESKTOP_PKG='
