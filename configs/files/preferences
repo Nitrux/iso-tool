@@ -9,3 +9,7 @@ Pin-Priority: -1
 Package: ufw
 Pin: release *
 Pin-Priority: -1
+
+Package: qml-module-org-kde-kitemmodels
+Pin: release *
+Pin-Priority: -1
