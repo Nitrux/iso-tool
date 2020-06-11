@@ -10,6 +10,6 @@ Package: ufw
 Pin: release *
 Pin-Priority: -1
 
-Package: qml-module-org-kde-kitemmodels
+Package: libkf5itemmodels5
 Pin: release *
 Pin-Priority: -1
