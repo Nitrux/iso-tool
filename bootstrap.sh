@@ -146,9 +146,9 @@ DEVUAN_POLKIT_PKGS='
 DEVUAN_NM_UD2='
 	init-system-helpers=1.57+devuan1
 	libnm0=1.14.6-2+deb10u1
-	libudisks2-0=2.8.4-2+devuan1
+	libudisks2-0
 	network-manager=1.14.6-2+deb10u1
-	udisks2=2.8.4-2+devuan1
+	udisks2
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
@@ -234,6 +234,7 @@ MISC_KDE_PKGS='
 	bluedevil
 	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
 	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
+	libkf5itemmodels5=5.70.0-0xneon+18.04+bionic+build31
 '
 
 NX_DESKTOP_PKG='
