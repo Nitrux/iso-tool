@@ -9,7 +9,3 @@ Pin-Priority: -1
 Package: ufw
 Pin: release *
 Pin-Priority: -1
-
-Package: libkf5itemmodels5
-Pin: release *
-Pin-Priority: -1
