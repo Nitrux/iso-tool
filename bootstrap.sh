@@ -118,12 +118,12 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends -
 puts "ADDING ELOGIND."
 
 ELOGIND_PKGS='
-	libelogind0
-	elogind
-	uuid-runtime=2.35.2-2+devuan1
-	util-linux=2.35.2-2+devuan1
-	libprocps7
 	bsdutils=1:2.35.2-2+devuan1
+	elogind
+	libelogind0
+	libprocps7
+	util-linux=2.35.2-2+devuan1
+	uuid-runtime=2.35.2-2+devuan1
 '
 
 UPDT_APT_PKGS='
@@ -160,15 +160,14 @@ DEVUAN_POLKIT_PKGS='
 '
 
 DEVUAN_NM_UD2='
-	libnm0=1.14.6-2+deb10u1
-	libudisks2-0=2.8.4-2+devuan1
-	network-manager=1.14.6-2+deb10u1
-	udisks2=2.8.4-2+devuan1
 	init-system-helpers=1.57+devuan1
+	libnm0=1.14.6-2+deb10u1
+	libudisks2-0
+	network-manager=1.14.6-2+deb10u1
+	udisks2
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
-
 
 #	Add SysV as init.
 
@@ -235,22 +234,23 @@ XENIAL_PACKAGES='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse0=13.0-5
-	pulseaudio=13.0-5
 	libpulse-mainloop-glib0=13.0-5
-	pulseaudio-utils=13.0-5
+	libpulse0=13.0-5
 	libpulsedsp=13.0-5
 	pulseaudio-module-bluetooth=13.0-5
+	pulseaudio-utils=13.0-5
+	pulseaudio=13.0-5
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.17.5-2
 	bluedevil
-	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
+	libkf5itemmodels5=5.70.0-0xneon+18.04+bionic+build31
 	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
-	xdg-desktop-portal-kde=5.18.5-0xneon+18.04+bionic+build66
+	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
 	libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 	liquidshell
+	plasma-pa=4:5.17.5-2
+	xdg-desktop-portal-kde=5.18.5-0xneon+18.04+bionic+build66
 '
 
 NX_DESKTOP_PKG='
