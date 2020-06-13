@@ -428,13 +428,6 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-#	Check that init system is not systemd.
-
-puts "CHECKING INIT LINK."
-
-stat /sbin/init
-
-
 #	WARNING:
 #	No apt usage past this point.
 
@@ -535,9 +528,14 @@ sed -i '$ a Inherits=nitrux_snow_cursors' /etc/X11/cursors/nitrux_cursors.theme
 rm -r /home/travis
 
 
-# -- Check contents of OpenRC runlevels.
+#	Check contents of OpenRC runlevels.
 
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+
+
+#	Check that init system is not systemd.
+
+stat /sbin/init
 
 
 #	Implement a new FHS.
