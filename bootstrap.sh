@@ -163,20 +163,12 @@ DEVUAN_INIT_PKGS='
 	fgetty
 	initscripts
 	openrc
-	openrc-config
 	policycoreutils
 	startpar
 	sysvinit-utils
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
-
-
-#	Check that init system is not systemd.
-
-puts "CHECKING INIT LINK."
-
-stat /sbin/init
 
 
 #	Install base system metapackages.
@@ -419,9 +411,28 @@ INSTALL_KERNEL='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
+
+
+#	Add OpenRC configuration.
+
+puts "ADDING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
+
+
+#	Check that init system is not systemd.
+
+puts "CHECKING INIT LINK."
+
+stat /sbin/init
 
 
 #	WARNING:
