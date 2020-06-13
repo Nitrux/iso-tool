@@ -177,7 +177,6 @@ puts "ADDING OPENRC CONFIG."
 
 OPENRC_CONFIG='
 	openrc-config
-
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
