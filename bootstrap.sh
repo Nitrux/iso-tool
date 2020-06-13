@@ -171,6 +171,18 @@ DEVUAN_INIT_PKGS='
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
 
 
+#	Add OpenRC configuration.
+
+puts "ADDING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
+
+
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
@@ -411,18 +423,6 @@ INSTALL_KERNEL='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
-
-
-#	Add OpenRC configuration.
-
-puts "ADDING OPENRC CONFIG."
-
-OPENRC_CONFIG='
-	openrc-config
-
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
