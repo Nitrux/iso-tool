@@ -44,6 +44,7 @@ BASIC_PACKAGES='
 	user-setup
 	wget
 	xz-utils
+	libarchive-tools
 '
 
 apt -qq update
