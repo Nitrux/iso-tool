@@ -175,7 +175,6 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-i
 puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
-	bootchart2
 	fgetty
 	initscripts
 	openrc
