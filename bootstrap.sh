@@ -169,27 +169,22 @@ DEVUAN_NM_UD2='
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
 
-#	Add SysV as init.
 
-puts "ADDING SYSV AS INIT."
+#	Add OpenRC as init.
+
+puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
-	init=1.57+devuan1
-	sysv-rc
-	sysvinit-core
+	bootchart2
+	fgetty
+	initscripts
+	openrc
+	policycoreutils
+	startpar
 	sysvinit-utils
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
-
-
-#	Check that init system is not systemd.
-
-puts "CHECKING INIT LINK."
-
-init --version
-stat /sbin/init
-
 
 # 	Install minimal metapackage.
 
@@ -254,8 +249,8 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKG='
-	nx-desktop-legacy-sysv
-	nx-desktop-apps-legacy-sysv
+	nx-desktop-legacy
+	nx-desktop-apps-legacy
 '
 
 CALAMARES_PKGS='
@@ -303,16 +298,31 @@ OTHER_MISC_PKGS='
 	tmate
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
+	docker.io
+	flatpak
+	fakeroot
 '
 
 UPDT_MISC_PKGS='
+	cgroupfs-mount
 	linux-firmware
 '
 
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
-apt -yy autoremove &> /dev/null
+
+
+#	Add OpenRC configuration.
+
+puts "ADDING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
@@ -357,6 +367,16 @@ sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
 
 ln -svf /boot/initrd.img-5* /initrd.img
 ln -svf /boot/vmlinuz-5* /vmlinuz
+
+
+#	Check contents of OpenRC runlevels.
+
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+
+
+#	Check that init system is not systemd.
+
+stat /sbin/init
 
 
 puts "UPDATING THE INITRAMFS."
