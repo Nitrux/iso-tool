@@ -238,13 +238,13 @@ DEVUAN_PULSE_PKGS='
 
 MISC_KDE_PKGS='
 	bluedevil
-	libkf5itemmodels5=5.70.0-0xneon+18.04+bionic+build31
-	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
-	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
+	libkf5itemmodels5=5.71.0-0xneon+18.04+bionic+build32
+	libkf5xmlgui-data=5.71.0-0xneon+18.04+bionic+build45
+	libkf5xmlgui5=5.71.0-0xneon+18.04+bionic+build45
 	libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 	liquidshell
 	plasma-pa=4:5.17.5-2
-	xdg-desktop-portal-kde=5.18.5-0xneon+18.04+bionic+build66
+	xdg-desktop-portal-kde=5.19.1-0xneon+18.04+bionic+build68
 '
 
 NX_DESKTOP_PKG='
