@@ -393,6 +393,7 @@ OTHER_MISC_PKGS='
 UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
+	sudo
 '
 
 apt -qq update
