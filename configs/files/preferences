@@ -1,3 +1,7 @@
+Package: libqtcore4
+Pin: release *
+Pin-Priority: -1
+
 Package: libsensors4
 Pin: release *
 Pin-Priority: -1
