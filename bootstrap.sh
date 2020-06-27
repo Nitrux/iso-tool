@@ -253,8 +253,8 @@ NX_DESKTOP_PKG='
 '
 
 CALAMARES_PKGS='
-	calamares
-	calamares-settings-nitrux
+	calamares-qml
+	calamares-qml-settings-nitrux
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
