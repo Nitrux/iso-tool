@@ -209,7 +209,7 @@ NITRUX_BASE_PACKAGES='
 '
 
 NITRUX_BF_PKG='
-	base-files=11.1.3+nitrux-legacy
+	base-files=11.1.4+nitrux-legacy
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
