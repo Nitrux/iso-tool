@@ -253,11 +253,11 @@ NX_DESKTOP_PKG='
 '
 
 CALAMARES_PKGS='
-	calamares
+	calamares=3.2.20-0xneon+18.04+bionic+build30
 	calamares-settings-nitrux
 '
 
-apt install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Upgrade KF5 packages and libs.
