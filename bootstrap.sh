@@ -526,6 +526,8 @@ cp /usr/share/icons/nitrux_snow_cursors/index.theme /etc/X11/cursors/nitrux_curs
 ln -svf /etc/X11/cursors/nitrux_cursors.theme /etc/alternatives/x-cursor-theme
 sed -i '$ a Inherits=nitrux_snow_cursors' /etc/X11/cursors/nitrux_cursors.theme
 
+cp /boot/initrd.img /boot/initrd.img-generic
+
 rm -r /home/travis
 
 
