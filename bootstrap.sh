@@ -33,17 +33,18 @@ BASIC_PACKAGES='
 	language-pack-en-base
 	libarchive13
 	libelf1
+	libxvmc1
 	localechooser-data
 	locales
 	lupin-casper
 	open-vm-tools
 	rng-tools
 	systemd
+	ufw
 	user-setup
 	wget
 	xz-utils
-	ufw
-	libxvmc1
+	libarchive-tools
 '
 
 apt -qq update
@@ -102,12 +103,12 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends -
 puts "ADDING ELOGIND."
 
 ELOGIND_PKGS='
-	libelogind0
+	bsdutils=1:2.35.2-2+devuan1
 	elogind
-	uuid-runtime=2.34-0.1+devuan1
-	util-linux=2.34-0.1+devuan1
-	libprocps6=2:3.3.12-3+devuan2.1
-	bsdutils=1:2.34-0.1+devuan1
+	libelogind0
+	libprocps7
+	util-linux=2.35.2-2+devuan1
+	uuid-runtime=2.35.2-2+devuan1
 '
 
 UPDT_APT_PKGS='
@@ -144,36 +145,31 @@ DEVUAN_POLKIT_PKGS='
 '
 
 DEVUAN_NM_UD2='
-	libnm0=1.14.6-2+deb10u1
-	libudisks2-0=2.8.4-2+devuan1
-	network-manager=1.14.6-2+deb10u1
-	udisks2=2.8.4-2+devuan1
 	init-system-helpers=1.57+devuan1
+	libnm0=1.14.6-2+deb10u1
+	libudisks2-0
+	network-manager=1.14.6-2+deb10u1
+	udisks2
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
 
 
-#	Add SysV as init.
+#	Add OpenRC as init.
 
-puts "ADDING SYSV AS INIT."
+puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
-	init=1.57+devuan1
-	sysv-rc
-	sysvinit-core
+	bootchart2
+	fgetty
+	initscripts
+	openrc
+	policycoreutils
+	startpar
 	sysvinit-utils
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
-
-
-#	Check that init system is not systemd.
-
-puts "CHECKING INIT LINK."
-
-init --version
-stat /sbin/init
 
 
 #	Install base system metapackages.
@@ -182,9 +178,9 @@ puts "INSTALLING BASE SYSTEM."
 
 
 GRUB_PACKAGES='
-	grub-efi-amd64-signed=1+2.04+7
-	grub-efi-amd64-bin=2.04-7
-	grub-common=2.04-7
+	grub-efi-amd64-signed=1+2.04+8
+	grub-efi-amd64-bin=2.04-8
+	grub-common=2.04-8
 '
 
 NITRUX_BASE_PACKAGES='
@@ -213,19 +209,20 @@ XENIAL_PACKAGES='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse0=13.0-5
-	pulseaudio=13.0-5
 	libpulse-mainloop-glib0=13.0-5
-	pulseaudio-utils=13.0-5
+	libpulse0=13.0-5
 	libpulsedsp=13.0-5
 	pulseaudio-module-bluetooth=13.0-5
+	pulseaudio-utils=13.0-5
+	pulseaudio=13.0-5
 '
 
 MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 	bluedevil
-	libkf5xmlgui5=5.70.0-0xneon+18.04+bionic+build43
-	libkf5xmlgui-data=5.70.0-0xneon+18.04+bionic+build43
+	libkf5xmlgui5=5.71.0-0xneon+18.04+bionic+build45
+	libkf5xmlgui-data=5.71.0-0xneon+18.04+bionic+build45
+	libkf5itemmodels5=5.71.0-0xneon+18.04+bionic+build32
 '
 
 NX_DESKTOP_PKG='
@@ -396,6 +393,7 @@ OTHER_MISC_PKGS='
 UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
+	sudo=1.9.0-1ubuntu1
 '
 
 apt -qq update
@@ -415,6 +413,17 @@ INSTALL_KERNEL='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
+
+
+#	Add OpenRC configuration.
+
+puts "ADDING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -424,80 +433,80 @@ apt autoclean &> /dev/null
 #	No apt usage past this point.
 
 
-# #	Add MAUI Appimages.
-# 
-# puts "ADDING MAUI APPS (STABLE)."
-# 
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# mkdir maui_pkgs
-# 
-# (
-# 	cd maui_pkgs
-# 
-# 	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
-# 
-# 	for i in $_apps; do
-#         _branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
-#         /tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
-# 	done
-# 
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
-# 
-# 	chmod +x /Applications/*
-# 
-# 	ls -l /Applications
-# )
-# 
-# /tmp/mc config host rm nx
-# 
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
-
-
 #	Add MAUI Appimages.
-
-puts "ADDING MAUI APPS (NIGHTLY)."
-
+ 
+puts "ADDING MAUI APPS (STABLE)."
+ 
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-_latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
 mkdir maui_pkgs
 
 (
 	cd maui_pkgs
 
-	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
 
-	for i in $_packages; do
-		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+	for i in $_apps; do
+		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
+		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
 	done
 
-	mv index-*amd64*.AppImage /Applications/index
-	mv buho-*amd64*.AppImage /Applications/buho
-	mv nota-*amd64*.AppImage /Applications/nota
-	mv vvave-*amd64*.AppImage /Applications/vvave
-	mv station-*amd64*.AppImage /Applications/station
-	mv pix-*amd64*.AppImage /Applications/pix
+ 	mv ${_branch}/index-*amd64*.AppImage /Applications/index
+ 	mv ${_branch}/buho-*amd64*.AppImage /Applications/buho
+ 	mv ${_branch}/nota-*amd64*.AppImage /Applications/nota
+ 	mv ${_branch}/vvave-*amd64*.AppImage /Applications/vvave
+ 	mv ${_branch}/station-*amd64*.AppImage /Applications/station
+ 	mv ${_branch}/pix-*amd64*.AppImage /Applications/pix
+ 
+ 	chmod +x /Applications/*
+ 
+ 	ls -l /Applications
+ )
+ 
+ /tmp/mc config host rm nx
+ 
+ rm -r \
+ 	maui_pkgs \
+ 	/tmp/mc
 
-	chmod +x /Applications/*
 
-	ls -l /Applications
-)
-
-/tmp/mc config host rm nx
-
-rm -r \
-	maui_pkgs \
-	/tmp/mc
+##	Add MAUI Appimages.
+#
+#puts "ADDING MAUI APPS (NIGHTLY)."
+#
+#wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+#chmod +x /tmp/mc
+#/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+#_latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
+#mkdir maui_pkgs
+#
+#(
+#	cd maui_pkgs
+#
+#	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+#
+#	for i in $_packages; do
+#		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+#	done
+#
+#	mv index-*amd64*.AppImage /Applications/index
+#	mv buho-*amd64*.AppImage /Applications/buho
+#	mv nota-*amd64*.AppImage /Applications/nota
+#	mv vvave-*amd64*.AppImage /Applications/vvave
+#	mv station-*amd64*.AppImage /Applications/station
+#	mv pix-*amd64*.AppImage /Applications/pix
+#
+#	chmod +x /Applications/*
+#
+#	ls -l /Applications
+#)
+#
+#/tmp/mc config host rm nx
+#
+#rm -r \
+#	maui_pkgs \
+#	/tmp/mc
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
@@ -518,6 +527,16 @@ ln -svf /etc/X11/cursors/nitrux_cursors.theme /etc/alternatives/x-cursor-theme
 sed -i '$ a Inherits=nitrux_snow_cursors' /etc/X11/cursors/nitrux_cursors.theme
 
 rm -r /home/travis
+
+
+#	Check contents of OpenRC runlevels.
+
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+
+
+#	Check that init system is not systemd.
+
+stat /sbin/init
 
 
 #	Implement a new FHS.
