@@ -103,12 +103,12 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends -
 puts "ADDING ELOGIND."
 
 ELOGIND_PKGS='
-	bsdutils=1:2.35.2-2+devuan1
+	bsdutils
 	elogind
 	libelogind0
 	libprocps7
-	util-linux=2.35.2-2+devuan1
-	uuid-runtime=2.35.2-2+devuan1
+	util-linux
+	uuid-runtime
 '
 
 UPDT_APT_PKGS='
