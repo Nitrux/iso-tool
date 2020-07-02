@@ -55,6 +55,7 @@ BASIC_PACKAGES='
 	user-setup
 	wget
 	xz-utils
+	libpam-runtime
 '
 
 apt -qq update
@@ -330,7 +331,11 @@ apt autoclean &> /dev/null
 
 puts "REMOVE SOURCES FILES."
 
-rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list /etc/apt/sources.list.d/ubuntu-xenial-repo.list /etc/apt/sources.list.d/ubuntu-groovy-repo.list /etc/apt/sources.list.d/neon-unstable-repo.list
+rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list \
+	/etc/apt/sources.list.d/ubuntu-xenial-repo.list \
+	/etc/apt/sources.list.d/ubuntu-groovy-repo.list \
+	/etc/apt/sources.list.d/neon-unstable-repo.list \
+	/etc/apt/sources.list.d/gpu-ppa-repo.list
 
 
 #	Make sure to refresh appstream cache.
