@@ -128,9 +128,9 @@ ELOGIND_PKGS='
 '
 
 UPDT_APT_PKGS='
-	apt=2.1.2+devuan1
-	apt-transport-https=2.1.2+devuan1
-	apt-utils=2.1.2+devuan1
+	apt
+	apt-transport-https
+	apt-utils
 '
 
 REMOVE_SYSTEMD_PKGS='
