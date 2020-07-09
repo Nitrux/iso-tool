@@ -103,18 +103,18 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends -
 puts "ADDING ELOGIND."
 
 ELOGIND_PKGS='
-	bsdutils=1:2.35.2-2+devuan1
+	bsdutils
 	elogind
 	libelogind0
 	libprocps7
-	util-linux=2.35.2-2+devuan1
-	uuid-runtime=2.35.2-2+devuan1
+	util-linux
+	uuid-runtime
 '
 
 UPDT_APT_PKGS='
-	apt=2.1.2+devuan1
-	apt-transport-https=2.1.2+devuan1
-	apt-utils=2.1.2+devuan1
+	apt
+	apt-transport-https
+	apt-utils
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -368,17 +368,27 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
-#	Upgrade and install misc. packages.
+#	Upgrade glibc packages.
 
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
 
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
 UPDT_GLBIC_PKGS='
 	libc-bin
 	libc6
 	locales
 '
+
+apt -qq update
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
+
+rm /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+
+#	Upgrade and install misc. packages.
+
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
 OTHER_MISC_PKGS='
 	gamemode
@@ -393,12 +403,11 @@ OTHER_MISC_PKGS='
 UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
-	sudo
+	sudo=1.9.0-1ubuntu1
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS $UPDT_MISC_PKGS --no-install-recommends
 
 
 #	Install the kernel.
@@ -434,9 +443,9 @@ apt autoclean &> /dev/null
 
 
 #	Add MAUI Appimages.
- 
+
 puts "ADDING MAUI APPS (STABLE)."
- 
+
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
@@ -458,14 +467,14 @@ mkdir maui_pkgs
  	mv ${_branch}/vvave-*amd64*.AppImage /Applications/vvave
  	mv ${_branch}/station-*amd64*.AppImage /Applications/station
  	mv ${_branch}/pix-*amd64*.AppImage /Applications/pix
- 
+
  	chmod +x /Applications/*
- 
+
  	ls -l /Applications
  )
- 
+
  /tmp/mc config host rm nx
- 
+
  rm -r \
  	maui_pkgs \
  	/tmp/mc

@@ -2,7 +2,7 @@
 
 #	Exit on errors.
 
-set -e
+set -xe
 
 
 #	base image URL.
