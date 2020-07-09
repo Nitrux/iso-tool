@@ -83,7 +83,6 @@ mkdir -p $iso_dir/boot
 
 cp $(echo $build_dir/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/kernel
 cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/initramfs
-cp $(echo $build_dir/boot/initrd.img-generic  | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/initramfs-generic
 
 rm -f $build_dir/boot/*
 
