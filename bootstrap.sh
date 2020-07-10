@@ -41,6 +41,7 @@ BASIC_PACKAGES='
 	language-pack-en-base
 	libarchive13
 	libelf1
+	libpam-runtime
 	libxvmc1
 	localechooser-data
 	locales
@@ -55,7 +56,6 @@ BASIC_PACKAGES='
 	user-setup
 	wget
 	xz-utils
-	libpam-runtime
 '
 
 apt -qq update
