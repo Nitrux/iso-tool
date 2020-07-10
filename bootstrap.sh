@@ -322,10 +322,6 @@ OPENRC_CONFIG='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
-
 
 #	Remove unnecessary sources.list files.
 
@@ -334,8 +330,28 @@ puts "REMOVE SOURCES FILES."
 rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list \
 	/etc/apt/sources.list.d/ubuntu-xenial-repo.list \
 	/etc/apt/sources.list.d/ubuntu-groovy-repo.list \
+	/etc/apt/sources.list.d/ubuntu-bionic-repo.list \
 	/etc/apt/sources.list.d/neon-unstable-repo.list \
-	/etc/apt/sources.list.d/gpu-ppa-repo.list
+	/etc/apt/sources.list.d/neon-user-repo.list \
+	/etc/apt/sources.list.d/devuan-repo.list \
+	/etc/apt/sources.list.d/gpu-ppa-repo.list \
+	/etc/apt/preferences
+
+apt -qq update
+
+
+#	Add repositories configuration.
+
+puts "ADDING REPOSITORIES SETTINGS."
+
+NX_REPO_PKG='
+	nitrux-repository-settings
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
+apt clean &> /dev/null
+apt autoclean &> /dev/null
 
 
 #	Make sure to refresh appstream cache.
