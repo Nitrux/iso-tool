@@ -17,7 +17,7 @@ puts "STARTING BOOTSTRAP."
 
 puts "INSTALLING BASIC PACKAGES."
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list
+cp /configs/files/sources.list.bionic /etc/apt/sources.list
 
 BASIC_PACKAGES='
 	apt-transport-https
