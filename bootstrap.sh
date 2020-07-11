@@ -17,7 +17,7 @@ puts "STARTING BOOTSTRAP."
 
 puts "INSTALLING BASIC PACKAGES."
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 BASIC_PACKAGES='
 	apt-transport-https
@@ -150,21 +150,21 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0=0.105-25+devuan8
-	libpolkit-backend-1-0=0.105-25+devuan8
-	libpolkit-backend-elogind-1-0=0.105-25+devuan8
-	libpolkit-gobject-1-0=0.105-25+devuan8
-	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1=0.112.0-6
-	policykit-1=0.105-25+devuan8
+	libpolkit-agent-1-0
+	libpolkit-backend-1-0
+	libpolkit-backend-elogind-1-0
+	libpolkit-gobject-1-0
+	libpolkit-gobject-elogind-1-0
+	libpolkit-qt5-1-1
+	policykit-1
 	polkit-kde-agent-1=4:5.17.5-2
 '
 
 DEVUAN_NM_UD2='
-	init-system-helpers=1.57+devuan1
-	libnm0=1.14.6-2+deb10u1
+	init-system-helpers
+	libnm0
 	libudisks2-0
-	network-manager=1.14.6-2+deb10u1
+	network-manager
 	udisks2
 '
 
@@ -186,19 +186,6 @@ DEVUAN_INIT_PKGS='
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
 
-# 	Install minimal metapackage.
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
-
-NITRUX_MIN_PACKAGE='
-	nitrux-minimal-legacy
-'
-
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_MIN_PACKAGE --no-install-recommends
-rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
-apt -qq update
-
 
 #	Install base system metapackages.
 
@@ -206,6 +193,7 @@ puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
 	nitrux-hardware-drivers-legacy
+	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
 
@@ -239,13 +227,13 @@ DEVUAN_PULSE_PKGS='
 
 MISC_KDE_PKGS='
 	bluedevil
-	libkf5itemmodels5=5.71.0-0xneon+18.04+bionic+build32
-	libkf5xmlgui-data=5.71.0-0xneon+18.04+bionic+build45
-	libkf5xmlgui5=5.71.0-0xneon+18.04+bionic+build45
+	libkf5itemmodels5
+	libkf5xmlgui-data
+	libkf5xmlgui5
 	libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
 	liquidshell
 	plasma-pa=4:5.17.5-2
-	xdg-desktop-portal-kde=5.19.1-0xneon+18.04+bionic+build68
+	xdg-desktop-portal-kde
 '
 
 NX_DESKTOP_PKG='
