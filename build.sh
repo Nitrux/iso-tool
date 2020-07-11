@@ -92,8 +92,6 @@ cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/bo
 
 rm \
 	$build_dir/boot/initrd.img-$(uname -r) \
-	$build_dir/boot/vmlinuz \
-	$build_dir/boot/initrd.img
 
 #rm -f $build_dir/boot/*
 
