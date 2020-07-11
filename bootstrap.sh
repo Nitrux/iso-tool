@@ -187,13 +187,26 @@ DEVUAN_INIT_PKGS='
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
 
 
+# 	Install minimal metapackage.
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+NITRUX_MIN_PACKAGE='
+	nitrux-minimal-legacy
+'
+
+apt -qq update
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_MIN_PACKAGE --no-install-recommends
+rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
+apt -qq update
+
+
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
 	nitrux-hardware-drivers-legacy
-	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
 
