@@ -150,13 +150,13 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0
-	libpolkit-backend-1-0
-	libpolkit-backend-elogind-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
+	libpolkit-agent-1-0=0.105-25+devuan8
+	libpolkit-backend-1-0=0.105-25+devuan8
+	libpolkit-backend-elogind-1-0=0.105-25+devuan8
+	libpolkit-gobject-1-0=0.105-25+devuan8
+	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
 	libpolkit-qt5-1-1
-	policykit-1
+	policykit-1=0.105-25+devuan8
 	polkit-kde-agent-1=4:5.17.5-2
 '
 
