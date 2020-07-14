@@ -17,7 +17,7 @@ puts "STARTING BOOTSTRAP."
 
 puts "INSTALLING BASIC PACKAGES."
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
+cp /configs/files/sources.list.bionic /etc/apt/sources.list
 
 BASIC_PACKAGES='
 	apt-transport-https
@@ -145,10 +145,10 @@ DEVUAN_POLKIT_PKGS='
 '
 
 DEVUAN_NM_UD2='
-	init-system-helpers=1.57+devuan1
-	libnm0=1.14.6-2+deb10u1
+	init-system-helpers
+	libnm0
 	libudisks2-0
-	network-manager=1.14.6-2+deb10u1
+	network-manager
 	udisks2
 '
 
@@ -218,11 +218,11 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.17.5-2
 	bluedevil
-	libkf5xmlgui5=5.71.0-0xneon+18.04+bionic+build45
-	libkf5xmlgui-data=5.71.0-0xneon+18.04+bionic+build45
-	libkf5itemmodels5=5.71.0-0xneon+18.04+bionic+build32
+	libkf5itemmodels5
+	libkf5xmlgui5
+	libkf5xmlgui-data
+	plasma-pa=4:5.17.5-2
 '
 
 NX_DESKTOP_PKG='
@@ -403,7 +403,7 @@ OTHER_MISC_PKGS='
 UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
-	sudo=1.9.0-1ubuntu1
+	sudo=1.9.1-1ubuntu1
 '
 
 apt -qq update
