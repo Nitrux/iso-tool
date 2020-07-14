@@ -307,6 +307,7 @@ OTHER_MISC_PKGS='
 UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
+	sudo=1.9.1-1ubuntu1
 '
 
 apt -qq update
