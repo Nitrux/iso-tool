@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -x
+set -xe
 
 export LANG=C
 export LC_ALL=C
@@ -41,6 +41,7 @@ BASIC_PACKAGES='
 	libelf1
 	libpam-runtime
 	libxvmc1
+	linux-base
 	localechooser-data
 	locales
 	locales-all
@@ -51,6 +52,7 @@ BASIC_PACKAGES='
 	squashfs-tools
 	systemd
 	systemd-sysv
+	sudo
 	ufw
 	user-setup
 	wget
@@ -354,8 +356,8 @@ sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
 
 ls -l /boot
 
-ln -svf /boot/initrd.img-5* /initrd.img
-ln -svf /boot/vmlinuz-5* /vmlinuz
+ln -svf /boot/initrd.img-5.6* /initrd.img
+ln -svf /boot/vmlinuz-5.6* /vmlinuz
 
 
 #	Check that init system is not systemd.
