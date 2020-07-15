@@ -35,6 +35,9 @@ BASIC_PACKAGES='
 	grub-efi-amd64-bin
 	grub-efi-amd64-signed
 	grub2-common
+	initramfs-tools
+	initramfs-tools-bin
+ 	initramfs-tools-core
 	language-pack-en
 	language-pack-en-base
 	libarchive13
