@@ -5,15 +5,17 @@
 set -xe
 
 
+#	Add repository keys for Travis
+
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
+	6B05F25D762E3157 > /dev/null
+
+wget -q -O - https://www.mongodb.org/static/pgp/server-3.2.pub | sudo apt-key add - > /dev/null
+
+
 #	base image URL.
 
-base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/18.04/release/ubuntu-base-18.04.4-base-amd64.tar.gz
-
-
-#	WARNING:
-#	Use sources.list.focal to update xorriso and GRUB.
-
-wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
+base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
 
 XORRISO_PACKAGES='
 	gcc-10-base
@@ -34,12 +36,23 @@ XORRISO_PACKAGES='
 	libreadline8
 	libtinfo6
 	locales
+	mtools
+	python3-pip
 	readline-common
+	squashfs-tools
+	sshpass
+	util-linux
 	xorriso
+	zsync
 '
 
 apt update &> /dev/null
 apt -q -yy install $XORRISO_PACKAGES --no-install-recommends
+
+
+#	Install python-gitlab
+
+pip3 install --upgrade python-gitlab
 
 
 #	Prepare the directories for the build.
@@ -148,3 +161,4 @@ zsyncmake \
 for f in $output_dir/*; do
     SSHPASS=$DEPLOY_PASS sshpass -e scp -q -o stricthostkeychecking=no "$f" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 done
+

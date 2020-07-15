@@ -17,8 +17,6 @@ puts "STARTING BOOTSTRAP."
 
 puts "INSTALLING BASIC PACKAGES."
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
-
 BASIC_PACKAGES='
 	apt-transport-https
 	apt-utils
@@ -90,11 +88,12 @@ puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
-cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+# cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt -qq update
@@ -176,26 +175,13 @@ DEVUAN_INIT_PKGS='
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
 
 
-# 	Install minimal metapackage.
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
-
-NITRUX_MIN_PACKAGE='
-	nitrux-minimal-legacy
-'
-
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_MIN_PACKAGE --no-install-recommends
-rm  /etc/apt/sources.list.d/ubuntu-focal-repo.list
-apt -qq update
-
-
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
 	nitrux-hardware-drivers-legacy
+	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
 
