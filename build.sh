@@ -5,14 +5,6 @@
 set -xe
 
 
-#	Add repository keys for Travis
-
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
-	6B05F25D762E3157 > /dev/null
-
-wget -q -O - https://www.mongodb.org/static/pgp/server-3.2.pub | sudo apt-key add - > /dev/null
-
-
 #	base image URL.
 
 base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
@@ -46,8 +38,8 @@ XORRISO_PACKAGES='
 	zsync
 '
 
-apt update &> /dev/null
-apt -q -yy install $XORRISO_PACKAGES --no-install-recommends
+apt -qq update
+apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
 
 
 #	Install python-gitlab
