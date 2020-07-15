@@ -49,7 +49,7 @@ BASIC_PACKAGES='
 	rng-tools
 	shim-signed
 	squashfs-tools
-	systemd
+	systemd-sysv
 	ufw
 	user-setup
 	wget

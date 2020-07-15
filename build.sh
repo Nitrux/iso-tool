@@ -12,30 +12,13 @@ wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-i
 apt update
 
 XORRISO_PACKAGES='
-	gcc-10-base
-	grub-common
-	grub-efi-amd64-bin
-	grub-pc
-	grub-pc-bin
-	grub2-common
 	libburn4
-	libc-bin
-	libc6
-	libefiboot1
-	libefivar1
 	libgcc1
 	libisoburn1
 	libisofs6
 	libjte2
-	libreadline8
-	libtinfo6
-	locales
 	mtools
-	python3-pip
-	readline-common
-	squashfs-tools
 	sshpass
-	util-linux
 	xorriso
 	zsync
 '
