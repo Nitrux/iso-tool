@@ -105,15 +105,6 @@ apt -qq update
 cp /configs/files/preferences /etc/apt/preferences
 
 
-#	Use Glibc package from Devuan.
-
-GLIBC_2_30_PKG='
-	libc6=2.30-8
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
-
-
 #	Use elogind packages from Devuan.
 
 puts "ADDING ELOGIND."
@@ -171,9 +162,9 @@ DEVUAN_NM_UD2='
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
 
 
-#	Add OpenRC as init.
+#	Add SysV as init.
 
-puts "ADDING OPENRC AS INIT."
+puts "ADDING SYSV AS INIT."
 
 DEVUAN_INIT_PKGS='
 	init
