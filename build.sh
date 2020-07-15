@@ -5,9 +5,11 @@
 set -xe
 
 
-#	base image URL.
 
-base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
+#	Travis stuff
+
+wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
+apt update
 
 XORRISO_PACKAGES='
 	gcc-10-base
@@ -37,14 +39,13 @@ XORRISO_PACKAGES='
 	xorriso
 	zsync
 '
-
-apt -qq update
 apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
-
-
-#	Install python-gitlab
-
 pip3 install --upgrade python-gitlab
+
+
+#	base image URL.
+
+base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04-base-amd64.tar.gz
 
 
 #	Prepare the directories for the build.
