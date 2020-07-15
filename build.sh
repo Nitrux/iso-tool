@@ -6,7 +6,7 @@ set -xe
 
 
 
-#	Travis stuff
+#	Travis stuff.
 
 wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
 apt update
@@ -26,7 +26,7 @@ XORRISO_PACKAGES='
 	libgcc1
 	libisoburn1
 	libisofs6
-	libjte1
+	libjte2
 	libreadline8
 	libtinfo6
 	locales
