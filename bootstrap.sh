@@ -202,6 +202,10 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no
 
 puts "INSTALLING DESKTOP PACKAGES."
 
+LIBPNG12_PKG='
+	libpng12-0
+'
+
 XENIAL_PACKAGES='
 	plymouth=0.9.2-3ubuntu13.5
 	plymouth-label=0.9.2-3ubuntu13.5
@@ -240,6 +244,7 @@ CALAMARES_PKGS='
 	calamares-settings-nitrux
 '
 
+apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
 
 
