@@ -31,6 +31,7 @@ BASIC_PACKAGES='
 	gnupg2
 	language-pack-en
 	language-pack-en-base
+	libarchive-tools
 	libarchive13
 	libelf1
 	libxvmc1
@@ -44,7 +45,6 @@ BASIC_PACKAGES='
 	user-setup
 	wget
 	xz-utils
-	libarchive-tools
 '
 
 apt -qq update
@@ -79,11 +79,11 @@ puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
-cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+# cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt -qq update
@@ -382,8 +382,6 @@ UPDT_GLBIC_PKGS='
 
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
-
-rm /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
 
 #	Upgrade and install misc. packages.
