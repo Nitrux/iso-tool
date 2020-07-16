@@ -42,6 +42,3 @@ Package: ufw
 Pin: release *
 Pin-Priority: -1
 
-Package: base-files
-Pin: release *
-Pin-Priority: -1

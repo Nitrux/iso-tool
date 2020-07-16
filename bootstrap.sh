@@ -259,7 +259,7 @@ UPDT_MISC_LIBS='
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
@@ -289,6 +289,7 @@ UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
 	sudo=1.9.1-1ubuntu1
+	inkscape
 '
 
 apt -qq update
