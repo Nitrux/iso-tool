@@ -112,7 +112,7 @@ cp /configs/files/preferences /etc/apt/preferences
 
 puts "INSTALLING CASPER PACKAGES."
 
-BASIC_PACKAGES='
+CASPER_PACKAGES='
 	casper
 	lupin-casper
 '
