@@ -24,7 +24,6 @@ BASIC_PACKAGES='
 	bluez
 	btrfs-progs
 	ca-certificates
-	casper
 	cgroupfs-mount
 	dhcpcd5
 	dictionaries-common
@@ -48,7 +47,6 @@ BASIC_PACKAGES='
 	localechooser-data
 	locales
 	locales-all
-	lupin-casper
 	open-vm-tools
 	rng-tools
 	shim-signed
@@ -108,6 +106,18 @@ apt -qq update
 #	Block installation of some packages.
 
 cp /configs/files/preferences /etc/apt/preferences
+
+
+#	Add casper packages.
+
+puts "INSTALLING CASPER PACKAGES."
+
+BASIC_PACKAGES='
+	casper
+	lupin-casper
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
 
 
 #	Use elogind packages from Devuan.
