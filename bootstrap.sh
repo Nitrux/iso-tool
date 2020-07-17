@@ -612,16 +612,16 @@ chmod a+x /usr/bin/vfio-pci-override-vga.sh
 #	Use LZ4 compression when creating the initramfs.
 #	Add initramfs hook script.
 #	Add the persistence and update the initramfs.
-#	Add znx_dev_uuid parameter. FIXME
 #	Add fstab mount binds.
+#	Add znx_dev_uuid parameter. FIXME
 
 puts "UPDATING THE INITRAMFS."
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
+# cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
 lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
