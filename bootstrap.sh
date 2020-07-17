@@ -17,7 +17,7 @@ puts "STARTING BOOTSTRAP."
 
 puts "INSTALLING BASIC PACKAGES."
 
-cp /configs/files/sources.list.bionic /etc/apt/sources.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list
 
 BASIC_PACKAGES='
 	apt-transport-https
@@ -87,15 +87,6 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt -qq update
-
-
-#	Use Glibc package from Devuan.
-
-GLIBC_2_30_PKG='
-	libc6=2.30-8
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
 
 
 #	Use elogind packages from Devuan.
@@ -200,6 +191,10 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NIT
 
 puts "INSTALLING DESKTOP PACKAGES."
 
+LIBPNG12_PKG='
+	libpng12-0
+'
+
 XENIAL_PACKAGES='
 	plymouth=0.9.2-3ubuntu13.5
 	plymouth-label=0.9.2-3ubuntu13.5
@@ -230,6 +225,7 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps
 '
 
+apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
@@ -368,25 +364,17 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
-#	Upgrade glibc packages.
+#	Upgrade and install misc. packages.
+
+cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
 UPDT_GLBIC_PKGS='
 	libc-bin
 	libc6
 	locales
 '
-
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
-
-
-#	Upgrade and install misc. packages.
-
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
 OTHER_MISC_PKGS='
 	gamemode
@@ -405,7 +393,8 @@ UPDT_MISC_PKGS='
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS $UPDT_MISC_PKGS --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
 #	Install the kernel.
