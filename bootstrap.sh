@@ -161,7 +161,6 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-i
 puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
-	bootchart2
 	fgetty
 	initscripts
 	openrc
@@ -230,13 +229,18 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 '
 
+SOME_MISC_PKGS='
+	p11-kit-modules=0.23.20-1build1
+	libp11-kit0=0.23.20-1build1
+'
+
 NX_DESKTOP_PKG='
 	nx-desktop
 	nx-desktop-apps
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $SOME_MISC_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
@@ -403,7 +407,7 @@ UPDT_MISC_PKGS='
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
