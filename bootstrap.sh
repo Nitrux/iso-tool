@@ -90,7 +90,7 @@ apt -qq update
 
 puts "INSTALLING CASPER PACKAGES."
 
-BASIC_PACKAGES='
+CASPER_PACKAGES='
 	casper
 	lupin-casper
 '
