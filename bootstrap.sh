@@ -89,6 +89,18 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 apt -qq update
 
 
+#	Add casper packages.
+
+puts "INSTALLING CASPER PACKAGES."
+
+BASIC_PACKAGES='
+	casper
+	lupin-casper
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
+
+
 #	Use elogind packages from Devuan.
 
 puts "ADDING ELOGIND."
