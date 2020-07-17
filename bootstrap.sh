@@ -182,9 +182,11 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-i
 puts "ADDING SYSV AS INIT."
 
 DEVUAN_INIT_PKGS='
-	init
-	sysv-rc
-	sysvinit-core
+	fgetty
+	initscripts
+	openrc
+	policycoreutils
+	startpar
 	sysvinit-utils
 '
 
@@ -311,6 +313,17 @@ apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
+
+#	Add OpenRC configuration.
+
+puts "ADDING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
+
 #	Remove unnecessary sources.list files.
 
 puts "REMOVE SOURCES FILES."
@@ -377,6 +390,11 @@ ls -l /boot
 
 ln -svf /boot/initrd.img-5.6* /initrd.img
 ln -svf /boot/vmlinuz-5.6* /vmlinuz
+
+
+#	Check contents of OpenRC runlevels.
+
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 
 
 #	Check that init system is not systemd.
