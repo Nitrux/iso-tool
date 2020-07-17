@@ -25,7 +25,6 @@ BASIC_PACKAGES='
 	avahi-daemon
 	bluez
 	ca-certificates
-	casper
 	cgroupfs-mount
 	dhcpcd5
 	gnupg2
@@ -37,7 +36,6 @@ BASIC_PACKAGES='
 	libxvmc1
 	localechooser-data
 	locales
-	lupin-casper
 	open-vm-tools
 	rng-tools
 	systemd
