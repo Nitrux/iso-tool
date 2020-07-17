@@ -79,6 +79,7 @@ cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
@@ -229,18 +230,13 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 '
 
-SOME_MISC_PKGS='
-	p11-kit-modules=0.23.20-1build1
-	libp11-kit0=0.23.20-1build1
-'
-
 NX_DESKTOP_PKG='
 	nx-desktop
 	nx-desktop-apps
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $SOME_MISC_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
