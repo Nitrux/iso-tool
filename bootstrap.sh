@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -xe
+set -x
 
 export LANG=C
 export LC_ALL=C
@@ -328,7 +328,7 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
 
 puts "REMOVE SOURCES FILES."
 
-rm /etc/apt/sources.list.d/ubuntu-eoan-repo.list \
+rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
 	/etc/apt/sources.list.d/ubuntu-xenial-repo.list \
 	/etc/apt/sources.list.d/ubuntu-groovy-repo.list \
 	/etc/apt/sources.list.d/ubuntu-bionic-repo.list \
