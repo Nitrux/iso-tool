@@ -395,6 +395,7 @@ OTHER_MISC_PKGS='
 '
 
 UPDT_MISC_PKGS='
+	bluez
 	cgroupfs-mount
 	linux-firmware
 	sudo=1.9.1-1ubuntu1
