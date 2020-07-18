@@ -30,10 +30,6 @@ Package: ksysguardd
 Pin: release *
 Pin-Priority: -1
 
-Package: libqt5webkit5
-Pin: release *
-Pin-Priority: -1
-
 Package: plasma-pa
 Pin: release *
 Pin-Priority: -1
