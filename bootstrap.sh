@@ -240,7 +240,7 @@ MISC_KDE_PKGS='
 	libkf5itemmodels5
 	libkf5xmlgui-data
 	libkf5xmlgui5
-	libqt5webkit5=5.212.0~alpha3-5+18.04+bionic+build43
+	libqt5webkit5
 	liquidshell
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
@@ -252,7 +252,7 @@ NX_DESKTOP_PKG='
 '
 
 CALAMARES_PKGS='
-	calamares=3.2.20-0xneon+18.04+bionic+build30
+	calamares
 	calamares-settings-nitrux
 '
 
