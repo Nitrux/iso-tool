@@ -188,13 +188,6 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends
 
 puts "INSTALLING BASE SYSTEM."
 
-
-GRUB_PACKAGES='
-	grub-efi-amd64-signed=1+2.04+8
-	grub-efi-amd64-bin=2.04-8
-	grub-common=2.04-8
-'
-
 NITRUX_BASE_PACKAGES='
 	nitrux-hardware-drivers
 	nitrux-minimal
