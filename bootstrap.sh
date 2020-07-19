@@ -403,9 +403,9 @@ UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
 	sudo=1.9.1-1ubuntu1
-	initramfs-tools=0.136ubuntu6.2
-	initramfs-tools-core=0.136ubuntu6.2
-	initramfs-tools-bin=0.136ubuntu6.2
+	initramfs-tools=0.137ubuntu10
+	initramfs-tools-core=0.137ubuntu10
+	initramfs-tools-bin=0.137ubuntu10
 '
 
 apt -qq update
