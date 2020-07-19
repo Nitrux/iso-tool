@@ -26,14 +26,6 @@ BASIC_PACKAGES='
 	cgroupfs-mount
 	dhcpcd5
 	gnupg2
-	grub-common
-	grub-efi-amd64
-	grub-efi-amd64-bin
-	grub-efi-amd64-signed
-	grub2-common
-	initramfs-tools
-	initramfs-tools-core
-	initramfs-tools-bin
 	language-pack-en
 	language-pack-en-base
 	libarchive-tools
@@ -405,6 +397,9 @@ UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
 	sudo=1.9.1-1ubuntu1
+	initramfs-tools=0.136ubuntu6.2
+	initramfs-tools-core=0.136ubuntu6.2
+	initramfs-tools-bin=0.136ubuntu6.2
 '
 
 apt -qq update
