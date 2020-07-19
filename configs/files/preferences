@@ -45,3 +45,15 @@ Pin-Priority: -1
 Package: libc-dev-bin
 Pin: version 2.31-1
 Pin-Priority: -1
+
+Package: initramfs-tools
+Pin: version 0.137
+Pin-Priority: -1
+
+Package: initramfs-tools-core
+Pin: version 0.137
+Pin-Priority: -1
+
+Package: initramfs-tools-bin
+Pin: version 0.137
+Pin-Priority: -1
