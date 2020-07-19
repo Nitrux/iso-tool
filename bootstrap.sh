@@ -383,11 +383,11 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
 
-UPDT_GLBIC_PKGS='
-	libc-bin
-	libc6
-	locales
-'
+# UPDT_GLBIC_PKGS='
+# 	libc-bin
+# 	libc6
+# 	locales
+# '
 
 OTHER_MISC_PKGS='
 	gamemode
@@ -407,7 +407,7 @@ UPDT_MISC_PKGS='
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_MISC_PKGS --only-upgrade --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
