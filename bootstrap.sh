@@ -86,6 +86,11 @@ cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo
 apt -qq update
 
 
+#	Block installation of some packages.
+
+cp /configs/files/preferences /etc/apt/preferences
+
+
 #	Add casper packages.
 
 puts "INSTALLING CASPER PACKAGES."
@@ -379,9 +384,9 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
 
 UPDT_GLBIC_PKGS='
-	libc-bin=2.31-0ubuntu10
-	libc6=2.31-0ubuntu10
-	locales=2.31-0ubuntu10
+	libc-bin
+	libc6
+	locales
 '
 
 OTHER_MISC_PKGS='

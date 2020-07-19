@@ -1,0 +1,40 @@
+Package: libsensors4
+Pin: release *
+Pin-Priority: -1
+
+Package: dash
+Pin: release *
+Pin-Priority: -1
+
+Package: xterm
+Pin: release *
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
+Pin-Priority: -1
+
+Package: ksysguard
+Pin: release *
+Pin-Priority: -1
+
+Package: ksysguard-data
+Pin: release *
+Pin-Priority: -1
+
+Package: ksysguardd
+Pin: release *
+Pin-Priority: -1
+
+Package: libc6
+Pin: version 2.31-1
+Pin-Priority: -1
+
+Package: locales
+Pin: version 2.31-1
+Pin-Priority: -1
+
+Package: libc-bin
+Pin: version 2.31-1
+Pin-Priority: -1
+
