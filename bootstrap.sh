@@ -26,6 +26,9 @@ BASIC_PACKAGES='
 	cgroupfs-mount
 	dhcpcd5
 	gnupg2
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
 	language-pack-en
 	language-pack-en-base
 	libarchive-tools
