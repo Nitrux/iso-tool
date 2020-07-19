@@ -379,9 +379,9 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 puts "UPGRADING/INSTALLING MISC. PACKAGES."
 
 UPDT_GLBIC_PKGS='
-	libc-bin
-	libc6
-	locales
+	libc-bin=2.31-0ubuntu10
+	libc6=2.31-0ubuntu10
+	locales=2.31-0ubuntu10
 '
 
 OTHER_MISC_PKGS='
