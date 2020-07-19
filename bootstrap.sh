@@ -26,6 +26,11 @@ BASIC_PACKAGES='
 	cgroupfs-mount
 	dhcpcd5
 	gnupg2
+	grub-common
+	grub-efi-amd64
+	grub-efi-amd64-bin
+	grub-efi-amd64-signed
+	grub2-common
 	initramfs-tools
 	initramfs-tools-core
 	initramfs-tools-bin
