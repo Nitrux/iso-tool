@@ -1,5 +1,6 @@
 #!/bin/sh
 
+set -x
 
 #	if 'iommu=pt' is not present in the kernel commandline, abort.
 
