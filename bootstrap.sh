@@ -263,6 +263,7 @@ HOLD_KDE_PKGS='
 
 UPDT_KDE_PKGS='
 	ark
+	bluedevil
 	kcalc
 	kde-spectacle
 	latte-dock
@@ -388,16 +389,6 @@ puts "UPGRADING/INSTALLING MISC. PACKAGES."
 # 	locales
 # '
 
-OTHER_MISC_PKGS='
-	gamemode
-	tmate
-	virtualbox-guest-dkms
-	virtualbox-guest-x11
-	docker.io
-	flatpak
-	fakeroot
-'
-
 UPDT_MISC_PKGS='
 	bluez
 	cgroupfs-mount
@@ -406,6 +397,16 @@ UPDT_MISC_PKGS='
 	initramfs-tools=0.137ubuntu10
 	initramfs-tools-core=0.137ubuntu10
 	initramfs-tools-bin=0.137ubuntu10
+'
+
+OTHER_MISC_PKGS='
+	gamemode
+	tmate
+	virtualbox-guest-dkms
+	virtualbox-guest-x11
+	docker.io
+	flatpak
+	fakeroot
 '
 
 apt -qq update
@@ -610,7 +611,7 @@ puts "ADDING VFIO ENABLEMENT AND CONFIGURATION."
 cp /configs/files/asound.conf /etc/
 cp /configs/files/asound.conf /etc/skel/.asoundrc
 cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
+cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
 
 cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
 chmod a+x /usr/bin/vfio-pci-override-vga.sh
@@ -632,7 +633,7 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 
 update-initramfs -u
 lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
-
+rm /usr/bin/vfio-pci-override-vga.sh
 
 #	Remove APT.
 
