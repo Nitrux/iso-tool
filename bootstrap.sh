@@ -100,7 +100,14 @@ CASPER_PACKAGES='
 	lupin-casper
 '
 
+INITRAMFS_PACKAGES='
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
+'
+
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
+apt-mark hold $INITRAMFS_PACKAGES
 
 
 #	Use elogind packages from Devuan.
@@ -633,7 +640,6 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 
 update-initramfs -u
 lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
-rm /usr/bin/vfio-pci-override-vga.sh
 
 #	Remove APT.
 
