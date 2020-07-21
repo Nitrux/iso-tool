@@ -22,6 +22,7 @@ BASIC_PACKAGES='
 	apt-utils
 	avahi-daemon
 	bluez
+	btrfs-progs
 	ca-certificates
 	cgroupfs-mount
 	dhcpcd5
