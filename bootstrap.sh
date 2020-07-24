@@ -14,38 +14,45 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
+#	PREBUILD_PACKAGES are packages that for one reason or the other do not get pulled when
+#	the metapackages are installed, or, that require systemd to be present and can't be installed
+#	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
+#	the rest of the packages.
 
 puts "INSTALLING BASIC PACKAGES."
 
 BASIC_PACKAGES='
 	apt-transport-https
 	apt-utils
-	avahi-daemon
-	bluez
-	btrfs-progs
 	ca-certificates
-	cgroupfs-mount
 	dhcpcd5
 	gnupg2
 	language-pack-en
 	language-pack-en-base
 	libarchive-tools
 	libarchive13
-	libelf1
-	libxvmc1
 	localechooser-data
 	locales
-	open-vm-tools
-	rng-tools
 	systemd
-	ufw
 	user-setup
 	wget
 	xz-utils
 '
 
+PREBUILD_PACKAGES='
+	avahi-daemon
+	bluez
+	btrfs-progs
+	cgroupfs-mount
+	libelf1
+	libxvmc1
+	open-vm-tools
+	rng-tools
+	ufw
+'
+
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES $PREBUILD_PACKAGES --no-install-recommends
 
 
 #	Add key for Neon repository.
@@ -415,7 +422,7 @@ OTHER_MISC_PKGS='
 	docker.io
 	flatpak
 	fakeroot
-	looking-glass
+	looking-glass-client
 '
 
 apt -qq update
