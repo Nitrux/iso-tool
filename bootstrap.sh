@@ -426,7 +426,7 @@ OTHER_MISC_PKGS='
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_MISC_PKGS --only-upgrade --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_MISC_PKGS --only-upgrade --allow-downgrades --allow-change-held-packages
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 
 
