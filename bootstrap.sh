@@ -586,46 +586,6 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Add vfio modules and files.
-#	FIXME: This configuration should be included in a package.
-
-puts "ADDING VFIO ENABLEMENT AND CONFIGURATION."
-
->> /etc/initramfs-tools/modules printf "%s\n" \
-	"install vfio-pci /usr/bin/vfio-override" \
-	"install vfio_pci /usr/bin/vfio-override" \
-	"softdep nvidia pre: vfio vfio_pci" \
-	"softdep nouveau pre: vfio vfio_pci" \
-	"softdep amdgpu pre: vfio vfio_pci" \
-	"softdep radeon pre: vfio vfio_pci" \
-	"softdep i915 pre: vfio vfio_pci" \
-	"vfio" \
-	"vfio_iommu_type1" \
-	"vfio_virqfd" \
-	"options vfio_pci ids=" \
-	"vfio_pci ids=" \
-	"vfio_pci" \
-	"nvidia" \
-	"nouveau" \
-	"amdgpu" \
-	"radeon" \
-	"i915"
-
->> /etc/modules printf "%s\n" \
-	"vfio" \
-	"vfio_iommu_type1" \
-	"vfio_pci" \
-	"vfio_pci ids="
-
-cp /configs/files/asound.conf /etc/
-cp /configs/files/asound.conf /etc/skel/.asoundrc
-cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-
-cp /configs/scripts/vfio-override /usr/bin/
-chmod a+x /usr/bin/vfio-override
-
-
 #	Use LZ4 compression when creating the initramfs.
 #	Add initramfs hook script.
 #	Add the persistence and update the initramfs.
