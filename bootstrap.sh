@@ -580,11 +580,8 @@ mkdir -p \
 	/System/Binaries \
 	/System/Binaries/Optional \
 	/System/Configuration \
-	/System/DevicesFS \
 	/System/Libraries \
 	/System/Mount/Filesystems \
-	/System/Processes \
-	/System/Runtime \
 	/System/Resources/Shared \
 	/System/Server/Services \
 	/System/Variable \
