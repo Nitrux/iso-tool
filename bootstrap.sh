@@ -435,10 +435,10 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
 puts "INSTALL KERNEL."
 
 INSTALL_KERNEL='
-	linux-image-unsigned-5.4.53-050453-generic
-	linux-modules-5.4.53-050453-generic
-	linux-headers-5.4.53-050453
-	linux-headers-5.4.53-050453-generic
+	linux-image-unsigned-5.4.21-050421-generic
+	linux-modules-5.4.21-050421-generic
+	linux-headers-5.4.21-050421
+	linux-headers-5.4.21-050421-generic
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
@@ -605,7 +605,7 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 # cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
+lsinitramfs -l /boot/initrd.img* | grep vfio
 
 #	Remove APT.
 
