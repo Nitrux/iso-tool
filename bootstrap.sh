@@ -405,25 +405,25 @@ UPDATE_MISC_PKGS='
 
 DOWNGRADE_MISC_PKGS='
 	bluez=5.50-1.2~deb10u1
+	initramfs-tools-bin=0.137ubuntu10
+	initramfs-tools-core=0.137ubuntu10
+	initramfs-tools=0.137ubuntu10
 	libc-bin=2.31-0ubuntu9
+	libc6-dev=2.31-0ubuntu9
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
-	libc6-dev=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
-	initramfs-tools=0.137ubuntu10
-	initramfs-tools-core=0.137ubuntu10
-	initramfs-tools-bin=0.137ubuntu10
 '
 
 INSTALL_MISC_PKGS='
+	docker.io
+	fakeroot
+	flatpak
 	gamemode
+	looking-glass-client
 	tmate
 	virtualbox-guest-dkms
 	virtualbox-guest-x11
-	docker.io
-	flatpak
-	fakeroot
-	looking-glass-client
 '
 
 apt -qq update
