@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -x
+set -xe
 
 export LANG=C
 export LC_ALL=C
@@ -392,29 +392,30 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
-#	Upgrade and install misc. packages.
+#	Upgrade, downgrade and install misc. packages.
 
 cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
-puts "UPGRADING/INSTALLING MISC. PACKAGES."
+puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
-# UPDT_GLBIC_PKGS='
-# 	libc-bin
-# 	libc6
-# 	locales
-# '
-
-UPDT_MISC_PKGS='
-	bluez
+UPDATE_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
+'
+
+DOWNGRADE_MISC_PKGS='
+	bluez=5.50-1.2~deb10u1
+	libc-bin=2.31-0ubuntu9
+	libc6=2.31-0ubuntu9
+	locales=2.31-0ubuntu9
+	libc6-dev=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
 	initramfs-tools=0.137ubuntu10
 	initramfs-tools-core=0.137ubuntu10
 	initramfs-tools-bin=0.137ubuntu10
 '
 
-OTHER_MISC_PKGS='
+INSTALL_MISC_PKGS='
 	gamemode
 	tmate
 	virtualbox-guest-dkms
@@ -426,8 +427,9 @@ OTHER_MISC_PKGS='
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_MISC_PKGS --only-upgrade --allow-downgrades --allow-change-held-packages
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_MISC_PKGS --no-install-recommends
 
 
 #	Install the kernel.
