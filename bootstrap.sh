@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -x
+set -xe
 
 export LANG=C
 export LC_ALL=C
@@ -50,9 +50,6 @@ PREBUILD_PACKAGES='
 	grub-efi-amd64-bin
 	grub-efi-amd64-signed
 	grub2-common
-	initramfs-tools
-	initramfs-tools-bin
-	initramfs-tools-core
 	libelf1
 	libpam-runtime
 	libxvmc1
@@ -324,8 +321,6 @@ INSTALL_MISC_PKGS='
 	flatpak
 	gamemode
 	tmate
-	virtualbox-guest-dkms
-	virtualbox-guest-x11
 '
 
 apt -qq update
@@ -391,9 +386,6 @@ apt -qq update
 puts "ADDING MISC. FIXES."
 
 cp /configs/files/grub /etc/default/grub
-
-sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
-
 
 ls -l /boot
 
