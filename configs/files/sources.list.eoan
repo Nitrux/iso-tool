@@ -1,7 +1,0 @@
-#####################
-# Ubuntu Repos Eoan #
-#####################
-
-deb http://archive.ubuntu.com/ubuntu eoan main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu eoan-security main restricted universe multiverse
-deb http://archive.ubuntu.com/ubuntu eoan-updates main restricted universe multiverse

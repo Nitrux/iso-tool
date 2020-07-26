@@ -14,21 +14,37 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
+#	PREBUILD_PACKAGES are packages that for one reason or the other do not get pulled when
+#	the metapackages are installed, or, that require systemd to be present and can't be installed
+#	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
+#	the rest of the packages.
 
 puts "INSTALLING BASIC PACKAGES."
 
 BASIC_PACKAGES='
 	apt-transport-https
 	apt-utils
+	ca-certificates
+	dhcpcd5
+	gnupg2
+	language-pack-en
+	language-pack-en-base
+	libarchive13
+	localechooser-data
+	locales
+	systemd
+	user-setup
+	wget
+	xz-utils
+'
+
+PREBUILD_PACKAGES='
 	avahi-daemon
 	bluez
 	btrfs-progs
-	ca-certificates
 	cgroupfs-mount
-	dhcpcd5
 	dictionaries-common
 	efibootmgr
-	gnupg2
 	grub-common
 	grub-efi-amd64
 	grub-efi-amd64-bin
@@ -36,32 +52,23 @@ BASIC_PACKAGES='
 	grub2-common
 	initramfs-tools
 	initramfs-tools-bin
- 	initramfs-tools-core
-	language-pack-en
-	language-pack-en-base
-	libarchive13
+	initramfs-tools-core
 	libelf1
 	libpam-runtime
 	libxvmc1
 	linux-base
-	localechooser-data
-	locales
 	locales-all
 	open-vm-tools
 	rng-tools
 	shim-signed
-	squashfs-tools
-	systemd
 	systemd-sysv
+	squashfs-tools
 	sudo
 	ufw
-	user-setup
-	wget
-	xz-utils
 '
 
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES $PREBUILD_PACKAGES --no-install-recommends
 
 
 #	Add key for Neon repository.
@@ -97,7 +104,6 @@ cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
-# cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 apt -qq update
@@ -117,7 +123,14 @@ CASPER_PACKAGES='
 	lupin-casper
 '
 
+INITRAMFS_PACKAGES='
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
+'
+
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
+apt-mark hold $INITRAMFS_PACKAGES
 
 
 #	Use elogind packages from Devuan.
@@ -252,8 +265,8 @@ NX_DESKTOP_PKG='
 '
 
 CALAMARES_PKGS='
-	calamares
-	calamares-settings-nitrux
+	calamares-qml
+	calamares-qml-settings-nitrux
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
@@ -280,38 +293,45 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_MISC_LIBS --only-upg
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
-#	Upgrade and install misc. packages.
+#	Upgrade, downgrade and install misc. packages.
 
 cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
 
-puts "UPGRADING/INSTALLING MISC. PACKAGES."
-
-UPDT_GLBIC_PKGS='
-	libc-bin
-	libc6
-	locales
-'
-
-OTHER_MISC_PKGS='
-	gamemode
-	tmate
-	virtualbox-guest-dkms
-	virtualbox-guest-x11
-	docker.io
-	flatpak
-	fakeroot
-'
+puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPDT_MISC_PKGS='
 	cgroupfs-mount
 	linux-firmware
-	sudo=1.9.1-1ubuntu1
 	inkscape
 '
 
+DOWNGRADE_MISC_PKGS='
+	bluez=5.50-1.2~deb10u1
+	initramfs-tools-bin=0.137ubuntu10
+	initramfs-tools-core=0.137ubuntu10
+	initramfs-tools=0.137ubuntu10
+	libc-bin=2.31-0ubuntu9
+	libc6-dev=2.31-0ubuntu9
+	libc-dev-bin=2.31-0ubuntu9
+	libc6=2.31-0ubuntu9
+	locales=2.31-0ubuntu9
+	sudo=1.9.1-1ubuntu1
+'
+
+INSTALL_MISC_PKGS='
+	docker.io
+	fakeroot
+	flatpak
+	gamemode
+	tmate
+	virtualbox-guest-dkms
+	virtualbox-guest-x11
+'
+
 apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS $UPDT_MISC_PKGS --only-upgrade
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_MISC_PKGS --no-install-recommends
 
 
 #	Add OpenRC configuration.
@@ -370,21 +390,10 @@ apt -qq update
 
 puts "ADDING MISC. FIXES."
 
-/bin/cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
-
-/bin/cp /configs/files/kwinrc /etc/xdg/kwinrc
-
 cp /configs/files/grub /etc/default/grub
 
-sed -i 's/enableLuksAutomatedPartitioning: true/enableLuksAutomatedPartitioning: false/' /etc/calamares/modules/partition.conf
-sed -i 's/systemd: true/systemd: false/g' /etc/calamares/modules/machineid.conf
-sed -i 's/restartNowCommand: "systemctl -i reboot"/restartNowCommand: "reboot"/g' /etc/calamares/modules/finished.conf
-sed -i 's/    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict grub-efi-amd64-signed/#    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict grub-efi-amd64-signed/g' /etc/calamares/modules/before_bootloader_context.conf
-sed -i 's/    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict shim-signed/#    - command: apt install -y --no-upgrade -o Acquire::gpgv::Options::=--ignore-time-conflict shim-signed/g' /etc/calamares/modules/before_bootloader_context.conf
-
-sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitruxDark/KvNitruxDark.kvconfig
-sed -i 's/translucent_windows=true/translucent_windows=false/' /usr/share/Kvantum/KvNitrux/KvNitrux.kvconfig
 sed -i 's/Backend=OpenGL/Backend=XRender/' /etc/xdg/kwinrc
+
 
 ls -l /boot
 
