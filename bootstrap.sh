@@ -422,8 +422,6 @@ INSTALL_MISC_PKGS='
 	gamemode
 	looking-glass-client
 	tmate
-	virtualbox-guest-dkms
-	virtualbox-guest-x11
 '
 
 apt -qq update
