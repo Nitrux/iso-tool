@@ -542,19 +542,19 @@ mkdir maui_pkgs
 
 puts "ADDING MISC. FIXES."
 
-cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
-
-echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
-echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
-
-cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
-cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
-
-cp /usr/share/icons/nitrux_snow_cursors/index.theme /etc/X11/cursors/nitrux_cursors.theme
-ln -svf /etc/X11/cursors/nitrux_cursors.theme /etc/alternatives/x-cursor-theme
-sed -i '$ a Inherits=nitrux_snow_cursors' /etc/X11/cursors/nitrux_cursors.theme
-
 rm -r /home/travis
+
+
+#	Check contents of /etc/environment.
+
+cat /etc/environment
+
+
+#	Check x_cursors_theme
+
+ls -l /etc/alternatives/x-cursor-theme
+
+cat /etc/X11/cursors/nitrux_cursors.theme
 
 
 #	Check contents of OpenRC runlevels.
