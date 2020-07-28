@@ -542,7 +542,7 @@ mkdir maui_pkgs
 
 puts "ADDING MISC. FIXES."
 
-cp /configs/files/casper.conf /etc/
+/bin/cp /configs/files/casper.conf /etc/
 
 rm -r /home/travis
 
