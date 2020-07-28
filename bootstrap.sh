@@ -420,7 +420,6 @@ INSTALL_MISC_PKGS='
 	fakeroot
 	flatpak
 	gamemode
-	looking-glass-client
 	tmate
 '
 
