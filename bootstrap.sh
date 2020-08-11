@@ -194,9 +194,9 @@ DEVUAN_NM_UD2='
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
 
 
-#	Add SysV as init.
+#	Add OpenRC as init.
 
-puts "ADDING SYSV AS INIT."
+puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
 	fgetty
