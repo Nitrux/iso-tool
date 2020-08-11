@@ -55,7 +55,7 @@ PREBUILD_PACKAGES='
 	libxvmc1
 	linux-base
 	locales-all
-	open-vm-tools
+	open-vm-tools-desktop
 	rng-tools
 	shim-signed
 	systemd-sysv
