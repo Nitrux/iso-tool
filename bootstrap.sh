@@ -46,7 +46,6 @@ PREBUILD_PACKAGES='
 	cgroupfs-mount
 	libelf1
 	libxvmc1
-	open-vm-tools-desktop
 	rng-tools
 	ufw
 '
