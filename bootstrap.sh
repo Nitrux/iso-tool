@@ -276,7 +276,6 @@ HOLD_KDE_PKGS='
 	libkwineffects12
 	libkwinglutils12
 	libkwinxrenderutils12
-	libphonon4qt5-4
 	qml-module-org-kde-kwindowsystem
 '
 
