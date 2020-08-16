@@ -257,7 +257,7 @@ MISC_KDE_PKGS='
 	libkf5xmlgui-data
 	libkf5xmlgui5
 	libqt5webkit5
-	liquidshell
+	latte-dock
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
 '
@@ -274,26 +274,6 @@ CALAMARES_PKGS='
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
-
-
-# #	Upgrade KF5 packages and libs.
-
-# puts "UPGRADING KDE PACKAGES."
-
-# cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
-
-
-# UPDT_KDE_PKGS='
-# 	kdenlive
-# '
-
-# UPDT_MISC_LIBS='
-# 	libpolkit-qt5-1-1
-# '
-
-# apt -qq update
-# apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
-# apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
 #	Upgrade, downgrade and install misc. packages.
