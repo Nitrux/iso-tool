@@ -141,7 +141,6 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-
 ADD_SYSTEMCTL_PKG='
 	systemctl
 '
