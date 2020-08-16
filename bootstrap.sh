@@ -580,7 +580,6 @@ puts "CREATING NEW FHS."
 mkdir -p \
 	/Core/System/Deployments \
 	/Devices \
-	/Devices/Removable \
 	/System/Binaries \
 	/System/Binaries/Optional \
 	/System/Configuration \

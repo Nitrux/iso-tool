@@ -26,7 +26,6 @@ cat > $FSTAB <<EOF
 /etc /System/Configuration none defaults,bind 0 0
 /home /Users none defaults,bind 0 0
 /isodevice /Core/System/Deployments none defaults,bind 0 0
-/media /Devices/Removable none defaults,bind 0 0
 /mnt /System/Mount/Filesystems none defaults,bind 0 0
 /opt /System/Binaries/Optional none defaults,bind 0 0
 /srv /System/Server/Services none defaults,bind 0 0
