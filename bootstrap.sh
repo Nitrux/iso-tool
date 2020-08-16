@@ -356,6 +356,7 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 # 	libkf5parts-data
 # 	libkf5parts5
 # 	libkf5plasmaquick5
+#	libkf5plasma5
 # 	libkf5purpose-bin
 # 	libkf5purpose5
 # 	libkf5quickaddons5
