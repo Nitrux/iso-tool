@@ -257,7 +257,6 @@ MISC_KDE_PKGS='
 	libkf5xmlgui-data
 	libkf5xmlgui5
 	libqt5webkit5
-	latte-dock
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
 '
@@ -267,13 +266,22 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps-legacy
 '
 
+NX_MISC_PKGS='
+	latte-dock
+	nx-audio-applet
+	nx-clock-applet
+    nx-networkmanagement-applet
+    nx-notifications-applet
+    nx-systemtray-applet
+'
+
 CALAMARES_PKGS='
 	calamares-qml
 	calamares-qml-settings-nitrux
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS --no-install-recommends --allow-downgrades
 
 
 #	Upgrade, downgrade and install misc. packages.
