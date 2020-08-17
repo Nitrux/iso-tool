@@ -273,6 +273,7 @@ NX_MISC_PKGS='
     nx-networkmanagement-applet
     nx-notifications-applet
     nx-systemtray-applet
+	nx-simplemenu-applet
 '
 
 CALAMARES_PKGS='
