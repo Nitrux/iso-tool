@@ -283,6 +283,7 @@ UPDT_KDE_PKGS='
 	bluedevil
 	kcalc
 	kde-spectacle
+	latte-dock
 '
 
 UPDT_KF5_LIBS='
