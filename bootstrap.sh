@@ -274,6 +274,7 @@ NX_MISC_PKGS='
     nx-notifications-applet
     nx-systemtray-applet
 	nx-simplemenu-applet
+	nitrux-live-user
 '
 
 CALAMARES_PKGS='
