@@ -270,9 +270,9 @@ NX_MISC_PKGS='
 	latte-dock
 	nx-audio-applet
 	nx-clock-applet
-    nx-networkmanagement-applet
-    nx-notifications-applet
-    nx-systemtray-applet
+	nx-networkmanagement-applet
+	nx-notifications-applet
+	nx-systemtray-applet
 	nx-simplemenu-applet
 	nitrux-live-user
 '
@@ -451,6 +451,7 @@ INSTALL_MISC_PKGS='
 	flatpak
 	gamemode
 	tmate
+	tree
 '
 
 apt -qq update
