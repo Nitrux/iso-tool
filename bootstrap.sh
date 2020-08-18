@@ -543,9 +543,33 @@ ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlev
 stat /sbin/init
 
 
+#	Implement a new FHS.
+#	FIXME: Replace with kernel patch and userland tool.
+
+puts "CREATING NEW FHS."
+
+mkdir -p \
+	/Devices \
+	/System/Binaries \
+	/System/Binaries/Optional \
+	/System/Configuration \
+	/System/Libraries \
+	/System/Mount/Filesystems \
+	/System/Resources/Shared \
+	/System/Server/Services \
+	/System/Variable \
+	/Users/
+
+cp /configs/files/hidden /.hidden
+
+
+#	Use LZ4 compression when creating the initramfs.
+#	Add fstab mount binds.
+
 puts "UPDATING THE INITRAMFS."
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
+cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 update-initramfs -u
 
