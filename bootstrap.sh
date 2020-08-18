@@ -274,7 +274,6 @@ NX_MISC_PKGS='
 	nx-notifications-applet
 	nx-systemtray-applet
 	nx-simplemenu-applet
-	nitrux-live-user
 '
 
 CALAMARES_PKGS='
@@ -495,7 +494,15 @@ NX_REPO_PKG='
 	nitrux-repository-settings
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG --no-install-recommends
+#	Add live user.
+
+puts "ADDING LIVE USER."
+
+NX_LIVE_USER='
+	nitrux-live-user
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
