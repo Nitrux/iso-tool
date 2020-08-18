@@ -423,6 +423,7 @@ INSTALL_MISC_PKGS='
 	flatpak
 	gamemode
 	tmate
+	tree
 '
 
 apt -qq update
