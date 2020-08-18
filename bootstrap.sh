@@ -518,6 +518,8 @@ puts "ADDING MISC. FIXES."
 
 cp /configs/files/grub /etc/default/grub
 
+/bin/cp /configs/files/casper.conf /etc/
+
 ls -l /boot
 
 ln -svf /boot/initrd.img-5.6* /initrd.img
