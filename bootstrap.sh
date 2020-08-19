@@ -501,8 +501,19 @@ NX_LIVE_USER='
 	nitrux-live-user
 '
 
+#	Add live user.
+
+puts "HOLD MISC. PACKAGES."
+
+HOLD_MISC_PKGS='
+	cgroupfs-mount
+	ssl-cert
+'
+
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
+apt-mark hold $HOLD_MISC_PKGS
+apt -qq -o=Dpkg::Use-Pty=0 -yy upgrade --allow-downgrades
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
