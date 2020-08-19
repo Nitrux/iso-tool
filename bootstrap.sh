@@ -501,7 +501,7 @@ NX_LIVE_USER='
 	nitrux-live-user
 '
 
-#	Add live user.
+#	Hold misc packages.
 
 puts "HOLD MISC. PACKAGES."
 
