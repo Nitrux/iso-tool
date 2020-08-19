@@ -425,10 +425,8 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
-UPDT_MISC_PKGS='
-	cgroupfs-mount
+UPDATE_MISC_PKGS='
 	linux-firmware
-	inkscape
 '
 
 DOWNGRADE_MISC_PKGS='
