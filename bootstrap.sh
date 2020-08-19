@@ -503,6 +503,7 @@ NX_LIVE_USER='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG $NX_LIVE_USER --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
