@@ -126,6 +126,7 @@ INITRAMFS_PACKAGES='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
+
 apt-mark hold $INITRAMFS_PACKAGES
 
 
@@ -257,6 +258,9 @@ MISC_KDE_PKGS='
 	libkf5xmlgui-data
 	libkf5xmlgui5
 	libqt5webkit5
+	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
+	plasma-discover-common=5.18.5-0ubuntu0.1
+	plasma-discover=5.18.5-0ubuntu0.1
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
 '
@@ -281,8 +285,15 @@ CALAMARES_PKGS='
 	calamares-qml-settings-nitrux
 '
 
+HOLD_MISC_PKGS='
+	cgroupfs-mount
+	ssl-cert
+'
+
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS --no-install-recommends --allow-downgrades
+
+apt-mark hold $HOLD_MISC_PKGS
 
 
 #	Upgrade KF5 libs for Latte Dock.
@@ -300,6 +311,9 @@ HOLD_KDE_PKGS='
 	libkwineffects12
 	libkwinglutils12
 	libkwinxrenderutils12
+	plasma-discover
+	plasma-discover-backend-flatpak
+	plasma-discover-common
 	qml-module-org-kde-kwindowsystem
 '
 
@@ -413,8 +427,9 @@ UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
 '
 
-apt -qq update
 apt-mark hold $HOLD_KDE_PKGS
+
+apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
@@ -440,9 +455,6 @@ DOWNGRADE_MISC_PKGS='
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
-	plasma-discover=5.18.5-0ubuntu0.1
-	plasma-discover-common=5.18.5-0ubuntu0.1
-	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
 '
 
 INSTALL_MISC_PKGS='
@@ -496,6 +508,9 @@ NX_REPO_PKG='
 	nitrux-repository-settings
 '
 
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG --no-install-recommends
+
+
 #	Add live user.
 
 puts "ADDING LIVE USER."
@@ -504,21 +519,8 @@ NX_LIVE_USER='
 	nitrux-live-user
 '
 
-#	Hold misc packages.
-
-puts "HOLD MISC. PACKAGES."
-
-HOLD_MISC_PKGS='
-	cgroupfs-mount
-	ssl-cert
-	plasma-discover
-	plasma-discover-common
-	plasma-discover-backend-flatpak
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG $NX_LIVE_USER --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt-mark hold $HOLD_MISC_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy upgrade --allow-downgrades
 apt clean &> /dev/null
 apt autoclean &> /dev/null
