@@ -440,6 +440,9 @@ DOWNGRADE_MISC_PKGS='
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
+	plasma-discover=5.18.5-0ubuntu0.1
+	plasma-discover-common=5.18.5-0ubuntu0.1
+	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
 '
 
 INSTALL_MISC_PKGS='
@@ -508,6 +511,9 @@ puts "HOLD MISC. PACKAGES."
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
+	plasma-discover
+	plasma-discover-common
+	plasma-discover-backend-flatpak
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG $NX_LIVE_USER --no-install-recommends
