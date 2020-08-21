@@ -544,12 +544,12 @@ apt autoclean &> /dev/null
 
 #	Add MAUI Appimages.
 
-puts "ADDING MAUI APPS (NIGHTLY/DATE)."
+puts "ADDING MAUI APPS (NIGHTLY)."
 
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-_latest=$(/tmp/mc cat nx/maui/nightly/2020-08-18)
+_latest=$(/tmp/mc cat nx/maui/nightly/WORKING)
 mkdir maui_pkgs
 
 (
