@@ -545,7 +545,7 @@ apt autoclean &> /dev/null
 
 #	Add MAUI Appimages.
 
-puts "ADDING MAUI APPS (NIGHTLY)."
+puts "ADDING MAUI APPS (NIGHTLY/CHERRYPICK_DATE)."
 
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
