@@ -49,6 +49,7 @@ PREBUILD_PACKAGES='
 	grub-efi-amd64
 	grub-efi-amd64-bin
 	grub-efi-amd64-signed
+	grub-pc-bin
 	grub2-common
 	libelf1
 	libpam-runtime
@@ -522,6 +523,7 @@ NX_LIVE_USER='
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt -qq -o=Dpkg::Use-Pty=0 -yy upgrade --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
