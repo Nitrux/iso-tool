@@ -458,6 +458,17 @@ OPENRC_CONFIG='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
+
+
+#	Add live user.
+
+puts "ADDING LIVE USER."
+
+NX_LIVE_USER='
+	nitrux-live-user
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
 apt clean &> /dev/null
 apt autoclean &> /dev/null
@@ -594,6 +605,12 @@ rm -r /home/travis
 #	Check contents of /etc/environment.
 
 cat /etc/environment
+
+
+#	Check live user.
+
+compgen -u 
+groups nitrux
 
 
 #	Check x_cursors_theme
