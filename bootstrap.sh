@@ -402,7 +402,6 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPDATE_MISC_PKGS='
-	cgroupfs-mount
 	linux-firmware
 '
 
@@ -426,6 +425,7 @@ INSTALL_MISC_PKGS='
 	gamemode
 	tmate
 	tree
+	unrar
 '
 
 apt -qq update
