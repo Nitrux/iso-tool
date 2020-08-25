@@ -1,16 +1,8 @@
-Package: libsensors4
-Pin: release *
-Pin-Priority: -1
-
 Package: dash
 Pin: release *
 Pin-Priority: -1
 
-Package: xterm
-Pin: release *
-Pin-Priority: -1
-
-Package: plymouth-theme-spinner
+Package: fuse
 Pin: release *
 Pin-Priority: -1
 
@@ -26,26 +18,22 @@ Package: ksysguardd
 Pin: release *
 Pin-Priority: -1
 
-Package: libc6
-Pin: version 2.31-1
+Package: libsensors4
+Pin: release *
 Pin-Priority: -1
 
-Package: locales
-Pin: version 2.31-1
+Package: plymouth-theme-spinner
+Pin: release *
 Pin-Priority: -1
 
-Package: libc-bin
-Pin: version 2.31-1
+Package: plasma-pa
+Pin: release *
 Pin-Priority: -1
 
-Package: libc6-dev
-Pin: version 2.31-1
+Package: ufw
+Pin: release *
 Pin-Priority: -1
 
-Package: libc-dev-bin
-Pin: version 2.31-1
-Pin-Priority: -1
-
-Package: fuse
+Package: xterm
 Pin: release *
 Pin-Priority: -1
