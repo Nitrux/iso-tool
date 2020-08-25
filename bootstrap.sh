@@ -44,8 +44,6 @@ PREBUILD_PACKAGES='
 	bluez
 	btrfs-progs
 	cgroupfs-mount
-	libelf1
-	libxvmc1
 	rng-tools
 	ufw
 '
@@ -121,6 +119,12 @@ apt-mark hold $INITRAMFS_PACKAGES
 
 puts "ADDING ELOGIND."
 
+REMOVE_SYSTEMD_PKGS='
+	systemd
+	systemd-sysv
+	libsystemd0
+'
+
 ELOGIND_PKGS='
 	bsdutils
 	elogind
@@ -134,12 +138,6 @@ UPDT_APT_PKGS='
 	apt
 	apt-transport-https
 	apt-utils
-'
-
-REMOVE_SYSTEMD_PKGS='
-	systemd
-	systemd-sysv
-	libsystemd0
 '
 
 ADD_SYSTEMCTL_PKG='
@@ -419,33 +417,13 @@ DOWNGRADE_MISC_PKGS='
 '
 
 INSTALL_MISC_PKGS='
-	docker.io
-	fakeroot
-	flatpak
-	gamemode
-	tmate
-	tree
-	unrar
+
 '
 
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_MISC_PKGS --no-install-recommends
-
-
-#	Install the kernel.
-
-puts "INSTALL KERNEL."
-
-INSTALL_KERNEL='
-	linux-image-unsigned-5.4.21-050421-generic
-	linux-modules-5.4.21-050421-generic
-	linux-headers-5.4.21-050421
-	linux-headers-5.4.21-050421-generic
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
 
 
 #	Add OpenRC configuration.
