@@ -247,6 +247,8 @@ MISC_KDE_PKGS='
 	libkf5xmlgui5
 	libkf5xmlgui-data
 	plasma-pa=4:5.17.5-2
+	kwin-wayland-backend-x11
+	kwin-wayland-backend-wayland
 '
 
 NX_DESKTOP_PKG='
