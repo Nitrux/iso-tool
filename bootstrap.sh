@@ -51,9 +51,7 @@ PREBUILD_PACKAGES='
 	grub-efi-amd64-signed
 	grub-pc-bin
 	grub2-common
-	libelf1
 	libpam-runtime
-	libxvmc1
 	linux-base
 	locales-all
 	rng-tools
@@ -459,12 +457,7 @@ DOWNGRADE_MISC_PKGS='
 '
 
 INSTALL_MISC_PKGS='
-	docker.io
-	fakeroot
-	flatpak
-	gamemode
-	tmate
-	tree
+
 '
 
 apt -qq update

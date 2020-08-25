@@ -1,4 +1,4 @@
-Package: libsensors4
+Package: base-files
 Pin: release *
 Pin-Priority: -1
 
@@ -6,15 +6,7 @@ Package: dash
 Pin: release *
 Pin-Priority: -1
 
-Package: xterm
-Pin: release *
-Pin-Priority: -1
-
-Package: plymouth-theme-spinner
-Pin: release *
-Pin-Priority: -1
-
-Package: base-files
+Package: fuse
 Pin: release *
 Pin-Priority: -1
 
@@ -30,6 +22,14 @@ Package: ksysguardd
 Pin: release *
 Pin-Priority: -1
 
+Package: libsensors4
+Pin: release *
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
+Pin-Priority: -1
+
 Package: plasma-pa
 Pin: release *
 Pin-Priority: -1
@@ -38,6 +38,6 @@ Package: ufw
 Pin: release *
 Pin-Priority: -1
 
-Package: fuse
+Package: xterm
 Pin: release *
 Pin-Priority: -1
