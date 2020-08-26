@@ -7,9 +7,6 @@ set -xe
 
 #	Travis stuff.
 
-wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
-apt -qq update
-
 XORRISO_PACKAGES='
 	libburn4
 	libgcc1
@@ -19,7 +16,6 @@ XORRISO_PACKAGES='
 	mtools
 	sshpass
 	xorriso
-	zsync
 '
 apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
 pip3 install --upgrade python-gitlab
@@ -44,7 +40,6 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/release/")-amd64_$(date +%Y.%m.%d).iso
-update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
 hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
 
 
@@ -109,7 +104,6 @@ mkiso \
 	-V "NITRUX" \
 	-b \
 	-e \
-	-u "$update_url" \
 	-s "$hash_url" \
 	-r "${TRAVIS_COMMIT:0:7}" \
 	-g $config_dir/files/grub.cfg \
@@ -121,14 +115,6 @@ mkiso \
 #	Calculate the checksum.
 
 md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
-
-
-#	Generate the zsync file.
-
-zsyncmake \
-	$output_dir/$image \
-	-u ${update_url%.zsync}.iso \
-	-o $output_dir/${image%.iso}.zsync
 
 
 #	Upload the ISO image.
