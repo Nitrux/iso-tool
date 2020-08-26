@@ -242,10 +242,6 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	bluedevil
-	libkf5itemmodels5
-	libkf5xmlgui5
-	libkf5xmlgui-data
 	plasma-pa=4:5.17.5-2
 '
 
@@ -254,13 +250,8 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps
 '
 
-MISC_EXTRA_PKGS='
-	libnvidia-egl-wayland1
-	libwayland-egl1
-'
-
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $MISC_EXTRA_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
@@ -271,9 +262,14 @@ puts "UPGRADING KDE PACKAGES."
 cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 
 HOLD_KDE_PKGS='
+	kwayland-integration
 	kwin-addons
 	kwin-common
 	kwin-data
+	kwin-wayland
+	kwin-wayland-backend-drm
+	kwin-wayland-backend-wayland
+	kwin-wayland-backend-x11
 	kwin-x11
 	libkwin4-effect-builtins1
 	libkwineffects12
@@ -288,6 +284,9 @@ UPDT_KDE_PKGS='
 	kcalc
 	kde-spectacle
 	latte-dock
+	plasma-workspace-wayland
+	qtwayland5
+	xwayland
 '
 
 UPDT_KF5_LIBS='
@@ -385,6 +384,8 @@ UPDT_KF5_LIBS='
 	libkf5xmlgui-bin
 	libkf5xmlgui-data
 	libkf5xmlgui5
+	libqt5waylandclient5
+	libqt5waylandcompositor5
 '
 
 UPDT_MISC_LIBS='
