@@ -18,6 +18,8 @@ XORRISO_PACKAGES='
 	xorriso
 	zsync
 '
+
+apt -qq update
 apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
 pip3 install --upgrade python-gitlab
 
