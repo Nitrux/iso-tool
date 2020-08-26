@@ -19,7 +19,7 @@ puts "STARTING BOOTSTRAP."
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
 #	the rest of the packages.
 
-puts "INSTALLING BASIC PACKAGES."
+puts "INSTALLING BASIC AND PREBUILD PACKAGES."
 
 BASIC_PACKAGES='
 	apt-transport-https
@@ -248,13 +248,13 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 '
 
-NX_DESKTOP_PKG='
+NX_DESKTOP_PKGS='
 	nx-desktop
 	nx-desktop-apps
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
@@ -279,6 +279,8 @@ DOWNGRADE_MISC_PKGS='
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
+	sddm=4:5.19.4-0ubuntu1
+	libkf5plasma5=5.73.0-0ubuntu2
 '
 
 INSTALL_MISC_PKGS='
@@ -374,17 +376,14 @@ rm -r /home/travis
 #	Check contents of OpenRC runlevels.
 #	Check that init system is not systemd.
 
-cat /etc/environment
+puts "DO SOME CHECKS."
 
+cat /etc/environment
 compgen -u 
 groups nitrux
-
 ls -l /etc/alternatives/x-cursor-theme
-
 cat /etc/X11/cursors/nitrux_cursors.theme
-
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-
 stat /sbin/init
 
 
