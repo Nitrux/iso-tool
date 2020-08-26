@@ -254,8 +254,13 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps
 '
 
+MISC_EXTRA_PKGS='
+	libnvidia-egl-wayland1
+	libwayland-egl1
+'
+
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $MISC_EXTRA_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
