@@ -279,7 +279,7 @@ DOWNGRADE_MISC_PKGS='
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
-	sddm=4:5.19.4-0ubuntu1
+	sddm=0.18.1-1ubuntu3
 	libkf5plasma5=5.73.0-0ubuntu2
 '
 
@@ -314,6 +314,7 @@ NX_LIVE_USER='
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
+apt upgrade
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
