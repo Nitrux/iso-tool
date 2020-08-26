@@ -7,9 +7,6 @@ set -xe
 
 #	Travis stuff.
 
-wget -qO /etc/apt/sources.list https://raw.githubusercontent.com/Nitrux/nitrux-iso-tool/master/configs/files/sources.list.focal
-apt -qq update
-
 XORRISO_PACKAGES='
 	libburn4
 	libgcc1
