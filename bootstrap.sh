@@ -279,8 +279,8 @@ DOWNGRADE_MISC_PKGS='
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
-	sddm=0.18.1-1ubuntu3
-	libkf5plasma5=5.73.0-0ubuntu2
+	sddm=0.18.1-2xneon+20.04+focal+build10
+	libkf5plasma5=5.73.0-0xneon+20.04+focal+build9
 '
 
 INSTALL_MISC_PKGS='
