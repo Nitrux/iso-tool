@@ -1,0 +1,13 @@
+########################
+# Devuan Repos Beowulf #
+########################
+
+deb http://pkgmaster.devuan.org/devuan beowulf main
+deb http://pkgmaster.devuan.org/devuan beowulf-updates main
+
+###############################
+# Devuan Merged Repos Beowulf #
+###############################
+
+deb http://pkgmaster.devuan.org/merged beowulf main
+deb http://pkgmaster.devuan.org/merged beowulf-updates main

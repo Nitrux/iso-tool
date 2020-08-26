@@ -1,0 +1,13 @@
+#########################
+# Devuan Repos Chimaera #
+#########################
+
+deb http://pkgmaster.devuan.org/devuan chimaera main
+deb http://pkgmaster.devuan.org/devuan chimaera-updates main
+
+################################
+# Devuan Merged Repos Chimaera #
+################################
+
+deb http://pkgmaster.devuan.org/merged chimaera main
+deb http://pkgmaster.devuan.org/merged chimaera-updates main
