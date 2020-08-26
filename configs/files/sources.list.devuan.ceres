@@ -1,0 +1,11 @@
+######################
+# Devuan Repos Ceres #
+######################
+
+deb http://pkgmaster.devuan.org/devuan ceres main
+
+#############################
+# Devuan Merged Repos Ceres #
+#############################
+
+deb http://pkgmaster.devuan.org/merged ceres main
