@@ -489,7 +489,8 @@ rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
 	/etc/apt/sources.list.d/ubuntu-bionic-repo.list \
 	/etc/apt/sources.list.d/neon-unstable-repo.list \
 	/etc/apt/sources.list.d/neon-user-repo.list \
-	/etc/apt/sources.list.d/devuan-repo.list \
+	/etc/apt/sources.list.d/devuan-beowulf-repo.list \
+	/etc/apt/sources.list.d/devuan-ceres-repo.list \
 	/etc/apt/sources.list.d/gpu-ppa-repo.list \
 	/etc/apt/preferences
 
