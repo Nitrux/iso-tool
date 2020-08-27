@@ -286,9 +286,6 @@ UPDT_KDE_PKGS='
 	kcalc
 	kde-spectacle
 	latte-dock
-	plasma-workspace-wayland
-	qtwayland5
-	xwayland
 '
 
 UPDT_KF5_LIBS='
