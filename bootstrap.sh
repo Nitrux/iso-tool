@@ -314,7 +314,6 @@ NX_LIVE_USER='
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt upgrade
 apt clean &> /dev/null
 apt autoclean &> /dev/null
 
