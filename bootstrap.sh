@@ -84,7 +84,6 @@ cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres
 cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
 cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
-cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
@@ -258,6 +257,150 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
 
+#	Upgrade KF5 libs for Latte Dock.
+
+puts "UPGRADING KDE PACKAGES."
+
+cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
+
+HOLD_KDE_PKGS='
+	kwayland-integration
+	kwin-addons
+	kwin-common
+	kwin-data
+	kwin-wayland
+	kwin-wayland-backend-drm
+	kwin-wayland-backend-wayland
+	kwin-wayland-backend-x11
+	kwin-x11
+	libkwin4-effect-builtins1
+	libkwineffects12
+	libkwinglutils12
+	libkwinxrenderutils12
+	qml-module-org-kde-kwindowsystem
+'
+
+UPDT_KDE_PKGS='
+	ark
+	bluedevil
+	kcalc
+	kde-spectacle
+	latte-dock
+	plasma-workspace-wayland
+	qtwayland5
+	xwayland
+'
+
+UPDT_KF5_LIBS='
+	libkf5activities5
+	libkf5activitiesstats1
+	libkf5archive5
+	libkf5attica5
+	libkf5auth-data
+	libkf5auth5
+	libkf5authcore5
+	libkf5bluezqt-data
+	libkf5bluezqt6
+	libkf5bookmarks-data
+	libkf5bookmarks5
+	libkf5calendarevents5
+	libkf5completion-data
+	libkf5completion5
+	libkf5config-data
+	libkf5configcore5
+	libkf5configgui5
+	libkf5configwidgets-data
+	libkf5configwidgets5
+	libkf5contacts-data
+	libkf5contacts5
+	libkf5coreaddons-data
+	libkf5coreaddons5
+	libkf5crash5
+	libkf5dbusaddons-data
+	libkf5dbusaddons5
+	libkf5declarative-data
+	libkf5declarative5
+	libkf5dnssd-data
+	libkf5dnssd5
+	libkf5doctools5
+	libkf5emoticons-data
+	libkf5emoticons5
+	libkf5filemetadata-data
+	libkf5filemetadata3
+	libkf5globalaccel-bin
+	libkf5globalaccel-data
+	libkf5globalaccel5
+	libkf5globalaccelprivate5
+	libkf5guiaddons5
+	libkf5holidays-data
+	libkf5holidays5
+	libkf5i18n-data
+	libkf5i18n5
+	libkf5iconthemes-data
+	libkf5iconthemes5
+	libkf5idletime5
+	libkf5itemmodels5
+	libkf5itemviews-data
+	libkf5itemviews5
+	libkf5jobwidgets-data
+	libkf5jobwidgets5
+	libkf5kdelibs4support-data
+	libkf5kdelibs4support5
+	libkf5kipi-data
+	libkf5kipi32.0.0
+	libkf5kirigami2-5
+	libkf5newstuff-data
+	libkf5newstuff5
+	libkf5newstuffcore5
+	libkf5notifications-data
+	libkf5notifications5
+	libkf5notifyconfig-data
+	libkf5notifyconfig5
+	libkf5package-data
+	libkf5package5
+	libkf5parts-data
+	libkf5parts5
+	libkf5plasmaquick5
+	libkf5purpose-bin
+	libkf5purpose5
+	libkf5quickaddons5
+	libkf5runner5
+	libkf5service-bin
+	libkf5service-data
+	libkf5service5
+	libkf5style5
+	libkf5su-bin
+	libkf5su-data
+	libkf5su5
+	libkf5syntaxhighlighting-data
+	libkf5syntaxhighlighting5
+	libkf5texteditor-bin
+	libkf5texteditor5
+	libkf5textwidgets-data
+	libkf5textwidgets5
+	libkf5threadweaver5
+	libkf5waylandclient5
+	libkf5waylandserver5
+	libkf5widgetsaddons-data
+	libkf5widgetsaddons5
+	libkf5xmlgui-bin
+	libkf5xmlgui-data
+	libkf5xmlgui5
+	libqt5waylandclient5
+	libqt5waylandcompositor5
+'
+
+UPDT_MISC_LIBS='
+	libpolkit-qt5-1-1
+'
+
+apt-mark hold $HOLD_KDE_PKGS
+
+apt -qq update
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
+apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
+
+
 #	Upgrade, downgrade and install misc. packages.
 
 cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
@@ -279,8 +422,6 @@ DOWNGRADE_MISC_PKGS='
 	libc6=2.31-0ubuntu9
 	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
-	sddm=0.18.1-2xneon+20.04+focal+build10
-	libkf5plasma5=5.73.0-0xneon+20.04+focal+build9
 '
 
 INSTALL_MISC_PKGS='
