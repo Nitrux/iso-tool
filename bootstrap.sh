@@ -285,11 +285,9 @@ UPDT_KDE_PKGS='
 	bluedevil
 	kcalc
 	kde-spectacle
-	latte-dock
 '
 
 UPDT_KF5_LIBS='
-	libkf5activities5
 	libkf5activitiesstats1
 	libkf5archive5
 	libkf5attica5
@@ -303,20 +301,10 @@ UPDT_KF5_LIBS='
 	libkf5calendarevents5
 	libkf5completion-data
 	libkf5completion5
-	libkf5config-data
-	libkf5configcore5
-	libkf5configgui5
 	libkf5configwidgets-data
 	libkf5configwidgets5
 	libkf5contacts-data
 	libkf5contacts5
-	libkf5coreaddons-data
-	libkf5coreaddons5
-	libkf5crash5
-	libkf5dbusaddons-data
-	libkf5dbusaddons5
-	libkf5declarative-data
-	libkf5declarative5
 	libkf5dnssd-data
 	libkf5dnssd5
 	libkf5doctools5
@@ -325,16 +313,9 @@ UPDT_KF5_LIBS='
 	libkf5filemetadata-data
 	libkf5filemetadata3
 	libkf5globalaccel-bin
-	libkf5globalaccel-data
-	libkf5globalaccel5
 	libkf5globalaccelprivate5
-	libkf5guiaddons5
 	libkf5holidays-data
 	libkf5holidays5
-	libkf5i18n-data
-	libkf5i18n5
-	libkf5iconthemes-data
-	libkf5iconthemes5
 	libkf5idletime5
 	libkf5itemmodels5
 	libkf5itemviews-data
@@ -346,25 +327,14 @@ UPDT_KF5_LIBS='
 	libkf5kipi-data
 	libkf5kipi32.0.0
 	libkf5kirigami2-5
-	libkf5newstuff-data
-	libkf5newstuff5
 	libkf5newstuffcore5
-	libkf5notifications-data
-	libkf5notifications5
 	libkf5notifyconfig-data
 	libkf5notifyconfig5
-	libkf5package-data
-	libkf5package5
 	libkf5parts-data
 	libkf5parts5
-	libkf5plasmaquick5
 	libkf5purpose-bin
 	libkf5purpose5
-	libkf5quickaddons5
 	libkf5runner5
-	libkf5service-bin
-	libkf5service-data
-	libkf5service5
 	libkf5style5
 	libkf5su-bin
 	libkf5su-data
@@ -376,19 +346,15 @@ UPDT_KF5_LIBS='
 	libkf5textwidgets-data
 	libkf5textwidgets5
 	libkf5threadweaver5
-	libkf5waylandclient5
 	libkf5waylandserver5
 	libkf5widgetsaddons-data
 	libkf5widgetsaddons5
-	libkf5xmlgui-bin
-	libkf5xmlgui-data
-	libkf5xmlgui5
-	libqt5waylandclient5
-	libqt5waylandcompositor5
 '
 
 UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
+	libqt5waylandclient5
+	libqt5waylandcompositor5
 '
 
 apt-mark hold $HOLD_KDE_PKGS
