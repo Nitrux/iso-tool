@@ -499,8 +499,6 @@ puts "ADDING MISC. FIXES."
 
 /bin/cp /configs/files/casper.conf /etc/
 
-rm -r /usr/bin/latte-dock
-
 rm -r /home/travis
 
 
