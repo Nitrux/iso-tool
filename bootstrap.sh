@@ -281,6 +281,18 @@ NX_MISC_PKGS='
 	nx-simplemenu-applet
 '
 
+MISC_PKGS='
+	libffi6
+	libncursesw5
+	libpython3.6
+	libpython3.6-minimal
+	libpython3.6-stdlib
+	libreadline7
+	libtinfo5
+	libyaml-cpp0.5v5
+	os-prober
+'
+
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
