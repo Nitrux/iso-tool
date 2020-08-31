@@ -263,18 +263,12 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKG='
-	nx-desktop-legacy
-	nx-desktop-apps-legacy
+	nx-desktop
+	nx-desktop-apps
 '
 
 NX_MISC_PKGS='
 	latte-dock
-	nx-audio-applet
-	nx-clock-applet
-	nx-networkmanagement-applet
-	nx-notifications-applet
-	nx-systemtray-applet
-	nx-simplemenu-applet
 '
 
 MISC_PKGS='
