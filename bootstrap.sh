@@ -216,13 +216,13 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
-	nitrux-hardware-drivers-legacy
-	nitrux-minimal-legacy
-	nitrux-standard-legacy
+	nitrux-hardware-drivers
+	nitrux-minimal
+	nitrux-standard
 '
 
 NITRUX_BF_PKG='
-	base-files=11.1.5+nitrux-legacy
+	base-files
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
@@ -259,11 +259,7 @@ MISC_KDE_PKGS='
 	libkf5xmlgui-data
 	libkf5xmlgui5
 	libqt5webkit5
-	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
-	plasma-discover-common=5.18.5-0ubuntu0.1
-	plasma-discover=5.18.5-0ubuntu0.1
 	plasma-pa=4:5.17.5-2
-	xdg-desktop-portal-kde
 '
 
 NX_DESKTOP_PKG='
@@ -319,9 +315,6 @@ HOLD_KDE_PKGS='
 	libkwineffects12
 	libkwinglutils12
 	libkwinxrenderutils12
-	plasma-discover
-	plasma-discover-backend-flatpak
-	plasma-discover-common
 	qml-module-org-kde-kwindowsystem
 '
 
@@ -504,17 +497,6 @@ rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
 apt -qq update
 
 
-#	Add repositories configuration.
-
-puts "ADDING REPOSITORIES SETTINGS."
-
-NX_REPO_PKG='
-	nitrux-repository-settings
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG --no-install-recommends
-
-
 #	Add live user.
 
 puts "ADDING LIVE USER."
@@ -531,12 +513,6 @@ apt clean &> /dev/null
 apt autoclean &> /dev/null
 
 
-#	Make sure to refresh appstream cache.
-
-appstreamcli refresh --force
-apt -qq update
-
-
 #	WARNING:
 #	No apt usage past this point.
 
@@ -546,15 +522,9 @@ apt -qq update
 
 puts "ADDING MISC. FIXES."
 
-cp /configs/files/grub /etc/default/grub
-
 /bin/cp /configs/files/casper.conf /etc/
 
 ls -l /boot
-
-ln -svf /boot/initrd.img-5.6* /initrd.img
-ln -svf /boot/vmlinuz-5.6* /vmlinuz
-
 
 #	Check contents of OpenRC runlevels.
 
