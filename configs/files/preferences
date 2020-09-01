@@ -1,7 +1,3 @@
-Package: base-files
-Pin: release *
-Pin-Priority: -1
-
 Package: dash
 Pin: release *
 Pin-Priority: -1
