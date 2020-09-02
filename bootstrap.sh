@@ -257,8 +257,8 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKG='
-	nx-desktop
-	nx-desktop-apps
+	nx-desktop-legacy
+	nx-desktop-apps-legacy
 '
 
 NX_MISC_PKGS='
