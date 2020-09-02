@@ -210,9 +210,9 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
-	nitrux-hardware-drivers
-	nitrux-minimal
-	nitrux-standard
+	nitrux-hardware-drivers-legacy
+	nitrux-minimal-legacy
+	nitrux-standard-legacy
 '
 
 NITRUX_BF_PKG='
@@ -385,14 +385,9 @@ DOWNGRADE_MISC_PKGS='
 	sudo=1.9.1-1ubuntu1
 '
 
-INSTALL_MISC_PKGS='
-
-'
-
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_MISC_PKGS --no-install-recommends
 
 
 #	Add OpenRC configuration.
@@ -424,6 +419,17 @@ rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
 apt -qq update
 
 
+#	Add repositories configuration.
+
+puts "ADDING REPOSITORIES SETTINGS."
+
+NX_REPO_PKG='
+	nitrux-repository-settings
+'
+
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG --no-install-recommends
+
+
 #	Add live user.
 
 puts "ADDING LIVE USER."
@@ -451,16 +457,8 @@ puts "ADDING MISC. FIXES."
 
 /bin/cp /configs/files/casper.conf /etc/
 
-ls -l /boot
-
-#	Check contents of OpenRC runlevels.
-
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-
-
-#	Check that init system is not systemd.
-
-stat /sbin/init
+ln -svf /boot/initrd.img-5.6* /initrd.img
+ln -svf /boot/vmlinuz-5.6* /vmlinuz
 
 
 #	Implement a new FHS.
@@ -483,7 +481,8 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use LZ4 compression when creating the initramfs.
+#	Use XZ compression when creating the initramfs.
+#	Add persistence script.
 #	Add fstab mount binds.
 
 puts "UPDATING THE INITRAMFS."
@@ -497,5 +496,15 @@ update-initramfs -u
 
 #	WARNING:
 #	No dpkg usage past this point.
+
+
+#	Check contents of /boot.
+#	Check contents of OpenRC runlevels.
+#	Check that init system is not systemd.
+
+ls -l /boot
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+stat /sbin/init
+
 
 puts "EXITING BOOTSTRAP."
