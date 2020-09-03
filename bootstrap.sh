@@ -6,8 +6,9 @@ export LANG=C
 export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
-# update () { apt -qq update; }
-# install () { apt -yy install --no-install-recommends; }
+
+update () { apt -qq update; }
+install () { apt -yy install --no-install-recommends; }
 # remove () { apt -yy purge --remove; }
 # autoremove () { apt -yy autoremove; }
 # hold () { apt-mark hold; }
@@ -64,8 +65,8 @@ PREBUILD_PACKAGES='
 	xz-utils
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES $PREBUILD_PACKAGES --no-install-recommends
+update
+install $BASIC_PACKAGES $PREBUILD_PACKAGES
 
 
 #	Add key for Neon repository.
