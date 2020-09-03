@@ -5,10 +5,12 @@ set -xe
 export LANG=C
 export LC_ALL=C
 
-puts () { printf "\n\n --- %s\n" "$*"; }
-
-
-#	let us start.
+# puts () { printf "\n\n --- %s\n" "$*"; }
+# update () { apt -qq update; }
+# install () { apt -yy install --no-install-recommends; }
+# remove () { apt -yy purge --remove; }
+# autoremove () { apt -yy autoremove; }
+# hold () { apt-mark hold; }
 
 puts "STARTING BOOTSTRAP."
 
@@ -264,14 +266,6 @@ NX_MISC_PKGS='
 '
 
 ADD_MISC_PKGS='
-	libffi6
-	libncursesw5
-	libpython3.6
-	libpython3.6-minimal
-	libpython3.6-stdlib
-	libreadline7
-	libtinfo5
-	libyaml-cpp0.5v5
 	os-prober
 '
 
