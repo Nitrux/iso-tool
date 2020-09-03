@@ -103,7 +103,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt update
+apt -qq update
 
 
 #	Block installation of some packages.
@@ -155,9 +155,9 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t focal $ADD_SYSTEMCTL_PKG --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
