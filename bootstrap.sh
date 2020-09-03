@@ -257,10 +257,11 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKG='
+	sddm
+	blackbox
 '
 
 NX_MISC_PKGS='
-	latte-dock
 '
 
 MISC_PKGS='
