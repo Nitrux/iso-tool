@@ -9,10 +9,16 @@ puts () { printf "\n\n --- %s\n" "$*"; }
 
 update () { apt -qq update; }
 install () { apt -yy install --no-install-recommends $@; }
+install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
+install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+purge () { apt -yy purge --remove $@; }
+autoremove () { apt -yy autoremove $@; }
+hold () { apt-mark hold $@; }
+clean_all () { apt clean && apt autoclean; }
+fix_install () { apt -yy --fix-broken install $@; }
+add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 
-# remove () { apt -yy purge --remove; }
-# autoremove () { apt -yy autoremove; }
-# hold () { apt-mark hold; }
 
 puts "STARTING BOOTSTRAP."
 
@@ -21,7 +27,7 @@ puts "STARTING BOOTSTRAP."
 #	PREBUILD_PACKAGES are packages that for one reason or the other do not get pulled when
 #	the metapackages are installed, or, that require systemd to be present and can't be installed
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
-#	the rest of the packages.
+#	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
 
 puts "INSTALLING BASIC PACKAGES."
 
@@ -54,6 +60,7 @@ PREBUILD_PACKAGES='
 	localechooser-data
 	locales
 	locales-all
+	os-prober
 	rng-tools
 	shim-signed
 	squashfs-tools
@@ -81,7 +88,7 @@ install $BASIC_PACKAGES $PREBUILD_PACKAGES
 
 puts "ADDING REPOSITORY KEYS."
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
+ add_keys \
 	55751E5D \
 	1B69B2DA \
 	541922FB \
@@ -107,7 +114,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt -qq update
+update
 
 
 #	Block installation of some packages.
@@ -130,8 +137,8 @@ INITRAMFS_PACKAGES='
 	initramfs-tools-bin
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
-apt-mark hold $INITRAMFS_PACKAGES
+install -t bionic $CASPER_PACKAGES
+hold $INITRAMFS_PACKAGES
 
 
 #	Use elogind packages from Devuan.
@@ -158,13 +165,12 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy install -t focal $ADD_SYSTEMCTL_PKG --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
-
-apt-mark hold $ADD_SYSTEMCTL_PKG
+install_downgrades $ELOGIND_PKGS $UPDT_APT_PKGS
+purge $REMOVE_SYSTEMD_PKGS
+autoremove
+install -t focal $ADD_SYSTEMCTL_PKG
+fix_install
+hold $ADD_SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
@@ -179,7 +185,6 @@ DEVUAN_NM_UD2='
 	udisks2
 '
 
-
 DEVUAN_POLKIT_PKGS='
 	libpolkit-agent-1-0=0.105-25+devuan8
 	libpolkit-backend-1-0=0.105-25+devuan8
@@ -190,7 +195,7 @@ DEVUAN_POLKIT_PKGS='
 	policykit-1=0.105-25+devuan8
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
+install_downgrades $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS
 
 
 #	Add OpenRC as init.
@@ -206,7 +211,7 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
+install_downgrades $DEVUAN_INIT_PKGS
 
 
 #	Install base system metapackages.
@@ -219,7 +224,7 @@ NITRUX_BASE_PACKAGES='
 	nitrux-standard
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
+install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG
 
 
 #	Add NX Desktop metapackage.
@@ -230,7 +235,7 @@ LIBPNG12_PKG='
 	libpng12-0
 '
 
-XENIAL_PACKAGES='
+PLYMOUTH_XENIAL_PKGS='
 	plymouth=0.9.2-3ubuntu13.5
 	plymouth-label=0.9.2-3ubuntu13.5
 	plymouth-themes=0.9.2-3ubuntu13.5
@@ -251,9 +256,7 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 '
 
-mkdir -p /etc/X11/cursors/
-
-NX_DESKTOP_PKG='
+NX_DESKTOP_PKGS='
 	sddm
 	blackbox
 	xterm=353-1ubuntu1
@@ -264,22 +267,17 @@ NX_DESKTOP_PKG='
 	nx-plasma-look-and-feel
 '
 
-NX_MISC_PKGS='
-'
-
-ADD_MISC_PKGS='
-	os-prober
-'
-
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $ADD_MISC_PKGS --no-install-recommends --allow-downgrades
+#REMOVE
+mkdir -p /etc/X11/cursors/
 
-apt-mark hold $HOLD_MISC_PKGS
+install_downgrades -t nitrux $LIBPNG12_PKG
+install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
+hold $HOLD_MISC_PKGS
 
 
 #	Upgrade KF5 libs for Latte Dock.
@@ -349,11 +347,11 @@ UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
 '
 
-apt-mark hold $HOLD_KDE_PKGS
+hold $HOLD_KDE_PKGS
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
+update
+install_upgrade $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS
+fix_install
 
 
 #	Upgrade, downgrade and install misc. packages.
@@ -362,7 +360,7 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
-UPDATE_MISC_PKGS='
+UPGRADE_MISC_PKGS='
 	linux-firmware
 '
 
@@ -379,9 +377,9 @@ DOWNGRADE_MISC_PKGS='
 	sudo=1.9.1-1ubuntu1
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
+update
+only_upgrade $UPGRADE_MISC_PKGS
+install_downgrades_hold $DOWNGRADE_MISC_PKGS
 
 
 #	Add OpenRC configuration.
@@ -392,7 +390,7 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
+install $OPENRC_CONFIG
 
 
 #	Remove unnecessary sources.list files.
@@ -410,7 +408,7 @@ rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
 	/etc/apt/sources.list.d/gpu-ppa-repo.list \
 	/etc/apt/preferences
 
-apt -qq update
+update
 
 
 #	Add repositories configuration.
@@ -421,7 +419,7 @@ NX_REPO_PKG='
 	nitrux-repository-settings
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_REPO_PKG --no-install-recommends
+install $NX_REPO_PKG
 
 
 #	Add live user.
@@ -432,12 +430,9 @@ NX_LIVE_USER='
 	nitrux-live-user
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy upgrade --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+install $NX_LIVE_USER
+autoremove
+clean_all
 
 
 #	WARNING:
