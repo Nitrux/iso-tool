@@ -386,9 +386,9 @@ UPDATE_MISC_PKGS='
 
 DOWNGRADE_MISC_PKGS='
 	bluez=5.50-1.2~deb10u1
-	initramfs-tools-bin=0.137ubuntu10
-	initramfs-tools-core=0.137ubuntu10
-	initramfs-tools=0.137ubuntu10
+	initramfs-tools-bin=0.137ubuntu12
+	initramfs-tools-core=0.137ubuntu12
+	initramfs-tools=0.137ubuntu12
 	libc-bin=2.31-0ubuntu9
 	libc6-dev=2.31-0ubuntu9
 	libc-dev-bin=2.31-0ubuntu9
