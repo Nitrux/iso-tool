@@ -261,6 +261,7 @@ NX_DESKTOP_PKG='
 	blackbox
 	xterm=353-1ubuntu1
 	nx-desktop-settings
+	git
 '
 
 NX_MISC_PKGS='
