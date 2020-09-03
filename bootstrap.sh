@@ -265,6 +265,7 @@ NX_DESKTOP_PKGS='
 	axel
 	npm
 	nx-plasma-look-and-feel
+	latte-dock
 '
 
 HOLD_MISC_PKGS='
