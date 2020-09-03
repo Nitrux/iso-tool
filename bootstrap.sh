@@ -5,7 +5,7 @@ set -xe
 export LANG=C
 export LC_ALL=C
 
-# puts () { printf "\n\n --- %s\n" "$*"; }
+puts () { printf "\n\n --- %s\n" "$*"; }
 # update () { apt -qq update; }
 # install () { apt -yy install --no-install-recommends; }
 # remove () { apt -yy purge --remove; }
