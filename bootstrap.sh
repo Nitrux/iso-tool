@@ -370,11 +370,8 @@ DOWNGRADE_MISC_PKGS='
 	initramfs-tools-bin=0.137ubuntu12
 	initramfs-tools-core=0.137ubuntu12
 	initramfs-tools=0.137ubuntu12
-	libc-bin=2.31-0ubuntu9
 	libc6-dev=2.31-0ubuntu9
 	libc-dev-bin=2.31-0ubuntu9
-	libc6=2.31-0ubuntu9
-	locales=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
 '
 
