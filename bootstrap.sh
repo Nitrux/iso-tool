@@ -264,6 +264,7 @@ NX_DESKTOP_PKG='
 	git
 	axel
 	npm
+	nx-plasma-look-and-feel
 '
 
 NX_MISC_PKGS='
