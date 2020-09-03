@@ -259,6 +259,7 @@ MISC_KDE_PKGS='
 NX_DESKTOP_PKG='
 	sddm
 	blackbox
+	xterm=353-1ubuntu1
 '
 
 NX_MISC_PKGS='
