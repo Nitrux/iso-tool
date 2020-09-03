@@ -260,6 +260,7 @@ NX_DESKTOP_PKG='
 	sddm
 	blackbox
 	xterm=353-1ubuntu1
+	nx-desktop-settings
 '
 
 NX_MISC_PKGS='
