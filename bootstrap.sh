@@ -135,6 +135,7 @@ apt-mark hold $INITRAMFS_PACKAGES
 puts "ADDING ELOGIND."
 
 ELOGIND_PKGS='
+	eudev
 	elogind
 	libelogind0
 	libprocps7
