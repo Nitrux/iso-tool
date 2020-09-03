@@ -135,7 +135,6 @@ apt-mark hold $INITRAMFS_PACKAGES
 puts "ADDING ELOGIND."
 
 ELOGIND_PKGS='
-	eudev
 	elogind
 	libelogind0
 	libprocps7
@@ -176,7 +175,7 @@ DEVUAN_POLKIT_PKGS='
 	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
 	libpolkit-qt5-1-1
 	policykit-1=0.105-25+devuan8
-	polkit-kde-agent-1=4:5.17.5-2
+	polkit-kde-agent-1
 '
 
 DEVUAN_NM_UD2='
