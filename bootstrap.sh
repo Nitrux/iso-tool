@@ -210,9 +210,9 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
-	nitrux-hardware-drivers-legacy
-	nitrux-minimal-legacy
-	nitrux-standard-legacy
+	nitrux-hardware-drivers
+	nitrux-minimal
+	nitrux-standard
 '
 
 NITRUX_BF_PKG='
@@ -257,12 +257,15 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKG='
-	nx-desktop-legacy
-	nx-desktop-apps-legacy
+	nx-desktop
+	nx-desktop-apps
 '
 
 NX_MISC_PKGS='
 	latte-dock
+	mauikit
+	station
+	index
 '
 
 MISC_PKGS='
@@ -456,9 +459,6 @@ apt autoclean &> /dev/null
 puts "ADDING MISC. FIXES."
 
 /bin/cp /configs/files/casper.conf /etc/
-
-ln -svf /boot/initrd.img-5.6* /initrd.img
-ln -svf /boot/vmlinuz-5.6* /vmlinuz
 
 
 #	Implement a new FHS.
