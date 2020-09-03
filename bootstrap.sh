@@ -263,6 +263,7 @@ NX_DESKTOP_PKG='
 	nx-desktop-settings
 	git
 	axel
+	npm
 '
 
 NX_MISC_PKGS='
