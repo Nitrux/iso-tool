@@ -263,9 +263,6 @@ NX_DESKTOP_PKG='
 
 NX_MISC_PKGS='
 	latte-dock
-	mauikit
-	station
-	index
 '
 
 MISC_PKGS='
