@@ -256,6 +256,8 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
 '
 
+mkdir -p /etc/X11/cursors/
+
 NX_DESKTOP_PKG='
 	sddm
 	blackbox
