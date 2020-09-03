@@ -262,6 +262,7 @@ NX_DESKTOP_PKG='
 	xterm=353-1ubuntu1
 	nx-desktop-settings
 	git
+	axel
 '
 
 NX_MISC_PKGS='
