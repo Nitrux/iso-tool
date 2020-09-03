@@ -350,7 +350,7 @@ UPDT_MISC_LIBS='
 hold $HOLD_KDE_PKGS
 
 update
-install_upgrade $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS
+only_upgrade $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS
 fix_install
 
 
