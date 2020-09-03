@@ -8,7 +8,8 @@ export LC_ALL=C
 puts () { printf "\n\n --- %s\n" "$*"; }
 
 update () { apt -qq update; }
-install () { apt -yy install --no-install-recommends; }
+install () { apt -yy install --no-install-recommends $@; }
+
 # remove () { apt -yy purge --remove; }
 # autoremove () { apt -yy autoremove; }
 # hold () { apt-mark hold; }
