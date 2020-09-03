@@ -18,8 +18,8 @@ XORRISO_PACKAGES='
 '
 
 apt -qq update
-apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
-pip3 install --upgrade python-gitlab
+apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends &> /dev/null
+pip3 install --upgrade python-gitlab &> /dev/null
 
 
 #	base image URL.

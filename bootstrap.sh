@@ -27,15 +27,6 @@ BASIC_PACKAGES='
 	ca-certificates
 	dhcpcd5
 	gnupg2
-	language-pack-en
-	language-pack-en-base
-	libarchive13
-	localechooser-data
-	locales
-	systemd
-	user-setup
-	wget
-	xz-utils
 '
 
 PREBUILD_PACKAGES='
@@ -51,15 +42,24 @@ PREBUILD_PACKAGES='
 	grub-efi-amd64-signed
 	grub-pc-bin
 	grub2-common
+	language-pack-en
+	language-pack-en-base
+	libarchive13
 	libpam-runtime
 	linux-base
+	localechooser-data
+	locales
 	locales-all
 	rng-tools
 	shim-signed
-	systemd-sysv
 	squashfs-tools
 	sudo
+	systemd
+	systemd-sysv
 	ufw
+	user-setup
+	wget
+	xz-utils
 '
 
 apt -qq update
@@ -167,23 +167,23 @@ apt-mark hold $ADD_SYSTEMCTL_PKG
 
 puts "ADDING POLICYKIT."
 
-DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0=0.105-25+devuan8
-	libpolkit-backend-1-0=0.105-25+devuan8
-	libpolkit-backend-elogind-1-0=0.105-25+devuan8
-	libpolkit-gobject-1-0=0.105-25+devuan8
-	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1
-	policykit-1=0.105-25+devuan8
-	polkit-kde-agent-1
-'
-
 DEVUAN_NM_UD2='
 	init-system-helpers
 	libnm0
 	libudisks2-0
 	network-manager
 	udisks2
+'
+
+
+DEVUAN_POLKIT_PKGS='
+	libpolkit-agent-1-0=0.105-25+devuan8
+	libpolkit-backend-1-0=0.105-25+devuan8
+	libpolkit-backend-elogind-1-0=0.105-25+devuan8
+	libpolkit-gobject-1-0=0.105-25+devuan8
+	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
+	libpolkit-qt5-1-1=0.113.0-1
+	policykit-1=0.105-25+devuan8
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
@@ -215,10 +215,6 @@ NITRUX_BASE_PACKAGES='
 	nitrux-standard
 '
 
-NITRUX_BF_PKG='
-	base-files
-'
-
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
 
 
@@ -248,11 +244,6 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	bluedevil
-	libkf5itemmodels5
-	libkf5xmlgui-data
-	libkf5xmlgui5
-	libqt5webkit5
 	plasma-pa=4:5.17.5-2
 '
 
@@ -272,7 +263,7 @@ NX_DESKTOP_PKG='
 NX_MISC_PKGS='
 '
 
-MISC_PKGS='
+ADD_MISC_PKGS='
 	libffi6
 	libncursesw5
 	libpython3.6
@@ -290,7 +281,7 @@ HOLD_MISC_PKGS='
 '
 
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS --no-install-recommends --allow-downgrades
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $ADD_MISC_PKGS --no-install-recommends --allow-downgrades
 
 apt-mark hold $HOLD_MISC_PKGS
 
