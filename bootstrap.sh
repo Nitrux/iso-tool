@@ -118,6 +118,7 @@ puts "INSTALLING CASPER PACKAGES."
 CASPER_PACKAGES='
 	casper
 	lupin-casper
+	libplymouth4=0.9.3-1ubuntu7.18.04.2
 '
 
 INITRAMFS_PACKAGES='
