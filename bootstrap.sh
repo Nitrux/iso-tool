@@ -39,7 +39,7 @@ BASIC_PACKAGES='
 	gnupg2
 '
 
-PREBUILD_PACKAGES='
+PRE_BUILD_PACKAGES='
 	avahi-daemon
 	bluez
 	btrfs-progs
@@ -74,7 +74,7 @@ PREBUILD_PACKAGES='
 '
 
 update
-install $BASIC_PACKAGES $PREBUILD_PACKAGES
+install $BASIC_PACKAGES $PRE_BUILD_PACKAGES
 
 
 #	Add key for Neon repository.
@@ -362,8 +362,6 @@ DOWNGRADE_MISC_PKGS='
 	initramfs-tools-bin=0.137ubuntu12
 	initramfs-tools-core=0.137ubuntu12
 	initramfs-tools=0.137ubuntu12
-	libc6-dev=2.31-0ubuntu9
-	libc-dev-bin=2.31-0ubuntu9
 	sudo=1.9.1-1ubuntu1
 '
 
