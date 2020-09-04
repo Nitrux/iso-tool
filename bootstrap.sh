@@ -257,15 +257,7 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKGS='
-	sddm
-	blackbox
-	xterm=353-1ubuntu1
-	nx-desktop-settings
-	git
-	axel
-	npm
-	nx-plasma-look-and-feel
-	latte-dock
+	nx-desktop
 '
 
 HOLD_MISC_PKGS='
