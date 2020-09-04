@@ -272,7 +272,6 @@ NX_DESKTOP_PKG='
 
 NX_MISC_PKGS='
 	latte-dock
-	inkscape=0.92.5-1ubuntu1.1
 '
 
 CALAMARES_PKGS='
