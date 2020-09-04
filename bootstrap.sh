@@ -350,10 +350,6 @@ UPGRADE_MISC_PKGS='
 
 DOWNGRADE_MISC_PKGS='
 	bluez=5.50-1.2~deb10u1
-	initramfs-tools-bin=0.137ubuntu12
-	initramfs-tools-core=0.137ubuntu12
-	initramfs-tools=0.137ubuntu12
-	sudo=1.9.1-1ubuntu1
 '
 
 update
