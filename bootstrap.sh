@@ -302,7 +302,6 @@ NX_DESKTOP_PKGS='
 	policykit-desktop-privileges
 	powerline
 	preload
-	pulseaudio-module-bluetooth
 	python-cairo
 	python-gi-cairo
 	python-setuptools
