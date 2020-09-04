@@ -37,6 +37,7 @@ BASIC_PACKAGES='
 	ca-certificates
 	dhcpcd5
 	gnupg2
+	debconf
 '
 
 PRE_BUILD_PACKAGES='
@@ -44,33 +45,18 @@ PRE_BUILD_PACKAGES='
 	bluez
 	btrfs-progs
 	cgroupfs-mount
+	cups-daemon
 	dictionaries-common
 	efibootmgr
-	grub-common
-	grub-efi-amd64
-	grub-efi-amd64-bin
-	grub-efi-amd64-signed
-	grub-pc-bin
-	grub2-common
-	language-pack-en
-	language-pack-en-base
-	libarchive13
 	libpam-runtime
-	linux-base
-	localechooser-data
-	locales
-	locales-all
 	os-prober
 	rng-tools
-	shim-signed
 	squashfs-tools
 	sudo
 	systemd
 	systemd-sysv
 	ufw
 	user-setup
-	wget
-	xz-utils
 '
 
 update
@@ -175,9 +161,7 @@ puts "ADDING POLICYKIT."
 DEVUAN_NETWORKMANAGER_PKGS='
 	init-system-helpers
 	libnm0
-	libudisks2-0
 	network-manager
-	udisks2
 '
 
 DEVUAN_UDISKS2_PKGS='
@@ -258,13 +242,22 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKGS='
-	nx-desktop
+	sddm
+	blackbox
+	xterm
+	latte-dock
+	nx-desktop-settings
+	nx-desktop-apps
+	nx-plasma-look-and-feel
+	plymouth-theme-nitrux
 '
 
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
 '
+
+mkdir -p /etc/X11/cursors/
 
 install_downgrades -t nitrux $LIBPNG12_PKG
 install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
