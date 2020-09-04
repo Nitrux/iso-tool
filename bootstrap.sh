@@ -246,9 +246,22 @@ NX_DESKTOP_PKGS='
 	blackbox
 	xterm=353-1ubuntu1
 	latte-dock
-	nx-desktop-settings
+	fonts-nx-desktop
+	grub2-theme-nitrux
+	kvantum-theme-kvnitrux
+	luv-icon-theme
+	nitrux-wallpapers-free
+	nx-audio-applet
+	nx-clock-applet
 	nx-desktop-apps
+	nx-desktop-settings
+	nx-firewall
+	nx-gtk-themes
+	nx-networkmanagement-applet
+	nx-notifications-applet
 	nx-plasma-look-and-feel
+	nx-simplemenu-applet
+	nx-systemtray-applet
 	plymouth-theme-nitrux
 '
 
