@@ -24,14 +24,14 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
-#	PREBUILD_PACKAGES are packages that for one reason or the other do not get pulled when
+#	PRE_BUILD_PKGS are packages that for one reason or the other do not get pulled when
 #	the metapackages are installed, or, that require systemd to be present and can't be installed
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
 #	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
 
 puts "INSTALLING BASIC PACKAGES."
 
-BASIC_PACKAGES='
+BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
@@ -40,7 +40,7 @@ BASIC_PACKAGES='
 	debconf
 '
 
-PRE_BUILD_PACKAGES='
+PRE_BUILD_PKGS='
 	avahi-daemon
 	bluez
 	btrfs-progs
@@ -60,7 +60,7 @@ PRE_BUILD_PACKAGES='
 '
 
 update
-install $BASIC_PACKAGES $PRE_BUILD_PACKAGES
+install $BASIC_PKGS $PRE_BUILD_PKGS
 
 
 #	Add key for Neon repository.
@@ -112,19 +112,19 @@ cp /configs/files/preferences /etc/apt/preferences
 
 puts "INSTALLING CASPER PACKAGES."
 
-CASPER_PACKAGES='
+CASPER_PKGS='
 	casper
 	lupin-casper
 '
 
-INITRAMFS_PACKAGES='
+INITRAMFS_PKGS='
 	initramfs-tools
 	initramfs-tools-core
 	initramfs-tools-bin
 '
 
-install -t bionic $CASPER_PACKAGES
-hold $INITRAMFS_PACKAGES
+install -t bionic $CASPER_PKGS
+hold $INITRAMFS_PKGS
 
 
 #	Use elogind packages from Devuan.
@@ -203,13 +203,13 @@ install_downgrades $DEVUAN_INIT_PKGS
 
 puts "INSTALLING BASE SYSTEM."
 
-NITRUX_BASE_PACKAGES='
+NITRUX_BASE_PKGS='
 	nitrux-hardware-drivers
 	nitrux-minimal
 	nitrux-standard
 '
 
-install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG
+install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
 
 
 #	Install NX Desktop metapackage.
