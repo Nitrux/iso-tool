@@ -41,3 +41,7 @@ Pin-Priority: -1
 Package: xterm
 Pin: release *
 Pin-Priority: -1
+
+Package: libgsl25
+Pin: release *
+Pin-Priority: -1
