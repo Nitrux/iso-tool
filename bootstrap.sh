@@ -145,13 +145,9 @@ hold $INITRAMFS_PACKAGES
 
 puts "ADDING ELOGIND."
 
-ELOGIND_PKGS='
+DEVUAN_ELOGIND_PKGS='
 	elogind
 	libelogind0
-'
-
-UPDT_APT_PKGS='
-	apt-transport-https
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -164,7 +160,7 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
-install_downgrades $ELOGIND_PKGS $UPDT_APT_PKGS
+install_downgrades $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
 install -t focal $ADD_SYSTEMCTL_PKG
@@ -176,7 +172,7 @@ hold $ADD_SYSTEMCTL_PKG
 
 puts "ADDING POLICYKIT."
 
-DEVUAN_NM_UD2='
+DEVUAN_NETWORKMANAGER_PKGS='
 	init-system-helpers
 	libnm0
 	libudisks2-0
@@ -184,7 +180,7 @@ DEVUAN_NM_UD2='
 	udisks2
 '
 
-DEVUAN_UDISKS2='
+DEVUAN_UDISKS2_PKGS='
 	libudisks2-0
 	udisks2
 '
@@ -199,7 +195,8 @@ DEVUAN_POLKIT_PKGS='
 	policykit-1=0.105-25+devuan8
 '
 
-install_downgrades $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS
+install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
+install_downgrades $DEVUAN_POLKIT_PKGS
 
 
 #	Add OpenRC as init.
@@ -209,7 +206,6 @@ puts "ADDING OPENRC AS INIT."
 DEVUAN_INIT_PKGS='
 	fgetty
 	initscripts
-	init-system-helpers
 	openrc
 	policycoreutils
 	startpar
@@ -219,9 +215,22 @@ DEVUAN_INIT_PKGS='
 install_downgrades $DEVUAN_INIT_PKGS
 
 
+#	Install base system metapackages.
+
+puts "INSTALLING BASE SYSTEM."
+
+NITRUX_BASE_PACKAGES='
+	nitrux-hardware-drivers
+	nitrux-minimal
+	nitrux-standard
+'
+
+install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG
+
+
 #	Install NX Desktop metapackage.
 
-puts "INSTALLING SYSTEM PACKAGES."
+puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
 	libpng12-0
@@ -414,7 +423,7 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use XZ compression when creating the initramfs.
+#	Use lz4 compression to initramfs.
 #	Add persistence script.
 #	Add fstab mount binds.
 
