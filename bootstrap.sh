@@ -160,9 +160,9 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
+apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
 apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
 apt -qq -o=Dpkg::Use-Pty=0 -yy install -t focal $ADD_SYSTEMCTL_PKG --no-install-recommends
 apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 
@@ -179,9 +179,8 @@ DEVUAN_POLKIT_PKGS='
 	libpolkit-backend-elogind-1-0=0.105-25+devuan8
 	libpolkit-gobject-1-0=0.105-25+devuan8
 	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1
+	libpolkit-qt5-1-1=0.113.0-1
 	policykit-1=0.105-25+devuan8
-	polkit-kde-agent-1=4:5.17.5-2
 '
 
 DEVUAN_NM_UD2='
