@@ -244,7 +244,7 @@ MISC_KDE_PKGS='
 NX_DESKTOP_PKGS='
 	sddm
 	blackbox
-	xterm
+	xterm=353-1ubuntu1
 	latte-dock
 	nx-desktop-settings
 	nx-desktop-apps
