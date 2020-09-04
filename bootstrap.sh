@@ -122,7 +122,7 @@ update
 cp /configs/files/preferences /etc/apt/preferences
 
 
-#	Add casper packages.
+#	Add casper packages from bionic.
 
 puts "INSTALLING CASPER PACKAGES."
 
@@ -148,7 +148,6 @@ puts "ADDING ELOGIND."
 ELOGIND_PKGS='
 	elogind
 	libelogind0
-	libprocps7
 '
 
 UPDT_APT_PKGS='
@@ -185,6 +184,11 @@ DEVUAN_NM_UD2='
 	udisks2
 '
 
+DEVUAN_UDISKS2='
+	libudisks2-0
+	udisks2
+'
+
 DEVUAN_POLKIT_PKGS='
 	libpolkit-agent-1-0=0.105-25+devuan8
 	libpolkit-backend-1-0=0.105-25+devuan8
@@ -205,6 +209,7 @@ puts "ADDING OPENRC AS INIT."
 DEVUAN_INIT_PKGS='
 	fgetty
 	initscripts
+	init-system-helpers
 	openrc
 	policycoreutils
 	startpar
@@ -214,22 +219,9 @@ DEVUAN_INIT_PKGS='
 install_downgrades $DEVUAN_INIT_PKGS
 
 
-#	Install base system metapackages.
+#	Install NX Desktop metapackage.
 
-puts "INSTALLING BASE SYSTEM."
-
-NITRUX_BASE_PACKAGES='
-	nitrux-hardware-drivers
-	nitrux-minimal
-	nitrux-standard
-'
-
-install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG
-
-
-#	Add NX Desktop metapackage.
-
-puts "INSTALLING DESKTOP PACKAGES."
+puts "INSTALLING SYSTEM PACKAGES."
 
 LIBPNG12_PKG='
 	libpng12-0
@@ -264,9 +256,6 @@ HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
 '
-
-#REMOVE
-mkdir -p /etc/X11/cursors/
 
 install_downgrades -t nitrux $LIBPNG12_PKG
 install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
@@ -379,36 +368,6 @@ OPENRC_CONFIG='
 '
 
 install $OPENRC_CONFIG
-
-
-#	Remove unnecessary sources.list files.
-
-puts "REMOVE SOURCES FILES."
-
-rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
-	/etc/apt/sources.list.d/ubuntu-xenial-repo.list \
-	/etc/apt/sources.list.d/ubuntu-groovy-repo.list \
-	/etc/apt/sources.list.d/ubuntu-bionic-repo.list \
-	/etc/apt/sources.list.d/neon-unstable-repo.list \
-	/etc/apt/sources.list.d/neon-user-repo.list \
-	/etc/apt/sources.list.d/devuan-beowulf-repo.list \
-	/etc/apt/sources.list.d/devuan-ceres-repo.list \
-	/etc/apt/sources.list.d/gpu-ppa-repo.list \
-	/etc/apt/preferences
-
-update
-
-
-#	Add repositories configuration.
-
-puts "ADDING REPOSITORIES SETTINGS."
-
-NX_REPO_PKG='
-	nitrux-repository-settings
-'
-
-install $NX_REPO_PKG
-
 
 #	Add live user.
 
