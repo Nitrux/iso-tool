@@ -272,12 +272,7 @@ NX_DESKTOP_PKG='
 
 NX_MISC_PKGS='
 	latte-dock
-	nx-audio-applet
-	nx-clock-applet
-	nx-networkmanagement-applet
-	nx-notifications-applet
-	nx-systemtray-applet
-	nx-simplemenu-applet
+	inkscape=0.92.5-1ubuntu1.1
 '
 
 CALAMARES_PKGS='
@@ -381,6 +376,7 @@ puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPDATE_MISC_PKGS='
 	linux-firmware
+	inkscape
 '
 
 DOWNGRADE_MISC_PKGS='
@@ -396,14 +392,9 @@ DOWNGRADE_MISC_PKGS='
 	sudo=1.9.1-1ubuntu1
 '
 
-INSTALL_MISC_PKGS='
-
-'
-
 apt -qq update
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
 apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_MISC_PKGS --no-install-recommends
 
 
 #	Add OpenRC configuration.
