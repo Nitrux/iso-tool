@@ -263,6 +263,62 @@ NX_DESKTOP_PKGS='
 	nx-simplemenu-applet
 	nx-systemtray-applet
 	plymouth-theme-nitrux
+	acpi-support
+	acpid
+	alsa-base
+	amd64-microcode
+	avahi-daemon
+	binutils-multiarch
+	coreutils
+	cups-daemon
+	desktop-file-utils
+	dnsmasq
+	firejail
+	firejail-profiles
+	fonts-arphic-ukai
+	fonts-arphic-uming
+	fonts-freefont-ttf
+	fonts-ipafont-gothic
+	fonts-ipafont-mincho
+	fonts-liberation
+	fonts-opensymbol
+	fonts-powerline
+	fonts-unfonts-core
+	ghostscript-x
+	gnome-keyring
+	gnupg-agent
+	haveged
+	intel-microcode
+	iucode-tool
+	laptop-detect
+	libavahi-glib1
+	libdbus-glib-1-2
+	libdbusmenu-gtk3-4
+	libexiv2-27
+	libstartup-notification0
+	mscompress
+	openresolv
+	pm-utils
+	policykit-desktop-privileges
+	powerline
+	preload
+	pulseaudio-module-bluetooth
+	python-cairo
+	python-gi-cairo
+	python-setuptools
+	qml-module-qtquick-xmllistmodel
+	qt5-gtk-platformtheme
+	qttranslations5-l10n
+	rfkill
+	rng-tools
+	rsyslog
+	sbsigntool
+	ssh-askpass
+	upower
+	usb-modeswitch
+	wireless-tools
+	xdg-user-dirs
+	xdg-utils
 '
 
 HOLD_MISC_PKGS='
