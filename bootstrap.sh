@@ -246,6 +246,16 @@ NX_DESKTOP_PKGS='
 	blackbox
 	xterm=353-1ubuntu1
 	latte-dock
+	kwayland-integration
+	kwin-wayland
+	kwin-wayland-backend-drm
+	kwin-wayland-backend-wayland
+	kwin-wayland-backend-x11
+	libqt5waylandclient5
+	libqt5waylandcompositor5
+	plasma-workspace-wayland
+	qtwayland5
+	xwayland
 	gtk2-engines-murrine
 	gtk3-engines-breeze
 	kup-backup
