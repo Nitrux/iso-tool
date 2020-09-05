@@ -242,7 +242,6 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKGS='
-	sddm
 	blackbox
 	xterm=353-1ubuntu1
 	latte-dock
@@ -279,6 +278,7 @@ NX_DESKTOP_PKGS='
 	plasma-vault
 	polkit-kde-agent-1
 	powerdevil
+	sddm
 	user-manager
 	kwayland-integration
 	kwin-wayland
