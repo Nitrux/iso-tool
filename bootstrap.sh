@@ -246,6 +246,18 @@ NX_DESKTOP_PKGS='
 	blackbox
 	xterm=353-1ubuntu1
 	latte-dock
+	alsa-utils
+	gstreamer1.0-libav
+	gstreamer1.0-libav
+	gstreamer1.0-plugins-base
+	gstreamer1.0-plugins-good
+	gstreamer1.0-plugins-ugly
+	gstreamer1.0-pulseaudio
+	gstreamer1.0-qt5
+	libqt5multimedia5-plugins
+	phonon4qt5
+	phonon4qt5-backend-vlc
+	qt5-image-formats-plugins
 	baloo-kf5
 	bluedevil
 	bluez
