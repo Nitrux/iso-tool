@@ -246,6 +246,13 @@ NX_DESKTOP_PKGS='
 	blackbox
 	xterm=353-1ubuntu1
 	latte-dock
+	gtk2-engines-murrine
+	gtk3-engines-breeze
+	kup-backup
+	qml-module-qmltermwidget
+	qml-module-qt-labs-platform
+	qml-module-qtquick-shapes
+	qml-module-qtwebview
 	fonts-nx-desktop
 	grub2-theme-nitrux
 	kvantum-theme-kvnitrux
