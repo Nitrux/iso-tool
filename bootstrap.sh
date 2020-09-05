@@ -263,7 +263,6 @@ NX_DESKTOP_PKGS='
 	oxygen-sounds
 	plasma-desktop
 	plasma-nm
-	plasma-pa
 	plasma-thunderbolt
 	plasma-vault
 	polkit-kde-agent-1
