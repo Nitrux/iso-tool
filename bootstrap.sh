@@ -369,6 +369,15 @@ NX_DESKTOP_PKGS='
 	wireless-tools
 	xdg-user-dirs
 	xdg-utils
+	x11-session-utils
+	xinit
+	libnvidia-egl-wayland1
+	libwayland-client++0
+	libwayland-client-extra++0
+	libwayland-cursor++0
+	libwayland-egl++0
+	libwayland-egl1-mesa
+	qml-module-qtwayland-compositor
 '
 
 HOLD_MISC_PKGS='
