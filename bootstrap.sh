@@ -246,6 +246,29 @@ NX_DESKTOP_PKGS='
 	blackbox
 	xterm=353-1ubuntu1
 	latte-dock
+	baloo-kf5
+	bluedevil
+	bluez
+	kde-cli-tools
+	kde-config-gtk-style
+	kde-config-plymouth
+	kde-config-screenlocker
+	kde-config-sddm
+	khotkeys
+	kio
+	kio-extras
+	kscreen
+	kwin
+	kwin-addons
+	oxygen-sounds
+	plasma-desktop
+	plasma-nm
+	plasma-pa
+	plasma-thunderbolt
+	plasma-vault
+	polkit-kde-agent-1
+	powerdevil
+	user-manager
 	kwayland-integration
 	kwin-wayland
 	kwin-wayland-backend-drm
