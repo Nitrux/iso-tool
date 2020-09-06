@@ -41,7 +41,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/release/")-amd64_$(date +%Y.%m.%d).iso
+image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/master/stable/")-amd64.iso
 update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
 hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
 
