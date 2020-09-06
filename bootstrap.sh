@@ -7,49 +7,60 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
+update () { apt -qq update; }
+install () { apt -yy install --no-install-recommends $@; }
+install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
+install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+purge () { apt -yy purge --remove $@; }
+autoremove () { apt -yy autoremove $@; }
+hold () { apt-mark hold $@; }
+clean_all () { apt clean && apt autoclean; }
+fix_install () { apt -yy --fix-broken install $@; }
+add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 
-#	let us start.
 
 puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
-#	PREBUILD_PACKAGES are packages that for one reason or the other do not get pulled when
+#	PRE_BUILD_PKGS are packages that for one reason or the other do not get pulled when
 #	the metapackages are installed, or, that require systemd to be present and can't be installed
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
-#	the rest of the packages.
+#	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
 
-puts "INSTALLING BASIC AND PREBUILD PACKAGES."
+puts "INSTALLING BASIC PACKAGES."
 
-BASIC_PACKAGES='
+BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
 	dhcpcd5
 	gnupg2
-	language-pack-en
-	language-pack-en-base
-	libarchive-tools
-	libarchive13
-	localechooser-data
-	locales
-	systemd
-	user-setup
-	wget
-	xz-utils
+	debconf
 '
 
-PREBUILD_PACKAGES='
+PRE_BUILD_PKGS='
 	avahi-daemon
 	bluez
 	btrfs-progs
 	cgroupfs-mount
+	cups-daemon
+	dictionaries-common
+	efibootmgr
+	libpam-runtime
+	os-prober
 	rng-tools
+	squashfs-tools
+	sudo
+	systemd
+	systemd-sysv
 	ufw
+	user-setup
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES $PREBUILD_PACKAGES --no-install-recommends
+update
+install $BASIC_PKGS $PRE_BUILD_PKGS
 
 
 #	Add key for Neon repository.
@@ -63,7 +74,7 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES $PREBUILD_PACKAGES --no-i
 
 puts "ADDING REPOSITORY KEYS."
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
+ add_keys \
 	55751E5D \
 	1B69B2DA \
 	541922FB \
@@ -89,7 +100,7 @@ cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 # cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt -qq update
+update
 
 
 #	Block installation of some packages.
@@ -97,29 +108,33 @@ apt -qq update
 cp /configs/files/preferences /etc/apt/preferences
 
 
-#	Add casper packages.
+#	Add casper packages from bionic.
 
 puts "INSTALLING CASPER PACKAGES."
 
-CASPER_PACKAGES='
+CASPER_PKGS='
 	casper
 	lupin-casper
 '
 
-INITRAMFS_PACKAGES='
+INITRAMFS_PKGS='
 	initramfs-tools
 	initramfs-tools-core
 	initramfs-tools-bin
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install -t bionic $CASPER_PACKAGES --no-install-recommends
-
-apt-mark hold $INITRAMFS_PACKAGES
+install -t bionic $CASPER_PKGS
+hold $INITRAMFS_PKGS
 
 
 #	Use elogind packages from Devuan.
 
 puts "ADDING ELOGIND."
+
+DEVUAN_ELOGIND_PKGS='
+	elogind
+	libelogind0
+'
 
 REMOVE_SYSTEMD_PKGS='
 	systemd
@@ -127,56 +142,45 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-ELOGIND_PKGS='
-	bsdutils
-	elogind
-	libelogind0
-	libprocps7
-	util-linux
-	uuid-runtime
-'
-
-UPDT_APT_PKGS='
-	apt
-	apt-transport-https
-	apt-utils
-'
-
 ADD_SYSTEMCTL_PKG='
-	systemctl
+	systemctl/focal
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install -t focal $ADD_SYSTEMCTL_PKG --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
+install_downgrades $DEVUAN_ELOGIND_PKGS
+purge $REMOVE_SYSTEMD_PKGS
+autoremove
+install $ADD_SYSTEMCTL_PKG
+fix_install
+hold $ADD_SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
 
 puts "ADDING POLICYKIT."
 
-DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0=0.105-25+devuan8
-	libpolkit-backend-1-0=0.105-25+devuan8
-	libpolkit-backend-elogind-1-0=0.105-25+devuan8
-	libpolkit-gobject-1-0=0.105-25+devuan8
-	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1
-	policykit-1=0.105-25+devuan8
-	polkit-kde-agent-1=4:5.17.5-2
-'
-
-DEVUAN_NM_UD2='
+DEVUAN_NETWORKMANAGER_PKGS='
 	init-system-helpers
 	libnm0
-	libudisks2-0
 	network-manager
+'
+
+DEVUAN_UDISKS2_PKGS='
+	libudisks2-0
 	udisks2
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
+DEVUAN_POLKIT_PKGS='
+	libpolkit-agent-1-0/beowulf
+	libpolkit-backend-1-0/beowulf
+	libpolkit-backend-elogind-1-0/beowulf
+	libpolkit-gobject-1-0/beowulf
+	libpolkit-gobject-elogind-1-0/beowulf
+	libpolkit-qt5-1-1/ceres
+	policykit-1/beowulf
+'
+
+install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
+install_downgrades $DEVUAN_POLKIT_PKGS
 
 
 #	Add OpenRC as init.
@@ -192,42 +196,33 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
+install_downgrades $DEVUAN_INIT_PKGS
 
 
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
 
-GRUB_PACKAGES='
-	grub-efi-amd64-signed=1+2.04+9
-	grub-efi-amd64-bin=2.04-9
-	grub-common=2.04-9
-	'
-
-NITRUX_BASE_PACKAGES='
+NITRUX_BASE_PKGS='
+	base-files
 	nitrux-hardware-drivers
 	nitrux-minimal
 	nitrux-standard
 '
 
-NITRUX_BF_PKG='
-	base-files
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
+install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
 
 
-#	Add NX Desktop metapackage.
+#	Install NX Desktop metapackage.
 
 puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
-	libpng12-0
+	libpng12-0/nitrux
 '
 
-XENIAL_PACKAGES='
-	plymouth=0.9.2-3ubuntu13.5
+PLYMOUTH_XENIAL_PKGS='
+	plymouth/xenial
 	plymouth-label=0.9.2-3ubuntu13.5
 	plymouth-themes=0.9.2-3ubuntu13.5
 	libplymouth4=0.9.2-3ubuntu13.5
@@ -245,17 +240,23 @@ DEVUAN_PULSE_PKGS='
 
 MISC_KDE_PKGS='
 	plasma-pa=4:5.17.5-2
-	latte-dock
 '
 
 NX_DESKTOP_PKGS='
+	latte-dock
 	nx-desktop
-	nx-desktop-apps
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install -t nitrux $LIBPNG12_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
+HOLD_MISC_PKGS='
+	cgroupfs-mount
+	ssl-cert
+'
+
+mkdir -p /etc/X11/cursors/
+
+install_downgrades $LIBPNG12_PKG
+install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
+hold $HOLD_MISC_PKGS
 
 
 #	Upgrade KF5 libs for Latte Dock.
@@ -277,36 +278,15 @@ HOLD_KDE_PKGS='
 '
 
 UPDT_KDE_PKGS='
-	ark
-	bluedevil
-	kcalc
-	kde-spectacle
 	latte-dock
-	systemsettings
 '
 
 UPDT_KF5_LIBS='
 	libkf5activities5
-	libkf5activitiesstats1
 	libkf5archive5
-	libkf5attica5
-	libkf5auth-data
-	libkf5auth5
-	libkf5authcore5
-	libkf5bluezqt-data
-	libkf5bluezqt6
-	libkf5bookmarks-data
-	libkf5bookmarks5
-	libkf5calendarevents5
-	libkf5completion-data
-	libkf5completion5
 	libkf5config-data
 	libkf5configcore5
 	libkf5configgui5
-	libkf5configwidgets-data
-	libkf5configwidgets5
-	libkf5contacts-data
-	libkf5contacts5
 	libkf5coreaddons-data
 	libkf5coreaddons5
 	libkf5crash5
@@ -314,69 +294,29 @@ UPDT_KF5_LIBS='
 	libkf5dbusaddons5
 	libkf5declarative-data
 	libkf5declarative5
-	libkf5dnssd-data
-	libkf5dnssd5
-	libkf5doctools5
-	libkf5emoticons-data
-	libkf5emoticons5
-	libkf5filemetadata-data
-	libkf5filemetadata3
 	libkf5globalaccel-bin
 	libkf5globalaccel-data
 	libkf5globalaccel5
-	libkf5globalaccelprivate5
 	libkf5guiaddons5
-	libkf5holidays-data
-	libkf5holidays5
 	libkf5i18n-data
 	libkf5i18n5
 	libkf5iconthemes-data
 	libkf5iconthemes5
-	libkf5idletime5
-	libkf5itemmodels5
-	libkf5itemviews-data
-	libkf5itemviews5
-	libkf5jobwidgets-data
-	libkf5jobwidgets5
-	libkf5kdelibs4support-data
-	libkf5kdelibs4support5
-	libkf5kipi-data
-	libkf5kipi32.0.0
-	libkf5kirigami2-5
 	libkf5newstuff-data
 	libkf5newstuff5
 	libkf5newstuffcore5
 	libkf5notifications-data
 	libkf5notifications5
-	libkf5notifyconfig-data
-	libkf5notifyconfig5
 	libkf5package-data
 	libkf5package5
-	libkf5parts-data
-	libkf5parts5
 	libkf5plasmaquick5
-	libkf5purpose-bin
-	libkf5purpose5
+	libkf5plasma5
 	libkf5quickaddons5
-	libkf5runner5
 	libkf5service-bin
 	libkf5service-data
 	libkf5service5
-	libkf5style5
-	libkf5su-bin
-	libkf5su-data
-	libkf5su5
-	libkf5syntaxhighlighting-data
-	libkf5syntaxhighlighting5
-	libkf5texteditor-bin
-	libkf5texteditor5
-	libkf5textwidgets-data
-	libkf5textwidgets5
-	libkf5threadweaver5
 	libkf5waylandclient5
-	libkf5waylandserver5
-	libkf5widgetsaddons-data
-	libkf5widgetsaddons5
+	libkf5windowsystem5
 	libkf5xmlgui-bin
 	libkf5xmlgui-data
 	libkf5xmlgui5
@@ -386,11 +326,12 @@ UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
 '
 
-apt-mark hold $HOLD_KDE_PKGS
+hold $HOLD_KDE_PKGS
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
+update
+only_upgrade $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS
+fix_install
+
 
 #	Upgrade, downgrade and install misc. packages.
 
@@ -398,31 +339,22 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
-UPDATE_MISC_PKGS='
+UPGRADE_MISC_PKGS='
 	linux-firmware
 '
 
 DOWNGRADE_MISC_PKGS='
-	bluez=5.50-1.2~deb10u1
-	initramfs-tools-bin=0.137ubuntu10
-	initramfs-tools-core=0.137ubuntu10
-	initramfs-tools=0.137ubuntu10
-	libc-bin=2.31-0ubuntu9
-	libc6-dev=2.31-0ubuntu9
-	libc-dev-bin=2.31-0ubuntu9
-	libc6=2.31-0ubuntu9
-	locales=2.31-0ubuntu9
-	sudo=1.9.1-1ubuntu1
+	bluez/ceres
 '
 
 INSTALL_MISC_PKGS='
-
+	xterm=353-1ubuntu1
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDATE_MISC_PKGS --only-upgrade
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DOWNGRADE_MISC_PKGS --allow-downgrades --allow-change-held-packages
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_MISC_PKGS --no-install-recommends
+update
+only_upgrade $UPGRADE_MISC_PKGS
+install_downgrades_hold $DOWNGRADE_MISC_PKGS
+install $INSTALL_MISC_PKGS
 
 
 #	Add OpenRC configuration.
@@ -433,8 +365,7 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
-
+install $OPENRC_CONFIG
 
 #	Add live user.
 
@@ -444,14 +375,49 @@ NX_LIVE_USER='
 	nitrux-live-user
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $NX_LIVE_USER --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+install $NX_LIVE_USER
+autoremove
+clean_all
 
 
 #	WARNING:
 #	No apt usage past this point.
+
+
+# puts "ADDING MAUI APPS (STABLE)."
+
+# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+# chmod +x /tmp/mc
+# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+# mkdir maui_pkgs
+
+# (
+# 	cd maui_pkgs
+
+# 	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
+
+# 	for i in $_apps; do
+# 		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
+# 		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
+# 	done
+
+#  	mv ${_branch}/index-*amd64*.AppImage /Applications/index
+#  	mv ${_branch}/buho-*amd64*.AppImage /Applications/buho
+#  	mv ${_branch}/nota-*amd64*.AppImage /Applications/nota
+#  	mv ${_branch}/vvave-*amd64*.AppImage /Applications/vvave
+#  	mv ${_branch}/station-*amd64*.AppImage /Applications/station
+#  	mv ${_branch}/pix-*amd64*.AppImage /Applications/pix
+
+#  	chmod +x /Applications/*
+
+#  	ls -l /Applications
+#  )
+
+#  /tmp/mc config host rm nx
+
+#  rm -r \
+#  	maui_pkgs \
+#  	/tmp/mc
 
 
 #	Add MAUI Appimages.
@@ -497,26 +463,7 @@ rm -r \
 
 puts "ADDING MISC. FIXES."
 
-/bin/cp /configs/files/casper.conf /etc/
-
-rm -r /home/travis
-
-
-#	Check contents of /etc/environment.
-#	Check live user.
-#	Check x_cursors_theme
-#	Check contents of OpenRC runlevels.
-#	Check that init system is not systemd.
-
-puts "DO SOME CHECKS."
-
-cat /etc/environment
-compgen -u 
-groups nitrux
-ls -l /etc/alternatives/x-cursor-theme
-cat /etc/X11/cursors/nitrux_cursors.theme
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-stat /sbin/init
+cat /configs/files/casper.conf > /etc/casper.conf
 
 
 #	Implement a new FHS.
@@ -525,7 +472,6 @@ stat /sbin/init
 puts "CREATING NEW FHS."
 
 mkdir -p \
-	/Core/System/Deployments \
 	/Devices \
 	/System/Binaries \
 	/System/Binaries/Optional \
@@ -540,11 +486,9 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use LZ4 compression when creating the initramfs.
-#	Add initramfs hook script.
-#	Add the persistence and update the initramfs.
+#	Use lz4 compression to initramfs.
+#	Add persistence script.
 #	Add fstab mount binds.
-#	Add znx_dev_uuid parameter. FIXME
 
 puts "UPDATING THE INITRAMFS."
 
@@ -552,34 +496,28 @@ cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
-# cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 
 update-initramfs -u
-lsinitramfs -l /boot/initrd.img* | grep vfio
+
 
 #	Remove APT.
 
 puts "REMOVING APT."
 
-REMOVE_APT='
+REMOVE_APT_PKGS='
 	apt
 	apt-utils
 	apt-transport-https
 '
 
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_APT &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_APT_PKGS
 
 
 #	Clean the filesystem.
 
 puts "REMOVING CASPER."
 
-REMOVE_PACKAGES='
-	casper
-	lupin-casper
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_PACKAGES &> /dev/null
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $CASPER_PKGS
 
 
 #	WARNING:
@@ -591,7 +529,19 @@ REMOVE_PACKAGES='
 puts "REMOVING DPKG."
 
 /configs/scripts/rm-dpkg.sh
-rm /configs/scripts/rm-dpkg.sh
+
+
+#	Check contents of /boot.
+#	Check contents of OpenRC runlevels.
+#	Check that init system is not systemd.
+#	Check if VFIO module is included in the initramfs.
+#	Check existence and contents of casper.conf
+
+ls -l /boot
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+stat /sbin/init
+lsinitramfs -l /boot/initrd.img* | grep vfio
+cat /etc/casper.conf
 
 
 puts "EXITING BOOTSTRAP."

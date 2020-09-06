@@ -2,14 +2,13 @@
 
 #	Exit on errors.
 
-set -xe
+set -e
 
 
 #	Travis stuff.
 
 XORRISO_PACKAGES='
 	libburn4
-	libgcc1
 	libisoburn1
 	libisofs6
 	libjte2
@@ -20,8 +19,8 @@ XORRISO_PACKAGES='
 '
 
 apt -qq update
-apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
-pip3 install --upgrade python-gitlab
+apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends &> /dev/null
+pip3 install --upgrade python-gitlab &> /dev/null
 
 
 #	base image URL.
@@ -42,7 +41,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/master/stable/")-amd64.iso
+image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/release/")-amd64_$(date +%Y.%m.%d).iso
 update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
 hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
 
@@ -65,6 +64,11 @@ chmod +x /bin/runch
 	bash || :
 
 
+#	Check filesystem size.
+
+du -hs $build_dir
+
+
 #	Copy the kernel and initramfs to $iso_dir.
 #	BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
@@ -73,7 +77,14 @@ mkdir -p $iso_dir/boot
 cp $(echo $build_dir/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/kernel
 cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/boot/initramfs
 
-rm -f $build_dir/boot/* $build_dir/vmlinuz* $build_dir/initrd* 
+
+#	Remove chroot host kernel from $build_dir.
+#	BUG: vmlinuz and initrd links are not created in $build_dir/; they're left at $build_dir/boot
+
+rm \
+	$build_dir/boot/*
+	$build_dir/vmlinuz*
+	$build_dir/initrd*
 
 
 #	WARNING FIXME BUG: This file isn't copied during the chroot.
@@ -87,7 +98,7 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 ( while :; do sleep 300; printf ".\n"; done ) &
 
 mkdir -p $iso_dir/casper
-mksquashfs $build_dir $iso_dir/casper/filesystem.squashfs -comp lz4 -no-progress -b 16384
+mksquashfs $build_dir $iso_dir/casper/filesystem.squashfs -comp zstd -no-progress -b 1048576
 
 
 #	Generate the ISO image.
