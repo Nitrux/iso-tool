@@ -204,6 +204,7 @@ install_downgrades $DEVUAN_INIT_PKGS
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PKGS='
+	base-files
 	nitrux-hardware-drivers
 	nitrux-minimal
 	nitrux-standard
@@ -381,6 +382,80 @@ clean_all
 
 #	WARNING:
 #	No apt usage past this point.
+
+
+# puts "ADDING MAUI APPS (STABLE)."
+
+# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+# chmod +x /tmp/mc
+# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+# mkdir maui_pkgs
+
+# (
+# 	cd maui_pkgs
+
+# 	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
+
+# 	for i in $_apps; do
+# 		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
+# 		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
+# 	done
+
+#  	mv ${_branch}/index-*amd64*.AppImage /Applications/index
+#  	mv ${_branch}/buho-*amd64*.AppImage /Applications/buho
+#  	mv ${_branch}/nota-*amd64*.AppImage /Applications/nota
+#  	mv ${_branch}/vvave-*amd64*.AppImage /Applications/vvave
+#  	mv ${_branch}/station-*amd64*.AppImage /Applications/station
+#  	mv ${_branch}/pix-*amd64*.AppImage /Applications/pix
+
+#  	chmod +x /Applications/*
+
+#  	ls -l /Applications
+#  )
+
+#  /tmp/mc config host rm nx
+
+#  rm -r \
+#  	maui_pkgs \
+#  	/tmp/mc
+
+
+#	Add MAUI Appimages.
+
+puts "ADDING MAUI APPS (NIGHTLY/CHERRYPICK_DATE)."
+
+wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+chmod +x /tmp/mc
+/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+_latest=$(/tmp/mc cat nx/maui/nightly/WORKING)
+mkdir maui_pkgs
+
+(
+	cd maui_pkgs
+
+	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+
+	for i in $_packages; do
+		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+	done
+
+	mv index-*amd64*.AppImage /Applications/index
+	mv buho-*amd64*.AppImage /Applications/buho
+	mv nota-*amd64*.AppImage /Applications/nota
+	mv vvave-*amd64*.AppImage /Applications/vvave
+	mv station-*amd64*.AppImage /Applications/station
+	mv pix-*amd64*.AppImage /Applications/pix
+
+	chmod +x /Applications/*
+
+	ls -l /Applications
+)
+
+/tmp/mc config host rm nx
+
+rm -r \
+	maui_pkgs \
+	/tmp/mc
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
