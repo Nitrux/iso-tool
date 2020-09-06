@@ -15,6 +15,7 @@ XORRISO_PACKAGES='
 	mtools
 	sshpass
 	xorriso
+	zsync
 '
 
 apt -qq update
@@ -41,6 +42,7 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/release/")-amd64_$(date +%Y.%m.%d).iso
+update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
 hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
 
 
@@ -60,6 +62,9 @@ chmod +x /bin/runch
 	-r /configs \
 	$build_dir \
 	bash || :
+
+
+#	Check filesystem size.
 
 du -hs $build_dir
 
@@ -107,6 +112,7 @@ mkiso \
 	-V "NITRUX" \
 	-b \
 	-e \
+	-u "$update_url" \
 	-s "$hash_url" \
 	-r "${TRAVIS_COMMIT:0:7}" \
 	-g $config_dir/files/grub.cfg \
@@ -120,9 +126,16 @@ mkiso \
 md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
 
 
+#	Generate the zsync file.
+
+zsyncmake \
+	$output_dir/$image \
+	-u ${update_url%.zsync}.iso \
+	-o $output_dir/${image%.iso}.zsync
+
+
 #	Upload the ISO image.
 
 for f in $output_dir/*; do
     SSHPASS=$DEPLOY_PASS sshpass -e scp -q -o stricthostkeychecking=no "$f" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
 done
-

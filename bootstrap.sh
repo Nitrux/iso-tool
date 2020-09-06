@@ -170,13 +170,13 @@ DEVUAN_UDISKS2_PKGS='
 '
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0=0.105-25+devuan8
-	libpolkit-backend-1-0=0.105-25+devuan8
-	libpolkit-backend-elogind-1-0=0.105-25+devuan8
-	libpolkit-gobject-1-0=0.105-25+devuan8
-	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1=0.113.0-1
-	policykit-1=0.105-25+devuan8
+	libpolkit-agent-1-0/beowulf
+	libpolkit-backend-1-0/beowulf
+	libpolkit-backend-elogind-1-0/beowulf
+	libpolkit-gobject-1-0/beowulf
+	libpolkit-gobject-elogind-1-0/beowulf
+	libpolkit-qt5-1-1/ceres
+	policykit-1/beowulf
 '
 
 install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
@@ -217,32 +217,31 @@ install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
 puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
-	libpng12-0
+	libpng12-0/ceres
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	plymouth=0.9.2-3ubuntu13.5
-	plymouth-label=0.9.2-3ubuntu13.5
-	plymouth-themes=0.9.2-3ubuntu13.5
-	libplymouth4=0.9.2-3ubuntu13.5
+	plymouth/xenial
+	plymouth-label/xenial
+	plymouth-themes/xenial
+	libplymouth4/xenial
 	ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=13.0-5
-	libpulse0=13.0-5
-	libpulsedsp=13.0-5
-	pulseaudio-module-bluetooth=13.0-5
-	pulseaudio-utils=13.0-5
-	pulseaudio=13.0-5
+	libpulse-mainloop-glib0/ceres
+	libpulse0/ceres
+	libpulsedsp/ceres
+	pulseaudio-module-bluetooth/ceres
+	pulseaudio-utils/ceres
+	pulseaudio/ceres
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.17.5-2
+	plasma-pa/ceres
 '
 
 NX_DESKTOP_PKGS='
-	xterm=353-1ubuntu1
 	latte-dock
 	nx-desktop
 '
@@ -254,7 +253,7 @@ HOLD_MISC_PKGS='
 
 mkdir -p /etc/X11/cursors/
 
-install_downgrades -t nitrux $LIBPNG12_PKG
+install_downgrades $LIBPNG12_PKG
 install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
 hold $HOLD_MISC_PKGS
 
@@ -344,12 +343,17 @@ UPGRADE_MISC_PKGS='
 '
 
 DOWNGRADE_MISC_PKGS='
-	bluez=5.50-1.2~deb10u1
+	bluez/ceres
+'
+
+INSTALL_MISC_PKGS='
+	xterm
 '
 
 update
 only_upgrade $UPGRADE_MISC_PKGS
 install_downgrades_hold $DOWNGRADE_MISC_PKGS
+install $INSTALL_MISC_PKGS
 
 
 #	Add OpenRC configuration.
@@ -414,23 +418,54 @@ cp /configs/files/hidden /.hidden
 puts "UPDATING THE INITRAMFS."
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
+cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 update-initramfs -u
 
 
+#	Remove APT.
+
+puts "REMOVING APT."
+
+REMOVE_APT_PKGS='
+	apt
+	apt-utils
+	apt-transport-https
+'
+
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_APT_PKGS
+
+
+#	Clean the filesystem.
+
+puts "REMOVING CASPER."
+
+/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $CASPER_PKGS
+
+
 #	WARNING:
 #	No dpkg usage past this point.
+
+
+#	Use script to remove dpkg.
+
+puts "REMOVING DPKG."
+
+/configs/scripts/rm-dpkg.sh
+rm /configs/scripts/rm-dpkg.sh
 
 
 #	Check contents of /boot.
 #	Check contents of OpenRC runlevels.
 #	Check that init system is not systemd.
+#	Check if VFIO module is included in the initramfs.
 
 ls -l /boot
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
+lsinitramfs -l /boot/initrd.img* | grep vfio
 
 
 puts "EXITING BOOTSTRAP."
