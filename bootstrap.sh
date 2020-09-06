@@ -143,13 +143,13 @@ REMOVE_SYSTEMD_PKGS='
 '
 
 ADD_SYSTEMCTL_PKG='
-	systemctl
+	systemctl/focal
 '
 
 install_downgrades $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
-install -t focal $ADD_SYSTEMCTL_PKG
+install $ADD_SYSTEMCTL_PKG
 fix_install
 hold $ADD_SYSTEMCTL_PKG
 
@@ -221,24 +221,24 @@ LIBPNG12_PKG='
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	plymouth/xenial
-	plymouth-label/xenial
-	plymouth-themes/xenial
-	libplymouth4/xenial
+	plymouth=0.9.2-3ubuntu13.5
+	plymouth-label=0.9.2-3ubuntu13.5
+	plymouth-themes=0.9.2-3ubuntu13.5
+	libplymouth4=0.9.2-3ubuntu13.5
 	ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0/ceres
-	libpulse0/ceres
-	libpulsedsp/ceres
-	pulseaudio-module-bluetooth/ceres
-	pulseaudio-utils/ceres
-	pulseaudio/ceres
+	libpulse-mainloop-glib0=13.0-5
+	libpulse0=13.0-5
+	libpulsedsp=13.0-5
+	pulseaudio-module-bluetooth=13.0-5
+	pulseaudio-utils=13.0-5
+	pulseaudio=13.0-5
 '
 
 MISC_KDE_PKGS='
-	plasma-pa/ceres
+	plasma-pa=4:5.17.5-2
 '
 
 NX_DESKTOP_PKGS='
@@ -388,7 +388,7 @@ clean_all
 
 puts "ADDING MISC. FIXES."
 
-/bin/cp /configs/files/casper.conf /etc/
+cat /configs/files/casper.conf > /etc/casper.conf
 
 
 #	Implement a new FHS.
@@ -460,11 +460,13 @@ puts "REMOVING DPKG."
 #	Check contents of OpenRC runlevels.
 #	Check that init system is not systemd.
 #	Check if VFIO module is included in the initramfs.
+#	Check existence and contents of casper.conf
 
 ls -l /boot
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
 lsinitramfs -l /boot/initrd.img* | grep vfio
+cat /etc/casper.conf
 
 
 puts "EXITING BOOTSTRAP."
