@@ -82,9 +82,9 @@ cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/bo
 #	BUG: vmlinuz and initrd links are not created in $build_dir/; they're left at $build_dir/boot
 
 rm \
-	$build_dir/boot/initrd.img-$(uname -r) \
-
-#rm -f $build_dir/boot/*
+	$build_dir/boot/*
+	$build_dir/vmlinuz*
+	$build_dir/initrd*
 
 
 #	WARNING FIXME BUG: This file isn't copied during the chroot.
