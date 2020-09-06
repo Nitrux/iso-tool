@@ -230,12 +230,12 @@ PLYMOUTH_XENIAL_PKGS='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0/ceres
-	libpulse0/ceres
-	libpulsedsp/ceres
-	pulseaudio-module-bluetooth/ceres
-	pulseaudio-utils/ceres
-	pulseaudio/ceres
+	libpulse-mainloop-glib0=13.0-5
+	libpulse0=13.0-5
+	libpulsedsp=13.0-5
+	pulseaudio-module-bluetooth=13.0-5
+	pulseaudio-utils=13.0-5
+	pulseaudio=13.0-5
 '
 
 MISC_KDE_PKGS='
