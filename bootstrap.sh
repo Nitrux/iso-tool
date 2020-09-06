@@ -222,20 +222,20 @@ LIBPNG12_PKG='
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	plymouth=0.9.2-3ubuntu13.5
-	plymouth-label=0.9.2-3ubuntu13.5
-	plymouth-themes=0.9.2-3ubuntu13.5
-	libplymouth4=0.9.2-3ubuntu13.5
+	plymouth/xenial
+	plymouth-label/xenial
+	plymouth-themes/xenial
+	libplymouth4/xenial
 	ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=13.0-5
-	libpulse0=13.0-5
-	libpulsedsp=13.0-5
-	pulseaudio-module-bluetooth=13.0-5
-	pulseaudio-utils=13.0-5
-	pulseaudio=13.0-5
+	libpulse-mainloop-glib0/ceres
+	libpulse0/ceres
+	libpulsedsp/ceres
+	pulseaudio-module-bluetooth/ceres
+	pulseaudio-utils/ceres
+	pulseaudio/ceres
 '
 
 MISC_KDE_PKGS='
