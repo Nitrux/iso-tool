@@ -41,7 +41,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/master/stable/")-amd64.iso
+image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/master/OTA-latest/")-amd64.iso
 update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
 hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
 
@@ -82,8 +82,8 @@ cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/bo
 #	BUG: vmlinuz and initrd links are not created in $build_dir/; they're left at $build_dir/boot
 
 rm \
-	$build_dir/boot/*
-	$build_dir/vmlinuz*
+	$build_dir/boot/* \
+	$build_dir/vmlinuz* \
 	$build_dir/initrd*
 
 
