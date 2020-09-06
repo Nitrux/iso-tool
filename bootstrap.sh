@@ -223,9 +223,9 @@ LIBPNG12_PKG='
 
 PLYMOUTH_XENIAL_PKGS='
 	plymouth/xenial
-	plymouth-label/xenial
-	plymouth-themes/xenial
-	libplymouth4/xenial
+	plymouth-label=0.9.2-3ubuntu13.5
+	plymouth-themes=0.9.2-3ubuntu13.5
+	libplymouth4=0.9.2-3ubuntu13.5
 	ttf-ubuntu-font-family
 '
 
