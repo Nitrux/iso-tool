@@ -454,7 +454,6 @@ puts "REMOVING CASPER."
 puts "REMOVING DPKG."
 
 /configs/scripts/rm-dpkg.sh
-rm /configs/scripts/rm-dpkg.sh
 
 
 #	Check contents of /boot.
