@@ -458,6 +458,9 @@ rm -r \
 puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
+wget -qO /Applications/latte-dock https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/latte-dock-0.9.11-x86_64.AppImage
+chmod +x /Applications/latte-dock
+rm /usr/bin/latte-dock 
 
 
 #	Implement a new FHS.
