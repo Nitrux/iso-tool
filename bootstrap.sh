@@ -222,10 +222,7 @@ LIBPNG12_PKG='
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	plymouth/xenial
-	plymouth-label=0.9.2-3ubuntu13.5
-	plymouth-themes=0.9.2-3ubuntu13.5
-	libplymouth4=0.9.2-3ubuntu13.5
+	plymouth/xenial-updates
 	ttf-ubuntu-font-family
 '
 
@@ -251,8 +248,6 @@ HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
 '
-
-mkdir -p /etc/X11/cursors/
 
 install_downgrades $LIBPNG12_PKG
 install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
@@ -281,53 +276,52 @@ UPDT_KDE_PKGS='
 	latte-dock
 '
 
-UPDT_KF5_LIBS='
-	libkf5activities5
-	libkf5archive5
-	libkf5config-data
-	libkf5configcore5
-	libkf5configgui5
-	libkf5coreaddons-data
-	libkf5coreaddons5
-	libkf5crash5
-	libkf5dbusaddons-data
-	libkf5dbusaddons5
-	libkf5declarative-data
-	libkf5declarative5
-	libkf5globalaccel-bin
-	libkf5globalaccel-data
-	libkf5globalaccel5
-	libkf5guiaddons5
-	libkf5i18n-data
-	libkf5i18n5
-	libkf5iconthemes-data
-	libkf5iconthemes5
-	libkf5newstuff-data
-	libkf5newstuff5
-	libkf5newstuffcore5
-	libkf5notifications-data
-	libkf5notifications5
-	libkf5package-data
-	libkf5package5
-	libkf5plasmaquick5
-	libkf5plasma5
-	libkf5quickaddons5
-	libkf5service-bin
-	libkf5service-data
-	libkf5service5
-	libkf5waylandclient5
-	libkf5windowsystem5
-	libkf5xmlgui-bin
-	libkf5xmlgui-data
-	libkf5xmlgui5
-'
+# UPDT_KF5_LIBS='
+# 	libkf5activities5
+# 	libkf5archive5
+# 	libkf5config-data
+# 	libkf5configcore5
+# 	libkf5configgui5
+# 	libkf5coreaddons-data
+# 	libkf5coreaddons5
+# 	libkf5crash5
+# 	libkf5dbusaddons-data
+# 	libkf5dbusaddons5
+# 	libkf5declarative-data
+# 	libkf5declarative5
+# 	libkf5globalaccel-bin
+# 	libkf5globalaccel-data
+# 	libkf5globalaccel5
+# 	libkf5guiaddons5
+# 	libkf5i18n-data
+# 	libkf5i18n5
+# 	libkf5iconthemes-data
+# 	libkf5iconthemes5
+# 	libkf5newstuff-data
+# 	libkf5newstuff5
+# 	libkf5newstuffcore5
+# 	libkf5notifications-data
+# 	libkf5notifications5
+# 	libkf5package-data
+# 	libkf5package5
+# 	libkf5plasmaquick5
+# 	libkf5plasma5
+# 	libkf5quickaddons5
+# 	libkf5service-bin
+# 	libkf5service-data
+# 	libkf5service5
+# 	libkf5waylandclient5
+# 	libkf5windowsystem5
+# 	libkf5xmlgui-bin
+# 	libkf5xmlgui-data
+# 	libkf5xmlgui5
+# '
 
 UPDT_MISC_LIBS='
 	libpolkit-qt5-1-1
 '
 
 hold $HOLD_KDE_PKGS
-
 update
 only_upgrade $UPDT_KDE_PKGS $UPDT_MISC_LIBS
 fix_install
