@@ -226,6 +226,8 @@ LIBPNG12_PKG='
 
 PLYMOUTH_XENIAL_PKGS='
 	plymouth/xenial-updates
+	plymouth-themes/xenial-updates
+	plymouth-label/xenial-updates
 	ttf-ubuntu-font-family
 '
 
