@@ -57,6 +57,8 @@ PRE_BUILD_PKGS='
 	systemd-sysv
 	ufw
 	user-setup
+	language-pack-en
+	language-pack-es
 '
 
 update
