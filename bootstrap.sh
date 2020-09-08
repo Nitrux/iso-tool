@@ -179,6 +179,7 @@ DEVUAN_POLKIT_PKGS='
 	libpolkit-gobject-elogind-1-0/beowulf
 	libpolkit-qt5-1-1/ceres
 	policykit-1/beowulf
+	polkit-kde-agent-1/beowulf
 '
 
 install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
