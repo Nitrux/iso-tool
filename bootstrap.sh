@@ -18,6 +18,7 @@ hold () { apt-mark hold $@; }
 clean_all () { apt clean && apt autoclean; }
 fix_install () { apt -yy --fix-broken install $@; }
 add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
 
 
 puts "STARTING BOOTSTRAP."
@@ -218,6 +219,8 @@ install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
 
 
 #	Install NX Desktop metapackage.
+#	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
+#	because otherwise the splash is not shown.
 
 puts "INSTALLING DESKTOP PACKAGES."
 
@@ -510,14 +513,14 @@ REMOVE_APT_PKGS='
 	apt-transport-https
 '
 
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_APT_PKGS
+dpkg_force_remove $REMOVE_APT_PKGS
 
 
 #	Clean the filesystem.
 
 puts "REMOVING CASPER."
 
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $CASPER_PKGS
+dpkg_force_remove $CASPER_PKGS
 
 
 #	WARNING:
