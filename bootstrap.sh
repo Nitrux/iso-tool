@@ -177,9 +177,6 @@ DEVUAN_POLKIT_PKGS='
 	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
-	libpolkit-qt5-1-1/ceres
-	policykit-1/beowulf
-	polkit-kde-agent-1/beowulf
 '
 
 install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
@@ -281,46 +278,46 @@ hold $HOLD_MISC_PKGS
 # 	latte-dock
 # '
 
-# # UPDT_KF5_LIBS='
-# # 	libkf5activities5
-# # 	libkf5archive5
-# # 	libkf5config-data
-# # 	libkf5configcore5
-# # 	libkf5configgui5
-# # 	libkf5coreaddons-data
-# # 	libkf5coreaddons5
-# # 	libkf5crash5
-# # 	libkf5dbusaddons-data
-# # 	libkf5dbusaddons5
-# # 	libkf5declarative-data
-# # 	libkf5declarative5
-# # 	libkf5globalaccel-bin
-# # 	libkf5globalaccel-data
-# # 	libkf5globalaccel5
-# # 	libkf5guiaddons5
-# # 	libkf5i18n-data
-# # 	libkf5i18n5
-# # 	libkf5iconthemes-data
-# # 	libkf5iconthemes5
-# # 	libkf5newstuff-data
-# # 	libkf5newstuff5
-# # 	libkf5newstuffcore5
-# # 	libkf5notifications-data
-# # 	libkf5notifications5
-# # 	libkf5package-data
-# # 	libkf5package5
-# # 	libkf5plasmaquick5
-# # 	libkf5plasma5
-# # 	libkf5quickaddons5
-# # 	libkf5service-bin
-# # 	libkf5service-data
-# # 	libkf5service5
-# # 	libkf5waylandclient5
-# # 	libkf5windowsystem5
-# # 	libkf5xmlgui-bin
-# # 	libkf5xmlgui-data
-# # 	libkf5xmlgui5
-# # '
+# UPDT_KF5_LIBS='
+# 	libkf5activities5
+#	libkf5archive5
+# 	libkf5config-data
+# 	libkf5configcore5
+# 	libkf5configgui5
+# 	libkf5coreaddons-data
+# 	libkf5coreaddons5
+# 	libkf5crash5
+# 	libkf5dbusaddons-data
+# 	libkf5dbusaddons5
+# 	libkf5declarative-data
+# 	libkf5declarative5
+# 	libkf5globalaccel-bin
+# 	libkf5globalaccel-data
+# 	libkf5globalaccel5
+# 	libkf5guiaddons5
+# 	libkf5i18n-data
+# 	libkf5i18n5
+# 	libkf5iconthemes-data
+# 	libkf5iconthemes5
+# 	libkf5newstuff-data
+# 	libkf5newstuff5
+# 	libkf5newstuffcore5
+# 	libkf5notifications-data
+# 	libkf5notifications5
+# 	libkf5package-data
+# 	libkf5package5
+# 	libkf5plasmaquick5
+# 	libkf5plasma5
+# 	libkf5quickaddons5
+# 	libkf5service-bin
+# 	libkf5service-data
+# 	libkf5service5
+# 	libkf5waylandclient5
+# 	libkf5windowsystem5
+# 	libkf5xmlgui-bin
+# 	libkf5xmlgui-data
+# 	libkf5xmlgui5
+# '
 
 # UPDT_MISC_LIBS='
 # 	libpolkit-qt5-1-1
@@ -463,9 +460,6 @@ rm -r \
 puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
-wget -qO /Applications/latte-dock https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/latte-dock-0.9.11-x86_64.AppImage
-chmod +x /Applications/latte-dock
-rm /usr/bin/latte-dock 
 
 
 #	Implement a new FHS.
