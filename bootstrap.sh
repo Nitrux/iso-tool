@@ -326,9 +326,13 @@ UPDT_KF5_LIBS='
 	libkf5xmlgui5
 '
 
+UPDT_QT_LIBS='
+	libqt5core5a
+'
+
 hold $HOLD_KDE_PKGS
 update
-only_upgrade $UPDT_KDE_PKGS
+only_upgrade $UPDT_KDE_PKGS $UPDT_QT_LIBS
 fix_install
 
 
