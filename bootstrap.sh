@@ -36,9 +36,9 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
+	debconf
 	dhcpcd5
 	gnupg2
-	debconf
 '
 
 PRE_BUILD_PKGS='
@@ -172,7 +172,7 @@ DEVUAN_POLKIT_PKGS='
 install -t beowulf $DEVUAN_POLKIT_PKGS
 
 
-# Add NetworkManager and Udisks2 from Devuan.
+#	Add NetworkManager and Udisks2 from Devuan.
 
 DEVUAN_NETWORKMANAGER_PKGS='
 	init-system-helpers
@@ -328,7 +328,7 @@ UPDT_KF5_LIBS='
 
 hold $HOLD_KDE_PKGS
 update
-only_upgrade $UPDT_KDE_PKGS $UPDT_KF5_LIBS
+only_upgrade $UPDT_KDE_PKGS
 fix_install
 
 
@@ -463,6 +463,10 @@ rm -r \
 puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
+
+wget -qO /Applications/latte-dock https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/latte-dock-0.9.11-x86_64.AppImage
+chmod +x /Applications/latte-dock
+rm /usr/bin/latte-dock 
 
 
 #	Implement a new FHS.
