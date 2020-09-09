@@ -156,9 +156,22 @@ fix_install
 hold $ADD_SYSTEMCTL_PKG
 
 
-#	Use PolicyKit packages from Devuan.
+#	Add PolicyKit packages from Devuan.
 
 puts "ADDING POLICYKIT."
+
+DEVUAN_POLKIT_PKGS='
+	libpolkit-agent-1-0
+	libpolkit-backend-1-0
+	libpolkit-backend-elogind-1-0
+	libpolkit-gobject-1-0
+	libpolkit-gobject-elogind-1-0
+'
+
+install -t beowulf $DEVUAN_POLKIT_PKGS
+
+
+# Add NetworkManager and Udisks2 from Devuan.
 
 DEVUAN_NETWORKMANAGER_PKGS='
 	init-system-helpers
@@ -171,16 +184,7 @@ DEVUAN_UDISKS2_PKGS='
 	udisks2
 '
 
-DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0/beowulf
-	libpolkit-backend-1-0/beowulf
-	libpolkit-backend-elogind-1-0/beowulf
-	libpolkit-gobject-1-0/beowulf
-	libpolkit-gobject-elogind-1-0/beowulf
-'
-
 install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
-install_downgrades $DEVUAN_POLKIT_PKGS
 
 
 #	Add OpenRC as init.
@@ -225,7 +229,7 @@ PLYMOUTH_XENIAL_PKGS='
 	plymouth/xenial-updates
 	plymouth-themes/xenial-updates
 	plymouth-label/xenial-updates
-	ttf-ubuntu-font-family
+	libplymouth4/xenial-updates
 '
 
 DEVUAN_PULSE_PKGS='
