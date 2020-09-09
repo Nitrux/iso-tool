@@ -326,13 +326,9 @@ hold $HOLD_MISC_PKGS
 # 	libkf5xmlgui5
 # '
 
-# UPDT_MISC_LIBS='
-# 	libpolkit-qt5-1-1
-# '
-
 # hold $HOLD_KDE_PKGS
 # update
-# only_upgrade $UPDT_KDE_PKGS $UPDT_MISC_LIBS
+# only_upgrade $UPDT_KDE_PKGS $UPDT_KF5_LIBS
 # fix_install
 
 
