@@ -48,6 +48,8 @@ PRE_BUILD_PKGS='
 	cups-daemon
 	dictionaries-common
 	efibootmgr
+	language-pack-en
+	language-pack-es
 	libpam-runtime
 	os-prober
 	rng-tools
@@ -57,8 +59,6 @@ PRE_BUILD_PKGS='
 	systemd-sysv
 	ufw
 	user-setup
-	language-pack-en
-	language-pack-es
 '
 
 update
