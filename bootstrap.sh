@@ -327,6 +327,7 @@ UPDT_KF5_LIBS='
 '
 
 UPDT_QT_LIBS='
+	libqt5core5a
 	libpolkit-qt5-1-1
 '
 
