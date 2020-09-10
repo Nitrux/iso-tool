@@ -249,7 +249,6 @@ MISC_KDE_PKGS='
 '
 
 NX_DESKTOP_PKGS='
-	latte-dock
 	nx-desktop
 '
 
@@ -332,7 +331,7 @@ UPDT_QT_LIBS='
 
 hold $HOLD_KDE_PKGS
 update
-only_upgrade $UPDT_KDE_PKGS
+only_upgrade
 fix_install
 
 
@@ -468,9 +467,7 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-wget -qO /Applications/latte-dock https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/bin/latte-dock-0.9.11-x86_64.AppImage
-chmod +x /Applications/latte-dock
-rm /usr/bin/latte-dock 
+rm -r /home/travis
 
 
 #	Implement a new FHS.
