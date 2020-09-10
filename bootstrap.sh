@@ -327,12 +327,12 @@ UPDT_KF5_LIBS='
 '
 
 UPDT_QT_LIBS='
-	libqt5core5a
+	libpolkit-qt5-1-1
 '
 
 hold $HOLD_KDE_PKGS
 update
-only_upgrade $UPDT_KDE_PKGS
+only_upgrade $UPDT_KDE_PKGS $UPDT_QT_LIBS
 fix_install
 
 
@@ -549,6 +549,6 @@ ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlev
 stat /sbin/init
 lsinitramfs -l /boot/initrd.img* | grep vfio
 cat /etc/casper.conf
-
+ll /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
 
 puts "EXITING BOOTSTRAP."
