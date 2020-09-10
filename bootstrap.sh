@@ -543,12 +543,13 @@ puts "REMOVING DPKG."
 #	Check that init system is not systemd.
 #	Check if VFIO module is included in the initramfs.
 #	Check existence and contents of casper.conf
+#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 
 ls -l /boot
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
 lsinitramfs -l /boot/initrd.img* | grep vfio
 cat /etc/casper.conf
-ll /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
+ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
 
 puts "EXITING BOOTSTRAP."
