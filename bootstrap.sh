@@ -245,6 +245,7 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
+	latte-dock
 	plasma-pa=4:5.17.5-2
 '
 
@@ -331,7 +332,7 @@ UPDT_QT_LIBS='
 
 hold $HOLD_KDE_PKGS
 update
-only_upgrade
+only_upgrade $UPDT_KDE_PKGS
 fix_install
 
 
@@ -467,7 +468,9 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-rm -r /home/travis
+rm -r \
+	/home/travis \
+	/usr/bin/latte-dock
 
 
 #	Implement a new FHS.
