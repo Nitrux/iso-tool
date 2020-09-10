@@ -332,7 +332,7 @@ UPDT_QT_LIBS='
 
 hold $HOLD_KDE_PKGS
 update
-only_upgrade $UPDT_KDE_PKGS $UPDT_QT_LIBS
+only_upgrade $UPDT_KDE_PKGS
 fix_install
 
 
