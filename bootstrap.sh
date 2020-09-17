@@ -262,77 +262,77 @@ install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_
 hold $HOLD_MISC_PKGS
 
 
-#	Upgrade KF5 libs for Latte Dock.
+# #	Upgrade KF5 libs for Latte Dock.
 
-puts "UPGRADING KDE PACKAGES."
+# puts "UPGRADING KDE PACKAGES."
 
-cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
+# cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 
-HOLD_KDE_PKGS='
-	kwin-addons
-	kwin-common
-	kwin-data
-	kwin-x11
-	libkwin4-effect-builtins1
-	libkwineffects12
-	libkwinglutils12
-	libkwinxrenderutils12
-	qml-module-org-kde-kwindowsystem
-'
+# HOLD_KDE_PKGS='
+# 	kwin-addons
+# 	kwin-common
+# 	kwin-data
+# 	kwin-x11
+# 	libkwin4-effect-builtins1
+# 	libkwineffects12
+# 	libkwinglutils12
+# 	libkwinxrenderutils12
+# 	qml-module-org-kde-kwindowsystem
+# '
 
-UPDT_KDE_PKGS='
-	latte-dock
-'
+# UPDT_KDE_PKGS='
+# 	latte-dock
+# '
 
-UPDT_KF5_LIBS='
-	libkf5activities5
-	libkf5archive5
-	libkf5config-data
-	libkf5configcore5
-	libkf5configgui5
-	libkf5coreaddons-data
-	libkf5coreaddons5
-	libkf5crash5
-	libkf5dbusaddons-data
-	libkf5dbusaddons5
-	libkf5declarative-data
-	libkf5declarative5
-	libkf5globalaccel-bin
-	libkf5globalaccel-data
-	libkf5globalaccel5
-	libkf5guiaddons5
-	libkf5i18n-data
-	libkf5i18n5
-	libkf5iconthemes-data
-	libkf5iconthemes5
-	libkf5newstuff-data
-	libkf5newstuff5
-	libkf5newstuffcore5
-	libkf5notifications-data
-	libkf5notifications5
-	libkf5package-data
-	libkf5package5
-	libkf5plasmaquick5
-	libkf5plasma5
-	libkf5quickaddons5
-	libkf5service-bin
-	libkf5service-data
-	libkf5service5
-	libkf5waylandclient5
-	libkf5windowsystem5
-	libkf5xmlgui-bin
-	libkf5xmlgui-data
-	libkf5xmlgui5
-'
+# UPDT_KF5_LIBS='
+# 	libkf5activities5
+# 	libkf5archive5
+# 	libkf5config-data
+# 	libkf5configcore5
+# 	libkf5configgui5
+# 	libkf5coreaddons-data
+# 	libkf5coreaddons5
+# 	libkf5crash5
+# 	libkf5dbusaddons-data
+# 	libkf5dbusaddons5
+# 	libkf5declarative-data
+# 	libkf5declarative5
+# 	libkf5globalaccel-bin
+# 	libkf5globalaccel-data
+# 	libkf5globalaccel5
+# 	libkf5guiaddons5
+# 	libkf5i18n-data
+# 	libkf5i18n5
+# 	libkf5iconthemes-data
+# 	libkf5iconthemes5
+# 	libkf5newstuff-data
+# 	libkf5newstuff5
+# 	libkf5newstuffcore5
+# 	libkf5notifications-data
+# 	libkf5notifications5
+# 	libkf5package-data
+# 	libkf5package5
+# 	libkf5plasmaquick5
+# 	libkf5plasma5
+# 	libkf5quickaddons5
+# 	libkf5service-bin
+# 	libkf5service-data
+# 	libkf5service5
+# 	libkf5waylandclient5
+# 	libkf5windowsystem5
+# 	libkf5xmlgui-bin
+# 	libkf5xmlgui-data
+# 	libkf5xmlgui5
+# '
 
-UPDT_QT_LIBS='
-	libpolkit-qt5-1-1
-'
+# UPDT_QT_LIBS='
+# 	libpolkit-qt5-1-1
+# '
 
-hold $HOLD_KDE_PKGS
-update
-only_upgrade $UPDT_KDE_PKGS $UPDT_QT_LIBS
-fix_install
+# hold $HOLD_KDE_PKGS
+# update
+# only_upgrade $UPDT_KDE_PKGS $UPDT_QT_LIBS
+# fix_install
 
 
 #	Upgrade, downgrade and install misc. packages.
