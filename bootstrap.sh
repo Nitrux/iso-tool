@@ -146,7 +146,7 @@ REMOVE_SYSTEMD_PKGS='
 '
 
 ADD_SYSTEMCTL_PKG='
-	systemctl/focal
+	systemctl
 '
 
 install_downgrades $DEVUAN_ELOGIND_PKGS
@@ -258,8 +258,7 @@ HOLD_MISC_PKGS='
 	ssl-cert
 '
 
-install_downgrades $LIBPNG12_PKG
-install_downgrades $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
+install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
 hold $HOLD_MISC_PKGS
 
 
@@ -327,13 +326,12 @@ UPDT_KF5_LIBS='
 '
 
 UPDT_QT_LIBS='
-	libqt5core5a
 	libpolkit-qt5-1-1
 '
 
 hold $HOLD_KDE_PKGS
 update
-only_upgrade $UPDT_KDE_PKGS
+only_upgrade $UPDT_KDE_PKGS $UPDT_QT_LIBS
 fix_install
 
 
@@ -424,14 +422,49 @@ clean_all
 #  	/tmp/mc
 
 
-#	Add MAUI Appimages.
+# #	Add MAUI Appimages.
 
-puts "ADDING MAUI APPS (NIGHTLY/CHERRYPICK_DATE)."
+# puts "ADDING MAUI APPS (NIGHTLY/CHERRYPICK_DATE)."
+
+# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+# chmod +x /tmp/mc
+# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+# _latest=$(/tmp/mc cat nx/maui/nightly/WORKING)
+# mkdir maui_pkgs
+
+# (
+# 	cd maui_pkgs
+
+# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+
+# 	for i in $_packages; do
+# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+# 	done
+
+# 	mv index-*amd64*.AppImage /Applications/index
+# 	mv buho-*amd64*.AppImage /Applications/buho
+# 	mv nota-*amd64*.AppImage /Applications/nota
+# 	mv vvave-*amd64*.AppImage /Applications/vvave
+# 	mv station-*amd64*.AppImage /Applications/station
+# 	mv pix-*amd64*.AppImage /Applications/pix
+
+# 	chmod +x /Applications/*
+
+# 	ls -l /Applications
+# )
+
+# /tmp/mc config host rm nx
+
+# rm -r \
+# 	maui_pkgs \
+# 	/tmp/mc
+
+puts "ADDING MAUI APPS (NIGHTLY)."
 
 wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
 chmod +x /tmp/mc
 /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-_latest=$(/tmp/mc cat nx/maui/nightly/WORKING)
+_latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
 mkdir maui_pkgs
 
 (
