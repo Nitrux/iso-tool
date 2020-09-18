@@ -262,7 +262,6 @@ install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_
 hold $HOLD_MISC_PKGS
 
 
-# 	libkwin4-effect-builtins1
 #	Upgrade, downgrade and install misc. packages.
 
 cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
