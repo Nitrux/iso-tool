@@ -245,7 +245,6 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	latte-dock
 	plasma-pa=4:5.17.5-2
 '
 
@@ -431,6 +430,14 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 rm -r \
 	/home/travis
+
+axel -a -q -o /Applications https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/split/bin/latte-dock/xaa
+axel -a -q -o /Applications https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/split/bin/latte-dock/xab
+
+cat /Applications/xa* > latte-dock
+rm /Applications/xa*
+
+chmod +x /Applications/latte-dock
 
 
 #	Implement a new FHS.
