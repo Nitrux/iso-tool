@@ -7,20 +7,20 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-update () { apt -qq update; }
+add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+autoremove () { apt -yy autoremove $@; }
+clean_all () { apt clean && apt autoclean; }
+dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+fix_install () { apt -yy --fix-broken install $@; }
+hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
-upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 purge () { apt -yy purge --remove $@; }
-autoremove () { apt -yy autoremove $@; }
-hold () { apt-mark hold $@; }
 unhold () { apt-mark unhold $@; }
-clean_all () { apt clean && apt autoclean; }
-fix_install () { apt -yy --fix-broken install $@; }
-add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
-dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+update () { apt -qq update; }
+upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
 puts "STARTING BOOTSTRAP."
@@ -278,7 +278,6 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	nx-desktop-apps-legacy
 '
 
 NX_MISC_PKGS='
@@ -413,7 +412,6 @@ ln -svf /boot/vmlinuz-5.6* /vmlinuz
 puts "UPDATING THE INITRAMFS."
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
-# cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 update-initramfs -u
 
