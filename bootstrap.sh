@@ -181,7 +181,7 @@ DEVUAN_POLKIT_PKGS='
 	policykit-1
 '
 
-install -t beowulf $DEVUAN_POLKIT_PKGS
+install_downgrades -t beowulf $DEVUAN_POLKIT_PKGS
 
 
 #	Add NetworkManager and Udisks2 from Devuan.
