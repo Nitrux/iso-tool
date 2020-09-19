@@ -263,7 +263,7 @@ MISC_KDE_PKGS='
 	libkf5itemmodels5
 	libkf5xmlgui-data
 	libkf5xmlgui5
-	libqt5webkit5
+	libqt5webkit5/focal
 	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
 	plasma-discover-common=5.18.5-0ubuntu0.1
 	plasma-discover=5.18.5-0ubuntu0.1
