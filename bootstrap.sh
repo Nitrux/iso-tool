@@ -177,6 +177,8 @@ DEVUAN_POLKIT_PKGS='
 	libpolkit-backend-elogind-1-0
 	libpolkit-gobject-1-0
 	libpolkit-gobject-elogind-1-0
+	libpolkit-qt5-1-1
+	policykit-1
 '
 
 install -t beowulf $DEVUAN_POLKIT_PKGS
