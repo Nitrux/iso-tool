@@ -12,6 +12,7 @@ install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 purge () { apt -yy purge --remove $@; }
 autoremove () { apt -yy autoremove $@; }
 hold () { apt-mark hold $@; }
@@ -37,9 +38,17 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
-	debconf
 	dhcpcd5
 	gnupg2
+	language-pack-en
+	language-pack-en-base
+	libarchive13
+	localechooser-data
+	locales
+	systemd
+	user-setup
+	wget
+	xz-utils
 '
 
 PRE_BUILD_PKGS='
@@ -47,7 +56,6 @@ PRE_BUILD_PKGS='
 	bluez
 	btrfs-progs
 	cgroupfs-mount
-	cups-daemon
 	dictionaries-common
 	efibootmgr
 	grub-common
@@ -56,20 +64,15 @@ PRE_BUILD_PKGS='
 	grub-efi-amd64-signed
 	grub-pc-bin
 	grub2-common
-	language-pack-en
-	language-pack-es
 	libpam-runtime
 	linux-base
-	os-prober
+	locales-all
 	rng-tools
 	shim-signed
 	systemd-sysv
 	squashfs-tools
 	sudo
-	systemd
-	systemd-sysv
 	ufw
-	user-setup
 '
 
 update
@@ -87,7 +90,7 @@ install $BASIC_PKGS $PRE_BUILD_PKGS
 
 puts "ADDING REPOSITORY KEYS."
 
- add_keys \
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
 	55751E5D \
 	1B69B2DA \
 	541922FB \
@@ -96,6 +99,7 @@ puts "ADDING REPOSITORY KEYS."
 	3B4FE6ACC0B21F32 \
 	871920D1991BC93C \
 	2836CB0A8AC93F7A > /dev/null
+
 
 
 #	Copy sources.list files.
@@ -136,7 +140,7 @@ INITRAMFS_PKGS='
 	initramfs-tools-bin
 '
 
-install -t bionic $CASPER_PKGS
+install -t bionic-updates $CASPER_PKGS
 hold $INITRAMFS_PKGS
 
 
@@ -145,8 +149,18 @@ hold $INITRAMFS_PKGS
 puts "ADDING ELOGIND."
 
 DEVUAN_ELOGIND_PKGS='
+	bsdutils
 	elogind
 	libelogind0
+	libprocps7
+	util-linux
+	uuid-runtime
+'
+
+UPDT_APT_PKGS='
+	apt
+	apt-transport-https
+	apt-utils
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -159,15 +173,15 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
-install_downgrades $DEVUAN_ELOGIND_PKGS
+install_downgrades $DEVUAN_ELOGIND_PKGS $UPDT_APT_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
-install $ADD_SYSTEMCTL_PKG
+install -t focal $ADD_SYSTEMCTL_PKG
 fix_install
 hold $ADD_SYSTEMCTL_PKG
 
 
-#	Add PolicyKit packages from Devuan.
+#	Use PolicyKit packages from Devuan.
 
 puts "ADDING POLICYKIT."
 
@@ -181,23 +195,14 @@ DEVUAN_POLKIT_PKGS='
 	policykit-1=0.105-25+devuan8
 '
 
-install_downgrades $DEVUAN_POLKIT_PKGS
-
-
-#	Add NetworkManager and Udisks2 from Devuan.
-
-DEVUAN_NETWORKMANAGER_PKGS='
+DEVUAN_NM_UD2='
 	init-system-helpers
 	libnm0
-	network-manager
-'
-
-DEVUAN_UDISKS2_PKGS='
 	libudisks2-0
+	network-manager
 	udisks2
 '
-
-install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
+install_downgrades $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS
 
 
 #	Add OpenRC as init.
@@ -230,7 +235,7 @@ NITRUX_BF_PKG='
 	base-files=11.1.6+nitrux-legacy
 '
 
-install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
+install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG
 
 
 #	Add NX Desktop metapackage.
@@ -238,14 +243,15 @@ install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
 puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
-	libpng12-0/nitrux
+	libpng12-0
 '
 
-PLYMOUTH_XENIAL_PKGS='
-	plymouth/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth-label/xenial-updates
-	libplymouth4/xenial-updates
+XENIAL_PACKAGES='
+	plymouth=0.9.2-3ubuntu13.5
+	plymouth-label=0.9.2-3ubuntu13.5
+	plymouth-themes=0.9.2-3ubuntu13.5
+	libplymouth4=0.9.2-3ubuntu13.5
+	ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
@@ -259,11 +265,10 @@ DEVUAN_PULSE_PKGS='
 
 MISC_KDE_PKGS='
 	bluedevil
-	latte-dock
 	libkf5itemmodels5
 	libkf5xmlgui-data
 	libkf5xmlgui5
-	libqt5webkit5/focal
+	libqt5webkit5
 	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
 	plasma-discover-common=5.18.5-0ubuntu0.1
 	plasma-discover=5.18.5-0ubuntu0.1
@@ -271,9 +276,13 @@ MISC_KDE_PKGS='
 	xdg-desktop-portal-kde
 '
 
-NX_DESKTOP_PKGS='
+NX_DESKTOP_PKG='
 	nx-desktop-legacy
 	nx-desktop-apps-legacy
+'
+
+NX_MISC_PKGS='
+	latte-dock
 '
 
 CALAMARES_PKGS='
@@ -286,7 +295,8 @@ HOLD_MISC_PKGS='
 	ssl-cert
 '
 
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS $CALAMARES_PKGS
+install_downgrades -t nitrux $LIBPNG12_PKG
+install_downgrades $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 
 
@@ -302,13 +312,21 @@ UPDATE_MISC_PKGS='
 '
 
 DOWNGRADE_MISC_PKGS='
-	bluez/ceres
+	bluez=5.50-1.2~deb10u1
+	initramfs-tools-bin=0.137ubuntu12
+	initramfs-tools-core=0.137ubuntu12
+	initramfs-tools=0.137ubuntu12
+	libc-bin=2.31-0ubuntu9
+	libc6-dev=2.31-0ubuntu9
+	libc-dev-bin=2.31-0ubuntu9
+	libc6=2.31-0ubuntu9
+	locales=2.31-0ubuntu9
+	sudo=1.9.1-1ubuntu1
 '
 
 update
-only_upgrade $UPGRADE_MISC_PKGS
+only_upgrade $UPDATE_MISC_PKGS
 install_downgrades_hold $DOWNGRADE_MISC_PKGS
-install $INSTALL_MISC_PKGS
 
 
 #	Add OpenRC configuration.
@@ -350,6 +368,7 @@ NX_REPO_PKG='
 
 install $NX_REPO_PKG
 
+
 #	Add live user.
 
 puts "ADDING LIVE USER."
@@ -360,7 +379,7 @@ NX_LIVE_USER='
 
 install $NX_LIVE_USER
 autoremove
-install_downgrades
+upgrade_downgrades
 autoremove
 unhold $ADD_SYSTEMCTL_PKG
 clean_all
@@ -394,6 +413,7 @@ ln -svf /boot/vmlinuz-5.6* /vmlinuz
 puts "UPDATING THE INITRAMFS."
 
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
+# cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 update-initramfs -u
 
@@ -414,5 +434,6 @@ ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlev
 stat /sbin/init
 cat /etc/casper.conf /etc/default/grub
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
+
 
 puts "EXITING BOOTSTRAP."
