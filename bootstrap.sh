@@ -172,16 +172,16 @@ hold $ADD_SYSTEMCTL_PKG
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0
-	libpolkit-backend-1-0
-	libpolkit-backend-elogind-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
-	libpolkit-qt5-1-1
-	policykit-1
+	libpolkit-agent-1-0=0.105-25+devuan8
+	libpolkit-backend-1-0=0.105-25+devuan8
+	libpolkit-backend-elogind-1-0=0.105-25+devuan8
+	libpolkit-gobject-1-0=0.105-25+devuan8
+	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
+	libpolkit-qt5-1-1=0.113.0-1
+	policykit-1=0.105-25+devuan8
 '
 
-install_downgrades -t beowulf $DEVUAN_POLKIT_PKGS
+install_downgrades $DEVUAN_POLKIT_PKGS
 
 
 #	Add NetworkManager and Udisks2 from Devuan.
