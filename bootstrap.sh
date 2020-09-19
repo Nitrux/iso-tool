@@ -347,7 +347,6 @@ rm /etc/apt/sources.list.d/ubuntu-focal-repo.list \
 	/etc/apt/sources.list.d/ubuntu-xenial-repo.list \
 	/etc/apt/sources.list.d/ubuntu-groovy-repo.list \
 	/etc/apt/sources.list.d/ubuntu-bionic-repo.list \
-	/etc/apt/sources.list.d/neon-unstable-repo.list \
 	/etc/apt/sources.list.d/neon-user-repo.list \
 	/etc/apt/sources.list.d/devuan-beowulf-repo.list \
 	/etc/apt/sources.list.d/devuan-ceres-repo.list \
