@@ -379,9 +379,8 @@ apt -qq update
 
 puts "ADDING MISC. FIXES."
 
-cp /configs/files/grub /etc/default/grub
-
-/bin/cp /configs/files/casper.conf /etc/
+cat /configs/files/grub > /etc/default/grub
+cat /configs/files/casper.conf > /etc/casper.conf
 
 ln -svf /boot/initrd.img-5.6* /initrd.img
 ln -svf /boot/vmlinuz-5.6* /vmlinuz
@@ -411,7 +410,7 @@ update-initramfs -u
 ls -l /boot
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
-cat /etc/casper.conf
+cat /etc/casper.conf /etc/default/grub
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
 
 puts "EXITING BOOTSTRAP."
