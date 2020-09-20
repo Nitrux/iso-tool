@@ -433,10 +433,8 @@ rm -r \
 
 axel -a -q -o /Applications https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/split/bin/latte-dock/xaa
 axel -a -q -o /Applications https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/split/bin/latte-dock/xab
-
 cat /Applications/xa* > /Applications/latte-dock
 rm /Applications/xa*
-
 chmod +x /Applications/latte-dock
 
 
