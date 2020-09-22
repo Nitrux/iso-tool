@@ -277,6 +277,7 @@ DOWNGRADE_MISC_PKGS='
 
 INSTALL_MISC_PKGS='
 	xterm=353-1ubuntu1
+	nvidia-drivers-450/groovy
 '
 
 update
