@@ -216,7 +216,7 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
-	nvidia-drivers-440
+	nvidia-driver-440
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
