@@ -216,7 +216,7 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
-	nvidia-driver-440/focal
+	nvidia-driver-440=440.100-0ubuntu0.20.04.1
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
