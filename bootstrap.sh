@@ -219,7 +219,7 @@ NVIDIA_DRV_PKGS='
 	nvidia-drivers-440
 '
 
-install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
+install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
