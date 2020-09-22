@@ -96,7 +96,7 @@ cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
 cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
 # cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
-cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
+# cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
@@ -215,6 +215,10 @@ NITRUX_BASE_PKGS='
 	nitrux-standard
 '
 
+NVIDIA_DRV_PKGS='
+	nvidia-drivers-440
+'
+
 install $NITRUX_BASE_PKGS $NITRUX_BF_PKG
 
 
@@ -277,7 +281,6 @@ DOWNGRADE_MISC_PKGS='
 
 INSTALL_MISC_PKGS='
 	xterm=353-1ubuntu1
-	nvidia-drivers-450/groovy
 '
 
 update
