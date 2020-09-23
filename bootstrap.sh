@@ -216,12 +216,7 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
-	libnvidia-compute-450
-	libnvidia-decode-450
-	libnvidia-encode-450
-	libnvidia-fbc1-450
-	libnvidia-gl-450
-	libnvidia-ifr1-450
+	libxnvctrl0
 	nvidia-driver-450
 	nvidia-prime
 	nvidia-settings
