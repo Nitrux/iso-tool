@@ -216,21 +216,15 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
-	libnvidia-cfg1-440=440.100-0ubuntu0.20.04.1
-	libnvidia-compute-440=440.100-0ubuntu0.20.04.1
-	libnvidia-decode-440=440.100-0ubuntu0.20.04.1
-	libnvidia-encode-440=440.100-0ubuntu0.20.04.1
-	libnvidia-extra-440=440.100-0ubuntu0.20.04.1
-	libnvidia-fbc1-440=440.100-0ubuntu0.20.04.1
-	libnvidia-gl-440=440.100-0ubuntu0.20.04.1
-	libnvidia-ifr1-440=440.100-0ubuntu0.20.04.1
-	nvidia-compute-utils-440=440.100-0ubuntu0.20.04.1
-	nvidia-dkms-440=440.100-0ubuntu0.20.04.1
-	nvidia-driver-440=440.100-0ubuntu0.20.04.1
-	nvidia-kernel-common-440=440.100-0ubuntu0.20.04.1
-	nvidia-kernel-source-440=440.100-0ubuntu0.20.04.1
-	nvidia-utils-440=440.100-0ubuntu0.20.04.1
-	xserver-xorg-video-nvidia-440=440.100-0ubuntu0.20.04.1
+	libnvidia-compute-450
+	libnvidia-decode-450
+	libnvidia-encode-450
+	libnvidia-fbc1-450
+	libnvidia-gl-450
+	libnvidia-ifr1-450
+	nvidia-driver-450
+	nvidia-prime
+	nvidia-settings
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
