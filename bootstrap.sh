@@ -226,16 +226,18 @@ install_downgrades $DEVUAN_INIT_PKGS
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PACKAGES='
+	base-files=11.1.6+nitrux-legacy
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
 
-NITRUX_BF_PKG='
-	base-files=11.1.6+nitrux-legacy
+NVIDIA_DRV_PKGS='
+	xserver-xorg-video-nouveau
+	nouveau-firmware
 '
 
-install $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG
+install $NITRUX_BASE_PACKAGES $NVIDIA_DRV_PKGS
 
 
 #	Add NX Desktop metapackage.
