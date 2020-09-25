@@ -424,7 +424,6 @@ update-initramfs -u
 #	Check contents of /boot.
 #	Check contents of OpenRC runlevels.
 #	Check that init system is not systemd.
-#	Check if VFIO module is included in the initramfs.
 #	Check existence and contents of casper.conf
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 
