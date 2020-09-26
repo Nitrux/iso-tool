@@ -110,7 +110,7 @@ cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
 cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
 # cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
-cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
+# cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
@@ -309,7 +309,6 @@ puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPDATE_MISC_PKGS='
 	linux-firmware
-	inkscape
 '
 
 DOWNGRADE_MISC_PKGS='
@@ -317,12 +316,6 @@ DOWNGRADE_MISC_PKGS='
 	initramfs-tools-bin=0.137ubuntu12
 	initramfs-tools-core=0.137ubuntu12
 	initramfs-tools=0.137ubuntu12
-	libc-bin=2.31-0ubuntu9
-	libc6-dev=2.31-0ubuntu9
-	libc-dev-bin=2.31-0ubuntu9
-	libc6=2.31-0ubuntu9
-	locales=2.31-0ubuntu9
-	sudo=1.9.1-1ubuntu1
 '
 
 update
