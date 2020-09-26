@@ -287,7 +287,7 @@ NX_MISC_PKGS='
 '
 
 CALAMARES_PKGS='
-	calamares-qml
+	calamares-qml=3.2.26.9
 	calamares-qml-settings-nitrux
 '
 
