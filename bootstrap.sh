@@ -54,7 +54,6 @@ PRE_BUILD_PKGS='
 	libpam-runtime
 	os-prober
 	rng-tools
-	screen-resolution-extra
 	squashfs-tools
 	sudo
 	systemd
@@ -220,7 +219,6 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-driver-450
 	nvidia-prime
-	nvidia-settings
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
@@ -438,12 +436,6 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 rm -r \
 	/home/travis
-
-axel -a -q -o /Applications https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/split/bin/latte-dock/xaa
-axel -a -q -o /Applications https://raw.githubusercontent.com/UriHerrera/storage/master/AppImages/split/bin/latte-dock/xab
-cat /Applications/xa* > /Applications/latte-dock
-rm /Applications/xa*
-chmod +x /Applications/latte-dock
 
 
 #	Implement a new FHS.
