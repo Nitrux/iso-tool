@@ -29,3 +29,7 @@ Pin-Priority: -1
 Package: libqt5webkit5
 Pin: version 5.212.0~alpha4-5
 Pin-Priority: -1
+
+Package: base-passwd
+Pin: version 3.5.48
+Pin-Priority: -1
