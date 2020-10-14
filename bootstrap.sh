@@ -294,6 +294,7 @@ CALAMARES_PKGS='
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
+	base-passwd
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
