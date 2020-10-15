@@ -18,6 +18,16 @@ XORRISO_PKGS='
 	xorriso
 '
 
+GRUB_PKGS='
+	grub-common
+	grub-efi-amd64
+	grub-efi-amd64-bin
+	grub-efi-amd64-signed
+	grub-pc-bin
+	grub2-common
+	shim-signed
+'
+
 apt -qq update
 apt -qq -yy install $XORRISO_PKGS $GRUB_PKGS --no-install-recommends
 pip3 install --upgrade python-gitlab
