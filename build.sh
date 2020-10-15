@@ -7,7 +7,7 @@ set -e
 
 #	Travis stuff.
 
-XORRISO_PACKAGES='
+XORRISO_PKGS='
 	libburn4
 	libgcc1
 	libisoburn1
@@ -19,7 +19,7 @@ XORRISO_PACKAGES='
 '
 
 apt -qq update
-apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends
+apt -qq -yy install $XORRISO_PKGS $GRUB_PKGS --no-install-recommends
 pip3 install --upgrade python-gitlab
 
 
