@@ -7,7 +7,7 @@ set -xe
 
 #	Travis stuff.
 
-XORRISO_PACKAGES='
+XORRISO_PKGS='
 	libburn4
 	libisoburn1
 	libisofs6
@@ -18,9 +18,19 @@ XORRISO_PACKAGES='
 	zsync
 '
 
+GRUB_PKGS='
+	grub-common
+	grub-efi-amd64
+	grub-efi-amd64-bin
+	grub-efi-amd64-signed
+	grub-pc-bin
+	grub2-common
+	shim-signed
+'
+
 apt -qq update
-apt -qq -yy install $XORRISO_PACKAGES --no-install-recommends &> /dev/null
-pip3 install --upgrade python-gitlab &> /dev/null
+apt -qq -yy install $XORRISO_PKGS $GRUB_PKGS --no-install-recommends
+pip3 install --upgrade python-gitlab
 
 
 #	base image URL.
