@@ -290,6 +290,7 @@ NX_MISC_PKGS='
 CALAMARES_PKGS='
 	calamares-qml
 	calamares-qml-settings-nitrux
+	libkpmcore9=4.1.0-0xneon+18.04+bionic+build15
 '
 
 HOLD_MISC_PKGS='
