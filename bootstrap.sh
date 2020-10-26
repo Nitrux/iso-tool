@@ -401,8 +401,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 rm /boot/vmlinuz /boot/initrd.img /boot/vmlinuz.old /boot/initrd.img.old
 
-ln -svf /vmlinuz /boot/vmlinuz-5.4.53-050453-generic
-ln -svf /initrd.img /boot/initrd.img-5.4.53-050453-generic
+ln -svf /boot/vmlinuz-5.4.53-050453-generic /vmlinuz
+ln -svf /boot/initrd.img-5.4.53-050453-generic /initrd.img
 
 
 #	Use LZ4 compression when creating the initramfs.
