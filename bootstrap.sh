@@ -54,6 +54,7 @@ PRE_BUILD_PKGS='
 	libpam-runtime
 	os-prober
 	rng-tools
+	screen-resolution-extra
 	squashfs-tools
 	sudo
 	systemd
