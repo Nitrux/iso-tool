@@ -219,6 +219,7 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-driver-450
 	nvidia-prime
+	nvidia-settings
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
