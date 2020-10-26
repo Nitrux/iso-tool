@@ -277,6 +277,7 @@ MISC_KDE_PKGS='
 	plasma-discover=5.18.5-0ubuntu0.1
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
+	partitionmanager=4.1.0-1+20.04+focal+build2
 '
 
 NX_DESKTOP_PKG='
@@ -290,13 +291,13 @@ NX_MISC_PKGS='
 CALAMARES_PKGS='
 	calamares-qml
 	calamares-qml-settings-nitrux
-	libkpmcore9=4.1.0-2+20.04+focal+build3
 '
 
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
 	base-passwd
+	partitionmanager
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
