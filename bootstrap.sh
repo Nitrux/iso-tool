@@ -272,9 +272,9 @@ MISC_KDE_PKGS='
 	libkf5xmlgui-data
 	libkf5xmlgui5
 	libqt5webkit5
-	plasma-discover-backend-flatpak=5.18.5-0ubuntu0.1
-	plasma-discover-common=5.18.5-0ubuntu0.1
-	plasma-discover=5.18.5-0ubuntu0.1
+	plasma-discover-backend-flatpak
+	plasma-discover-common
+	plasma-discover
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
 	partitionmanager=4.1.0-1+20.04+focal+build2
