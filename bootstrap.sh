@@ -225,7 +225,7 @@ install_downgrades $DEVUAN_INIT_PKGS
 
 puts "INSTALLING BASE SYSTEM."
 
-NITRUX_BASE_PACKAGES='
+NITRUX_BASE_PKGS='
 	base-files=11.1.7+nitrux-legacy
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
@@ -238,7 +238,7 @@ NVIDIA_DRV_PKGS='
 	nouveau-firmware
 '
 
-install $NITRUX_BASE_PACKAGES $NVIDIA_DRV_PKGS
+install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 
 
 #	Add NX Desktop metapackage.
@@ -249,7 +249,7 @@ LIBPNG12_PKG='
 	libpng12-0
 '
 
-XENIAL_PACKAGES='
+XENIAL_PKGS='
 	plymouth=0.9.2-3ubuntu13.5
 	plymouth-label=0.9.2-3ubuntu13.5
 	plymouth-themes=0.9.2-3ubuntu13.5
@@ -301,7 +301,7 @@ HOLD_MISC_PKGS='
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
-install_downgrades $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS
+install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 
 
@@ -369,11 +369,11 @@ install $NX_REPO_PKG
 
 puts "ADDING LIVE USER."
 
-NX_LIVE_USER='
+NX_LIVE_USER_PKG='
 	nitrux-live-user
 '
 
-install $NX_LIVE_USER
+install $NX_LIVE_USER_PKG
 autoremove
 upgrade_downgrades
 autoremove
@@ -399,9 +399,6 @@ puts "ADDING MISC. FIXES."
 cat /configs/files/grub > /etc/default/grub
 cat /configs/files/casper.conf > /etc/casper.conf
 
-ln -svf /boot/initrd.img-5.6* /initrd.img
-ln -svf /boot/vmlinuz-5.6* /vmlinuz
-
 
 #	Use LZ4 compression when creating the initramfs.
 #	Add fstab mount binds.
@@ -424,6 +421,7 @@ update-initramfs -u
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 
 ls -l /boot
+ls -l /vmlinuz /initrd.img
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
 cat /etc/casper.conf /etc/default/grub
