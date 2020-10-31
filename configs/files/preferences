@@ -33,3 +33,7 @@ Pin-Priority: -1
 Package: k3b
 Pin: release *
 Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
