@@ -296,7 +296,6 @@ HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
 	base-passwd
-	partitionmanager
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
