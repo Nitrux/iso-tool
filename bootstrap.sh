@@ -277,7 +277,6 @@ MISC_KDE_PKGS='
 	plasma-discover
 	plasma-pa=4:5.17.5-2
 	xdg-desktop-portal-kde
-	partitionmanager=4.1.0-1+20.04+focal+build2
 '
 
 NX_DESKTOP_PKG='
