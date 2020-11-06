@@ -1,5 +1,0 @@
-####################
-# Graphics Drivers #
-####################
-
-deb http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu focal main
