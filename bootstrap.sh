@@ -246,7 +246,7 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-
+	plasma-pa=4:5.19.5-3
 '
 
 NX_DESKTOP_PKGS='
