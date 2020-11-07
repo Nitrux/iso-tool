@@ -71,10 +71,8 @@ install $BASIC_PKGS $PRE_BUILD_PKGS
 #	Add key for Nitrux repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
-#	Add key for the Proprietary Graphics Drivers PPA.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
-#	Add key for Kubuntu Backports PPA.
 
 puts "ADDING REPOSITORY KEYS."
 
@@ -83,10 +81,8 @@ puts "ADDING REPOSITORY KEYS."
 	1B69B2DA \
 	541922FB \
 	BB23C00C61FC752C \
-	1118213C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C \
-	2836CB0A8AC93F7A > /dev/null
+	871920D1991BC93C > /dev/null
 
 
 #	Copy sources.list files.
@@ -250,7 +246,7 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.17.5-2
+
 '
 
 NX_DESKTOP_PKGS='
