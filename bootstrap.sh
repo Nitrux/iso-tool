@@ -83,10 +83,8 @@ install $BASIC_PKGS $PRE_BUILD_PKGS
 #	Add key for Nitrux repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
-#	Add key for the Proprietary Graphics Drivers PPA.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
-#	Add key for Kubuntu Backports PPA.
 
 puts "ADDING REPOSITORY KEYS."
 
@@ -95,11 +93,8 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
 	1B69B2DA \
 	541922FB \
 	BB23C00C61FC752C \
-	1118213C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C \
-	2836CB0A8AC93F7A > /dev/null
-
+	871920D1991BC93C > /dev/null
 
 
 #	Copy sources.list files.
@@ -109,13 +104,10 @@ puts "ADDING SOURCES FILES."
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
 cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
-# cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
-# cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
-# cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
 update
 
@@ -275,7 +267,7 @@ MISC_KDE_PKGS='
 	plasma-discover-backend-flatpak
 	plasma-discover-common
 	plasma-discover
-	plasma-pa=4:5.17.5-2
+	plasma-pa=4:5.19.5-3
 	xdg-desktop-portal-kde
 '
 
@@ -399,8 +391,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 rm /boot/vmlinuz /boot/initrd.img /boot/vmlinuz.old /boot/initrd.img.old
 
-ln -svf /boot/vmlinuz-5.4.53-050453-generic /vmlinuz
-ln -svf /boot/initrd.img-5.4.53-050453-generic /initrd.img
+ln -svf /boot/vmlinuz-5.4.75-050475-generic /vmlinuz
+ln -svf /boot/initrd.img-5.4.75-050475-generic /initrd.img
 
 
 #	Use LZ4 compression when creating the initramfs.
