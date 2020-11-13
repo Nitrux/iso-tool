@@ -260,7 +260,6 @@ DEVUAN_PULSE_PKGS='
 
 MISC_KDE_PKGS='
 	plasma-pa=4:5.19.5-3
-	xdg-desktop-portal-kde
 '
 
 NX_DESKTOP_PKG='
