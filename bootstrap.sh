@@ -259,14 +259,6 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	bluedevil
-	libkf5itemmodels5
-	libkf5xmlgui-data
-	libkf5xmlgui5
-	libqt5webkit5
-	plasma-discover-backend-flatpak
-	plasma-discover-common
-	plasma-discover
 	plasma-pa=4:5.19.5-3
 	xdg-desktop-portal-kde
 '
