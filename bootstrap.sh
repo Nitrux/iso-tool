@@ -354,11 +354,19 @@ NX_LIVE_USER_PKG='
 	nitrux-live-user
 '
 
+
+# Unhold misc. packages.
+
+UNHOLD_MISC_PKGS='
+	systemctl
+	base-passwd
+'
+
 install $NX_LIVE_USER_PKG
 autoremove
 upgrade_downgrades
 autoremove
-unhold $ADD_SYSTEMCTL_PKG
+unhold $UNHOLD_MISC_PKGS
 clean_all
 
 
@@ -387,7 +395,6 @@ ln -svf /boot/initrd.img-5.4.75-050475-generic /initrd.img
 
 
 #	Use LZ4 compression when creating the initramfs.
-#	Add fstab mount binds.
 
 puts "UPDATING THE INITRAMFS."
 
