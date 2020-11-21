@@ -275,6 +275,17 @@ CALAMARES_PKGS='
 	calamares-settings-nitrux
 '
 
+PYTHON_3_PKGS='
+	libpython3-stdlib
+	python3
+	python3-minimal
+	python3-six
+	python3-talloc
+	python3-ldb
+	samba-common
+	samba-libs
+'
+
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
@@ -282,6 +293,8 @@ HOLD_MISC_PKGS='
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
+install_downgrades -t focal $PYTHON_3_PKGS
+hold $PYTHON_3_PKGS
 install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 

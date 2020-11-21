@@ -37,35 +37,3 @@ Pin-Priority: -1
 Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
-
-Package: libpython3-stdlib
-Pin: release *
-Pin-Priority: -1
-
-Package: python3
-Pin: release *
-Pin-Priority: -1
-
-Package: python3-minimal
-Pin: release *
-Pin-Priority: -1
-
-Package: python3-six
-Pin: release *
-Pin-Priority: -1
-
-Package: python3-talloc
-Pin: release *
-Pin-Priority: -1
-
-Package: python3-ldb
-Pin: release *
-Pin-Priority: -1
-
-Package: samba-common
-Pin: release *
-Pin-Priority: -1
-
-Package: samba-libs
-Pin: release *
-Pin-Priority: -1
