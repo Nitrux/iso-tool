@@ -284,6 +284,7 @@ PYTHON_3_PKGS='
 	python3-ldb
 	samba-common
 	samba-libs
+	libtalloc2
 '
 
 HOLD_MISC_PKGS='
