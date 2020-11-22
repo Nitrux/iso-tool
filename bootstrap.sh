@@ -285,7 +285,7 @@ PYTHON_3_PKGS='
 	samba-common
 	samba-libs=2:4.11.6+dfsg-0ubuntu1.6
 	libtalloc2=2.3.0-3ubuntu1
-	libwbclient0=2.3.0-3ubuntu1
+	libwbclient0=2:4.11.6+dfsg-0ubuntu1.6
 '
 
 HOLD_MISC_PKGS='
