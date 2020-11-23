@@ -266,9 +266,6 @@ NX_DESKTOP_PKG='
 	nx-desktop-legacy
 '
 
-NX_MISC_PKGS='
-	latte-dock
-'
 
 CALAMARES_PKGS='
 	calamares
@@ -282,8 +279,7 @@ HOLD_MISC_PKGS='
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
-install_downgrades -t focal $PYTHON_3_PKGS
-install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS
+install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 
 
