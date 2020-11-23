@@ -275,19 +275,6 @@ CALAMARES_PKGS='
 	calamares-settings-nitrux
 '
 
-PYTHON_3_PKGS='	
-	python3-six
-	python3-talloc
-	python3-ldb
-	samba-common
-	samba-libs=2:4.11.6+dfsg-0ubuntu1.6
-	libtalloc2=2.3.0-3ubuntu1
-	libwbclient0=2:4.11.6+dfsg-0ubuntu1.6
-	libsmbclient=2:4.11.6+dfsg-0ubuntu1.6
-	kio-extras=20.08.3-0xneon+20.04+focal+build18
-	kio-extras-data=20.08.3-0xneon+20.04+focal+build18
-'
-
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
@@ -296,7 +283,6 @@ HOLD_MISC_PKGS='
 
 install_downgrades -t nitrux $LIBPNG12_PKG
 install_downgrades -t focal $PYTHON_3_PKGS
-hold $PYTHON_3_PKGS
 install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $NX_MISC_PKGS $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 
