@@ -275,10 +275,7 @@ CALAMARES_PKGS='
 	calamares-settings-nitrux
 '
 
-PYTHON_3_PKGS='
-	libpython3-stdlib
-	python3
-	python3-minimal
+PYTHON_3_PKGS='	
 	python3-six
 	python3-talloc
 	python3-ldb
@@ -287,6 +284,8 @@ PYTHON_3_PKGS='
 	libtalloc2=2.3.0-3ubuntu1
 	libwbclient0=2:4.11.6+dfsg-0ubuntu1.6
 	libsmbclient=2:4.11.6+dfsg-0ubuntu1.6
+	kio-extras=20.08.3-0xneon+20.04+focal+build18
+	kio-extras-data=20.08.3-0xneon+20.04+focal+build18
 '
 
 HOLD_MISC_PKGS='
