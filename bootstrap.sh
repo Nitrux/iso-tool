@@ -348,40 +348,40 @@ clean_all
 #  	maui_pkgs \
 #  	/tmp/mc
 
-puts "ADDING MAUI APPS (DEVEL)."
+# puts "ADDING MAUI APPS (DEVEL)."
 
-wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-chmod +x /tmp/mc
-/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-_latest=$(/tmp/mc cat nx/maui/devel/LATEST)
-mkdir maui_pkgs
+# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+# chmod +x /tmp/mc
+# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+# _latest=$(/tmp/mc cat nx/maui/devel/LATEST)
+# mkdir maui_pkgs
 
-(
-	cd maui_pkgs
+# (
+# 	cd maui_pkgs
 
-	_packages=$(/tmp/mc ls nx/maui/devel/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+# 	_packages=$(/tmp/mc ls nx/maui/devel/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
 
-	for i in $_packages; do
-		/tmp/mc cp nx/maui/devel/$_latest/$i .
-	done
+# 	for i in $_packages; do
+# 		/tmp/mc cp nx/maui/devel/$_latest/$i .
+# 	done
 
-	mv index-*amd64*.AppImage /Applications/index
-	mv buho-*amd64*.AppImage /Applications/buho
-	mv nota-*amd64*.AppImage /Applications/nota
-	mv vvave-*amd64*.AppImage /Applications/vvave
-	mv station-*amd64*.AppImage /Applications/station
-	mv pix-*amd64*.AppImage /Applications/pix
+# 	mv index-*amd64*.AppImage /Applications/index
+# 	mv buho-*amd64*.AppImage /Applications/buho
+# 	mv nota-*amd64*.AppImage /Applications/nota
+# 	mv vvave-*amd64*.AppImage /Applications/vvave
+# 	mv station-*amd64*.AppImage /Applications/station
+# 	mv pix-*amd64*.AppImage /Applications/pix
 
-	chmod +x /Applications/*
+# 	chmod +x /Applications/*
 
-	ls -l /Applications
-)
+# 	ls -l /Applications
+# )
 
-/tmp/mc config host rm nx
+# /tmp/mc config host rm nx
 
-rm -r \
-	maui_pkgs \
-	/tmp/mc
+# rm -r \
+# 	maui_pkgs \
+# 	/tmp/mc
 
 # #	Add MAUI Appimages.
 
@@ -420,40 +420,40 @@ rm -r \
 # 	maui_pkgs \
 # 	/tmp/mc
 
-# puts "ADDING MAUI APPS (NIGHTLY)."
+puts "ADDING MAUI APPS (NIGHTLY)."
 
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# _latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
-# mkdir maui_pkgs
+wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+chmod +x /tmp/mc
+/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+_latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
+mkdir maui_pkgs
 
-# (
-# 	cd maui_pkgs
+(
+	cd maui_pkgs
 
-# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
+	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
 
-# 	for i in $_packages; do
-# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
-# 	done
+	for i in $_packages; do
+		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+	done
 
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
+	mv index-*amd64*.AppImage /Applications/index
+	mv buho-*amd64*.AppImage /Applications/buho
+	mv nota-*amd64*.AppImage /Applications/nota
+	mv vvave-*amd64*.AppImage /Applications/vvave
+	mv station-*amd64*.AppImage /Applications/station
+	mv pix-*amd64*.AppImage /Applications/pix
 
-# 	chmod +x /Applications/*
+	chmod +x /Applications/*
 
-# 	ls -l /Applications
-# )
+	ls -l /Applications
+)
 
-# /tmp/mc config host rm nx
+/tmp/mc config host rm nx
 
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
+rm -r \
+	maui_pkgs \
+	/tmp/mc
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
