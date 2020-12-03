@@ -88,7 +88,7 @@ install $BASIC_PKGS $PRE_BUILD_PKGS
 
 puts "ADDING REPOSITORY KEYS."
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
+ add_keys \
 	55751E5D \
 	1B69B2DA \
 	541922FB \
