@@ -62,7 +62,7 @@ PRE_BUILD_PKGS='
 	linux-base
 	locales-all
 	rng-tools
-	shim-signed
+	screen-resolution-extra
 	systemd-sysv
 	squashfs-tools
 	sudo
