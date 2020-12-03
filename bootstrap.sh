@@ -7,18 +7,20 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-update () { apt -qq update; }
+add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+autoremove () { apt -yy autoremove $@; }
+clean_all () { apt clean && apt autoclean; }
+dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+fix_install () { apt -yy --fix-broken install $@; }
+hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
-autoremove () { apt -yy autoremove $@; }
-hold () { apt-mark hold $@; }
-clean_all () { apt clean && apt autoclean; }
-fix_install () { apt -yy --fix-broken install $@; }
-add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
-dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+unhold () { apt-mark unhold $@; }
+update () { apt -qq update; }
+upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
 puts "STARTING BOOTSTRAP."
@@ -36,9 +38,17 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
-	debconf
 	dhcpcd5
 	gnupg2
+	language-pack-en
+	language-pack-en-base
+	libarchive13
+	localechooser-data
+	locales
+	systemd
+	user-setup
+	wget
+	xz-utils
 '
 
 PRE_BUILD_PKGS='
@@ -46,21 +56,17 @@ PRE_BUILD_PKGS='
 	bluez
 	btrfs-progs
 	cgroupfs-mount
-	cups-daemon
 	dictionaries-common
 	efibootmgr
-	language-pack-en
-	language-pack-es
 	libpam-runtime
-	os-prober
+	linux-base
+	locales-all
 	rng-tools
-	screen-resolution-extra
+	shim-signed
+	systemd-sysv
 	squashfs-tools
 	sudo
-	systemd
-	systemd-sysv
 	ufw
-	user-setup
 '
 
 update
@@ -120,7 +126,7 @@ INITRAMFS_PKGS='
 	initramfs-tools-bin
 '
 
-install -t bionic $CASPER_PKGS
+install -t bionic-updates $CASPER_PKGS
 hold $INITRAMFS_PKGS
 
 
@@ -129,8 +135,18 @@ hold $INITRAMFS_PKGS
 puts "ADDING ELOGIND."
 
 DEVUAN_ELOGIND_PKGS='
+	bsdutils
 	elogind
 	libelogind0
+	libprocps7
+	util-linux
+	uuid-runtime
+'
+
+UPDT_APT_PKGS='
+	apt
+	apt-transport-https
+	apt-utils
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -143,43 +159,36 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
-install_downgrades $DEVUAN_ELOGIND_PKGS
+install_downgrades $DEVUAN_ELOGIND_PKGS $UPDT_APT_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
-install $ADD_SYSTEMCTL_PKG
+install -t focal $ADD_SYSTEMCTL_PKG
 fix_install
 hold $ADD_SYSTEMCTL_PKG
 
 
-#	Add PolicyKit packages from Devuan.
+#	Use PolicyKit packages from Devuan.
 
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0
-	libpolkit-backend-1-0
-	libpolkit-backend-elogind-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
+	libpolkit-agent-1-0=0.105-25+devuan8
+	libpolkit-backend-1-0=0.105-25+devuan8
+	libpolkit-backend-elogind-1-0=0.105-25+devuan8
+	libpolkit-gobject-1-0=0.105-25+devuan8
+	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
+	libpolkit-qt5-1-1=0.113.0-1
+	policykit-1=0.105-25+devuan8
 '
 
-install -t beowulf $DEVUAN_POLKIT_PKGS
-
-
-#	Add NetworkManager and Udisks2 from Devuan.
-
-DEVUAN_NETWORKMANAGER_PKGS='
+DEVUAN_NM_UD2='
 	init-system-helpers
 	libnm0
-	network-manager
-'
-
-DEVUAN_UDISKS2_PKGS='
 	libudisks2-0
+	network-manager
 	udisks2
 '
-
-install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
+install_downgrades $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS
 
 
 #	Add OpenRC as init.
@@ -226,14 +235,15 @@ install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
-	libpng12-0/nitrux
+	libpng12-0
 '
 
-PLYMOUTH_XENIAL_PKGS='
-	plymouth/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth-label/xenial-updates
-	libplymouth4/xenial-updates
+XENIAL_PKGS='
+	plymouth=0.9.2-3ubuntu13.5
+	plymouth-label=0.9.2-3ubuntu13.5
+	plymouth-themes=0.9.2-3ubuntu13.5
+	libplymouth4=0.9.2-3ubuntu13.5
+	ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
@@ -249,16 +259,24 @@ MISC_KDE_PKGS='
 	plasma-pa=4:5.19.5-3
 '
 
-NX_DESKTOP_PKGS='
-	nx-desktop
+NX_DESKTOP_PKG='
+	nx-desktop-legacy
+'
+
+
+CALAMARES_PKGS='
+	calamares
+	calamares-settings-nitrux
 '
 
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
+	base-passwd
 '
 
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKGS
+install_downgrades -t nitrux $LIBPNG12_PKG
+install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 
 
@@ -273,7 +291,10 @@ UPGRADE_MISC_PKGS='
 '
 
 DOWNGRADE_MISC_PKGS='
-	bluez/ceres
+	bluez=5.50-1.2~deb10u1
+	initramfs-tools-bin=0.137ubuntu12
+	initramfs-tools-core=0.137ubuntu12
+	initramfs-tools=0.137ubuntu12
 '
 
 INSTALL_MISC_PKGS='
@@ -296,16 +317,25 @@ OPENRC_CONFIG='
 
 install $OPENRC_CONFIG
 
+
 #	Add live user.
 
 puts "ADDING LIVE USER."
 
-NX_LIVE_USER='
+NX_LIVE_USER_PKG='
 	nitrux-live-user
 '
 
-install $NX_LIVE_USER
+# Unhold misc. packages.
+
+UNHOLD_MISC_PKGS='
+	systemctl
+	base-passwd
+'
+
+install $NX_LIVE_USER_PKG
 autoremove
+unhold $UNHOLD_MISC_PKGS
 clean_all
 
 
@@ -347,78 +377,6 @@ clean_all
 #  rm -r \
 #  	maui_pkgs \
 #  	/tmp/mc
-
-# puts "ADDING MAUI APPS (DEVEL)."
-
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# _latest=$(/tmp/mc cat nx/maui/devel/LATEST)
-# mkdir maui_pkgs
-
-# (
-# 	cd maui_pkgs
-
-# 	_packages=$(/tmp/mc ls nx/maui/devel/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
-
-# 	for i in $_packages; do
-# 		/tmp/mc cp nx/maui/devel/$_latest/$i .
-# 	done
-
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
-
-# 	chmod +x /Applications/*
-
-# 	ls -l /Applications
-# )
-
-# /tmp/mc config host rm nx
-
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
-
-# #	Add MAUI Appimages.
-
-# puts "ADDING MAUI APPS (NIGHTLY/CHERRYPICK_DATE)."
-
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# _latest=$(/tmp/mc cat nx/maui/nightly/WORKING)
-# mkdir maui_pkgs
-
-# (
-# 	cd maui_pkgs
-
-# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
-
-# 	for i in $_packages; do
-# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
-# 	done
-
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
-
-# 	chmod +x /Applications/*
-
-# 	ls -l /Applications
-# )
-
-# /tmp/mc config host rm nx
-
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
 
 puts "ADDING MAUI APPS (NIGHTLY)."
 
