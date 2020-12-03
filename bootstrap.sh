@@ -58,6 +58,12 @@ PRE_BUILD_PKGS='
 	cgroupfs-mount
 	dictionaries-common
 	efibootmgr
+	grub-common
+	grub-efi-amd64
+	grub-efi-amd64-bin
+	grub-efi-amd64-signed
+	grub-pc-bin
+	grub2-common
 	libpam-runtime
 	linux-base
 	locales-all
