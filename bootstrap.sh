@@ -233,7 +233,9 @@ NVIDIA_DRV_PKGS='
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 
 
-#	Add NX Desktop metapackage.
+#	Install NX Desktop metapackage.
+#	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
+#	because otherwise the splash is not shown.
 
 puts "INSTALLING DESKTOP PACKAGES."
 
@@ -289,7 +291,7 @@ cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
-UPDATE_MISC_PKGS='
+UPGRADE_MISC_PKGS='
 	linux-firmware
 '
 
@@ -301,7 +303,7 @@ DOWNGRADE_MISC_PKGS='
 '
 
 update
-only_upgrade $UPDATE_MISC_PKGS
+only_upgrade $UPGRADE_MISC_PKGS
 install_downgrades_hold $DOWNGRADE_MISC_PKGS
 
 
