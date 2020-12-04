@@ -21,7 +21,7 @@ purge () { apt -yy purge --remove $@; }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
-
+appstream_refresh_force () { appstreamcli refresh --force; }
 
 puts "STARTING BOOTSTRAP."
 
@@ -367,16 +367,12 @@ upgrade_downgrades
 autoremove
 unhold $UNHOLD_MISC_PKGS
 clean_all
+update
+appstream_refresh_force
 
 
 #	WARNING:
 #	No apt usage past this point.
-
-
-#	Make sure to refresh appstream cache.
-
-appstreamcli refresh --force
-apt -qq update
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
