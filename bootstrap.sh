@@ -68,7 +68,6 @@ PRE_BUILD_PKGS='
 	linux-base
 	locales-all
 	rng-tools
-	screen-resolution-extra
 	systemd-sysv
 	squashfs-tools
 	sudo
@@ -229,6 +228,7 @@ NVIDIA_DRV_PKGS='
 	nvidia-driver-450
 	nvidia-prime
 	nvidia-settings
+	screen-resolution-extra
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS

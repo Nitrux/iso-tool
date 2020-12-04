@@ -22,6 +22,18 @@ Package: xterm
 Pin: release *
 Pin-Priority: -1
 
+Package: libqt5webkit5
+Pin: version 5.212.0~alpha4-5
+Pin-Priority: -1
+
 Package: k3b
 Pin: release *
+Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
+Package: qml-module-qmltermwidget
+Pin: version 1.1.1+git20200723-2
 Pin-Priority: -1
