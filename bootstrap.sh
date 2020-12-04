@@ -72,6 +72,11 @@ PRE_BUILD_PKGS='
 	squashfs-tools
 	sudo
 	ufw
+	libpaper1
+	libgs9
+	libgs9-common
+	ghostscript
+	ghostscript-x
 '
 
 update
