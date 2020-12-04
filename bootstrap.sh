@@ -68,7 +68,6 @@ PRE_BUILD_PKGS='
 	linux-base
 	locales-all
 	rng-tools
-	screen-resolution-extra
 	systemd-sysv
 	squashfs-tools
 	sudo
@@ -228,7 +227,6 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-driver-450
 	nvidia-prime
-	nvidia-settings
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
@@ -451,7 +449,7 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use lz4 compression to initramfs.
+#	Use LZ4 compression when creating the initramfs.
 #	Add persistence script.
 #	Add fstab mount binds.
 
@@ -504,10 +502,12 @@ puts "REMOVING DPKG."
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 
 ls -l /boot
+ls -l /vmlinuz /initrd.img
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
-lsinitramfs -l /boot/initrd.img* | grep vfio
 cat /etc/casper.conf
+lsinitramfs -l /boot/initrd.img* | grep vfio
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
+
 
 puts "EXITING BOOTSTRAP."
