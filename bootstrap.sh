@@ -353,7 +353,6 @@ NX_LIVE_USER_PKG='
 	nitrux-live-user
 '
 
-
 # Unhold misc. packages.
 
 UNHOLD_MISC_PKGS='
