@@ -227,8 +227,6 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-driver-450
 	nvidia-prime
-	nvidia-settings
-	screen-resolution-extra
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
