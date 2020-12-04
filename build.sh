@@ -9,6 +9,7 @@ set -xe
 
 XORRISO_PKGS='
 	libburn4
+	libgcc1
 	libisoburn1
 	libisofs6
 	libjte2
@@ -91,7 +92,7 @@ cp $(echo $build_dir/boot/initrd*  | tr " " "\n" | sort | tail -n 1) $iso_dir/bo
 #	Remove chroot host kernel from $build_dir.
 #	BUG: vmlinuz and initrd links are not created in $build_dir/; they're left at $build_dir/boot
 
-rm \
+rm -r \
 	$build_dir/boot/* \
 	$build_dir/vmlinuz* \
 	$build_dir/initrd*

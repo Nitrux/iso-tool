@@ -504,10 +504,12 @@ puts "REMOVING DPKG."
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 
 ls -l /boot
+ls -l /vmlinuz /initrd.img
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
 lsinitramfs -l /boot/initrd.img* | grep vfio
 cat /etc/casper.conf
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
+
 
 puts "EXITING BOOTSTRAP."
