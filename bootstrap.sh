@@ -369,14 +369,14 @@ unhold $UNHOLD_MISC_PKGS
 clean_all
 
 
+#	WARNING:
+#	No apt usage past this point.
+
+
 #	Make sure to refresh appstream cache.
 
 appstreamcli refresh --force
 apt -qq update
-
-
-#	WARNING:
-#	No apt usage past this point.
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
