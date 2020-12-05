@@ -77,6 +77,7 @@ PRE_BUILD_PKGS='
 	libgs9-common
 	ghostscript
 	ghostscript-x
+	cups-daemon
 '
 
 update
