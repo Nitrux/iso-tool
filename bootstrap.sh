@@ -273,12 +273,6 @@ NX_DESKTOP_PKG='
 	nx-desktop
 '
 
-
-CALAMARES_PKGS='
-	calamares
-	calamares-settings-nitrux
-'
-
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
@@ -286,7 +280,7 @@ HOLD_MISC_PKGS='
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
-install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS
+install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
 hold $HOLD_MISC_PKGS
 
 
