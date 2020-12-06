@@ -56,28 +56,28 @@ PRE_BUILD_PKGS='
 	bluez
 	btrfs-progs
 	cgroupfs-mount
+	cups-daemon
 	dictionaries-common
 	efibootmgr
+	ghostscript
+	ghostscript-x
 	grub-common
 	grub-efi-amd64
 	grub-efi-amd64-bin
 	grub-efi-amd64-signed
 	grub-pc-bin
 	grub2-common
+	libgs9
+	libgs9-common
 	libpam-runtime
+	libpaper1
 	linux-base
 	locales-all
 	rng-tools
-	systemd-sysv
 	squashfs-tools
 	sudo
+	systemd-sysv
 	ufw
-	libpaper1
-	libgs9
-	libgs9-common
-	ghostscript
-	ghostscript-x
-	cups-daemon
 '
 
 update
