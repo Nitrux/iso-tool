@@ -248,7 +248,7 @@ LIBPNG12_PKG='
 	libpng12-0
 '
 
-XENIAL_PKGS='
+XENIAL_PLYMOUTH_PKGS='
 	plymouth=0.9.2-3ubuntu13.5
 	plymouth-label=0.9.2-3ubuntu13.5
 	plymouth-themes=0.9.2-3ubuntu13.5
@@ -280,7 +280,7 @@ HOLD_MISC_PKGS='
 '
 
 install_downgrades -t nitrux $LIBPNG12_PKG
-install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+install_downgrades $XENIAL_PLYMOUTH_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
 hold $HOLD_MISC_PKGS
 
 
