@@ -286,12 +286,18 @@ hold $HOLD_MISC_PKGS
 
 #	Upgrade, downgrade and install misc. packages.
 
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
+cp /configs/files/sources.list.hirsute /etc/apt/sources.list.d/ubuntu-hirsute-repo.list
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
 	linux-firmware
+'
+
+UPDT_GLBIC_PKGS='
+	libc6
+	libc-bin
+	locales
 '
 
 DOWNGRADE_MISC_PKGS='
@@ -306,7 +312,7 @@ INSTALL_MISC_PKGS='
 '
 
 update
-only_upgrade $UPGRADE_MISC_PKGS
+only_upgrade $UPGRADE_MISC_PKGS $UPDT_GLBIC_PKGS
 install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
 
