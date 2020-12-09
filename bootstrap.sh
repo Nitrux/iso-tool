@@ -52,7 +52,6 @@ PRE_BUILD_PKGS='
 	dictionaries-common
 	efibootmgr
 	fuwpd
-	fwupdate
 	language-pack-en
 	language-pack-es
 	libpam-runtime
