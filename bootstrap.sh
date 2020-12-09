@@ -38,17 +38,9 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
+	debconf
 	dhcpcd5
 	gnupg2
-	language-pack-en
-	language-pack-en-base
-	libarchive13
-	localechooser-data
-	locales
-	systemd
-	user-setup
-	wget
-	xz-utils
 '
 
 PRE_BUILD_PKGS='
@@ -59,25 +51,17 @@ PRE_BUILD_PKGS='
 	cups-daemon
 	dictionaries-common
 	efibootmgr
-	ghostscript
-	ghostscript-x
-	grub-common
-	grub-efi-amd64
-	grub-efi-amd64-bin
-	grub-efi-amd64-signed
-	grub-pc-bin
-	grub2-common
-	libgs9
-	libgs9-common
+	language-pack-en
+	language-pack-es
 	libpam-runtime
-	libpaper1
-	linux-base
-	locales-all
+	os-prober
 	rng-tools
 	squashfs-tools
 	sudo
+	systemd
 	systemd-sysv
 	ufw
+	user-setup
 '
 
 update
@@ -146,18 +130,8 @@ hold $INITRAMFS_PKGS
 puts "ADDING ELOGIND."
 
 DEVUAN_ELOGIND_PKGS='
-	bsdutils
 	elogind
 	libelogind0
-	libprocps7
-	util-linux
-	uuid-runtime
-'
-
-UPDT_APT_PKGS='
-	apt
-	apt-transport-https
-	apt-utils
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -170,7 +144,7 @@ ADD_SYSTEMCTL_PKG='
 	systemctl
 '
 
-install_downgrades $DEVUAN_ELOGIND_PKGS $UPDT_APT_PKGS
+install_downgrades $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
 install -t focal $ADD_SYSTEMCTL_PKG
@@ -183,23 +157,30 @@ hold $ADD_SYSTEMCTL_PKG
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0=0.105-25+devuan8
-	libpolkit-backend-1-0=0.105-25+devuan8
-	libpolkit-backend-elogind-1-0=0.105-25+devuan8
-	libpolkit-gobject-1-0=0.105-25+devuan8
-	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1=0.113.0-1
-	policykit-1=0.105-25+devuan8
+	libpolkit-agent-1-0
+	libpolkit-backend-1-0
+	libpolkit-backend-elogind-1-0
+	libpolkit-gobject-1-0
+	libpolkit-gobject-elogind-1-0
 '
 
-DEVUAN_NM_UD2='
+install -t beowulf $DEVUAN_POLKIT_PKGS
+
+
+#	Add NetworkManager and udisks2 from Devuan.
+
+DEVUAN_NETWORKMANAGER_PKGS='
 	init-system-helpers
 	libnm0
-	libudisks2-0
 	network-manager
+'
+
+DEVUAN_UDISKS2_PKGS='
+	libudisks2-0
 	udisks2
 '
-install_downgrades $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS
+
+install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
 
 
 #	Add OpenRC as init.
@@ -245,15 +226,14 @@ install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
-	libpng12-0
+	libpng12-0/nitrux
 '
 
-XENIAL_PLYMOUTH_PKGS='
-	plymouth=0.9.2-3ubuntu13.5
-	plymouth-label=0.9.2-3ubuntu13.5
-	plymouth-themes=0.9.2-3ubuntu13.5
-	libplymouth4=0.9.2-3ubuntu13.5
-	ttf-ubuntu-font-family
+PLYMOUTH_XENIAL_PKGS='
+	plymouth/xenial-updates
+	plymouth-themes/xenial-updates
+	plymouth-label/xenial-updates
+	libplymouth4/xenial-updates
 '
 
 DEVUAN_PULSE_PKGS='
@@ -276,11 +256,9 @@ NX_DESKTOP_PKG='
 HOLD_MISC_PKGS='
 	cgroupfs-mount
 	ssl-cert
-	base-passwd
 '
 
-install_downgrades -t nitrux $LIBPNG12_PKG
-install_downgrades $XENIAL_PLYMOUTH_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
 hold $HOLD_MISC_PKGS
 
 
@@ -294,7 +272,7 @@ UPGRADE_MISC_PKGS='
 	linux-firmware
 '
 
-UPDT_GLBIC_PKGS='
+UPDATE_GLIBC_PKGS='
 	libc6
 	libc-bin
 	locales
@@ -312,7 +290,7 @@ INSTALL_MISC_PKGS='
 '
 
 update
-only_upgrade $UPGRADE_MISC_PKGS $UPDT_GLBIC_PKGS
+only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
 install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
 
@@ -336,16 +314,8 @@ NX_LIVE_USER_PKG='
 	nitrux-live-user
 '
 
-# Unhold misc. packages.
-
-UNHOLD_MISC_PKGS='
-	systemctl
-	base-passwd
-'
-
 install $NX_LIVE_USER_PKG
 autoremove
-unhold $UNHOLD_MISC_PKGS
 clean_all
 
 
