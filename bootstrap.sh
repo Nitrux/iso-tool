@@ -208,6 +208,7 @@ NITRUX_BASE_PKGS='
 	nitrux-hardware-drivers
 	nitrux-minimal
 	nitrux-standard
+	linux-image-mainline-vfio
 '
 
 NVIDIA_DRV_PKGS='
