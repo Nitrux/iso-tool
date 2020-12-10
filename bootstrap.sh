@@ -51,7 +51,6 @@ PRE_BUILD_PKGS='
 	cups-daemon
 	dictionaries-common
 	efibootmgr
-	fwupd
 	language-pack-en
 	language-pack-es
 	libpam-runtime
