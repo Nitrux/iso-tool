@@ -244,11 +244,10 @@ LIBPNG12_PKG='
 '
 
 XENIAL_PKGS='
-	plymouth=0.9.2-3ubuntu13.5
-	plymouth-label=0.9.2-3ubuntu13.5
-	plymouth-themes=0.9.2-3ubuntu13.5
-	libplymouth4=0.9.2-3ubuntu13.5
-	ttf-ubuntu-font-family
+	plymouth
+	plymouth-label
+	plymouth-themes
+	libplymouth5
 '
 
 DEVUAN_PULSE_PKGS='
