@@ -244,10 +244,10 @@ LIBPNG12_PKG='
 '
 
 XENIAL_PKGS='
-	plymouth
-	plymouth-label
-	plymouth-themes
-	libplymouth5
+	plymouth/ceres
+	plymouth-label/ceres
+	plymouth-themes/ceres
+	libplymouth5/ceres
 '
 
 DEVUAN_PULSE_PKGS='
