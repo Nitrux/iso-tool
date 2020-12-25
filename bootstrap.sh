@@ -222,7 +222,7 @@ NITRUX_BASE_PKGS='
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
-	linux-image-mainline-lts
+	linux-image-mainline-lts=0.0.6
 '
 
 NVIDIA_DRV_PKGS='
