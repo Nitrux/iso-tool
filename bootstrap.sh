@@ -244,10 +244,11 @@ LIBPNG12_PKG='
 '
 
 XENIAL_PKGS='
-	plymouth/ceres
-	plymouth-label/ceres
-	plymouth-themes/ceres
-	libplymouth5/ceres
+	plymouth=0.9.2-3ubuntu13.5
+	plymouth-label=0.9.2-3ubuntu13.5
+	plymouth-themes=0.9.2-3ubuntu13.5
+	libplymouth4=0.9.2-3ubuntu13.5
+	ttf-ubuntu-font-family
 '
 
 DEVUAN_PULSE_PKGS='
