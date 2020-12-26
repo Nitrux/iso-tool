@@ -362,8 +362,6 @@ UNHOLD_MISC_PKGS='
 
 install $NX_LIVE_USER_PKG
 autoremove
-upgrade_downgrades
-autoremove
 unhold $UNHOLD_MISC_PKGS
 clean_all
 update
