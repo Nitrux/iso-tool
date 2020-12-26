@@ -73,7 +73,6 @@ PRE_BUILD_PKGS='
 	squashfs-tools
 	sudo
 	ufw
-	fwupd
 '
 
 update
@@ -267,6 +266,7 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
+	fwupd/ceres
 '
 
 
