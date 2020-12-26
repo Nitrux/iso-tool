@@ -42,6 +42,10 @@ Package: qml-module-qmltermwidget
 Pin: version 1.1.1+git20200723-2
 Pin-Priority: -1
 
+Package: calamares
+Pin: version 3.2.35.1-1+b1
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################

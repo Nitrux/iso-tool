@@ -73,6 +73,7 @@ PRE_BUILD_PKGS='
 	squashfs-tools
 	sudo
 	ufw
+	fwupd
 '
 
 update
@@ -270,7 +271,7 @@ NX_DESKTOP_PKG='
 
 
 CALAMARES_PKGS='
-	calamares
+	calamares=3.2.35.1
 	calamares-settings-nitrux
 '
 
