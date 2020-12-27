@@ -266,7 +266,6 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	fwupd=1.3.11-1~focal1
 '
 
 

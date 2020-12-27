@@ -43,7 +43,7 @@ Pin: version 1.1.1+git20200723-2
 Pin-Priority: -1
 
 Package: calamares
-Pin: version 3.2.35.1-1+b1
+Pin: version 3.2.35.1-0xneon+20.04+focal+build20
 Pin-Priority: -1
 
 Package: fwupd
