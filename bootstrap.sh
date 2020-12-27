@@ -271,7 +271,7 @@ NX_DESKTOP_PKG='
 
 
 CALAMARES_PKGS='
-	calamares=3.2.35.1
+	calamares=3.2.35.1-0xneon+20.04+focal+build20
 	calamares-settings-nitrux
 '
 
