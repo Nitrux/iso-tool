@@ -46,6 +46,10 @@ Package: calamares
 Pin: version 3.2.35.1-1+b1
 Pin-Priority: -1
 
+Package: fwupd
+Pin: version 1.5.3-2
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################
