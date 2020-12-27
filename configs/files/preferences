@@ -37,3 +37,19 @@ Pin-Priority: -1
 Package: qml-module-qmltermwidget
 Pin: version 1.1.1+git20200723-2
 Pin-Priority: -1
+
+Package: fwupd
+Pin: version 1.5.3-0xneon+20.04+focal+build3
+Pin-Priority: -1
+
+########################
+#  Repository Priority #
+########################
+
+Package: *
+Pin: release o=user
+Pin-Priority: 700
+
+Package: *
+Pin: origin archive.neon.kde.org
+Pin-Priority: 700
