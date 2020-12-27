@@ -266,11 +266,12 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
+	fwupd/focal
 '
 
 
 CALAMARES_PKGS='
-	calamares
+	calamares/ceres
 	calamares-settings-nitrux
 '
 
