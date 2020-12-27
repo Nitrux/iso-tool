@@ -294,7 +294,7 @@ install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
 
 
-#	Install Latte Dock fron Neon unstable
+#	Install Latte Dock fron Neon unstable.
 
 cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 
