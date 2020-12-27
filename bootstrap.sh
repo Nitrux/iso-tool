@@ -248,7 +248,6 @@ DEVUAN_PULSE_PKGS='
 
 MISC_KDE_PKGS='
 	plasma-pa=4:5.20.4-2
-	latte-dock
 '
 
 NX_DESKTOP_PKG='
@@ -293,6 +292,20 @@ update
 only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
 install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
+
+
+#	Upgrade Latte Dock
+
+cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
+
+puts "UPGRADING/DOWNGRADING/INSTALLING KDE PACKAGES."
+
+UNSTABLE_KDE_PKGS='
+	latte-dock
+'
+
+update
+install $UNSTABLE_KDE_PKGS
 
 
 #	Add OpenRC configuration.
