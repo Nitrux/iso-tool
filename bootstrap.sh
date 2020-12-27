@@ -281,8 +281,6 @@ HOLD_MISC_PKGS='
 	base-passwd
 '
 
-apt-cache policy fwupd
-
 install_downgrades -t nitrux $LIBPNG12_PKG
 install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
