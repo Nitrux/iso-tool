@@ -50,6 +50,10 @@ Package: fwupd
 Pin: version 1.5.3-0xneon+20.04+focal+build3
 Pin-Priority: -1
 
+Package: packagekit
+Pin: version 1.2.2-2+devuan1
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################
