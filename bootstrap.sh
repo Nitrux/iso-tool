@@ -281,6 +281,13 @@ HOLD_MISC_PKGS='
 	base-passwd
 '
 
+
+#	Disallow dpkg to exclude translations affecting Plasma (see issue https://github.com/Nitrux/iso-tool/issues/48 and 
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
+
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
+
+
 install_downgrades -t nitrux $LIBPNG12_PKG
 install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
