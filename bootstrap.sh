@@ -252,12 +252,12 @@ XENIAL_PKGS='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=13.0-5
-	libpulse0=13.0-5
-	libpulsedsp=13.0-5
-	pulseaudio-module-bluetooth=13.0-5
-	pulseaudio-utils=13.0-5
-	pulseaudio=13.0-5
+	libpulse-mainloop-glib0=14.0-2
+	libpulse0=14.0-2
+	libpulsedsp=14.0-2
+	pulseaudio-module-bluetooth=14.0-2
+	pulseaudio-utils=14.0-2
+	pulseaudio=14.0-2
 '
 
 MISC_KDE_PKGS='
@@ -282,7 +282,7 @@ HOLD_MISC_PKGS='
 '
 
 
-#	Disallow dpkg to exclude translations affecting Plasma (see issue https://github.com/Nitrux/iso-tool/issues/48 and 
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
 
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
