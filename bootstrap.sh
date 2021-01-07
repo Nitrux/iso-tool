@@ -238,16 +238,16 @@ PLYMOUTH_XENIAL_PKGS='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=13.0-5
-	libpulse0=13.0-5
-	libpulsedsp=13.0-5
-	pulseaudio-module-bluetooth=13.0-5
-	pulseaudio-utils=13.0-5
-	pulseaudio=13.0-5
+	libpulse-mainloop-glib0=14.0-2
+	libpulse0=14.0-2
+	libpulsedsp=14.0-2
+	pulseaudio-module-bluetooth=14.0-2
+	pulseaudio-utils=14.0-2
+	pulseaudio=14.0-2
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.20.4-2
+	plasma-pa=4:5.20.5-1
 '
 
 NX_DESKTOP_PKG='
