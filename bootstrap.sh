@@ -260,6 +260,13 @@ HOLD_MISC_PKGS='
 	ssl-cert
 '
 
+
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
+
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
+
+
 install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
 hold $HOLD_MISC_PKGS
 
@@ -294,18 +301,18 @@ install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
 
 
-#	Install Latte Dock fron Neon unstable.
+# #	Install Latte Dock fron Neon unstable.
 
-cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
+# cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 
-puts "UPGRADING/DOWNGRADING/INSTALLING KDE PACKAGES."
+# puts "UPGRADING/DOWNGRADING/INSTALLING KDE PACKAGES."
 
-UNSTABLE_KDE_PKGS='
-	latte-dock
-'
+# UNSTABLE_KDE_PKGS='
+# 	latte-dock
+# '
 
-update
-install $UNSTABLE_KDE_PKGS
+# update
+# install $UNSTABLE_KDE_PKGS
 
 
 #	Add OpenRC configuration.
