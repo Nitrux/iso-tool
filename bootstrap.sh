@@ -267,6 +267,7 @@ MISC_KDE_PKGS='
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
 	fwupd=1.5.3-2
+	accountsservice
 '
 
 
