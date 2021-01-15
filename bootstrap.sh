@@ -213,7 +213,7 @@ NITRUX_BASE_PKGS='
 
 NVIDIA_DRV_PKGS='
 	libxnvctrl0
-	nvidia-driver-450
+	nvidia-driver-460
 	nvidia-prime
 '
 
