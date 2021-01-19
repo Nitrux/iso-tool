@@ -252,12 +252,12 @@ XENIAL_PKGS='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=14.1-1
-	libpulse0=14.1-1
-	libpulsedsp=14.1-1
-	pulseaudio-module-bluetooth=14.1-1
-	pulseaudio-utils=14.1-1
-	pulseaudio=14.1-1
+	libpulse-mainloop-glib0=14.2-1
+	libpulse0=14.2-1
+	libpulsedsp=14.2-1
+	pulseaudio-module-bluetooth=14.2-1
+	pulseaudio-utils=14.2-1
+	pulseaudio=14.2-1
 '
 
 MISC_KDE_PKGS='
@@ -266,7 +266,7 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	fwupd=1.5.3-2
+	fwupd=1.5.5-1
 '
 
 
