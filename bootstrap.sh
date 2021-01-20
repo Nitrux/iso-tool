@@ -266,9 +266,9 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	fwupd=1.5.5-1
-	libfwupd2=1.5.5-1
-	libfwupdplugin1=1.5.5-1
+	fwupd=1.5.5-2
+	libfwupd2=1.5.5-2
+	libfwupdplugin1=1.5.5-2
 '
 
 
