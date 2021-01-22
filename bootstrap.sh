@@ -215,6 +215,7 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-driver-460
 	nvidia-prime
+	nvidia-x11-config
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
@@ -253,7 +254,9 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	fwupd=1.5.3-2
+	fwupd=1.5.5-2
+	libfwupd2=1.5.5-2
+	libfwupdplugin1=1.5.5-2
 '
 
 HOLD_MISC_PKGS='
