@@ -376,8 +376,7 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-rm -r \
-	/home/travis
+rm -r /home/travis || true
 
 
 #	Implement a new FHS.
