@@ -359,7 +359,6 @@ clean_all
 
 # 	chmod +x /Applications/*
 
-# 	ls -l /Applications
 # )
 
 # /tmp/mc config host rm nx
@@ -457,7 +456,8 @@ ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlev
 stat /sbin/init
 cat /etc/casper.conf
 lsinitramfs -l /boot/initrd.img* | grep vfio
-ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
+ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+ls -l /Applications
 
 
 puts "EXITING BOOTSTRAP."
