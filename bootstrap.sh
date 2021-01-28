@@ -269,6 +269,7 @@ NX_DESKTOP_PKG='
 	fwupd=1.5.5-2
 	libfwupd2=1.5.5-2
 	libfwupdplugin1=1.5.5-2
+	sudo=1.9.5p2-1
 '
 
 
