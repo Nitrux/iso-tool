@@ -21,13 +21,8 @@ esac
 iso_path=
 for x in $(cat /proc/cmdline); do
 	case ${x} in
-		ZNX_DEV_UUID=*)
-			znx_dev_uuid=${x#ZNX_DEV_UUID=}
-		;;
-
-		iso-scan/filename=*)
-			iso_path=${x#iso-scan/filename=}
-		;;
+		ZNX_DEV_UUID=*) znx_dev_uuid=${x#ZNX_DEV_UUID=};;
+		iso-scan/filename=*) iso_path=${x#iso-scan/filename=};;
 	esac
 done
 
@@ -35,21 +30,19 @@ _find_dev () {
 	lsblk -no PATH,UUID | grep $1 | cut -d ' ' -f 1
 }
 
-
-if [ "$iso_path" ]; then
-	if mount  -t btrfs $(_find_dev $znx_dev_uuid) isodevice /isodevice; then
+test "$iso_path" && test -f "$iso_path" && {
+	znx_dev=$(_find_dev $znx_dev_uuid)
+	mkdir -p /isodevice
+	mount -t btrfs "$znx_dev" /isodevice && {
 		echo "LIVEMEDIA=$iso_path" >> /conf/param.conf
-		echo "FOUNDDEV=$(_find_dev $znx_dev_uuid)" >> /conf/param.conf
-		if [ -f "${iso_path}" ]; then
-			echo "LIVEMEDIA_OFFSET=0" >> /conf/param.conf
-		fi
-
-	else
+		echo "FOUNDDEV=$znx_dev" >> /conf/param.conf
+		echo "LIVEMEDIA_OFFSET=0" >> /conf/param.conf
+	} || {
 		panic "
 Could not find the ISO $iso_path
 This could also happen if the file system is not clean because of an operating
 system crash, an interrupted boot process, an improper shutdown, or unplugging
 of a removable device without first unmounting or ejecting it.
 "
-	fi
-fi
+	}
+}

@@ -1,76 +1,89 @@
 #! /bin/bash
 
-set -x
+set -xe
 
 export LANG=C
 export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
+add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+autoremove () { apt -yy autoremove $@; }
+clean_all () { apt clean && apt autoclean; }
+dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+fix_install () { apt -yy --fix-broken install $@; }
+hold () { apt-mark hold $@; }
+install () { apt -yy install --no-install-recommends $@; }
+install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
+install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+purge () { apt -yy purge --remove $@; }
+unhold () { apt-mark unhold $@; }
+update () { apt -qq update; }
+upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
-#	let us start.
 
 puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
+#	PRE_BUILD_PKGS are packages that for one reason or the other do not get pulled when
+#	the metapackages are installed, or, that require systemd to be present and can't be installed
+#	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
+#	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
 
 puts "INSTALLING BASIC PACKAGES."
 
-cp /configs/files/sources.list.eoan /etc/apt/sources.list
-
-BASIC_PACKAGES='
+BASIC_PKGS='
 	apt-transport-https
 	apt-utils
-	avahi-daemon
-	bluez
 	ca-certificates
-	casper
-	cgroupfs-mount
+	debconf
 	dhcpcd5
 	gnupg2
-	language-pack-en
-	language-pack-en-base
-	libarchive13
-	libelf1
-	libxvmc1
-	localechooser-data
-	locales
-	lupin-casper
-	open-vm-tools
-	rng-tools
-	systemd
-	ufw
-	user-setup
-	wget
-	xz-utils
-	libarchive-tools
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $BASIC_PACKAGES --no-install-recommends
+PRE_BUILD_PKGS='
+	avahi-daemon
+	bluez
+	btrfs-progs
+	cgroupfs-mount
+	cups-daemon
+	dictionaries-common
+	efibootmgr
+	language-pack-en
+	language-pack-es
+	libpam-runtime
+	os-prober
+	rng-tools
+	squashfs-tools
+	sudo
+	systemd
+	systemd-sysv
+	ufw
+	user-setup
+'
+
+update
+install $BASIC_PKGS $PRE_BUILD_PKGS
 
 
 #	Add key for Neon repository.
 #	Add key for Nitrux repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
-#	Add key for the Proprietary Graphics Drivers PPA.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
-#	Add key for Kubuntu Backports PPA.
 
 puts "ADDING REPOSITORY KEYS."
 
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
+ add_keys \
 	55751E5D \
 	1B69B2DA \
 	541922FB \
 	BB23C00C61FC752C \
-	1118213C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C \
-	2836CB0A8AC93F7A > /dev/null
+	871920D1991BC93C > /dev/null
 
 
 #	Copy sources.list files.
@@ -78,43 +91,47 @@ apt-key adv --keyserver keyserver.ubuntu.com --recv-keys \
 puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-cp /configs/files/sources.list.devuan /etc/apt/sources.list.d/devuan-repo.list
-cp /configs/files/sources.list.eoan /etc/apt/sources.list.d/ubuntu-eoan-repo.list
-cp /configs/files/sources.list.gpu /etc/apt/sources.list.d/gpu-ppa-repo.list
+cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
+cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
-# cp /configs/files/sources.list.backports /etc/apt/sources.list.d/backports-ppa-repo.list
 
-apt -qq update
+update
 
 
-#	Use Glibc package from Devuan.
+#	Block installation of some packages.
 
-GLIBC_2_30_PKG='
-	libc6=2.30-8
+cp /configs/files/preferences /etc/apt/preferences
+
+
+#	Add casper packages from bionic.
+
+puts "INSTALLING CASPER PACKAGES."
+
+CASPER_PKGS='
+	casper
+	lupin-casper
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GLIBC_2_30_PKG --no-install-recommends --allow-downgrades
+INITRAMFS_PKGS='
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
+'
+
+install -t bionic-updates $CASPER_PKGS
+hold $INITRAMFS_PKGS
 
 
 #	Use elogind packages from Devuan.
 
 puts "ADDING ELOGIND."
 
-ELOGIND_PKGS='
-	bsdutils
+DEVUAN_ELOGIND_PKGS='
 	elogind
 	libelogind0
-	libprocps7
-	util-linux
-	uuid-runtime
-'
-
-UPDT_APT_PKGS='
-	apt
-	apt-transport-https
-	apt-utils
 '
 
 REMOVE_SYSTEMD_PKGS='
@@ -123,10 +140,16 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy purge --remove $REMOVE_SYSTEMD_PKGS
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $ELOGIND_PKGS $UPDT_APT_PKGS --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
+ADD_SYSTEMCTL_PKG='
+	systemctl
+'
+
+install_downgrades $DEVUAN_ELOGIND_PKGS
+purge $REMOVE_SYSTEMD_PKGS
+autoremove
+install -t focal $ADD_SYSTEMCTL_PKG
+fix_install
+hold $ADD_SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
@@ -134,25 +157,30 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0=0.105-25+devuan8
-	libpolkit-backend-1-0=0.105-25+devuan8
-	libpolkit-backend-elogind-1-0=0.105-25+devuan8
-	libpolkit-gobject-1-0=0.105-25+devuan8
-	libpolkit-gobject-elogind-1-0=0.105-25+devuan8
-	libpolkit-qt5-1-1=0.112.0-6
-	policykit-1=0.105-25+devuan8
-	polkit-kde-agent-1=4:5.17.5-2
+	libpolkit-agent-1-0
+	libpolkit-backend-1-0
+	libpolkit-backend-elogind-1-0
+	libpolkit-gobject-1-0
+	libpolkit-gobject-elogind-1-0
 '
 
-DEVUAN_NM_UD2='
-	init-system-helpers=1.57+devuan1
-	libnm0=1.14.6-2+deb10u1
+install -t beowulf $DEVUAN_POLKIT_PKGS
+
+
+#	Add NetworkManager and udisks2 from Devuan.
+
+DEVUAN_NETWORKMANAGER_PKGS='
+	init-system-helpers
+	libnm0
+	network-manager
+'
+
+DEVUAN_UDISKS2_PKGS='
 	libudisks2-0
-	network-manager=1.14.6-2+deb10u1
 	udisks2
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-install-recommends --allow-downgrades
+install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
 
 
 #	Add OpenRC as init.
@@ -160,7 +188,6 @@ apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_NM_UD2 $DEVUAN_POLKIT_PKGS --no-i
 puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
-	bootchart2
 	fgetty
 	initscripts
 	openrc
@@ -169,259 +196,114 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $DEVUAN_INIT_PKGS --no-install-recommends --allow-downgrades
+install_downgrades $DEVUAN_INIT_PKGS
 
 
 #	Install base system metapackages.
 
 puts "INSTALLING BASE SYSTEM."
 
-
-GRUB_PACKAGES='
-	grub-efi-amd64-signed=1+2.04+8
-	grub-efi-amd64-bin=2.04-8
-	grub-common=2.04-8
-'
-
-NITRUX_BASE_PACKAGES='
+NITRUX_BASE_PKGS='
+	base-files=12.1.0+nitrux
 	nitrux-hardware-drivers
 	nitrux-minimal
 	nitrux-standard
+	linux-image-mainline-vfio
 '
 
-NITRUX_BF_PKG='
-	base-files
+NVIDIA_DRV_PKGS='
+	libxnvctrl0
+	nvidia-driver-460
+	nvidia-prime
+	nvidia-x11-config
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $GRUB_PACKAGES $NITRUX_BASE_PACKAGES $NITRUX_BF_PKG --no-install-recommends
+install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 
 
-#	Add NX Desktop metapackage.
+#	Install NX Desktop metapackage.
+#	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
+#	because otherwise the splash is not shown.
 
 puts "INSTALLING DESKTOP PACKAGES."
 
-XENIAL_PACKAGES='
-	plymouth=0.9.2-3ubuntu13.5
-	plymouth-label=0.9.2-3ubuntu13.5
-	plymouth-themes=0.9.2-3ubuntu13.5
-	libplymouth4=0.9.2-3ubuntu13.5
-	ttf-ubuntu-font-family
+LIBPNG12_PKG='
+	libpng12-0/nitrux
+'
+
+PLYMOUTH_XENIAL_PKGS='
+	plymouth/xenial-updates
+	plymouth-themes/xenial-updates
+	plymouth-label/xenial-updates
+	libplymouth4/xenial-updates
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=13.0-5
-	libpulse0=13.0-5
-	libpulsedsp=13.0-5
-	pulseaudio-module-bluetooth=13.0-5
-	pulseaudio-utils=13.0-5
-	pulseaudio=13.0-5
+	libpulse-mainloop-glib0=14.2-1
+	libpulse0=14.2-1
+	libpulsedsp=14.2-1
+	pulseaudio-module-bluetooth=14.2-1
+	pulseaudio-utils=14.2-1
+	pulseaudio=14.2-1
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.17.5-2
-	bluedevil
-	libkf5xmlgui5=5.71.0-0xneon+18.04+bionic+build45
-	libkf5xmlgui-data=5.71.0-0xneon+18.04+bionic+build45
-	libkf5itemmodels5=5.71.0-0xneon+18.04+bionic+build32
+	plasma-pa=4:5.20.5-1
+	latte-dock
 '
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	nx-desktop-apps
+	fwupd=1.5.5-2
+	libfwupd2=1.5.5-2
+	libfwupdplugin1=1.5.5-2
+	sudo=1.9.5p2-1
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $XENIAL_PACKAGES $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG --no-install-recommends --allow-downgrades
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
-
-
-#	Upgrade KF5 libs for Latte Dock.
-
-puts "UPGRADING KDE PACKAGES."
-
-cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
-
-HOLD_KDE_PKGS='
-	kwin-addons
-	kwin-common
-	kwin-data
-	kwin-x11
-	libkwin4-effect-builtins1
-	libkwineffects12
-	libkwinglutils12
-	libkwinxrenderutils12
-	libphonon4qt5-4
-	qml-module-org-kde-kwindowsystem
+HOLD_MISC_PKGS='
+	cgroupfs-mount
+	ssl-cert
 '
 
-UPDT_KDE_PKGS='
-	ark
-	kcalc
-	kde-spectacle
-	latte-dock
+
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
+
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
+
+
+install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+hold $HOLD_MISC_PKGS
+
+
+#	Upgrade, downgrade and install misc. packages.
+
+cp /configs/files/sources.list.hirsute /etc/apt/sources.list.d/ubuntu-hirsute-repo.list
+
+puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
+
+UPGRADE_MISC_PKGS='
+	linux-firmware
 '
 
-UPDT_KF5_LIBS='
-	libkf5activities5
-	libkf5activitiesstats1
-	libkf5archive5
-	libkf5attica5
-	libkf5auth-data
-	libkf5auth5
-	libkf5authcore5
-	libkf5bluezqt-data
-	libkf5bluezqt6
-	libkf5bookmarks-data
-	libkf5bookmarks5
-	libkf5calendarevents5
-	libkf5completion-data
-	libkf5completion5
-	libkf5config-data
-	libkf5configcore5
-	libkf5configgui5
-	libkf5configwidgets-data
-	libkf5configwidgets5
-	libkf5contacts-data
-	libkf5contacts5
-	libkf5coreaddons-data
-	libkf5coreaddons5
-	libkf5crash5
-	libkf5dbusaddons-data
-	libkf5dbusaddons5
-	libkf5declarative-data
-	libkf5declarative5
-	libkf5dnssd-data
-	libkf5dnssd5
-	libkf5doctools5
-	libkf5emoticons-data
-	libkf5emoticons5
-	libkf5filemetadata-data
-	libkf5filemetadata3
-	libkf5globalaccel-bin
-	libkf5globalaccel-data
-	libkf5globalaccel5
-	libkf5globalaccelprivate5
-	libkf5guiaddons5
-	libkf5holidays-data
-	libkf5holidays5
-	libkf5i18n-data
-	libkf5i18n5
-	libkf5iconthemes-data
-	libkf5iconthemes5
-	libkf5idletime5
-	libkf5itemmodels5
-	libkf5itemviews-data
-	libkf5itemviews5
-	libkf5jobwidgets-data
-	libkf5jobwidgets5
-	libkf5kdelibs4support-data
-	libkf5kdelibs4support5
-	libkf5kipi-data
-	libkf5kipi32.0.0
-	libkf5kirigami2-5
-	libkf5newstuff-data
-	libkf5newstuff5
-	libkf5newstuffcore5
-	libkf5notifications-data
-	libkf5notifications5
-	libkf5notifyconfig-data
-	libkf5notifyconfig5
-	libkf5package-data
-	libkf5package5
-	libkf5parts-data
-	libkf5parts5
-	libkf5plasma5
-	libkf5plasmaquick5
-	libkf5purpose-bin
-	libkf5purpose5
-	libkf5quickaddons5
-	libkf5runner5
-	libkf5service-bin
-	libkf5service-data
-	libkf5service5
-	libkf5style5
-	libkf5su-bin
-	libkf5su-data
-	libkf5su5
-	libkf5syntaxhighlighting-data
-	libkf5syntaxhighlighting5
-	libkf5texteditor-bin
-	libkf5texteditor5
-	libkf5textwidgets-data
-	libkf5textwidgets5
-	libkf5threadweaver5
-	libkf5waylandclient5
-	libkf5waylandserver5
-	libkf5widgetsaddons-data
-	libkf5widgetsaddons5
-	libkf5xmlgui-bin
-	libkf5xmlgui-data
-	libkf5xmlgui5
-'
-
-UPDT_MISC_LIBS='
-	libpolkit-qt5-1-1
-'
-
-apt -qq update
-apt-mark hold $HOLD_KDE_PKGS
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_KDE_PKGS $UPDT_KF5_LIBS $UPDT_MISC_LIBS --only-upgrade --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy --fix-broken install
-
-
-#	Upgrade glibc packages.
-
-puts "UPGRADING/INSTALLING MISC. PACKAGES."
-
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
-
-UPDT_GLBIC_PKGS='
-	libc-bin
+UPDATE_GLIBC_PKGS='
 	libc6
+	libc-bin
 	locales
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $UPDT_GLBIC_PKGS --only-upgrade
-
-rm /etc/apt/sources.list.d/ubuntu-focal-repo.list
-
-
-#	Upgrade and install misc. packages.
-
-cp /configs/files/sources.list.groovy /etc/apt/sources.list.d/ubuntu-groovy-repo.list
-
-OTHER_MISC_PKGS='
-	gamemode
-	tmate
-	virtualbox-guest-dkms
-	virtualbox-guest-x11
-	docker.io
-	flatpak
-	fakeroot
+DOWNGRADE_MISC_PKGS='
+	bluez/ceres
 '
 
-UPDT_MISC_PKGS='
-	cgroupfs-mount
-	linux-firmware
-	sudo=1.9.0-1ubuntu1
+INSTALL_MISC_PKGS='
+	patchelf
 '
 
-apt -qq update
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OTHER_MISC_PKGS $UPDT_MISC_PKGS --no-install-recommends
-
-
-#	Install the kernel.
-
-puts "INSTALL KERNEL."
-
-INSTALL_KERNEL='
-	linux-image-unsigned-5.4.21-050421-generic
-	linux-modules-5.4.21-050421-generic
-	linux-headers-5.4.21-050421
-	linux-headers-5.4.21-050421-generic
-'
-
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $INSTALL_KERNEL --no-install-recommends
+update
+only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
+install_downgrades_hold $DOWNGRADE_MISC_PKGS
+install $INSTALL_MISC_PKGS
 
 
 #	Add OpenRC configuration.
@@ -432,90 +314,59 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-apt -qq -o=Dpkg::Use-Pty=0 -yy install $OPENRC_CONFIG --no-install-recommends
-apt -qq -o=Dpkg::Use-Pty=0 -yy autoremove
-apt clean &> /dev/null
-apt autoclean &> /dev/null
+install $OPENRC_CONFIG
+
+
+#	Add live user.
+
+puts "ADDING LIVE USER."
+
+NX_LIVE_USER_PKG='
+	nitrux-live-user
+'
+
+install $NX_LIVE_USER_PKG
+autoremove
+clean_all
 
 
 #	WARNING:
 #	No apt usage past this point.
 
 
-#	Add MAUI Appimages.
- 
-puts "ADDING MAUI APPS (STABLE)."
- 
-wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-chmod +x /tmp/mc
-/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-mkdir maui_pkgs
+# puts "ADDING MAUI APPS (NIGHTLY)."
 
-(
-	cd maui_pkgs
+# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
+# chmod +x /tmp/mc
+# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
+# _latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
+# mkdir maui_pkgs
 
-	_apps=$(/tmp/mc ls nx/maui/stable/ | grep -Eo "\w*/")
+# (
+# 	cd maui_pkgs
 
-	for i in $_apps; do
-		_branch=$(/tmp/mc cat nx/maui/stable/${i}LATEST)
-		/tmp/mc cp -r nx/maui/stable/${i}${_branch} ./
-	done
+# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
 
- 	mv ${_branch}/index-*amd64*.AppImage /Applications/index
- 	mv ${_branch}/buho-*amd64*.AppImage /Applications/buho
- 	mv ${_branch}/nota-*amd64*.AppImage /Applications/nota
- 	mv ${_branch}/vvave-*amd64*.AppImage /Applications/vvave
- 	mv ${_branch}/station-*amd64*.AppImage /Applications/station
- 	mv ${_branch}/pix-*amd64*.AppImage /Applications/pix
- 
- 	chmod +x /Applications/*
- 
- 	ls -l /Applications
- )
- 
- /tmp/mc config host rm nx
- 
- rm -r \
- 	maui_pkgs \
- 	/tmp/mc
+# 	for i in $_packages; do
+# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
+# 	done
 
+# 	mv index-*amd64*.AppImage /Applications/index
+# 	mv buho-*amd64*.AppImage /Applications/buho
+# 	mv nota-*amd64*.AppImage /Applications/nota
+# 	mv vvave-*amd64*.AppImage /Applications/vvave
+# 	mv station-*amd64*.AppImage /Applications/station
+# 	mv pix-*amd64*.AppImage /Applications/pix
 
-##	Add MAUI Appimages.
-#
-#puts "ADDING MAUI APPS (NIGHTLY)."
-#
-#wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-#chmod +x /tmp/mc
-#/tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-#_latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
-#mkdir maui_pkgs
-#
-#(
-#	cd maui_pkgs
-#
-#	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
-#
-#	for i in $_packages; do
-#		/tmp/mc cp nx/maui/nightly/$_latest/$i .
-#	done
-#
-#	mv index-*amd64*.AppImage /Applications/index
-#	mv buho-*amd64*.AppImage /Applications/buho
-#	mv nota-*amd64*.AppImage /Applications/nota
-#	mv vvave-*amd64*.AppImage /Applications/vvave
-#	mv station-*amd64*.AppImage /Applications/station
-#	mv pix-*amd64*.AppImage /Applications/pix
-#
-#	chmod +x /Applications/*
-#
-#	ls -l /Applications
-#)
-#
-#/tmp/mc config host rm nx
-#
-#rm -r \
-#	maui_pkgs \
-#	/tmp/mc
+# 	chmod +x /Applications/*
+
+# )
+
+# /tmp/mc config host rm nx
+
+# rm -r \
+# 	maui_pkgs \
+# 	/tmp/mc
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
@@ -523,31 +374,9 @@ mkdir maui_pkgs
 
 puts "ADDING MISC. FIXES."
 
-cp /configs/files/plasmanotifyrc /etc/xdg/plasmanotifyrc
+cat /configs/files/casper.conf > /etc/casper.conf
 
-echo "XDG_CONFIG_DIRS=/etc/xdg" >> /etc/environment
-echo "XDG_DATA_DIRS=/usr/local/share:/usr/share" >> /etc/environment
-
-cp /configs/other/compendium_offline.pdf /etc/skel/Desktop/Nitrux\ —\ Compendium.pdf
-cp /configs/other/faq_offline.pdf /etc/skel/Desktop/Nitrux\ —\ FAQ.pdf
-
-cp /usr/share/icons/nitrux_snow_cursors/index.theme /etc/X11/cursors/nitrux_cursors.theme
-ln -svf /etc/X11/cursors/nitrux_cursors.theme /etc/alternatives/x-cursor-theme
-sed -i '$ a Inherits=nitrux_snow_cursors' /etc/X11/cursors/nitrux_cursors.theme
-
-cp /boot/initrd.img /boot/initrd.img-generic
-
-rm -r /home/travis
-
-
-#	Check contents of OpenRC runlevels.
-
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-
-
-#	Check that init system is not systemd.
-
-stat /sbin/init
+rm -r /home/travis || true
 
 
 #	Implement a new FHS.
@@ -556,17 +385,12 @@ stat /sbin/init
 puts "CREATING NEW FHS."
 
 mkdir -p \
-	/Core/System/Deployments \
 	/Devices \
-	/Devices/Removable \
 	/System/Binaries \
 	/System/Binaries/Optional \
 	/System/Configuration \
-	/System/DevicesFS \
 	/System/Libraries \
 	/System/Mount/Filesystems \
-	/System/Processes \
-	/System/Runtime \
 	/System/Resources/Shared \
 	/System/Server/Services \
 	/System/Variable \
@@ -575,51 +399,8 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Add vfio modules and files.
-#	FIXME: This configuration should be included a in a package
-#	replacing the default package like base-files.
-
-puts "ADDING VFIO ENABLEMENT AND CONFIGURATION."
-
->> /etc/initramfs-tools/modules printf "%s\n" \
-	"install vfio-pci /usr/bin/vfio-pci-override-vga.sh" \
-	"install vfio_pci /usr/bin/vfio-pci-override-vga.sh" \
-	"softdep nvidia pre: vfio vfio_pci" \
-	"softdep nouveau pre: vfio vfio_pci" \
-	"softdep amdgpu pre: vfio vfio_pci" \
-	"softdep radeon pre: vfio vfio_pci" \
-	"softdep i915 pre: vfio vfio_pci" \
-	"vfio" \
-	"vfio_iommu_type1" \
-	"vfio_virqfd" \
-	"options vfio_pci ids=" \
-	"vfio_pci ids=" \
-	"vfio_pci" \
-	"nvidia" \
-	"nouveau" \
-	"amdgpu" \
-	"radeon" \
-	"i915"
-
->> /etc/modules printf "%s\n" \
-	"vfio" \
-	"vfio_iommu_type1" \
-	"vfio_pci" \
-	"vfio_pci ids="
-
-cp /configs/files/asound.conf /etc/
-cp /configs/files/asound.conf /etc/skel/.asoundrc
-cp /configs/files/iommu_unsafe_interrupts.conf /etc/modprobe.d/
-cp /configs/files/{amdgpu.conf,i915.conf,kvm.conf,nvidia.conf,nouveau.conf,qemu-system-x86.conf,radeon.conf,vfio_pci.conf,vfio-pci.conf} /etc/modprobe.d/
-
-cp /configs/scripts/vfio-pci-override-vga.sh /usr/bin/
-chmod a+x /usr/bin/vfio-pci-override-vga.sh
-
-
 #	Use LZ4 compression when creating the initramfs.
-#	Add initramfs hook script.
-#	Add the persistence and update the initramfs.
-#	Add znx_dev_uuid parameter. FIXME
+#	Add persistence script.
 #	Add fstab mount binds.
 
 puts "UPDATING THE INITRAMFS."
@@ -627,36 +408,29 @@ puts "UPDATING THE INITRAMFS."
 cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
-# cp /configs/scripts/iso_scanner /usr/share/initramfs-tools/scripts/casper-premount/20iso_scan
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 update-initramfs -u
-lsinitramfs -l /boot/initrd.img-5.4.21-050421-generic | grep vfio
 
 
 #	Remove APT.
 
 puts "REMOVING APT."
 
-REMOVE_APT='
+REMOVE_APT_PKGS='
 	apt
 	apt-utils
 	apt-transport-https
 '
 
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_APT &> /dev/null
+dpkg_force_remove $REMOVE_APT_PKGS
 
 
 #	Clean the filesystem.
 
 puts "REMOVING CASPER."
 
-REMOVE_PACKAGES='
-	casper
-	lupin-casper
-'
-
-/usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $REMOVE_PACKAGES &> /dev/null
+dpkg_force_remove $CASPER_PKGS
 
 
 #	WARNING:
@@ -668,7 +442,23 @@ REMOVE_PACKAGES='
 puts "REMOVING DPKG."
 
 /configs/scripts/rm-dpkg.sh
-rm /configs/scripts/rm-dpkg.sh
+
+
+#	Check contents of /boot.
+#	Check contents of OpenRC runlevels.
+#	Check that init system is not systemd.
+#	Check if VFIO module is included in the initramfs.
+#	Check existence and contents of casper.conf
+#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+
+ls -l /boot
+ls -l /vmlinuz /initrd.img
+ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+stat /sbin/init
+cat /etc/casper.conf
+lsinitramfs -l /boot/initrd.img* | grep vfio
+ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+ls -l /Applications
 
 
 puts "EXITING BOOTSTRAP."

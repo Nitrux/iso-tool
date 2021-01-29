@@ -25,14 +25,9 @@ cat > $FSTAB <<EOF
 /dev /Devices none defaults,bind 0 0
 /etc /System/Configuration none defaults,bind 0 0
 /home /Users none defaults,bind 0 0
-/isodevice /Core/System/Deployments none defaults,bind 0 0
-/media /Devices/Removable none defaults,bind 0 0
 /mnt /System/Mount/Filesystems none defaults,bind 0 0
 /opt /System/Binaries/Optional none defaults,bind 0 0
-/proc /System/Processes none defaults,bind 0 0
-/run /System/Runtime none defaults,bind 0 0
 /srv /System/Server/Services none defaults,bind 0 0
-/sys /System/DevicesFS none defaults,bind 0 0
 /usr/bin  /System/Binaries none defaults,bind 0 0
 /usr/lib  /System/Libraries none defaults,bind 0 0
 /usr/share  /System/Resources/Shared none defaults,bind 0 0

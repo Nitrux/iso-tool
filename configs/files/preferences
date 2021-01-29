@@ -1,0 +1,55 @@
+Package: dash
+Pin: release *
+Pin-Priority: -1
+
+Package: fuse
+Pin: release *
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
+Pin-Priority: -1
+
+Package: plasma-pa
+Pin: release *
+Pin-Priority: -1
+
+Package: ufw
+Pin: release *
+Pin-Priority: -1
+
+Package: xterm
+Pin: release *
+Pin-Priority: -1
+
+Package: libqt5webkit5
+Pin: version 5.212.0~alpha4-7
+Pin-Priority: -1
+
+Package: k3b
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
+Package: qml-module-qmltermwidget
+Pin: version 1.1.1+git20200723-2
+Pin-Priority: -1
+
+Package: fwupd
+Pin: version 1.5.3-0xneon+20.04+focal+build3
+Pin-Priority: -1
+
+########################
+#  Repository Priority #
+########################
+
+Package: *
+Pin: release o=user
+Pin-Priority: 700
+
+Package: *
+Pin: origin archive.neon.kde.org
+Pin-Priority: 700

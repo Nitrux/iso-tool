@@ -26,8 +26,4 @@ REMOVE_FILES='
 
 rm -r ${REMOVE_FILES//\\n/ }
 
-
-
 exit 0
-
-

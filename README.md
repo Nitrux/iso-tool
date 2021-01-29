@@ -1,4 +1,4 @@
-## Nitrux ISO Tool
+# Nitrux ISO Tool
 
 [![Build Status](https://travis-ci.org/Nitrux/nitrux-iso-tool.svg?branch=master)](https://travis-ci.org/Nitrux/nitrux-iso-tool)
 
