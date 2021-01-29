@@ -1,5 +1,0 @@
-#####################
-# Kubuntu Backports #
-#####################
-
-deb http://ppa.launchpad.net/kubuntu-ppa/backports/ubuntu eoan main
