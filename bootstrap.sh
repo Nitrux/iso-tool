@@ -254,9 +254,9 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	fwupd=1.5.5-2
-	libfwupd2=1.5.5-2
-	libfwupdplugin1=1.5.5-2
+	fwupd/ceres
+	libfwupd2/ceres
+	libfwupdplugin1/ceres
 	sudo/ceres
 '
 
