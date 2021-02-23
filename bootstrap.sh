@@ -205,7 +205,7 @@ puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PKGS='
 	base-files=12.1.0+nitrux
-	nitrux-hardware-drivers
+	nitrux-hardware-drivers-minimal
 	nitrux-minimal
 	nitrux-standard
 	linux-image-mainline-vfio
@@ -228,14 +228,11 @@ install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 puts "INSTALLING DESKTOP PACKAGES."
 
 LIBPNG12_PKG='
-	libpng12-0/nitrux
+	
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	plymouth/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth-label/xenial-updates
-	libplymouth4/xenial-updates
+	
 '
 
 DEVUAN_PULSE_PKGS='
@@ -248,12 +245,11 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	plasma-pa=4:5.20.5-1
-	latte-dock
+	
 '
 
 NX_DESKTOP_PKG='
-	nx-desktop
+	nx-desktop-minimal
 	fwupd/ceres
 	libfwupd2/ceres
 	libfwupdplugin1/ceres
@@ -332,41 +328,6 @@ clean_all
 
 #	WARNING:
 #	No apt usage past this point.
-
-
-# puts "ADDING MAUI APPS (NIGHTLY)."
-
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# _latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
-# mkdir maui_pkgs
-
-# (
-# 	cd maui_pkgs
-
-# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
-
-# 	for i in $_packages; do
-# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
-# 	done
-
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
-
-# 	chmod +x /Applications/*
-
-# )
-
-# /tmp/mc config host rm nx
-
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
