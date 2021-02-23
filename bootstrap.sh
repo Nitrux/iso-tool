@@ -250,10 +250,8 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-minimal
-	fwupd/ceres
-	libfwupd2/ceres
-	libfwupdplugin1/ceres
-	sudo/ceres
+	sddm
+	blackbox
 '
 
 HOLD_MISC_PKGS='
