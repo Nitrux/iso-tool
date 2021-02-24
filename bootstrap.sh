@@ -251,7 +251,7 @@ MISC_KDE_PKGS='
 NX_DESKTOP_PKG='
 	nx-desktop-minimal
 	sddm
-	blackbox
+	i3
 	xterm/ceres
 '
 
