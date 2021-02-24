@@ -252,6 +252,7 @@ NX_DESKTOP_PKG='
 	nx-desktop-minimal
 	sddm
 	blackbox
+	xterm/ceres
 '
 
 HOLD_MISC_PKGS='
