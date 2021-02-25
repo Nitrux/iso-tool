@@ -411,6 +411,8 @@ puts "REMOVING DPKG."
 #	Check if VFIO module is included in the initramfs.
 #	Check existence and contents of casper.conf
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+#	Check contents of /Applications
+#	Check contents of sddm.conf
 
 ls -l /boot
 ls -l /vmlinuz /initrd.img
