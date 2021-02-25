@@ -252,6 +252,7 @@ NX_DESKTOP_PKG='
 	nx-desktop-minimal
 	sddm
 	i3
+	i3status
 	xterm/ceres
 '
 
