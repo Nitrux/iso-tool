@@ -420,6 +420,6 @@ cat /etc/casper.conf
 lsinitramfs -l /boot/initrd.img* | grep vfio
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 ls -l /Applications
-
+cat /etc/sddm.conf
 
 puts "EXITING BOOTSTRAP."
