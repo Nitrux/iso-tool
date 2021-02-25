@@ -245,15 +245,15 @@ DEVUAN_PULSE_PKGS='
 '
 
 MISC_KDE_PKGS='
-	
+	sddm
 '
 
 NX_DESKTOP_PKG='
 	nx-desktop-minimal
-	sddm
 	i3
 	i3status
 	xterm/ceres
+	dmz-cursor-theme
 '
 
 HOLD_MISC_PKGS='
