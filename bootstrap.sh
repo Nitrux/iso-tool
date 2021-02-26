@@ -273,9 +273,9 @@ MISC_DESKTOP_PKGS='
 	libfwupd2/ceres
 	libfwupdplugin1/ceres
 	sudo/ceres
-	libpam0g/ceres
-	libpam-modules/ceres
-	libpam-modules-bin/ceres
+	libpam0g/focal-updates
+	libpam-modules/focal-updates
+	libpam-modules-bin/focal-updates
 '
 
 CALAMARES_PKGS='
