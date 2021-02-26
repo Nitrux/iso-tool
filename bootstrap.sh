@@ -276,6 +276,7 @@ MISC_DESKTOP_PKGS='
 	libpam0g/focal-updates
 	libpam-modules/focal-updates
 	libpam-modules-bin/focal-updates
+	dosfstools/focal
 '
 
 CALAMARES_PKGS='
