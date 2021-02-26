@@ -250,6 +250,9 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-minimal
+'
+
+MISC_DESKTOP_PKGS='
 	i3
 	i3status
 	xterm/ceres
@@ -268,7 +271,7 @@ HOLD_MISC_PKGS='
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
 
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 hold $HOLD_MISC_PKGS
 
 
