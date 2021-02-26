@@ -218,11 +218,11 @@ install_downgrades $DEVUAN_INIT_PKGS
 puts "INSTALLING BASE SYSTEM."
 
 NITRUX_BASE_PKGS='
-	base-files=11.2.2+nitrux-legacy
+	base-files=11.2.3+nitrux-legacy
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
-	linux-image-mainline-lts=0.0.6-6c75f7b
+	linux-image-mainline-lts
 '
 
 NVIDIA_DRV_PKGS='
@@ -266,12 +266,17 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
+'
+
+MISC_DESKTOP_PKGS='
 	fwupd/ceres
 	libfwupd2/ceres
 	libfwupdplugin1/ceres
 	sudo/ceres
+	libpam0g/ceres
+	libpam-modules/ceres
+	libpam-modules-bin/ceres
 '
-
 
 CALAMARES_PKGS='
 	calamares/ceres
@@ -292,7 +297,7 @@ sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /e
 
 
 install_downgrades -t nitrux $LIBPNG12_PKG
-install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $CALAMARES_PKGS
+install_downgrades $XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $CALAMARES_PKGS
 hold $HOLD_MISC_PKGS
 
 
@@ -307,10 +312,10 @@ UPGRADE_MISC_PKGS='
 '
 
 DOWNGRADE_MISC_PKGS='
-	bluez=5.50-1.2~deb10u1
-	initramfs-tools-bin=0.137ubuntu12
-	initramfs-tools-core=0.137ubuntu12
-	initramfs-tools=0.137ubuntu12
+	bluez/ceres
+	initramfs-tools-bin/hirsute
+	initramfs-tools-core/hirsute
+	initramfs-tools/hirsute
 '
 
 update
@@ -415,13 +420,19 @@ update-initramfs -u
 #	Check that init system is not systemd.
 #	Check existence and contents of casper.conf
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+#	Check contents of /Applications
+#	Check contents of sddm.conf
+#	Check existence of sddm.conf.d
 
 ls -l /boot
 ls -l /vmlinuz /initrd.img
 ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
 stat /sbin/init
 cat /etc/casper.conf /etc/default/grub
-ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper 
+ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+ls -l /Applications
+cat /etc/sddm.conf
+file -d /etc/sddm.conf.d
 
 
 puts "EXITING BOOTSTRAP."
