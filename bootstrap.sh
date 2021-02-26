@@ -222,7 +222,7 @@ NITRUX_BASE_PKGS='
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
-	linux-image-mainline-lts=0.0.6-6c75f7b
+	linux-image-mainline-lts-5.4
 '
 
 NVIDIA_DRV_PKGS='
@@ -426,7 +426,12 @@ update-initramfs -u
 
 ls -l /boot
 ls -l /vmlinuz /initrd.img
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+ls -l /etc/init.d/ \
+	/etc/runlevels/default/ \
+	/etc/runlevels/nonetwork/ \
+	/etc/runlevels/off \
+	/etc/runlevels/recovery/ \
+	/etc/runlevels/sysinit/
 stat /sbin/init
 cat /etc/casper.conf /etc/default/grub
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
