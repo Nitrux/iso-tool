@@ -336,6 +336,7 @@ clean_all
 puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
+ln -sv /usr/share/xsessions/i3.desktop /usr/share/xsessions/plasma.desktop 
 
 rm -r /home/travis || true
 
