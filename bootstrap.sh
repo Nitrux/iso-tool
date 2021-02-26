@@ -413,6 +413,7 @@ puts "REMOVING DPKG."
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 #	Check contents of /Applications
 #	Check contents of sddm.conf
+#	Check existence of sddm.conf.d
 
 ls -l /boot
 ls -l /vmlinuz /initrd.img
@@ -423,5 +424,6 @@ lsinitramfs -l /boot/initrd.img* | grep vfio
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 ls -l /Applications
 cat /etc/sddm.conf
+file -d /etc/sddm.conf.d
 
 puts "EXITING BOOTSTRAP."
