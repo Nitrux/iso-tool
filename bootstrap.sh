@@ -422,8 +422,12 @@ puts "REMOVING DPKG."
 
 ls -l /boot
 ls -l /vmlinuz /initrd.img
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-stat /sbin/init
+ls -l /etc/init.d/ \
+	/etc/runlevels/default/ \
+	/etc/runlevels/nonetwork/ \
+	/etc/runlevels/off \
+	/etc/runlevels/recovery/ \
+	/etc/runlevels/sysinit/stat /sbin/init
 cat /etc/casper.conf
 lsinitramfs -l /boot/initrd.img* | grep vfio
 ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
