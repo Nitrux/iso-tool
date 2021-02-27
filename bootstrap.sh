@@ -269,14 +269,14 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	dosfstools/focal
 	fwupd/ceres
 	libfwupd2/ceres
 	libfwupdplugin1/ceres
-	sudo/ceres
-	libpam0g/focal-updates
-	libpam-modules/focal-updates
 	libpam-modules-bin/focal-updates
-	dosfstools/focal
+	libpam-modules/focal-updates
+	libpam0g/focal-updates
+	sudo/ceres
 '
 
 CALAMARES_PKGS='
