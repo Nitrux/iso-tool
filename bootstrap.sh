@@ -239,12 +239,12 @@ PLYMOUTH_XENIAL_PKGS='
 '
 
 DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=14.2-1
-	libpulse0=14.2-1
-	libpulsedsp=14.2-1
-	pulseaudio-module-bluetooth=14.2-1
-	pulseaudio-utils=14.2-1
-	pulseaudio=14.2-1
+	libpulse-mainloop-glib0=14.2-2
+	libpulse0=14.2-2
+	libpulsedsp=14.2-2
+	pulseaudio-module-bluetooth=14.2-2
+	pulseaudio-utils=14.2-2
+	pulseaudio=14.2-2
 '
 
 MISC_KDE_PKGS='
@@ -254,9 +254,6 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	fwupd/ceres
-	libfwupd2/ceres
-	libfwupdplugin1/ceres
 	sudo/ceres
 '
 
