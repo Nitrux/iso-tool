@@ -230,11 +230,7 @@ NVIDIA_DRV_PKGS='
 	nouveau-firmware
 '
 
-BROADCOM_DRV_PKG='
-	broadcom-sta-dkms/ceres
-'
-
-install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS $BROADCOM_DRV_PKG
+install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
@@ -274,13 +270,6 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	dosfstools/focal
-	fwupd/ceres
-	libfwupd2/ceres
-	libfwupdplugin1/ceres
-	libpam-modules-bin/focal-updates
-	libpam-modules/focal-updates
-	libpam0g/focal-updates
-	sudo/ceres
 '
 
 CALAMARES_PKGS='
@@ -403,8 +392,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 rm /boot/vmlinuz /boot/initrd.img /boot/vmlinuz.old /boot/initrd.img.old
 
-ln -svf /boot/vmlinuz-5.4.100-0504100-generic /vmlinuz
-ln -svf /boot/initrd.img-5.4.100-0504100-generic /initrd.img
+ln -svf /boot/vmlinuz-5.10.19-051019-generic /vmlinuz
+ln -svf /boot/initrd.img-5.10.19-051019-generic /initrd.img
 
 
 #	Use LZ4 compression when creating the initramfs.
