@@ -222,7 +222,7 @@ NITRUX_BASE_PKGS='
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
-	linux-image-mainline-lts-5.4
+	linux-image-mainline-lts
 '
 
 NVIDIA_DRV_PKGS='
@@ -230,7 +230,11 @@ NVIDIA_DRV_PKGS='
 	nouveau-firmware
 '
 
-install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
+BROADCOM_DRV_PKG='
+	broadcom-sta-dkms/ceres
+'
+
+install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS $BROADCOM_DRV_PKG
 
 
 #	Install NX Desktop metapackage.
