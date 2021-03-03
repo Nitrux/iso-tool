@@ -18,5 +18,5 @@ deb http://deb.devuan.org/devuan beowulf-security main
 
 deb http://deb.devuan.org/merged beowulf main
 deb http://deb.devuan.org/merged beowulf-updates main
-deb http://deb.devuan.org/devuan beowulf-backports main
-deb http://deb.devuan.org/devuan beowulf-security main
+deb http://deb.devuan.org/merged beowulf-backports main
+deb http://deb.devuan.org/merged beowulf-security main
