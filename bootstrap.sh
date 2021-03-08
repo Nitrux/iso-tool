@@ -314,9 +314,6 @@ UPGRADE_MISC_PKGS='
 
 DOWNGRADE_MISC_PKGS='
 	bluez/ceres
-	initramfs-tools-bin/hirsute
-	initramfs-tools-core/hirsute
-	initramfs-tools/hirsute
 '
 
 update
