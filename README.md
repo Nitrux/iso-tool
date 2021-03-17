@@ -1,6 +1,6 @@
 # Nitrux ISO Tool
 
-[![Build Status](https://travis-ci.org/Nitrux/nitrux-iso-tool.svg?branch=master)](https://travis-ci.org/Nitrux/nitrux-iso-tool)
+[![Build Status](https://travis-ci.org/Nitrux/iso-tool.svg?branch=master)](https://travis-ci.org/Nitrux/iso-tool)
 
 A script for generating Nitrux Ubuntu based ISO files. The code is very readable, and so, self documented.
 
