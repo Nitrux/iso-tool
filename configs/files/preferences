@@ -142,7 +142,7 @@ Package: frameworkintegration
 Pin: version 5.80.*
 Pin-Priority: -1
 
-Package: drkoqni
+Package: drkonqi
 Pin: version 5.21.3*
 Pin-Priority: -1
 
