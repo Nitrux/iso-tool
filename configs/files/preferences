@@ -122,6 +122,58 @@ Package: libkwall*
 Pin: version 5.80.*
 Pin-Priority: -1
 
+Package: kinit
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: baloo-kf5
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: plasma-framework
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: kded5
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: kio
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: frameworkintegration
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: kpackagetool5
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: libkf5*
+Pin: version 4:5.80.*
+Pin-Priority: -1
+
+Package: kwayland-data
+Pin: version 4:5.80.*
+Pin-Priority: -1
+
+Package: breeze-icon-*
+Pin: version 4:5.80.*
+Pin-Priority: -1
+
+Package: libkf5*
+Pin: version 5:5.80.*
+Pin-Priority: -1
+
+Package: libkf5*
+Pin: version 1:5.80.*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 1:5.80.*
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################
