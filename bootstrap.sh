@@ -287,6 +287,8 @@ MISC_UBUNTU_HIRSUTE_PKGS='
 	rng-tools
 	secureboot-db
 	ubuntu-drivers-common
+	screen-resolution-extra
+	nvidia-prime
 '
 
 install $MISC_UBUNTU_HIRSUTE_PKGS
