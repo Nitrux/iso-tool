@@ -199,7 +199,7 @@ Pin: version 1:5.80.*
 Pin-Priority: -1
 
 Package: lib*
-Pin: version 5.80.*
+Pin: version 5.81.*
 Pin-Priority: -1
 
 Package: lib*
