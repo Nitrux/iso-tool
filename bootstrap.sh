@@ -52,6 +52,7 @@ CHROOT_BASIC_PKGS='
 	dhcpcd5
 	gnupg2
 	initramfs-tools
+	lz4
 '
 
 update
