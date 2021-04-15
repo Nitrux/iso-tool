@@ -254,7 +254,6 @@ MISC_KDE_PKGS='
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	sudo/ceres
 '
 
 HOLD_MISC_PKGS='
