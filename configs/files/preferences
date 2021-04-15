@@ -74,6 +74,10 @@ Package: rng-tools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: policykit-1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: pulseaudio
 Pin: release o=Ubuntu,a=focal,n=focal
 Pin-Priority: -1
