@@ -459,7 +459,6 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	kde-config-updates
 	libpython3.8
 	libpython3.8-minimal
 	libpython3.8-stdlib
