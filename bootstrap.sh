@@ -374,6 +374,11 @@ puts "ADDING MISC. FIXES."
 cat /configs/files/casper.conf > /etc/casper.conf
 
 rm -r /home/travis || true
+rm -r \
+	/initrd.img \
+	/initrd.img.old \
+	/vmlinuz \
+	/vmlinuz.old \
 
 
 #	Implement a new FHS.
@@ -448,14 +453,21 @@ puts "REMOVING DPKG."
 #	Check existence and contents of casper.conf
 #	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 
-ls -l /boot
-ls -l /vmlinuz /initrd.img
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
+ls -l 
+	/boot \
+	/vmlinuz \
+	/initrd.img \
+	/etc/init.d/ \
+	/etc/runlevels/default/ \
+	/etc/runlevels/nonetwork/ \
+	/etc/runlevels/off \
+	/etc/runlevels/recovery/ \
+	/etc/runlevels/sysinit/ \
+	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
+	/Applications
 stat /sbin/init
 cat /etc/casper.conf
 lsinitramfs -l /boot/initrd.img* | grep vfio
-ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-ls -l /Applications
 
 
 puts "EXITING BOOTSTRAP."
