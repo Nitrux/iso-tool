@@ -212,10 +212,7 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
-	libxnvctrl0
-	nvidia-driver-460
-	nvidia-prime
-	nvidia-x11-config
+	nvidia-settings
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
