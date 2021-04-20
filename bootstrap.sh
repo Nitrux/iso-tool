@@ -212,6 +212,7 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
+	nvidia-x11-config
 	screen-resolution-extra
 '
 
