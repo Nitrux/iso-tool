@@ -212,7 +212,7 @@ NITRUX_BASE_PKGS='
 '
 
 NVIDIA_DRV_PKGS='
-	nvidia-settings
+	screen-resolution-extra
 '
 
 install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
