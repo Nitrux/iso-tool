@@ -22,10 +22,6 @@ Package: xterm
 Pin: release *
 Pin-Priority: -1
 
-Package: libqt5webkit5
-Pin: version 5.212.0~alpha4-7
-Pin-Priority: -1
-
 Package: k3b
 Pin: release *
 Pin-Priority: -1
@@ -34,12 +30,256 @@ Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
 
-Package: qml-module-qmltermwidget
-Pin: version 1.1.1+git20200723-2
+##########################
+#  Neon Package Priority #
+##########################
+
+Package: baloo-*
+Pin: version 5.80.*
 Pin-Priority: -1
 
-Package: fwupd
-Pin: version 1.5.3-0xneon+20.04+focal+build3
+Package: baloo-*
+Pin: version 5.81.*
+Pin-Priority: -1
+
+Package: bluedevil
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: bluedevil
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: breeze-*
+Pin: version 4:5.80.*
+Pin-Priority: -1
+
+Package: breeze-*
+Pin: version 4:5.81.*
+Pin-Priority: -1
+
+Package: breeze*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: breeze-*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: breeze-*
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: -breeze*
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: breeze*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: breeze-*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: breeze-*
+Pin: version 5.21.4*
+Pin-Priority: -1
+
+Package: -breeze*
+Pin: version 5.21.4*
+Pin-Priority: -1
+
+Package: frameworkintegration
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: frameworkintegration
+Pin: version 5.81.*
+Pin-Priority: -1
+
+Package: drkonqi
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: drkonqi
+Pin: version 5.21.4*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 4:5.80.*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 5.81.*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 4:5.81.*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 5.21.4*
+Pin-Priority: -1
+
+Package: k*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 4:5.80.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 5:5.80.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 1:5.80.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 5.81.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 4:5.81.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 5:5.81.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 1:5.81.*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: milou
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: oxygen-*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: lib*
+Pin: version 5.21.4*
+Pin-Priority: -1
+
+Package: milou
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: oxygen-*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: version 5.81.*
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: polkit-*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: power*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: version 5.21.4*
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: polkit-*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: power*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 5.80.*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 1:5.80.*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 5.81.*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 1:5.81.*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: systemsettings
+Pin: version 4:5.21.3*
+Pin-Priority: -1
+
+Package: xdg-*
+Pin: version 5.21.3*
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: systemsettings
+Pin: version 4:5.21.4*
+Pin-Priority: -1
+
+Package: xdg-*
+Pin: version 5.21.4*
 Pin-Priority: -1
 
 ########################
