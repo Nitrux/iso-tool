@@ -59,8 +59,6 @@ update
 upgrade
 install $CHROOT_BASIC_PKGS
 
-pkg_policy libpulse0
-
 
 #	Add key for Nitrux repository.
 
