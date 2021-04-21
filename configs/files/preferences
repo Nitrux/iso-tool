@@ -87,6 +87,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: partitionmanager
+Pin: version 20.12.2-*
+Pin-Priority: -1
+
+Package: partitionmanager
 Pin: version 20.12.3-*
 Pin-Priority: -1
 
