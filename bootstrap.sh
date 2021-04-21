@@ -295,23 +295,6 @@ install $MISC_UBUNTU_HIRSUTE_PKGS
 rm \
 	/etc/apt/sources.list.d/ubuntu-hirsute-repo.list
 
-cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
-
-update
-
-MISC_UBUNTU_BIONIC_PKGS='
-	nitroshare
-'
-
-install $MISC_UBUNTU_BIONIC_PKGS
-
-rm \
-	/etc/apt/sources.list.d/ubuntu-bionic-repo.list
-
-remove_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
-
 update
 
 
@@ -590,8 +573,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-ln -svf /boot/vmlinuz-5.4.108-0504108-generic /vmlinuz
-ln -svf /boot/initrd.img-5.4.108-0504108-generic /initrd.img
+ln -svf /boot/vmlinuz-5.4.111-0504111-generic /vmlinuz
+ln -svf /boot/initrd.img-5.4.111-0504111-generic /initrd.img
 
 dpkg_force_remove dash || true
 
