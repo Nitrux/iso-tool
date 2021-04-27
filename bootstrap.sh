@@ -373,13 +373,6 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-rm -r \
-	/initrd.img \
-	/initrd.img.old \
-	/vmlinuz \
-	/vmlinuz.old \
-	/home/travis || true
-
 
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
