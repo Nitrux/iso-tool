@@ -189,7 +189,6 @@ install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
 puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
-	fgetty
 	initscripts
 	openrc
 	policycoreutils
