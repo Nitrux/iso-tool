@@ -54,6 +54,7 @@ PRE_BUILD_PKGS='
 	language-pack-en
 	language-pack-es
 	libpam-runtime
+	lz4
 	os-prober
 	rng-tools
 	squashfs-tools
@@ -373,12 +374,12 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-rm -r /home/travis || true
 rm -r \
 	/initrd.img \
 	/initrd.img.old \
 	/vmlinuz \
 	/vmlinuz.old \
+	/home/travis || true
 
 
 #	Implement a new FHS.
@@ -415,6 +416,21 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 update-initramfs -u
 
 
+#	Remove Dash.
+
+puts "REMOVING DASH."
+
+REMOVE_DASH_PKG='
+	dash
+'
+
+dpkg_force_remove $REMOVE_DASH_PKG || true
+
+ln -svf /bin/mksh /bin/sh
+
+dpkg_force_remove $REMOVE_DASH_PKG
+
+
 #	Remove APT.
 
 puts "REMOVING APT."
@@ -448,25 +464,33 @@ puts "REMOVING DPKG."
 
 #	Check contents of /boot.
 #	Check contents of OpenRC runlevels.
+#	Check links to kernel and initramdisk.
+#	Check contents of init.d and sddm.conf.d.
+#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper.
+#	Check contents of /Applications.
 #	Check that init system is not systemd.
-#	Check if VFIO module is included in the initramfs.
-#	Check existence and contents of casper.conf
-#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+#	Check that /bin/sh is in fact not Dash.
+#	Check existence and contents of casper.conf and sddm.conf.
+#	Check that the VFIO driver is included in the intiramfs.
 
-ls -l 
+
+puts "PERFORM MANUAL CHECKS."
+
+ls -l \
 	/boot \
-	/vmlinuz \
-	/initrd.img \
-	/etc/init.d/ \
-	/etc/runlevels/default/ \
-	/etc/runlevels/nonetwork/ \
-	/etc/runlevels/off \
-	/etc/runlevels/recovery/ \
-	/etc/runlevels/sysinit/ \
+	/etc/runlevels/{default,nonetwork,off,recovery,sysinit} \
+	/{vmlinuz,initrd.img} \
+	/etc/{init.d,sddm.conf.d} \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
-	/Applications
-stat /sbin/init
-cat /etc/casper.conf
+	/Applications || true
+
+stat \
+	/sbin/init \
+	/bin/sh
+
+cat \
+	/etc/{casper.conf,sddm.conf}
+
 lsinitramfs -l /boot/initrd.img* | grep vfio
 
 

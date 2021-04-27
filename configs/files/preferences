@@ -6,6 +6,10 @@ Package: fuse
 Pin: release *
 Pin-Priority: -1
 
+Package: latte-dock
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
