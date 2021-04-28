@@ -22,6 +22,7 @@ REMOVE_FILES='
 /usr/share/polkit-1/actions/org.dpkg.pkexec.update-alternatives.policy
 /var/lib/apt/lists
 /var/cache/apt
+/var/lib/dpkg/
 '
 
 rm -r ${REMOVE_FILES//\\n/ }
