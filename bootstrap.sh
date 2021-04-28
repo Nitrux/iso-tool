@@ -18,7 +18,7 @@ install_downgrades () { apt -yy install --no-install-recommends --allow-downgrad
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
-remove_dpkg () { /configs/scripts/rm-dpkg.sh }
+remove_dpkg () { rm-dpkg }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
@@ -104,6 +104,11 @@ update
 #	Block installation of some packages.
 
 cp /configs/files/preferences /etc/apt/preferences
+
+
+#	Add script to remove dpkg.
+
+cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
 
 
 #	Add casper packages from bionic.
