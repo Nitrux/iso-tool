@@ -249,7 +249,7 @@ MISC_DESKTOP_PKGS='
 	dmz-cursor-theme
 '
 
-install $MISC_KDE_PKGS $NX_DESKTOP_PKG
+install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS
 
 
 #	Install Nvidia driver.
@@ -326,7 +326,6 @@ puts "ADDING MISC. FIXES."
 cat /configs/files/casper.conf > /etc/casper.conf
 
 ln -sv /usr/share/xsessions/i3.desktop /usr/share/xsessions/plasma.desktop 
-
 
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
