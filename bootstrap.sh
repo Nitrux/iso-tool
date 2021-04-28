@@ -135,7 +135,7 @@ puts "INSTALLING CASPER PACKAGES."
 
 CASPER_PKGS='
 	casper/bionic-updates
-	lupin-casper/bionic-updates
+	lupin-casper/bionic
 '
 
 install $CASPER_PKGS
