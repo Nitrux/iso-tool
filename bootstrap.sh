@@ -43,7 +43,6 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
-	debconf
 	dhcpcd5
 	gnupg2
 '
@@ -67,7 +66,6 @@ EXTRA_PKGS='
 SYSTEMD_RDEP_PKGS='
 	bluez
 	btrfs-progs
-	libpam-runtime
 	rng-tools
 	systemd
 	systemd-sysv

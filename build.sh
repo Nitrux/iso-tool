@@ -9,7 +9,6 @@ set -xe
 
 XORRISO_PKGS='
 	libburn4
-	libgcc1
 	libisoburn1
 	libisofs6
 	libjte2
