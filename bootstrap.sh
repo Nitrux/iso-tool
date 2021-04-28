@@ -18,7 +18,7 @@ install_downgrades () { apt -yy install --no-install-recommends --allow-downgrad
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
-remove_dpkg () { rm-dpkg }
+remove_dpkg () { rm-dpkg; }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
@@ -218,8 +218,6 @@ NITRUX_BASE_PKGS='
 
 NVIDIA_DRV_PKGS='
 	libxnvctrl0
-	nvidia-driver-460
-	nvidia-prime
 	nvidia-x11-config
 '
 
@@ -232,11 +230,8 @@ install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 
 puts "INSTALLING DESKTOP PACKAGES."
 
-LIBPNG12_PKG='
-	libpng12-0/nitrux
-'
-
 PLYMOUTH_XENIAL_PKGS='
+	libpng12-0/nitrux
 	plymouth/xenial-updates
 	plymouth-themes/xenial-updates
 	plymouth-label/xenial-updates
@@ -263,7 +258,7 @@ HOLD_MISC_PKGS='
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
 
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+install_downgrades $PLYMOUTH_XENIAL_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
 hold $HOLD_MISC_PKGS
 
 
