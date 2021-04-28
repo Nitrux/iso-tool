@@ -47,6 +47,7 @@ BASIC_PKGS='
 	dhcpcd5
 	gnupg2
 '
+
 EXTRA_PKGS='
 	avahi-daemon
 	cups-daemon
