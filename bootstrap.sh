@@ -239,6 +239,7 @@ PLYMOUTH_XENIAL_PKGS='
 '
 
 NX_DESKTOP_PKG='
+	nitrux-hardware-drivers
 	nx-desktop
 '
 
