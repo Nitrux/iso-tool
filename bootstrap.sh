@@ -213,6 +213,7 @@ puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_KERNEL_PKGS='
 	base-files=12.1.1+nitrux
+	nitrux-hardware-drivers
 	linux-image-mainline-vfio
 '
 
@@ -239,7 +240,6 @@ PLYMOUTH_XENIAL_PKGS='
 '
 
 NX_DESKTOP_PKG='
-	nitrux-hardware-drivers
 	nx-desktop
 '
 
