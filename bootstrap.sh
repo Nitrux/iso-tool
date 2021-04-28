@@ -385,7 +385,6 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use LZ4 compression when creating the initramfs.
 #	Add persistence script.
 #	Add fstab mount binds.
 
