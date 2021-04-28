@@ -217,6 +217,7 @@ NITRUX_BASE_PKGS='
 
 install $NITRUX_BASE_PKGS 
 
+
 #	Install Nvidia driver.
 
 NVIDIA_DRV_PKGS='
