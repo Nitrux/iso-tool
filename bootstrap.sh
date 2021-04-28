@@ -206,28 +206,17 @@ DEVUAN_SYS_PKGS='
 
 install $DEVUAN_SYS_PKGS
 
+
 #	Install base system metapackages.
 
-puts "INSTALLING BASE SYSTEM."
+puts "INSTALLING BASE FILES AND KERNEL."
 
-NITRUX_BASE_PKGS='
+NITRUX_BASE_KERNEL_PKGS='
 	base-files=12.1.1+nitrux
-	nitrux-hardware-drivers
 	linux-image-mainline-vfio
 '
 
-install $NITRUX_BASE_PKGS 
-
-
-#	Install Nvidia driver.
-
-NVIDIA_DRV_PKGS='
-	libxnvctrl0
-	nvidia-x11-config
-	screen-resolution-extra
-'
-
-install $NVIDIA_DRV_PKGS
+install $NITRUX_BASE_KERNEL_PKGS 
 
 
 #	Install NX Desktop metapackage.
@@ -235,12 +224,11 @@ install $NVIDIA_DRV_PKGS
 #	because otherwise the splash is not shown.
 #	
 #	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
-#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
-
-sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
-
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
 
 puts "INSTALLING DESKTOP PACKAGES."
+
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
 PLYMOUTH_XENIAL_PKGS='
 	libpng12-0/nitrux
@@ -259,6 +247,17 @@ MISC_KDE_PKGS='
 '
 
 install_downgrades $PLYMOUTH_XENIAL_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+
+
+#	Install Nvidia driver.
+
+NVIDIA_DRV_PKGS='
+	libxnvctrl0
+	nvidia-x11-config
+	screen-resolution-extra
+'
+
+install $NVIDIA_DRV_PKGS
 
 
 #	Upgrade, downgrade and install misc. packages.
