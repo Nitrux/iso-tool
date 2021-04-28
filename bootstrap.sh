@@ -215,12 +215,17 @@ NITRUX_BASE_PKGS='
 	linux-image-mainline-vfio
 '
 
+install $NITRUX_BASE_PKGS 
+
+#	Install Nvidia driver.
+
 NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-x11-config
+	screen-resolution-extra
 '
 
-install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
+install $NVIDIA_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
