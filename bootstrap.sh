@@ -234,14 +234,6 @@ puts "INSTALLING DESKTOP PACKAGES."
 
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
-PLYMOUTH_XENIAL_PKGS='
-	libpng12-0/nitrux
-	plymouth/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth-label/xenial-updates
-	libplymouth4/xenial-updates
-'
-
 NX_DESKTOP_PKG='
 	nx-desktop
 '
@@ -250,7 +242,15 @@ MISC_KDE_PKGS='
 	latte-dock
 '
 
-install_downgrades $PLYMOUTH_XENIAL_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+PLYMOUTH_XENIAL_PKGS='
+	libpng12-0/nitrux
+	plymouth/xenial-updates
+	plymouth-themes/xenial-updates
+	plymouth-label/xenial-updates
+	libplymouth4/xenial-updates
+'
+
+install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $PLYMOUTH_XENIAL_PKGS
 
 
 #	Install Nvidia driver.
