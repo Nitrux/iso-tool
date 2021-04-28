@@ -211,13 +211,13 @@ install $DEVUAN_SYS_PKGS
 
 puts "INSTALLING BASE FILES AND KERNEL."
 
-NITRUX_BASE_KERNEL_PKGS='
+NITRUX_BASE_KERNEL_DRV_PKGS='
 	base-files=12.1.1+nitrux
 	nitrux-hardware-drivers
 	linux-image-mainline-vfio
 '
 
-install $NITRUX_BASE_KERNEL_PKGS 
+install $NITRUX_BASE_KERNEL_DRV_PKGS 
 
 
 #	Install NX Desktop metapackage.
