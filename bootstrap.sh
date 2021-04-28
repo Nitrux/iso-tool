@@ -18,6 +18,7 @@ install_downgrades () { apt -yy install --no-install-recommends --allow-downgrad
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
+remove_dpkg () { /configs/scripts/rm-dpkg.sh }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
@@ -51,8 +52,6 @@ PRE_BUILD_PKGS='
 	cups-daemon
 	dictionaries-common
 	efibootmgr
-	language-pack-en
-	language-pack-es
 	libpam-runtime
 	os-prober
 	rng-tools
@@ -141,16 +140,16 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-ADD_SYSTEMCTL_PKG='
-	systemctl
+SYSTEMCTL_PKG='
+	systemctl/focal
 '
 
-install_downgrades $DEVUAN_ELOGIND_PKGS
+install $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
-install -t focal $ADD_SYSTEMCTL_PKG
+install $SYSTEMCTL_PKG
 fix_install
-hold $ADD_SYSTEMCTL_PKG
+hold $SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
@@ -158,20 +157,20 @@ hold $ADD_SYSTEMCTL_PKG
 puts "ADDING POLICYKIT."
 
 DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0
-	libpolkit-backend-1-0
-	libpolkit-backend-elogind-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
+	libpolkit-agent-1-0/beowulf
+	libpolkit-backend-1-0/beowulf
+	libpolkit-backend-elogind-1-0/beowulf
+	libpolkit-gobject-1-0/beowulf
+	libpolkit-gobject-elogind-1-0/beowulf
+	policykit-1/beowulf
 '
 
-install -t beowulf $DEVUAN_POLKIT_PKGS
+install $DEVUAN_POLKIT_PKGS
 
 
 #	Add NetworkManager and udisks2 from Devuan.
 
 DEVUAN_NETWORKMANAGER_PKGS='
-	init-system-helpers
 	libnm0
 	network-manager
 '
@@ -189,6 +188,7 @@ install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
 puts "ADDING OPENRC AS INIT."
 
 DEVUAN_INIT_PKGS='
+	init-system-helpers
 	initscripts
 	openrc
 	policycoreutils
@@ -196,7 +196,7 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-install_downgrades $DEVUAN_INIT_PKGS
+install $DEVUAN_INIT_PKGS
 
 
 #	Install base system metapackages.
@@ -238,23 +238,12 @@ PLYMOUTH_XENIAL_PKGS='
 	libplymouth4/xenial-updates
 '
 
-DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=14.2-2
-	libpulse0=14.2-2
-	libpulsedsp=14.2-2
-	pulseaudio-module-bluetooth=14.2-2
-	pulseaudio-utils=14.2-2
-	pulseaudio=14.2-2
-'
-
 MISC_KDE_PKGS='
-	plasma-pa=4:5.20.5-1
 	latte-dock
 '
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	sudo/ceres
 '
 
 HOLD_MISC_PKGS='
@@ -269,7 +258,7 @@ HOLD_MISC_PKGS='
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
 
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
+install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
 hold $HOLD_MISC_PKGS
 
 
@@ -281,6 +270,8 @@ puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
 	linux-firmware
+	bluez
+	sudo
 '
 
 UPDATE_GLIBC_PKGS='
@@ -289,17 +280,12 @@ UPDATE_GLIBC_PKGS='
 	locales
 '
 
-DOWNGRADE_MISC_PKGS='
-	bluez/ceres
-'
-
 INSTALL_MISC_PKGS='
 	patchelf
 '
 
 update
 only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
-install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
 
 
@@ -374,7 +360,7 @@ puts "ADDING MISC. FIXES."
 cat /configs/files/casper.conf > /etc/casper.conf
 
 rm \
-	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
+	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
 
 #	Implement a new FHS.
@@ -411,38 +397,22 @@ update-initramfs -u
 
 
 #	Remove Dash.
-
-puts "REMOVING DASH."
-
-REMOVE_DASH_PKG='
-	dash
-'
-
-dpkg_force_remove $REMOVE_DASH_PKG || true
-
-ln -svf /bin/mksh /bin/sh
-
-dpkg_force_remove $REMOVE_DASH_PKG
-
-
 #	Remove APT.
 
-puts "REMOVING APT."
+puts "REMOVING DASH, CASPER AND APT."
 
-REMOVE_APT_PKGS='
+REMOVE_DASH_APT_PKGS='
 	apt
 	apt-utils
 	apt-transport-https
+	dash
 '
 
-dpkg_force_remove $REMOVE_APT_PKGS
+dpkg_force_remove $REMOVE_DASH_APT_PKGS || true
 
+ln -svf /bin/mksh /bin/sh
 
-#	Clean the filesystem.
-
-puts "REMOVING CASPER."
-
-dpkg_force_remove $CASPER_PKGS
+dpkg_force_remove $REMOVE_DASH_APT_PKGS $CASPER_PKGS
 
 
 #	WARNING:
@@ -453,7 +423,7 @@ dpkg_force_remove $CASPER_PKGS
 
 puts "REMOVING DPKG."
 
-/configs/scripts/rm-dpkg.sh
+remove_dpkg
 
 
 #	Check contents of /boot.

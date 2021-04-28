@@ -6,15 +6,47 @@ Package: fuse
 Pin: release *
 Pin-Priority: -1
 
+Package: k3b
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
 Package: latte-dock
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: plymouth-theme-spinner
-Pin: release *
+Package: libpulse0
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: plasma-pa
+Package: libpulsedsp
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulse-mainloop-glib0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio-utils
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio-module-gsettings
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio-module-bluetooth
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
 
@@ -23,14 +55,6 @@ Pin: release *
 Pin-Priority: -1
 
 Package: xterm
-Pin: release *
-Pin-Priority: -1
-
-Package: k3b
-Pin: release *
-Pin-Priority: -1
-
-Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
 
