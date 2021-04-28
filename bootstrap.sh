@@ -53,6 +53,11 @@ EXTRA_PKGS='
 	cups-daemon
 	dictionaries-common
 	efibootmgr
+	language-pack-en
+	language-pack-es
+	language-pack-de
+	language-pack-pt
+	language-pack-fr
 	os-prober
 	squashfs-tools
 	sudo
