@@ -16,9 +16,10 @@ hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
-remove_dpkg () { rm-dpkg; }
+remove_dpkg () { /usr/bin/rm-dpkg; }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
@@ -28,10 +29,13 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
-#	PRE_BUILD_PKGS are packages that for one reason or the other do not get pulled when
+#	
+#	Install extra packages.
+#
+#	SYSTEMD_RDEP_PKGS are packages that for one reason or the other do not get pulled when
 #	the metapackages are installed, or, that require systemd to be present and can't be installed
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
-#	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
+#	the rest of the packages.
 
 puts "INSTALLING BASIC PACKAGES."
 
@@ -43,29 +47,43 @@ BASIC_PKGS='
 	dhcpcd5
 	gnupg2
 '
-
-PRE_BUILD_PKGS='
+EXTRA_PKGS='
 	avahi-daemon
-	bluez
-	btrfs-progs
-	cgroupfs-mount
 	cups-daemon
 	dictionaries-common
 	efibootmgr
-	libpam-runtime
 	os-prober
-	rng-tools
 	squashfs-tools
 	sudo
+	xz-utils
+'
+
+SYSTEMD_RDEP_PKGS='
+	bluez
+	btrfs-progs
+	libpam-runtime
+	rng-tools
 	systemd
 	systemd-sysv
 	ufw
 	user-setup
-	xz-utils
 '
 
 update
-install $BASIC_PKGS $PRE_BUILD_PKGS
+install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
+
+
+#	Hold misc. packages.
+
+puts "HOLD MISC. PACKAGES."
+
+HOLD_MISC_PKGS='
+	dictionaries-common
+	cgroupfs-mount
+	ssl-cert
+'
+
+hold $HOLD_MISC_PKGS
 
 
 #	Add key for Neon repository.
@@ -116,9 +134,14 @@ cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
 puts "INSTALLING CASPER PACKAGES."
 
 CASPER_PKGS='
-	casper
-	lupin-casper
+	casper/bionic-updates
+	lupin-casper/bionic-updates
 '
+
+install $CASPER_PKGS
+
+
+#	Hold initramfs packages.
 
 INITRAMFS_PKGS='
 	initramfs-tools
@@ -126,11 +149,10 @@ INITRAMFS_PKGS='
 	initramfs-tools-bin
 '
 
-install -t bionic-updates $CASPER_PKGS
 hold $INITRAMFS_PKGS
 
 
-#	Use elogind packages from Devuan.
+#	Add elogind packages from Devuan.
 
 puts "ADDING ELOGIND."
 
@@ -143,6 +165,8 @@ REMOVE_SYSTEMD_PKGS='
 	systemd
 	systemd-sysv
 	libsystemd0
+	libargon2-1
+	libcryptsetup12
 '
 
 SYSTEMCTL_PKG='
@@ -151,48 +175,26 @@ SYSTEMCTL_PKG='
 
 install $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
-autoremove
-install $SYSTEMCTL_PKG
-fix_install
-hold $SYSTEMCTL_PKG
+install_hold $SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
+#	Add NetworkManager and udisks2 from Devuan.
+#	Add OpenRC as init.
 
 puts "ADDING POLICYKIT."
 
-DEVUAN_POLKIT_PKGS='
+DEVUAN_SYS_PKGS='
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
 	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
 	policykit-1/beowulf
-'
-
-install $DEVUAN_POLKIT_PKGS
-
-
-#	Add NetworkManager and udisks2 from Devuan.
-
-DEVUAN_NETWORKMANAGER_PKGS='
 	libnm0
 	network-manager
-'
-
-DEVUAN_UDISKS2_PKGS='
 	libudisks2-0
 	udisks2
-'
-
-install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
-
-
-#	Add OpenRC as init.
-
-puts "ADDING OPENRC AS INIT."
-
-DEVUAN_INIT_PKGS='
 	init-system-helpers
 	initscripts
 	openrc
@@ -201,8 +203,7 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-install $DEVUAN_INIT_PKGS
-
+install $DEVUAN_SYS_PKGS
 
 #	Install base system metapackages.
 
@@ -211,8 +212,6 @@ puts "INSTALLING BASE SYSTEM."
 NITRUX_BASE_PKGS='
 	base-files=12.1.1+nitrux
 	nitrux-hardware-drivers
-	nitrux-minimal
-	nitrux-standard
 	linux-image-mainline-vfio
 '
 
@@ -227,6 +226,12 @@ install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
 #	Install NX Desktop metapackage.
 #	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
 #	because otherwise the splash is not shown.
+#	
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
+
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
+
 
 puts "INSTALLING DESKTOP PACKAGES."
 
@@ -238,28 +243,15 @@ PLYMOUTH_XENIAL_PKGS='
 	libplymouth4/xenial-updates
 '
 
-MISC_KDE_PKGS='
-	latte-dock
-'
-
 NX_DESKTOP_PKG='
 	nx-desktop
 '
 
-HOLD_MISC_PKGS='
-	cgroupfs-mount
-	ssl-cert
+MISC_KDE_PKGS='
+	latte-dock
 '
 
-
-#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
-#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
-
-sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
-
-
 install_downgrades $PLYMOUTH_XENIAL_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
-hold $HOLD_MISC_PKGS
 
 
 #	Upgrade, downgrade and install misc. packages.
@@ -424,6 +416,8 @@ dpkg_force_remove $REMOVE_DASH_APT_PKGS $CASPER_PKGS
 puts "REMOVING DPKG."
 
 remove_dpkg
+
+rm -r /usr/bin/rm-dpkg
 
 
 #	Check contents of /boot.
