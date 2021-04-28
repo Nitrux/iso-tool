@@ -266,14 +266,14 @@ install $NVIDIA_DRV_PKGS
 
 #	Upgrade, downgrade and install misc. packages.
 
-cp /configs/files/sources.list.hirsute /etc/apt/sources.list.d/ubuntu-hirsute-repo.list
+cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
 	linux-firmware
-	bluez
-	sudo
+	bluez/ceres
+	sudo/ceres
 '
 
 UPDATE_GLIBC_PKGS='
