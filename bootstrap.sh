@@ -16,8 +16,10 @@ hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
+remove_dpkg () { /usr/bin/rm-dpkg; }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
@@ -27,10 +29,13 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
-#	PRE_BUILD_PKGS are packages that for one reason or the other do not get pulled when
+#	
+#	Install extra packages.
+#
+#	SYSTEMD_RDEP_PKGS are packages that for one reason or the other do not get pulled when
 #	the metapackages are installed, or, that require systemd to be present and can't be installed
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
-#	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
+#	the rest of the packages.
 
 puts "INSTALLING BASIC PACKAGES."
 
@@ -38,26 +43,30 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
-	debconf
 	dhcpcd5
 	gnupg2
 '
 
-PRE_BUILD_PKGS='
+EXTRA_PKGS='
 	avahi-daemon
-	bluez
-	btrfs-progs
-	cgroupfs-mount
 	cups-daemon
 	dictionaries-common
 	efibootmgr
 	language-pack-en
 	language-pack-es
-	libpam-runtime
+	language-pack-de
+	language-pack-pt
+	language-pack-fr
 	os-prober
-	rng-tools
 	squashfs-tools
 	sudo
+	xz-utils
+'
+
+SYSTEMD_RDEP_PKGS='
+	bluez
+	btrfs-progs
+	rng-tools
 	systemd
 	systemd-sysv
 	ufw
@@ -65,7 +74,20 @@ PRE_BUILD_PKGS='
 '
 
 update
-install $BASIC_PKGS $PRE_BUILD_PKGS
+install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
+
+
+#	Hold misc. packages.
+
+puts "HOLD MISC. PACKAGES."
+
+HOLD_MISC_PKGS='
+	dictionaries-common
+	cgroupfs-mount
+	ssl-cert
+'
+
+hold $HOLD_MISC_PKGS
 
 
 #	Add key for Neon repository.
@@ -75,7 +97,7 @@ install $BASIC_PKGS $PRE_BUILD_PKGS
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
 
-puts "ADDING REPOSITORY KEYS."
+puts "INSTALLING REPOSITORY KEYS."
 
  add_keys \
 	55751E5D \
@@ -106,14 +128,24 @@ update
 cp /configs/files/preferences /etc/apt/preferences
 
 
+#	Add script to remove dpkg.
+
+cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
+
+
 #	Add casper packages from bionic.
 
 puts "INSTALLING CASPER PACKAGES."
 
 CASPER_PKGS='
-	casper
-	lupin-casper
+	casper/bionic-updates
+	lupin-casper/bionic
 '
+
+install $CASPER_PKGS
+
+
+#	Hold initramfs packages.
 
 INITRAMFS_PKGS='
 	initramfs-tools
@@ -121,13 +153,12 @@ INITRAMFS_PKGS='
 	initramfs-tools-bin
 '
 
-install -t bionic-updates $CASPER_PKGS
 hold $INITRAMFS_PKGS
 
 
-#	Use elogind packages from Devuan.
+#	Add elogind packages from Devuan.
 
-puts "ADDING ELOGIND."
+puts "INSTALLING ELOGIND."
 
 DEVUAN_ELOGIND_PKGS='
 	elogind
@@ -138,57 +169,37 @@ REMOVE_SYSTEMD_PKGS='
 	systemd
 	systemd-sysv
 	libsystemd0
+	libargon2-1
+	libcryptsetup12
 '
 
-ADD_SYSTEMCTL_PKG='
-	systemctl
+SYSTEMCTL_PKG='
+	systemctl/focal
 '
 
-install_downgrades $DEVUAN_ELOGIND_PKGS
+install $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
-autoremove
-install -t focal $ADD_SYSTEMCTL_PKG
-fix_install
-hold $ADD_SYSTEMCTL_PKG
+install_hold $SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
-
-puts "ADDING POLICYKIT."
-
-DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0
-	libpolkit-backend-1-0
-	libpolkit-backend-elogind-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
-'
-
-install -t beowulf $DEVUAN_POLKIT_PKGS
-
-
 #	Add NetworkManager and udisks2 from Devuan.
-
-DEVUAN_NETWORKMANAGER_PKGS='
-	init-system-helpers
-	libnm0
-	network-manager
-'
-
-DEVUAN_UDISKS2_PKGS='
-	libudisks2-0
-	udisks2
-'
-
-install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
-
-
 #	Add OpenRC as init.
 
-puts "ADDING OPENRC AS INIT."
+puts "INSTALLING POLICYKIT."
 
-DEVUAN_INIT_PKGS='
-	fgetty
+DEVUAN_SYS_PKGS='
+	libpolkit-agent-1-0/beowulf
+	libpolkit-backend-1-0/beowulf
+	libpolkit-backend-elogind-1-0/beowulf
+	libpolkit-gobject-1-0/beowulf
+	libpolkit-gobject-elogind-1-0/beowulf
+	policykit-1/beowulf
+	libnm0
+	network-manager
+	libudisks2-0
+	udisks2
+	init-system-helpers
 	initscripts
 	openrc
 	policycoreutils
@@ -196,58 +207,39 @@ DEVUAN_INIT_PKGS='
 	sysvinit-utils
 '
 
-install_downgrades $DEVUAN_INIT_PKGS
+install $DEVUAN_SYS_PKGS
 
 
 #	Install base system metapackages.
 
-puts "INSTALLING BASE SYSTEM."
+puts "INSTALLING BASE FILES AND KERNEL."
 
-NITRUX_BASE_PKGS='
+NITRUX_BASE_KERNEL_DRV_PKGS='
 	base-files=12.1.1+nitrux
 	nitrux-hardware-drivers-minimal
-	nitrux-minimal
-	nitrux-standard
 	linux-image-mainline-vfio
 '
 
-NVIDIA_DRV_PKGS='
-	nvidia-x11-config
-	screen-resolution-extra
-'
-
-install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
+install $NITRUX_BASE_KERNEL_DRV_PKGS 
 
 
 #	Install NX Desktop metapackage.
 #	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
 #	because otherwise the splash is not shown.
+#	
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
 
 puts "INSTALLING DESKTOP PACKAGES."
 
-LIBPNG12_PKG='
-	
-'
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
-PLYMOUTH_XENIAL_PKGS='
-	
-'
-
-DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=14.2-2
-	libpulse0=14.2-2
-	libpulsedsp=14.2-2
-	pulseaudio-module-bluetooth=14.2-2
-	pulseaudio-utils=14.2-2
-	pulseaudio=14.2-2
+NX_DESKTOP_PKG='
+	nx-desktop-minimal
 '
 
 MISC_KDE_PKGS='
 	sddm
-'
-
-NX_DESKTOP_PKG='
-	nx-desktop-minimal
 '
 
 MISC_DESKTOP_PKGS='
@@ -257,30 +249,30 @@ MISC_DESKTOP_PKGS='
 	dmz-cursor-theme
 '
 
-HOLD_MISC_PKGS='
-	cgroupfs-mount
-	ssl-cert
+install $MISC_KDE_PKGS $NX_DESKTOP_PKG
+
+
+#	Install Nvidia driver.
+
+NVIDIA_DRV_PKGS='
+	libxnvctrl0
+	nvidia-x11-config
+	screen-resolution-extra
 '
 
-
-#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
-#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
-
-sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
-
-
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
-hold $HOLD_MISC_PKGS
+install $NVIDIA_DRV_PKGS
 
 
 #	Upgrade, downgrade and install misc. packages.
 
-cp /configs/files/sources.list.hirsute /etc/apt/sources.list.d/ubuntu-hirsute-repo.list
+cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
 	linux-firmware
+	bluez/ceres
+	sudo/ceres
 '
 
 UPDATE_GLIBC_PKGS='
@@ -289,23 +281,18 @@ UPDATE_GLIBC_PKGS='
 	locales
 '
 
-DOWNGRADE_MISC_PKGS='
-	bluez/ceres
-'
-
 INSTALL_MISC_PKGS='
 	patchelf
 '
 
 update
 only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
-install_downgrades_hold $DOWNGRADE_MISC_PKGS
 install $INSTALL_MISC_PKGS
 
 
 #	Add OpenRC configuration.
 
-puts "ADDING OPENRC CONFIG."
+puts "INSTALLING OPENRC CONFIG."
 
 OPENRC_CONFIG='
 	openrc-config
@@ -316,7 +303,7 @@ install $OPENRC_CONFIG
 
 #	Add live user.
 
-puts "ADDING LIVE USER."
+puts "INSTALLING LIVE USER."
 
 NX_LIVE_USER_PKG='
 	nitrux-live-user
@@ -340,7 +327,9 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 ln -sv /usr/share/xsessions/i3.desktop /usr/share/xsessions/plasma.desktop 
 
-rm -r /home/travis || true
+
+rm \
+	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
 
 #	Implement a new FHS.
@@ -363,13 +352,11 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use LZ4 compression when creating the initramfs.
 #	Add persistence script.
 #	Add fstab mount binds.
 
 puts "UPDATING THE INITRAMFS."
 
-cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
@@ -377,24 +364,25 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 update-initramfs -u
 
 
+#	Remove Dash.
 #	Remove APT.
 
-puts "REMOVING APT."
+puts "REMOVING DASH, CASPER AND APT."
 
-REMOVE_APT_PKGS='
+REMOVE_DASH_CASPER_APT_PKGS='
 	apt
 	apt-utils
 	apt-transport-https
+	dash
+	casper
+	lupin-casper
 '
 
-dpkg_force_remove $REMOVE_APT_PKGS
+dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 
+ln -svf /bin/mksh /bin/sh
 
-#	Clean the filesystem.
-
-puts "REMOVING CASPER."
-
-dpkg_force_remove $CASPER_PKGS
+dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
 
 
 #	WARNING:
@@ -405,32 +393,41 @@ dpkg_force_remove $CASPER_PKGS
 
 puts "REMOVING DPKG."
 
-/configs/scripts/rm-dpkg.sh
+remove_dpkg
+
+rm -r /usr/bin/rm-dpkg
 
 
 #	Check contents of /boot.
 #	Check contents of OpenRC runlevels.
+#	Check links to kernel and initramdisk.
+#	Check contents of init.d and sddm.conf.d.
+#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper.
+#	Check contents of /Applications.
 #	Check that init system is not systemd.
-#	Check if VFIO module is included in the initramfs.
-#	Check existence and contents of casper.conf
-#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-#	Check contents of /Applications
-#	Check contents of sddm.conf
-#	Check existence of sddm.conf.d
+#	Check that /bin/sh is in fact not Dash.
+#	Check existence and contents of casper.conf and sddm.conf.
+#	Check that the VFIO driver is included in the intiramfs.
 
-ls -l /boot
-ls -l /vmlinuz /initrd.img
-ls -l /etc/init.d/ \
-	/etc/runlevels/default/ \
-	/etc/runlevels/nonetwork/ \
-	/etc/runlevels/off \
-	/etc/runlevels/recovery/ \
-	/etc/runlevels/sysinit/stat /sbin/init
-cat /etc/casper.conf
+
+puts "PERFORM MANUAL CHECKS."
+
+ls -lh \
+	/boot \
+	/etc/runlevels/{default,nonetwork,off,recovery,sysinit} \
+	/{vmlinuz,initrd.img} \
+	/etc/{init.d,sddm.conf.d} \
+	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
+	/Applications || true
+
+stat \
+	/sbin/init \
+	/bin/sh
+
+cat \
+	/etc/{casper.conf,sddm.conf}
+
 lsinitramfs -l /boot/initrd.img* | grep vfio
-ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-ls -l /Applications
-cat /etc/sddm.conf
-file -d /etc/sddm.conf.d
+
 
 puts "EXITING BOOTSTRAP."
