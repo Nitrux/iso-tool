@@ -94,7 +94,7 @@ hold $HOLD_MISC_PKGS
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
 
-puts "ADDING REPOSITORY KEYS."
+puts "INSTALLING REPOSITORY KEYS."
 
  add_keys \
 	55751E5D \
@@ -155,7 +155,7 @@ hold $INITRAMFS_PKGS
 
 #	Add elogind packages from Devuan.
 
-puts "ADDING ELOGIND."
+puts "INSTALLING ELOGIND."
 
 DEVUAN_ELOGIND_PKGS='
 	elogind
@@ -183,7 +183,7 @@ install_hold $SYSTEMCTL_PKG
 #	Add NetworkManager and udisks2 from Devuan.
 #	Add OpenRC as init.
 
-puts "ADDING POLICYKIT."
+puts "INSTALLING POLICYKIT."
 
 DEVUAN_SYS_PKGS='
 	libpolkit-agent-1-0/beowulf
@@ -290,7 +290,7 @@ install $INSTALL_MISC_PKGS
 
 #	Add OpenRC configuration.
 
-puts "ADDING OPENRC CONFIG."
+puts "INSTALLING OPENRC CONFIG."
 
 OPENRC_CONFIG='
 	openrc-config
@@ -301,7 +301,7 @@ install $OPENRC_CONFIG
 
 #	Add live user.
 
-puts "ADDING LIVE USER."
+puts "INSTALLING LIVE USER."
 
 NX_LIVE_USER_PKG='
 	nitrux-live-user
@@ -400,18 +400,20 @@ update-initramfs -u
 
 puts "REMOVING DASH, CASPER AND APT."
 
-REMOVE_DASH_APT_PKGS='
+REMOVE_DASH_CASPER_APT_PKGS='
 	apt
 	apt-utils
 	apt-transport-https
 	dash
+	casper
+	lupin-casper
 '
 
-dpkg_force_remove $REMOVE_DASH_APT_PKGS || true
+dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 
 ln -svf /bin/mksh /bin/sh
 
-dpkg_force_remove $REMOVE_DASH_APT_PKGS $CASPER_PKGS
+dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
 
 
 #	WARNING:
