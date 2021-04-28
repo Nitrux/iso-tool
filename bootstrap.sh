@@ -54,7 +54,6 @@ PRE_BUILD_PKGS='
 	language-pack-en
 	language-pack-es
 	libpam-runtime
-	lz4
 	os-prober
 	rng-tools
 	squashfs-tools
@@ -63,6 +62,7 @@ PRE_BUILD_PKGS='
 	systemd-sysv
 	ufw
 	user-setup
+	xz-utils
 '
 
 update
@@ -373,6 +373,9 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
+rm \
+	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
+
 
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
@@ -400,7 +403,6 @@ cp /configs/files/hidden /.hidden
 
 puts "UPDATING THE INITRAMFS."
 
-cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
