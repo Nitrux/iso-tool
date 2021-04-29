@@ -181,7 +181,7 @@ install $OPENRC_INIT_PKGS
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-mainline-lts-5.4
+	linux-image-mainline-lts
 '
 
 install $MAINLINE_KERNEL_PKG
@@ -561,8 +561,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-ln -svf /boot/vmlinuz-5.4.111-0504111-generic /vmlinuz
-ln -svf /boot/initrd.img-5.4.111-0504111-generic /initrd.img
+ln -svf /boot/vmlinuz-5.10.33-051033-generic /vmlinuz
+ln -svf /boot/initrd.img-5.10.33-051033-generic /initrd.img
 
 dpkg_force_remove dash || true
 
