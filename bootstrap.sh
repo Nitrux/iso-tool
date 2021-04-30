@@ -475,7 +475,7 @@ INSTALL_MAUI_APPS_PKGS='
 	vvave
 '
 
-download $INSTALL_MAUIKIT_PKGS
+download $INSTALL_MAUI_APPS_PKGS
 dpkg_force_install *.deb
 rm -r *.deb
 fix_install
