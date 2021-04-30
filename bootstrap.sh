@@ -444,11 +444,10 @@ INSTALL_MAUIKIT_PKGS='
 	applet-window-buttons
 '
 
-mkdir -p /debs/mauikit
 download $INSTALL_MAUIKIT_PKGS
-dpkg_install /debs/mauikit/mauikit*.deb
-dpkg_force_install /debs/mauikit/applet-*.deb
-rm -r /debs/mauikit
+dpkg_install mauikit*.deb
+dpkg_force_install applet-*.deb
+rm -r *.deb
 
 
 NX_DESKTOP_PKG='
@@ -475,10 +474,9 @@ INSTALL_MAUI_APPS_PKGS='
 	vvave
 '
 
-mkdir -p /debs/maui_apps
-download $INSTALL_MAUI_APPS_PKGS
-dpkg_force_install /debs/maui_apps/*.deb
-rm -r /debs/maui_apps
+download $INSTALL_MAUIKIT_PKGS
+dpkg_force_install *.deb
+rm -r *.deb
 
 
 rm \
