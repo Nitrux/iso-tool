@@ -19,6 +19,7 @@ dpkg_force_install () { dpkg --force-all -i $@; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
 download () { apt download $@; }
 fix_install () { apt -yy --fix-broken install $@; }
+fix_install_no_recommends () { apt -yy --fix-broken install --no-install-recommends $@; }
 hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
@@ -474,12 +475,13 @@ INSTALL_MAUI_APPS_PKGS='
 	station
 	vvave
 	maui-apps
+	mpv
 '
 
 download $INSTALL_MAUI_APPS_PKGS
 dpkg_force_install *.deb || true
 rm -r *.deb
-fix_install
+fix_install_no_recommends
 
 
 rm \
