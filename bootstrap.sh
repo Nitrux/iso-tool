@@ -603,7 +603,7 @@ dpkg-query -f '${binary:Package}\n' -W | wc -l
 
 puts "PERFORM MANUAL CHECKS."
 
-ls -l \
+ls -lh \
 	/boot \
 	/etc/runlevels/{default,nonetwork,off,recovery,sysinit} \
 	/{vmlinuz,initrd.img} \
