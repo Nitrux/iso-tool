@@ -448,6 +448,7 @@ download $INSTALL_MAUIKIT_PKGS
 dpkg_install mauikit*.deb || true
 dpkg_force_install applet-*.deb  || true
 rm -r *.deb
+fix_install
 
 
 NX_DESKTOP_PKG='
@@ -477,6 +478,7 @@ INSTALL_MAUI_APPS_PKGS='
 download $INSTALL_MAUIKIT_PKGS
 dpkg_force_install *.deb
 rm -r *.deb
+fix_install
 
 
 rm \
