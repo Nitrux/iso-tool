@@ -445,8 +445,8 @@ INSTALL_MAUIKIT_PKGS='
 '
 
 download $INSTALL_MAUIKIT_PKGS
-dpkg_install mauikit*.deb
-dpkg_force_install applet-*.deb
+dpkg_install mauikit*.deb || true
+dpkg_force_install applet-*.deb  || true
 rm -r *.deb
 
 
