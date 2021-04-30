@@ -474,7 +474,6 @@ INSTALL_MAUI_APPS_PKGS='
 	shelf
 	station
 	vvave
-	maui-apps
 '
 
 download $INSTALL_MAUI_APPS_PKGS

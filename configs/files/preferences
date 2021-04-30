@@ -114,6 +114,10 @@ Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
 
+Package: qml-module-qmltermwidget
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: xterm
 Pin: release *
 Pin-Priority: -1
