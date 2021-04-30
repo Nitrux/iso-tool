@@ -446,9 +446,9 @@ INSTALL_MAUIKIT_PKGS='
 
 mkdir -p /debs/mauikit
 download $INSTALL_MAUIKIT_PKGS
-dpkg_install /deb/mauikit/mauikit.deb
-dpkg_force_install /deb/mauikit/applet-*.deb
-rm -r /deb/mauikit
+dpkg_install /debs/mauikit/mauikit*.deb
+dpkg_force_install /debs/mauikit/applet-*.deb
+rm -r /debs/mauikit
 
 
 NX_DESKTOP_PKG='
@@ -477,7 +477,7 @@ INSTALL_MAUI_APPS_PKGS='
 
 mkdir -p /debs/maui_apps
 download $INSTALL_MAUI_APPS_PKGS
-dpkg_force_install /deb/maui_apps/*.deb
+dpkg_force_install /debs/maui_apps/*.deb
 rm -r /debs/maui_apps
 
 
