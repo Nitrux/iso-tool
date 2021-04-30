@@ -422,6 +422,8 @@ update
 #	Use MISC_DESKTOP_PKGS to add packages to test. If tests are positive, add to the appropriate meta-package.
 #
 #	Use the KDE Neon repository to provide the latest stable release of Plasma and KF5.
+#
+#	We're installing the Maui apps and Mauikit like this because the AppImages are broken with recent versions of Kirigami.
 
 add_keys \
 	55751E5D \
@@ -436,6 +438,18 @@ update
 
 puts "ADDING NX DESKTOP."
 
+INSTALL_MAUIKIT_PKGS='
+	mauikit
+	applet-window-buttons
+'
+
+mkdir -p /debs/mauikit
+download $INSTALL_MAUIKIT_PKGS
+dpkg_install /deb/mauikit/mauikit*.deb
+dpkg_force_install /deb/mauikit/applet-*.deb
+rm -r /deb/mauikit
+
+
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
 '
@@ -447,6 +461,24 @@ MISC_DESKTOP_PKGS='
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+
+
+INSTALL_MAUI_APPS_PKGS='
+	buho
+	clip
+	index
+	nota
+	pix
+	shelf
+	station
+	vvave
+'
+
+mkdir -p /debs/maui_apps
+download $INSTALL_MAUI_APPS_PKGS
+dpkg_force_install /deb/maui_apps/*.deb
+rm -r /debs/maui_apps
+
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list \
