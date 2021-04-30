@@ -446,7 +446,7 @@ INSTALL_MAUIKIT_PKGS='
 
 mkdir -p /debs/mauikit
 download $INSTALL_MAUIKIT_PKGS
-dpkg_install /deb/mauikit/mauikit*.deb
+dpkg_install /deb/mauikit/mauikit.deb
 dpkg_force_install /deb/mauikit/applet-*.deb
 rm -r /deb/mauikit
 
