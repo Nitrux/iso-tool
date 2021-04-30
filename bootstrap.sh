@@ -444,9 +444,8 @@ MISC_DESKTOP_PKGS='
 	libpython3.8
 	libpython3.8-minimal
 	libpython3.8-stdlib
-	libkpmcore10
 '
-pkg_policy libkpmcore10
+
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \

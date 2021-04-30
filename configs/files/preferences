@@ -94,6 +94,10 @@ Package: partitionmanager
 Pin: version 20.12.3-*
 Pin-Priority: -1
 
+Package: partitionmanager
+Pin: version 21.04.*
+Pin-Priority: -1
+
 Package: policykit-1
 Pin: release o=Ubuntu,a=focal,n=focal
 Pin-Priority: -1
