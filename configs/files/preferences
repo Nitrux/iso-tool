@@ -66,10 +66,6 @@ Package: libglu1-mesa
 Pin: release o=Ubuntu,a=focal,n=focal
 Pin-Priority: -1
 
-Package: libkpmcore10
-Pin: version 20.12.3-*
-Pin-Priority: -1
-
 Package: libpulse0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
@@ -84,18 +80,6 @@ Pin-Priority: -1
 
 Package: rng-tools
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: partitionmanager
-Pin: version 20.12.2-*
-Pin-Priority: -1
-
-Package: partitionmanager
-Pin: version 20.12.3-*
-Pin-Priority: -1
-
-Package: partitionmanager
-Pin: version 21.04.*
 Pin-Priority: -1
 
 Package: policykit-1
