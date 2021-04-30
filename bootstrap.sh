@@ -475,7 +475,6 @@ INSTALL_MAUI_APPS_PKGS='
 	station
 	vvave
 	maui-apps
-	mpv
 '
 
 download $INSTALL_MAUI_APPS_PKGS
