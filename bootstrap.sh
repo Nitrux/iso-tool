@@ -17,6 +17,7 @@ dist_upgrade () { apt -yy dist-upgrade $@; }
 dpkg_install () { dpkg -i $@; }
 dpkg_force_install () { dpkg --force-all -i $@; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+download () { apt download $@; }
 fix_install () { apt -yy --fix-broken install $@; }
 hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
