@@ -468,6 +468,7 @@ install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 INSTALL_MAUI_APPS_PKGS='
 	buho
 	clip
+	communicator
 	index
 	nota
 	pix
