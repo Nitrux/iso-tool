@@ -475,6 +475,7 @@ INSTALL_MAUI_APPS_PKGS='
 	shelf
 	station
 	vvave
+	kquickimageeditor
 '
 
 download $INSTALL_MAUI_APPS_PKGS
