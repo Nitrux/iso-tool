@@ -55,7 +55,7 @@ Pin: release *
 Pin-Priority: -1
 
 Package: qml-module-qmltermwidget
-Pin: release o=Debian,a=unstable,n=sid
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: ufw
