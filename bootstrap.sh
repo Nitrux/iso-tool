@@ -14,10 +14,10 @@ appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
 dist_upgrade () { apt -yy dist-upgrade $@; }
-dpkg_install () { dpkg -i $@; }
+download () { apt download $@; }
 dpkg_force_install () { dpkg --force-all -i $@; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
-download () { apt download $@; }
+dpkg_install () { dpkg -i $@; }
 fix_install () { apt -yy --fix-broken install $@; }
 fix_install_no_recommends () { apt -yy --fix-broken install --no-install-recommends $@; }
 hold () { apt-mark hold $@; }
