@@ -8,20 +8,31 @@ export LC_ALL=C
 puts () { printf "\n\n --- %s\n" "$*"; }
 
 add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
+dist_upgrade () { apt -yy dist-upgrade $@; }
+download () { apt download $@; }
+dpkg_force_install () { dpkg --force-all -i $@; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+dpkg_install () { dpkg -i $@; }
 fix_install () { apt -yy --fix-broken install $@; }
+fix_install_no_recommends () { apt -yy --fix-broken install --no-install-recommends $@; }
 hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
+list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+pkg_policy () { apt-cache policy $@; }
 purge () { apt -yy purge --remove $@; }
 remove_dpkg () { /usr/bin/rm-dpkg; }
+remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
 update () { apt -qq update; }
+update_quiet () { apt -qq update; }
+upgrade () { apt -yy upgrade $@; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
@@ -229,10 +240,23 @@ install $NITRUX_BASE_KERNEL_DRV_PKGS
 #	
 #	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
+#
+#	We're installing the Maui apps and Mauikit like this because the AppImages are broken with recent versions of Kirigami.
 
 puts "INSTALLING DESKTOP PACKAGES."
 
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
+
+INSTALL_MAUIKIT_PKGS='
+	mauikit
+	applet-window-buttons
+'
+
+download $INSTALL_MAUIKIT_PKGS
+dpkg_install mauikit*.deb || true
+dpkg_force_install applet-*.deb  || true
+rm -r *.deb
+fix_install_no_recommends
 
 NX_DESKTOP_PKG='
 	nx-desktop
@@ -240,6 +264,7 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
+	maui-apps
 '
 
 PLYMOUTH_XENIAL_PKGS='
