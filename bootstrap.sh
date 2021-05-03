@@ -226,7 +226,7 @@ install $DEVUAN_SYS_PKGS
 puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_KERNEL_DRV_PKGS='
-	base-files=12.1.1+nitrux
+	base-files=12.1.2+nitrux
 	nitrux-hardware-drivers
 	linux-image-mainline-vfio
 '
@@ -262,9 +262,10 @@ NX_DESKTOP_PKG='
 	nx-desktop
 '
 
-MISC_KDE_PKGS='
+MISC_DESKTOP_PKGS='
 	latte-dock
 	maui-apps
+	kquickimageeditor
 '
 
 PLYMOUTH_XENIAL_PKGS='
@@ -275,7 +276,7 @@ PLYMOUTH_XENIAL_PKGS='
 	libplymouth4/xenial-updates
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $PLYMOUTH_XENIAL_PKGS
+install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_XENIAL_PKGS
 
 
 #	Install Nvidia driver.
