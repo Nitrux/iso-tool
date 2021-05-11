@@ -102,6 +102,10 @@ Package: index
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: nota
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 Package: pix
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
