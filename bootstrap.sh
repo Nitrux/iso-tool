@@ -63,11 +63,11 @@ EXTRA_PKGS='
 	cups-daemon
 	dictionaries-common
 	efibootmgr
+	language-pack-de
 	language-pack-en
 	language-pack-es
-	language-pack-de
-	language-pack-pt
 	language-pack-fr
+	language-pack-pt
 	os-prober
 	squashfs-tools
 	sudo
@@ -177,11 +177,11 @@ DEVUAN_ELOGIND_PKGS='
 '
 
 REMOVE_SYSTEMD_PKGS='
-	systemd
-	systemd-sysv
-	libsystemd0
 	libargon2-1
 	libcryptsetup12
+	libsystemd0
+	systemd
+	systemd-sysv
 '
 
 SYSTEMCTL_PKG='
@@ -197,25 +197,25 @@ install_hold $SYSTEMCTL_PKG
 #	Add NetworkManager and udisks2 from Devuan.
 #	Add OpenRC as init.
 
-puts "INSTALLING POLICYKIT."
+puts "INSTALLING DEVUAN SYS PACKAGES."
 
 DEVUAN_SYS_PKGS='
+	init-system-helpers
+	initscripts
+	libnm0
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
 	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
-	policykit-1/beowulf
-	libnm0
-	network-manager
 	libudisks2-0
-	udisks2
-	init-system-helpers
-	initscripts
+	network-manager
 	openrc
 	policycoreutils
+	policykit-1/beowulf
 	startpar
 	sysvinit-utils
+	udisks2
 '
 
 install $DEVUAN_SYS_PKGS
@@ -263,17 +263,17 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	kquickimageeditor
 	latte-dock
 	maui-apps
-	kquickimageeditor
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	libpng12-0/nitrux
-	plymouth/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth-label/xenial-updates
 	libplymouth4/xenial-updates
+	libpng12-0/nitrux
+	plymouth-label/xenial-updates
+	plymouth-themes/xenial-updates
+	plymouth/xenial-updates
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_XENIAL_PKGS
@@ -297,8 +297,8 @@ cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
-	linux-firmware
 	bluez/ceres
+	linux-firmware
 	sudo/ceres
 '
 
