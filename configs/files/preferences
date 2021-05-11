@@ -26,6 +26,22 @@ Package: libpulse0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
+Package: libpam-modules
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libpam-modules-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libpam-runtime
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libpam0g
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libpulsedsp
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
