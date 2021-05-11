@@ -85,6 +85,7 @@ SYSTEMD_RDEP_PKGS='
 '
 
 update
+upgrade
 install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 
 
@@ -93,7 +94,6 @@ install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 puts "HOLD MISC. PACKAGES."
 
 HOLD_MISC_PKGS='
-	dictionaries-common
 	cgroupfs-mount
 	ssl-cert
 '
@@ -156,15 +156,17 @@ CASPER_PKGS='
 install $CASPER_PKGS
 
 
-#	Hold initramfs packages.
+#	Hold initramfs and casper packages.
 
-INITRAMFS_PKGS='
+INITRAMFS_CASPER_PKGS='
+	casper
+	lupin-casper
 	initramfs-tools
 	initramfs-tools-core
 	initramfs-tools-bin
 '
 
-hold $INITRAMFS_PKGS
+hold $INITRAMFS_CASPER_PKGS
 
 
 #	Add elogind packages from Devuan.
@@ -231,7 +233,8 @@ NITRUX_BASE_KERNEL_DRV_PKGS='
 	linux-image-mainline-vfio
 '
 
-install $NITRUX_BASE_KERNEL_DRV_PKGS 
+install $NITRUX_BASE_KERNEL_DRV_PKGS
+upgrade
 
 
 #	Install NX Desktop metapackage.
@@ -247,16 +250,16 @@ puts "INSTALLING DESKTOP PACKAGES."
 
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
-INSTALL_MAUIKIT_PKGS='
-	mauikit
-	applet-window-buttons
-'
+# INSTALL_MAUIKIT_PKGS='
+# 	mauikit
+# 	applet-window-buttons
+# '
 
-download $INSTALL_MAUIKIT_PKGS
-dpkg_install mauikit*.deb || true
-dpkg_force_install applet-*.deb  || true
-rm -r *.deb
-fix_install_no_recommends
+# download $INSTALL_MAUIKIT_PKGS
+# dpkg_install mauikit*.deb || true
+# dpkg_force_install applet-*.deb  || true
+# rm -r *.deb
+# fix_install_no_recommends
 
 NX_DESKTOP_PKG='
 	nx-desktop
