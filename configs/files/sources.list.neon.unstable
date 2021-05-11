@@ -2,4 +2,4 @@
 # KDE Neon Repos #
 ##################
 
-deb http://archive.neon.kde.org/unstable focal main
+deb http://archive.neon.kde.org/dev/unstable focal main
