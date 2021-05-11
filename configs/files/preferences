@@ -86,6 +86,37 @@ Pin-Priority: -1
 #  Neon Package Priority #
 ##########################
 
+Package: buho
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: clip
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: communicator
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: index
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: pix
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: shelf
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: station
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: vvave
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
 
 ########################
 #  Repository Priority #
