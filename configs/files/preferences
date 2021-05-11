@@ -122,6 +122,10 @@ Package: libmauikit
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: qml-module-org-kde-mauikit
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################
