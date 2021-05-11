@@ -250,16 +250,16 @@ puts "INSTALLING DESKTOP PACKAGES."
 
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
-# INSTALL_MAUIKIT_PKGS='
-# 	mauikit
-# 	applet-window-buttons
-# '
+INSTALL_MAUIKIT_PKGS='
+	mauikit
+	applet-window-buttons
+'
 
-# download $INSTALL_MAUIKIT_PKGS
-# dpkg_install mauikit*.deb || true
-# dpkg_force_install applet-*.deb  || true
-# rm -r *.deb
-# fix_install_no_recommends
+download $INSTALL_MAUIKIT_PKGS
+dpkg_install mauikit*.deb || true
+dpkg_force_install applet-*.deb  || true
+rm -r *.deb
+fix_install_no_recommends
 
 NX_DESKTOP_PKG='
 	nx-desktop
