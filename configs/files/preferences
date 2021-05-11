@@ -118,6 +118,10 @@ Package: vvave
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: libmauikit
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################
