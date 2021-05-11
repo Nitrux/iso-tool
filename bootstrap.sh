@@ -30,7 +30,7 @@ purge () { apt -yy purge --remove $@; }
 remove_dpkg () { /usr/bin/rm-dpkg; }
 remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
-update () { apt -qq update; }
+update () { apt update; }
 update_quiet () { apt -qq update; }
 upgrade () { apt -yy upgrade $@; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
