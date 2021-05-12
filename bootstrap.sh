@@ -84,7 +84,7 @@ SYSTEMD_RDEP_PKGS='
 	user-setup
 '
 
-update
+update_quiet
 upgrade
 install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 
@@ -131,7 +131,7 @@ cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.l
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
-update
+update_quiet
 
 
 #	Block installation of some packages.
@@ -269,6 +269,7 @@ MISC_DESKTOP_PKGS='
 	kquickimageeditor
 	latte-dock
 	maui-apps
+	mesa-git
 '
 
 PLYMOUTH_XENIAL_PKGS='
@@ -315,7 +316,7 @@ INSTALL_MISC_PKGS='
 	patchelf
 '
 
-update
+update_quiet
 only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
 install $INSTALL_MISC_PKGS
 
