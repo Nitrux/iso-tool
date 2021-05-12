@@ -85,7 +85,6 @@ SYSTEMD_RDEP_PKGS='
 '
 
 update_quiet
-upgrade
 install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 
 
@@ -107,6 +106,7 @@ hold $HOLD_MISC_PKGS
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
+#	Add key for MESA-Git repository.
 
 puts "INSTALLING REPOSITORY KEYS."
 
@@ -116,7 +116,8 @@ puts "INSTALLING REPOSITORY KEYS."
 	541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	871920D1991BC93C \
+	A03A4626 > /dev/null
 
 
 #	Copy sources.list files.
@@ -130,6 +131,7 @@ cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstab
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
+cp /configs/files/sources.list.mesa.ppa /etc/apt/sources.list.d/mesa-git-ppa.list
 
 update_quiet
 
@@ -234,7 +236,6 @@ NITRUX_BASE_KERNEL_DRV_PKGS='
 '
 
 install $NITRUX_BASE_KERNEL_DRV_PKGS
-upgrade
 
 
 #	Install NX Desktop metapackage.
@@ -269,7 +270,6 @@ MISC_DESKTOP_PKGS='
 	kquickimageeditor
 	latte-dock
 	maui-apps
-	mesa-git
 '
 
 PLYMOUTH_XENIAL_PKGS='
@@ -305,7 +305,7 @@ UPGRADE_MISC_PKGS='
 	sudo/ceres
 '
 
-UPDATE_GLIBC_PKGS='
+UPGRADE_GLIBC_PKGS='
 	libc6
 	libc-bin
 	locales
@@ -316,9 +316,8 @@ INSTALL_MISC_PKGS='
 '
 
 update_quiet
-only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
+only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
 install $INSTALL_MISC_PKGS
-upgrade
 
 
 #	Add OpenRC configuration.

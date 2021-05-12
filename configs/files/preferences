@@ -2,6 +2,10 @@
 #  Package Priority #
 #####################
 
+Package: base-files
+Pin: release *
+Pin-Priority: -1
+
 Package: bluez
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
