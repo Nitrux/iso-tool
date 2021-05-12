@@ -74,6 +74,10 @@ Package: qml-module-qmltermwidget
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: ubuntu-keyring
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: ufw
 Pin: release *
 Pin-Priority: -1
