@@ -319,6 +319,7 @@ INSTALL_MISC_PKGS='
 update_quiet
 only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
 install $INSTALL_MISC_PKGS
+upgrade
 
 
 #	Add OpenRC configuration.
