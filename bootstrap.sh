@@ -273,11 +273,10 @@ MISC_DESKTOP_PKGS='
 '
 
 PLYMOUTH_XENIAL_PKGS='
-	libplymouth4/xenial-updates
-	libpng12-0/nitrux
-	plymouth-label/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth/xenial-updates
+	libplymouth5/ceres
+	plymouth-label/ceres
+	plymouth-themes/ceres
+	plymouth/ceres
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_XENIAL_PKGS
