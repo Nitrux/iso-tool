@@ -433,10 +433,10 @@ puts "REMOVING DASH, CASPER AND APT."
 
 REMOVE_DASH_CASPER_APT_PKGS='
 	apt
-	apt-utils
 	apt-transport-https
-	dash
+	apt-utils
 	casper
+	dash
 	lupin-casper
 '
 
