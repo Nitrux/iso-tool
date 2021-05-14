@@ -21,7 +21,8 @@ only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 purge () { apt -yy purge --remove $@; }
 remove_dpkg () { /usr/bin/rm-dpkg; }
 unhold () { apt-mark unhold $@; }
-update () { apt -qq update; }
+update () { apt update; }
+update_quiet () { apt -qq update; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
@@ -82,7 +83,6 @@ install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 puts "HOLD MISC. PACKAGES."
 
 HOLD_MISC_PKGS='
-	dictionaries-common
 	cgroupfs-mount
 	ssl-cert
 '
@@ -189,22 +189,22 @@ install_hold $SYSTEMCTL_PKG
 puts "INSTALLING POLICYKIT."
 
 DEVUAN_SYS_PKGS='
+	init-system-helpers
+	initscripts
+	libnm0
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
 	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
-	policykit-1/beowulf
-	libnm0
-	network-manager
 	libudisks2-0
-	udisks2
-	init-system-helpers
-	initscripts
+	network-manager
 	openrc
 	policycoreutils
+	policykit-1/beowulf
 	startpar
 	sysvinit-utils
+	udisks2
 '
 
 install $DEVUAN_SYS_PKGS
@@ -215,7 +215,7 @@ install $DEVUAN_SYS_PKGS
 puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_KERNEL_DRV_PKGS='
-	base-files=12.1.1+nitrux
+	base-files=12.1.2+nitrux
 	nitrux-hardware-drivers-minimal
 	linux-image-mainline-vfio
 '
@@ -243,10 +243,10 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
+	dmz-cursor-theme
 	i3
 	i3status
 	xterm/ceres
-	dmz-cursor-theme
 '
 
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS
@@ -370,10 +370,10 @@ puts "REMOVING DASH, CASPER AND APT."
 
 REMOVE_DASH_CASPER_APT_PKGS='
 	apt
-	apt-utils
 	apt-transport-https
-	dash
+	apt-utils
 	casper
+	dash
 	lupin-casper
 '
 
