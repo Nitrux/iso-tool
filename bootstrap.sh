@@ -427,6 +427,8 @@ update
 #	Use the KDE Neon repository to provide the latest stable release of Plasma and KF5.
 #
 #	We're installing the Maui apps and Mauikit like this because the AppImages are broken with recent versions of Kirigami.
+#
+#	We include plasma-systemmonitor; however, it seems to require files (libraries) only found in the ksysguard package.
 
 add_keys \
 	55751E5D \
@@ -461,6 +463,7 @@ MISC_DESKTOP_PKGS='
 	libpython3.8
 	libpython3.8-minimal
 	libpython3.8-stdlib
+	ksysguard
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
