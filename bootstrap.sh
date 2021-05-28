@@ -271,7 +271,7 @@ cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo
 
 update
 
-MISC_UBUNTU_impish_PKGS='
+MISC_UBUNTU_IMPISH_PKGS='
 	linux-firmware
 	linux-sound-base
 	libc6-dev
@@ -292,7 +292,7 @@ MISC_UBUNTU_impish_PKGS='
 	ubuntu-drivers-common
 '
 
-install $MISC_UBUNTU_impish_PKGS
+install $MISC_UBUNTU_IMPISH_PKGS
 
 rm \
 	/etc/apt/sources.list.d/ubuntu-impish-repo.list
