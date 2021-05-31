@@ -393,6 +393,7 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
+cp /configs/sound.conf /etc/modprobe.d/
 
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
