@@ -270,6 +270,7 @@ MISC_DESKTOP_PKGS='
 	kquickimageeditor
 	latte-dock
 	maui-apps
+	clip=1.1.1
 '
 
 PLYMOUTH_XENIAL_PKGS='
@@ -393,7 +394,7 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-cp /configs/files/sound.conf /etc/modprobe.d/
+cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
