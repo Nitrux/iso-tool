@@ -263,13 +263,14 @@ rm -r *.deb
 fix_install_no_recommends
 
 NX_DESKTOP_PKG='
+	nx-desktop
 '
 
 MISC_DESKTOP_PKGS='
-	applet-window-buttons
-	libkdecorations2private7
-	libkdecorations2private9
-	libkdecorations2-5v5
+	kquickimageeditor
+	latte-dock
+	maui-apps
+	clip=1.1.1
 '
 
 PLYMOUTH_XENIAL_PKGS='
