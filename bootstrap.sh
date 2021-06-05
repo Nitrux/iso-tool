@@ -268,6 +268,7 @@ NX_DESKTOP_PKG='
 MISC_DESKTOP_PKGS='
 	applet-window-buttons
 	libkdecorations2private7
+	libkdecorations2private9
 	libkdecorations2-5v5
 '
 
