@@ -263,14 +263,11 @@ rm -r *.deb
 fix_install_no_recommends
 
 NX_DESKTOP_PKG='
-	nx-desktop
+	applet-window-buttons
 '
 
 MISC_DESKTOP_PKGS='
-	kquickimageeditor
-	latte-dock
-	maui-apps
-	clip=1.1.1
+
 '
 
 PLYMOUTH_XENIAL_PKGS='
