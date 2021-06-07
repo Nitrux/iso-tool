@@ -263,14 +263,11 @@ rm -r *.deb
 fix_install_no_recommends
 
 NX_DESKTOP_PKG='
-	nx-desktop
+	plasma-workspace
 '
 
 MISC_DESKTOP_PKGS='
-	clip=1.1.1
-	kquickimageeditor
-	latte-dock
-	maui-apps
+	
 '
 
 PLYMOUTH_XENIAL_PKGS='
