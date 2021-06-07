@@ -163,9 +163,5 @@ Pin-Priority: -1
 ########################
 
 Package: *
-Pin: release o=user
-Pin-Priority: 700
-
-Package: *
 Pin: origin archive.neon.kde.org
 Pin-Priority: 700
