@@ -27,7 +27,7 @@ Pin: release *
 Pin-Priority: -1
 
 Package: libkdecorations2-5v5
-Pin: origin deb.devuan.org
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: libpulse0
