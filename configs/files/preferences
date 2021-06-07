@@ -26,10 +26,6 @@ Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
 
-Package: libkdecorations2-5v5
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
 Package: libpulse0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
@@ -97,6 +93,14 @@ Pin-Priority: -1
 ##########################
 #  Neon Package Priority #
 ##########################
+
+Package: kwin-common
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libkdecorations2-5v5
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
 
 Package: buho
 Pin: origin archive.neon.kde.org
