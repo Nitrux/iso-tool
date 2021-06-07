@@ -94,6 +94,10 @@ Pin-Priority: -1
 #  Neon Package Priority #
 ##########################
 
+Package: fwupd
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 Package: kwin-common
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
