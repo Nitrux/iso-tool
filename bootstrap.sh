@@ -279,7 +279,7 @@ PLYMOUTH_XENIAL_PKGS='
 	plymouth/ceres
 '
 
-policy libkdecorations2-5v5
+pkg_policy libkdecorations2-5v5
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_XENIAL_PKGS
 
