@@ -264,6 +264,8 @@ fix_install_no_recommends
 
 NX_DESKTOP_PKG='
 	plasma-workspace
+	kwin-common
+	plasma-integration
 '
 
 MISC_DESKTOP_PKGS='
