@@ -267,10 +267,10 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	clip=1.1.1
 	kquickimageeditor
 	latte-dock
 	maui-apps
-	clip=1.1.1
 '
 
 PLYMOUTH_XENIAL_PKGS='
@@ -279,8 +279,6 @@ PLYMOUTH_XENIAL_PKGS='
 	plymouth-themes/ceres
 	plymouth/ceres
 '
-
-pkg_policy libkdecorations2-5v5
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_XENIAL_PKGS
 
