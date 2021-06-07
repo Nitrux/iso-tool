@@ -102,6 +102,14 @@ Package: kwin-common
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: kwin-data
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libkwin4-effect-builtins1
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 Package: libkdecorations2-5v5
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
