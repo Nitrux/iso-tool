@@ -264,6 +264,7 @@ fix_install_no_recommends
 
 NX_DESKTOP_PKG='
 	applet-window-buttons
+	libkdecorations2private7
 '
 
 MISC_DESKTOP_PKGS='
