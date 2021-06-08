@@ -130,7 +130,6 @@ cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres
 cp /configs/files/sources.list.neon.unstable /etc/apt/sources.list.d/neon-unstable-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
-cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 cp /configs/files/sources.list.mesa.ppa /etc/apt/sources.list.d/mesa-git-ppa.list
 
 update_quiet
@@ -147,6 +146,8 @@ cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
 
 
 #	Add casper packages from bionic.
+#
+#	Remove bionic repo, we don't need it after.
 
 puts "INSTALLING CASPER PACKAGES."
 
@@ -156,6 +157,8 @@ CASPER_PKGS='
 '
 
 install $CASPER_PKGS
+
+rm -r /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 
 
 #	Hold initramfs and casper packages.
@@ -272,14 +275,14 @@ MISC_DESKTOP_PKGS='
 	
 '
 
-PLYMOUTH_XENIAL_PKGS='
+PLYMOUTH_CERES_PKGS='
 	libplymouth5/ceres
 	plymouth-label/ceres
 	plymouth-themes/ceres
 	plymouth/ceres
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_XENIAL_PKGS
+install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
 #	Install Nvidia driver.
