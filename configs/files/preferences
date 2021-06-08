@@ -172,4 +172,4 @@ Pin-Priority: -1
 
 Package: *
 Pin: origin archive.neon.kde.org
-Pin-Priority: 700
+Pin-Priority: 500
