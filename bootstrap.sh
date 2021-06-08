@@ -26,6 +26,7 @@ install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 pkg_policy () { apt-cache policy $@; }
+pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
 remove_dpkg () { /usr/bin/rm-dpkg; }
 remove_keys () { apt-key del $@; }
@@ -282,6 +283,8 @@ PLYMOUTH_CERES_PKGS='
 	plymouth-themes/ceres
 	plymouth/ceres
 '
+
+pkg_search libkdecorations2private
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
