@@ -266,13 +266,14 @@ rm -r *.deb
 fix_install_no_recommends
 
 NX_DESKTOP_PKG='
-	plasma-workspace
-	kwin-common
-	plasma-integration
+	nx-desktop
 '
 
 MISC_DESKTOP_PKGS='
-	
+	maui-apps
+	kquickimageeditor
+	clip=1.1.1
+	latte-dock
 '
 
 PLYMOUTH_CERES_PKGS='
