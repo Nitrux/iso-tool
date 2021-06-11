@@ -249,22 +249,10 @@ install $NITRUX_BASE_KERNEL_DRV_PKGS
 #	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
 #
-#	We're installing the Maui apps and Mauikit like this because the AppImages are broken with recent versions of Kirigami.
 
 puts "INSTALLING DESKTOP PACKAGES."
 
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
-
-# INSTALL_MAUIKIT_PKGS='
-# 	mauikit
-# 	applet-window-buttons
-# '
-
-# download $INSTALL_MAUIKIT_PKGS
-# dpkg_install mauikit*.deb || true
-# dpkg_force_install applet-*.deb  || true
-# rm -r *.deb
-# fix_install_no_recommends
 
 NX_DESKTOP_PKG='
 	nx-desktop
@@ -272,7 +260,6 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	maui-apps
-	kquickimageeditor
 	clip=1.1.1
 	latte-dock
 '
@@ -283,8 +270,6 @@ PLYMOUTH_CERES_PKGS='
 	plymouth-themes/ceres
 	plymouth/ceres
 '
-
-pkg_search libkdecorations2private
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
@@ -354,44 +339,6 @@ clean_all
 #	WARNING:
 #	No apt usage past this point.
 
-
-# puts "ADDING MAUI APPS (NIGHTLY)."
-
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# _latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
-# mkdir maui_pkgs
-
-# (
-# 	cd maui_pkgs
-
-# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
-
-# 	for i in $_packages; do
-# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
-# 	done
-
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
-
-# 	chmod +x /Applications/*
-
-# )
-
-# /tmp/mc config host rm nx
-
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
-
-
-#	Changes specific to this image. If they can be put in a package, do so.
-#	FIXME: These fixes should be included in a package.
 
 puts "ADDING MISC. FIXES."
 
