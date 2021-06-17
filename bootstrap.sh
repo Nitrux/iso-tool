@@ -453,16 +453,10 @@ MISC_DESKTOP_PKGS='
 	libpython3.8-minimal
 	libpython3.8-stdlib
 	ksysguard
+	clip=1.1.1
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
-
-
-MAUI_APPS_PKG='
-	maui-apps
-'
-
-install $MAUI_APPS_PKG
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list \
