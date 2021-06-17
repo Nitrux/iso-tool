@@ -443,17 +443,6 @@ update
 
 puts "ADDING NX DESKTOP."
 
-INSTALL_MAUIKIT_PKGS='
-	mauikit
-	applet-window-buttons
-'
-
-download $INSTALL_MAUIKIT_PKGS
-dpkg_install mauikit*.deb || true
-dpkg_force_install applet-*.deb  || true
-rm -r *.deb
-fix_install_no_recommends
-
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
@@ -469,24 +458,11 @@ MISC_DESKTOP_PKGS='
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 
-INSTALL_MAUI_APPS_PKGS='
-	buho
-	clip
-	communicator
-	index
-	nota
-	pix
-	shelf
-	station
-	vvave
-	kquickimageeditor
+MAUI_APPS_PKG='
+	maui-apps
 '
 
-download $INSTALL_MAUI_APPS_PKGS
-dpkg_force_install *.deb || true
-rm -r *.deb
-fix_install_no_recommends
-
+install $MAUI_APPS_PKG
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list \
