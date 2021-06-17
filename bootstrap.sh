@@ -454,6 +454,7 @@ MISC_DESKTOP_PKGS='
 	libpython3.8-stdlib
 	ksysguard
 	clip=1.1.1
+	firefox/experimental
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
