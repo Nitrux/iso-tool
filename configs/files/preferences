@@ -142,6 +142,10 @@ Package: qml-module-org-kde-mauikit
 Pin: release *
 Pin-Priority: -1
 
+Package: latte-dock
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 ##########################
 #  Maui Package Priority #
 ##########################
