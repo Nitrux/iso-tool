@@ -43,8 +43,6 @@ puts "STARTING BOOTSTRAP."
 
 cp /configs/files/preferences /etc/apt/preferences
 
-pkg_policy libfreetype6
-
 
 #	Install basic packages.
 
@@ -106,6 +104,7 @@ GRUB2_PKGS='
 	grub-efi-amd64-signed/impish
 	grub-pc-bin/impish
 	grub2-common/impish
+	libfreetype6/unstable
 '
 
 install $GRUB2_PKGS

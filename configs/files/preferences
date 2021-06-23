@@ -63,7 +63,7 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libfreetype6
-Pin: release o=Ubuntu,a=impish,n=impish
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libglu1-mesa
