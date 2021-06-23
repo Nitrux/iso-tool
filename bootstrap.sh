@@ -43,6 +43,8 @@ puts "STARTING BOOTSTRAP."
 
 cp /configs/files/preferences /etc/apt/preferences
 
+pkg_policy libfreetype6
+
 
 #	Install basic packages.
 
