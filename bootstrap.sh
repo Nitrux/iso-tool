@@ -295,6 +295,7 @@ UPGRADE_MISC_PKGS='
 	bluez/ceres
 	linux-firmware
 	sudo/ceres
+	openssl
 '
 
 UPGRADE_GLIBC_PKGS='
