@@ -117,7 +117,6 @@ add_nitrux_key
 
 add_keys \
 	55751E5D \
-	1B69B2DA \
 	541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
