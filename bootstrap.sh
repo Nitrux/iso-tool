@@ -7,7 +7,8 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
@@ -62,6 +63,7 @@ BASIC_PKGS='
 EXTRA_PKGS='
 	avahi-daemon
 	cups-daemon
+	curl
 	dictionaries-common
 	efibootmgr
 	language-pack-de
@@ -111,7 +113,9 @@ hold $HOLD_MISC_PKGS
 
 puts "INSTALLING REPOSITORY KEYS."
 
- add_keys \
+add_nitrux_key
+
+add_keys \
 	55751E5D \
 	1B69B2DA \
 	541922FB \
