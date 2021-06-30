@@ -115,7 +115,7 @@ puts "INSTALLING REPOSITORY KEYS."
 
 add_nitrux_key
 
-add_keys \
+add_repo_keys \
 	55751E5D \
 	541922FB \
 	BB23C00C61FC752C \
