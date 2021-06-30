@@ -52,6 +52,7 @@ BASIC_PKGS='
 EXTRA_PKGS='
 	avahi-daemon
 	cups-daemon
+	curl
 	dictionaries-common
 	efibootmgr
 	language-pack-en
