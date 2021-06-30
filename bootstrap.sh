@@ -103,8 +103,8 @@ HOLD_MISC_PKGS='
 hold $HOLD_MISC_PKGS
 
 
-#	Add key for Neon repository.
 #	Add key for Nitrux repository.
+#	Add key for Neon repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
