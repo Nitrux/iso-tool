@@ -53,6 +53,7 @@ CHROOT_BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
+	curl
 	dhcpcd5
 	gnupg2
 	initramfs-tools
