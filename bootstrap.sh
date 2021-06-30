@@ -7,7 +7,8 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
@@ -90,8 +91,8 @@ HOLD_MISC_PKGS='
 hold $HOLD_MISC_PKGS
 
 
-#	Add key for Neon repository.
 #	Add key for Nitrux repository.
+#	Add key for Neon repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
@@ -99,9 +100,10 @@ hold $HOLD_MISC_PKGS
 
 puts "INSTALLING REPOSITORY KEYS."
 
- add_keys \
+add_nitrux_key
+
+add_repo_keys \
 	55751E5D \
-	84CBC17810B26459 \
 	541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
