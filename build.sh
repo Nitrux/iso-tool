@@ -123,3 +123,5 @@ md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
 
 curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary "~@$output_dir/${image%.iso}"
 
+
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary "~@$output_dir/${image%.iso}.md5sum"
