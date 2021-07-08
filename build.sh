@@ -46,7 +46,7 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/release/")-amd64_$(date +%Y.%m.%d).iso
-hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
+hash_url=http://storage.nxos.org/${image%.iso}.md5sum
 
 
 #	Prepare the directory where the filesystem will be created.
@@ -121,6 +121,6 @@ md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
 
 #	Upload the ISO image.
 
-curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary "~@$output_dir/$image"
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/$image
 
-curl -X PUT --url https://storage.bunnycdn.com/isoreleases/${image%.iso}.md5sum -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary "~@$output_dir/${image%.iso}.md5sum"
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/${image%.iso}.md5sum -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/${image%.iso}.md5sum
