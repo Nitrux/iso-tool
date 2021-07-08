@@ -121,7 +121,5 @@ md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
 
 #	Upload the ISO image.
 
-for f in $output_dir/*; do
-    SSHPASS=$DEPLOY_PASS sshpass -e scp -q -o stricthostkeychecking=no "$f" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-done
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H 'AccessKey: $BUNNY_API_KEY' -H --header 'Content-Type: application/octet-stream' --data-binary "~@$output_dir/${image%.iso}"
 
