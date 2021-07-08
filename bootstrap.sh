@@ -86,6 +86,15 @@ update
 dist_upgrade
 
 
+#	Upgrade dpkg to support zstd compressed packages
+
+UPGRADE_DPKG_ZSTD='
+	dpkg/trixie
+'
+
+install $UPGRADE_DPKG_ZSTD
+
+
 #	Add bootloader.
 #
 #	The GRUB2 packages from Debian do not work correctly with EFI, so we use Ubuntu packages.
@@ -181,15 +190,6 @@ OPENRC_INIT_PKGS='
 '
 
 install $OPENRC_INIT_PKGS
-
-
-#	Upgrade dpkg to support zstd comrpesse dpackages
-
-UPGRADE_DPKG_ZSTD='
-	dpkg/trixie
-'
-
-install $UPGRADE_DPKG_ZSTD
 
 
 #	Add kernel.
