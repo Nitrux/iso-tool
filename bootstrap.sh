@@ -183,6 +183,15 @@ OPENRC_INIT_PKGS='
 install $OPENRC_INIT_PKGS
 
 
+#	Upgrade dpkg to support zstd comrpesse dpackages
+
+UPGRADE_DPKG_ZSTD='
+	dpkg/trixie
+'
+
+install $UPGRADE_DPKG_ZSTD
+
+
 #	Add kernel.
 
 puts "ADDING KERNEL."
