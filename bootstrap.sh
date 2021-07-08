@@ -57,7 +57,7 @@ CHROOT_BASIC_PKGS='
 	dhcpcd5
 	gnupg2
 	initramfs-tools
-	libzst-dev
+	libzstd-dev
 	lz4
 	zstd
 '
