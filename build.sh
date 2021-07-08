@@ -53,8 +53,8 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/master/OTA-latest/")-amd64.iso
-update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
-hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
+update_url=http://storage.nxos.org/${image%.iso}.zsync
+hash_url=http://storage.nxos.org/${image%.iso}.md5sum
 
 
 #	Prepare the directory where the filesystem will be created.
@@ -147,6 +147,8 @@ zsyncmake \
 
 #	Upload the ISO image.
 
-for f in $output_dir/*; do
-    SSHPASS=$DEPLOY_PASS sshpass -e scp -q -o stricthostkeychecking=no "$f" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
-done
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/$image
+
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/${image%.iso}.md5sum -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/${image%.iso}.md5sum
+
+curl -X PUT --url https://storage.bunnycdn.com/isoreleases/${image%.iso}.zsync -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/${image%.iso}.zsync
