@@ -494,8 +494,9 @@ update
 puts "ADDING CALAMARES INSTALLER."
 
 CALAMARES_PKGS='
-	calamares
-	calamares-settings-nitrux
+	calamares/focal
+	calamares-qml-settings-nitrux
+	libboost-python1.71.0/trixie
 	squashfs-tools
 '
 
