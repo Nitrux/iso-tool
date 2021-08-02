@@ -495,7 +495,7 @@ puts "ADDING CALAMARES INSTALLER."
 
 CALAMARES_PKGS='
 	calamares
-	calamares-qml-settings-nitrux
+	calamares-settings-nitrux
 	squashfs-tools
 '
 
