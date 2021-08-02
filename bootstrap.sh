@@ -503,7 +503,7 @@ update
 
 
 CALAMARES_PKGS='
-	calamares/focal
+	calamares
 	calamares-qml-settings-nitrux
 	libboost-python1.71.0/trixie
 	squashfs-tools

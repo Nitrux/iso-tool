@@ -6,10 +6,6 @@ Package: base-files
 Pin: release *
 Pin-Priority: -1
 
-Package: calamares
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
 Package: dash
 Pin: release *
 Pin-Priority: -1
@@ -20,10 +16,6 @@ Pin-Priority: -1
 
 Package: fuse
 Pin: release *
-Pin-Priority: -1
-
-Package: fwupd
-Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: fwupd
@@ -150,6 +142,9 @@ Pin-Priority: -1
 #  Neon Package Priority #
 ##########################
 
+Package: fwupd
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
 
 ########################
 #  Repository Priority #
