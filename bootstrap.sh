@@ -488,8 +488,9 @@ update
 
 #	Add Calamares.
 #
-#	A problem with libkpmcore 20.12.3 causes Calamares to fail to copy the squashfs to 
-#	the target device; instead, it copies it to tmpfs. We stick to the version of Calamares from Debian.
+#	The package from KDE Neon is compiled against libkpmcore11 (21.04) and libboost-python1.71.0 from 
+#	Ubuntu which provides the virtual package libboost-python1.71.0-py38. The package from Debian doesn't 
+#	offer this virtual dependency.
 
 puts "ADDING CALAMARES INSTALLER."
 
