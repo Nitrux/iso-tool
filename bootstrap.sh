@@ -471,7 +471,6 @@ MISC_DESKTOP_PKGS='
 	clip=1.1.1
 	firefox/experimental
 '
-pkg_policy fwupd
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
@@ -494,6 +493,14 @@ update
 
 puts "ADDING CALAMARES INSTALLER."
 
+add_repo_keys \
+	55751E5D > /dev/null
+
+cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+
+update
+
+
 CALAMARES_PKGS='
 	calamares/focal
 	calamares-qml-settings-nitrux
@@ -502,6 +509,14 @@ CALAMARES_PKGS='
 '
 
 install $CALAMARES_PKGS
+
+rm \
+	/etc/apt/sources.list.d/neon-user-repo.list
+
+remove_keys \
+	55751E5D > /dev/null
+
+update
 
 
 #	Hold packages.
