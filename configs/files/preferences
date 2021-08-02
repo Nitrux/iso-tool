@@ -32,7 +32,7 @@ Pin-Priority: -1
 
 Package: fwupd
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: 500
+Pin-Priority: 600
 
 Package: libtss2-esys0
 Pin: release *
