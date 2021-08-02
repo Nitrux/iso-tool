@@ -23,7 +23,11 @@ Pin: release *
 Pin-Priority: -1
 
 Package: fwupd
-Pin: release a=focal,n=focal
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libtss2-esys0
+Pin: release *
 Pin-Priority: -1
 
 Package: grub-common

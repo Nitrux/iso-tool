@@ -471,6 +471,7 @@ MISC_DESKTOP_PKGS='
 	clip=1.1.1
 	firefox/experimental
 '
+pkg_policy fwupd
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
