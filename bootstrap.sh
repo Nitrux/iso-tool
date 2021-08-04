@@ -460,7 +460,7 @@ puts "ADDING NX DESKTOP."
 
 
 NX_DESKTOP_PKG='
-	nx-desktop-apps-legacy
+	nx-desktop-legacy
 '
 
 MISC_DESKTOP_PKGS='
