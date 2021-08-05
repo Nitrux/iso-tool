@@ -269,52 +269,6 @@ remove_keys \
 update
 
 
-#	Add misc. Ubuntu packages.
-#
-#	Some packages required by our meta-packages are only available in Ubuntu.
-#
-#	The rng-tools package is a transitional package for rng-tools5 in Debian; however, its init script
-#	has a different name than the one we list in openrc-config, so we use the package from Ubuntu instead.
-
-puts "ADDING UBUNTU MISC. PACKAGES."
-
-add_repo_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
-
-cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
-
-update
-
-MISC_UBUNTU_IMPISH_PKGS='
-	linux-firmware
-	linux-sound-base
-	libc6-dev
-	locales
-	language-pack-en
-	language-pack-en-base
-	language-pack-es
-	language-pack-es-base
-	language-pack-de
-	language-pack-de-base
-	language-pack-fr
-	language-pack-fr-base
-	language-pack-pt
-	language-pack-pt-base
-	policykit-desktop-privileges
-	rng-tools
-	secureboot-db
-	ubuntu-drivers-common
-'
-
-install $MISC_UBUNTU_IMPISH_PKGS
-
-rm \
-	/etc/apt/sources.list.d/ubuntu-impish-repo.list
-
-update
-
-
 #	Adding PolicyKit packages from Devuan.
 #
 #	Since we're using elogind to replace logind, we need to add the matching PolicyKit packages.
@@ -410,27 +364,10 @@ install $NITRUX_BASE_PKGS
 
 puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
 
-add_repo_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
-
-cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
-
-update
-
 NVIDIA_DRV_PKGS='
 	xserver-xorg-video-nouveau
 	nouveau-firmware
 '
-
-install $NVIDIA_DRV_PKGS
-
-rm \
-	/etc/apt/sources.list.d/ubuntu-impish-repo.list
-
-remove_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
 
 update
 
