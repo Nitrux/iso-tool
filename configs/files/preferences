@@ -138,6 +138,10 @@ Package: xterm
 Pin: release *
 Pin-Priority: -1
 
+Package: *
+Pin: version 10.3.0-1ubuntu1~20.04
+Pin-Priority: -1
+
 ##########################
 #  Neon Package Priority #
 ##########################
