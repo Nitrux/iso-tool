@@ -446,12 +446,9 @@ update
 #	We include plasma-systemmonitor; however, it seems to require files (libraries) only found in the ksysguard package.
 
 add_repo_keys \
-	55751E5D \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	55751E5D > /dev/null
 
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
 update
 
@@ -475,13 +472,10 @@ MISC_DESKTOP_PKGS='
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
-	/etc/apt/sources.list.d/neon-user-repo.list \
-	/etc/apt/sources.list.d/ubuntu-focal-repo.list
+	/etc/apt/sources.list.d/neon-user-repo.list
 
 remove_keys \
-	55751E5D \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	55751E5D > /dev/null
 
 update
 
