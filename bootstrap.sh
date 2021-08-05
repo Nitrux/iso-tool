@@ -394,7 +394,7 @@ puts "ADDING NX DESKTOP."
 
 
 NX_DESKTOP_PKG='
-	rpcsvc-proto
+	nx-desktop-legacy
 '
 
 MISC_DESKTOP_PKGS='
