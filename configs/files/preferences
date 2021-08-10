@@ -154,6 +154,3 @@ Package: *
 Pin: origin archive.neon.kde.org
 Pin-Priority: 500
 
-Package: *
-Pin: origin deb.debian.org
-Pin-Priority: 500
