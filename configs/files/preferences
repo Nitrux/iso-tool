@@ -158,6 +158,10 @@ Package: libqt5webenginewidgets5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: qml-module-qtwebengine
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 ##########################
 #  Neon Package Priority #
 ##########################
