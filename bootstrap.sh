@@ -86,17 +86,6 @@ update
 dist_upgrade
 
 
-#	Upgrade dpkg to support zstd compressed packages.
-#
-#	It's critical to update dpkg; We can not install otherwise newer Ubuntu packages.
-
-UPGRADE_DPKG_ZSTD='
-	dpkg
-'
-
-only_upgrade $UPGRADE_DPKG_ZSTD
-
-
 #	Add bootloader.
 #
 #	The GRUB2 packages from Debian do not work correctly with EFI, so we use Ubuntu packages.
@@ -311,8 +300,7 @@ update
 #	The network-manager package that is available in Debian does not have an init script compatible with OpenRC.
 #	so we use the package from Devuan instead.
 #
-#	Devuan, like Debian, has both unstable and experimental suites, called ceres and chimaera. Prioritize installing
-#	packages from chimaera over ceres, unless the package only exists in ceres.
+#	Prioritize installing packages from chimaera over ceres, unless the package only exists in ceres.
 
 puts "ADDING DEVUAN MISC. PACKAGES."
 
@@ -329,6 +317,14 @@ MISC_DEVUAN_CHIMAERA_PKGS='
 '
 
 install $MISC_DEVUAN_CHIMAERA_PKGS
+
+UPGRADE_DEVUAN_CHIMAEARA_PKGS='
+	elogind
+	libelogind0
+	libpam-elogind0
+'
+
+only_upgrade $UPGRADE_DEVUAN_CHIMAEARA_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-chimaera-repo.list
@@ -402,8 +398,6 @@ MISC_DESKTOP_PKGS='
 	clip=1.1.1
 	firefox/experimental
 '
-
-pkg_policy libpolkit-qt5-1-1 packagekit polkit-kde-agent-1 policykit-1
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
