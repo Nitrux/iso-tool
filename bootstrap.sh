@@ -321,7 +321,7 @@ install $MISC_DEVUAN_CHIMAERA_PKGS
 UPGRADE_DEVUAN_CHIMAEARA_PKGS='
 	elogind
 	libelogind0
-	libpam-elogind0
+	libpam-elogind
 '
 
 only_upgrade $UPGRADE_DEVUAN_CHIMAEARA_PKGS
