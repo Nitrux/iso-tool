@@ -403,6 +403,8 @@ MISC_DESKTOP_PKGS='
 	firefox/experimental
 '
 
+pkg_policy libpolkit-qt5-1-1 network-manager packagekit polkit-kde-agent-1
+
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
