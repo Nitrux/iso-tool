@@ -23,7 +23,6 @@ GRUB_EFI_PKGS='
 '
 
 apt -qq update
-apt -yy upgrade > /dev/null
 apt -yy install $XORRISO_PKGS $GRUB_EFI_PKGS --no-install-recommends > /dev/null
 
 
