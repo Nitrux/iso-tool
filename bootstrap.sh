@@ -521,8 +521,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-ln -svf /boot/vmlinuz-5.13.7-051307-generic /vmlinuz
-ln -svf /boot/initrd.img-5.13.7-051307-generic /initrd.img
+ln -svf /boot/vmlinuz-5.13.12-051312-generic /vmlinuz
+ln -svf /boot/initrd.img-5.13.12-051312-generic /initrd.img
 
 dpkg_force_remove dash || true
 
