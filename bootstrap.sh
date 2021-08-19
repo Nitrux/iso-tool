@@ -357,7 +357,7 @@ NVIDIA_DRV_PKGS='
 	nouveau-firmware
 '
 
-update
+install $NVIDIA_DRV_PKGS
 
 
 #	Add NX Desktop meta-package.
