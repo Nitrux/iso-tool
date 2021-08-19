@@ -365,10 +365,6 @@ install $NVIDIA_DRV_PKGS
 #	Use MISC_DESKTOP_PKGS to add packages to test. If tests are positive, add to the appropriate meta-package.
 #
 #	Use the KDE Neon repository to provide the latest stable release of Plasma and KF5.
-#
-#	We're installing the Maui apps and Mauikit like this because the AppImages are broken with recent versions of Kirigami.
-#
-#	We include plasma-systemmonitor; however, it seems to require files (libraries) only found in the ksysguard package.
 
 add_repo_keys \
 	55751E5D > /dev/null
