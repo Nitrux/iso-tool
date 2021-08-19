@@ -313,18 +313,10 @@ cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-ch
 update
 
 MISC_DEVUAN_CHIMAERA_PKGS='
-	network-manager
+	network-manager/chimaera
 '
 
 install $MISC_DEVUAN_CHIMAERA_PKGS
-
-UPGRADE_DEVUAN_CHIMAEARA_PKGS='
-	elogind
-	libelogind0
-	libpam-elogind
-'
-
-only_upgrade $UPGRADE_DEVUAN_CHIMAEARA_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-chimaera-repo.list
