@@ -377,9 +377,7 @@ cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.
 
 update
 
-
 puts "ADDING NX DESKTOP."
-
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
