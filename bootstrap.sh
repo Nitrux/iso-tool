@@ -75,6 +75,7 @@ EXTRA_PKGS='
 	squashfs-tools
 	sudo
 	xz-utils
+	zstd
 '
 
 SYSTEMD_RDEP_PKGS='
