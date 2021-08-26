@@ -526,6 +526,8 @@ ln -svf /bin/bash /bin/sh
 
 dpkg_force_remove dash
 
+ln -svf /bin/bash /bin/dash
+
 
 #	Use LZ4 compression when creating the initramfs.
 
@@ -568,7 +570,8 @@ ls -lh \
 	/Applications || true
 
 stat /sbin/init \
-	/bin/sh
+	/bin/sh \
+	/bin/dash
 
 cat \
 	/etc/{casper.conf,sddm.conf} \
