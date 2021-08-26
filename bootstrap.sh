@@ -218,7 +218,7 @@ install $DEVUAN_SYS_PKGS
 puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_KERNEL_DRV_PKGS='
-	base-files=12.1.4+nitrux
+	base-files=12.1.5+nitrux
 	nitrux-hardware-drivers-minimal
 	linux-image-mainline-vfio
 '
