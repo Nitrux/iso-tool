@@ -135,11 +135,11 @@ Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: libmauikit
-Pin: release *
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: qml-module-org-kde-mauikit
-Pin: release *
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: latte-dock

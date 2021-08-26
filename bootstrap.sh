@@ -238,7 +238,7 @@ install $DEVUAN_SYS_PKGS
 puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_KERNEL_DRV_PKGS='
-	base-files=12.1.4+nitrux
+	base-files=12.1.5+nitrux
 	nitrux-hardware-drivers
 	linux-image-mainline-vfio
 '
@@ -354,6 +354,7 @@ rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
 cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
+
 
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
