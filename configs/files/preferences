@@ -18,6 +18,14 @@ Package: dosfstools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libcrypt1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libcrypt-dev
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: fuse
 Pin: release *
 Pin-Priority: -1
