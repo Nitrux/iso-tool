@@ -38,6 +38,10 @@ Package: fwupd
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 600
 
+Package: kio-gdrive
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libtss2-esys0
 Pin: release *
 Pin-Priority: -1
@@ -84,6 +88,18 @@ Pin-Priority: -1
 
 Package: libglu1-mesa
 Pin: release o=Ubuntu,a=focal,n=focal
+Pin-Priority: -1
+
+Package: libkpimgapicore5abi1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkpimgapi-data
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkpimgapidrive5
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpng16-16

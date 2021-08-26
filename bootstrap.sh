@@ -383,6 +383,8 @@ MISC_DESKTOP_PKGS='
 	ksysguard
 	clip=1.1.1
 	firefox/experimental
+	libcrypt1/trixie
+	libcrypt-dev/trixie
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
