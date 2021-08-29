@@ -263,6 +263,8 @@ NX_DESKTOP_PKG='
 	plasma-nm
 	nx-desktop-apps
 	nx-networkmanagement-applet
+	kdeconnect/focal
+	qml-module-org-kde-prison
 '
 
 MISC_DESKTOP_PKGS='
