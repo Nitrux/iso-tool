@@ -265,6 +265,7 @@ NX_DESKTOP_PKG='
 	nx-networkmanagement-applet
 	kdeconnect/focal
 	qml-module-org-kde-prison
+	libkf5prison5
 '
 
 MISC_DESKTOP_PKGS='
@@ -280,6 +281,8 @@ PLYMOUTH_CERES_PKGS='
 	plymouth-themes/ceres
 	plymouth/ceres
 '
+
+pkg_policy qml-module-org-kde-prison libkf5prison5
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
