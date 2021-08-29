@@ -380,8 +380,8 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	ksysguard
-	clip=1.1.1
+	maui-apps=0.0.3-fd0f066
+	nx-software-center
 	firefox/experimental
 	libcrypt1/trixie
 	libcrypt-dev/trixie
