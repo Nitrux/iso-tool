@@ -311,6 +311,7 @@ UPGRADE_GLIBC_PKGS='
 
 INSTALL_MISC_PKGS='
 	patchelf
+	fuse-overlayfs
 '
 
 update_quiet
