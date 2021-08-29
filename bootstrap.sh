@@ -260,12 +260,6 @@ sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /e
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	plasma-nm
-	nx-desktop-apps
-	nx-networkmanagement-applet
-	kdeconnect/focal
-	qml-module-org-kde-prison
-	libkf5prison5
 '
 
 MISC_DESKTOP_PKGS='
