@@ -260,6 +260,9 @@ sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /e
 
 NX_DESKTOP_PKG='
 	nx-desktop
+	plasma-nm
+	nx-desktop-apps
+	nx-networkmanagement-applet
 '
 
 MISC_DESKTOP_PKGS='
