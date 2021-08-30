@@ -226,6 +226,10 @@ Package: libkf5kirigami2-5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kio-extras
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 ##########################
 #  Neon Package Priority #
 ##########################
