@@ -9,21 +9,32 @@ puts () { printf "\n\n --- %s\n" "$*"; }
 
 add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
+dist_upgrade () { apt -yy dist-upgrade $@; }
+download () { apt download $@; }
+dpkg_force_install () { dpkg --force-all -i $@; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+dpkg_install () { dpkg -i $@; }
 fix_install () { apt -yy --fix-broken install $@; }
+fix_install_no_recommends () { apt -yy --fix-broken install --no-install-recommends $@; }
 hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
+list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+pkg_policy () { apt-cache policy $@; }
+pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
 remove_dpkg () { /usr/bin/rm-dpkg; }
+remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
 update () { apt update; }
 update_quiet () { apt -qq update; }
+upgrade () { apt -yy upgrade $@; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
@@ -55,15 +66,16 @@ EXTRA_PKGS='
 	curl
 	dictionaries-common
 	efibootmgr
+	language-pack-de
 	language-pack-en
 	language-pack-es
-	language-pack-de
-	language-pack-pt
 	language-pack-fr
+	language-pack-pt
 	os-prober
 	squashfs-tools
 	sudo
 	xz-utils
+	zstd
 '
 
 SYSTEMD_RDEP_PKGS='
@@ -76,7 +88,7 @@ SYSTEMD_RDEP_PKGS='
 	user-setup
 '
 
-update
+update_quiet
 install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 
 
@@ -121,9 +133,8 @@ cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
-cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
-update
+update_quiet
 
 
 #	Block installation of some packages.
@@ -137,6 +148,8 @@ cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
 
 
 #	Add casper packages from bionic.
+#
+#	Remove bionic repo, we don't need it after.
 
 puts "INSTALLING CASPER PACKAGES."
 
@@ -147,16 +160,20 @@ CASPER_PKGS='
 
 install $CASPER_PKGS
 
+rm -r /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 
-#	Hold initramfs packages.
 
-INITRAMFS_PKGS='
+#	Hold initramfs and casper packages.
+
+INITRAMFS_CASPER_PKGS='
+	casper
+	lupin-casper
 	initramfs-tools
 	initramfs-tools-core
 	initramfs-tools-bin
 '
 
-hold $INITRAMFS_PKGS
+hold $INITRAMFS_CASPER_PKGS
 
 
 #	Add elogind packages from Devuan.
@@ -169,11 +186,11 @@ DEVUAN_ELOGIND_PKGS='
 '
 
 REMOVE_SYSTEMD_PKGS='
-	systemd
-	systemd-sysv
-	libsystemd0
 	libargon2-1
 	libcryptsetup12
+	libsystemd0
+	systemd
+	systemd-sysv
 '
 
 SYSTEMCTL_PKG='
@@ -189,7 +206,7 @@ install_hold $SYSTEMCTL_PKG
 #	Add NetworkManager and udisks2 from Devuan.
 #	Add OpenRC as init.
 
-puts "INSTALLING POLICYKIT."
+puts "INSTALLING DEVUAN SYS PACKAGES."
 
 DEVUAN_SYS_PKGS='
 	init-system-helpers
@@ -223,12 +240,10 @@ NITRUX_BASE_KERNEL_DRV_PKGS='
 	linux-image-mainline-vfio
 '
 
-install $NITRUX_BASE_KERNEL_DRV_PKGS 
+install $NITRUX_BASE_KERNEL_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
-#	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
-#	because otherwise the splash is not shown.
 #	
 #	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
@@ -252,7 +267,14 @@ MISC_DESKTOP_PKGS='
 	xterm/ceres
 '
 
-install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS
+PLYMOUTH_CERES_PKGS='
+	libplymouth5/ceres
+	plymouth-label/ceres
+	plymouth-themes/ceres
+	plymouth/ceres
+'
+
+install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
 #	Install Nvidia driver.
@@ -273,12 +295,12 @@ cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
-	linux-firmware
 	bluez/ceres
+	linux-firmware
 	sudo/ceres
 '
 
-UPDATE_GLIBC_PKGS='
+UPGRADE_GLIBC_PKGS='
 	libc6
 	libc-bin
 	locales
@@ -288,8 +310,8 @@ INSTALL_MISC_PKGS='
 	patchelf
 '
 
-update
-only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
+update_quiet
+only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
 install $INSTALL_MISC_PKGS
 
 
@@ -332,6 +354,8 @@ ln -sv /usr/share/xsessions/i3.desktop /usr/share/xsessions/plasma.desktop
 
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
+
+cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 
 #	Implement a new FHS.
