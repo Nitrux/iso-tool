@@ -262,6 +262,7 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	maui-apps
+	nx-software-center
 	latte-dock
 	touchegg-kde
 '
