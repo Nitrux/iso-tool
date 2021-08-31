@@ -381,6 +381,7 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	kde-config-updates
 	nx-software-center
 	firefox/experimental
 	libcrypt1/trixie
