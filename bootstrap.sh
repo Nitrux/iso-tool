@@ -52,6 +52,7 @@ puts "ADDING BASIC PACKAGES."
 CHROOT_BASIC_PKGS='
 	apt-transport-https
 	apt-utils
+	appstream
 	ca-certificates
 	curl
 	dhcpcd5
