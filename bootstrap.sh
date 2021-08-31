@@ -381,17 +381,7 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	maui-apps=0.0.3-fd0f066
 	nx-software-center
-	index=0.0.3+2.0.0+git 
-	nota=0.0.3+2.0.0+git 
-	buho=0.0.3+2.0.0+git 
-	station=0.0.3+2.0.0+git 
-	vvave=0.0.3+2.0.0+git 
-	communicator=0.0.3+2.0.0+git 
-	shelf=0.0.3+2.0.0+git 
-	clip=0.0.3+2.0.0+git 
-	pix=0.0.3+2.0.0+git
 	firefox/experimental
 	libcrypt1/trixie
 	libcrypt-dev/trixie
