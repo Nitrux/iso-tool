@@ -247,8 +247,6 @@ install $NITRUX_BASE_KERNEL_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
-#	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
-#	because otherwise the splash is not shown.
 #	
 #	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
@@ -264,7 +262,6 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	maui-apps
-	clip=1.1.1
 	latte-dock
 	touchegg-kde
 '
@@ -275,8 +272,6 @@ PLYMOUTH_CERES_PKGS='
 	plymouth-themes/ceres
 	plymouth/ceres
 '
-
-pkg_policy qml-module-org-kde-prison libkf5prison5
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
@@ -348,6 +343,9 @@ clean_all
 #	WARNING:
 #	No apt usage past this point.
 
+
+#	Changes specific to this image. If they can be put in a package, do so.
+#	FIXME: These fixes should be included in a package.
 
 puts "ADDING MISC. FIXES."
 
