@@ -1,3 +1,11 @@
+#####################
+#  Package Priority #
+#####################
+
+Package: base-files
+Pin: release *
+Pin-Priority: -1
+
 Package: bluez
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
@@ -18,12 +26,24 @@ Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
 
-Package: latte-dock
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
 Package: libpulse0
 Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpam-modules
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-modules-bin
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-runtime
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam0g
+Pin: release *
 Pin-Priority: -1
 
 Package: libpulsedsp
@@ -54,6 +74,14 @@ Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
 
+Package: qml-module-qmltermwidget
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: ubuntu-keyring
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: ufw
 Pin: release *
 Pin-Priority: -1
@@ -66,252 +94,68 @@ Pin-Priority: -1
 #  Neon Package Priority #
 ##########################
 
-Package: baloo-*
-Pin: version 5.80.*
+Package: fwupd
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: baloo-*
-Pin: version 5.81.*
+Package: buho
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: bluedevil
-Pin: version 4:5.21.3*
+Package: clip
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: bluedevil
-Pin: version 4:5.21.4*
+Package: communicator
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze-*
-Pin: version 4:5.80.*
+Package: index
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze-*
-Pin: version 4:5.81.*
+Package: nota
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze*
-Pin: version 4:5.21.3*
+Package: pix
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze-*
-Pin: version 4:5.21.3*
+Package: shelf
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze-*
-Pin: version 5.21.3*
+Package: station
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: -breeze*
-Pin: version 5.21.3*
+Package: vvave
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze*
-Pin: version 4:5.21.4*
+Package: libmauikit
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze-*
-Pin: version 4:5.21.4*
+Package: qml-module-org-kde-mauikit
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: breeze-*
-Pin: version 5.21.4*
+Package: latte-dock
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: -breeze*
-Pin: version 5.21.4*
+Package: libkf5prison5
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: frameworkintegration
-Pin: version 5.80.*
-Pin-Priority: -1
+##########################
+#  Maui Package Priority #
+##########################
 
-Package: frameworkintegration
-Pin: version 5.81.*
-Pin-Priority: -1
-
-Package: drkonqi
-Pin: version 5.21.3*
-Pin-Priority: -1
-
-Package: drkonqi
-Pin: version 5.21.4*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 5.80.*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 4:5.80.*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 5.81.*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 4:5.81.*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 5.21.3*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 5.21.4*
-Pin-Priority: -1
-
-Package: k*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 5.80.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 4:5.80.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 5:5.80.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 1:5.80.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 5.81.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 4:5.81.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 5:5.81.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 1:5.81.*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 5.21.3*
-Pin-Priority: -1
-
-Package: milou
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: oxygen-*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: lib*
-Pin: version 5.21.4*
-Pin-Priority: -1
-
-Package: milou
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: oxygen-*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: plasma-*
-Pin: version 5.80.*
-Pin-Priority: -1
-
-Package: plasma-*
-Pin: version 5.81.*
-Pin-Priority: -1
-
-Package: plasma-*
-Pin: version 5.21.3*
-Pin-Priority: -1
-
-Package: plasma-*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: polkit-*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: power*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: plasma-*
-Pin: version 5.21.4*
-Pin-Priority: -1
-
-Package: plasma-*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: polkit-*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: power*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: qml-module-org-kde-*
-Pin: version 5.80.*
-Pin-Priority: -1
-
-Package: qml-module-org-kde-*
-Pin: version 1:5.80.*
-Pin-Priority: -1
-
-Package: qml-module-org-kde-*
-Pin: version 5.81.*
-Pin-Priority: -1
-
-Package: qml-module-org-kde-*
-Pin: version 1:5.81.*
-Pin-Priority: -1
-
-Package: qml-module-org-kde-*
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: systemsettings
-Pin: version 4:5.21.3*
-Pin-Priority: -1
-
-Package: xdg-*
-Pin: version 5.21.3*
-Pin-Priority: -1
-
-Package: qml-module-org-kde-*
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: systemsettings
-Pin: version 4:5.21.4*
-Pin-Priority: -1
-
-Package: xdg-*
-Pin: version 5.21.4*
+Package: clip
+Pin: version 1.2.0
 Pin-Priority: -1
 
 ########################
@@ -320,8 +164,8 @@ Pin-Priority: -1
 
 Package: *
 Pin: release o=user
-Pin-Priority: 700
+Pin-Priority: 600
 
 Package: *
 Pin: origin archive.neon.kde.org
-Pin-Priority: 700
+Pin-Priority: 600
