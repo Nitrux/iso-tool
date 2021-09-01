@@ -262,6 +262,7 @@ MISC_KDE_PKGS='
 
 MISC_DESKTOP_PKGS='
 	dmz-cursor-theme
+	fonts-nx-desktop
 	i3
 	i3status
 	xterm/ceres
