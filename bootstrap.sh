@@ -386,6 +386,7 @@ MISC_DESKTOP_PKGS='
 	firefox/experimental
 	libcrypt1/trixie
 	libcrypt-dev/trixie
+	touchegg-kde
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
