@@ -42,7 +42,7 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
-#	
+#
 #	Install extra packages.
 #
 #	SYSTEMD_RDEP_PKGS are packages that for one reason or the other do not get pulled when
@@ -247,8 +247,8 @@ install $NITRUX_BASE_KERNEL_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
-#	
-#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
+#
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
 #
 
@@ -262,6 +262,8 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	latte-dock
+	libcrypt1/trixie
+	libcrypt-dev/trixie
 '
 
 PLYMOUTH_CERES_PKGS='
