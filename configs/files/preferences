@@ -14,6 +14,10 @@ Package: dash
 Pin: release *
 Pin-Priority: -1
 
+Package: docker.io
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
 Package: fuse
 Pin: release *
 Pin-Priority: -1
