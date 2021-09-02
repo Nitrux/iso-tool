@@ -11,7 +11,6 @@ puts () { printf "\n\n --- %s\n" "$*"; }
 
 add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
-appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
 dist_upgrade () { apt -yy dist-upgrade $@; }
@@ -449,13 +448,6 @@ HOLD_MISC_PKGS='
 '
 
 hold $HOLD_MISC_PKGS
-
-
-#	Update Appstream cache.
-
-clean_all
-update
-appstream_refresh_force
 
 
 #	Remove sources used to build the root.
