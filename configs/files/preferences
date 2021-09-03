@@ -267,6 +267,10 @@ Package: kio-extras-data
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkf5dbusaddons-bin
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 ##########################
 #  Neon Package Priority #
 ##########################
