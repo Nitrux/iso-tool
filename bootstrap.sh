@@ -213,6 +213,7 @@ update
 DEVUAN_PLYMOUTH_PKGS='
 	plymouth/chimaera
 	plymouth-label/chimaera
+	plymouth-x11/chimaera
 '
 
 install $DEVUAN_PLYMOUTH_PKGS
@@ -382,12 +383,10 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	kde-config-updates
-	nx-software-center
 	firefox/experimental
 	libkf5dbusaddons-bin
 	libcrypt1/trixie
 	libcrypt-dev/trixie
-	touchegg-kde
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
@@ -519,8 +518,8 @@ cat /configs/files/grub > /etc/default/grub
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-ln -svf /boot/vmlinuz-5.14.0-051400-generic /vmlinuz
-ln -svf /boot/initrd.img-5.14.0-051400-generic /initrd.img
+ln -svf /boot/vmlinuz-5.14.1-051401-generic /vmlinuz
+ln -svf /boot/initrd.img-5.14.0-051401-generic /initrd.img
 
 dpkg_force_remove dash || true
 
