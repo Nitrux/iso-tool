@@ -271,6 +271,7 @@ PLYMOUTH_CERES_PKGS='
 	plymouth-label/ceres
 	plymouth-themes/ceres
 	plymouth/ceres
+	plymouth-x11/ceres
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
