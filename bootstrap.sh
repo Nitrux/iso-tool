@@ -284,7 +284,7 @@ install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_C
 
 NVIDIA_DRV_PKGS='
 	libxnvctrl0
-	nvidia-x11-config
+	nvidia-x11-config-460
 	screen-resolution-extra
 '
 

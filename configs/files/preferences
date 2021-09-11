@@ -158,14 +158,6 @@ Package: libkf5prison5
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-##########################
-#  Maui Package Priority #
-##########################
-
-Package: clip
-Pin: version 1.2.0
-Pin-Priority: -1
-
 ########################
 #  Repository Priority #
 ########################
