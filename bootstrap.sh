@@ -135,7 +135,6 @@ cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
-cp /configs/files/sources.list.mesa.ppa /etc/apt/sources.list.d/mesa-git-ppa.list
 
 update_quiet
 
