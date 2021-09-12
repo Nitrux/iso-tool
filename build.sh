@@ -147,8 +147,6 @@ zsyncmake \
 
 #	Upload the ISO image.
 
-curl -X PUT --url https://storage.bunnycdn.com/isoreleases/$image -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/$image
-
-curl -X PUT --url https://storage.bunnycdn.com/isoreleases/${image%.iso}.md5sum -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/${image%.iso}.md5sum
-
-curl -X PUT --url https://storage.bunnycdn.com/isoreleases/${image%.iso}.zsync -H "AccessKey: $BUNNY_API_KEY" -H 'Content-Type: application/octet-stream' --data-binary @$output_dir/${image%.iso}.zsync
+for f in $output_dir/*; do
+    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -q -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
+done
