@@ -34,23 +34,6 @@ Package: dosfstools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libcrypt1
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libcrypt-dev
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-
-Package: libgutenprint9
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libgutenprint-common
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
 Package: fuse
 Pin: release *
 Pin-Priority: -1
@@ -65,14 +48,6 @@ Pin-Priority: 600
 
 Package: gutenprint-locales
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: kio-gdrive
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libtss2-esys0
-Pin: release *
 Pin-Priority: -1
 
 Package: grub-common
@@ -107,6 +82,34 @@ Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
 
+Package: kio
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kio-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libcrypt1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libcrypt-dev
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libgutenprint9
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libgutenprint-common
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libtss2-esys0
+Pin: release *
+Pin-Priority: -1
+
 Package: libboost-python1.71.0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -117,6 +120,10 @@ Pin-Priority: -1
 
 Package: libglu1-mesa
 Pin: release o=Ubuntu,a=focal,n=focal
+Pin-Priority: -1
+
+Package: libkf5*
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapicore5abi1
@@ -131,12 +138,12 @@ Package: libkpimgapidrive5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libpng16-16
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
 Package: libnm0
 Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libpng16-16
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libpolkit-agent-1-0
@@ -159,7 +166,7 @@ Package: libpulse-mainloop-glib0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: libqt5webkit5
+Package: libqt5*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -168,10 +175,6 @@ Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: network-manager
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: rng-tools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -211,27 +214,7 @@ Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
 
-Package: qml-module-qmltermwidget
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: xterm
-Pin: release *
-Pin-Priority: -1
-
-Package: libqt5webengine5
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libqt5webenginecore5
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libqt5webengine-data
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libqt5webenginewidgets5
+Package: printer-driver-gutenprint
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -239,36 +222,20 @@ Package: qml-module-qtwebengine
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libkf5xmlgui5
+Package: qml-module-qmltermwidget
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: printer-driver-gutenprint
+Package: qml-module-org-kde-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: qml-module-org-kde-kirigami2
+Package: rng-tools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libkf5xmlgui-data
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libkf5kirigami2-5
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: kio-extras
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: kio-extras-data
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libkf5dbusaddons-bin
-Pin: release o=Debian,a=unstable,n=sid
+Package: xterm
+Pin: release *
 Pin-Priority: -1
 
 ##########################
