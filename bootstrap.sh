@@ -88,11 +88,19 @@ update
 
 #	Upgrade dpkg for zstd support.
 
-DPKG_PKG='
-	dpkg
+UPGRADE_DPKG='
+	dpkg/trixie
+	libc-bin=2.33-0ubuntu5
+	libc6=2.33-0ubuntu5
+	locales=2.33-0ubuntu5
 '
 
-only_upgrade $DPKG_PKG
+install $UPGRADE_DPKG
+
+
+#	Do dist-upgrade.
+
+dist_upgrade
 
 
 #	Add bootloader.
