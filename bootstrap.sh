@@ -92,7 +92,9 @@ DPKG_PKG='
 	dpkg
 '
 
-only_upgrade $DPKG_PKG
+download $DPKG_PKG
+dpkg_install *.deb
+rm *.deb
 
 
 #	Add bootloader.
