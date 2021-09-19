@@ -84,7 +84,15 @@ cp /configs/files/sources.list.debian.experimental /etc/apt/sources.list.d/debia
 cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
 
 update
-dist_upgrade
+
+
+#	Upgrade dpkg for zstd support.
+
+DPKG_PKG='
+	dpkg
+'
+
+only_upgrade $DPKG_PKG
 
 
 #	Add bootloader.
