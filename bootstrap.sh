@@ -341,6 +341,8 @@ NITRUX_BASE_PKGS='
 	nitrux-standard-legacy
 '
 
+install locales
+
 install_downgrades $NITRUX_BASE_PKGS
 
 
