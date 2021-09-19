@@ -399,7 +399,6 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	kde-config-updates
-	firefox/experimental
 	libkf5dbusaddons-bin
 	libcrypt1/trixie
 	libcrypt-dev/trixie
