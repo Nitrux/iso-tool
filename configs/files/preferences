@@ -14,10 +14,6 @@ Package: base-files
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: base-files
-Pin: origin archive.kde.neon.org
-Pin-Priority: -1
-
 Package: calamares
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -90,6 +86,10 @@ Package: kio-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kross
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libboost-python1.71.0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -115,7 +115,7 @@ Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libglu1-mesa
-Pin: release o=Ubuntu,a=focal,n=focal
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libkf5*
@@ -178,8 +178,12 @@ Package: network-manager
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: plasma-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: policykit-1
-Pin: release o=Ubuntu,a=focal,n=focal
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: policykit-1
@@ -237,6 +241,10 @@ Pin-Priority: -1
 ##########################
 #  Neon Package Priority #
 ##########################
+
+Package: base-files
+Pin: origin archive.kde.neon.org
+Pin-Priority: -1
 
 Package: fwupd
 Pin: origin archive.neon.kde.org
