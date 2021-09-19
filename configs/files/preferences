@@ -90,6 +90,14 @@ Package: kross
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: ktexteditor-data
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kwayland-data
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libboost-python1.71.0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -131,6 +139,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapidrive5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkwalletbackend5-5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
