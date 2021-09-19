@@ -90,6 +90,10 @@ Package: kio-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libboost-python1.71.0
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libcrypt1
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -103,14 +107,6 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libgutenprint-common
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libtss2-esys0
-Pin: release *
-Pin-Priority: -1
-
-Package: libboost-python1.71.0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -170,6 +166,10 @@ Package: libqt5*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libtss2-esys0
+Pin: release *
+Pin-Priority: -1
+
 Package: libwbclient0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
@@ -183,6 +183,22 @@ Pin: release o=Ubuntu,a=focal,n=focal
 Pin-Priority: -1
 
 Package: policykit-1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: plymouth
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: plymouth-label
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
+Pin-Priority: -1
+
+Package: printer-driver-gutenprint
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -202,27 +218,7 @@ Package: pulseaudio-module-bluetooth
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: plymouth
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: plymouth-label
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: plymouth-theme-spinner
-Pin: release *
-Pin-Priority: -1
-
-Package: printer-driver-gutenprint
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: qml-module-qtwebengine
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: qml-module-qmltermwidget
+Package: qml-module-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
