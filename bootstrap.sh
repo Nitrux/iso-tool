@@ -517,8 +517,8 @@ cat /configs/files/grub > /etc/default/grub
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-ln -svf /boot/vmlinuz-5.14.1-051401-generic /vmlinuz
-ln -svf /boot/initrd.img-5.14.1-051401-generic /initrd.img
+ln -svf /boot/vmlinuz-5.14.6-051406-generic /vmlinuz
+ln -svf /boot/initrd.img-5.14.6-051406-generic /initrd.img
 
 dpkg_force_remove dash || true
 
