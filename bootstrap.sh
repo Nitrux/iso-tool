@@ -449,24 +449,8 @@ remove_keys \
 update
 
 
-#	Hold packages.
-#
-#	These packages are put on hold because they're known to be affected by the inexistence of Dash
-#	as the default /bin/sh or their postinst scripts have bashisms.
-#
-#	See https://github.com/Nitrux/nitrux-bug-tracker/issues/15
-
-HOLD_MISC_PKGS='
-	base-passwd
-	cgroupfs-mount
-	ssl-cert
-	systemctl
-'
-
-hold $HOLD_MISC_PKGS
-
-
 #	Update Appstream cache.
+
 clean_all
 update
 appstream_refresh_force
@@ -534,7 +518,7 @@ rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
 ln -svf /boot/vmlinuz-5.14.1-051401-generic /vmlinuz
-ln -svf /boot/initrd.img-5.14.0-051401-generic /initrd.img
+ln -svf /boot/initrd.img-5.14.1-051401-generic /initrd.img
 
 dpkg_force_remove dash || true
 
