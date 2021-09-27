@@ -403,8 +403,8 @@ MISC_DESKTOP_PKGS='
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 '
-pkg_policy python-gi python-gi-cairo
-install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+install python-gi python-gi-cairo
+install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
