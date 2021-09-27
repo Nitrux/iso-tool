@@ -130,6 +130,10 @@ Package: libglu1-mesa
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
+Package: libgirepository-1.0-1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libkf5*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1

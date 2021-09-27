@@ -403,7 +403,7 @@ MISC_DESKTOP_PKGS='
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 '
-install python-gi python-gi-cairo
+
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
