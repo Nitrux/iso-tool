@@ -42,6 +42,10 @@ Package: fwupd
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 600
 
+Package: gir1.2-glib-2.0
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: gutenprint-locales
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
