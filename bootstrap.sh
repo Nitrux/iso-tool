@@ -512,7 +512,7 @@ install $OPENRC_CONFIG
 puts "ADDING MISC. FIXES."
 
 cat /configs/files/grub > /etc/default/grub
-# cat /configs/files/casper.conf > /etc/casper.conf
+cat /configs/files/casper.conf > /etc/casper.conf
 
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
