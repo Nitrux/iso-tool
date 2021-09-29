@@ -1,25 +1,13 @@
-#####################
-#  Package Priority #
-#####################
+############################
+#  Debian Package Priority #
+############################
 
 Package: base-files
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: base-files
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
-Package: base-files
-Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: calamares
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: dash
-Pin: release *
 Pin-Priority: -1
 
 Package: debianutils
@@ -28,14 +16,6 @@ Pin-Priority: -1
 
 Package: dosfstools
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: fuse
-Pin: release *
-Pin-Priority: -1
-
-Package: fwupd
-Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: fwupd
@@ -76,14 +56,6 @@ Pin-Priority: -1
 
 Package: grub2-common
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: k3b
-Pin: release *
-Pin-Priority: -1
-
-Package: k3b-i18n
-Pin: release *
 Pin-Priority: -1
 
 Package: kio
@@ -130,19 +102,27 @@ Package: libgutenprint-common
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libfreetype6
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
-Package: libglu1-mesa
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
 Package: libgirepository-1.0-1
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkate1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkcolorpicker0
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libkf5*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkimageannotator0
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkimageannotator-common
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -158,16 +138,16 @@ Package: libkpimgapidrive5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkuserfeedbackcore1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libkwalletbackend5-5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libnm0
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libpng16-16
-Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libpolkit-agent-1-0
@@ -178,28 +158,8 @@ Package: libpolkit-gobject-1-0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libpulse0
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
-Package: libpulsedsp
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
-Package: libpulse-mainloop-glib0
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
 Package: libqt5*
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libtss2-esys0
-Pin: release *
-Pin-Priority: -1
-
-Package: libwbclient0
-Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: network-manager
@@ -208,10 +168,6 @@ Pin-Priority: -1
 
 Package: plasma-*
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: policykit-1
-Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: policykit-1
@@ -226,12 +182,96 @@ Package: plymouth-label
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: printer-driver-gutenprint
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: qml-module-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: qml-module-org-kde-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: rng-tools
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+###########################
+#  Other Package Priority #
+###########################
+
+Package: dash
+Pin: release *
+Pin-Priority: -1
+
+Package: fuse
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
+Package: libtss2-esys0
+Pin: release *
+Pin-Priority: -1
+
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
 
-Package: printer-driver-gutenprint
-Pin: release o=Debian,a=unstable,n=sid
+Package: xterm
+Pin: release *
+Pin-Priority: -1
+
+############################
+#  Ubuntu Package Priority #
+############################
+
+Package: base-files
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: fwupd
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libfreetype6
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libglu1-mesa
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpng16-16
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulse0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulsedsp
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulse-mainloop-glib0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libwbclient0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: policykit-1
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: pulseaudio
@@ -250,20 +290,12 @@ Package: pulseaudio-module-bluetooth
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: qml-module-*
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
+############################
+#  Devuan Package Priority #
+############################
 
-Package: qml-module-org-kde-*
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: rng-tools
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: xterm
-Pin: release *
+Package: base-files
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 ##########################

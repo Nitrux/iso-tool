@@ -351,13 +351,13 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=11.3.0+nitrux-legacy
+	base-files=13.0.0+nitrux-legacy
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
 
-install_downgrades $NITRUX_BASE_PKGS
+install $NITRUX_BASE_PKGS
 
 
 #	Add Nvidia drivers or Nouveau.
@@ -510,6 +510,10 @@ install $OPENRC_CONFIG
 #	FIXME: These fixes should be included in a package.
 
 puts "ADDING MISC. FIXES."
+
+rm \
+	/etc/default/grub \
+	/etc/casper.conf
 
 cat /configs/files/grub > /etc/default/grub
 cat /configs/files/casper.conf > /etc/casper.conf
