@@ -104,11 +104,7 @@ Pin-Priority: -1
 
 Package: libgirepository-1.0-1
 Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libkate1
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
+Pin-Priority: -11
 
 Package: libkcolorpicker0
 Pin: release o=Debian,a=unstable,n=sid
