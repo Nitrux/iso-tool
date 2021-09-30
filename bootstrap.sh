@@ -462,15 +462,7 @@ puts "REMOVE BUILD SOURCES."
 
 rm \
 	/etc/apt/preferences \
-	/etc/apt/sources.list.d/debian-experimental-repo.list \
-	/etc/apt/sources.list.d/debian-unstable-repo.list \
-	/etc/apt/sources.list.d/devuan-beowulf-repo.list \
-	/etc/apt/sources.list.d/devuan-ceres-repo.list \
-	/etc/apt/sources.list.d/neon-user-repo.list \
-	/etc/apt/sources.list.d/ubuntu-bionic-repo.list \
-	/etc/apt/sources.list.d/ubuntu-focal-repo.list \
-	/etc/apt/sources.list.d/ubuntu-impish-repo.list \
-	/etc/apt/sources.list.d/ubuntu-xenial-repo.list || true
+	/etc/apt/sources.list.d/{debian-experimental-repo.list,debian-unstable-repo.list,devuan-beowulf-repo.list,devuan-ceres-repo.list,neon-user-repo.list,ubuntu-bionic-repo.list,ubuntu-focal-repo.list,ubuntu-impish-repo.list,ubuntu-xenial-repo.list} || true
 
 update
 
