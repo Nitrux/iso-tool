@@ -404,6 +404,8 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 '
 
+install phonon4qt5-backend-vlc
+
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
