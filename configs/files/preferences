@@ -2,7 +2,15 @@
 #  Debian Package Priority #
 ############################
 
+Package: baloo-kf5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: base-files
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: breeze-icon-theme
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -15,6 +23,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: dosfstools
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: frameworkintegration
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -55,6 +67,14 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub2-common
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kded5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kinit
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 

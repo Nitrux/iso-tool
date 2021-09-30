@@ -351,7 +351,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.0+nitrux-legacy
+	base-files=13.1.1+nitrux-legacy
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
@@ -521,8 +521,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-ln -svf /boot/vmlinuz-5.14.6-051406-generic /vmlinuz
-ln -svf /boot/initrd.img-5.14.6-051406-generic /initrd.img
+ln -svf /boot/vmlinuz-5.14.8-051408-generic /vmlinuz
+ln -svf /boot/initrd.img-5.14.8-051408-generic /initrd.img
 
 dpkg_force_remove dash || true
 
