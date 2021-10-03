@@ -272,7 +272,7 @@ PLYMOUTH_CERES_PKGS='
 	plymouth/ceres
 	plymouth-x11/ceres
 '
-install libglib2.0-0 libglib2.0-bin libglib2.0-data
+install gstreamer1.0-plugins-good gstreamer1.0-pulseaudio plasma-desktop plasma-widgets-addons plasma-workspace-wayland nx-clock-applet nx-desktop-apps nx-notifications-applet nx-simplemenu-applet nx-systemtray-applet
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
