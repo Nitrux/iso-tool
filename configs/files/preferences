@@ -26,7 +26,27 @@ Package: libgirepository-1.0-1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-*
+Package: libglib2.0-0
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-dev-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-doc
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
