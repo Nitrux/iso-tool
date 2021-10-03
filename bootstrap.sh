@@ -272,7 +272,7 @@ PLYMOUTH_CERES_PKGS='
 	plymouth/ceres
 	plymouth-x11/ceres
 '
-
+inatall libglib2.0-0 libglib2.0-bin libglib2.0-data
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
