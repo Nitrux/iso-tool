@@ -26,6 +26,10 @@ Package: libgirepository-1.0-1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libglib2.0-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: qml-module-qmltermwidget
 Pin: origin deb.devuan.org
 Pin-Priority: -1
