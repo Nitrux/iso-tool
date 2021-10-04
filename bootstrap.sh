@@ -272,8 +272,9 @@ PLYMOUTH_CERES_PKGS='
 	plymouth/ceres
 	plymouth-x11/ceres
 '
-install gstreamer1.0-plugins-good gstreamer1.0-pulseaudio plasma-desktop plasma-widgets-addons plasma-workspace-wayland nx-clock-applet nx-desktop-apps nx-notifications-applet nx-simplemenu-applet nx-systemtray-applet plasma-workspace kinfocenter touchegg-kde flatpak libsoup2.4-1 xdg-desktop-portal-kde xdg-desktop-portal
+
 pkg_policy glib-networking
+install glib-networking
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
