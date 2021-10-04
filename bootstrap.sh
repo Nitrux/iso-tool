@@ -110,7 +110,6 @@ hold $HOLD_MISC_PKGS
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
-#	Add key for MESA-Git repository.
 
 puts "INSTALLING REPOSITORY KEYS."
 
@@ -121,8 +120,7 @@ add_repo_keys \
 	541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C \
-	A03A4626 > /dev/null
+	871920D1991BC93C > /dev/null
 
 
 #	Copy sources.list files.
