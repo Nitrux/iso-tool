@@ -50,6 +50,10 @@ Package: libglib2.0-doc
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: glib-networking
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: qml-module-qmltermwidget
 Pin: origin deb.devuan.org
 Pin-Priority: -1
