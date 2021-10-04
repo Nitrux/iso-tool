@@ -273,8 +273,6 @@ PLYMOUTH_CERES_PKGS='
 	plymouth-x11/ceres
 '
 
-pkg_policy glib-networking
-install glib-networking
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
