@@ -1,29 +1,17 @@
-#####################
-#  Package Priority #
-#####################
-
-Package: base-files
-Pin: release *
-Pin-Priority: -1
+############################
+#  Devuan Package Priority #
+###########################
 
 Package: bluez
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: dash
-Pin: release *
+Package: gir1.2-glib-2.0
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: fuse
-Pin: release *
-Pin-Priority: -1
-
-Package: k3b
-Pin: release *
-Pin-Priority: -1
-
-Package: k3b-i18n
-Pin: release *
+Package: gir1.2-freedesktop
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: libcrypt1
@@ -34,24 +22,76 @@ Package: libcrypt-dev
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libpulse0
+Package: libgirepository-1.0-1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-0
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-dev-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-doc
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking-services
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: qml-module-qmltermwidget
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: ubuntu-keyring
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: xdg-desktop-portal
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+############################
+#  Ubuntu Package Priority #
+############################
+
+Package: docker.io
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: libpam-modules
-Pin: release *
+Package: gir1.2-glib-2.0
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: libpam-modules-bin
-Pin: release *
+Package: gir1.2-freedesktop
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: libpam-runtime
-Pin: release *
+Package: libgirepository-1.0-1
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: libpam0g
-Pin: release *
+Package: libpulse0
+Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libpulsedsp
@@ -78,16 +118,48 @@ Package: pulseaudio-module-bluetooth
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: plymouth-theme-spinner
+###########################
+#  Other Package Priority #
+###########################
+
+Package: base-files
 Pin: release *
 Pin-Priority: -1
 
-Package: qml-module-qmltermwidget
-Pin: origin deb.devuan.org
+Package: dash
+Pin: release *
 Pin-Priority: -1
 
-Package: ubuntu-keyring
-Pin: origin deb.devuan.org
+Package: fuse
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-modules
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-modules-bin
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-runtime
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam0g
+Pin: release *
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
 Pin-Priority: -1
 
 Package: ufw
