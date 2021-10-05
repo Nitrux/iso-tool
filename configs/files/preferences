@@ -14,6 +14,14 @@ Package: gir1.2-freedesktop
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: glib-networking
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking-services
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libcrypt1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
@@ -47,14 +55,6 @@ Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: libglib2.0-doc
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: glib-networking
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: glib-networking-services
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
