@@ -7,19 +7,34 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-add_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
+appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
 clean_all () { apt clean && apt autoclean; }
+dist_upgrade () { apt -yy dist-upgrade $@; }
+download () { apt download $@; }
+dpkg_force_install () { dpkg --force-all -i $@; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+dpkg_install () { dpkg -i $@; }
 fix_install () { apt -yy --fix-broken install $@; }
+fix_install_no_recommends () { apt -yy --fix-broken install --no-install-recommends $@; }
 hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
+list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
+pkg_policy () { apt-cache policy $@; }
+pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
+remove_dpkg () { /usr/bin/rm-dpkg; }
+remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
-update () { apt -qq update; }
+update () { apt update; }
+update_quiet () { apt -qq update; }
+upgrade () { apt -yy upgrade $@; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
@@ -27,10 +42,13 @@ puts "STARTING BOOTSTRAP."
 
 
 #	Install basic packages.
-#	PRE_BUILD_PKGS are packages that for one reason or the other do not get pulled when
+#
+#	Install extra packages.
+#
+#	SYSTEMD_RDEP_PKGS are packages that for one reason or the other do not get pulled when
 #	the metapackages are installed, or, that require systemd to be present and can't be installed
 #	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
-#	the rest of the packages, or, that we want to test by adding them but are not part of the metapackages.
+#	the rest of the packages.
 
 puts "INSTALLING BASIC PACKAGES."
 
@@ -38,48 +56,67 @@ BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	ca-certificates
-	debconf
 	dhcpcd5
 	gnupg2
 '
 
-PRE_BUILD_PKGS='
+EXTRA_PKGS='
 	avahi-daemon
-	bluez
-	btrfs-progs
-	cgroupfs-mount
 	cups-daemon
+	curl
 	dictionaries-common
 	efibootmgr
+	language-pack-de
 	language-pack-en
 	language-pack-es
-	libpam-runtime
+	language-pack-fr
+	language-pack-pt
 	os-prober
-	rng-tools
 	squashfs-tools
 	sudo
+	xz-utils
+	zstd
+'
+
+SYSTEMD_RDEP_PKGS='
+	bluez
+	btrfs-progs
+	rng-tools
 	systemd
 	systemd-sysv
 	ufw
 	user-setup
 '
 
-update
-install $BASIC_PKGS $PRE_BUILD_PKGS
+update_quiet
+install $BASIC_PKGS $EXTRA_PKGS $SYSTEMD_RDEP_PKGS
 
 
-#	Add key for Neon repository.
+#	Hold misc. packages.
+
+puts "HOLD MISC. PACKAGES."
+
+HOLD_MISC_PKGS='
+	cgroupfs-mount
+	ssl-cert
+'
+
+hold $HOLD_MISC_PKGS
+
+
 #	Add key for Nitrux repository.
+#	Add key for Neon repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
 
-puts "ADDING REPOSITORY KEYS."
+puts "INSTALLING REPOSITORY KEYS."
 
- add_keys \
+add_nitrux_key
+
+add_repo_keys \
 	55751E5D \
-	1B69B2DA \
 	541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
@@ -96,9 +133,8 @@ cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
-cp /configs/files/sources.list.xenial /etc/apt/sources.list.d/ubuntu-xenial-repo.list
 
-update
+update_quiet
 
 
 #	Block installation of some packages.
@@ -106,28 +142,43 @@ update
 cp /configs/files/preferences /etc/apt/preferences
 
 
+#	Add script to remove dpkg.
+
+cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
+
+
 #	Add casper packages from bionic.
+#
+#	Remove bionic repo, we don't need it after.
 
 puts "INSTALLING CASPER PACKAGES."
 
 CASPER_PKGS='
-	casper
-	lupin-casper
+	casper/bionic-updates
+	lupin-casper/bionic
 '
 
-INITRAMFS_PKGS='
+install $CASPER_PKGS
+
+rm -r /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+
+
+#	Hold initramfs and casper packages.
+
+INITRAMFS_CASPER_PKGS='
+	casper
+	lupin-casper
 	initramfs-tools
 	initramfs-tools-core
 	initramfs-tools-bin
 '
 
-install -t bionic-updates $CASPER_PKGS
-hold $INITRAMFS_PKGS
+hold $INITRAMFS_CASPER_PKGS
 
 
-#	Use elogind packages from Devuan.
+#	Add elogind packages from Devuan.
 
-puts "ADDING ELOGIND."
+puts "INSTALLING ELOGIND."
 
 DEVUAN_ELOGIND_PKGS='
 	elogind
@@ -135,180 +186,137 @@ DEVUAN_ELOGIND_PKGS='
 '
 
 REMOVE_SYSTEMD_PKGS='
+	libargon2-1
+	libcryptsetup12
+	libsystemd0
 	systemd
 	systemd-sysv
-	libsystemd0
 '
 
-ADD_SYSTEMCTL_PKG='
-	systemctl
+SYSTEMCTL_PKG='
+	systemctl/focal
 '
 
-install_downgrades $DEVUAN_ELOGIND_PKGS
+install $DEVUAN_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
-autoremove
-install -t focal $ADD_SYSTEMCTL_PKG
-fix_install
-hold $ADD_SYSTEMCTL_PKG
+install_hold $SYSTEMCTL_PKG
 
 
 #	Use PolicyKit packages from Devuan.
-
-puts "ADDING POLICYKIT."
-
-DEVUAN_POLKIT_PKGS='
-	libpolkit-agent-1-0
-	libpolkit-backend-1-0
-	libpolkit-backend-elogind-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
-'
-
-install -t beowulf $DEVUAN_POLKIT_PKGS
-
-
 #	Add NetworkManager and udisks2 from Devuan.
+#	Add OpenRC as init.
 
-DEVUAN_NETWORKMANAGER_PKGS='
+puts "INSTALLING DEVUAN SYS PACKAGES."
+
+DEVUAN_SYS_PKGS='
 	init-system-helpers
+	initscripts
 	libnm0
-	network-manager
-'
-
-DEVUAN_UDISKS2_PKGS='
+	libpolkit-agent-1-0/beowulf
+	libpolkit-backend-1-0/beowulf
+	libpolkit-backend-elogind-1-0/beowulf
+	libpolkit-gobject-1-0/beowulf
+	libpolkit-gobject-elogind-1-0/beowulf
 	libudisks2-0
+	network-manager
+	openrc
+	policycoreutils
+	policykit-1/beowulf
+	startpar
+	sysvinit-utils
 	udisks2
 '
 
-install $DEVUAN_NETWORKMANAGER_PKGS $DEVUAN_UDISKS2_PKGS
-
-
-#	Add OpenRC as init.
-
-puts "ADDING OPENRC AS INIT."
-
-DEVUAN_INIT_PKGS='
-	fgetty
-	initscripts
-	openrc
-	policycoreutils
-	startpar
-	sysvinit-utils
-'
-
-install_downgrades $DEVUAN_INIT_PKGS
+install $DEVUAN_SYS_PKGS
 
 
 #	Install base system metapackages.
 
-puts "INSTALLING BASE SYSTEM."
+puts "INSTALLING BASE FILES AND KERNEL."
 
-NITRUX_BASE_PKGS='
-	base-files=12.1.0+nitrux
+NITRUX_BASE_KERNEL_DRV_PKGS='
+	base-files=13.0.1+nitrux
 	nitrux-hardware-drivers
-	nitrux-minimal
-	nitrux-standard
 	linux-image-mainline-vfio
 '
 
-NVIDIA_DRV_PKGS='
-	libxnvctrl0
-	nvidia-driver-460
-	nvidia-prime
-	nvidia-x11-config
-'
-
-install $NITRUX_BASE_PKGS $NVIDIA_DRV_PKGS
+install $NITRUX_BASE_KERNEL_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
-#	NOTE: The plymouth packages have to be downgraded to the version in xenial-updates
-#	because otherwise the splash is not shown.
+#
+#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and
+#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
+#
 
 puts "INSTALLING DESKTOP PACKAGES."
 
-LIBPNG12_PKG='
-	libpng12-0/nitrux
-'
-
-PLYMOUTH_XENIAL_PKGS='
-	plymouth/xenial-updates
-	plymouth-themes/xenial-updates
-	plymouth-label/xenial-updates
-	libplymouth4/xenial-updates
-'
-
-DEVUAN_PULSE_PKGS='
-	libpulse-mainloop-glib0=14.2-1
-	libpulse0=14.2-1
-	libpulsedsp=14.2-1
-	pulseaudio-module-bluetooth=14.2-1
-	pulseaudio-utils=14.2-1
-	pulseaudio=14.2-1
-'
-
-MISC_KDE_PKGS='
-	plasma-pa=4:5.20.5-1
-	latte-dock
-'
+sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
 NX_DESKTOP_PKG='
 	nx-desktop
-	fwupd=1.5.5-2
-	libfwupd2=1.5.5-2
-	libfwupdplugin1=1.5.5-2
-	sudo=1.9.5p2-1
 '
 
-HOLD_MISC_PKGS='
-	cgroupfs-mount
-	ssl-cert
+MISC_DESKTOP_PKGS='
+	latte-dock
+	libcrypt1/trixie
+	libcrypt-dev/trixie
 '
 
+PLYMOUTH_CERES_PKGS='
+	libplymouth5/ceres
+	plymouth-label/ceres
+	plymouth-themes/ceres
+	plymouth/ceres
+	plymouth-x11/ceres
+'
 
-#	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and 
-#	https://github.com/Nitrux/nitrux-bug-tracker/issues/4)
-
-sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
+install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
 
 
-install_downgrades $LIBPNG12_PKG $PLYMOUTH_XENIAL_PKGS $DEVUAN_PULSE_PKGS $MISC_KDE_PKGS $NX_DESKTOP_PKG
-hold $HOLD_MISC_PKGS
+#	Install Nvidia driver.
+
+NVIDIA_DRV_PKGS='
+	libxnvctrl0
+	nvidia-x11-config-460
+	screen-resolution-extra
+'
+
+install $NVIDIA_DRV_PKGS
 
 
 #	Upgrade, downgrade and install misc. packages.
 
-cp /configs/files/sources.list.hirsute /etc/apt/sources.list.d/ubuntu-hirsute-repo.list
+cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
+	bluez/ceres
 	linux-firmware
+	sudo/ceres
+	openssl
 '
 
-UPDATE_GLIBC_PKGS='
+UPGRADE_GLIBC_PKGS='
 	libc6
 	libc-bin
 	locales
 '
 
-DOWNGRADE_MISC_PKGS='
-	bluez/ceres
-'
-
 INSTALL_MISC_PKGS='
 	patchelf
+	fuse-overlayfs
 '
 
-update
-only_upgrade $UPGRADE_MISC_PKGS $UPDATE_GLIBC_PKGS
-install_downgrades_hold $DOWNGRADE_MISC_PKGS
+update_quiet
+only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
 install $INSTALL_MISC_PKGS
 
 
 #	Add OpenRC configuration.
 
-puts "ADDING OPENRC CONFIG."
+puts "INSTALLING OPENRC CONFIG."
 
 OPENRC_CONFIG='
 	openrc-config
@@ -319,7 +327,7 @@ install $OPENRC_CONFIG
 
 #	Add live user.
 
-puts "ADDING LIVE USER."
+puts "INSTALLING LIVE USER."
 
 NX_LIVE_USER_PKG='
 	nitrux-live-user
@@ -334,41 +342,6 @@ clean_all
 #	No apt usage past this point.
 
 
-# puts "ADDING MAUI APPS (NIGHTLY)."
-
-# wget -q https://dl.min.io/client/mc/release/linux-amd64/mc -O /tmp/mc
-# chmod +x /tmp/mc
-# /tmp/mc config host add nx $NITRUX_STORAGE_URL $NITRUX_STORAGE_ACCESS_KEY $NITRUX_STORAGE_SECRET_KEY
-# _latest=$(/tmp/mc cat nx/maui/nightly/LATEST)
-# mkdir maui_pkgs
-
-# (
-# 	cd maui_pkgs
-
-# 	_packages=$(/tmp/mc ls nx/maui/nightly/$_latest/ | grep -Po "[\w\d\-+]*amd64\.AppImage")
-
-# 	for i in $_packages; do
-# 		/tmp/mc cp nx/maui/nightly/$_latest/$i .
-# 	done
-
-# 	mv index-*amd64*.AppImage /Applications/index
-# 	mv buho-*amd64*.AppImage /Applications/buho
-# 	mv nota-*amd64*.AppImage /Applications/nota
-# 	mv vvave-*amd64*.AppImage /Applications/vvave
-# 	mv station-*amd64*.AppImage /Applications/station
-# 	mv pix-*amd64*.AppImage /Applications/pix
-
-# 	chmod +x /Applications/*
-
-# )
-
-# /tmp/mc config host rm nx
-
-# rm -r \
-# 	maui_pkgs \
-# 	/tmp/mc
-
-
 #	Changes specific to this image. If they can be put in a package, do so.
 #	FIXME: These fixes should be included in a package.
 
@@ -376,7 +349,10 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-rm -r /home/travis || true
+rm \
+	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
+
+cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 
 #	Implement a new FHS.
@@ -399,13 +375,11 @@ mkdir -p \
 cp /configs/files/hidden /.hidden
 
 
-#	Use LZ4 compression when creating the initramfs.
 #	Add persistence script.
 #	Add fstab mount binds.
 
 puts "UPDATING THE INITRAMFS."
 
-cp /configs/files/initramfs.conf /etc/initramfs-tools/
 cp /configs/scripts/hook-scripts.sh /usr/share/initramfs-tools/hooks/
 cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bottom/05mountpoints_lupin
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
@@ -413,24 +387,25 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 update-initramfs -u
 
 
+#	Remove Dash.
 #	Remove APT.
 
-puts "REMOVING APT."
+puts "REMOVING DASH, CASPER AND APT."
 
-REMOVE_APT_PKGS='
+REMOVE_DASH_CASPER_APT_PKGS='
 	apt
-	apt-utils
 	apt-transport-https
+	apt-utils
+	casper
+	dash
+	lupin-casper
 '
 
-dpkg_force_remove $REMOVE_APT_PKGS
+dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 
+ln -svf /bin/mksh /bin/sh
 
-#	Clean the filesystem.
-
-puts "REMOVING CASPER."
-
-dpkg_force_remove $CASPER_PKGS
+dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
 
 
 #	WARNING:
@@ -441,24 +416,41 @@ dpkg_force_remove $CASPER_PKGS
 
 puts "REMOVING DPKG."
 
-/configs/scripts/rm-dpkg.sh
+remove_dpkg
+
+rm -r /usr/bin/rm-dpkg
 
 
 #	Check contents of /boot.
 #	Check contents of OpenRC runlevels.
+#	Check links to kernel and initramdisk.
+#	Check contents of init.d and sddm.conf.d.
+#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper.
+#	Check contents of /Applications.
 #	Check that init system is not systemd.
-#	Check if VFIO module is included in the initramfs.
-#	Check existence and contents of casper.conf
-#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
+#	Check that /bin/sh is in fact not Dash.
+#	Check existence and contents of casper.conf and sddm.conf.
+#	Check that the VFIO driver is included in the intiramfs.
 
-ls -l /boot
-ls -l /vmlinuz /initrd.img
-ls -l /etc/init.d/ /etc/runlevels/default/ /etc/runlevels/nonetwork/ /etc/runlevels/off /etc/runlevels/recovery/ /etc/runlevels/sysinit/
-stat /sbin/init
-cat /etc/casper.conf
+
+puts "PERFORM MANUAL CHECKS."
+
+ls -lh \
+	/boot \
+	/etc/runlevels/{default,nonetwork,off,recovery,sysinit} \
+	/{vmlinuz,initrd.img} \
+	/etc/{init.d,sddm.conf.d} \
+	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
+	/Applications || true
+
+stat \
+	/sbin/init \
+	/bin/sh
+
+cat \
+	/etc/{casper.conf,sddm.conf}
+
 lsinitramfs -l /boot/initrd.img* | grep vfio
-ls -l /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-ls -l /Applications
 
 
 puts "EXITING BOOTSTRAP."

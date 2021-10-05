@@ -2,14 +2,13 @@
 
 #	Exit on errors.
 
-set -xe
+set -e
 
 
 #	Travis stuff.
 
 XORRISO_PKGS='
 	libburn4
-	libgcc1
 	libisoburn1
 	libisofs6
 	libjte2
@@ -31,12 +30,13 @@ GRUB_PKGS='
 
 apt -qq update
 apt -qq -yy install $XORRISO_PKGS $GRUB_PKGS --no-install-recommends
-pip3 install --upgrade python-gitlab
+
+#pip3 install --upgrade python-gitlab
 
 
 #	base image URL.
 
-base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04.1-base-amd64.tar.gz
+base_img_url=http://cdimage.ubuntu.com/ubuntu-base/releases/20.04/release/ubuntu-base-20.04.3-base-amd64.tar.gz
 
 
 #	Prepare the directories for the build.
@@ -53,8 +53,8 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/master/OTA-latest/")-amd64.iso
-update_url=http://repo.nxos.org:8000/${image%.iso}.zsync
-hash_url=http://repo.nxos.org:8000/${image%.iso}.md5sum
+update_url=http://updates.nxos.org/${image%.iso}.zsync
+hash_url=http://updates.nxos.org/${image%.iso}.md5sum
 
 
 #	Prepare the directory where the filesystem will be created.
@@ -109,7 +109,7 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 ( while :; do sleep 300; printf ".\n"; done ) &
 
 mkdir -p $iso_dir/casper
-mksquashfs $build_dir $iso_dir/casper/filesystem.squashfs -comp zstd -no-progress -b 1048576
+mksquashfs $build_dir $iso_dir/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576
 
 
 #	Generate the ISO image.
@@ -148,5 +148,5 @@ zsyncmake \
 #	Upload the ISO image.
 
 for f in $output_dir/*; do
-    SSHPASS=$DEPLOY_PASS sshpass -e scp -q -o stricthostkeychecking=no "$f" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
+    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -q -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
 done

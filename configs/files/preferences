@@ -1,3 +1,131 @@
+############################
+#  Devuan Package Priority #
+###########################
+
+Package: bluez
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: gir1.2-glib-2.0
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: gir1.2-freedesktop
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking-services
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libcrypt1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libcrypt-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libgirepository-1.0-1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-0
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-dev-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libglib2.0-doc
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: qml-module-qmltermwidget
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: ubuntu-keyring
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: xdg-desktop-portal
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+############################
+#  Ubuntu Package Priority #
+############################
+
+Package: docker.io
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: gir1.2-glib-2.0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: gir1.2-freedesktop
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libgirepository-1.0-1
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulse0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulsedsp
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libpulse-mainloop-glib0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio-utils
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio-module-gsettings
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: pulseaudio-module-bluetooth
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+###########################
+#  Other Package Priority #
+###########################
+
+Package: base-files
+Pin: release *
+Pin-Priority: -1
+
 Package: dash
 Pin: release *
 Pin-Priority: -1
@@ -6,11 +134,31 @@ Package: fuse
 Pin: release *
 Pin-Priority: -1
 
-Package: plymouth-theme-spinner
+Package: k3b
 Pin: release *
 Pin-Priority: -1
 
-Package: plasma-pa
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-modules
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-modules-bin
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam-runtime
+Pin: release *
+Pin-Priority: -1
+
+Package: libpam0g
+Pin: release *
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
 
@@ -22,24 +170,64 @@ Package: xterm
 Pin: release *
 Pin-Priority: -1
 
-Package: libqt5webkit5
-Pin: version 5.212.0~alpha4-7
-Pin-Priority: -1
-
-Package: k3b
-Pin: release *
-Pin-Priority: -1
-
-Package: k3b-i18n
-Pin: release *
-Pin-Priority: -1
-
-Package: qml-module-qmltermwidget
-Pin: version 1.1.1+git20200723-2
-Pin-Priority: -1
+##########################
+#  Neon Package Priority #
+##########################
 
 Package: fwupd
-Pin: version 1.5.3-0xneon+20.04+focal+build3
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: buho
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: clip
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: communicator
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: index
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: nota
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: pix
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: shelf
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: station
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: vvave
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libmauikit
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: qml-module-org-kde-mauikit
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: latte-dock
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libkf5prison5
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 ########################
@@ -48,8 +236,8 @@ Pin-Priority: -1
 
 Package: *
 Pin: release o=user
-Pin-Priority: 700
+Pin-Priority: 600
 
 Package: *
 Pin: origin archive.neon.kde.org
-Pin-Priority: 700
+Pin-Priority: 600
