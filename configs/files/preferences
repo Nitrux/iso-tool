@@ -74,6 +74,10 @@ Package: kded5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kdeplasma-addons-data
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: kinit
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -99,6 +103,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kwayland-data
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kwin-addons
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -162,6 +170,10 @@ Package: libkwalletbackend5-5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: liblayershellqtinterface5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libnm0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -211,6 +223,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: rng-tools
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: xdg-desktop-portal-kde
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -332,5 +348,5 @@ Pin-Priority: -1
 
 Package: *
 Pin: origin archive.neon.kde.org
-Pin-Priority: 600
+Pin-Priority: 500
 
