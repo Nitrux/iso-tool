@@ -106,7 +106,7 @@ Package: kwayland-data
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: kwin-addons
+Package: kwin-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
