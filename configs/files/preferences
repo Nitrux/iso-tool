@@ -14,7 +14,7 @@ Package: breeze
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: breeze-icon-theme
+Package: breeze-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -178,7 +178,7 @@ Package: libkwalletbackend5-5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libkwineffects13
+Package: libkwin*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
