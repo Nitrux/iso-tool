@@ -178,6 +178,10 @@ Package: libkwalletbackend5-5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkwineffects13
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: liblayershellqtinterface5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
