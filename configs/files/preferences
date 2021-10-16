@@ -10,6 +10,10 @@ Package: base-files
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: breeze
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: breeze-icon-theme
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -159,6 +163,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapidrive5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libksysguard*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
