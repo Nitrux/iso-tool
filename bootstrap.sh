@@ -404,7 +404,7 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 '
 
-install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
