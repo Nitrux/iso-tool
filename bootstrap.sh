@@ -403,7 +403,7 @@ MISC_DESKTOP_PKGS='
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 '
-
+pkg_policy kwin-style-breeze kwin kwin-common kwin-wayland
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
