@@ -404,7 +404,8 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 '
 
-install breeze kwin-common kwin-x11 kwin-wayland plasma-workspace 
+pkg_policy qml-module-org-kde-ksysguard libksgrd9 libprocesscore9 libprocessui9 libqalculate20
+install qml-module-org-kde-ksysguard libksgrd9 libprocesscore9 libprocessui9 libqalculate20
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
