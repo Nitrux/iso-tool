@@ -404,7 +404,7 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 '
 
-install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+install breeze kwin-common kwin-x11 kwin-wayland plasma-workspace 
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
