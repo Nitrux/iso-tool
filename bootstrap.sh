@@ -404,8 +404,7 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 '
 
-pkg_policy qml-module-org-kde-ksysguard libksgrd9 libprocesscore9 libprocessui9 libqalculate20
-install qml-module-org-kde-ksysguard libksgrd9 libprocesscore9 libprocessui9 libqalculate20
+install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
