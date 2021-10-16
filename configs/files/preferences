@@ -82,6 +82,10 @@ Package: kdeplasma-addons-data
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kde-style-breeze
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: kinit
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
