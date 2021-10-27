@@ -293,6 +293,7 @@ cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beo
 update
 
 DEVUAN_POLKIT_PKGS='
+	libpam-elogind/beowulf
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
 	libpolkit-backend-elogind-1-0/beowulf
@@ -301,6 +302,7 @@ DEVUAN_POLKIT_PKGS='
 	policykit-1/beowulf
 '
 
+pkg_policy $DEVUAN_POLKIT_PKGS
 install $DEVUAN_POLKIT_PKGS
 
 rm \
