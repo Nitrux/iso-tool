@@ -301,7 +301,7 @@ DEVUAN_POLKIT_PKGS='
 	policykit-1/beowulf
 '
 
-install $DEVUAN_POLKIT_PKGS
+install_downgrades $DEVUAN_POLKIT_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-beowulf-repo.list
