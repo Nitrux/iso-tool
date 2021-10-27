@@ -222,14 +222,14 @@ add_repo_keys \
 	541922FB \
 	BB23C00C61FC752C > /dev/null
 
-cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-chimaera-repo.list
 
 update
 
 DEVUAN_PLYMOUTH_PKGS='
-	plymouth/chimaera
-	plymouth-label/chimaera
-	plymouth-x11/chimaera
+	plymouth/daedalus
+	plymouth-label/daedalus
+	plymouth-x11/daedalus
 '
 
 install $DEVUAN_PLYMOUTH_PKGS
@@ -295,14 +295,11 @@ update
 DEVUAN_POLKIT_PKGS='
 	libpam-elogind/beowulf
 	libpolkit-agent-1-0/beowulf
-	libpolkit-backend-1-0/beowulf
-	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
 	policykit-1/beowulf
 '
 
-pkg_policy $DEVUAN_POLKIT_PKGS
 install $DEVUAN_POLKIT_PKGS
 
 rm \
@@ -328,12 +325,12 @@ add_repo_keys \
 	541922FB \
 	BB23C00C61FC752C > /dev/null
 
-cp /configs/files/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-chimaera-repo.list
 
 update
 
 MISC_DEVUAN_CHIMAERA_PKGS='
-	network-manager/chimaera
+	network-manager/daedalus
 '
 
 install $MISC_DEVUAN_CHIMAERA_PKGS

@@ -202,6 +202,10 @@ Package: libnm0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libpam-elogind
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libpolkit-agent-1-0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
