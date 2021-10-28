@@ -214,7 +214,7 @@ install $MAINLINE_KERNEL_PKG
 #	Add Plymouth.
 #
 #	The version of Plymouth that is available from Debian requires systemd and udev.
-#	To avoid this requirement, we will use the package from Devuan (chimaera) that only requires udev (eudev).
+#	To avoid this requirement, we will use the package from Devuan (daedalus) that only requires udev (eudev).
 
 puts "ADDING PLYMOUTH."
 
@@ -222,7 +222,7 @@ add_repo_keys \
 	541922FB \
 	BB23C00C61FC752C > /dev/null
 
-cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-chimaera-repo.list
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 
 update
 
@@ -235,7 +235,7 @@ DEVUAN_PLYMOUTH_PKGS='
 install $DEVUAN_PLYMOUTH_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-chimaera-repo.list
+	/etc/apt/sources.list.d/devuan-daedalus-repo.list
 
 remove_keys \
 	541922FB \
@@ -280,7 +280,7 @@ update
 #
 #	Since we're using elogind to replace logind, we need to add the matching PolicyKit packages.
 #
-#	Strangely, the complete stack is only available in beowulf but not in ceres or chimaera.
+#	Strangely, the complete stack is only available in beowulf but not in chimaera or daedalus.
 
 puts "ADDING POLICYKIT ELOGIND COMPAT."
 
@@ -318,7 +318,7 @@ update
 #	The network-manager package that is available in Debian does not have an init script compatible with OpenRC.
 #	so we use the package from Devuan instead.
 #
-#	Prioritize installing packages from chimaera over ceres, unless the package only exists in ceres.
+#	Prioritize installing packages from daedalus over chimaera, unless the package only exists in ceres.
 
 puts "ADDING DEVUAN MISC. PACKAGES."
 
@@ -326,18 +326,18 @@ add_repo_keys \
 	541922FB \
 	BB23C00C61FC752C > /dev/null
 
-cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-chimaera-repo.list
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 
 update
 
-MISC_DEVUAN_CHIMAERA_PKGS='
+MISC_DEVUAN_DAEDALUS_PKGS='
 	network-manager/daedalus
 '
 
-install $MISC_DEVUAN_CHIMAERA_PKGS
+install $MISC_DEVUAN_DAEDALUS_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-chimaera-repo.list
+	/etc/apt/sources.list.d/devuan-daedalus-repo.list
 
 remove_keys \
 	541922FB \
