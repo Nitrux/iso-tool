@@ -109,34 +109,17 @@ dist_upgrade
 
 puts "ADDING BOOTLOADER."
 
-add_repo_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
-
-cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
-
-update
-
 GRUB2_PKGS='
-	grub-common/impish
-	grub-efi-amd64/impish
-	grub-efi-amd64-bin/impish
-	grub-efi-amd64-signed/impish
-	grub-pc-bin/impish
-	grub2-common/impish
+	grub-common/trixie
+	grub-efi-amd64/trixie
+	grub-efi-amd64-bin/trixie
+	grub-efi-amd64-signed/trixie
+	grub-pc-bin/trixie
+	grub2-common/trixie
 	libfreetype6/unstable
 '
 
 install $GRUB2_PKGS
-
-rm \
-	/etc/apt/sources.list.d/ubuntu-impish-repo.list
-
-remove_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
-
-update
 
 
 #	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
@@ -462,7 +445,7 @@ puts "REMOVE BUILD SOURCES."
 
 rm \
 	/etc/apt/preferences \
-	/etc/apt/sources.list.d/{debian-experimental-repo.list,debian-unstable-repo.list,devuan-beowulf-repo.list,devuan-ceres-repo.list,neon-user-repo.list,ubuntu-bionic-repo.list,ubuntu-focal-repo.list,ubuntu-impish-repo.list,ubuntu-xenial-repo.list} || true
+	/etc/apt/sources.list.d/*
 
 update
 
