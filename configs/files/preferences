@@ -294,6 +294,10 @@ Package: libtss2-esys0
 Pin: release *
 Pin-Priority: -1
 
+Package: libtag1v5-vanilla
+Pin: release *
+Pin-Priority: -1
+
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
