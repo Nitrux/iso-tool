@@ -9,7 +9,9 @@ puts () { printf "\n\n --- %s\n" "$*"; }
 
 #	Wrap APT commands in functions.
 
-add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_nitrux_key_repo () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_nitrux_key_compat () { curl -L https://packagecloud.io/nitrux/compat/gpgkey | apt-key add -; }
+add_nitrux_key_testing () { curl -L https://packagecloud.io/nitrux/testing/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
@@ -72,7 +74,9 @@ install $CHROOT_BASIC_PKGS
 
 puts "ADDING REPOSITORY KEYS."
 
-add_nitrux_key
+add_nitrux_key_repo
+add_nitrux_key_compat
+add_nitrux_key_testing
 
 
 #	Copy repository sources.
@@ -80,6 +84,7 @@ add_nitrux_key
 puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+cp /configs/files/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
 cp /configs/files/sources.list.debian.experimental /etc/apt/sources.list.d/debian-experimental-repo.list
 cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
 
