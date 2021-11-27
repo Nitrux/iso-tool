@@ -371,6 +371,7 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	index
 	kde-config-updates
 	libkf5dbusaddons-bin
 	libcrypt1/trixie
