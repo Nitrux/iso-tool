@@ -377,6 +377,7 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 '
 
+pkg_policy index
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
