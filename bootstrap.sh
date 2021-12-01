@@ -367,11 +367,10 @@ update
 puts "ADDING NX DESKTOP."
 
 NX_DESKTOP_PKG='
-	nx-desktop-legacy
+	maui-apps
 '
 
 MISC_DESKTOP_PKGS='
-	index
 	kde-config-updates
 	libkf5dbusaddons-bin
 	libcrypt1/trixie
