@@ -193,7 +193,7 @@ install $OPENRC_INIT_PKGS
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-mainline-current
+	linux-image-mainline-lts
 '
 
 install $MAINLINE_KERNEL_PKG
