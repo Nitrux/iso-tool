@@ -90,6 +90,14 @@ Package: kde-cli-tools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kde-cli-tools-data
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kde-config-screenlocker
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: kded5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -279,6 +287,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: python3-gi
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: systemsettings
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
