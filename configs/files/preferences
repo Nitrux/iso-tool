@@ -30,6 +30,10 @@ Package: dosfstools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: drkonqi
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: frameworkintegration
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -78,6 +82,14 @@ Package: gtk3-engines-breeze
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kactivitymanagerd
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kde-cli-tools
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: kded5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -103,6 +115,14 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kross
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kscreen
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: ksystemstats
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -174,6 +194,10 @@ Package: libkpimgapidrive5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkscreenlocker5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libksgrd9
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -199,6 +223,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libnm0
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libnotificationmanager1
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
