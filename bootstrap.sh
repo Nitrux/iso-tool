@@ -100,7 +100,7 @@ UPGRADE_DPKG='
 	locales=2.33-0ubuntu5
 '
 
-install $UPGRADE_DPKG
+install_downgrades $UPGRADE_DPKG
 
 
 #	Do dist-upgrade.
