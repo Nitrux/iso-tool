@@ -371,6 +371,9 @@ puts "ADDING NX DESKTOP."
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
 	maui-apps-git
+	kio-extras
+	python-cairo
+	python-gi-cairo
 '
 
 MISC_DESKTOP_PKGS='
