@@ -380,6 +380,7 @@ NX_DESKTOP_PKG='
 	shelf-git
 	station-git
 	vvave-git
+	maui-shell-git
 	nx-software-center-git
 '
 
@@ -509,6 +510,8 @@ ln -svf /bin/bash /bin/sh
 dpkg_force_remove dash
 
 ln -svf /bin/bash /bin/dash
+
+chmod +x /usr/bin/startcask-x11
 
 
 #	Use LZ4 compression when creating the initramfs.
