@@ -73,7 +73,7 @@ du -hs $build_dir
 
 #	Remove CI leftovers.
 
-rm -r $iso_dir/home/travis
+rm -r $iso_dir/home/{travis,Travis} || true
 
 
 #	Copy the kernel and initramfs to $iso_dir.
