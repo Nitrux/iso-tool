@@ -371,6 +371,15 @@ puts "ADDING NX DESKTOP."
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
 	maui-apps-git
+	buho-git
+	clip-git
+	communicator-git
+	index-git
+	nota-git
+	pix-git
+	shelf-git
+	station-git
+	vvave-git
 	nx-software-center-git
 '
 
