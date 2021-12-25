@@ -71,6 +71,11 @@ chmod +x /bin/runch
 du -hs $build_dir
 
 
+#	Remove CI leftovers.
+
+rm -r $iso_dir/home/travis
+
+
 #	Copy the kernel and initramfs to $iso_dir.
 #	BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
