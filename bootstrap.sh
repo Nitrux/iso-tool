@@ -385,6 +385,7 @@ MAUI_APPS_PKG='
 	shelf-git
 	station-git
 	vvave-git
+	nx-software-center-git
 '
 
 MISC_DESKTOP_PKGS='
@@ -392,10 +393,9 @@ MISC_DESKTOP_PKGS='
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 	libkf5dbusaddons-bin
-	nx-software-center-git
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
