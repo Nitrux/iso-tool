@@ -370,25 +370,29 @@ puts "ADDING NX DESKTOP."
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	maui-apps-git
+	nx-desktop-wayland-legacy
+'
+
+MAUI_APPS_PKG='
 	buho-git
 	clip-git
 	communicator-git
 	index-git
+	maui-apps-git
+	maui-shell-git
 	nota-git
 	pix-git
 	shelf-git
 	station-git
 	vvave-git
-	maui-shell-git
-	nx-software-center-git
 '
 
 MISC_DESKTOP_PKGS='
 	kde-config-updates
-	libkf5dbusaddons-bin
-	libcrypt1/trixie
 	libcrypt-dev/trixie
+	libcrypt1/trixie
+	libkf5dbusaddons-bin
+	nx-software-center-git
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
