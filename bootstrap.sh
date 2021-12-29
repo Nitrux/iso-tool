@@ -67,7 +67,6 @@ BASIC_PKGS='
 
 EXTRA_PKGS='
 	avahi-daemon
-	curl
 	efibootmgr
 	squashfs-tools
 '
@@ -211,12 +210,15 @@ puts "INSTALLING DEVUAN SYS PACKAGES."
 DEVUAN_SYS_PKGS='
 	init-system-helpers
 	initscripts
+	libglib2.0-0/trixie
 	libnm0
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
 	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
+	libsemanage-common/daedalus
+	libsemanage2/daedalus
 	libudisks2-0
 	network-manager
 	openrc
@@ -225,9 +227,6 @@ DEVUAN_SYS_PKGS='
 	startpar
 	sysvinit-utils
 	udisks2
-	libsemanage2/daedalus
-	libsemanage-common/daedalus
-	libglib2.0-0/trixie
 '
 
 install $DEVUAN_SYS_PKGS
@@ -270,12 +269,14 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
+	dbus-user-session
 	dmz-cursor-theme
 	i3
 	i3status
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 	xterm/daedalus
+	xauth
 '
 
 PLYMOUTH_daedalus_PKGS='
@@ -374,6 +375,7 @@ cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 #	Before removing dpkg, check the most oversized installed packages.
 
 dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'
+dpkg-query -f '${binary:Package}\n' -W | wc -l
 
 
 #	Implement a new FHS.
