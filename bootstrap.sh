@@ -116,7 +116,7 @@ puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
-cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
@@ -255,17 +255,17 @@ MISC_DESKTOP_PKGS='
 	i3status
 	libcrypt1/trixie
 	libcrypt-dev/trixie
-	xterm/ceres
+	xterm/daedalus
 '
 
-PLYMOUTH_CERES_PKGS='
-	libplymouth5/ceres
-	plymouth-label/ceres
-	plymouth-themes/ceres
-	plymouth/ceres
+PLYMOUTH_daedalus_PKGS='
+	libplymouth5/daedalus
+	plymouth-label/daedalus
+	plymouth-themes/daedalus
+	plymouth/daedalus
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
+install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_daedalus_PKGS
 
 
 #	Install Nvidia driver.
@@ -281,7 +281,7 @@ install $NVIDIA_DRV_PKGS
 
 #	Upgrade, downgrade and install misc. packages.
 
-cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
+cp /configs/files/sources.list.jammy /etc/apt/sources.list.d/ubuntu-jammy-repo.list
 
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
