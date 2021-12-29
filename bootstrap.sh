@@ -243,7 +243,7 @@ NITRUX_BASE_PKGS='
 
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers-minimal
-	linux-image-mainline-vfio
+	
 '
 
 install $NITRUX_BASE_PKGS
@@ -292,7 +292,6 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-x11-config-460
 	screen-resolution-extra
-	python3-gi
 '
 
 install $NVIDIA_DRV_PKGS

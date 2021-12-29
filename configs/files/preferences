@@ -6,10 +6,6 @@ Package: bluez
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
-Package: gir1.2-glib-2.0
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
 Package: gir1.2-freedesktop
 Pin: origin deb.devuan.org
 Pin-Priority: -1
