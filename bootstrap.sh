@@ -216,7 +216,7 @@ puts "INSTALLING DEVUAN SYS PACKAGES."
 DEVUAN_SYS_PKGS='
 	init-system-helpers
 	initscripts
-	libglib2.0-0/trixie
+	libglib2.0-0/daedalus
 	libnm0
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
