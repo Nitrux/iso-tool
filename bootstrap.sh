@@ -235,15 +235,19 @@ install $DEVUAN_SYS_PKGS
 
 puts "INSTALLING BASE FILES AND KERNEL."
 
-NITRUX_BASE_KERNEL_DRV_PKGS='
+NITRUX_BASE_PKGS='
 	base-files=13.0.1+nitrux
 	nitrux-minimal
 	nitrux-standard
+'
+
+KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers-minimal
 	linux-image-mainline-vfio
 '
 
-install $NITRUX_BASE_KERNEL_DRV_PKGS
+install $NITRUX_BASE_PKGS
+install $KERNEL_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
@@ -288,6 +292,7 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-x11-config-460
 	screen-resolution-extra
+	python3-gi
 '
 
 install $NVIDIA_DRV_PKGS
