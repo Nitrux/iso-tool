@@ -73,9 +73,6 @@ EXTRA_PKGS='
 '
 
 SYSTEMD_RDEP_PKGS='
-	systemd
-	systemd-sysv
-	ufw
 	user-setup
 '
 
@@ -207,6 +204,10 @@ install_hold $SYSTEMCTL_PKG
 
 puts "INSTALLING DEVUAN SYS PACKAGES."
 
+DEVUAN_GLIB_PKGS='
+	libglib2.0-0/daedalus
+'
+
 DEVUAN_SYS_PKGS='
 	init-system-helpers
 	initscripts
@@ -228,7 +229,8 @@ DEVUAN_SYS_PKGS='
 	sysvinit-utils
 	udisks2
 '
-install libglib2.0-0
+
+install $DEVUAN_GLIB_PKGS 
 install $DEVUAN_SYS_PKGS
 
 
@@ -269,7 +271,6 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
-	dbus-user-session
 	dmz-cursor-theme
 	i3
 	i3status
