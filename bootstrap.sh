@@ -295,7 +295,7 @@ NVIDIA_DRV_PKGS='
 	nvidia-x11-config-460
 	screen-resolution-extra
 '
-pkg_policy gir1.2-glib-2.0 python3-gi libgirepository-1.0-1 libglib2.0-0
+
 install $NVIDIA_DRV_PKGS
 
 
