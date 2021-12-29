@@ -90,6 +90,10 @@ Package: libgirepository-1.0-1
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
+Package: libglib2.0-0
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
 Package: libpulse0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
