@@ -62,18 +62,12 @@ BASIC_PKGS='
 
 EXTRA_PKGS='
 	avahi-daemon
-	cups-daemon
 	curl
-	dictionaries-common
 	efibootmgr
-	os-prober
 	squashfs-tools
-	sudo
 '
 
 SYSTEMD_RDEP_PKGS='
-	bluez
-	btrfs-progs
 	rng-tools
 	systemd
 	systemd-sysv
@@ -229,6 +223,8 @@ puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_KERNEL_DRV_PKGS='
 	base-files=13.0.1+nitrux
+	nitrux-minimal
+	nitrux-standard
 	nitrux-hardware-drivers-minimal
 	linux-image-mainline-vfio
 '
@@ -250,12 +246,11 @@ NX_DESKTOP_PKG='
 '
 
 MISC_KDE_PKGS='
-	sddm
+
 '
 
 MISC_DESKTOP_PKGS='
 	dmz-cursor-theme
-	fonts-nx-desktop
 	i3
 	i3status
 	libcrypt1/trixie
@@ -291,19 +286,15 @@ cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo
 puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
 UPGRADE_MISC_PKGS='
-	bluez/ceres
-	linux-firmware
-	sudo/ceres
+
 '
 
 UPGRADE_GLIBC_PKGS='
-	libc6
-	libc-bin
-	locales
+
 '
 
 INSTALL_MISC_PKGS='
-	patchelf
+
 '
 
 update_quiet
