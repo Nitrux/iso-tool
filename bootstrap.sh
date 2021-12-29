@@ -227,7 +227,7 @@ DEVUAN_SYS_PKGS='
 	libglib2.0-0
 '
 
-policy libglib2.0-0 libsemanage-common libsemanage2
+pkg_policy libglib2.0-0 libsemanage-common libsemanage2
 install $DEVUAN_SYS_PKGS
 
 
