@@ -73,7 +73,6 @@ EXTRA_PKGS='
 '
 
 SYSTEMD_RDEP_PKGS='
-	rng-tools
 	systemd
 	systemd-sysv
 	ufw
