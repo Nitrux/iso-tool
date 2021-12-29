@@ -160,6 +160,8 @@ install $CASPER_PKGS
 
 rm -r /etc/apt/sources.list.d/ubuntu-bionic-repo.list
 
+update_quiet
+
 
 #	Hold initramfs and casper packages.
 
@@ -298,6 +300,8 @@ install $NVIDIA_DRV_PKGS
 
 
 #	Upgrade, downgrade and install misc. packages.
+#
+#	Remove jammy repo, we don't need it after.
 
 cp /configs/files/sources.list.jammy /etc/apt/sources.list.d/ubuntu-jammy-repo.list
 
@@ -318,6 +322,10 @@ INSTALL_MISC_PKGS='
 update_quiet
 only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
 install $INSTALL_MISC_PKGS
+
+rm -r /etc/apt/sources.list.d/ubuntu-jammy-repo.list
+
+update_quiet
 
 
 #	Add OpenRC configuration.
