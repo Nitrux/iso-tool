@@ -7,7 +7,12 @@ export LC_ALL=C
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+
+#	Wrap APT commands in functions.
+
+add_nitrux_key_repo () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_nitrux_key_compat () { curl -L https://packagecloud.io/nitrux/compat/gpgkey | apt-key add -; }
+add_nitrux_key_testing () { curl -L https://packagecloud.io/nitrux/testing/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
@@ -29,7 +34,7 @@ only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 pkg_policy () { apt-cache policy $@; }
 pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
-remove_dpkg () { /usr/bin/rm-dpkg; }
+remove_dpkg () { /usr/bin/rdpkg; }
 remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
 update () { apt update; }
@@ -92,6 +97,14 @@ hold $HOLD_MISC_PKGS
 
 
 #	Add key for Nitrux repository.
+
+puts "ADDING REPOSITORY KEYS."
+
+add_nitrux_key_repo
+add_nitrux_key_compat
+add_nitrux_key_testing
+
+
 #	Add key for Neon repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
@@ -100,11 +113,9 @@ hold $HOLD_MISC_PKGS
 
 puts "INSTALLING REPOSITORY KEYS."
 
-add_nitrux_key
-
 add_repo_keys \
-	55751E5D \
-	541922FB \
+	E6D4736255751E5D \
+	94532124541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
 	871920D1991BC93C > /dev/null
@@ -131,7 +142,7 @@ cp /configs/files/preferences /etc/apt/preferences
 
 #	Add script to remove dpkg.
 
-cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
+cp /configs/scripts/rdpkg /usr/bin/rdpkg
 
 
 #	Add casper packages from bionic.
@@ -410,7 +421,7 @@ puts "REMOVING DPKG."
 
 remove_dpkg
 
-rm -r /usr/bin/rm-dpkg
+rm -r /usr/bin/rdpkg
 
 
 #	Check contents of /boot.
