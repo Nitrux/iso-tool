@@ -294,6 +294,7 @@ NVIDIA_DRV_PKGS='
 	libxnvctrl0
 	nvidia-x11-config-460
 	screen-resolution-extra
+	python3-gi
 '
 
 install $NVIDIA_DRV_PKGS
