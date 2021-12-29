@@ -205,13 +205,15 @@ DEVUAN_SYS_PKGS='
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
 	libudisks2-0
-	network-manager/daedalus
+	network-manager
 	openrc
-	policycoreutils/daedalus
+	policycoreutils
 	policykit-1/beowulf
 	startpar
 	sysvinit-utils
 	udisks2
+	libsemanage2
+	libglib2.0-0
 '
 
 install $DEVUAN_SYS_PKGS
