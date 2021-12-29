@@ -276,8 +276,8 @@ MISC_DESKTOP_PKGS='
 	i3status
 	libcrypt1/trixie
 	libcrypt-dev/trixie
+	sddm
 	xterm/daedalus
-	xauth
 '
 
 PLYMOUTH_daedalus_PKGS='
@@ -317,29 +317,29 @@ UPGRADE_GLIBC_PKGS='
 
 '
 
-INSTALL_MISC_PKGS='
-whiptail
-nano
-netcat-openbsd
-linux-firmware
-linux-sound-base
-bash-completion
-busybox-static
-dosfstools
-iputils-ping
-logrotate
-ltrace
-mailcap
-man-db
-manpages
-net-tools
-ntfs-3g
-parted
-'
+# INSTALL_MISC_PKGS='
+# 	bash-completion
+# 	busybox-static
+# 	dosfstools
+# 	iputils-ping
+# 	linux-firmware
+# 	linux-sound-base
+# 	logrotate
+# 	ltrace
+# 	mailcap
+# 	man-db
+# 	manpages
+# 	nano
+# 	net-tools
+# 	netcat-openbsd
+# 	ntfs-3g
+# 	parted
+# 	whiptail
+# '
 
 update_quiet
 only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
-install $INSTALL_MISC_PKGS
+# install $INSTALL_MISC_PKGS
 
 rm -r /etc/apt/sources.list.d/ubuntu-jammy-repo.list
 
@@ -387,8 +387,6 @@ rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
 cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
-
-ln -sv /Applications/sddm /usr/bin/sddm
 
 
 #	Before removing dpkg, check the most oversized installed packages.
