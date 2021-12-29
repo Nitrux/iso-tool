@@ -319,19 +319,14 @@ UPGRADE_GLIBC_PKGS='
 
 INSTALL_MISC_PKGS='
 whiptail
-sudo
 nano
-netbase
 netcat-openbsd
 linux-firmware
 linux-sound-base
-e2fsprogs
-btrfs-progs
 bash-completion
 busybox-static
 dosfstools
 iputils-ping
-localechooser-data
 logrotate
 ltrace
 mailcap
