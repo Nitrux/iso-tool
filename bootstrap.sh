@@ -228,7 +228,7 @@ DEVUAN_SYS_PKGS='
 	sysvinit-utils
 	udisks2
 '
-pkg_policy libglib2.0-0
+install libglib2.0-0
 install $DEVUAN_SYS_PKGS
 
 
