@@ -46,12 +46,6 @@ upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 puts "STARTING BOOTSTRAP."
 
 
-#	List installed packages.
-
-dpkg-query -l | less > default_installed_pkgs.txt
-dpkg-query -f '${binary:Package}\n' -W | wc -l
-
-
 #	Install basic packages.
 #
 #	Install extra packages.
