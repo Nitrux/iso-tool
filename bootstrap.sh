@@ -371,6 +371,11 @@ rm \
 cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 
+#	Before removing dpkg, check the most oversized installed packages.
+
+dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'
+
+
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
 
