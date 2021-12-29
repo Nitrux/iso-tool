@@ -7,6 +7,8 @@
 
 A script for generating Nitrux ISO files. The code is very readable, and so, self documented.
 
+This branch generates an ISO file spcecifically to use VFIO.
+
 # Issues
 If you find problems with the contents of this repository please create an issue.
 

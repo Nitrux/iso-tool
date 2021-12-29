@@ -66,16 +66,9 @@ EXTRA_PKGS='
 	curl
 	dictionaries-common
 	efibootmgr
-	language-pack-de
-	language-pack-en
-	language-pack-es
-	language-pack-fr
-	language-pack-pt
 	os-prober
 	squashfs-tools
 	sudo
-	xz-utils
-	zstd
 '
 
 SYSTEMD_RDEP_PKGS='
