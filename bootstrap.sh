@@ -223,11 +223,11 @@ DEVUAN_SYS_PKGS='
 	startpar
 	sysvinit-utils
 	udisks2
-	libsemanage2
-	libglib2.0-0
+	libsemanage2/daedalus
+	libsemanage-common/daedalus
+	libglib2.0-0/trixie
 '
 
-pkg_policy libglib2.0-0 libsemanage-common libsemanage2
 install $DEVUAN_SYS_PKGS
 
 
