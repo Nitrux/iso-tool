@@ -344,7 +344,7 @@ install $OPENRC_CONFIG
 puts "INSTALLING LIVE USER."
 
 NX_LIVE_USER_PKG='
-	nitrux-live-user
+	nitrux-live-user-minimal
 '
 
 install $NX_LIVE_USER_PKG
