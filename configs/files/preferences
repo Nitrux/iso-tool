@@ -22,10 +22,6 @@ Package: libcrypt-dev
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libgirepository-1.0-1
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
 Package: libglib2.0-0
 Pin: origin deb.devuan.org
 Pin-Priority: -1
