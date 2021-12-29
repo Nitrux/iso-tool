@@ -276,6 +276,7 @@ MISC_DESKTOP_PKGS='
 	i3status
 	libcrypt1/trixie
 	libcrypt-dev/trixie
+	lxappearance
 	sddm
 	xterm/daedalus
 '
@@ -287,7 +288,7 @@ PLYMOUTH_daedalus_PKGS='
 	plymouth/daedalus
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_daedalus_PKGS
+install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_daedalus_PKGS
 
 
 #	Install Nvidia driver.
@@ -333,7 +334,6 @@ UPGRADE_GLIBC_PKGS='
 # 	net-tools
 # 	netcat-openbsd
 # 	ntfs-3g
-# 	parted
 # 	whiptail
 # '
 
@@ -391,6 +391,8 @@ cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 #	Before removing dpkg, check the most oversized installed packages.
 
+puts "SHOW LARGEST INSTALLED PACKAGES.."
+
 dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'
 dpkg-query -f '${binary:Package}\n' -W | wc -l
 
@@ -429,6 +431,7 @@ update-initramfs -u
 
 #	Remove Dash.
 #	Remove APT.
+#	Remove sudo as we're using doas link doas to sudo for downward compatibility.
 
 puts "REMOVING DASH, CASPER AND APT."
 
@@ -439,6 +442,7 @@ REMOVE_DASH_CASPER_APT_PKGS='
 	casper
 	dash
 	lupin-casper
+	sudo
 '
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
@@ -446,6 +450,8 @@ dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 ln -svf /bin/mksh /bin/sh
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
+
+ln -s $(which doas) /usr/bin/sudo
 
 
 #	WARNING:
@@ -469,7 +475,7 @@ rm -r /usr/bin/rdpkg
 #	Check contents of /Applications.
 #	Check that init system is not systemd.
 #	Check that /bin/sh is in fact not Dash.
-#	Check existence and contents of casper.conf and sddm.conf.
+#	Check existence and contents of casper.conf, sddm.conf and sddm.conf.d.
 #	Check that the VFIO driver is included in the intiramfs.
 
 
@@ -488,7 +494,8 @@ stat \
 	/bin/sh
 
 cat \
-	/etc/{casper.conf,sddm.conf}
+	/etc/{casper.conf,sddm.conf} \
+	/etc/sddm.conf.d/kde_settings.conf
 
 lsinitramfs -l /boot/initrd.img* | grep vfio
 
