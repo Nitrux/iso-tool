@@ -205,9 +205,9 @@ DEVUAN_SYS_PKGS='
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
 	libudisks2-0
-	network-manager
+	network-manager/daedalus
 	openrc
-	policycoreutils
+	policycoreutils/daedalus
 	policykit-1/beowulf
 	startpar
 	sysvinit-utils
