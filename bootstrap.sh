@@ -4,6 +4,7 @@ set -xe
 
 export LANG=C
 export LC_ALL=C
+export SUDO_FORCE_REMOVE=yes
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
