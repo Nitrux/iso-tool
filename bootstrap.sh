@@ -388,6 +388,8 @@ rm \
 
 cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
+ln -sv /Applications/sddm /usr/bin/sddm
+
 
 #	Before removing dpkg, check the most oversized installed packages.
 
