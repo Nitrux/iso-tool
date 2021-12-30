@@ -279,9 +279,11 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
-	dmz-cursor-theme
+	fonts-font-awesome
+	hsetroot
 	i3
 	i3blocks
+	i3lock
 	i3status
 	libcrypt1/trixie
 	libcrypt-dev/trixie
