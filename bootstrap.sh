@@ -272,6 +272,8 @@ sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /e
 
 NX_DESKTOP_PKG='
 	nx-desktop-minimal
+	nx-desktop-apps-vfio
+	nx-desktop-appimages-vfio
 '
 
 MISC_KDE_PKGS='
