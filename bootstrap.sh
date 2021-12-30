@@ -303,21 +303,21 @@ NVIDIA_DRV_PKGS='
 install $NVIDIA_DRV_PKGS
 
 
-#	Upgrade, downgrade and install misc. packages.
-#
-#	Remove jammy repo, we don't need it after.
+# #	Upgrade, downgrade and install misc. packages.
+# #
+# #	Remove jammy repo, we don't need it after.
 
-cp /configs/files/sources.list.jammy /etc/apt/sources.list.d/ubuntu-jammy-repo.list
+# cp /configs/files/sources.list.jammy /etc/apt/sources.list.d/ubuntu-jammy-repo.list
 
-puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
+# puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
 
-UPGRADE_MISC_PKGS='
+# UPGRADE_GLIBC_PKGS='
 
-'
+# '
 
-UPGRADE_GLIBC_PKGS='
+# UPGRADE_MISC_PKGS='
 
-'
+# '
 
 # INSTALL_MISC_PKGS='
 # 	bash-completion
@@ -338,13 +338,13 @@ UPGRADE_GLIBC_PKGS='
 # 	whiptail
 # '
 
-update_quiet
-only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
+# update_quiet
+# only_upgrade $UPGRADE_GLIBC_PKGS $UPGRADE_MISC_PKGS 
 # install $INSTALL_MISC_PKGS
 
-rm -r /etc/apt/sources.list.d/ubuntu-jammy-repo.list
+# rm -r /etc/apt/sources.list.d/ubuntu-jammy-repo.list
 
-update_quiet
+# update_quiet
 
 
 #	Add OpenRC configuration.
