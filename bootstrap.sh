@@ -30,6 +30,8 @@ install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
+list_installed_apt () { apt list --installed; }
+list_installed_dpkg () { dpkg --list '*'; }
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 pkg_policy () { apt-cache policy $@; }
@@ -45,6 +47,11 @@ upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
 puts "STARTING BOOTSTRAP."
+
+
+# Check installed packages at start.
+
+list_installed_apt > list_installed_pkgs_start.txt
 
 
 #	Install basic packages.
@@ -274,10 +281,12 @@ MISC_KDE_PKGS='
 MISC_DESKTOP_PKGS='
 	dmz-cursor-theme
 	i3
+	i3blocks
 	i3status
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 	lxappearance
+	rofi
 	sddm
 	xterm/daedalus
 '
@@ -453,6 +462,11 @@ ln -svf /bin/mksh /bin/sh
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
 
 ln -s $(which doas) /usr/bin/sudo
+
+
+#	List installed packages at end.
+
+list_installed_dpkg > list_installed_pkgs_end.txt
 
 
 #	WARNING:
