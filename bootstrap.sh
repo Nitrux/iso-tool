@@ -281,12 +281,9 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
-	fonts-font-awesome
 	hsetroot
-	i3
-	i3blocks
-	i3lock
-	i3status
+	jwm
+	picom
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 	lxappearance
@@ -394,7 +391,7 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-ln -sv /usr/share/xsessions/i3.desktop /usr/share/xsessions/plasma.desktop 
+ln -sv /usr/share/xsessions/jwm.desktop /usr/share/xsessions/plasma.desktop 
 
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
