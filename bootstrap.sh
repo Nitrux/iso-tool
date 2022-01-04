@@ -286,10 +286,9 @@ MISC_DESKTOP_PKGS='
 	picom
 	libcrypt1/trixie
 	libcrypt-dev/trixie
-	lxappearance
-	rofi
 	sddm
 	xterm/daedalus
+	xclip
 '
 
 PLYMOUTH_daedalus_PKGS='
