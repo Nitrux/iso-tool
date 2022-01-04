@@ -285,7 +285,9 @@ MISC_DESKTOP_PKGS='
 	jwm
 	libcrypt1/trixie
 	libcrypt-dev/trixie
+	qml-module-qtquick-controls2
 	sddm
+	sxhkd
 	xterm/daedalus
 '
 
