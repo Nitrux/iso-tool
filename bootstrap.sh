@@ -283,12 +283,10 @@ MISC_KDE_PKGS='
 MISC_DESKTOP_PKGS='
 	hsetroot
 	jwm
-	picom
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 	sddm
 	xterm/daedalus
-	xclip
 '
 
 PLYMOUTH_daedalus_PKGS='
