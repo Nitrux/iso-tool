@@ -32,6 +32,8 @@ install_downgrades_hold () { apt -yy install --no-install-recommends --allow-dow
 install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
 list_installed_apt () { apt list --installed; }
 list_installed_dpkg () { dpkg --list '*'; }
+list_number_pkgs () { dpkg-query -f '${binary:Package}\n' -W | wc -l }
+list_pkgs_size () { dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}' }
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 pkg_policy () { apt-cache policy $@; }
@@ -52,6 +54,7 @@ puts "STARTING BOOTSTRAP."
 # Check installed packages at start.
 
 list_installed_apt > list_installed_pkgs_start.txt
+list_number_pkgs
 
 
 #	Install basic packages.
@@ -400,8 +403,8 @@ cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 puts "SHOW LARGEST INSTALLED PACKAGES.."
 
-dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'
-dpkg-query -f '${binary:Package}\n' -W | wc -l
+list_pkgs_size
+list_number_pkgs
 
 
 #	Implement a new FHS.
