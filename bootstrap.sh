@@ -277,17 +277,15 @@ NX_DESKTOP_PKG='
 '
 
 MISC_KDE_PKGS='
-
+	sddm
 '
 
 MISC_DESKTOP_PKGS='
-	hsetroot
+	feh
 	jwm
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 	qml-module-qtquick-controls2
-	sddm
-	sxhkd
 	xterm/daedalus
 '
 
