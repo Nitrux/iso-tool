@@ -292,14 +292,14 @@ MISC_DESKTOP_PKGS='
 	xterm/daedalus
 '
 
-PLYMOUTH_daedalus_PKGS='
+PLYMOUTH_DAEDALUS_PKGS='
 	libplymouth5/daedalus
 	plymouth-label/daedalus
 	plymouth-themes/daedalus
 	plymouth/daedalus
 '
 
-install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_daedalus_PKGS
+install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
 #	Install Nvidia driver.
