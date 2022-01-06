@@ -53,7 +53,7 @@ puts "STARTING BOOTSTRAP."
 
 # Check installed packages at start.
 
-list_installed_apt > list_installed_pkgs_start.txt
+# list_installed_apt > list_installed_pkgs_start.txt
 list_number_pkgs
 
 
@@ -222,7 +222,6 @@ DEVUAN_GLIB_PKGS='
 DEVUAN_SYS_PKGS='
 	init-system-helpers
 	initscripts
-	libglib2.0-0/daedalus
 	libnm0
 	libpolkit-agent-1-0/beowulf
 	libpolkit-backend-1-0/beowulf
@@ -399,7 +398,12 @@ rm \
 cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 rm \
-	/Applications/{app,appimaged}
+	/Applications/{app,appimaged} \
+	/usr/bin/xterm
+
+ln -sv /usr/bin/uxterm /usr/bin/xterm
+
+sudo passwd --delete --lock root
 
 
 #	Before removing dpkg, check the most oversized installed packages.
@@ -469,7 +473,7 @@ ln -s $(which doas) /usr/bin/sudo
 
 #	List installed packages at end.
 
-list_installed_dpkg > list_installed_pkgs_end.txt
+# list_installed_dpkg > list_installed_pkgs_end.txt
 
 
 #	WARNING:
