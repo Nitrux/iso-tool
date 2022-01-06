@@ -464,7 +464,7 @@ REMOVE_DASH_CASPER_APT_PKGS='
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 
-ln -svf $(which mksh) /bin/sh
+ln -svf /usr/bin/mksh /bin/sh
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
 
