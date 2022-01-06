@@ -401,9 +401,9 @@ rm \
 	/Applications/{app,appimaged} \
 	/usr/bin/xterm
 
-ln -sv /usr/bin/uxterm /usr/bin/xterm
+ln -svf $(which uxterm) /usr/bin/xterm
 
-sudo passwd --delete --lock root
+passwd --delete --lock root
 
 
 #	Before removing dpkg, check the most oversized installed packages.
@@ -464,11 +464,11 @@ REMOVE_DASH_CASPER_APT_PKGS='
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 
-ln -svf /bin/mksh /bin/sh
+ln -svf $(which mksh) /bin/sh
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
 
-ln -s $(which doas) /usr/bin/sudo
+ln -svf $(which doas) /usr/bin/sudo
 
 
 #	List installed packages at end.
