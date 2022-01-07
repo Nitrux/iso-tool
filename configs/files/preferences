@@ -54,6 +54,10 @@ Package: libqt5webkit5
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libqt5webenginewidgets5
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libprocessui9
 Pin: origin deb.devuan.org
 Pin-Priority: -1
