@@ -255,8 +255,8 @@ NITRUX_BASE_PKGS='
 '
 
 KERNEL_DRV_PKGS='
-	nitrux-hardware-drivers-minimal
-	linux-image-mainline-vfio
+	nitrux-hardware-drivers
+	linux-image-mainline-lts
 '
 
 install $NITRUX_BASE_PKGS
