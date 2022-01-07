@@ -284,8 +284,6 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
-	plasma-desktop
-	libprocessui9
 '
 
 MISC_DESKTOP_PKGS='

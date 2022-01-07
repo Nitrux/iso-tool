@@ -38,6 +38,10 @@ Package: libglib2.0-doc
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libprocessui9
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libqt5webengine5
 Pin: origin deb.devuan.org
 Pin-Priority: -1
@@ -55,10 +59,6 @@ Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: libqt5webenginewidgets5
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libprocessui9
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -187,6 +187,14 @@ Pin: release *
 Pin-Priority: -1
 
 Package: libpam0g
+Pin: release *
+Pin-Priority: -1
+
+Package: libtag1v5
+Pin: release *
+Pin-Priority: -1
+
+Package: libtag1v5-vanilla
 Pin: release *
 Pin-Priority: -1
 
