@@ -221,6 +221,7 @@ DEVUAN_GLIB_PKGS='
 	libglib2.0-bin/daedalus
 	libglib2.0-dev-bin/daedalus
 	libglib2.0-doc/daedalus
+	
 '
 
 DEVUAN_SYS_PKGS='
@@ -287,6 +288,7 @@ MISC_KDE_PKGS='
 MISC_DESKTOP_PKGS='
 	libcrypt1/trixie
 	libcrypt-dev/trixie
+	gir1.2-gtk-3.0/daedalus
 '
 
 PLYMOUTH_DAEDALUS_PKGS='
