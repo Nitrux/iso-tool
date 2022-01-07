@@ -283,6 +283,19 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
+	plasma-desktop
+	plasma-widgets-addons
+	kaccounts-integration
+	kaccounts-providers
+	kio-gdrive
+	qml-module-qtwebview
+	fwupd
+	nx-clock-applet
+	nx-desktop-apps
+	nx-firewall
+	nx-notifications-applet
+	nx-simplemenu-applet
+	nx-systemtray-applet
 '
 
 MISC_DESKTOP_PKGS='
