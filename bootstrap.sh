@@ -394,12 +394,6 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-rm \
-	/Applications/{app,appimaged} \
-	/usr/bin/xterm
-
-ln -svf $(which uxterm) /usr/bin/xterm
-
 passwd --delete --lock root
 
 
