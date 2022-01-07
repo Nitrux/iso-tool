@@ -257,6 +257,7 @@ NITRUX_BASE_PKGS='
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
 	linux-image-mainline-lts
+	linux-headers-5.15.11-051511-generic
 '
 
 install $NITRUX_BASE_PKGS
