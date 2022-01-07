@@ -273,22 +273,16 @@ puts "INSTALLING DESKTOP PACKAGES."
 sed -i 's+path-exclude=/usr/share/locale/+#path-exclude=/usr/share/locale/+g' /etc/dpkg/dpkg.cfg.d/excludes
 
 NX_DESKTOP_PKG='
-	nx-desktop-minimal
-	nx-desktop-apps-vfio
-	nx-desktop-appimages-vfio
+	nx-desktop
 '
 
 MISC_KDE_PKGS='
-	sddm
+	latte-dock
 '
 
 MISC_DESKTOP_PKGS='
-	feh
-	jwm
 	libcrypt1/trixie
 	libcrypt-dev/trixie
-	qml-module-qtquick-controls2
-	xterm/daedalus
 '
 
 PLYMOUTH_DAEDALUS_PKGS='
@@ -296,6 +290,7 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth-label/daedalus
 	plymouth-themes/daedalus
 	plymouth/daedalus
+	plymouth-x11/daedalus
 '
 
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
@@ -305,7 +300,7 @@ install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKG
 
 NVIDIA_DRV_PKGS='
 	libxnvctrl0
-	nvidia-x11-config-460
+	nvidia-x11-config
 '
 
 install $NVIDIA_DRV_PKGS
@@ -518,8 +513,6 @@ stat \
 cat \
 	/etc/{casper.conf,sddm.conf} \
 	/etc/sddm.conf.d/kde_settings.conf
-
-lsinitramfs -l /boot/initrd.img* | grep vfio
 
 
 puts "EXITING BOOTSTRAP."
