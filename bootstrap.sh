@@ -306,7 +306,6 @@ install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKG
 #	Install Nvidia driver.
 
 NVIDIA_DRV_PKGS='
-	libxnvctrl0
 	nvidia-x11-config
 '
 
