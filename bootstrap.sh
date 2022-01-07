@@ -391,12 +391,8 @@ puts "ADDING MISC. FIXES."
 
 cat /configs/files/casper.conf > /etc/casper.conf
 
-ln -sv /usr/share/xsessions/jwm.desktop /usr/share/xsessions/plasma.desktop 
-
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
-
-cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
 
 rm \
 	/Applications/{app,appimaged} \
