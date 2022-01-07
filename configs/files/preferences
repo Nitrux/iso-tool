@@ -38,7 +38,7 @@ Package: libglib2.0-doc
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libpaper1
+Package: libcrypt1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
