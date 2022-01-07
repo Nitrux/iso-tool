@@ -216,7 +216,11 @@ install_hold $SYSTEMCTL_PKG
 puts "INSTALLING DEVUAN SYS PACKAGES."
 
 DEVUAN_GLIB_PKGS='
+	libglib2.0-data/daedalus
 	libglib2.0-0/daedalus
+	libglib2.0-bin/daedalus
+	libglib2.0-dev-bin/daedalus
+	libglib2.0-doc/daedalus
 '
 
 DEVUAN_SYS_PKGS='
@@ -257,7 +261,6 @@ NITRUX_BASE_PKGS='
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
 	linux-image-mainline-lts
-	linux-headers-5.15.11-051511-generic
 '
 
 install $NITRUX_BASE_PKGS
