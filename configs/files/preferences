@@ -46,6 +46,10 @@ Package: libqt5webenginecore5
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libqt5webengine-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: glib-networking
 Pin: origin deb.devuan.org
 Pin-Priority: -1
