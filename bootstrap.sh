@@ -85,6 +85,7 @@ EXTRA_PKGS='
 
 SYSTEMD_RDEP_PKGS='
 	user-setup
+	ufw
 '
 
 update_quiet
@@ -296,6 +297,14 @@ MISC_KDE_PKGS='
 	nx-notifications-applet
 	nx-simplemenu-applet
 	nx-systemtray-applet
+	signon-ui-x11
+	libqt5webengine5
+	libqt5webenginecore5
+	libkpimgapicore5
+	libkpimgapidrive5
+	plasma-workspace
+	touchegg-kde
+	qml-module-qtwebengine
 '
 
 MISC_DESKTOP_PKGS='
