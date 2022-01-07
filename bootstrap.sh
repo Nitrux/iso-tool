@@ -78,6 +78,7 @@ BASIC_PKGS='
 
 EXTRA_PKGS='
 	avahi-daemon
+	cups-daemon
 	curl
 	efibootmgr
 	squashfs-tools
