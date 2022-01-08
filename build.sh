@@ -2,7 +2,7 @@
 
 #	Exit on errors.
 
-set -e
+set -xe
 
 
 #	Travis stuff.
