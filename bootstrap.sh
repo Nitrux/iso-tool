@@ -285,6 +285,11 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
+	kwin
+	kwin-addons
+	plasma-desktop
+	plasma-wdgets-addons
+	plasma-vault
 '
 
 MISC_DESKTOP_PKGS='
@@ -300,7 +305,7 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth/daedalus
 	plymouth-x11/daedalus
 '
-pkg_policy
+
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
