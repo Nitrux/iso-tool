@@ -290,7 +290,6 @@ MISC_KDE_PKGS='
 MISC_DESKTOP_PKGS='
 	libcrypt1/trixie
 	libcrypt-dev/trixie
-	gir1.2-gtk-3.0/daedalus
 '
 
 PLYMOUTH_DAEDALUS_PKGS='
@@ -301,7 +300,6 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth-x11/daedalus
 '
 
-pkg_policy gir1.2-gtk-3.0
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 

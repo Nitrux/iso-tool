@@ -14,10 +14,6 @@ Package: breeze-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: gir1.2-freedesktop
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
 Package: gtk3-engines-breeze
 Pin: origin deb.devuan.org
 Pin-Priority: -1
