@@ -18,6 +18,10 @@ Package: kwin-common
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: kwin-x11
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libcrypt1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
@@ -55,6 +59,14 @@ Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: libkf5sysguard-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libksgrd9
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libksysguardsensorfaces1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -122,6 +134,10 @@ Package: qml-module-qtwebengine
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: qml-module-org-kde-ksysguard
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: ubuntu-keyring
 Pin: origin deb.devuan.org
 Pin-Priority: -1
@@ -131,7 +147,7 @@ Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: xdg-desktop-portal-kde
-Pin: origin archive.ubuntu.com
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 ############################
