@@ -10,15 +10,7 @@ Package: gir1.2-freedesktop
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: kwin-addons
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: kwin-common
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: kwin-x11
+Package: kwin-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -34,23 +26,7 @@ Package: liblayershellqtinterface5
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-bin
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libglib2.0-data
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libglib2.0-dev
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libglib2.0-dev-bin
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libglib2.0-doc
+Package: libglib2.0-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -58,7 +34,7 @@ Package: libcrypt1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libkf5sysguard-data
+Package: libkf5*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -66,47 +42,19 @@ Package: libksgrd9
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libksysguardsensorfaces1
+Package: libksysguard*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libkwinglutils13
+Package: libkwin*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libkwinxrenderutils13
+Package: libprocess*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libkwineffects13
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libprocesscore9
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libprocessui9
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libqt5webengine5
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libqt5webenginecore5
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libqt5webengine-data
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libqt5webkit5
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libqt5webenginewidgets5
+Package: libqt5*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -118,35 +66,11 @@ Package: glib-networking-services
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: plasma-desktop
+Package: plasma-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: plasma-integration
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: plasma-widgets-addons
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: plasma-workspace
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: plasma-vault
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: qml-module-qmltermwidget
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: qml-module-qtwebengine
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: qml-module-org-kde-ksysguard
+Package: qml-module-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
