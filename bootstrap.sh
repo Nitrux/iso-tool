@@ -286,7 +286,15 @@ NX_DESKTOP_PKG='
 MISC_KDE_PKGS='
 	latte-dock
 	kwin-x11
+	kwin-common
+	plasma-desktop
+	plasma-vault
 	plasma-workspace
+	nx-desktop-apps
+	qml-module-org-kde-ksysguard
+	libksysguardsensorfaces1
+	libprocesscore9
+	libprocessui9
 '
 
 MISC_DESKTOP_PKGS='
