@@ -70,6 +70,14 @@ Package: libksysguardsensorfaces1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libkwinglutils13
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkwinxrenderutils13
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libprocesscore9
 Pin: origin deb.devuan.org
 Pin-Priority: -1
