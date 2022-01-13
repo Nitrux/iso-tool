@@ -94,7 +94,19 @@ Package: glib-networking-services
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: plasma-desktop
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: plasma-integration
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: plasma-workspace
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: plasma-vault
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 

@@ -300,7 +300,7 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth/daedalus
 	plymouth-x11/daedalus
 '
-
+pkg_policy kwin kwin-addons plasma-desktop plasma-widgets-addonds plasma-vault
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
