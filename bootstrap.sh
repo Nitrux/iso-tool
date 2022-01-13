@@ -263,7 +263,7 @@ NITRUX_BASE_PKGS='
 
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
-	linux-image-liqourix
+	linux-image-liquorix
 '
 
 install $NITRUX_BASE_PKGS
