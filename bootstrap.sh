@@ -53,7 +53,7 @@ puts "STARTING BOOTSTRAP."
 
 # Check installed packages at start.
 
-# list_installed_apt > list_installed_pkgs_start.txt
+# list_installed_dpkg > list_installed_pkgs_start.txt
 list_number_pkgs
 
 
@@ -256,14 +256,14 @@ install $DEVUAN_SYS_PKGS
 puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_PKGS='
-	base-files=13.0.1+nitrux
+	base-files=13.0.2+nitrux
 	nitrux-minimal
 	nitrux-standard
 '
 
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
-	linux-image-mainline-lts
+	linux-image-liqourix
 '
 
 install $NITRUX_BASE_PKGS
@@ -398,14 +398,6 @@ rm \
 passwd --delete --lock root
 
 
-#	Before removing dpkg, check the most oversized installed packages.
-
-puts "SHOW LARGEST INSTALLED PACKAGES.."
-
-list_pkgs_size
-list_number_pkgs
-
-
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
 
@@ -436,6 +428,14 @@ cat /configs/scripts/persistence >> /usr/share/initramfs-tools/scripts/casper-bo
 cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 update-initramfs -u
+
+
+#	Before removing dpkg, check the most oversized installed packages.
+
+puts "SHOW LARGEST INSTALLED PACKAGES."
+
+list_pkgs_size
+list_number_pkgs
 
 
 #	Remove Dash.
