@@ -288,7 +288,7 @@ MISC_KDE_PKGS='
 	kwin
 	kwin-addons
 	plasma-desktop
-	plasma-wdgets-addons
+	plasma-widgets-addons
 	plasma-vault
 '
 
