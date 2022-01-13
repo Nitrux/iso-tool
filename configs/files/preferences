@@ -58,6 +58,10 @@ Package: libkf5sysguard-data
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libprocesscore9
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libprocessui9
 Pin: origin deb.devuan.org
 Pin-Priority: -1

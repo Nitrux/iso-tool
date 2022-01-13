@@ -285,11 +285,8 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
-	kwin
-	kwin-addons
-	plasma-desktop
-	plasma-widgets-addons
-	plasma-vault
+	kwin-x11
+	plasma-workspace
 '
 
 MISC_DESKTOP_PKGS='
