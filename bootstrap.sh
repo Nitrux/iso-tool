@@ -301,7 +301,7 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth-x11/daedalus
 '
 
-install plasma-integration plasma-widgets-addons plasma-desktop breeze ibus-table-emoji ibus-table ibus
+pkg_policy gir1.2-gtk-3.0
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
