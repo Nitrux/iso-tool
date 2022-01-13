@@ -301,7 +301,7 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth-x11/daedalus
 '
 
-pkg_policy plasma-integration
+install plasma-integration plasma-widgets-addons plasma-desktop
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
