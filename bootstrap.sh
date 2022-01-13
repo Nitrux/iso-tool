@@ -288,7 +288,10 @@ MISC_KDE_PKGS='
 	kde-config-screenlocker
 	kwin
 	kwin-addons
+	kwin-x11
 	plasma-desktop
+	plasma-integration
+	plasma-workspace
 	plasma-widgets-addons
 '
 
