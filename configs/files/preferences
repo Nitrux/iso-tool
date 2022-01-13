@@ -22,6 +22,10 @@ Package: gtk3-engines-breeze
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: kde-style-breeze
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: kwin-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
