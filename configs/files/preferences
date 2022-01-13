@@ -78,6 +78,10 @@ Package: libkwinxrenderutils13
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libkwineffects13
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libprocesscore9
 Pin: origin deb.devuan.org
 Pin-Priority: -1
