@@ -285,19 +285,6 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
-	kde-config-screenlocker
-	libkscreenlocker5
-	kwin
-	kwin-common
-	kwin-addons
-	kwin-x11
-	plasma-desktop
-	plasma-integration
-	plasma-workspace
-	plasma-widgets-addons
-	xdg-desktop-portal-kde
-	liblayershellqtinterface5
-	libprocessui9
 '
 
 MISC_DESKTOP_PKGS='
