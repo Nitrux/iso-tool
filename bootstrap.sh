@@ -495,7 +495,7 @@ MESA_GIT_PKGS='
 	mesa-git
 '
 
-install $MESA_GIT_PKGS=
+install $MESA_GIT_PKGS
 upgrade
 
 
