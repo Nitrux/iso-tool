@@ -290,6 +290,7 @@ MISC_KDE_PKGS='
 MISC_DESKTOP_PKGS='
 	libcrypt1/trixie
 	libcrypt-dev/trixie
+	cpufrequtils
 '
 
 PLYMOUTH_DAEDALUS_PKGS='
