@@ -395,6 +395,7 @@ MISC_DESKTOP_PKGS='
 	libkf5dbusaddons-bin
 '
 
+pkg_policy bup
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
 
 rm \
