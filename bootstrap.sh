@@ -196,6 +196,7 @@ MAINLINE_KERNEL_PKG='
 	linux-image-liquorix
 '
 
+pkg_policy libcrypt1 libcrypt-dev
 install $MAINLINE_KERNEL_PKG
 
 
