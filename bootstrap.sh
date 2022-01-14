@@ -193,7 +193,7 @@ install $OPENRC_INIT_PKGS
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-mainline-lts
+	linux-image-liquorix
 '
 
 install $MAINLINE_KERNEL_PKG
@@ -483,6 +483,19 @@ OPENRC_CONFIG='
 '
 
 install $OPENRC_CONFIG
+
+
+#	Upgrade MESA packages.
+#
+
+puts "UPDATING MESA."
+
+MESA_GIT_PKGS='
+	mesa-git
+'
+
+install $MESA_GIT_PKGS=
+upgrade
 
 
 #	WARNING:
