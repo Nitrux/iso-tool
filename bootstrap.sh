@@ -194,10 +194,11 @@ puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
 	linux-image-liquorix
+	libcrypt-dev/trixie
+	libcrypt1/trixie
 '
 
-pkg_policy libcrypt1 libcrypt-dev
-install $MAINLINE_KERNEL_PKG
+install_downgrades $MAINLINE_KERNEL_PKG
 
 
 #	Add Plymouth.
@@ -391,8 +392,6 @@ MAUI_APPS_PKG='
 
 MISC_DESKTOP_PKGS='
 	kde-config-updates
-	libcrypt-dev/trixie
-	libcrypt1/trixie
 	libkf5dbusaddons-bin
 '
 
