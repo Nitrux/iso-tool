@@ -431,11 +431,11 @@ Pin-Priority: -1
 ##########################
 
 Package: base-files
-Pin: origin archive.kde.neon.org
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: bup
-Pin: origin archive.kde.neon.org
+Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: fwupd
