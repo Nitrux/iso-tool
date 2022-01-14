@@ -19,6 +19,7 @@ XORRISO_PKGS='
 
 GRUB_EFI_PKGS='
 	grub-efi-amd64
+	grub-efi-amd64-signed
 	shim-signed
 '
 

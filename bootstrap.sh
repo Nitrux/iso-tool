@@ -110,7 +110,7 @@ dist_upgrade
 
 #	Add bootloader.
 #
-#	The GRUB2 packages from Debian do not work correctly with EFI, so we use Ubuntu packages.
+#	The GRUB2 packages from Debian do not work correctly with EFI.
 
 puts "ADDING BOOTLOADER."
 
@@ -125,6 +125,19 @@ GRUB2_PKGS='
 '
 
 install $GRUB2_PKGS
+
+
+#	Add packages for secure boot compatibility.
+
+puts "ADDING SECURE BOOT COMPAT."
+
+SB_SHIM_PKGS='
+	sbsigntool/trixie
+	shim-signed/trixie
+	mokutil/trixie
+'
+
+install $SB_SHIM_PKGS
 
 
 #	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
@@ -395,7 +408,6 @@ MISC_DESKTOP_PKGS='
 	libkf5dbusaddons-bin
 '
 
-pkg_policy bup
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
 
 rm \
@@ -487,7 +499,6 @@ install $OPENRC_CONFIG
 
 
 #	Upgrade MESA packages.
-#
 
 puts "UPDATING MESA."
 
@@ -517,9 +528,6 @@ cat /configs/files/casper.conf > /etc/casper.conf
 
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
-
-ln -svf /boot/vmlinuz-5.14.15-051415-generic /vmlinuz
-ln -svf /boot/initrd.img-5.14.15-051415-generic /initrd.img
 
 dpkg_force_remove dash || true
 
