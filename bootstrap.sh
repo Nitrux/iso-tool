@@ -535,6 +535,8 @@ rm \
 
 chmod +x /usr/bin/startcask-x11
 
+sed -i s/$/fuse/ /etc/modules
+
 
 #	Use LZ4 compression when creating the initramfs.
 
@@ -581,7 +583,7 @@ stat /sbin/init \
 	/bin/dash
 
 cat \
-	/etc/{casper.conf,sddm.conf} \
+	/etc/{casper.conf,sddm.conf,modules} \
 	/etc/default/grub
 
 
