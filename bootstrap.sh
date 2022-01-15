@@ -206,7 +206,7 @@ install $OPENRC_INIT_PKGS
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-liquorix
+	linux-image-xanmod
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 '
