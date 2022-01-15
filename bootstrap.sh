@@ -406,10 +406,9 @@ MAUI_APPS_PKG='
 MISC_DESKTOP_PKGS='
 	kde-config-updates
 	libkf5dbusaddons-bin
-	linux-tools-common
 	cpufrequtils
 '
-
+install linux-tools-common
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
 
 rm \
