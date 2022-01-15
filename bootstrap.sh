@@ -94,7 +94,10 @@ update
 #	Upgrade dpkg for zstd support.
 
 UPGRADE_DPKG='
-	dpkg/trixie
+	dpkg=1.20.9ubuntu2
+	libc-bin=2.33-0ubuntu5
+	libc6=2.33-0ubuntu5
+	locales=2.33-0ubuntu5
 '
 
 install_downgrades $UPGRADE_DPKG
