@@ -95,12 +95,9 @@ update
 
 UPGRADE_DPKG='
 	dpkg/trixie
-	libc-bin=2.33-0ubuntu5
-	libc6=2.33-0ubuntu5
-	locales=2.33-0ubuntu5
 '
 
-install_downgrades $UPGRADE_DPKG
+upgrade $UPGRADE_DPKG
 
 
 #	Do dist-upgrade.
