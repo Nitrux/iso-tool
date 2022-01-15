@@ -408,6 +408,8 @@ MISC_DESKTOP_PKGS='
 	libkf5dbusaddons-bin
 	cpufrequtils
 	linux-cpupower
+	tuned
+	tuned-utils
 '
 
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
@@ -534,6 +536,8 @@ rm \
 dpkg_force_remove bash || true
 
 ln -svf /bin/dash /bin/bash
+
+dpkg_force_remove bash
 
 chmod +x /usr/bin/startcask-x11
 
