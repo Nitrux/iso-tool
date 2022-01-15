@@ -326,7 +326,7 @@ Pin-Priority: -1
 #  Other Package Priority #
 ###########################
 
-Package: dash
+Package: bash
 Pin: release *
 Pin-Priority: -1
 
