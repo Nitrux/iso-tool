@@ -408,7 +408,7 @@ MISC_DESKTOP_PKGS='
 	cpufrequtils
 	kde-config-updates
 	libkf5dbusaddons-bin
-	cpufrequtils
+	libkf5kdelibs4support5-bin
 	linux-cpupower
 	tuned
 	tuned-utils
