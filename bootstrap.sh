@@ -396,21 +396,22 @@ MAUI_APPS_PKG='
 	maui-apps-git
 	maui-shell-git
 	nota-git
+	nx-software-center-git
 	pix-git
 	shelf-git
 	station-git
 	vvave-git
-	nx-software-center-git
 '
 
 MISC_DESKTOP_PKGS='
+	amdgpu-firmware-extra
+	cpufrequtils
 	kde-config-updates
 	libkf5dbusaddons-bin
 	cpufrequtils
 	linux-cpupower
 	tuned
 	tuned-utils
-	amdgpu-firmware-extra
 '
 
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
