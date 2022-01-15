@@ -302,6 +302,10 @@ Package: python3-gi
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: sbsigntool
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: systemsettings
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
