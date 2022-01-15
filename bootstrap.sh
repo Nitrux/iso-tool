@@ -150,7 +150,7 @@ UPGRADE_DPKG='
 	dpkg/trixie
 '
 
-install_downgrades $UPGRADE_DPKG
+upgrade $UPGRADE_DPKG
 
 
 #	Block installation of some packages.
