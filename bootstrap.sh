@@ -466,6 +466,37 @@ update
 appstream_refresh_force
 
 
+#	Upgrade MESA packages.
+
+puts "UPDATING MESA."
+
+MESA_GIT_PKGS='
+	mesa-git
+'
+
+MESA_LIBS_PKGS='
+	libdrm-amdgpu1
+	libdrm-common
+	libdrm-intel1
+	libdrm-nouveau2
+	libdrm-radeon1
+	libdrm2
+	libegl-mesa0
+	libgbm1
+	libgirepository-1.0-1
+	libgl1-mesa-dri
+	libglapi-mesa
+	libglx-mesa0
+	libxatracker2
+	mesa-va-drivers
+	mesa-vdpau-drivers
+	mesa-vulkan-drivers
+'
+
+install $MESA_GIT_PKGS
+only_upgrade $MESA_LIBS_PKGS
+
+
 #	Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
@@ -502,18 +533,6 @@ OPENRC_CONFIG='
 '
 
 install $OPENRC_CONFIG
-
-
-# #	Upgrade MESA packages.
-
-# puts "UPDATING MESA."
-
-# MESA_GIT_PKGS='
-# 	mesa-git
-# '
-
-# install $MESA_GIT_PKGS
-# upgrade
 
 
 #	WARNING:
