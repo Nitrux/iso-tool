@@ -14,6 +14,14 @@ Package: breeze-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: dpkg
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: dpkg-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: gtk3-engines-breeze
 Pin: origin deb.devuan.org
 Pin-Priority: -1
@@ -31,6 +39,10 @@ Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: libcrypt-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libdpkg-perl
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
