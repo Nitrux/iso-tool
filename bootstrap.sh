@@ -535,7 +535,7 @@ rm \
 
 chmod +x /usr/bin/startcask-x11
 
-sed -i s/$/fuse/ /etc/modules
+sed -i -e '$afuse' /etc/modules
 
 
 #	Use LZ4 compression when creating the initramfs.
