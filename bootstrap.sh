@@ -410,6 +410,7 @@ MISC_DESKTOP_PKGS='
 	linux-cpupower
 	tuned
 	tuned-utils
+	amdgpu-firmware-extra
 '
 
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
