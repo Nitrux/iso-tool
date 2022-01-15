@@ -533,12 +533,6 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-dpkg_force_remove bash || true
-
-ln -svf /bin/dash /bin/bash
-
-dpkg_force_remove bash
-
 chmod +x /usr/bin/startcask-x11
 
 
