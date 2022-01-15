@@ -272,9 +272,7 @@ NITRUX_BASE_PKGS='
 
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
-	linux-image-liquorix
-	libcrypt1/trixie
-	libcrypt-dev/trixie
+	linux-image-mainline-lts
 '
 
 install $NITRUX_BASE_PKGS
