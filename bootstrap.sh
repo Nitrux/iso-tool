@@ -407,8 +407,9 @@ MISC_DESKTOP_PKGS='
 	kde-config-updates
 	libkf5dbusaddons-bin
 	cpufrequtils
+	linux-cpupower
 '
-install linux-tools-common
+
 install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
 
 rm \
@@ -531,10 +532,6 @@ rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
 dpkg_force_remove bash || true
-
-ln -svf /bin/dash /bin/sh
-
-dpkg_force_remove bash
 
 ln -svf /bin/dash /bin/bash
 
