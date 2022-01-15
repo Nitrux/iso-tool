@@ -504,16 +504,16 @@ OPENRC_CONFIG='
 install $OPENRC_CONFIG
 
 
-#	Upgrade MESA packages.
+# #	Upgrade MESA packages.
 
-puts "UPDATING MESA."
+# puts "UPDATING MESA."
 
-MESA_GIT_PKGS='
-	mesa-git
-'
+# MESA_GIT_PKGS='
+# 	mesa-git
+# '
 
-install $MESA_GIT_PKGS
-upgrade
+# install $MESA_GIT_PKGS
+# upgrade
 
 
 #	WARNING:
