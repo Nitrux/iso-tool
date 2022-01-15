@@ -418,7 +418,7 @@ rm \
 
 passwd --delete --lock root
 
-sed -i s/$/fuse/ /etc/modules
+sed -i -e '$afuse' /etc/modules
 
 
 #	Implement a new FHS.
