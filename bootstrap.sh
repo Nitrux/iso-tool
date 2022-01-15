@@ -383,6 +383,18 @@ autoremove
 clean_all
 
 
+#	Upgrade MESA packages.
+
+puts "UPDATING MESA."
+
+MESA_GIT_PKGS='
+	mesa-git
+'
+
+install $MESA_GIT_PKGS
+upgrade
+
+
 #	WARNING:
 #	No apt usage past this point.
 
