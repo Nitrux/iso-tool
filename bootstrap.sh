@@ -97,7 +97,7 @@ UPGRADE_DPKG='
 	dpkg/trixie
 '
 
-only_upgrade $UPGRADE_DPKG
+install_downgrades $UPGRADE_DPKG
 
 
 #	Do dist-upgrade.
