@@ -418,6 +418,8 @@ rm \
 
 passwd --delete --lock root
 
+sed -i s/$/fuse/ /etc/modules
+
 
 #	Implement a new FHS.
 #	FIXME: Replace with kernel patch and userland tool.
@@ -529,7 +531,7 @@ stat \
 	/bin/sh
 
 cat \
-	/etc/{casper.conf,sddm.conf} \
+	/etc/{casper.conf,sddm.conf,modules} \
 	/etc/sddm.conf.d/kde_settings.conf
 
 
