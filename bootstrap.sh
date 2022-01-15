@@ -263,7 +263,9 @@ NITRUX_BASE_PKGS='
 
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
-	linux-image-mainline-lts
+	linux-image-liquorix
+	libcrypt1/trixie
+	libcrypt-dev/trixie
 '
 
 install $NITRUX_BASE_PKGS
@@ -288,9 +290,9 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
-	libcrypt1/trixie
-	libcrypt-dev/trixie
-	cpufrequtils
+	linux-cpupower
+	tuned
+	tuned-utils
 '
 
 PLYMOUTH_DAEDALUS_PKGS='
