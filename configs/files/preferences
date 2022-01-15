@@ -326,10 +326,6 @@ Pin-Priority: -1
 #  Other Package Priority #
 ###########################
 
-Package: bash
-Pin: release *
-Pin-Priority: -1
-
 Package: fuse
 Pin: release *
 Pin-Priority: -1
