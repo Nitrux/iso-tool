@@ -297,7 +297,6 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
-	libkf5kdelibs4support5-bin 
 	linux-cpupower
 	tuned
 	tuned-utils
