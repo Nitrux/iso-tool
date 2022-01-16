@@ -297,7 +297,9 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
+	daemonize
 	linux-cpupower
+	schedtool
 	tuned
 	tuned-utils
 '
