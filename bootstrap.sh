@@ -552,7 +552,8 @@ stat \
 
 cat \
 	/etc/{casper.conf,sddm.conf,modules} \
-	/etc/sddm.conf.d/kde_settings.conf
+	/etc/sddm.conf.d/kde_settings.conf \
+	/etc/environment
 
 
 puts "EXITING BOOTSTRAP."
