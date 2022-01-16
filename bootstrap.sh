@@ -388,33 +388,13 @@ NX_DESKTOP_PKG='
 	nx-desktop-wayland-legacy
 '
 
-MAUI_APPS_PKG='
-	buho-git
-	clip-git
-	communicator-git
-	index-git
-	maui-apps-git
-	maui-shell-git
-	nota-git
-	nx-software-center-git
-	pix-git
-	shelf-git
-	station-git
-	vvave-git
-'
-
 MISC_DESKTOP_PKGS='
-	amdgpu-firmware-extra
-	cpufrequtils
-	kde-config-updates
-	libkf5dbusaddons-bin
-	libkf5kdelibs4support5-bin
 	linux-cpupower
 	tuned
 	tuned-utils
 '
 
-install_downgrades $NX_DESKTOP_PKG $MAUI_APPS_PKG $MISC_DESKTOP_PKGS
+install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
@@ -483,7 +463,6 @@ MESA_LIBS_PKGS='
 	libdrm2
 	libegl-mesa0
 	libgbm1
-	libgirepository-1.0-1
 	libgl1-mesa-dri
 	libglapi-mesa
 	libglx-mesa0
