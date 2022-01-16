@@ -421,8 +421,10 @@ update
 
 
 CALAMARES_PKGS='
+	efibootmgr
 	calamares
 	calamares-qml-settings-nitrux
+	dosfstools
 	libboost-python1.71.0/trixie
 	squashfs-tools
 '
@@ -583,7 +585,8 @@ stat /sbin/init \
 
 cat \
 	/etc/{casper.conf,sddm.conf,modules} \
-	/etc/default/grub
+	/etc/default/grub \
+	/etc/environment
 
 
 puts "EXITING BOOTSTRAP."
