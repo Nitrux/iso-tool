@@ -322,74 +322,6 @@ NVIDIA_DRV_PKGS='
 install $NVIDIA_DRV_PKGS
 
 
-# #	Upgrade, downgrade and install misc. packages.
-# #
-# #	Remove jammy repo, we don't need it after.
-
-# cp /configs/files/sources.list.jammy /etc/apt/sources.list.d/ubuntu-jammy-repo.list
-
-# puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
-
-# UPGRADE_GLIBC_PKGS='
-
-# '
-
-# UPGRADE_MISC_PKGS='
-
-# '
-
-# INSTALL_MISC_PKGS='
-# 	bash-completion
-# 	busybox-static
-# 	dosfstools
-# 	iputils-ping
-# 	linux-firmware
-# 	linux-sound-base
-# 	logrotate
-# 	ltrace
-# 	mailcap
-# 	man-db
-# 	manpages
-# 	nano
-# 	net-tools
-# 	netcat-openbsd
-# 	ntfs-3g
-# 	whiptail
-# '
-
-# update_quiet
-# only_upgrade $UPGRADE_GLIBC_PKGS $UPGRADE_MISC_PKGS 
-# install $INSTALL_MISC_PKGS
-
-# rm -r /etc/apt/sources.list.d/ubuntu-jammy-repo.list
-
-# update_quiet
-
-
-#	Add OpenRC configuration.
-
-puts "INSTALLING OPENRC CONFIG."
-
-OPENRC_CONFIG='
-	openrc-config
-'
-
-install $OPENRC_CONFIG
-
-
-#	Add live user.
-
-puts "INSTALLING LIVE USER."
-
-NX_LIVE_USER_PKG='
-	nitrux-live-user
-'
-
-install $NX_LIVE_USER_PKG
-autoremove
-clean_all
-
-
 #	Upgrade MESA packages.
 
 puts "UPDATING MESA."
@@ -418,6 +350,35 @@ MESA_LIBS_PKGS='
 
 install $MESA_GIT_PKGS
 only_upgrade $MESA_LIBS_PKGS
+
+
+#	Add live user.
+
+puts "INSTALLING LIVE USER."
+
+NX_LIVE_USER_PKG='
+	nitrux-live-user
+'
+
+install $NX_LIVE_USER_PKG
+autoremove
+clean_all
+
+
+#	Add OpenRC configuration.
+#
+#	Due to how the upstream openrc package "works," we need to put this package at the end of the build process.
+#	Otherwise, we end up with an unbootable system.
+#
+#	See https://github.com/Nitrux/openrc-config/issues/1
+
+puts "INSTALLING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+'
+
+install $OPENRC_CONFIG
 
 
 #	WARNING:
