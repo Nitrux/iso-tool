@@ -582,7 +582,8 @@ ls -lh \
 
 stat /sbin/init \
 	/bin/sh \
-	/bin/dash
+	/bin/dash \
+	/bin/bash
 
 cat \
 	/etc/{casper.conf,sddm.conf,modules} \
