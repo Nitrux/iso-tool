@@ -507,7 +507,8 @@ ls -lh \
 
 stat \
 	/sbin/init \
-	/bin/sh
+	/bin/sh \
+	/bin/bash
 
 cat \
 	/etc/{casper.conf,sddm.conf,modules} \
