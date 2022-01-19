@@ -104,6 +104,11 @@ mkdir -p $iso_dir/boot/grub/x86_64-efi
 cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 
 
+#	Copy EFI folder to ISO
+
+cp -r EFI/ $iso_dir/
+
+
 #	Compress the root filesystem.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
