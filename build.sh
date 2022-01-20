@@ -46,7 +46,7 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/release/")-amd64_$(date +%Y.%m.%d).iso
-hash_url=http://storage.nxos.org/${image%.iso}.md5sum
+hash_url=http://updates.nxos.org/${image%.iso}.md5sum
 
 
 #	Prepare the directory where the filesystem will be created.
@@ -95,6 +95,11 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 #	Copy EFI folder to ISO
 
 cp -r EFI/ $iso_dir/
+
+
+#	Copy ucode to ISO
+
+cp -r ucode/ $iso_dir/boot/
 
 
 #	Compress the root filesystem.
