@@ -109,6 +109,11 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 cp -r EFI/ $iso_dir/
 
 
+#	Copy ucode to ISO
+
+cp -r ucode/ $iso_dir/boot/
+
+
 #	Compress the root filesystem.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
