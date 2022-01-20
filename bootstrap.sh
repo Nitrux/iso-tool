@@ -370,8 +370,6 @@ install $NVIDIA_DRV_PKGS
 #	Use MISC_DESKTOP_PKGS to add packages to test. If tests are positive, add to the appropriate meta-package.
 #
 #	Use the KDE Neon repository to provide the latest stable release of Plasma and KF5.
-#
-#	Manually add index to the package list otherwise it's not installed because #APT being #APT.
 
 add_repo_keys \
 	55751E5D > /dev/null
