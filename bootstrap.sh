@@ -27,9 +27,16 @@ hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
+install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
+list_installed_apt () { apt list --installed; }
+list_installed_dpkg () { dpkg --list '*'; }
+list_installed_pkgs () { dpkg-query -l | less > installed_pkgs.txt }
+list_number_pkgs () { dpkg-query -f '${binary:Package}\n' -W | wc -l; }
+list_pkgs_size () { dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'; }
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 pkg_policy () { apt-cache policy $@; }
+pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
 remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
@@ -547,10 +554,13 @@ cp /configs/files/initramfs.conf /etc/initramfs-tools/
 update-initramfs -u
 
 
-#	List installed packages.
+#	Before removing dpkg, check the most oversized installed packages.
 
-dpkg-query -l | less > installed_pkgs.txt
-dpkg-query -f '${binary:Package}\n' -W | wc -l
+puts "SHOW LARGEST INSTALLED PACKAGES.."
+
+list_pkgs_size
+list_number_pkgs
+list_installed_pkgs
 
 
 #	WARNING:
