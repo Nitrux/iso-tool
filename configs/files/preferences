@@ -30,6 +30,10 @@ Package: kde-style-breeze
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: kdeplasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: kwin-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
