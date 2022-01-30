@@ -14,6 +14,10 @@ Package: breeze-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: bluedevil
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: dpkg
 Pin: origin deb.devuan.org
 Pin-Priority: -1
@@ -22,15 +26,39 @@ Package: dpkg-dev
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: drkonqi
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: gtk3-engines-breeze
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: kde-style-breeze
+Package: kactivity*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kde-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: khotkeys*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: kdeplasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kmenuedit
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kscreen
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: ksystemstats
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -58,11 +86,23 @@ Package: libglib2.0-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libcolorcorrect*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libcrypt1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libkdeco*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libkf5*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkfont*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -78,11 +118,39 @@ Package: libkwin*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libkscreen*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkwork*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libnotification*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libplasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libpowerdevil*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libprocess*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: libqt5*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libweather-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: milou
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -94,7 +162,23 @@ Package: glib-networking-services
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: oxygen-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: plasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: polkit-kde-agent-1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: powerdevil*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: systemsettings
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
