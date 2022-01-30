@@ -10,6 +10,10 @@ Package: base-files
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: bluedevil
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: breeze
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -102,7 +106,7 @@ Package: kde-cli-tools-data
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: kde-config-screenlocker
+Package: kde-config-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -127,6 +131,18 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kio-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kinfocenter
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kmenuedit
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: khotkeys*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -162,11 +178,19 @@ Package: libboost-python1.71.0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libweather-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libcrypt1
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libcrypt-dev
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libcolorcorrect5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -190,7 +214,15 @@ Package: libkcolorpicker0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkdeco*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libkf5*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkfont*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -238,6 +270,10 @@ Package: libkwin*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libkwork*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: liblayershellqtinterface5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -254,11 +290,19 @@ Package: libpam-elogind
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libplasma-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libpolkit-agent-1-0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpolkit-gobject-1-0
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libpowerdevil*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -274,7 +318,15 @@ Package: libqt5*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: milou
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: network-manager
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: oxygen-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -283,6 +335,14 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: policykit-1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: polkit-kde-agent-1
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: powerdevil*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
