@@ -127,7 +127,8 @@ add_repo_keys \
 	94532124541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	871920D1991BC93C \
+	FCAE110B1118213C > /dev/null
 
 
 #	Copy sources.list files.
@@ -140,6 +141,7 @@ cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-da
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+cp /configs/files/sources.list.graphics.ppa /etc/apt/sources.list.d/gpu-ppa-repo.list
 
 update_quiet
 
