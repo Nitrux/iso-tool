@@ -317,6 +317,7 @@ install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKG
 
 NVIDIA_DRV_PKGS='
 	nvidia-x11-config
+	nvidia-driver-510
 '
 
 install $NVIDIA_DRV_PKGS
