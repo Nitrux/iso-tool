@@ -141,7 +141,7 @@ cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-da
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
-cp /configs/files/sources.list.graphics.ppa /etc/apt/sources.list.d/gpu-ppa-repo.list
+cp /configs/files/sources.list.graphics.ppa /etc/apt/sources.list.d/gpu-drivers-repo.list
 
 update_quiet
 
@@ -319,7 +319,6 @@ install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKG
 
 NVIDIA_DRV_PKGS='
 	nvidia-x11-config
-	nvidia-driver-510
 '
 
 install $NVIDIA_DRV_PKGS
