@@ -396,6 +396,7 @@ MISC_DESKTOP_PKGS='
 	dialog
 	linux-cpupower
 	maui-shell-git
+	steam-devices
 	tuned
 	tuned-utils
 '
