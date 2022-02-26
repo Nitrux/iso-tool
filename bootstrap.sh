@@ -397,6 +397,7 @@ MISC_DESKTOP_PKGS='
 	linux-cpupower
 	maui-shell-git
 	steam-devices
+	sddm/trixie
 	tuned
 	tuned-utils
 '
