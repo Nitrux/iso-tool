@@ -2,6 +2,10 @@
 #  Debian Package Priority #
 ############################
 
+Package: ark
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: baloo-kf5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -95,6 +99,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kactivitymanagerd
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kcalc
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -243,6 +251,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapidrive5
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkpm*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
