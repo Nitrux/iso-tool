@@ -119,6 +119,7 @@ add_nitrux_key_testing
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
+#	Add key for Grahpics Drivers PPA.
 
 puts "INSTALLING REPOSITORY KEYS."
 
