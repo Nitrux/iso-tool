@@ -53,7 +53,6 @@ puts "STARTING BOOTSTRAP."
 
 # Check installed packages at start.
 
-# list_installed_dpkg > list_installed_pkgs_start.txt
 list_number_pkgs
 
 
