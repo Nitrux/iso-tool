@@ -299,6 +299,9 @@ MISC_KDE_PKGS='
 '
 
 MISC_DESKTOP_PKGS='
+	ifuse
+	libimobiledevice-utils
+	libimobiledevice6
 	linux-cpupower
 	sddm-config
 	tuned
