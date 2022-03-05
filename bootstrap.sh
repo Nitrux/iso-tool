@@ -274,7 +274,7 @@ NITRUX_BASE_PKGS='
 
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
-	linux-image-mainline-current
+	linux-image-xanmod
 '
 
 install $NITRUX_BASE_PKGS
