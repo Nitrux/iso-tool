@@ -396,11 +396,9 @@ MISC_DESKTOP_PKGS='
 	dialog
 	linux-cpupower
 	maui-shell-git
-	steam-devices
 	sddm/trixie
 	tuned
 	tuned-utils
-	firmware-b43-installer
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
