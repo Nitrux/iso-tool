@@ -396,7 +396,6 @@ MISC_DESKTOP_PKGS='
 	dialog
 	linux-cpupower
 	maui-shell-git
-	sddm/trixie
 	tuned
 	tuned-utils
 '
