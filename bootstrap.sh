@@ -300,7 +300,6 @@ MISC_KDE_PKGS='
 
 MISC_DESKTOP_PKGS='
 	linux-cpupower
-	sddm-config
 	tuned
 	tuned-utils
 '
