@@ -400,6 +400,7 @@ MISC_DESKTOP_PKGS='
 	sddm/trixie
 	tuned
 	tuned-utils
+	firmware-b43-installer
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
