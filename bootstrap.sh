@@ -267,7 +267,7 @@ install $DEVUAN_SYS_PKGS
 puts "INSTALLING BASE FILES AND KERNEL."
 
 NITRUX_BASE_PKGS='
-	base-files=13.0.5+nitrux
+	base-files=13.0.6+nitrux
 	nitrux-minimal
 	nitrux-standard
 '
