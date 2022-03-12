@@ -275,9 +275,9 @@ NITRUX_BASE_PKGS='
 KERNEL_DRV_PKGS='
 	nitrux-hardware-drivers
 	linux-image-mainline-current
-	xserver-xorg-video-qxl
 '
 
+pkg_policy xserver-xorg-video-qxl
 install $NITRUX_BASE_PKGS
 install $KERNEL_DRV_PKGS
 
