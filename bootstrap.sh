@@ -296,6 +296,8 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
+	kaccounts-integration
+	kio-gdrive
 '
 
 MISC_DESKTOP_PKGS='
