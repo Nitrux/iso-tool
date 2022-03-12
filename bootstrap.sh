@@ -296,6 +296,9 @@ NX_DESKTOP_PKG='
 
 MISC_KDE_PKGS='
 	latte-dock
+	qml-module-org-kde-kaccounts
+	kaccounts-integration
+	kio-gdrive
 '
 
 MISC_DESKTOP_PKGS='
@@ -312,7 +315,6 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth-x11/daedalus
 '
 
-pkg_policy qml-module-org-kde-kaccounts
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
