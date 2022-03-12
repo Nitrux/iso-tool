@@ -106,6 +106,18 @@ Package: libkfont*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: libkpimgapicore5abi1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkpimgapi-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkpimgapidrive5
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libksgrd9
 Pin: origin deb.devuan.org
 Pin-Priority: -1
