@@ -47,11 +47,11 @@ Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: kio
-Pin: release o=Debian,a=unstable,n=sid
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: kio-*
-Pin: release o=Debian,a=unstable,n=sid
+Pin: origin deb.devuan.org
 Pin-Priority: -1
 
 Package: kdeplasma-*
