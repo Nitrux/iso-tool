@@ -277,7 +277,6 @@ KERNEL_DRV_PKGS='
 	linux-image-mainline-current
 '
 
-pkg_policy xserver-xorg-video-qxl
 install $NITRUX_BASE_PKGS
 install $KERNEL_DRV_PKGS
 
