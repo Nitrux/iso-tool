@@ -314,7 +314,7 @@ PLYMOUTH_DAEDALUS_PKGS='
 	plymouth/daedalus
 	plymouth-x11/daedalus
 '
-
+pkg_policy libkpimgapicore5abi1
 install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
