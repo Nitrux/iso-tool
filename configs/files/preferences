@@ -38,12 +38,20 @@ Package: kactivity*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: kaccounts-integration
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: kde-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: khotkeys*
-Pin: origin deb.devuan.org
+Package: kio
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kio-*
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kdeplasma-*
