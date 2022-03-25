@@ -4,10 +4,16 @@ set -xe
 
 export LANG=C
 export LC_ALL=C
+export SUDO_FORCE_REMOVE=yes
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
-add_nitrux_key () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+
+#	Wrap APT commands in functions.
+
+add_nitrux_key_repo () { curl -L https://packagecloud.io/nitrux/repo/gpgkey | apt-key add -; }
+add_nitrux_key_compat () { curl -L https://packagecloud.io/nitrux/compat/gpgkey | apt-key add -; }
+add_nitrux_key_testing () { curl -L https://packagecloud.io/nitrux/testing/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $@; }
 appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove $@; }
@@ -24,12 +30,16 @@ install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
 install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
+list_installed_apt () { apt list --installed; }
+list_installed_dpkg () { dpkg --list '*'; }
+list_number_pkgs () { dpkg-query -f '${binary:Package}\n' -W | wc -l; }
+list_pkgs_size () { dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'; }
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade $@; }
 pkg_policy () { apt-cache policy $@; }
 pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
-remove_dpkg () { /usr/bin/rm-dpkg; }
+remove_dpkg () { /usr/bin/rdpkg; }
 remove_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
 update () { apt update; }
@@ -39,6 +49,11 @@ upgrade_downgrades () { apt -yy upgrade --allow-downgrades $@; }
 
 
 puts "STARTING BOOTSTRAP."
+
+
+# Check installed packages at start.
+
+list_number_pkgs
 
 
 #	Install basic packages.
@@ -64,28 +79,13 @@ EXTRA_PKGS='
 	avahi-daemon
 	cups-daemon
 	curl
-	dictionaries-common
 	efibootmgr
-	language-pack-de
-	language-pack-en
-	language-pack-es
-	language-pack-fr
-	language-pack-pt
-	os-prober
 	squashfs-tools
-	sudo
-	xz-utils
-	zstd
 '
 
 SYSTEMD_RDEP_PKGS='
-	bluez
-	btrfs-progs
-	rng-tools
-	systemd
-	systemd-sysv
-	ufw
 	user-setup
+	ufw
 '
 
 update_quiet
@@ -105,22 +105,30 @@ hold $HOLD_MISC_PKGS
 
 
 #	Add key for Nitrux repository.
+
+puts "ADDING REPOSITORY KEYS."
+
+add_nitrux_key_repo
+add_nitrux_key_compat
+add_nitrux_key_testing
+
+
 #	Add key for Neon repository.
 #	Add key for Devuan repositories #1.
 #	Add key for Devuan repositories #2.
 #	Add key for Ubuntu repositories #1.
 #	Add key for Ubuntu repositories #2.
+#	Add key for Grahpics Drivers PPA.
 
 puts "INSTALLING REPOSITORY KEYS."
 
-add_nitrux_key
-
 add_repo_keys \
-	55751E5D \
-	541922FB \
+	E6D4736255751E5D \
+	94532124541922FB \
 	BB23C00C61FC752C \
 	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	871920D1991BC93C \
+	FCAE110B1118213C > /dev/null
 
 
 #	Copy sources.list files.
@@ -129,12 +137,22 @@ puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
-cp /configs/files/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 cp /configs/files/sources.list.bionic /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+cp /configs/files/sources.list.graphics.ppa /etc/apt/sources.list.d/gpu-drivers-repo.list
 
 update_quiet
+
+
+#	Upgrade dpkg for zstd support.
+
+UPGRADE_DPKG='
+	dpkg/trixie
+'
+
+only_upgrade $UPGRADE_DPKG
 
 
 #	Block installation of some packages.
@@ -144,7 +162,7 @@ cp /configs/files/preferences /etc/apt/preferences
 
 #	Add script to remove dpkg.
 
-cp /configs/scripts/rm-dpkg.sh /usr/bin/rm-dpkg
+cp /configs/scripts/rdpkg /usr/bin/rdpkg
 
 
 #	Add casper packages from bionic.
@@ -161,6 +179,8 @@ CASPER_PKGS='
 install $CASPER_PKGS
 
 rm -r /etc/apt/sources.list.d/ubuntu-bionic-repo.list
+
+update_quiet
 
 
 #	Hold initramfs and casper packages.
@@ -208,6 +228,15 @@ install_hold $SYSTEMCTL_PKG
 
 puts "INSTALLING DEVUAN SYS PACKAGES."
 
+DEVUAN_GLIB_PKGS='
+	libglib2.0-data/daedalus
+	libglib2.0-0/daedalus
+	libglib2.0-bin/daedalus
+	libglib2.0-dev-bin/daedalus
+	libglib2.0-doc/daedalus
+	
+'
+
 DEVUAN_SYS_PKGS='
 	init-system-helpers
 	initscripts
@@ -217,6 +246,8 @@ DEVUAN_SYS_PKGS='
 	libpolkit-backend-elogind-1-0/beowulf
 	libpolkit-gobject-1-0/beowulf
 	libpolkit-gobject-elogind-1-0/beowulf
+	libsemanage-common/daedalus
+	libsemanage2/daedalus
 	libudisks2-0
 	network-manager
 	openrc
@@ -227,6 +258,7 @@ DEVUAN_SYS_PKGS='
 	udisks2
 '
 
+install $DEVUAN_GLIB_PKGS 
 install $DEVUAN_SYS_PKGS
 
 
@@ -234,20 +266,25 @@ install $DEVUAN_SYS_PKGS
 
 puts "INSTALLING BASE FILES AND KERNEL."
 
-NITRUX_BASE_KERNEL_DRV_PKGS='
-	base-files=13.0.1+nitrux
-	nitrux-hardware-drivers
-	linux-image-mainline-vfio
+NITRUX_BASE_PKGS='
+	base-files=13.0.6+nitrux
+	nitrux-minimal
+	nitrux-standard
 '
 
-install $NITRUX_BASE_KERNEL_DRV_PKGS
+KERNEL_DRV_PKGS='
+	nitrux-hardware-drivers
+	linux-image-mainline-current
+'
+
+install $NITRUX_BASE_PKGS
+install $KERNEL_DRV_PKGS
 
 
 #	Install NX Desktop metapackage.
 #
 #	Disallow dpkg to exclude translations affecting Plasma (see issues https://github.com/Nitrux/iso-tool/issues/48 and
 #	https://github.com/Nitrux/nitrux-bug-tracker/issues/4).
-#
 
 puts "INSTALLING DESKTOP PACKAGES."
 
@@ -257,72 +294,66 @@ NX_DESKTOP_PKG='
 	nx-desktop
 '
 
-MISC_DESKTOP_PKGS='
+MISC_KDE_PKGS='
 	latte-dock
 	libcrypt1/trixie
 	libcrypt-dev/trixie
 '
 
-PLYMOUTH_CERES_PKGS='
-	libplymouth5/ceres
-	plymouth-label/ceres
-	plymouth-themes/ceres
-	plymouth/ceres
-	plymouth-x11/ceres
+MISC_DESKTOP_PKGS='
+	linux-cpupower
+	tuned
+	tuned-utils
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $PLYMOUTH_CERES_PKGS
+PLYMOUTH_DAEDALUS_PKGS='
+	libplymouth5/daedalus
+	plymouth-label/daedalus
+	plymouth-themes/daedalus
+	plymouth/daedalus
+	plymouth-x11/daedalus
+'
+
+install $NX_DESKTOP_PKG $MISC_KDE_PKGS $MISC_DESKTOP_PKGS $PLYMOUTH_DAEDALUS_PKGS
 
 
 #	Install Nvidia driver.
 
 NVIDIA_DRV_PKGS='
-	libxnvctrl0
-	nvidia-x11-config-460
-	screen-resolution-extra
+	nvidia-x11-config
 '
 
 install $NVIDIA_DRV_PKGS
 
 
-#	Upgrade, downgrade and install misc. packages.
+#	Upgrade MESA packages.
 
-cp /configs/files/sources.list.impish /etc/apt/sources.list.d/ubuntu-impish-repo.list
+puts "UPDATING MESA."
 
-puts "UPGRADING/DOWNGRADING/INSTALLING MISC. PACKAGES."
-
-UPGRADE_MISC_PKGS='
-	bluez/ceres
-	linux-firmware
-	sudo/ceres
-	openssl
+MESA_GIT_PKGS='
+	mesa-git
 '
 
-UPGRADE_GLIBC_PKGS='
-	libc6
-	libc-bin
-	locales
+MESA_LIBS_PKGS='
+	libdrm-amdgpu1
+	libdrm-common
+	libdrm-intel1
+	libdrm-nouveau2
+	libdrm-radeon1
+	libdrm2
+	libegl-mesa0
+	libgbm1
+	libgl1-mesa-dri
+	libglapi-mesa
+	libglx-mesa0
+	libxatracker2
+	mesa-va-drivers
+	mesa-vdpau-drivers
+	mesa-vulkan-drivers
 '
 
-INSTALL_MISC_PKGS='
-	patchelf
-	fuse-overlayfs
-'
-
-update_quiet
-only_upgrade $UPGRADE_MISC_PKGS $UPGRADE_GLIBC_PKGS
-install $INSTALL_MISC_PKGS
-
-
-#	Add OpenRC configuration.
-
-puts "INSTALLING OPENRC CONFIG."
-
-OPENRC_CONFIG='
-	openrc-config
-'
-
-install $OPENRC_CONFIG
+install $MESA_GIT_PKGS
+only_upgrade $MESA_LIBS_PKGS
 
 
 #	Add live user.
@@ -336,6 +367,22 @@ NX_LIVE_USER_PKG='
 install $NX_LIVE_USER_PKG
 autoremove
 clean_all
+
+
+#	Add OpenRC configuration.
+#
+#	Due to how the upstream openrc package "works," we need to put this package at the end of the build process.
+#	Otherwise, we end up with an unbootable system.
+#
+#	See https://github.com/Nitrux/openrc-config/issues/1
+
+puts "INSTALLING OPENRC CONFIG."
+
+OPENRC_CONFIG='
+	openrc-config
+'
+
+install $OPENRC_CONFIG
 
 
 #	WARNING:
@@ -352,7 +399,9 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-cp /configs/files/sound.conf /etc/modprobe.d/snd.conf
+passwd --delete --lock root
+
+sed -i -e '$afuse' /etc/modules
 
 
 #	Implement a new FHS.
@@ -387,8 +436,17 @@ cat /configs/scripts/mounts >> /usr/share/initramfs-tools/scripts/casper-bottom/
 update-initramfs -u
 
 
+#	Before removing dpkg, check the most oversized installed packages.
+
+puts "SHOW LARGEST INSTALLED PACKAGES."
+
+list_pkgs_size
+list_number_pkgs
+
+
 #	Remove Dash.
 #	Remove APT.
+#	Remove sudo as we're using doas link doas to sudo for downward compatibility.
 
 puts "REMOVING DASH, CASPER AND APT."
 
@@ -399,13 +457,21 @@ REMOVE_DASH_CASPER_APT_PKGS='
 	casper
 	dash
 	lupin-casper
+	sudo
 '
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS || true
 
-ln -svf /bin/mksh /bin/sh
+ln -svf /usr/bin/mksh /bin/sh
 
 dpkg_force_remove $REMOVE_DASH_CASPER_APT_PKGS
+
+ln -svf $(which doas) /usr/bin/sudo
+
+
+#	List installed packages at end.
+
+# list_installed_dpkg > list_installed_pkgs_end.txt
 
 
 #	WARNING:
@@ -418,7 +484,7 @@ puts "REMOVING DPKG."
 
 remove_dpkg
 
-rm -r /usr/bin/rm-dpkg
+rm -r /usr/bin/rdpkg
 
 
 #	Check contents of /boot.
@@ -429,7 +495,7 @@ rm -r /usr/bin/rm-dpkg
 #	Check contents of /Applications.
 #	Check that init system is not systemd.
 #	Check that /bin/sh is in fact not Dash.
-#	Check existence and contents of casper.conf and sddm.conf.
+#	Check existence and contents of casper.conf, sddm.conf and sddm.conf.d.
 #	Check that the VFIO driver is included in the intiramfs.
 
 
@@ -445,12 +511,13 @@ ls -lh \
 
 stat \
 	/sbin/init \
-	/bin/sh
+	/bin/sh \
+	/bin/bash
 
 cat \
-	/etc/{casper.conf,sddm.conf}
-
-lsinitramfs -l /boot/initrd.img* | grep vfio
+	/etc/{casper.conf,sddm.conf,modules} \
+	/etc/sddm.conf.d/kde_settings.conf \
+	/etc/environment
 
 
 puts "EXITING BOOTSTRAP."

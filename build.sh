@@ -104,6 +104,16 @@ mkdir -p $iso_dir/boot/grub/x86_64-efi
 cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 
 
+#	Copy EFI folder to ISO
+
+cp -r EFI/ $iso_dir/
+
+
+#	Copy ucode to ISO
+
+cp -r ucode/ $iso_dir/boot/
+
+
 #	Compress the root filesystem.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
@@ -148,5 +158,5 @@ zsyncmake \
 #	Upload the ISO image.
 
 for f in $output_dir/*; do
-    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -q -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
+    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
 done

@@ -1,0 +1,11 @@
+#########################
+# Devuan Repos Daedalus #
+#########################
+
+deb http://deb.devuan.org/devuan daedalus main
+
+################################
+# Devuan Merged Repos Daedalus #
+################################
+
+deb http://deb.devuan.org/merged daedalus main

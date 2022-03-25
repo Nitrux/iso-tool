@@ -2,23 +2,75 @@
 #  Devuan Package Priority #
 ###########################
 
-Package: bluez
-Pin: origin archive.ubuntu.com
-Pin-Priority: -1
-
-Package: gir1.2-glib-2.0
+Package: base-files
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: gir1.2-freedesktop
+Package: breeze
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: glib-networking
+Package: breeze-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: glib-networking-services
+Package: bluedevil
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: dpkg
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: dpkg-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: drkonqi
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: gtk3-engines-breeze
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kactivity*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kaccounts-integration
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kde-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kio
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kio-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kdeplasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kmenuedit
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kscreen
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: ksystemstats
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: kwin-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -30,35 +82,131 @@ Package: libcrypt-dev
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libgirepository-1.0-1
+Package: libdpkg-perl
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-0
+Package: liblayershellqtinterface5
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-bin
+Package: libglib2.0-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-data
+Package: libcolorcorrect*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-dev
+Package: libcrypt1
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-dev-bin
+Package: libkdeco*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: libglib2.0-doc
+Package: libkacc*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-Package: qml-module-qmltermwidget
+Package: libkf5*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkfont*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkpimgapicore5abi1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkpimgapi-data
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkpimgapidrive5
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libksgrd9
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libksysguard*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkwin*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkscreen*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libkwork*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libnotification*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libplasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libpowerdevil*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libprocess*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libqt5*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libweather-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: milou
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: glib-networking-services
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: oxygen-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: plasma-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: polkit-kde-agent-1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: powerdevil*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: systemsettings
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: qml-module-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
@@ -70,11 +218,27 @@ Package: xdg-desktop-portal
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: xdg-desktop-portal-kde
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 ############################
 #  Ubuntu Package Priority #
 ############################
 
+Package: base-files
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: bluez
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
 Package: docker.io
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: fwupd
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
@@ -87,6 +251,10 @@ Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
 Package: libgirepository-1.0-1
+Pin: origin archive.ubuntu.com
+Pin-Priority: -1
+
+Package: libglib2.0-0
 Pin: origin archive.ubuntu.com
 Pin-Priority: -1
 
@@ -158,6 +326,14 @@ Package: libpam0g
 Pin: release *
 Pin-Priority: -1
 
+Package: libtag1v5
+Pin: release *
+Pin-Priority: -1
+
+Package: libtag1v5-vanilla
+Pin: release *
+Pin-Priority: -1
+
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
@@ -174,51 +350,23 @@ Pin-Priority: -1
 #  Neon Package Priority #
 ##########################
 
+Package: base-files
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: bup
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: xterm
+Pin: release *
+Pin-Priority: -1
+
+##########################
+#  Neon Package Priority #
+##########################
+
 Package: fwupd
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: buho
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: clip
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: communicator
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: index
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: nota
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: pix
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: shelf
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: station
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: vvave
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: libmauikit
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: qml-module-org-kde-mauikit
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
@@ -236,8 +384,8 @@ Pin-Priority: -1
 
 Package: *
 Pin: release o=user
-Pin-Priority: 600
+Pin-Priority: 500
 
 Package: *
 Pin: origin archive.neon.kde.org
-Pin-Priority: 600
+Pin-Priority: 500
