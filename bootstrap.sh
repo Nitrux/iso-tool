@@ -345,7 +345,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.9+nitrux-legacy
+	base-files=13.1.10+nitrux-legacy
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
@@ -398,7 +398,7 @@ MISC_DESKTOP_PKGS='
 	tuned
 	tuned-utils
 '
-pkg_policy python3-gi libgirepository-1.0-1
+
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
