@@ -397,8 +397,9 @@ MISC_DESKTOP_PKGS='
 	linux-cpupower
 	tuned
 	tuned-utils
+	python3-gi
 '
-
+pkg_policy python3-gi
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
