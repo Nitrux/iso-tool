@@ -397,8 +397,6 @@ MISC_DESKTOP_PKGS='
 	linux-cpupower
 	tuned
 	tuned-utils
-	libwebp6
-	python3-gi
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
