@@ -399,7 +399,7 @@ MISC_DESKTOP_PKGS='
 	tuned-utils
 	python3-gi
 '
-pkg_policy python3-gi
+pkg_policy python3-gi libgirepository-1.0-1
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
