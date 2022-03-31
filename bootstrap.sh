@@ -395,7 +395,6 @@ NX_DESKTOP_PKG='
 MISC_DESKTOP_PKGS='
 	dialog
 	linux-cpupower
-	maui-shell-git
 	tuned
 	tuned-utils
 '
