@@ -540,8 +540,6 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
-chmod +x /usr/bin/startcask-x11
-
 sed -i '$ a\fuse\nnouveau\namdgpu' /etc/modules
 
 
