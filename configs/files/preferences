@@ -362,10 +362,6 @@ Package: printer-driver-gutenprint
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: python3-gi
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
 Package: sddm
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
