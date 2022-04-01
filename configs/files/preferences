@@ -2,6 +2,10 @@
 #  Debian Package Priority #
 ############################
 
+Package: adduser
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: baloo-kf5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
