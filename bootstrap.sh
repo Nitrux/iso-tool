@@ -393,6 +393,7 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	adduser/trixie
 	dialog
 	linux-cpupower
 	tuned
