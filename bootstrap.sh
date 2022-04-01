@@ -393,7 +393,6 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	adduser/trixie
 	dialog
 	linux-cpupower
 	tuned
@@ -543,6 +542,8 @@ rm \
 
 sed -i '$ a\fuse\nnouveau\namdgpu' /etc/modules
 
+cat /configs/files/adduser.conf > /etc/adduser.conf
+
 
 #	Use LZ4 compression when creating the initramfs.
 
@@ -566,17 +567,6 @@ list_installed_pkgs
 #	No dpkg usage past this point.
 
 
-#	Check contents of /boot.
-#	Check contents of OpenRC runlevels.
-#	Check links to kernel and initramdisk.
-#	Check contents of init.d and sddm.conf.d.
-#	Check the setuid and groups of /usr/lib/dbus-1.0/dbus-daemon-launch-helper
-#	Check contents of /Applications
-#	Check that init system is not systemd.
-#	Check that /bin/sh is in fact not Dash.
-#	Check existence and contents of casper.conf and sddm.conf
-#	Check the contents of /etc/default/grub
-
 puts "PERFORM MANUAL CHECKS."
 
 ls -lh \
@@ -595,7 +585,8 @@ stat /sbin/init \
 cat \
 	/etc/{casper.conf,sddm.conf,modules} \
 	/etc/default/grub \
-	/etc/environment
+	/etc/environment \
+	/etc/adduser.conf
 
 
 puts "EXITING BOOTSTRAP."
