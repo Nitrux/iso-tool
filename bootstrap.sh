@@ -207,6 +207,35 @@ OPENRC_INIT_PKGS='
 install $OPENRC_INIT_PKGS
 
 
+#	Add initramfs-tools from Ubuntu.
+
+add_repo_keys \
+	3B4FE6ACC0B21F32 \
+	871920D1991BC93C > /dev/null
+
+cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+update
+
+INITRAMFS_PKGS='
+	initramfs-tools/focal
+	initramfs-tools-core/focal
+	initramfs-tools-bin/focal
+'
+
+install_downgrades $INITRAMFS_PKGS
+hold $INITRAMFS_PKGS
+
+rm \
+	/etc/apt/sources.list.d/ubuntu-focal-repo.list
+
+remove_keys \
+	3B4FE6ACC0B21F32 \
+	871920D1991BC93C > /dev/null
+
+update
+
+
 #	Add kernel.
 
 puts "ADDING KERNEL."
