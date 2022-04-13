@@ -571,6 +571,8 @@ cat /configs/files/casper.conf > /etc/casper.conf
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
+cat /configs/files/motd > /etc/motd
+
 sed -i '$ a\fuse\nnouveau\namdgpu' /etc/modules
 
 cat /configs/files/adduser.conf > /etc/adduser.conf
