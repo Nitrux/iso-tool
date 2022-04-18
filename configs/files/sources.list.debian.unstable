@@ -7,4 +7,4 @@
 # Debian Repos Unstable #
 #########################
 
-deb http://deb.debian.org/debian unstable main non-free contrib
+deb [arch=amd64] http://deb.debian.org/debian unstable main non-free contrib

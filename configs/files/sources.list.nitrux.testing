@@ -7,4 +7,4 @@
 # Nitrux Repos #
 ################
 
-deb https://packagecloud.io/nitrux/testing/debian/ trixie main
+deb [arch=amd64] https://packagecloud.io/nitrux/testing/debian/ trixie main

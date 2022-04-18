@@ -7,4 +7,4 @@
 # Debian Repos Experimental #
 #############################
 
-deb http://deb.debian.org/debian experimental main non-free contrib
+deb [arch=amd64] http://deb.debian.org/debian experimental main non-free contrib
