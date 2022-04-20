@@ -1,7 +1,8 @@
 dist: focal
 
 script:
-  - sudo ./build.sh
+  - sudo ./build.sh 2>&1 | tee build-"${TRAVIS_COMMIT:0:7}".log
+  - SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -o stricthostkeychecking=no build.sh.log $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
 
 branches:
   except:
