@@ -379,6 +379,7 @@ NITRUX_BASE_PKGS='
 	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
+	amd64-microcode
 '
 
 install_force_overwrite $NITRUX_BASE_PKGS
