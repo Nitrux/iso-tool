@@ -293,7 +293,6 @@ puts "ADDING CASPER."
 
 CASPER_PKGS='
 	casper
-	lupin-casper
 '
 
 install $CASPER_PKGS
