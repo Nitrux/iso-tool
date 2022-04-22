@@ -27,7 +27,7 @@ hold () { apt-mark hold $@; }
 install () { apt -yy install --no-install-recommends $@; }
 install_downgrades () { apt -yy install --no-install-recommends --allow-downgrades $@; }
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages $@; }
-install_force_overwrite () { apt install -yy -o Dpkg::Options::="--force-overwrite" $@; }
+install_force_overwrite () { apt -yy install --no-install-recommends -o Dpkg::Options::="--force-overwrite" $@; }
 install_hold () { apt -yy install --no-install-recommends $@ && apt-mark hold $@; }
 list_installed_apt () { apt list --installed; }
 list_installed_dpkg () { dpkg --list '*'; }
