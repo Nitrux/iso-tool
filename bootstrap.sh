@@ -381,7 +381,7 @@ NITRUX_BASE_PKGS='
 	nitrux-standard-legacy
 '
 
-install $NITRUX_BASE_PKGS
+install_force_overwrite $NITRUX_BASE_PKGS
 
 
 #	Add Nvidia drivers or Nouveau.
