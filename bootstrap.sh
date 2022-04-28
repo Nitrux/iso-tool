@@ -244,7 +244,7 @@ update
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-xanmod
+	linux-image-xanmod-lts
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 '
