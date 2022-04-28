@@ -435,7 +435,6 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	dialog
-	packagekit-utils
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
