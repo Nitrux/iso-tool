@@ -4,6 +4,7 @@ set -xe
 
 export LANG=C
 export LC_ALL=C
+export SUDO_FORCE_REMOVE=yes
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
@@ -371,18 +372,27 @@ update
 
 
 #	Add Nitrux meta-packages.
+#
+#	The most recent versions of amd64-microcode and linux-firmware have a file conflict with
+#	the file /lib/firmware/amd/amd_sev_fam17h_model0xh.sbin as both provide it.
 
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
 	base-files=13.1.11+nitrux-legacy
-	nitrux-hardware-drivers-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
+'
+
+Install $NITRUX_BASE_PKGS
+
+
+NITRUX_HW_PKGS='
+	nitrux-hardware-drivers-legacy
 	amd64-microcode
 '
 
-install_force_overwrite $NITRUX_BASE_PKGS
+install_force_overwrite $NITRUX_HW_PKGS
 
 
 #	Add Nvidia drivers or Nouveau.
@@ -425,9 +435,7 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	dialog
-	linux-cpupower
-	tuned
-	tuned-utils
+	packagekit-utils
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
@@ -550,6 +558,19 @@ OPENRC_CONFIG='
 '
 
 install $OPENRC_CONFIG
+
+
+#	Remove Debian bits.
+
+puts "REMOVING DEBIAN BITS."
+
+REMOVE_DEBIAN_BITS='
+	sudo
+'
+
+dpkg_force_remove $REMOVE_DEBIAN_BITS
+
+ln -svf $(which doas) /usr/bin/sudo
 
 
 #	WARNING:
