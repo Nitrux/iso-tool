@@ -384,7 +384,7 @@ NITRUX_BASE_PKGS='
 	nitrux-standard-legacy
 '
 
-Install $NITRUX_BASE_PKGS
+install $NITRUX_BASE_PKGS
 
 
 NITRUX_HW_PKGS='
