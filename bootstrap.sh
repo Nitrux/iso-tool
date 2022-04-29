@@ -544,6 +544,19 @@ NX_REPO_PKG='
 install $NX_REPO_PKG
 
 
+#	Add live user.
+
+puts "INSTALLING LIVE USER."
+
+NX_LIVE_USER_PKG='
+	nitrux-live-user
+'
+
+install $NX_LIVE_USER_PKG
+autoremove
+clean_all
+
+
 #	Add OpenRC configuration.
 #
 #	Due to how the upstream openrc package "works," we need to put this package at the end of the build process.
