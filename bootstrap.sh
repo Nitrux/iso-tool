@@ -573,17 +573,6 @@ OPENRC_CONFIG='
 install $OPENRC_CONFIG
 
 
-#	Remove Debian bits.
-
-puts "REMOVING DEBIAN BITS."
-
-REMOVE_DEBIAN_BITS='
-
-'
-
-dpkg_force_remove $REMOVE_DEBIAN_BITS
-
-
 #	WARNING:
 #	No apt usage past this point.
 
