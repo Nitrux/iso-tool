@@ -578,12 +578,10 @@ install $OPENRC_CONFIG
 puts "REMOVING DEBIAN BITS."
 
 REMOVE_DEBIAN_BITS='
-	sudo
+
 '
 
 dpkg_force_remove $REMOVE_DEBIAN_BITS
-
-ln -svf $(which doas) /usr/bin/sudo
 
 
 #	WARNING:
