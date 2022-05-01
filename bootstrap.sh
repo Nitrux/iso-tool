@@ -290,6 +290,8 @@ update
 #
 #	It's worth noting that casper isn't available anywhere but Ubuntu.
 #	Debian doesn't use it; it uses live-boot, live-config, et. al.
+#
+#	casper v.1.470 doesn't need lupin-casper anymore.
 
 puts "ADDING CASPER."
 
@@ -528,6 +530,7 @@ puts "REMOVE BUILD SOURCES."
 
 rm \
 	/etc/apt/preferences \
+	/etc/apt/sources.list
 	/etc/apt/sources.list.d/*
 
 update
