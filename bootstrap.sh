@@ -93,9 +93,11 @@ add_nitrux_key_testing
 puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
-cp /configs/files/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
 cp /configs/files/sources.list.debian.experimental /etc/apt/sources.list.d/debian-experimental-repo.list
 cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
+
+apt-key export 86A634D7 | gpg --dearmour -o /usr/share/keyrings/nitrux-repo.gpg
+apt-key export 712260DE | gpg --dearmour -o /usr/share/keyrings/nitrux-compat.gpg
 
 update
 
