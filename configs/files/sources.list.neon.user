@@ -7,4 +7,4 @@
 # KDE Neon Repos #
 ##################
 
-deb [arch=amd64 signed-by=/usr/share/keyrings/neon-archive.gpg] http://archive.neon.kde.org/user focal main
+deb [arch=amd64] http://archive.neon.kde.org/user focal main
