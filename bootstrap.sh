@@ -531,7 +531,9 @@ puts "REMOVE BUILD SOURCES."
 
 rm \
 	/etc/apt/preferences \
-	/etc/apt/sources.list.d/*
+	/etc/apt/sources.list.d/* \
+	/usr/share/keyrings/nitrux-repo.gpg \
+	/usr/share/keyrings/nitrux-compat.gpg
 
 update
 
