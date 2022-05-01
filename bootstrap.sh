@@ -454,7 +454,7 @@ update
 
 #	Add Calamares.
 #
-#	The package from KDE Neon is compiled against libkpmcore11 (21.04) and libboost-python1.71.0 from 
+#	The package from KDE Neon is compiled against libkpmcore12 (22.04) and libboost-python1.71.0 from 
 #	Ubuntu which provides the virtual package libboost-python1.71.0-py38. The package from Debian doesn't 
 #	offer this virtual dependency.
 
@@ -488,13 +488,6 @@ remove_keys \
 update
 
 
-#	Update Appstream cache.
-
-clean_all
-update
-appstream_refresh_force
-
-
 #	Upgrade MESA packages.
 
 puts "UPDATING MESA."
@@ -525,30 +518,6 @@ install $MESA_GIT_PKGS
 only_upgrade_force_overwrite $MESA_LIBS_PKGS
 
 
-#	Remove sources used to build the root.
-
-puts "REMOVE BUILD SOURCES."
-
-rm \
-	/etc/apt/preferences \
-	/etc/apt/sources.list.d/* \
-	/usr/share/keyrings/nitrux-repo.gpg \
-	/usr/share/keyrings/nitrux-compat.gpg
-
-update
-
-
-#	Add repository configuration.
-
-puts "ADDING REPOSITORY SETTINGS."
-
-NX_REPO_PKG='
-	nitrux-repositories-config
-'
-
-install $NX_REPO_PKG
-
-
 #	Add OpenRC configuration.
 #
 #	Due to how the upstream openrc package "works," we need to put this package at the end of the build process.
@@ -563,6 +532,37 @@ OPENRC_CONFIG='
 '
 
 install $OPENRC_CONFIG
+
+
+#	Remove sources used to build the root.
+
+puts "REMOVE BUILD SOURCES."
+
+rm \
+	/etc/apt/preferences \
+	/etc/apt/sources.list.d/* \
+	/usr/share/keyrings/nitrux-repo.gpg \
+	/usr/share/keyrings/nitrux-compat.gpg
+
+update
+
+
+#	Update Appstream cache.
+
+clean_all
+update
+appstream_refresh_force
+
+
+#	Add repository configuration.
+
+puts "ADDING REPOSITORY SETTINGS."
+
+NX_REPO_PKG='
+	nitrux-repositories-config
+'
+
+install $NX_REPO_PKG
 
 
 #	WARNING:
