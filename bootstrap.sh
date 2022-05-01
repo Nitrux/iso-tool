@@ -97,11 +97,6 @@ cp /configs/files/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-tes
 cp /configs/files/sources.list.debian.experimental /etc/apt/sources.list.d/debian-experimental-repo.list
 cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
 
-apt-key export 86A634D7 | gpg --dearmour -o /usr/share/keyrings/nitrux-repo.gpg
-apt-key export 712260DE | gpg --dearmour -o /usr/share/keyrings/nitrux-compat.gpg
-apt-key export D8C9FD0D | gpg --dearmour -o /usr/share/keyrings/nitrux-testing.gpg
-apt-key export 55751E5D | gpg --dearmour -o /usr/share/keyrings/neon-archive.gpg
-
 update
 
 
