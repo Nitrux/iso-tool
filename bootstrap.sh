@@ -4,7 +4,6 @@ set -xe
 
 export LANG=C
 export LC_ALL=C
-export SUDO_FORCE_REMOVE=yes
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
@@ -98,6 +97,11 @@ cp /configs/files/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-tes
 cp /configs/files/sources.list.debian.experimental /etc/apt/sources.list.d/debian-experimental-repo.list
 cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
 
+apt-key export 86A634D7 | gpg --dearmour -o /usr/share/keyrings/nitrux-repo.gpg
+apt-key export 712260DE | gpg --dearmour -o /usr/share/keyrings/nitrux-compat.gpg
+apt-key export D8C9FD0D | gpg --dearmour -o /usr/share/keyrings/nitrux-testing.gpg
+apt-key export 55751E5D | gpg --dearmour -o /usr/share/keyrings/neon-archive.gpg
+
 update
 
 
@@ -157,7 +161,7 @@ install $SB_SHIM_PKGS
 
 add_repo_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
 
@@ -190,7 +194,7 @@ rm \
 
 remove_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 update
 
@@ -214,8 +218,8 @@ install $OPENRC_INIT_PKGS
 #	Add initramfs-tools from Ubuntu.
 
 add_repo_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	C0B21F32 \
+	991BC93C > /dev/null
 
 cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
 
@@ -234,8 +238,8 @@ rm \
 	/etc/apt/sources.list.d/ubuntu-focal-repo.list
 
 remove_keys \
-	3B4FE6ACC0B21F32 \
-	871920D1991BC93C > /dev/null
+	C0B21F32 \
+	991BC93C > /dev/null
 
 update
 
@@ -262,7 +266,7 @@ puts "ADDING PLYMOUTH."
 
 add_repo_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 
@@ -281,7 +285,7 @@ rm \
 
 remove_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 update
 
@@ -314,7 +318,7 @@ puts "ADDING POLICYKIT ELOGIND COMPAT."
 
 add_repo_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 cp /configs/files/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
 
@@ -336,7 +340,7 @@ rm \
 
 remove_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 update
 
@@ -352,7 +356,7 @@ puts "ADDING DEVUAN MISC. PACKAGES."
 
 add_repo_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 
@@ -369,7 +373,7 @@ rm \
 
 remove_keys \
 	541922FB \
-	BB23C00C61FC752C > /dev/null
+	61FC752C > /dev/null
 
 update
 
@@ -530,7 +534,6 @@ puts "REMOVE BUILD SOURCES."
 
 rm \
 	/etc/apt/preferences \
-	/etc/apt/sources.list \
 	/etc/apt/sources.list.d/*
 
 update
@@ -593,9 +596,7 @@ cat /configs/files/adduser.conf > /etc/adduser.conf
 
 puts "UPDATING THE INITRAMFS."
 
-cp /configs/files/initramfs.conf /etc/initramfs-tools/
-
-update-initramfs -u
+update-initramfs -c -k all
 
 
 #	Before removing dpkg, check the most oversized installed packages.

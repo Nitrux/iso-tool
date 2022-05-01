@@ -7,6 +7,5 @@
 # Nitrux Repos #
 ################
 
-deb [arch=amd64] https://packagecloud.io/nitrux/repo/debian/ trixie main
-deb [arch=amd64] https://packagecloud.io/nitrux/compat/debian/ trixie main
-
+deb [arch=amd64 signed-by=/usr/share/keyrings/nitrux-repo.gpg] https://packagecloud.io/nitrux/repo/debian/ trixie main
+deb [arch=amd64 signed-by=/usr/share/keyrings/nitrux-compat.gpg] https://packagecloud.io/nitrux/compat/debian/ trixie main
