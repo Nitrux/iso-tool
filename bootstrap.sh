@@ -530,7 +530,7 @@ puts "REMOVE BUILD SOURCES."
 
 rm \
 	/etc/apt/preferences \
-	/etc/apt/sources.list
+	/etc/apt/sources.list \
 	/etc/apt/sources.list.d/*
 
 update
