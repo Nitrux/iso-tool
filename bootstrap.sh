@@ -586,7 +586,7 @@ rm \
 
 cat /configs/files/motd > /etc/motd
 
-printf '%s\n' fuse nvidia amdgpu >> /etc/modules
+printf '%s\n' fuse nouveau amdgpu >> /etc/modules
 
 cat /configs/files/adduser.conf > /etc/adduser.conf
 
