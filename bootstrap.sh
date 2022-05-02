@@ -590,7 +590,7 @@ printf '%s\n' fuse nouveau amdgpu >> /etc/modules
 cat /configs/files/adduser.conf > /etc/adduser.conf
 
 
-#	Use LZ4 compression when creating the initramfs.
+#	Generate initramfs.
 
 puts "UPDATING THE INITRAMFS."
 
