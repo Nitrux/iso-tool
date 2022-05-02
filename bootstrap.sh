@@ -434,7 +434,6 @@ puts "ADDING NX DESKTOP."
 
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
-	nx-desktop-wayland-legacy
 '
 
 MISC_DESKTOP_PKGS='
