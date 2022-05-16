@@ -394,6 +394,9 @@ install $NITRUX_BASE_PKGS
 NITRUX_HW_PKGS='
 	nitrux-hardware-drivers-legacy
 	amd64-microcode
+	firmware-brcm80211
+	broadcom-sta-common
+	broadcom-sta-source
 '
 
 install_force_overwrite $NITRUX_HW_PKGS
