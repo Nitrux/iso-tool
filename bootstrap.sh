@@ -379,6 +379,9 @@ update
 #
 #	The most recent versions of amd64-microcode and linux-firmware have a file conflict with
 #	the file /lib/firmware/amd/amd_sev_fam17h_model0xh.sbin as both provide it.
+#
+#	The package firmware-brcm80211 has a file conflict with linux-firmware as both provide
+#	the file /lib/firmware/brcm/bcm43xx-0.fw.
 
 puts "ADDING NITRUX BASE."
 
@@ -390,13 +393,10 @@ NITRUX_BASE_PKGS='
 
 install $NITRUX_BASE_PKGS
 
-
 NITRUX_HW_PKGS='
-	nitrux-hardware-drivers-legacy
 	amd64-microcode
 	firmware-brcm80211
-	broadcom-sta-common
-	broadcom-sta-source
+	nitrux-hardware-drivers-legacy
 '
 
 install_force_overwrite $NITRUX_HW_PKGS
