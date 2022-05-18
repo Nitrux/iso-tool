@@ -394,12 +394,10 @@ NITRUX_BASE_PKGS='
 install $NITRUX_BASE_PKGS
 
 NITRUX_HW_PKGS='
-	amd64-microcode
-	firmware-brcm80211
 	nitrux-hardware-drivers-legacy
 '
 
-install_force_overwrite $NITRUX_HW_PKGS
+install $NITRUX_HW_PKGS
 
 
 #	Add Nvidia drivers or Nouveau.
