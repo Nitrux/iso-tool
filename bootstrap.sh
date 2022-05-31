@@ -395,7 +395,6 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	dialog
-	dmcrypt-openrc
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
