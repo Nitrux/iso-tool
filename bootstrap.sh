@@ -210,7 +210,7 @@ update
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-xanmod-edge
+	linux-image-xanmod-stable
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 '
@@ -340,6 +340,8 @@ update
 
 
 #	Add Nitrux meta-packages.
+#
+#	31/05/22 - Once again the package 'broadcom-sta-dkms' is broken with the latest kernel 5.18.
 
 puts "ADDING NITRUX BASE."
 
