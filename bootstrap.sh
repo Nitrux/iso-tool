@@ -401,6 +401,7 @@ MISC_DESKTOP_PKGS='
 	dialog
 	dmsetup
 	keyutils
+	vkbasalt
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
