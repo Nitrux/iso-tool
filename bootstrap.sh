@@ -489,12 +489,7 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-OPENRC_DMCRYPT='
-	dmcrypt-openrc
-'
-
 install $OPENRC_CONFIG
-install $OPENRC_DMCRYPT
 
 
 #	Remove sources used to build the root.
@@ -578,7 +573,7 @@ puts "PERFORM MANUAL CHECKS."
 
 ls -lh \
 	/boot \
-	/etc/runlevels/{default,nonetwork,off,recovery,sysinit} \
+	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
 	/{vmlinuz,initrd.img} \
 	/etc/{init.d,sddm.conf.d} \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
