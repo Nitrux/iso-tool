@@ -490,7 +490,7 @@ OPENRC_CONFIG='
 '
 
 OPENRC_DMC_CONFIG='
-	dmcrypt
+	dmcrypt-openrc
 '
 
 install $OPENRC_CONFIG
