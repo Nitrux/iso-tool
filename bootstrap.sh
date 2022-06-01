@@ -396,7 +396,12 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	cryptsetup
+	cryptsetup-initramfs
+	cryptmount
 	dialog
+	dmsetup
+	keyutils
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
