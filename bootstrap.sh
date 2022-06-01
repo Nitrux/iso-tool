@@ -398,7 +398,6 @@ NX_DESKTOP_PKG='
 MISC_DESKTOP_PKGS='
 	cryptsetup
 	cryptsetup-initramfs
-	cryptmount
 	dialog
 	dmsetup
 	keyutils
