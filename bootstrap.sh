@@ -489,12 +489,12 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-OPENRC_DMC_CONFIG='
+OPENRC_DMCRYPT='
 	dmcrypt-openrc
 '
 
 install $OPENRC_CONFIG
-install $OPENRC_DMC_CONFIG
+install $OPENRC_DMCRYPT
 
 
 #	Remove sources used to build the root.
