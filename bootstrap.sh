@@ -153,7 +153,7 @@ install $SYSTEMCTL_STANDALONE_PKG
 rm \
 	/etc/apt/sources.list.d/devuan-beowulf-repo.list
 
-remove_keys \
+remove_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
 
@@ -198,7 +198,7 @@ hold $INITRAMFS_PKGS
 rm \
 	/etc/apt/sources.list.d/ubuntu-focal-repo.list
 
-remove_keys \
+remove_repo_keys \
 	C0B21F32 \
 	991BC93C > /dev/null
 
@@ -227,7 +227,7 @@ install_downgrades $MAINLINE_KERNEL_PKG
 rm \
 	/etc/apt/sources.list.d/xanmod-repo.list
 
-remove_keys \
+remove_repo_keys \
 	86F7D09EE734E623 > /dev/null
 
 update
@@ -259,7 +259,7 @@ install $DEVUAN_PLYMOUTH_PKGS
 rm \
 	/etc/apt/sources.list.d/devuan-daedalus-repo.list
 
-remove_keys \
+remove_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
 
@@ -314,7 +314,7 @@ install_downgrades $DEVUAN_POLKIT_PKGS
 rm \
 	/etc/apt/sources.list.d/devuan-beowulf-repo.list
 
-remove_keys \
+remove_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
 
@@ -347,7 +347,7 @@ install $MISC_DEVUAN_DAEDALUS_PKGS
 rm \
 	/etc/apt/sources.list.d/devuan-daedalus-repo.list
 
-remove_keys \
+remove_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
 
@@ -424,7 +424,7 @@ install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
 
-remove_keys \
+remove_repo_keys \
 	55751E5D > /dev/null
 
 update
@@ -460,7 +460,7 @@ install $CALAMARES_PKGS
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
 
-remove_keys \
+remove_repo_keys \
 	55751E5D > /dev/null
 
 update

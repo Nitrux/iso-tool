@@ -33,7 +33,7 @@ only_upgrade_force_overwrite () { apt -yy install --no-install-recommends --only
 pkg_policy () { apt-cache policy $@; }
 pkg_search () { apt-cache search $@; }
 purge () { apt -yy purge --remove $@; }
-remove_keys () { apt-key del $@; }
+remove_repo_keys () { apt-key del $@; }
 unhold () { apt-mark unhold $@; }
 update () { apt update; }
 update_quiet () { apt -qq update; }
