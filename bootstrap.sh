@@ -207,6 +207,8 @@ update
 
 #	Add kernel.
 
+cp /configs/files/sources.list.xanmod /etc/apt/sources.list.d/xanmod-repo.list
+
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
@@ -216,6 +218,11 @@ MAINLINE_KERNEL_PKG='
 '
 
 install_downgrades $MAINLINE_KERNEL_PKG
+
+rm \
+	/etc/apt/sources.list.d/xanmod-repo.list
+
+update
 
 
 #	Add Plymouth.
