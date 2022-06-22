@@ -7,4 +7,4 @@
 # Xanmod Repos #
 ################
 
-deb [arch=amd64 signed-by=/usr/share/keyrings/xanmod-repo.gpg] http://deb.xanmod.org releases main
+deb [arch=amd64] http://deb.xanmod.org releases main
