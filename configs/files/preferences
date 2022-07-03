@@ -90,6 +90,10 @@ Package: gtk3-engines-breeze
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: gstreamer1.0-pipewire
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: 700
+
 Package: kactivitymanagerd
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -294,6 +298,14 @@ Package: libplasma-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libpipewire-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: 700
+
+Package: libspa-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: 700
+
 Package: libpolkit-agent-1-0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -329,6 +341,14 @@ Pin-Priority: -1
 Package: oxygen-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
+
+Package: pipewire
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: 700
+
+Package: pipewire-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: 700
 
 Package: plasma-*
 Pin: release o=Debian,a=unstable,n=sid
@@ -502,7 +522,27 @@ Package: fwupd
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: gstreamer1.0-pipewire
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 Package: latte-dock
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libpipewire-*
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: libspa-*
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: pipewire
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+Package: pipewire-*
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
