@@ -361,7 +361,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.15+nitrux-legacy
+	base-files=13.1.16+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
