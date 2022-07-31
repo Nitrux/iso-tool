@@ -29,7 +29,7 @@ apt -yy install $XORRISO_PKGS $GRUB_EFI_PKGS --no-install-recommends > /dev/null
 
 #	base image URL.
 
-base_img_url=https://raw.githubusercontent.com/debuerreotype/docker-debian-artifacts/dist-amd64/unstable/rootfs.tar.xz
+base_img_url=https://uk.lxd.images.canonical.com/images/devuan/chimaera/amd64/default/20220730_11:50/rootfs.tar.xz
 
 
 #	Prepare the directories for the build.
