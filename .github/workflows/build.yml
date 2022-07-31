@@ -1,0 +1,18 @@
+name: Build ISO.
+
+on:
+  push:
+    branches:
+      - 'legacy'
+    paths-ignore:
+      - 'README.md'
+
+jobs:
+  build:
+    runs-on: debian/unstable
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build.
+        run: |
+          sudo ./build.sh
