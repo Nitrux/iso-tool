@@ -29,7 +29,7 @@ apt -yy install $XORRISO_PKGS $GRUB_EFI_PKGS --no-install-recommends > /dev/null
 
 #	base image URL.
 
-base_img_url=https://uk.lxd.images.canonical.com/images/debian/sid/amd64/default/20220731_05:24/rootfs.tar.xz
+base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Unstable/rootfs.tar.xz
 
 
 #	Prepare the directories for the build.
