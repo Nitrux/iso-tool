@@ -2,7 +2,7 @@
 
 ![](https://raw.githubusercontent.com/Nitrux/luv-icon-theme/master/Luv/mimetypes/64/application-x-cd-image.svg) ![](https://raw.githubusercontent.com/Nitrux/luv-icon-theme/master/Luv/apps/64/live-installer.svg)
 
-[![Build Status](https://app.travis-ci.com/Nitrux/iso-tool.svg?branch=legacy)](https://app.travis-ci.com/Nitrux/iso-tool) [![Generic badge](https://img.shields.io/badge/Installer-Calamares-green)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/Arch-x64-yellowgreen.svg)](https://shields.io/) [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
+[![Generic badge](https://img.shields.io/badge/Installer-Calamares-green)](https://shields.io/) [![Generic badge](https://img.shields.io/badge/Arch-x64-yellowgreen.svg)](https://shields.io/) [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
 
 `iso-tool` is a shell script for generating Nitrux ISO files. The code is very readable and so self-documented.
