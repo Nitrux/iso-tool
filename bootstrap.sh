@@ -41,7 +41,6 @@ CHROOT_BASIC_PKGS='
 '
 
 update
-upgrade
 install $CHROOT_BASIC_PKGS
 
 
