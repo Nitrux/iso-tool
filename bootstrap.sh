@@ -4,6 +4,7 @@ set -xe
 
 export LANG=C
 export LC_ALL=C
+export DEBIAN_FRONTEND=noninteractive
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
@@ -31,6 +32,7 @@ CHROOT_BASIC_PKGS='
 	ca-certificates
 	curl
 	dhcpcd5
+	dirmngr
 	gnupg2
 	initramfs-tools
 	libzstd-dev
@@ -69,10 +71,7 @@ update
 #	Upgrade dpkg for zstd support.
 
 UPGRADE_DPKG='
-	dpkg=1.20.9ubuntu2
-	libc-bin=2.33-0ubuntu5
-	libc6=2.33-0ubuntu5
-	locales=2.33-0ubuntu5
+	dpkg=1.21.1ubuntu1
 '
 
 install_downgrades $UPGRADE_DPKG
