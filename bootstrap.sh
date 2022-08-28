@@ -29,12 +29,12 @@ CHROOT_BASIC_PKGS='
 	apt-transport-https
 	apt-utils
 	appstream
+	axel
 	ca-certificates
 	curl
 	dhcpcd5
 	dirmngr
 	gnupg2
-	initramfs-tools
 	libzstd-dev
 	lz4
 	zstd
@@ -58,11 +58,13 @@ add_nitrux_key_testing
 puts "ADDING SOURCES FILES."
 
 cp /configs/files/sources.list.nitrux /etc/apt/sources.list
+cp /configs/files/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
 cp /configs/files/sources.list.debian.experimental /etc/apt/sources.list.d/debian-experimental-repo.list
 cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
 
 apt-key export 86A634D7 | gpg --dearmour -o /usr/share/keyrings/nitrux-repo.gpg
 apt-key export 712260DE | gpg --dearmour -o /usr/share/keyrings/nitrux-compat.gpg
+apt-key export EB1BEB0D | gpg --dearmour -o /usr/share/keyrings/nitrux-testing.gpg
 
 update
 
@@ -174,33 +176,33 @@ OPENRC_INIT_PKGS='
 install $OPENRC_INIT_PKGS
 
 
-#	Add initramfs-tools from Ubuntu.
+#	Add casper.
+#
+#	It's worth noting that casper isn't available anywhere but Ubuntu.
+#	Debian doesn't use it; it uses live-boot, live-config, et. al.
 
-add_repo_keys \
-	C0B21F32 \
-	991BC93C > /dev/null
+puts "ADDING CASPER."
 
-cp /configs/files/sources.list.focal /etc/apt/sources.list.d/ubuntu-focal-repo.list
-
-update
-
-INITRAMFS_PKGS='
-	initramfs-tools/focal
-	initramfs-tools-core/focal
-	initramfs-tools-bin/focal
+CASPER_DEPS_PKGS='
+	casper/trixie
+	initramfs-tools/trixie
+	initramfs-tools-bin/trixie
+	initramfs-tools-core/trixie
 '
 
-install_downgrades $INITRAMFS_PKGS
-hold $INITRAMFS_PKGS
+install_downgrades $CASPER_DEPS_PKGS
 
-rm \
-	/etc/apt/sources.list.d/ubuntu-focal-repo.list
 
-remove_repo_keys \
-	C0B21F32 \
-	991BC93C > /dev/null
+#	Hold initramfs and casper packages.
 
-update
+INITRAMFS_CASPER_PKGS='
+	casper
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
+'
+
+hold $INITRAMFS_CASPER_PKGS
 
 
 #	Add kernel.
@@ -260,24 +262,6 @@ rm \
 remove_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
-
-update
-
-
-#	Add casper.
-#
-#	It's worth noting that casper isn't available anywhere but Ubuntu.
-#	Debian doesn't use it; it uses live-boot, live-config, et. al.
-#
-#	casper v.1.470 doesn't need lupin-casper anymore.
-
-puts "ADDING CASPER."
-
-CASPER_PKGS='
-	casper
-'
-
-install $CASPER_PKGS
 
 update
 
@@ -359,7 +343,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.16+nitrux-legacy
+	base-files=13.1.17+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
@@ -414,6 +398,7 @@ MISC_DESKTOP_PKGS='
 	dialog
 	dmsetup
 	keyutils
+	nohang
 	vkbasalt
 '
 
