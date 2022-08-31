@@ -343,7 +343,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.17+nitrux-legacy
+	base-files=13.1.18+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
@@ -434,7 +434,6 @@ CALAMARES_PKGS='
 	calamares
 	calamares-qml-settings-nitrux
 	dosfstools
-	libboost-python1.71.0/trixie
 	squashfs-tools
 '
 
@@ -524,6 +523,11 @@ NX_REPO_PKG='
 '
 
 install $NX_REPO_PKG
+
+
+#	Unhold initramfs and casper packages.
+
+unhold $INITRAMFS_CASPER_PKGS
 
 
 #	WARNING:
