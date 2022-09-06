@@ -1,5 +1,10 @@
 #! /bin/bash
 
+
+
+[ "$__time_traced" ] ||
+	__time_traced=yes exec time "$0" "$@"
+
 #	Exit on errors.
 
 set -xe

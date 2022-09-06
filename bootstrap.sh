@@ -415,8 +415,8 @@ update
 
 #	Add Calamares.
 #
-#	The package from KDE Neon is compiled against libkpmcore12 (22.04) and libboost-python1.71.0 from 
-#	Ubuntu which provides the virtual package libboost-python1.71.0-py38. The package from Debian doesn't 
+#	The package from KDE Neon is compiled against libkpmcore12 (22.04) and libboost-python1.71.0 from
+#	Ubuntu which provides the virtual package libboost-python1.71.0-py38. The package from Debian doesn't
 #	offer this virtual dependency.
 
 puts "ADDING CALAMARES INSTALLER."
