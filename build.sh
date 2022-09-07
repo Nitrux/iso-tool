@@ -127,7 +127,7 @@ mkiso \
 	-b \
 	-e \
 	-s "$hash_url" \
-	-r "${TRAVIS_COMMIT:0:7}" \
+	-r "$(date -u +'%Y.%m.%d-%H.%M.%S')" \
 	-g $config_dir/files/grub.cfg \
 	-g $config_dir/files/loopback.cfg \
 	-t grub-theme/nitrux \
