@@ -343,7 +343,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.18+nitrux-legacy
+	base-files=13.1.19+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
@@ -398,6 +398,7 @@ MISC_DESKTOP_PKGS='
 	dialog
 	dmsetup
 	keyutils
+	kwin-x11
 	nohang
 	vkbasalt
 '

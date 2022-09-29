@@ -1,6 +1,6 @@
 #! /bin/bash
 
-
+export TRAVIS_BRANCH=legacy
 
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
@@ -139,9 +139,19 @@ mkiso \
 md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
 
 
+#	Move files to current directory
+
+mv $output_dir/* $PWD
+
+
+#	Clean up build directory
+
+rm -r base.tar.{xz,gz} \
+	grub-theme || true
+
+
 #	Upload the ISO image.
 
-for f in $output_dir/*; do
-    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -q -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
-done
-
+#for f in $output_dir/*; do
+#    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -q -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
+#done
