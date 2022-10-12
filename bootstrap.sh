@@ -565,7 +565,7 @@ update-initramfs -c -k all
 
 #	Before removing dpkg, check the most oversized installed packages.
 
-puts "SHOW LARGEST INSTALLED PACKAGES.."
+puts "SHOW LARGEST INSTALLED PACKAGES."
 
 list_pkgs_size
 list_number_pkgs
