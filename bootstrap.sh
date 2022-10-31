@@ -604,8 +604,10 @@ stat \
 
 tail -n +1 \
 	/etc/{casper.conf,sddm.conf,modules} \
+	/etc/default/grub \
 	/etc/sddm.conf.d/kde_settings.conf \
 	/etc/environment \
+	/etc/adduser.conf \
 	/etc/modules
 
 
