@@ -369,14 +369,14 @@ puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
 
 NVIDIA_DRV_PKGS='
 	nvidia-driver-520
-	nvidia-settings/jammy
+	nvidia-settings
 	nvidia-prime
 '
 
 install $NVIDIA_DRV_PKGS
 
 rm \
-	/etc/apt/sources.list.d/sources.list.gpu.ppa
+	/etc/apt/sources.list.d/gpu-ppa-repo.list
 
 remove_repo_keys \
 	1118213C > /dev/null
