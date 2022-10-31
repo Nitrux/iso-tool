@@ -144,14 +144,9 @@ md5sum $output_dir/$image > $output_dir/${image%.iso}.md5sum
 mv $output_dir/* $PWD
 
 
-#	Clean up build directory
+#	Clean up build directories
 
-rm -r base.tar.{xz,gz} \
+rm -r \
+	base.tar.{xz,gz} \
+	/tmp/tmp.* \
 	grub-theme || true
-
-
-#	Upload the ISO image.
-
-#for f in $output_dir/*; do
-#    SSHPASS=$FOSSHOST_PASSWORD sshpass -e scp -q -o stricthostkeychecking=no "$f" $FOSSHOST_USERNAME@$FOSSHOST_HOST:$FOSSHOST_DEPLOY_PATH
-#done
