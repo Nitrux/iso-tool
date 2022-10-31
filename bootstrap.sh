@@ -407,6 +407,7 @@ MISC_DESKTOP_PKGS='
 	cryptsetup
 	cryptsetup-initramfs
 	dialog
+	distrobox
 	dmsetup
 	keyutils
 	kwin-x11
