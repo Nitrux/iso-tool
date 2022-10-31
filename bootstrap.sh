@@ -361,7 +361,7 @@ install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
 add_repo_keys \
 	1118213C > /dev/null
 
-cp /configs/files/sources.list.gpu.ppa /etc/apt/sources.list.d/sources.list.gpu.ppa
+cp /configs/files/sources.list.gpu.ppa /etc/apt/sources.list.d/gpu-ppa-repo.list
 
 update
 
