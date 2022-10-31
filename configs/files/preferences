@@ -338,6 +338,10 @@ Package: network-manager
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: nvidia-settings
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: oxygen-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1

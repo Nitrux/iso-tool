@@ -369,7 +369,7 @@ puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
 
 NVIDIA_DRV_PKGS='
 	nvidia-driver-520
-	nvidia-settings
+	nvidia-settings/jammy
 	nvidia-prime
 '
 
