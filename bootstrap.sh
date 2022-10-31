@@ -358,6 +358,13 @@ install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
 #
 #	The Nvidia proprietary driver can't be installed alongside Nouveau.
 
+add_repo_keys \
+	1118213C > /dev/null
+
+cp /configs/files/sources.list.gpu.ppa /etc/apt/sources.list.d/sources.list.gpu.ppa
+
+update
+
 puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
 
 NVIDIA_DRV_PKGS='
@@ -367,6 +374,14 @@ NVIDIA_DRV_PKGS='
 '
 
 install $NVIDIA_DRV_PKGS
+
+rm \
+	/etc/apt/sources.list.d/sources.list.gpu.ppa
+
+remove_repo_keys \
+	1118213C > /dev/null
+
+update
 
 
 #	Add NX Desktop meta-package.
