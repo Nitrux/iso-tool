@@ -216,7 +216,7 @@ update
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-xanmod-edge
+	linux-image-xanmod-main
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 '
@@ -270,6 +270,12 @@ update
 #	Since we're using elogind to replace logind, we need to add the matching PolicyKit packages.
 #
 #	Strangely, the complete stack is only available in beowulf but not in chimaera or daedalus.
+#
+#	Adding NetworkManager packages from Devuan.
+#
+#	The network-manager package that is available in Debian does not have an init script compatible with OpenRC.
+#	so we use the package from Devuan instead.
+
 
 puts "ADDING POLICYKIT ELOGIND COMPAT."
 
@@ -292,6 +298,14 @@ DEVUAN_POLKIT_PKGS='
 
 install_downgrades $DEVUAN_POLKIT_PKGS
 
+puts "ADDING POLICYKIT ELOGIND COMPAT."
+
+DEVUAN_NM_PKGS='
+	network-manager/daedalus
+'
+
+install $DEVUAN_NM_PKGS
+
 rm \
 	/etc/apt/sources.list.d/devuan-beowulf-repo.list
 
@@ -302,47 +316,12 @@ remove_repo_keys \
 update
 
 
-#	Add misc. Devuan packages.
-#
-#	The network-manager package that is available in Debian does not have an init script compatible with OpenRC.
-#	so we use the package from Devuan instead.
-#
-#	Prioritize installing packages from daedalus over chimaera, unless the package only exists in ceres.
-
-puts "ADDING DEVUAN MISC. PACKAGES."
-
-add_repo_keys \
-	541922FB \
-	61FC752C > /dev/null
-
-cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
-
-update
-
-MISC_DEVUAN_DAEDALUS_PKGS='
-	network-manager/daedalus
-'
-
-install $MISC_DEVUAN_DAEDALUS_PKGS
-
-rm \
-	/etc/apt/sources.list.d/devuan-daedalus-repo.list
-
-remove_repo_keys \
-	541922FB \
-	61FC752C > /dev/null
-
-update
-
-
 #	Add Nitrux meta-packages.
-#
-#	31/05/22 - Once again the package 'broadcom-sta-dkms' is broken with the latest kernel 5.18.
 
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.19+nitrux-legacy
+	base-files=13.1.20+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
@@ -359,14 +338,13 @@ install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
 #	The package nouveau-firmware isn't available in Debian but only in Ubuntu.
 #
 #	The Nvidia proprietary driver can't be installed alongside Nouveau.
-#
-#	To install it replace the Nouveau packages with the Nvidia counterparts.
 
 puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
 
 NVIDIA_DRV_PKGS='
-	xserver-xorg-video-nouveau
-	nouveau-firmware
+	nvidia-driver-520
+	nvidia-settings
+	nvidia-prime
 '
 
 install $NVIDIA_DRV_PKGS
@@ -398,6 +376,7 @@ MISC_DESKTOP_PKGS='
 	dmsetup
 	keyutils
 	kwin-x11
+	kwin-bismuth
 	nohang
 	vkbasalt
 '
@@ -414,10 +393,6 @@ update
 
 
 #	Add Calamares.
-#
-#	The package from KDE Neon is compiled against libkpmcore12 (22.04) and libboost-python1.71.0 from
-#	Ubuntu which provides the virtual package libboost-python1.71.0-py38. The package from Debian doesn't
-#	offer this virtual dependency.
 
 puts "ADDING CALAMARES INSTALLER."
 
@@ -551,7 +526,7 @@ rm \
 
 cat /configs/files/motd > /etc/motd
 
-printf '%s\n' fuse nouveau amdgpu >> /etc/modules
+printf '%s\n' fuse nvidia amdgpu >> /etc/modules
 
 cat /configs/files/adduser.conf > /etc/adduser.conf
 
@@ -586,7 +561,8 @@ ls -lh \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
 	/Applications || true
 
-stat /sbin/init \
+stat \
+	/sbin/init \
 	/bin/sh \
 	/bin/dash \
 	/bin/bash
