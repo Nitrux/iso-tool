@@ -270,12 +270,6 @@ update
 #	Since we're using elogind to replace logind, we need to add the matching PolicyKit packages.
 #
 #	Strangely, the complete stack is only available in beowulf but not in chimaera or daedalus.
-#
-#	Adding NetworkManager packages from Devuan.
-#
-#	The network-manager package that is available in Debian does not have an init script compatible with OpenRC.
-#	so we use the package from Devuan instead.
-
 
 puts "ADDING POLICYKIT ELOGIND COMPAT."
 
@@ -298,7 +292,32 @@ DEVUAN_POLKIT_PKGS='
 
 install_downgrades $DEVUAN_POLKIT_PKGS
 
-puts "ADDING POLICYKIT ELOGIND COMPAT."
+rm \
+	/etc/apt/sources.list.d/devuan-beowulf-repo.list
+
+remove_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+update
+
+
+#	Add misc. Devuan packages.
+#
+#	The network-manager package that is available in Debian does not have an init script compatible with OpenRC.
+#	so we use the package from Devuan instead.
+#
+#	Prioritize installing packages from daedalus over chimaera, unless the package only exists in ceres.
+
+puts "ADDING DEVUAN NM PACKAGE."
+
+add_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+cp /configs/files/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
+
+update
 
 DEVUAN_NM_PKGS='
 	network-manager/daedalus
@@ -307,7 +326,7 @@ DEVUAN_NM_PKGS='
 install $DEVUAN_NM_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-beowulf-repo.list
+	/etc/apt/sources.list.d/devuan-daedalus-repo.list
 
 remove_repo_keys \
 	541922FB \
