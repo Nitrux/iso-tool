@@ -414,6 +414,8 @@ MISC_DESKTOP_PKGS='
 	kwin-bismuth/trixie
 	nohang
 	vkbasalt
+    xclip
+    xsel
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
