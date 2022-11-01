@@ -410,8 +410,8 @@ MISC_DESKTOP_PKGS='
 	distrobox
 	dmsetup
 	keyutils
-	kwin-x11
-	kwin-bismuth
+	kwin-x11/jammy
+	kwin-bismuth/trixie
 	nohang
 	vkbasalt
 '

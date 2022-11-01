@@ -346,6 +346,10 @@ Package: oxygen-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: passwd
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: pipewire
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
