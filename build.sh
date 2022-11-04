@@ -51,7 +51,7 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/nx-desktop/")-$(date +%Y%m%d)-amd64.iso
-hash_url=http://updates.nxos.org/${image%.iso}.md5sum
+hash_url=http://releases.nxos.org/${image%.iso}.md5sum
 
 
 #	Prepare the directory where the filesystem will be created.
