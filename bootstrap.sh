@@ -207,27 +207,25 @@ hold $INITRAMFS_CASPER_PKGS
 #	Add kernel.
 
 add_repo_keys \
-	86F7D09EE734E623 > /dev/null
+	9B72E6DF > /dev/null
 
-cp /configs/files/sources.list.xanmod /etc/apt/sources.list.d/xanmod-repo.list
+cp /configs/files/sources.list.liquorix /etc/apt/sources.list.d/liquorix-repo.list
 
 update
 
 puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
-	linux-image-xanmod-main
-	libcrypt-dev/trixie
-	libcrypt1/trixie
+	linux-image-liquorix
 '
 
 install_downgrades $MAINLINE_KERNEL_PKG
 
 rm \
-	/etc/apt/sources.list.d/xanmod-repo.list
+	/etc/apt/sources.list.d/liquorix-repo.list
 
 remove_repo_keys \
-	86F7D09EE734E623 > /dev/null
+	9B72E6DF > /dev/null
 
 update
 
