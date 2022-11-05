@@ -217,6 +217,8 @@ puts "ADDING KERNEL."
 
 MAINLINE_KERNEL_PKG='
 	linux-image-liquorix
+	libcrypt-dev/trixie
+	libcrypt1/trixie
 '
 
 install_downgrades $MAINLINE_KERNEL_PKG
