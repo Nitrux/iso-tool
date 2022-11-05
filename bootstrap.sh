@@ -207,7 +207,7 @@ hold $INITRAMFS_CASPER_PKGS
 #	Add kernel.
 
 add_repo_keys \
-	9B72E6DF > /dev/null
+	9352A0B69B72E6DF > /dev/null
 
 cp /configs/files/sources.list.liquorix /etc/apt/sources.list.d/liquorix-repo.list
 
@@ -225,7 +225,7 @@ rm \
 	/etc/apt/sources.list.d/liquorix-repo.list
 
 remove_repo_keys \
-	9B72E6DF > /dev/null
+	9352A0B69B72E6DF > /dev/null
 
 update
 
