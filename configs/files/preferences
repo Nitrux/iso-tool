@@ -378,6 +378,10 @@ Package: plasma-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: polkitd
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: policykit-1
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
