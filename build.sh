@@ -50,7 +50,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(printf "$git_branch\n" | sed "s/legacy/nx-desktop/")-$(git rev-parse --verify HEAD)-amd64.iso
+image=nitrux-$(printf "$git_branch\n" | sed "s/legacy/nx-desktop/")-$(git rev-parse --short=8 HEAD)-amd64.iso
 hash_url=http://releases.nxos.org/${image%.iso}.md5sum
 
 
@@ -127,7 +127,7 @@ mkiso \
 	-b \
 	-e \
 	-s "$hash_url" \
-	-r "$(git rev-parse --verify HEAD)" \
+	-r "$(git rev-parse --short=8 HEAD)" \
 	-g $config_dir/files/grub.cfg \
 	-g $config_dir/files/loopback.cfg \
 	-t grub-theme/nitrux \
