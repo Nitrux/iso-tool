@@ -1,6 +1,6 @@
 #! /bin/bash
 
-export TRAVIS_BRANCH=legacy
+git_branch=$(git branch --show-current)
 
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
@@ -50,7 +50,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(printf "$TRAVIS_BRANCH\n" | sed "s/legacy/nx-desktop/")-$(date +%Y%m%d)-amd64.iso
+image=nitrux-$(printf "$git_branch\n" | sed "s/legacy/nx-desktop/")-$(git rev-parse --verify HEAD)-amd64.iso
 hash_url=http://releases.nxos.org/${image%.iso}.md5sum
 
 
@@ -127,7 +127,7 @@ mkiso \
 	-b \
 	-e \
 	-s "$hash_url" \
-	-r "$(date -u +'%Y.%m.%d-%H.%M.%S')" \
+	-r "$(git rev-parse --verify HEAD)" \
 	-g $config_dir/files/grub.cfg \
 	-g $config_dir/files/loopback.cfg \
 	-t grub-theme/nitrux \
