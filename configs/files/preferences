@@ -346,6 +346,10 @@ Package: network-manager
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: nvidia-kernel-common
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: nvidia-settings
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
