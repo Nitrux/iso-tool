@@ -419,6 +419,15 @@ MISC_DESKTOP_PKGS='
 	xsel
 '
 
+FKN_DESKTOP_PKGS='
+	packagekit-tools
+	kio-extras
+	python-setuptools
+'
+
+pkg_policy $FKN_DESKTOP_PKGS
+install $FKN_DESKTOP_PKGS
+
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 rm \
