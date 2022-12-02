@@ -415,6 +415,7 @@ MISC_DESKTOP_PKGS='
 	kwin-x11/jammy
 	nohang
 	vkbasalt
+	wireless-regdb
 	xclip
 	xsel
 '
