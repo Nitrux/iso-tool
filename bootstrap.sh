@@ -465,9 +465,12 @@ update
 
 puts "UPDATING MESA."
 
-MESA_GIT_PKGS='
-	mesa-git
-'
+add_repo_keys \
+	A03A4626 > /dev/null
+
+cp /configs/files/sources.list.mesa.git.ppa /etc/apt/sources.list.d/mesa-git-ppa.list
+
+update
 
 MESA_LIBS_PKGS='
 	libdrm-amdgpu1
@@ -487,8 +490,15 @@ MESA_LIBS_PKGS='
 	mesa-vulkan-drivers
 '
 
-install $MESA_GIT_PKGS
 only_upgrade_force_overwrite $MESA_LIBS_PKGS
+
+rm \
+	/etc/apt/sources.list.d/mesa-git-ppa.list
+
+remove_repo_keys \
+	A03A4626 > /dev/null
+
+update
 
 
 #	Add OpenRC configuration.
@@ -532,6 +542,7 @@ appstream_refresh_force
 puts "ADDING REPOSITORY SETTINGS."
 
 NX_REPO_PKG='
+	mesa-git
 	nitrux-repositories-config
 '
 
