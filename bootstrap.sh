@@ -340,7 +340,7 @@ update
 puts "ADDING NITRUX BASE."
 
 NITRUX_BASE_PKGS='
-	base-files=13.1.20+nitrux-legacy
+	base-files=13.1.22+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
@@ -408,10 +408,11 @@ MISC_DESKTOP_PKGS='
 	cryptsetup-initramfs
 	dialog
 	distrobox
+	dmcrypt-openrc
 	dmsetup
 	keyutils
-	kwin-x11/jammy
 	kwin-bismuth/trixie
+	kwin-x11/jammy
 	nohang
 	vkbasalt
 	xclip
