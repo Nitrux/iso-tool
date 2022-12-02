@@ -2,6 +2,10 @@
 #  Debian Package Priority #
 ############################
 
+Package: akonadi-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: baloo-kf5
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -247,6 +251,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpm*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: libkpipewire*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
