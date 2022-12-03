@@ -414,6 +414,8 @@ MISC_DESKTOP_PKGS='
 	kwin-bismuth/trixie
 	kwin-x11/jammy
 	nohang
+	open-vm-tools-dekstop
+	partitionmanager
 	vkbasalt
 	wireless-regdb
 	xclip
