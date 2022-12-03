@@ -404,22 +404,9 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	cryptsetup
-	cryptsetup-initramfs
-	dialog
 	distrobox
-	dmcrypt-openrc
-	dmsetup
-	keyutils
 	kwin-bismuth/trixie
 	kwin-x11/jammy
-	nohang
-	open-vm-tools-dekstop
-	partitionmanager
-	vkbasalt
-	wireless-regdb
-	xclip
-	xsel
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
