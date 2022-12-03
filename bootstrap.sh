@@ -404,7 +404,6 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	distrobox
 	kwin-bismuth/trixie
 	kwin-x11/jammy
 '
