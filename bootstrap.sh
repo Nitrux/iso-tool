@@ -63,7 +63,7 @@ cp /configs/files/sources.list.debian.unstable /etc/apt/sources.list.d/debian-un
 
 apt-key export 86A634D7 | gpg --dearmour -o /usr/share/keyrings/nitrux-repo.gpg
 apt-key export 712260DE | gpg --dearmour -o /usr/share/keyrings/nitrux-compat.gpg
-apt-key export EB1BEB0D | gpg --dearmour -o /usr/share/keyrings/nitrux-testing.gpg
+# apt-key export EB1BEB0D | gpg --dearmour -o /usr/share/keyrings/nitrux-testing.gpg
 
 update
 
