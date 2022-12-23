@@ -50,7 +50,7 @@ puts "ADDING REPOSITORY KEYS."
 
 add_nitrux_key_repo
 add_nitrux_key_compat
-add_nitrux_key_testing
+# add_nitrux_key_testing
 
 
 #	Copy repository sources.
