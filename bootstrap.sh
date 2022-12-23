@@ -531,7 +531,6 @@ appstream_refresh_force
 puts "ADDING REPOSITORY SETTINGS."
 
 NX_REPO_PKG='
-	mesa-git
 	nitrux-repositories-config
 '
 
