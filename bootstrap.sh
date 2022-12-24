@@ -408,6 +408,10 @@ MISC_DESKTOP_PKGS='
 	kwin-x11/jammy
 	inxi
 	mesa-utils
+	pulseaudio-equalizer-ladspa
+	python3-gi
+	gobject-introspection
+	gir1.2-gtk3.0
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
@@ -600,7 +604,8 @@ ls -lh \
 	/{vmlinuz,initrd.img} \
 	/etc/{init.d,sddm.conf.d} \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
-	/Applications || true
+	/installed_pkgs.txt
+	/Applications
 
 stat \
 	/sbin/init \
