@@ -215,13 +215,14 @@ update
 
 puts "ADDING KERNEL."
 
-MAINLINE_KERNEL_PKG='
-	linux-image-liquorix
+DEFAULT_KERNEL_PKG='
+	linux-image-amd64
+	linux-headers-amd64
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 '
 
-install_downgrades $MAINLINE_KERNEL_PKG
+install_downgrades $DEFAULT_KERNEL_PKG
 
 rm \
 	/etc/apt/sources.list.d/liquorix-repo.list
