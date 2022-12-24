@@ -605,6 +605,8 @@ ls -lh \
 	/etc/{init.d,sddm.conf.d} \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
 	/installed_pkgs.txt
+
+tree \
 	/Applications
 
 stat \
