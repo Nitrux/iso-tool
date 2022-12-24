@@ -404,17 +404,27 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	gir1.2-gtk-3.0
+	gobject-introspection
+	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
-	inxi
 	mesa-utils
 	pulseaudio-equalizer-ladspa
 	python3-gi
-	gobject-introspection
-	gir1.2-gtk-3.0
 '
 
-install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+DBGSYM_PACKAGES='
+	kwin-common-dbgsym
+	kwin-x11-dbgsym
+	latte-dock-dbgsym
+	libkwineffects14-dbgsym
+	libkwinglutils14-dbgsym
+	libqt5core5a-dbgsym
+	qml-module-org-kde-kwindowsystem-dbgsym
+'
+
+install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $DBGSYM_PACKAGES
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
