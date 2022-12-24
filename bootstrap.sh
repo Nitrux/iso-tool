@@ -578,7 +578,7 @@ cat /configs/files/adduser.conf > /etc/adduser.conf
 
 puts "UPDATING THE INITRAMFS."
 
-cp /configs/scripts/others/crypttab-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
+cp /configs/files/crypttab-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
 
 update-initramfs -c -k all
 
