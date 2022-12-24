@@ -412,6 +412,7 @@ MISC_DESKTOP_PKGS='
 	mesa-utils
 	pulseaudio-equalizer-ladspa
 	python3-gi
+	uidmap
 '
 
 DBGSYM_PACKAGES='
