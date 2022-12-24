@@ -406,6 +406,7 @@ NX_DESKTOP_PKG='
 MISC_DESKTOP_PKGS='
 	kwin-bismuth/trixie
 	kwin-x11/jammy
+	inxi
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
