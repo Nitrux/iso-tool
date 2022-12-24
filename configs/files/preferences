@@ -574,10 +574,6 @@ Package: gstreamer1.0-pipewire
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
-Package: latte-dock
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
 Package: libappimage1.0
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
