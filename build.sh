@@ -1,7 +1,5 @@
 #! /bin/bash
 
-git_branch=$(git branch --show-current)
-
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
 
@@ -50,7 +48,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(printf "$git_branch\n" | sed "s/legacy/nx-desktop/")-$(git rev-parse --short=8 HEAD)-amd64.iso
+image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
 hash_url=http://releases.nxos.org/${image%.iso}.md5sum
 
 
