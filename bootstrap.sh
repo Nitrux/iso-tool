@@ -411,7 +411,7 @@ MISC_DESKTOP_PKGS='
 	pulseaudio-equalizer-ladspa
 	python3-gi
 	gobject-introspection
-	gir1.2-gtk3.0
+	gir1.2-gtk-3.0
 '
 
 install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
