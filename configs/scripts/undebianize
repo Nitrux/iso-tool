@@ -1,0 +1,48 @@
+#! /bin/bash
+
+set -xe
+
+
+#	Source APT commands as functions.
+
+source /configs/scripts/others/apt-funcs
+
+
+REMOVE_DEB_BITS_PKGS='
+	apt
+	apt-transport-https
+	apt-utils
+	casper
+	lupin-casper
+'
+
+dpkg_force_remove $REMOVE_DEB_BITS_PKGS || true
+
+dpkg_force_remove $REMOVE_DEB_BITS_PKGS
+
+
+#   Remove dpkg directories 
+
+REMOVE_DPKG='
+    /etc/alternatives/README
+    /etc/cron.daily/dpkg
+    /etc/dpkg
+    /etc/apt
+    /etc/logrotate.d/alternatives
+    /etc/logrotate.d/dpkg
+    /usr/bin/dpkg
+    /usr/bin/dpkg-*
+    /usr/bin/update-alternatives
+    /usr/libexec/dpkg
+    /usr/share/doc/dpkg/
+    /usr/share/dpkg/
+    /usr/share/lintian/overrides/dpkg
+    /usr/share/polkit-1/actions/org.dpkg.pkexec.update-alternatives.policy
+    /var/lib/apt/lists
+    /var/cache/apt
+    /var/lib/dpkg/
+'
+
+rm -r ${REMOVE_DPKG//\\n/ }
+
+exit 0

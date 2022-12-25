@@ -10,7 +10,7 @@ puts () { printf "\n\n --- %s\n" "$*"; }
 
 #	Wrap APT commands in functions.
 
-source /configs/scripts/apt_funcs.sh
+source /configs/scripts/apt_funcs
 
 
 puts "STARTING BOOTSTRAP."
