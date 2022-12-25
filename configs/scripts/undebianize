@@ -3,10 +3,7 @@
 set -xe
 
 
-#	Source APT commands as functions.
-
-source /configs/scripts/others/apt-funcs
-
+#	Remove Debian bits.
 
 REMOVE_DEB_BITS_PKGS='
 	apt
@@ -21,7 +18,7 @@ dpkg_force_remove $REMOVE_DEB_BITS_PKGS || true
 dpkg_force_remove $REMOVE_DEB_BITS_PKGS
 
 
-#   Remove dpkg directories 
+#   Remove dpkg directories.
 
 REMOVE_DPKG='
     /etc/alternatives/README
