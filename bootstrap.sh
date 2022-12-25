@@ -539,17 +539,6 @@ update
 appstream_refresh_force
 
 
-#	Add repository configuration.
-
-puts "ADDING REPOSITORY SETTINGS."
-
-NX_REPO_PKG='
-	nitrux-repositories-config
-'
-
-install $NX_REPO_PKG
-
-
 #	Unhold initramfs and casper packages.
 
 unhold $INITRAMFS_CASPER_PKGS
