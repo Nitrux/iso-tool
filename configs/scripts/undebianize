@@ -11,11 +11,7 @@ REMOVE_DEB_BITS_PKGS='
 	apt
 	apt-transport-https
 	apt-utils
-	casper
-	lupin-casper
 '
-
-dpkg_force_remove $REMOVE_DEB_BITS_PKGS || true
 
 dpkg_force_remove $REMOVE_DEB_BITS_PKGS
 
