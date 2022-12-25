@@ -34,10 +34,6 @@ Package: debianutils
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: dosfstools
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
 Package: dpkg
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
