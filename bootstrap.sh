@@ -404,15 +404,11 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	gir1.2-gtk-3.0
-	gobject-introspection
 	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
-	mesa-utils
 	pulseaudio-equalizer-ladspa
 	python3-gi
-	uidmap
 '
 
 DBGSYM_PACKAGES='
