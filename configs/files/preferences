@@ -98,6 +98,14 @@ Package: kactivitymanagerd
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: kaccounts-providers
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: kcalc
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: kde-cli-tools
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -363,6 +371,10 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: packagekit-*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: partitionmanager
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
