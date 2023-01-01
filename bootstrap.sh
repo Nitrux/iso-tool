@@ -417,9 +417,16 @@ DBGSYM_PACKAGES='
 	kwin-common-dbgsym
 	kwin-x11-dbgsym
 	latte-dock-dbgsym
+	libgl1-mesa-dri-dbgsym
 	libkwineffects14-dbgsym
 	libkwinglutils14-dbgsym
 	libqt5core5a-dbgsym
+	libqt5dbus5-dbgsym
+	libqt5gui5-dbgsym
+	libqt5qml5-dbgsym
+	libqt5quick5-dbgsym
+	libqt5widgets5-dbgsym
+	print-manager-dbgsym
 	qml-module-org-kde-kwindowsystem-dbgsym
 '
 
