@@ -408,6 +408,7 @@ MISC_DESKTOP_PKGS='
 	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
+	overlayroot
 	pulseaudio-equalizer-ladspa
 	python3-gi
 '
