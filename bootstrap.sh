@@ -347,6 +347,7 @@ NITRUX_BASE_PKGS='
 
 NITRUX_HW_PKGS='
 	nitrux-hardware-drivers-legacy
+	broadcom-sta-dkms
 '
 
 install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
