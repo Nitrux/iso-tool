@@ -417,7 +417,6 @@ DBGSYM_PACKAGES='
 	kwin-common-dbgsym
 	kwin-x11-dbgsym
 	latte-dock-dbgsym
-	libgl1-mesa-dri-dbgsym
 	libkwineffects14-dbgsym
 	libkwinglutils14-dbgsym
 	libqt5core5a-dbgsym
