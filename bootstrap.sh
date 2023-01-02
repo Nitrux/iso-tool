@@ -410,10 +410,18 @@ MISC_DESKTOP_PKGS='
 	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
-	libpipewire-0.3-{0,common,modules}
-	libspa-0.2-{bluetooth,jack,modules}
+	libpipewire-0.3-0
+	libpipewire-0.3-common
+	libpipewire-0.3-modules
+	libspa-0.2-bluetooth
+	libspa-0.2-jack
+	libspa-0.2-modules
 	overlayroot
-	pipewire{,-{alsa,bin,jack,pulse,v4l2}}
+	pipewire-alsa
+	pipewire-bin
+	pipewire-jack
+	pipewire-pulse
+	pipewire-v4l2
 	plasma-workspace-wayland
 	pulseaudio-equalizer-ladspa
 	python3-gi
