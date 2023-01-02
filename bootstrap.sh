@@ -584,6 +584,10 @@ printf '%s\n' fuse nvidia amdgpu i915 >> /etc/modules
 
 cat /configs/files/adduser.conf > /etc/adduser.conf
 
+rc-update del pulseaudio-enable-autospawn default
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
 
 #	Generate initramfs.
 
