@@ -406,6 +406,7 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	cifs-utils
 	gstreamer1.0-pipewire
 	inxi
 	kwin-bismuth/trixie
@@ -424,6 +425,8 @@ MISC_DESKTOP_PKGS='
 	plasma-workspace-wayland
 	pulseaudio-equalizer-ladspa
 	python3-gi
+	samba
+	smbclient
 	wireplumber
 '
 
