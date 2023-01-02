@@ -406,12 +406,18 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	gstreamer1.0-pipewire
 	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
+	libpipewire-0.3-{0,common,modules}
+	libspa-0.2-{bluetooth,jack,modules}
 	overlayroot
+	pipewire{,-{alsa,bin,jack,pulse,v4l2}}
+	plasma-workspace-wayland
 	pulseaudio-equalizer-ladspa
 	python3-gi
+	wireplumber
 '
 
 DBGSYM_PACKAGES='
