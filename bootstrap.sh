@@ -417,7 +417,6 @@ MISC_DESKTOP_PKGS='
 	libspa-0.2-jack
 	libspa-0.2-modules
 	overlayroot
-	pipewire-alsa
 	pipewire-bin
 	pipewire-jack
 	pipewire-pulse
