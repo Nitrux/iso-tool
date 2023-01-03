@@ -406,7 +406,6 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	cifs-utils
 	gstreamer1.0-pipewire
 	inxi
 	kwin-bismuth/trixie
