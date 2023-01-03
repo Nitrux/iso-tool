@@ -590,7 +590,7 @@ rm \
 
 cat /configs/files/motd > /etc/motd
 
-printf '%s\n' fuse nvidia amdgpu i915 >> /etc/modules
+printf '%s\n' fuse nvidia amdgpu i915 exfat >> /etc/modules
 
 cat /configs/files/adduser.conf > /etc/adduser.conf
 
