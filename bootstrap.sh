@@ -147,6 +147,7 @@ SYSTEMCTL_STANDALONE_PKG='
 install $DEVUAN_EUDEV_ELOGIND_PKGS
 purge $REMOVE_SYSTEMD_PKGS
 autoremove
+pkg_policy python3
 install $SYSTEMCTL_STANDALONE_PKG
 
 rm \
