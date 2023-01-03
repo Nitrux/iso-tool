@@ -538,6 +538,7 @@ puts "ADDING OPENRC CONFIG."
 
 OPENRC_CONFIG='
 	openrc-config
+	nitrux-live-user
 '
 
 install $OPENRC_CONFIG
