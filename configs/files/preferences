@@ -434,7 +434,11 @@ Package: python3.10
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: pyhton3-minimal
+Package: python3-minimal
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
+Package: python3.10-minimal
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
