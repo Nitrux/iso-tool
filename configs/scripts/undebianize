@@ -40,4 +40,10 @@ REMOVE_DPKG='
 
 rm -r ${REMOVE_DPKG//\\n/ }
 
+
+#   Delete live user from root because idontfuckingknowwhy the postrm script in the package
+#   doesn't actually do that, so let's brute force that.
+
+deluser --remove-home nitrux
+
 exit 0
