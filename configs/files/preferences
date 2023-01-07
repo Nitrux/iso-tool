@@ -338,14 +338,6 @@ Package: libprocessui9
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libpython3-stdlib
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: libpython3.10-stdlib
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
 Package: libqt5*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
@@ -423,22 +415,6 @@ Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: printer-driver-gutenprint
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: python3
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: python3.10
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: python3-minimal
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
-Package: python3.10-minimal
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
