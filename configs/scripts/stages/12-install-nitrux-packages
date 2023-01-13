@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+NITRUX_BASE_PKGS='
+	base-files=13.1.23+nitrux-legacy
+	nitrux-minimal-legacy
+	nitrux-standard-legacy
+'
+
+NITRUX_HW_PKGS='
+	nitrux-hardware-drivers-legacy
+	broadcom-sta-dkms
+'
+
+install "$NITRUX_BASE_PKGS $NITRUX_HW_PKGS"

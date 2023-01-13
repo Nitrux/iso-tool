@@ -1,0 +1,33 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Add casper packages from bionic.
+#	Remove bionic repo, we don't need it after.
+
+CASPER_DEPS_PKGS='
+	casper/trixie
+	initramfs-tools/trixie
+	initramfs-tools-bin/trixie
+	initramfs-tools-core/trixie
+'
+
+install_downgrades "$CASPER_DEPS_PKGS"
+
+
+#	Hold initramfs and casper packages.
+
+INITRAMFS_CASPER_PKGS='
+	casper
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
+'
+
+hold "$INITRAMFS_CASPER_PKGS"

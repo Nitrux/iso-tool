@@ -1,0 +1,36 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Add bootloader
+#
+#	The GRUB2 packages from Debian do not work correctly with EFI.
+
+GRUB2_PKGS='
+	grub-common/trixie
+	grub-efi-amd64/trixie
+	grub-efi-amd64-bin/trixie
+	grub-efi-amd64-signed/trixie
+	grub-pc-bin/trixie
+	grub2-common/trixie
+	libfreetype6/unstable
+'
+
+install "$GRUB2_PKGS"
+
+
+#	Add packages for secure boot compatibility.
+
+SB_SHIM_PKGS='
+	sbsigntool/trixie
+	shim-signed/trixie
+	mokutil/trixie
+'
+
+install "$SB_SHIM_PKGS"

@@ -1,0 +1,32 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+add_repo_keys \
+	1118213C > /dev/null
+
+cp /configs/files/sources.list.gpu.ppa /etc/apt/sources.list.d/gpu-ppa-repo.list
+
+update
+
+NVIDIA_DRV_PKGS='
+	nvidia-driver-525
+	nvidia-settings
+	nvidia-prime
+'
+
+install "$NVIDIA_DRV_PKGS"
+
+rm \
+	/etc/apt/sources.list.d/gpu-ppa-repo.list
+
+remove_repo_keys \
+	1118213C > /dev/null
+
+update

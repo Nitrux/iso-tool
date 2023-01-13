@@ -1,0 +1,32 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+add_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+cp /configs/files/sources/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
+
+update
+
+DEVUAN_NM_PKGS='
+	network-manager/daedalus
+'
+
+install "$DEVUAN_NM_PKGS"
+
+rm \
+	/etc/apt/sources.list.d/devuan-daedalus-repo.list
+
+remove_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+update

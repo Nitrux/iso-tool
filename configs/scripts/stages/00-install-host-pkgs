@@ -1,0 +1,28 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+XORRISO_PKGS='
+	libburn4
+	libisoburn1
+	libisofs6
+	libjte2
+	mtools
+	sshpass
+	xorriso
+'
+
+GRUB_EFI_PKGS='
+	grub-efi-amd64
+	grub-efi-amd64-signed
+	shim-signed
+'
+
+update
+install "$XORRISO_PKGS $GRUB_EFI_PKGS"

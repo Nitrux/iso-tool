@@ -1,0 +1,13 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+cp /configs/files/initramfs/crypttab-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
+
+update-initramfs -c -k all

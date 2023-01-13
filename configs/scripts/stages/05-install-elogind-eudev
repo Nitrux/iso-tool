@@ -1,0 +1,50 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
+#	To remove systemd, we have to replace libsystemd0, udev, elogind and provide systemctl. However, neither of them
+#	are available to install from other sources than Devuan except for systemctl.
+
+add_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+cp /configs/files/sources/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
+
+update
+
+DEVUAN_EUDEV_ELOGIND_PKGS='
+	eudev
+	elogind
+'
+
+REMOVE_SYSTEMD_PKGS='
+	systemd
+	systemd-sysv
+	libsystemd0
+'
+
+SYSTEMCTL_STANDALONE_PKG='
+	systemctl
+'
+
+install "$DEVUAN_EUDEV_ELOGIND_PKGS"
+purge "$REMOVE_SYSTEMD_PKGS"
+autoremove
+install "$SYSTEMCTL_STANDALONE_PKG"
+
+rm \
+	/etc/apt/sources.list.d/devuan-beowulf-repo.list
+
+remove_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+update

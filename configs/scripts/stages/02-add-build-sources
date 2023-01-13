@@ -1,0 +1,28 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Add repository keys.
+
+add_nitrux_key_repo
+add_nitrux_key_compat
+add_nitrux_key_testing
+
+
+#	Add repository sources.
+
+cp /configs/files/sources/sources.list.nitrux /etc/apt/sources.list
+cp /configs/files/sources/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
+cp /configs/files/sources/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
+
+apt-key export 86A634D7 | gpg --dearmour -o /usr/share/keyrings/nitrux-repo.gpg
+apt-key export 712260DE | gpg --dearmour -o /usr/share/keyrings/nitrux-compat.gpg
+apt-key export EB1BEB0D | gpg --dearmour -o /usr/share/keyrings/nitrux-testing.gpg
+
+update

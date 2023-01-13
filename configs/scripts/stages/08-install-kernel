@@ -1,0 +1,32 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+add_repo_keys \
+	9352A0B69B72E6DF > /dev/null
+
+cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix-repo.list
+
+update
+
+DEFAULT_KERNEL_PKG='
+	linux-image-liquorix
+	libcrypt-dev/trixie
+	libcrypt1/trixie
+'
+
+install_downgrades "$DEFAULT_KERNEL_PKG"
+
+rm \
+	/etc/apt/sources.list.d/liquorix-repo.list
+
+remove_repo_keys \
+	9352A0B69B72E6DF > /dev/null
+
+update

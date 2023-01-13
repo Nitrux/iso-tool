@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Add OpenRC as init.
+
+OPENRC_INIT_PKGS='
+	initscripts
+	init-system-helpers
+	openrc
+	policycoreutils
+	startpar
+	sysvinit-utils
+'
+
+install "$OPENRC_INIT_PKGS"

@@ -1,0 +1,19 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#   Add Live user.
+#
+#   Need to add the package because casper decided not to create the fucking user.
+
+NX_LIVE_USER='
+    nitrux-live-user
+'
+
+install "$NX_LIVE_USER"

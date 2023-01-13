@@ -1,0 +1,22 @@
+#! /bin/bash
+
+set -xe
+
+
+rm \
+	/etc/default/grub \
+	/etc/casper.conf
+
+cat /configs/files/grub_files/grub > /etc/default/grub
+cat /configs/files/conf/casper.conf > /etc/casper.conf
+
+rm \
+	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
+
+cat /configs/files/other/motd > /etc/motd
+
+printf '%s\n' fuse nvidia amdgpu i915 exfat >> /etc/modules
+
+cat /configs/files/conf/adduser.conf > /etc/adduser.conf
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo

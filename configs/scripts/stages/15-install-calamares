@@ -1,0 +1,35 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+add_repo_keys \
+	55751E5D > /dev/null
+
+cp /configs/files/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+
+update
+
+
+CALAMARES_PKGS='
+	efibootmgr
+	calamares
+	calamares-qml-settings-nitrux
+	dosfstools
+	squashfs-tools
+'
+
+install "$CALAMARES_PKGS"
+
+rm \
+	/etc/apt/sources.list.d/neon-user-repo.list
+
+remove_repo_keys \
+	55751E5D > /dev/null
+
+update

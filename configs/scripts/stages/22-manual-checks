@@ -1,0 +1,34 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+ls -lh \
+	/boot \
+	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
+	/{vmlinuz,initrd.img} \
+	/etc/{init.d,sddm.conf.d} \
+	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
+	/installed_pkgs.txt
+
+tree \
+	/Applications
+
+stat \
+	/sbin/init \
+	/bin/sh \
+	/bin/dash \
+	/bin/bash
+
+tail -n +1 \
+	/etc/{casper.conf,sddm.conf,modules} \
+	/etc/default/grub \
+	/etc/sddm.conf.d/kde_settings.conf \
+	/etc/environment \
+	/etc/adduser.conf \
+	/etc/modules

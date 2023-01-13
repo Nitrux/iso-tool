@@ -1,0 +1,19 @@
+#! /bin/bash
+
+set -xe
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+rm \
+	/etc/apt/preferences \
+	/etc/apt/sources.list \
+	/etc/apt/sources.list.d/* \
+	/usr/share/keyrings/nitrux-repo.gpg \
+	/usr/share/keyrings/nitrux-compat.gpg \
+	/usr/share/keyrings/nitrux-testing.gpg
+
+update
