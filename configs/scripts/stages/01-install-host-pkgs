@@ -36,4 +36,4 @@ CHROOT_BASIC_PKGS='
 	zstd
 '
 
-install "$CHROOT_BASIC_PKGS"
+install $CHROOT_BASIC_PKGS

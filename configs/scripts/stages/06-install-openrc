@@ -19,4 +19,4 @@ OPENRC_INIT_PKGS='
 	sysvinit-utils
 '
 
-install "$OPENRC_INIT_PKGS"
+install $OPENRC_INIT_PKGS

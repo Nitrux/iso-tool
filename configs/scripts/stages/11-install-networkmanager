@@ -20,7 +20,7 @@ DEVUAN_NM_PKGS='
 	network-manager/daedalus
 '
 
-install "$DEVUAN_NM_PKGS"
+install $DEVUAN_NM_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-daedalus-repo.list

@@ -21,7 +21,7 @@ NVIDIA_DRV_PKGS='
 	nvidia-prime
 '
 
-install "$NVIDIA_DRV_PKGS"
+install $NVIDIA_DRV_PKGS
 
 rm \
 	/etc/apt/sources.list.d/gpu-ppa-repo.list

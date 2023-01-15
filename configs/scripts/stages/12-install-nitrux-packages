@@ -19,4 +19,4 @@ NITRUX_HW_PKGS='
 	broadcom-sta-dkms
 '
 
-install "$NITRUX_BASE_PKGS $NITRUX_HW_PKGS"
+install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS

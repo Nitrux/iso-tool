@@ -16,4 +16,4 @@ NX_LIVE_USER='
     nitrux-live-user
 '
 
-install "$NX_LIVE_USER"
+install $NX_LIVE_USER

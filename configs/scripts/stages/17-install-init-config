@@ -19,4 +19,4 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-install "$OPENRC_CONFIG"
+install $OPENRC_CONFIG

@@ -35,10 +35,10 @@ SYSTEMCTL_STANDALONE_PKG='
 	systemctl
 '
 
-install "$DEVUAN_EUDEV_ELOGIND_PKGS"
-purge "$REMOVE_SYSTEMD_PKGS"
+install $DEVUAN_EUDEV_ELOGIND_PKGS
+purge $REMOVE_SYSTEMD_PKGS
 autoremove
-install "$SYSTEMCTL_STANDALONE_PKG"
+install $SYSTEMCTL_STANDALONE_PKG
 
 rm \
 	/etc/apt/sources.list.d/devuan-beowulf-repo.list

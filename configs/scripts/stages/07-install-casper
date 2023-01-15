@@ -18,7 +18,7 @@ CASPER_DEPS_PKGS='
 	initramfs-tools-core/trixie
 '
 
-install_downgrades "$CASPER_DEPS_PKGS"
+install_downgrades $CASPER_DEPS_PKGS
 
 
 #	Hold initramfs and casper packages.
@@ -30,4 +30,4 @@ INITRAMFS_CASPER_PKGS='
 	initramfs-tools-bin
 '
 
-hold "$INITRAMFS_CASPER_PKGS"
+hold $INITRAMFS_CASPER_PKGS

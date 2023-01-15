@@ -24,7 +24,7 @@ CALAMARES_PKGS='
 	squashfs-tools
 '
 
-install "$CALAMARES_PKGS"
+install $CALAMARES_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list

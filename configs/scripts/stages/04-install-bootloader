@@ -22,7 +22,7 @@ GRUB2_PKGS='
 	libfreetype6/unstable
 '
 
-install "$GRUB2_PKGS"
+install $GRUB2_PKGS
 
 
 #	Add packages for secure boot compatibility.
@@ -33,4 +33,4 @@ SB_SHIM_PKGS='
 	mokutil/trixie
 '
 
-install "$SB_SHIM_PKGS"
+install $SB_SHIM_PKGS
