@@ -41,6 +41,7 @@ MISC_DESKTOP_PKGS='
 	pipewire-pulse
 	pipewire-v4l2
 	plasma-workspace-wayland
+	poppler-utils/jammy
 	pulseaudio-equalizer-ladspa
 	python3-gi
 	samba
