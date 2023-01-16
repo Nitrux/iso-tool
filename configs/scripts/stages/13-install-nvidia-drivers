@@ -11,7 +11,7 @@ source /configs/scripts/others/apt-funcs
 add_repo_keys \
 	1118213C > /dev/null
 
-cp /configs/files/sources.list.gpu.ppa /etc/apt/sources.list.d/gpu-ppa-repo.list
+cp /configs/files/sources/sources.list.gpu.ppa /etc/apt/sources.list.d/gpu-ppa-repo.list
 
 update
 
