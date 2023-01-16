@@ -16,7 +16,7 @@ puts "HELLO. STARTING BOOTSTRAP."
 #	Source APT commands as functions.
 #	shellcheck source=/dev/null
 
-source /configs/scripts/stages/00-apt-funcs
+source /configs/scripts/others/apt-funcs
 
 
 #	Block installation of some packages.
