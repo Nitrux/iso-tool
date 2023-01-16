@@ -326,10 +326,6 @@ Package: libpolkit-gobject-1-0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: libpoppler-qt5-*
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
 Package: libpowerdevil*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
