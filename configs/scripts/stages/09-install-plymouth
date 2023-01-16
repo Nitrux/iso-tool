@@ -22,7 +22,7 @@ DEVUAN_PLYMOUTH_PKGS='
 	plymouth-x11/daedalus
 '
 
-install "$DEVUAN_PLYMOUTH_PKGS"
+install $DEVUAN_PLYMOUTH_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-daedalus-repo.list
