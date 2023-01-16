@@ -32,6 +32,7 @@ CHROOT_BASIC_PKGS='
 	dirmngr
 	gnupg2
 	libzstd-dev
+	less
 	lz4
 	zstd
 '
