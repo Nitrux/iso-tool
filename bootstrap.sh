@@ -39,12 +39,6 @@ cp -r /configs/scripts/stages/* /tmp/scripts
 cp -r /configs/files/other/pkg-origin /tmp/pkg-origin
 
 
-#	Check installed packages at start.
-
-list_number_pkgs
-list_installed_text_start
-
-
 puts "---------------------------"
 puts "POPULATING ROOT DIRECTORY."
 
@@ -60,6 +54,12 @@ puts "POPULATING ROOT DIRECTORY."
 puts "ADDING BASIC PACKAGES."
 
 01-install-basic-pkgs
+
+
+#	Check installed packages at start.
+
+list_number_pkgs
+list_installed_text_start
 
 
 #	Add repositories to build root.
