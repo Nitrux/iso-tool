@@ -11,7 +11,7 @@ source /configs/scripts/others/apt-funcs
 add_repo_keys \
 	A03A4626 > /dev/null
 
-cp /configs/files/sources.list.mesa.git.ppa /etc/apt/sources.list.d/mesa-git-ppa.list
+cp /configs/files/sources/sources.list.mesa.git.ppa /etc/apt/sources.list.d/mesa-git-ppa.list
 
 update
 
