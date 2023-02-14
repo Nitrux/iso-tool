@@ -22,31 +22,15 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	gstreamer1.0-pipewire
 	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
-	libpipewire-0.3-0
-	libpipewire-0.3-common
-	libpipewire-0.3-modules
 	libpoppler126/jammy
 	libpoppler-cpp0v5/jammy
 	libpoppler-qt5-1/jammy
-	libspa-0.2-bluetooth
-	libspa-0.2-jack
-	libspa-0.2-modules
 	overlayroot
-	pipewire-bin
-	pipewire-jack
-	pipewire-pulse
-	pipewire-v4l2
-	plasma-workspace-wayland
 	poppler-utils/jammy
-	pulseaudio-equalizer-ladspa
-	python3-gi
-	samba
-	smbclient
-	wireplumber
+	open-iscsi
 '
 
 DBGSYM_PACKAGES='
