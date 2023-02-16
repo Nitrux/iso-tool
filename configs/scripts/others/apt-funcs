@@ -2,8 +2,8 @@
 
 #	Wrap APT commands in functions.
 
-add_nitrux_key_repo () { curl -L https://packagecloud.io/nitrux/depot/gpgkey | apt-key add -; }
-add_nitrux_key_compat () { curl -L https://packagecloud.io/nitrux/bond/gpgkey | apt-key add -; }
+add_nitrux_key_depot () { curl -L https://packagecloud.io/nitrux/depot/gpgkey | apt-key add -; }
+add_nitrux_key_unison () { curl -L https://packagecloud.io/nitrux/unison/gpgkey | apt-key add -; }
 add_nitrux_key_testing () { curl -L https://packagecloud.io/nitrux/testing/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$@"; }
 appstream_refresh_force () { appstreamcli refresh --force; }
