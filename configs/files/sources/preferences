@@ -558,7 +558,15 @@ Pin-Priority: -1
 #  Devuan Package Priority #
 ############################
 
+Package: avahi-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: base-files
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libavahi-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
