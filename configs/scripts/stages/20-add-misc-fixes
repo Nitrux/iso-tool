@@ -38,4 +38,4 @@ chmod -x /opt/{1,2,3}
 
 #	Add link for applet window buttons
 
-ln -s /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9 /usr/lib/x86_64-linux-gnu/libkdecorations2.so.5.27.1
+ln -s /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9 /usr/lib/x86_64-linux-gnu/libkdecorations2.so.5.27.2
