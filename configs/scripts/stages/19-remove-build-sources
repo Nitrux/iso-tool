@@ -17,3 +17,15 @@ rm \
 	/usr/share/keyrings/nitrux-testing.gpg
 
 update
+
+
+#	Unhold initramfs and casper packages.
+
+INITRAMFS_CASPER_PKGS='
+	casper
+	initramfs-tools
+	initramfs-tools-core
+	initramfs-tools-bin
+'
+
+unhold $INITRAMFS_CASPER_PKGS
