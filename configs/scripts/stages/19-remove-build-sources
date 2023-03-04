@@ -14,7 +14,7 @@ rm \
 	/etc/apt/sources.list.d/* \
 	/usr/share/keyrings/nitrux-repo.gpg \
 	/usr/share/keyrings/nitrux-compat.gpg \
-	/usr/share/keyrings/nitrux-testing.gpg
+	/usr/share/keyrings/nitrux-testing.gpg || true
 
 update
 
