@@ -20,3 +20,18 @@ printf '%s\n' fuse nvidia amdgpu i915 exfat >> /etc/modules
 cat /configs/files/conf/adduser.conf > /etc/adduser.conf
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+
+#	*And* create symlink for libboost-python for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
+
+ln -svf /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_python310.so.1.74.0
+
+
+#	Move APT and dpkg out of the way, out of the way, move b...
+#	use undebianize to delete these files.
+
+mv /usr/bin/apt /opt/1
+mv /usr/bin/apt-get /opt/2
+mv /usr/bin/dpkg /opt/3
+
+chmod -x /opt/{1,2,3}
