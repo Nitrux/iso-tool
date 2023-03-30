@@ -1,0 +1,11 @@
+#! /bin/bash
+
+set -x
+
+# -- Link package manager binaries for Calamares to not freak out during installation.
+
+ln -svf /opt/1 /usr/bin/apt
+ln -svf /opt/2 /usr/bin/apt-get
+ln -svf /opt/3 /usr/bin/dpkg
+
+chmod +x /opt/{1,2,3}
