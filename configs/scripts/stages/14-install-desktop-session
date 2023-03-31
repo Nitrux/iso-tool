@@ -28,6 +28,7 @@ MISC_DESKTOP_PKGS='
 	libpoppler126/jammy
 	libpoppler-cpp0v5/jammy
 	libpoppler-qt5-1/jammy
+	libjpeg-turbo8/trixie
 	network-manager-openvpn
 	overlayroot
 	poppler-utils/jammy
