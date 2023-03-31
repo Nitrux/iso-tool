@@ -7,4 +7,4 @@
 # Proprietary GPU PPA #
 #######################
 
-deb [arch=amd64] http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu jammy main
+deb [arch=amd64] http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu lunar main
