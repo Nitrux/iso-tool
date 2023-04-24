@@ -60,6 +60,7 @@ rm \
 	/etc/apt/sources.list.d/neon-user-repo.list
 
 remove_repo_keys \
-	55751E5D > /dev/null
+	55751E5D \
+	90E51522 > /dev/null
 
 update
