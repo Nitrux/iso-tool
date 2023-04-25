@@ -12,7 +12,7 @@ source /configs/scripts/others/apt-funcs
 
 ls -lh \
 	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
-	/etc/init.d}
+	/etc/init.d
 
 
 #	Add OpenRC configuration.
