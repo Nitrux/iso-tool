@@ -15,7 +15,7 @@ rm \
 
 cat /configs/files/other/motd > /etc/motd
 
-printf '%s\n' fuse nvidia amdgpu i915 exfat >> /etc/modules
+printf '%s\n' fuse nvidia amdgpu i915 exfat loop >> /etc/modules
 
 cat /configs/files/conf/adduser.conf > /etc/adduser.conf
 
