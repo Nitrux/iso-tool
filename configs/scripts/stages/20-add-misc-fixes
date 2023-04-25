@@ -119,7 +119,7 @@ ln -svf /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-l
 
 
 #	Move APT and dpkg out of the way, out of the way, move b...
-#	use undebianize to delete these files.
+#	use undebianize from Calamres to delete these files from the root.
 
 mv /usr/bin/apt /opt/1
 mv /usr/bin/apt-get /opt/2
@@ -128,11 +128,18 @@ mv /usr/bin/dpkg /opt/3
 chmod -x /opt/{1,2,3}
 
 
-#	Add link for applet window buttons
+#	Add link for applet window buttons.
 
 ln -sv /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.5.27.4 /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
 
-#	Add link for libappimage1.0
+#	Add link for libappimage1.0.
 
 ln -sv /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux-gnu/libappimage.so.1.0
+
+
+#	Enable Prelink.
+#	Disable Prelink dpkg database imestamp.
+
+sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
+sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink

@@ -24,18 +24,15 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	inxi
 	kwin-bismuth/trixie
 	kwin-x11/jammy
 	libjpeg-turbo8/trixie
 	libpoppler-cpp0v5/jammy
 	libpoppler-qt5-1/jammy
 	libpoppler126/jammy
-	network-manager-openvpn
-	open-iscsi
-	overlayroot
 	poppler-utils/jammy
-	waydroid
+	prelink
+	cron
 '
 
 DBGSYM_PACKAGES='
