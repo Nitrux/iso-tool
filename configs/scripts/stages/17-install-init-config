@@ -8,6 +8,13 @@ set -xe
 source /configs/scripts/others/apt-funcs
 
 
+#	Check currently installed services.
+
+ls -lh \
+	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
+	/etc/init.d}
+
+
 #	Add OpenRC configuration.
 #
 #	Due to how the upstream openrc package "works," we need to put this package at the end of the build process.
