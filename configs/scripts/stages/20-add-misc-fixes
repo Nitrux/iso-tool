@@ -143,3 +143,12 @@ ln -sv /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux
 
 sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
 sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
+
+
+#	Enable ufw by default
+#	Add rules for ports for WayDroid to access the Internet.
+
+ufw enable
+ufw allow 53
+ufw allow 67
+ufw default allow FORWARD
