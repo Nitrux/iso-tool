@@ -119,7 +119,7 @@ ln -svf /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-l
 
 
 #	Move APT and dpkg out of the way, out of the way, move b...
-#	use undebianize from Calamres to delete these files from the root.
+#	use undebianize from Calamares to delete these files from the root.
 
 mv /usr/bin/apt /opt/1
 mv /usr/bin/apt-get /opt/2
@@ -146,9 +146,16 @@ sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /et
 
 
 #	Enable ufw by default
-#	Add rules for ports for WayDroid to access the Internet.
+#	Add rules for ports so WayDroid to access the Internet.
 
 ufw enable
 ufw allow 53
 ufw allow 67
 ufw default allow FORWARD
+
+
+#	Add variable to PAM for Firefox to work with touchscreens in Wayland
+
+sed -i "$ a \  " /etc/security/pam_env.conf
+sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
+sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
