@@ -33,7 +33,7 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	prelink
 	cron
-	maliit-keyboard/unstable
+	maliit-keyboard/jammy
 '
 
 DBGSYM_PACKAGES='
