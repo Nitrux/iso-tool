@@ -318,6 +318,10 @@ Package: libspa-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
 
+Package: libpinyin*
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libpolkit-agent-1-0
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1

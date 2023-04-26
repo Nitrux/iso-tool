@@ -34,6 +34,8 @@ MISC_DESKTOP_PKGS='
 	prelink
 	cron
 	maliit-keyboard/jammy
+	libpinyin13/trixie
+	libpinyin-data/trixie
 '
 
 DBGSYM_PACKAGES='
