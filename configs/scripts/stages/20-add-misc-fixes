@@ -105,8 +105,8 @@ ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so
 #	FIXME
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 
-ln -svf /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
+# ln -svf /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
+# ln -svf /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
 ln -svf /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
 ln -svf /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
 ln -svf /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5.22.3 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
