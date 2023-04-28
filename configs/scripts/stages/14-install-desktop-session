@@ -36,7 +36,7 @@ MISC_DESKTOP_PKGS='
 	maliit-keyboard/jammy
 	libpinyin13/trixie
 	libpinyin-data/trixie
-	kde-config-fcitx5/jammy
+	kde-config-fcitx5/trixie
 '
 
 DBGSYM_PACKAGES='
