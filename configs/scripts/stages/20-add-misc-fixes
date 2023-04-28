@@ -140,10 +140,11 @@ ln -sv /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux
 
 #	Enable Prelink.
 #	Disable Prelink dpkg database timestamp.
+#	Run prelink.
 
 sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
 sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
-
+prelink -amR
 
 #	Enable ufw by default
 #	Add rules for ports so WayDroid to access the Internet.
@@ -159,8 +160,3 @@ ufw default allow FORWARD
 sed -i "$ a \  " /etc/security/pam_env.conf
 sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
 sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
-
-
-#	Run prelink.
-
-prelink -amR
