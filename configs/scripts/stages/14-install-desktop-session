@@ -37,6 +37,7 @@ MISC_DESKTOP_PKGS='
 	libpinyin13/trixie
 	libpinyin-data/trixie
 	kde-config-fcitx5/trixie
+	fscrypt
 '
 
 DBGSYM_PACKAGES='
