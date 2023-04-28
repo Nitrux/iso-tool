@@ -159,3 +159,8 @@ ufw default allow FORWARD
 sed -i "$ a \  " /etc/security/pam_env.conf
 sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
 sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
+
+
+#	Run prelink.
+
+prelink -amR
