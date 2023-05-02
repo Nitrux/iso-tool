@@ -60,7 +60,8 @@ install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $DBGSYM_PACKAGES
 
 
 rm \
-	/etc/apt/sources.list.d/neon-user-repo.list
+	/etc/apt/sources.list.d/neon-user-repo.list \
+	/etc/apt/sources.list.d/waydroid-repo.list
 
 remove_repo_keys \
 	55751E5D \
