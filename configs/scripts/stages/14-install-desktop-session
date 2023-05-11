@@ -24,8 +24,6 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
-	cron
-	fscrypt
 	kde-config-fcitx5/trixie
 	kwin-bismuth/trixie
 	kwin-x11/jammy
@@ -37,7 +35,6 @@ MISC_DESKTOP_PKGS='
 	libpoppler126/jammy
 	maliit-keyboard/jammy
 	poppler-utils/jammy
-	prelink
 '
 
 DBGSYM_PACKAGES='
