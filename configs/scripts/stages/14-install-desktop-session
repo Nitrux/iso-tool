@@ -53,8 +53,8 @@ DBGSYM_PACKAGES='
 	print-manager-dbgsym
 	qml-module-org-kde-kwindowsystem-dbgsym
 '
-pkg_policy rsyslog
-install_downgrades $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $DBGSYM_PACKAGES
+
+install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $DBGSYM_PACKAGES
 
 
 rm \
