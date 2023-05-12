@@ -104,12 +104,13 @@ ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so
 
 #	FIXME
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
+#	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new release.
 
 # ln -svf /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.5.23.0 /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
 # ln -svf /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.5.23.0 /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.5.23.0 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.5.23.0 /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.5.23.0 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
 ln -svf /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5.105.0 /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
 
 
