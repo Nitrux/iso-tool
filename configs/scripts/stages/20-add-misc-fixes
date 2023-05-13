@@ -148,6 +148,7 @@ sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
 sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
 prelink -amR
 
+
 #	Enable ufw by default
 #	Add rules for ports so WayDroid to access the Internet.
 
@@ -167,3 +168,4 @@ sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
 #	Replace dnscrypt-proxy default configuration.
 
 cat /configs/files/other/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+/bin/cp /configs/files/other/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
