@@ -169,3 +169,4 @@ sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
 
 cat /configs/files/other/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
 /bin/cp /configs/files/other/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
+/bin/cp /configs/files/other/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
