@@ -214,7 +214,6 @@ puts "UPDATING THE INITRAMFS."
 puts "SHOW LARGEST INSTALLED PACKAGES."
 
 list_installed_text_end
-list_installed_origin_text
 
 
 ####################################
