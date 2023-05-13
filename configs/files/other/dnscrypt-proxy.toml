@@ -11,7 +11,7 @@ require_dnssec = true
   file = '/var/log/dnscrypt-proxy/query.log'
 
 [nx_log]
-  file = /var/log/dnscrypt-proxy/nx.log
+  file = '/var/log/dnscrypt-proxy/nx.log'
 
 [sources]
   [sources]
