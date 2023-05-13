@@ -1,0 +1,21 @@
+# Empty listen_address to use systemd socket activation
+listen_address = ['127.0.0.53:53', '[::1]:53']
+server_names = ['adguard-dns', 'adguard-dns-ipv6', 'ams-dnscrypt-nl', 'ams-dnscrypt-nl-ipv6', ]
+ipv6_servers = true
+dnscrypt_servers = true
+doh_servers = true
+cache = true
+require_dnssec = true
+
+[query_log]
+  file = '/var/log/dnscrypt-proxy/query.log'
+
+[nx_log]
+  file = /var/log/dnscrypt-proxy/nx.log
+
+[sources]
+  [sources]
+  url = 'https://download.dnscrypt.info/resolvers-list/v2/public-resolvers.md'
+  minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GF03'
+  refresh_delay = 72
+  prefix = ''
