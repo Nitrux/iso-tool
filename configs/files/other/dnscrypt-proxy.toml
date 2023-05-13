@@ -1,4 +1,5 @@
 # Empty listen_address to use systemd socket activation
+
 listen_addresses = [':53']
 server_names = ['adguard-dns', 'adguard-dns-ipv6', 'ams-dnscrypt-nl', 'ams-dnscrypt-nl-ipv6']
 ipv6_servers = true
