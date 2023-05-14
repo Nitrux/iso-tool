@@ -36,6 +36,7 @@ MISC_DESKTOP_PKGS='
 	maliit-keyboard/jammy
 	poppler-utils/jammy
 	rsyslog
+	netstat
 '
 
 DBGSYM_PACKAGES='
