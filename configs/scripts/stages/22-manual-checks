@@ -11,6 +11,7 @@ source /configs/scripts/others/apt-funcs
 ls -lh \
 	/boot \
 	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
+	/etc/rc.local \
 	/{vmlinuz,initrd.img} \
 	/etc/{init.d,sddm.conf.d} \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
