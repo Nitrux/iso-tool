@@ -39,6 +39,11 @@ cp -r /configs/scripts/stages/* /tmp/scripts
 cp -r /configs/files/other/pkg-origin /tmp/pkg-origin
 
 
+#	Copy apt_config.
+
+cp -r /configs/files/apt_conf/skip_waydroid.conf /etc/apt/apt.conf.d/
+
+
 puts "---------------------------"
 puts "POPULATING ROOT DIRECTORY."
 
