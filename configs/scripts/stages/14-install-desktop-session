@@ -37,6 +37,7 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	rsyslog
 	net-tools
+	unused-net-protocols
 '
 
 DBGSYM_PACKAGES='
