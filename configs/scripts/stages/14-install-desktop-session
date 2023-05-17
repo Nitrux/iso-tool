@@ -40,6 +40,7 @@ MISC_DESKTOP_PKGS='
 	unused-net-protocols
 	aide
 	aide-common
+	gcc-11
 '
 
 DBGSYM_PACKAGES='
