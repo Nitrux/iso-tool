@@ -150,7 +150,7 @@ prelink -amR
 
 
 #	Enable ufw by default
-#	Add rules for ports so WayDroid to access the Internet.
+#	Add rules for ports so Waydroid to access the Internet.
 
 ufw enable
 ufw allow 53
