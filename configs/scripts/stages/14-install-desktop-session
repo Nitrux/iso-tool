@@ -38,6 +38,8 @@ MISC_DESKTOP_PKGS='
 	rsyslog
 	net-tools
 	unused-net-protocols
+	aide
+	aide-common
 '
 
 DBGSYM_PACKAGES='
