@@ -130,7 +130,7 @@ chmod -x /opt/{1,2,3}
 
 
 #	Add link for applet window buttons.
-#	Update the link on every new release.
+#	NOTE: Update the link on every new release.
 
 ln -sv /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.5.27.5 /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
@@ -146,6 +146,7 @@ ln -sv /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux
 
 sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
 sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
+
 prelink -amR
 
 
