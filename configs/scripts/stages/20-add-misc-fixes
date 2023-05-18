@@ -172,3 +172,8 @@ cat /configs/files/other/dnscrypt-proxy-settings/dnscrypt-proxy.toml > /etc/dnsc
 
 $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
 $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
+
+
+#   Make sddm.conf immutable so nothing fucking touches it, did you hear casper?
+
+chattr +i /etc/sddm.conf
