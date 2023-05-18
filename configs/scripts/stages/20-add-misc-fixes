@@ -3,6 +3,8 @@
 set -xe
 
 
+#	Add GRUB and casper configuration.
+
 rm \
 	/etc/default/grub \
 	/etc/casper.conf
@@ -10,14 +12,29 @@ rm \
 cat /configs/files/grub_files/grub > /etc/default/grub
 cat /configs/files/conf/casper.conf > /etc/casper.conf
 
+
+#	Remove kernel from boot.
+
 rm \
 	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
 
+
+#	Add motd.
+
 cat /configs/files/other/motd > /etc/motd
+
+
+#	Add modules to initram
 
 printf '%s\n' fuse nvidia amdgpu i915 exfat loop >> /etc/modules
 
+
+#	Use our configuration for adduser because Debian's broken for some reason.
+
 cat /configs/files/conf/adduser.conf > /etc/adduser.conf
+
+
+#	Add Flathub.
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
@@ -150,7 +167,7 @@ sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /et
 prelink -amR
 
 
-#	Enable ufw by default
+#	Enable ufw by default.
 #	Add rules for ports so Waydroid to access the Internet.
 
 ufw enable
@@ -159,7 +176,7 @@ ufw allow 67
 ufw default allow FORWARD
 
 
-#	Add variable to PAM for Firefox to work with touchscreens in Wayland
+#	Add variable to PAM for Firefox to work with touchscreens in Wayland.
 
 sed -i "$ a \  " /etc/security/pam_env.conf
 sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
@@ -174,6 +191,6 @@ $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /va
 $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
 
 
-#	Force SDDM to use Wayland session
+#	Force SDDM to use Wayland session.
 
 mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.bak
