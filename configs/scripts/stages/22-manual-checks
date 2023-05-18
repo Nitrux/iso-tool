@@ -32,4 +32,6 @@ tail -n +1 \
 	/etc/sddm.conf.d/kde_settings.conf \
 	/etc/environment \
 	/etc/adduser.conf \
-	/etc/modules
+	/etc/modules \
+	/etc/pam.d/common-password \
+	/etc/login.defs
