@@ -17,6 +17,9 @@ ls -lh \
 	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
 	/installed_pkgs*.txt
 
+lsattr \
+	/etc/sddm.conf
+
 tree \
 	/Applications
 
