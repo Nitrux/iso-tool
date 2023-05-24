@@ -37,6 +37,7 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	aide
 	aide-common
+	btrfs-progs
 	gcc-11
 	hyperv-daemons
 	net-tools
