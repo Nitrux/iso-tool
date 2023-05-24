@@ -33,5 +33,6 @@ tail -n +1 \
 	/etc/environment \
 	/etc/adduser.conf \
 	/etc/modules \
+	/etc/initramfs-tools/modules \
 	/etc/pam.d/common-password \
 	/etc/login.defs
