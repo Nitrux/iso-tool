@@ -24,9 +24,14 @@ rm \
 cat /configs/files/other/motd > /etc/motd
 
 
-#	Add modules to initram
+#	Add modules to load at boot time.
 
 printf '%s\n' fuse nvidia amdgpu i915 exfat loop >> /etc/modules
+
+
+#	Add modules to initramfs.
+
+printf '%s\n' hv_vmbus hv_storvsc hv_blkvsc hv_netvsc >> /etc/initramfs-tools/modules
 
 
 #	Use our configuration for adduser because Debian's broken for some reason.

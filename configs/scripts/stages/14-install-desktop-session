@@ -35,12 +35,13 @@ MISC_DESKTOP_PKGS='
 	libpoppler126/jammy
 	maliit-keyboard/jammy
 	poppler-utils/jammy
-	rsyslog
-	net-tools
-	unused-net-protocols
 	aide
 	aide-common
 	gcc-11
+	hyperv-daemons
+	net-tools
+	rsyslog
+	unused-net-protocols
 '
 
 DBGSYM_PACKAGES='
