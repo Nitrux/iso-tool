@@ -40,6 +40,7 @@ MISC_DESKTOP_PKGS='
 	btrfs-progs
 	gcc-11
 	hyperv-daemons
+	iio-sensor-proxy
 	net-tools
 	rsyslog
 	unused-net-protocols
