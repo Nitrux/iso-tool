@@ -41,6 +41,7 @@ MISC_DESKTOP_PKGS='
 	gcc-11
 	hyperv-daemons
 	iio-sensor-proxy
+	libnvidia-egl-wayland1
 	libpwquality-tools
 	net-tools
 	rsyslog
