@@ -199,3 +199,8 @@ $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.min
 #	Force SDDM to use Wayland session.
 
 mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.bak
+
+
+#	Increase size of hashing rounds in /etc/pam.d/common-password. See https://cisofy.com/lynis/controls/AUTH-9230/
+
+$(which cp) /configs/files/other/common-password /etc/pam.d/common-password
