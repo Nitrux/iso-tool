@@ -43,6 +43,7 @@ MISC_DESKTOP_PKGS='
 	iio-sensor-proxy
 	net-tools
 	rsyslog
+	selinux-basics
 	unused-net-protocols
 '
 
