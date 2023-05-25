@@ -214,4 +214,4 @@ $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 
 #	Add pwquality.conf (missing for some reason?)
 
-$(which cp) /configs/files/other/pwquality.conf > /etc/security/pwquality.conf
+$(which cp) /configs/files/other/pwquality.conf /etc/security/pwquality.conf
