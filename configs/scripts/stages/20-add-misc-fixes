@@ -208,5 +208,5 @@ $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 
 #	Enable SELinux and set enforcing mode.
 
-selinux-activate
-selinux-config-enforcing
+# selinux-activate
+# selinux-config-enforcing
