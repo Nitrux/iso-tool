@@ -9,7 +9,7 @@ source /configs/scripts/others/apt-funcs
 
 
 add_repo_keys \
-	9352A0B69B72E6DF > /dev/null
+	9AE4078033F8024D > /dev/null
 
 cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix-repo.list
 
@@ -27,6 +27,6 @@ rm \
 	/etc/apt/sources.list.d/liquorix-repo.list
 
 remove_repo_keys \
-	9352A0B69B72E6DF > /dev/null
+	9AE4078033F8024D > /dev/null
 
 update
