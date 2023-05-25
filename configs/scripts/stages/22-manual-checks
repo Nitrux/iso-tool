@@ -35,4 +35,5 @@ tail -n +1 \
 	/etc/modules \
 	/etc/initramfs-tools/modules \
 	/etc/pam.d/common-password \
+	/etc/security/pwquality.conf \
 	/etc/login.defs
