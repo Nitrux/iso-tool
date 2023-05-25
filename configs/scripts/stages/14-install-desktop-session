@@ -49,6 +49,7 @@ MISC_DESKTOP_PKGS='
 '
 
 DBGSYM_PACKAGES='
+	calamares-dbgsym
 	kwin-common-dbgsym
 	kwin-x11-dbgsym
 	latte-dock-dbgsym
