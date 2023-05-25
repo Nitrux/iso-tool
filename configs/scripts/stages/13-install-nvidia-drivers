@@ -19,10 +19,13 @@ NVIDIA_DRV_PKGS='
 	nvidia-driver-530
 	nvidia-settings
 	nvidia-prime
+'
+
+NVIDIA_SUPPORTING_LIBS='
 	libnvidia-egl-wayland1
 '
 
-install $NVIDIA_DRV_PKGS
+install $NVIDIA_DRV_PKGS $NVIDIA_SUPPORTING_LIBS
 
 rm \
 	/etc/apt/sources.list.d/gpu-ppa-repo.list
