@@ -210,3 +210,8 @@ $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 
 # selinux-activate
 # selinux-config-enforcing
+
+
+#	Add pwquality.conf (missing for some reason?)
+
+$(which cp) /configs/files/other/pwquality.conf > /etc/security/pwquality.conf
