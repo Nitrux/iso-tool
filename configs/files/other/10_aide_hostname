@@ -1,0 +1,37 @@
+#!/bin/sh
+
+escapere()
+{
+  sed 's/\./\\\\./g'
+}
+
+_HOST="$(hostname 2>/dev/null)"
+_FQDN="$(hostname --fqdn 2>/dev/null)"
+if [ "$?" -eq 1 ]; then
+  _FQDN="${_HOST}"
+fi
+_DNSDN="$(dnsdomainname 2>/dev/null)"
+if [ "$?" -eq 1 ]; then
+  _DNSDN=""
+fi
+if [ -n "${_FQDN}" ]; then 
+  printf "@@define FQDN %s\\n" "$(echo "${_FQDN}" | escapere)"
+fi
+if [ -n "${_HOST}" ]; then
+  printf "@@define HOSTNAME %s\\n" "$(echo "${_HOST}" | escapere)"
+fi
+if [ -n "${_DNSDN}" ]; then
+  printf "@@define DNSDOMAINNAME %s\\n" "$(echo "${_DNSDN}" | escapere)"
+fi
+# if [ -n "$(dpkg --print-architecture)" ]; then
+  # printf "@@define ARCH %s\\n" "$(dpkg --print-architecture)"
+# fi
+# if [ -n "$(dpkg --print-foreign-architectures)" ]; then
+  # if [ "$(dpkg --print-foreign-architectures | wc -l)" -gt 1 ]; then
+    # printf "@@define FOREIGN_ARCHES %s\\n" "$(dpkg --print-foreign-architectures | tr '\\n' '|' | sed 's/^/(/; s/|$/)/')"
+  # else
+    # printf "@@define FOREIGN_ARCHES %s\\n" "$(dpkg --print-foreign-architectures)"
+  # fi
+# fi
+# dpkg-architecture --host-type 2>/dev/null | awk '{print "@@define " $1 " " $2}' FS="="
+
