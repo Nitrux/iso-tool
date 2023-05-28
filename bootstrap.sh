@@ -207,11 +207,19 @@ puts "ADDING MISC. FIXES."
 20-add-misc-fixes
 
 
+#	Changes specific to this image. If they can be put in a package, do so.
+#	FIXME: These fixes should be included in a package.
+
+puts "EDITING CONF. FILES."
+
+21-edit-conf-files
+
+
 #	Generate initramfs.
 
 puts "UPDATING THE INITRAMFS."
 
-21-update-initramfs
+22-update-initramfs
 
 
 #	Check installed packages at end.
