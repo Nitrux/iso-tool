@@ -64,12 +64,12 @@ $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.min
 $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 
 
-#	Add pwquality.conf (which missing for some reason!).
+#	Add pwquality.conf (which is missing for some reason!).
 
 $(which cp) /configs/files/conf/pwquality.conf /etc/security/pwquality.conf
 
 
-#	Add user for AIDE (missing for some reason).
+#	Add user for AIDE (which is missing for some reason!).
 #	Replace aide.conf and 10_aide_hostname.
 
 useradd -r -s /bin/false -M _aide
