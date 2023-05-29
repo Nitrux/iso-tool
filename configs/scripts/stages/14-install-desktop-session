@@ -47,6 +47,7 @@ MISC_DESKTOP_PKGS='
 	rsyslog
 	selinux-basics
 	unused-net-protocols
+	xdg-desktop-portal-gnome
 '
 
 DBGSYM_PACKAGES='
