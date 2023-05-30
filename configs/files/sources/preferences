@@ -622,6 +622,14 @@ Package: sddm
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+#########################
+#  Any Package Priority #
+#########################
+
+Package: linux-image-rt-amd64
+Pin: release *
+Pin-Priority: -1
+
 ########################
 #  Repository Priority #
 ########################
