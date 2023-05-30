@@ -41,7 +41,7 @@ REMOVE_DPKG='
     /opt/3
 '
 
-rm -r ${REMOVE_DPKG//\\n/ } || true
+rm -rf ${REMOVE_DPKG//\\n/ } || true
 
 
 #   Delete live user from root because idontfuckingknowwhy the postrm script in the package
