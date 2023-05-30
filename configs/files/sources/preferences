@@ -626,7 +626,7 @@ Pin-Priority: -1
 #  Any Package Priority #
 #########################
 
-Package: linux-image-rt-amd64
+Package: linux-image-*-amd64
 Pin: release *
 Pin-Priority: -1
 
