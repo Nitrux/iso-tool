@@ -626,13 +626,17 @@ Pin-Priority: -1
 #  Any Package Priority #
 #########################
 
-Package: linux-image-*-amd64
+Package: linux-image-rt-amd64
 Pin: release *
 Pin-Priority: -1
 
-Package: linux-image-liquorix-amd64
+Package: linux-image-cloud-amd64
 Pin: release *
-Pin-Priority: 500
+Pin-Priority: -1
+
+Package: linux-image-generic-amd64
+Pin: release *
+Pin-Priority: -1
 
 ########################
 #  Repository Priority #
