@@ -634,7 +634,7 @@ Package: linux-image-cloud-amd64
 Pin: release *
 Pin-Priority: -1
 
-Package: linux-image-generic-amd64
+Package: linux-image-amd64
 Pin: release *
 Pin-Priority: -1
 
