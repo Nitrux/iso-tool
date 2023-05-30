@@ -630,6 +630,10 @@ Package: linux-image-*-amd64
 Pin: release *
 Pin-Priority: -1
 
+Package: linux-image-liquorix-amd64
+Pin: release *
+Pin-Priority: 500
+
 ########################
 #  Repository Priority #
 ########################
