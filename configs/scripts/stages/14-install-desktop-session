@@ -35,6 +35,7 @@ MISC_DESKTOP_PKGS='
 	libpoppler126/jammy
 	maliit-keyboard/jammy
 	poppler-utils/jammy
+	wireguard/trixie
 '
 
 DBGSYM_PACKAGES='
