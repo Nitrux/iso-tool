@@ -16,7 +16,7 @@ cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix
 update
 
 DEFAULT_KERNEL_PKG='
-	linux-image-liquorix
+	linux-image-liquorix/sid
 	libcrypt-dev/trixie
 	libcrypt1/trixie
 '
