@@ -38,6 +38,8 @@ MISC_DESKTOP_PKGS='
 	wireguard/trixie
 	dbab
 	ufw
+	maliit-inputcontext-gtk2
+	maliit-inputcontext-gtk3
 '
 
 DBGSYM_PACKAGES='
