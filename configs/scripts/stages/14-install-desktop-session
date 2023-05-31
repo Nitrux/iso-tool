@@ -37,7 +37,6 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	wireguard/trixie
 	dbab
-	ch-mount
 '
 
 DBGSYM_PACKAGES='
