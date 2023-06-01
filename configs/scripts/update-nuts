@@ -2,7 +2,7 @@
 
 set -xe
 
-#   Remove dpkg directories.
+#   Remove unwanted directories.
 
 REMOVE_DPKG='
     /etc/alternatives/README
@@ -28,5 +28,3 @@ REMOVE_DPKG='
 '
 
 rm -rf ${REMOVE_DPKG//\\n/ } || true
-
-exit 0
