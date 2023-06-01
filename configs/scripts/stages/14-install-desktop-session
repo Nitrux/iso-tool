@@ -40,7 +40,7 @@ MISC_DESKTOP_PKGS='
 	ufw
 	maliit-inputcontext-gtk2
 	maliit-inputcontext-gtk3
-	ctorrent
+	aria2
 '
 
 DBGSYM_PACKAGES='
