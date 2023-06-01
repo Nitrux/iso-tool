@@ -2,7 +2,7 @@
 
 set -xe
 
-#   Remove unwanted directories.
+#   Remove unwanted files and directories.
 
 REMOVE_DPKG='
     /etc/alternatives/README
