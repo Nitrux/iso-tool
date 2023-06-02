@@ -41,6 +41,8 @@ MISC_DESKTOP_PKGS='
 	maliit-inputcontext-gtk2
 	maliit-inputcontext-gtk3
 	aria2
+	mozc-utils-gui
+	ibus-mozc
 '
 
 DBGSYM_PACKAGES='
