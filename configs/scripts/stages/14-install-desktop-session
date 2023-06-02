@@ -43,6 +43,11 @@ MISC_DESKTOP_PKGS='
 	aria2
 	mozc-utils-gui
 	ibus-mozc
+	im-config
+	ibus-gtk
+	ibus-gtk3
+	ibus-gtk4
+	ibus-wayland
 '
 
 DBGSYM_PACKAGES='
