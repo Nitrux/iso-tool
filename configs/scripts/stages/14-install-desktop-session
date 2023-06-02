@@ -34,8 +34,6 @@ MISC_DESKTOP_PKGS='
 	libpoppler-qt5-1/jammy
 	libpoppler126/jammy
 	maliit-keyboard/jammy
-	maliit-inputcontext-gtk2/jammy
-	maliit-inputcontext-gtk3/jammy
 	poppler-utils/jammy
 	wireguard/trixie
 '
