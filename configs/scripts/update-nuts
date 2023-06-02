@@ -4,11 +4,11 @@ set -xe
 
 #   Remove unwanted files and directories.
 
-REMOVE_DPKG='
+REMOVE_UNWANTED_FILES='
     /etc/alternatives/README
     /etc/cron.daily/dpkg
-    /etc/dpkg
-    /etc/apt
+    /etc/dpkg/
+    /etc/apt/
     /etc/logrotate.d/alternatives
     /etc/logrotate.d/dpkg
     /usr/bin/dpkg
@@ -27,4 +27,8 @@ REMOVE_DPKG='
     /opt/3
 '
 
-rm -rf ${REMOVE_DPKG//\\n/ } || true
+rm -rf ${REMOVE_UNWANTED_FILES//\\n/ } || true
+
+
+#   Link kernel image to newer kernel
+
