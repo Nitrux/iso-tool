@@ -37,6 +37,7 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
+	plasma-welcome
 '
 
 DBGSYM_PACKAGES='
