@@ -28,7 +28,7 @@ chmod 755 $build_dir
 
 
 # The name of the ISO image.
-image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
+image=nitrux-$(git branch --show-current | sed 's/legacy/nx-desktop/')-$(git rev-parse --short=8 HEAD)-$(uname -m | sed 's/x86_64/amd64/').iso
 hash_url=http://releases.nxos.org/${image%.iso}.md5sum
 
 
@@ -56,11 +56,11 @@ du -hs $build_dir
 # BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 mkdir -p $iso_dir/boot
 
-cp $(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | tail -n 1) $iso_dir/boot/kernel
-cp $(echo "$build_dir"/boot/initrd*  | tr " " "\n" | tail -n 1) $iso_dir/boot/initramfs
+cp $(echo $build_dir/boot/vmlinuz* | tr ' ' '\n' | tail -n 1) $iso_dir/boot/kernel
+cp $(echo $build_dir/boot/initrd*  | tr ' ' '\n' | tail -n 1) $iso_dir/boot/initramfs
 
 
-#	WARNING FIXME BUG: This file isn't copied during the chroot.
+# WARNING FIXME BUG: This file isn't copied during the chroot.
 mkdir -p $iso_dir/boot/grub/x86_64-efi
 cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 
@@ -68,6 +68,11 @@ cp /usr/lib/grub/x86_64-efi/linuxefi.mod $iso_dir/boot/grub/x86_64-efi
 # Add GRUB image and uCode to the ISO.
 cp -r EFI/ $iso_dir/
 cp -r ucode/ $iso_dir/boot/
+
+
+# Add a build-date timestamp. This is used when updating the system with nuts (https://github.com/Nitrux/nuts).
+date +%s > built-on.txt
+cp built-on.txt $build_dir/.built-on.txt
 
 
 # Compress the root filesystem.
@@ -87,7 +92,7 @@ mkiso -V NITRUX \
       -b \
       -e \
       -s "$hash_url" \
-      -r "$(git rev-parse --short=8 HEAD)" \
+      -r $(git rev-parse --short=8 HEAD) \
       -g configs/files/grub_files/grub.cfg \
       -g configs/files/grub_files/loopback.cfg \
       -t grub-theme/nitrux \
