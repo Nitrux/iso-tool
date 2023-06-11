@@ -27,6 +27,7 @@ CHROOT_BASIC_PKGS='
 	appstream
 	axel
 	ca-certificates
+	ca-certificates-java
 	curl
 	dhcpcd5
 	dirmngr
