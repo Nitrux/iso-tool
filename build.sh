@@ -81,12 +81,6 @@ cp -r EFI/ $iso_dir/
 cp -r ucode/ $iso_dir/boot/
 
 
-#	Add a build-date timestamp. This is used when updating the system with nuts (https://github.com/Nitrux/nuts).
-
-date +%s > built-on.txt
-cp built-on.txt $build_dir/.built-on.txt
-
-
 #	Compress the root filesystem.
 
 ( while sleep 300; do echo .; done ) &
