@@ -34,6 +34,7 @@ MISC_DESKTOP_PKGS='
 	libpoppler-qt5-1/jammy
 	libpoppler126/jammy
 	maliit-keyboard/jammy
+	nuts
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
