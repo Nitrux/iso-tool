@@ -26,7 +26,6 @@ CHROOT_BASIC_PKGS='
 	apt-utils
 	appstream
 	axel
-	ca-certificates
 	curl
 	dirmngr
 	gnupg2
