@@ -120,7 +120,9 @@ chmod -x /opt/{1,2,3}
 #	Add link for applet window buttons.
 #	NOTE: Update the link on every new release of Plasma.
 
-ln -sv /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.5.27.5 /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
+PLASMA_LIB="5.27.5"
+
+ln -sv /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
 
 #	Add link for libappimage1.0.
