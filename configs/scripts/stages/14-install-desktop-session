@@ -44,7 +44,6 @@ DBGSYM_PACKAGES='
 	calamares-dbgsym
 	kwin-common-dbgsym
 	kwin-x11-dbgsym
-	latte-dock-dbgsym
 	libkwineffects14-dbgsym
 	libkwinglutils14-dbgsym
 	libqt5core5a-dbgsym
