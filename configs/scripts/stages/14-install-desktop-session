@@ -35,6 +35,7 @@ MISC_DESKTOP_PKGS='
 	libpoppler126/jammy
 	maliit-keyboard/jammy
 	nuts
+	plasma-gamemode
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
@@ -51,7 +52,10 @@ DBGSYM_PACKAGES='
 	libqt5gui5-dbgsym
 	libqt5qml5-dbgsym
 	libqt5quick5-dbgsym
+	libqt5waylandclient5-dbgsym
 	libqt5widgets5-dbgsym
+	plasma-desktop-dbgsym
+	plasma-workspace-dbgsym
 	print-manager-dbgsym
 	qml-module-org-kde-kwindowsystem-dbgsym
 '
