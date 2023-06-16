@@ -35,7 +35,7 @@ MISC_DESKTOP_PKGS='
 	libpoppler126/jammy
 	maliit-keyboard/jammy
 	nuts
-	plasma-gamemode
+	plasma-gamemode/trixie
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
