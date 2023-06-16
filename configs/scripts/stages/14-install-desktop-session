@@ -55,7 +55,7 @@ DBGSYM_PACKAGES='
 	libqt5waylandclient5-dbgsym
 	libqt5widgets5-dbgsym
 	plasma-desktop-dbgsym
-	plasma-workspace-dbgsym
+	plasma-workspace-dbgsym/jammy
 	print-manager-dbgsym
 	qml-module-org-kde-kwindowsystem-dbgsym
 '
