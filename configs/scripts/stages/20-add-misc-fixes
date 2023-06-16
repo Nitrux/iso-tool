@@ -14,96 +14,92 @@ rm \
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
-#	For some (very stupid) reason, checkinstall fails to include the symlinks for the MauiKit Frameworks libraries in the Debian packages
-#	rendering the apps and the shell unusable, so *we* must add them manually.
+# Function to create symlinks
+create_symlink() {
+    local source="$1"
+    local destination="$2"
 
-#	MauiKit FileBrowsing 2.2.2.
+    ln -svf "$source" "$destination"
+}
 
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so
 
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so
+# Create symlinks for MauiKit FileBrowsing 2.2.2
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so"
 
-#	MauiKit TextEditor 2.2.2.
 
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so
+# Create symlinks for MauiKit TextEditor 2.2.2
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so"
 
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so
 
-#	MauiKit ImageTools 2.2.2.
+# Create symlinks for MauiKit ImageTools 2.2.2
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so"
 
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so
 
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so
+# Create symlinks for MauiKit Accounts 2.2.2
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so"
 
-#	MauiKit Accounts 2.2.2.
 
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2.2.2 /usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so
+# Create symlinks for MauiKit Documents 1.0.1
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so"
 
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2.2.2 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so
 
-#	MauiKit Documents 1.0.1.
+# Create symlinks for MauiKit Calendar 1.0.1
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so"
 
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1.0.1 /usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1.0.1 /usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so
 
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1.0.1 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1.0.1 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so
+# Create symlinks for MauiKit Terminal 1.0.0
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so"
 
-#	MauiKit Calendar 1.0.1.
 
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1.0.1 /usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1.0.1 /usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1.0.1 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1.0.1 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so
-
-#	MauiKit Terminal 1.0.0.
-
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1.0.0 /usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1.0.0 /usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1.0.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1.0.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so
-
-#	Maui Core Libraries 0.6.0.
-
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0 /usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0 /usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so.0.6.0 /usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so.0
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so.0.6.0 /usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiCorePower.so.0.6.0 /usr/lib/x86_64-linux-gnu/libMauiCorePower.so.0
-ln -svf /usr/lib/x86_64-linux-gnu/libMauiCorePower.so.0.6.0 /usr/lib/x86_64-linux-gnu/libMauiCorePower.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so.0.6.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so.0
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so.0.6.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so.0.6.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so.0
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so.0.6.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so
-
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0.6.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0
-ln -svf /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0.6.0 /usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so
+# Create symlinks for Maui Core Libraries 0.6.0
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so.0"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreNotifications.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCorePower.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCorePower.so.0"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCorePower.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCorePower.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so.0"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/audio/libMauiCoreAudio.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so.0"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/notifications/libMauiCoreNotifications.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so"
 
 
 #	FIXME
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 #	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
-ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.5.23.1 /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
-ln -svf /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5.105.0 /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
+KDEPIM_LIB="5.23.2"
+KF5_LIB="5.107.0"
+
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
+ln -svf /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
+ln -svf /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
 
 
 #	*And* create symlink for libboost-python for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
