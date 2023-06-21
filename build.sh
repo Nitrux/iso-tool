@@ -125,6 +125,6 @@ mv "$output_dir"/* "$PWD"
 #	Clean up build directories
 
 rm -r \
-	base.tar.{xz,gz} \
+	rootfs.tar.{xz,gz} \
 	/tmp/tmp.* \
 	grub-theme || true
