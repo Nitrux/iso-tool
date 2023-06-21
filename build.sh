@@ -36,7 +36,6 @@ config_dir=$PWD/configs
 #	The name of the ISO image.
 
 image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
-hash_url=http://releases.nxos.org/${image%.iso}.md5sum
 
 
 #	Prepare the directory where the filesystem will be created.
@@ -106,7 +105,6 @@ mkiso \
 	-V "NITRUX" \
 	-b \
 	-e \
-	-s "$hash_url" \
 	-r "$(git rev-parse --short=8 HEAD)" \
 	-g "$config_dir"/files/grub_files/grub.cfg \
 	-g "$config_dir"/files/grub_files/loopback.cfg \
