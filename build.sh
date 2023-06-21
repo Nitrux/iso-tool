@@ -40,7 +40,7 @@ image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop/")-$(git rev
 
 #	Prepare the directory where the filesystem will be created.
 
-axel -o "$config_dir" -n 10 $base_img_url
+axel -o "$config_dir" -c -n 10 $base_img_url
 tar xf "$config_dir/rootfs.tar.xz" -C "$build_dir"
 
 
