@@ -98,6 +98,7 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 
 #	Generate the ISO image.
 
+rm -r /bin/mkiso || true 
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
 chmod +x /bin/mkiso
 
