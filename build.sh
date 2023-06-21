@@ -46,7 +46,7 @@ tar xf rootfs.tar.xz -C "$build_dir"
 
 #	Populate $build_dir.
 
-wget -qO /bin/runch https://raw.githubusercontent.com/Nitrux/tools/master/runch
+axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 
 < bootstrap.sh runch \
@@ -96,7 +96,7 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 
 #	Generate the ISO image.
 
-wget -qO /bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
+axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
 chmod +x /bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
