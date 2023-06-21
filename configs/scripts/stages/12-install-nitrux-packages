@@ -18,7 +18,5 @@ NITRUX_HW_PKGS='
 	nitrux-hardware-drivers-legacy
 	broadcom-sta-dkms
 '
-pkg_policy console-setup-linux console-setup-freebsd hurd keyboard-configuration
+install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS keyboard-configuration
 exit 1
-
-install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
