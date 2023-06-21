@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e
+set -xe
 
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
