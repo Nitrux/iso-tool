@@ -47,6 +47,7 @@ tar xf "$config_dir/rootfs.tar.xz" -C "$build_dir"
 
 #	Populate $build_dir.
 
+rm -r /bin/runch || true 
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 
