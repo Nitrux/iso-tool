@@ -41,6 +41,8 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
+	hplip
+	libsane-hpaio
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
