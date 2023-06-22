@@ -366,6 +366,10 @@ Package: oxygen-*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: openresolv
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: passwd
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
