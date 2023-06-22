@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -xe
+set -e
 
 
 #	Remove kernel from boot.
@@ -120,7 +120,7 @@ chmod -x /opt/{1,2,3}
 #	Add link for applet window buttons.
 #	NOTE: Update the link on every new release of Plasma.
 
-PLASMA_LIB="5.27.5"
+PLASMA_LIB="5.27.6"
 
 ln -sv /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 

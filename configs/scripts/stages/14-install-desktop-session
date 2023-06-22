@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -xe
+set -e
 
 #	Source APT commands as functions.
 #	shellcheck source=/dev/null
@@ -25,6 +25,7 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	kde-config-fcitx5/trixie
+	kexec-tools
 	kwin-bismuth/trixie
 	kwin-x11/jammy
 	libjpeg-turbo8/trixie
@@ -39,7 +40,6 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
-	kexec-tools
 '
 
 DBGSYM_PACKAGES='

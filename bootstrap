@@ -237,7 +237,7 @@ list_installed_text_end
 
 puts "PERFORM MANUAL CHECKS."
 
-22-manual-checks
+23-manual-checks
 
 
 puts "EXITING BOOTSTRAP."

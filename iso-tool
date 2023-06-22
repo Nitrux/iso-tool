@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -xe
+set -e
 
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
@@ -51,7 +51,7 @@ rm -r /bin/runch || true
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 
-< bootstrap.sh runch \
+< bootstrap runch \
 	-m configs:/configs \
 	-r /configs \
 	"$build_dir" \
