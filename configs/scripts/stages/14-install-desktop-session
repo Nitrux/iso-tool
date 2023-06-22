@@ -42,26 +42,7 @@ MISC_DESKTOP_PKGS='
 	zenity
 '
 
-DBGSYM_PACKAGES='
-	calamares-dbgsym
-	kwin-common-dbgsym
-	kwin-x11-dbgsym
-	libkwineffects14-dbgsym
-	libkwinglutils14-dbgsym
-	libqt5core5a-dbgsym
-	libqt5dbus5-dbgsym
-	libqt5gui5-dbgsym
-	libqt5qml5-dbgsym
-	libqt5quick5-dbgsym
-	libqt5waylandclient5-dbgsym
-	libqt5widgets5-dbgsym
-	plasma-desktop-dbgsym/jammy
-	plasma-workspace-dbg/jammy
-	print-manager-dbgsym
-	qml-module-org-kde-kwindowsystem-dbgsym
-'
-
-install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS $DBGSYM_PACKAGES
+install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 
 rm \
