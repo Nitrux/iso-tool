@@ -454,10 +454,6 @@ Package: xdg-desktop-portal-kde
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: xfsprogs
-Pin: release o=Debian,a=unstable,n=sid
-Pin-Priority: -1
-
 ###########################
 #  Other Package Priority #
 ###########################
