@@ -23,32 +23,32 @@ create_symlink() {
 }
 
 
-# Create symlinks for MauiKit FileBrowsing 2.2.2
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so"
+# Create symlinks for MauiKit FileBrowsing 3.0.0
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so"
 
 
-# Create symlinks for MauiKit TextEditor 2.2.2
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so"
+# Create symlinks for MauiKit TextEditor 3.0.0
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so"
 
 
-# Create symlinks for MauiKit ImageTools 2.2.2
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so"
+# Create symlinks for MauiKit ImageTools 3.0.0
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so"
 
 
-# Create symlinks for MauiKit Accounts 2.2.2
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.2.2.2" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so"
+# Create symlinks for MauiKit Accounts 3.0.0
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.3.0.0" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.3"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so"
 
 
 # Create symlinks for MauiKit Documents 1.0.1
