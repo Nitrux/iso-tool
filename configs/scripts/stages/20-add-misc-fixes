@@ -132,11 +132,14 @@ ln -sv /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux
 
 #	Enable ufw by default.
 #	Add rules for ports so Waydroid to access the Internet.
+#	Add rules for KDE Connect.
 
 ufw enable
 ufw allow 53
 ufw allow 67
 ufw default allow FORWARD
+ufw allow 1714:1764/udp
+ufw allow 1714:1764/tcp
 
 
 #	Force SDDM to use Wayland session.
