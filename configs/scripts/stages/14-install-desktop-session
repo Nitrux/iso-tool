@@ -24,6 +24,7 @@ NX_DESKTOP_PKG='
 '
 
 MISC_DESKTOP_PKGS='
+	hplip
 	kde-config-fcitx5/trixie
 	kexec-tools
 	kwin-bismuth/trixie
@@ -34,15 +35,15 @@ MISC_DESKTOP_PKGS='
 	libpoppler-cpp0v5/jammy
 	libpoppler-qt5-1/jammy
 	libpoppler126/jammy
+	libsane-hpaio
 	maliit-keyboard/jammy
+	man-db
 	nuts
 	openresolv/trixie
 	plasma-gamemode/trixie
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
-	hplip
-	libsane-hpaio
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
