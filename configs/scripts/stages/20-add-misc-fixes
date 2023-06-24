@@ -51,21 +51,21 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKi
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.3.0.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so"
 
 
-# Create symlinks for MauiKit Documents 1.0.1
+# Create symlinks for MauiKit Documents 1.1.0
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1.1.0" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1"
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1.1.0" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so"
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1.1.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1"
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1.1.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so"
 
 
-# Create symlinks for MauiKit Calendar 1.0.1
+# Create symlinks for MauiKit Calendar 1.1.0
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1.1.0" "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1"
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1.1.0" "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so"
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1.1.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1"
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1.1.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so"
 
 
-# Create symlinks for MauiKit Terminal 1.0.0
+# Create symlinks for MauiKit Terminal 1.1.0
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1.1.0" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1"
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1.1.0" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so"
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1.1.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1"
