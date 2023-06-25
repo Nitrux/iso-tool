@@ -151,3 +151,9 @@ mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.
 
 # selinux-activate
 # selinux-config-enforcing
+
+
+#   Change icon for 0install launcher
+
+sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
+
