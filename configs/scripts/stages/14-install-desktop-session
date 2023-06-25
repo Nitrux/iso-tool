@@ -25,6 +25,7 @@ NX_DESKTOP_PKG='
 
 MISC_DESKTOP_PKGS='
 	0install
+	flatpak-kcm
 	hplip
 	kde-config-fcitx5/trixie
 	kexec-tools
