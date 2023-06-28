@@ -10,7 +10,7 @@
 deb [arch=amd64] http://deb.devuan.org/devuan beowulf main
 deb [arch=amd64] http://deb.devuan.org/devuan beowulf-updates main
 deb [arch=amd64] http://deb.devuan.org/devuan beowulf-backports main
-deb [arch=amd64]  http://deb.devuan.org/devuan beowulf-security main
+deb [arch=amd64] http://deb.devuan.org/devuan beowulf-security main
 
 ###############################
 # Devuan Merged Repos Beowulf #
