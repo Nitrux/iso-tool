@@ -22,18 +22,5 @@ tree \
 
 stat \
 	/sbin/init \
-	/bin/sh \
-	/bin/dash \
-	/bin/bash
+	/bin/sh
 
-tail -n +1 \
-	/etc/{casper.conf,sddm.conf,modules} \
-	/etc/default/grub \
-	/etc/sddm.conf.d/kde_settings.conf \
-	/etc/environment \
-	/etc/adduser.conf \
-	/etc/modules \
-	/etc/initramfs-tools/modules \
-	/etc/pam.d/common-password \
-	/etc/security/pwquality.conf \
-	/etc/login.defs
