@@ -40,6 +40,7 @@ MISC_DESKTOP_PKGS='
 	libsane-hpaio
 	maliit-keyboard/jammy
 	man-db
+	network-manager-openconnect
 	nuts
 	openresolv/trixie
 	plasma-gamemode/trixie
