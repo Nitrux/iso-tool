@@ -43,7 +43,6 @@ MISC_DESKTOP_PKGS='
 	nuts
 	openresolv/trixie
 	plasma-gamemode/trixie
-	power-profiles-daemon/trixie
 	poppler-utils/jammy
 	wireguard/trixie
 	zenity
