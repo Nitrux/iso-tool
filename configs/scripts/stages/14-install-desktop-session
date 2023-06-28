@@ -45,7 +45,6 @@ MISC_DESKTOP_PKGS='
 	plasma-gamemode/trixie
 	poppler-utils/jammy
 	wireguard/trixie
-	zenity
 '
 
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
