@@ -32,6 +32,7 @@ CHROOT_BASIC_PKGS='
 	libzstd-dev
 	less
 	lz4
+	perl-modules-5.36
 	zstd
 '
 
