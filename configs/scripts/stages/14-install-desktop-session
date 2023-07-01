@@ -49,7 +49,8 @@ MISC_DESKTOP_PKGS='
 	poppler-utils/jammy
 	wireguard/trixie
 '
-
+pkg_policy libgps28 python3-pyqt5.sip
+exit 1
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 
