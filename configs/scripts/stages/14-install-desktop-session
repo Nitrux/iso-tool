@@ -48,9 +48,9 @@ MISC_DESKTOP_PKGS='
 	plasma-gamemode/trixie
 	poppler-utils/jammy
 	wireguard/trixie
+	python3-pyqt5.sip/unstable
 '
-pkg_policy libgps28 python3-pyqt5.sip
-exit 1
+
 install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
 
 
