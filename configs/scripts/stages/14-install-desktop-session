@@ -24,13 +24,8 @@ NX_DESKTOP_PKG='
 	maui-shell-git
 '
 
-MISC_DESKTOP_PKGS='
-	0install
-	flatpak-kcm
-	hplip
-	hplip-gui
+UNISON_DESKTOP_PKGS='
 	kde-config-fcitx5/trixie
-	kexec-tools
 	kwin-bismuth/trixie
 	kwin-x11/jammy
 	libjpeg-turbo8/trixie
@@ -39,19 +34,17 @@ MISC_DESKTOP_PKGS='
 	libpoppler-cpp0v5/jammy
 	libpoppler-qt5-1/jammy
 	libpoppler126/jammy
-	libsane-hpaio
 	maliit-keyboard/jammy
-	man-db
-	network-manager-openconnect
-	nuts
 	openresolv/trixie
 	plasma-gamemode/trixie
 	poppler-utils/jammy
-	wireguard/trixie
 	python3-pyqt5.sip/unstable
+	wireguard/trixie
+	wireplumber/trixie
+	libwireplumber-0.4-0/trixie
 '
 
-install $NX_DESKTOP_PKG $MISC_DESKTOP_PKGS
+install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS
 
 
 rm \
