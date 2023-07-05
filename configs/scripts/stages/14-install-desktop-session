@@ -21,7 +21,6 @@ update
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
 	nx-desktop-wayland-legacy
-	maui-shell-git
 '
 
 UNISON_DESKTOP_PKGS='
