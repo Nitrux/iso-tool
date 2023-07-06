@@ -19,5 +19,4 @@ NITRUX_HW_PKGS='
 	broadcom-sta-dkms
 '
 pkg_policy python3-pyqt5 python3-dbus.mainloop.pyqt5
-exit1
 install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
