@@ -35,7 +35,7 @@ config_dir=$PWD/configs
 
 #	The name of the ISO image.
 
-image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
+image=nitrux-$(git branch --show-current | sed "s/legacy-plasma/nx-desktop/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
 
 
 #	Prepare the directory where the filesystem will be created.
