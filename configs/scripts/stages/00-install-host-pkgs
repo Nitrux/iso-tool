@@ -9,6 +9,9 @@ source "$PWD"/configs/scripts/others/apt-funcs
 
 HOST_PKGS='
 	axel
+	dkms
+	mokutil
+	shim-signed
 	squashfs-tools
 '
 
@@ -22,14 +25,11 @@ XORRISO_PKGS='
 	xorriso
 '
 
-GRUB_EFI_PKGS='
-	dkms
-	mokutil
+GRUB_PKGS='
 	grub-efi-amd64
 	grub-efi-amd64-signed
 	grub-pc-bin
-	shim-signed
 '
 
 update
-install $XORRISO_PKGS $GRUB_EFI_PKGS $HOST_PKGS
+install $XORRISO_PKGS $GRUB_PKGS $HOST_PKGS
