@@ -9,6 +9,14 @@ set -e
 	__time_traced=yes exec time "$0" "$@"
 
 
+#	Clean up build directories
+
+rm -r \
+	rootfs.tar.{xz,gz} \
+	/tmp/tmp.* \
+	grub-theme || true
+
+
 #	Source APT commands as functions.
 #	shellcheck source=/dev/null
 
