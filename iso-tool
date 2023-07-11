@@ -3,7 +3,7 @@
 set -e
 
 
-#	The command "time" is a Bash buil-in, however, the package 'time' can be installed to supply this command.
+#	The command "time" is a Bash built-in. However, the package 'time' can be installed to supply this command.
 
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
