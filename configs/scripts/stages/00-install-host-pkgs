@@ -9,6 +9,7 @@ source "$PWD"/configs/scripts/others/apt-funcs
 
 HOST_PKGS='
 	axel
+	squashfs-tools
 '
 
 XORRISO_PKGS='
