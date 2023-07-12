@@ -9,30 +9,6 @@ set -e
 	__time_traced=yes exec time "$0" "$@"
 
 
-#	Clean up build directories
-
-rm -r \
-	rootfs.tar.{xz,gz} \
-	/tmp/tmp.* \
-	grub-theme || true
-
-
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
-
-source "$PWD"/configs/scripts/others/apt-funcs
-
-
-#	Build environment stuff.
-
-bash "$PWD"/configs/scripts/stages/00-install-host-pkgs
-
-
-#	base image URL.
-
-base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Unstable/rootfs.tar.xz
-
-
 #	Prepare the directories for the build.
 
 build_dir=$(mktemp -d)
@@ -44,9 +20,33 @@ chmod 755 "$build_dir"
 config_dir=$PWD/configs
 
 
+#	Clean up build directories
+
+rm -r \
+	"$config_dir/rootfs.tar.{xz,gz}" \
+	/tmp/tmp.* \
+	grub-theme || true
+
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source "$config_dir/scripts/others/apt-funcs"
+
+
+#	Build environment stuff.
+
+bash "$config_dir/scripts/stages/00-install-host-pkgs"
+
+
+#	base image URL.
+
+base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Unstable/rootfs.tar.xz
+
+
 #	The name of the ISO image.
 
-image=nitrux-$(git branch --show-current | sed "s/legacy-plasma/nx-desktop/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
+image=nitrux-$(git branch --show-current | sed "s/legacy-plasma/nx-desktop-plasma/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
 
 
 #	Prepare the directory where the filesystem will be created.
@@ -139,6 +139,6 @@ mv "$output_dir"/* "$PWD"
 #	Clean up build directories
 
 rm -r \
-	rootfs.tar.{xz,gz} \
+	"$config_dir/rootfs.tar.{xz,gz}" \
 	/tmp/tmp.* \
 	grub-theme || true
