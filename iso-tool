@@ -150,3 +150,7 @@ fi
 if [ -d "$config_dir/grub-theme" ]; then
   rm -rf "$config_dir/grub-theme"
 fi
+
+if [ -f "$config_dir/*.iso" ] || [ -f "$config_dir/*.md5sum" ]; then
+  rm -f "$config_dir/*.iso" "$config_dir/*.md5sum"
+fi
