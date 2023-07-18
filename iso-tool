@@ -5,7 +5,9 @@ set -e
 
 #	Prepare the directories for the build.
 
-rm -r /tmp/tmp.*
+if ls /tmp/tmp.* 1> /dev/null 2>&1; then
+  rm -f /tmp/tmp.*
+fi
 
 build_dir=$(mktemp -d)
 iso_dir=$(mktemp -d)
@@ -36,6 +38,10 @@ fi
 
 if [ -d "$config_dir/grub-theme" ]; then
   rm -rf "$config_dir/grub-theme"
+fi
+
+if [ -f "$config_dir/*.iso" ] || [ -f "$config_dir/*.md5sum" ]; then
+  rm -f "$config_dir/*.iso" "$config_dir/*.md5sum"
 fi
 
 
