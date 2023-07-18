@@ -22,12 +22,13 @@ config_dir=$PWD/configs
 
 #	Clean up build directories
 
-if [[ -d "$config_dir" ]]; then
-    rm -r "$config_dir/rootfs.tar."{xz,gz}
+if [ -f "$config_dir/rootfs.tar.xz" ] || [ -f "$config_dir/rootfs.tar.gz" ]; then
+  rm -f "$config_dir/rootfs.tar.xz" "$config_dir/rootfs.tar.gz"
 fi
 
-rm -f /tmp/tmp.*
-rm -rf grub-theme
+if [ -d "$config_dir/grub-theme" ]; then
+  rm -rf "$config_dir/grub-theme"
+fi
 
 
 #	Source APT commands as functions.
@@ -140,9 +141,4 @@ mv "$output_dir"/* "$PWD"
 
 #	Clean up build directories
 
-if [[ -d "$config_dir" ]]; then
-    rm -r "$config_dir/rootfs.tar."{xz,gz}
-fi
-
-rm -f /tmp/tmp.*
-rm -rf grub-theme
+rm -r /tmp/tmp.*
