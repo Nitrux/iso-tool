@@ -6,7 +6,7 @@ set -e
 #	Prepare the directories for the build.
 
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
-  rm -f /tmp/tmp.*
+  rm -rf /tmp/tmp.*
 fi
 
 build_dir=$(mktemp -d)
@@ -150,7 +150,7 @@ mv "$output_dir"/* "$PWD"
 #	Clean up build directories
 
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
-  rm -f /tmp/tmp.*
+  rm -rf /tmp/tmp.*
 fi
 
 if [ -d "$config_dir/grub-theme" ]; then
