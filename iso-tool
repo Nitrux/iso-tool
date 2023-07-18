@@ -143,4 +143,10 @@ mv "$output_dir"/* "$PWD"
 
 #	Clean up build directories
 
-rm -r /tmp/tmp.*
+if ls /tmp/tmp.* 1> /dev/null 2>&1; then
+  rm -f /tmp/tmp.*
+fi
+
+if [ -d "$config_dir/grub-theme" ]; then
+  rm -rf "$config_dir/grub-theme"
+fi
