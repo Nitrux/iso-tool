@@ -36,12 +36,12 @@ if [ -f "$config_dir/rootfs.tar.xz" ] || [ -f "$config_dir/rootfs.tar.gz" ]; the
   rm -f "$config_dir/rootfs.tar.xz" "$config_dir/rootfs.tar.gz"
 fi
 
-if [ -d "$config_dir/grub-theme" ]; then
-  rm -rf "$config_dir/grub-theme"
+if [ -d "$PWD/grub-theme" ]; then
+  rm -rf "$PWD/grub-theme"
 fi
 
-if [ -f "$config_dir/*.iso" ] || [ -f "$config_dir/*.md5sum" ]; then
-  rm -f "$config_dir/*.iso" "$config_dir/*.md5sum"
+if [ -f "$PWD/*.iso" ] || [ -f "$PWD/*.md5sum" ]; then
+  rm -f "$PWD/*.iso" "$PWD/*.md5sum"
 fi
 
 
@@ -153,10 +153,10 @@ if ls /tmp/tmp.* 1> /dev/null 2>&1; then
   rm -rf /tmp/tmp.*
 fi
 
-if [ -d "$config_dir/grub-theme" ]; then
-  rm -rf "$config_dir/grub-theme"
+if [ -d "$PWD/grub-theme" ]; then
+  rm -rf "$PWD/grub-theme"
 fi
 
-if [ -f "$config_dir/*.iso" ] || [ -f "$config_dir/*.md5sum" ]; then
-  rm -f "$config_dir/*.iso" "$config_dir/*.md5sum"
+if [ -f "$PWD/*.iso" ] || [ -f "$PWD/*.md5sum" ]; then
+  rm -f "$PWD/*.iso" "$PWD/*.md5sum"
 fi
