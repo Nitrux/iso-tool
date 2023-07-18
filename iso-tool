@@ -5,6 +5,8 @@ set -e
 
 #	Prepare the directories for the build.
 
+rm -r /tmp/tmp.*
+
 build_dir=$(mktemp -d)
 iso_dir=$(mktemp -d)
 output_dir=$(mktemp -d)
