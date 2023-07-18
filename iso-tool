@@ -2,7 +2,12 @@
 
 set -e
 
+#	Source APT commands as functions.
 #	shellcheck source=/dev/null
+
+source "$config_dir/scripts/others/apt-funcs"
+
+
 #	The command "time" is a Bash built-in. However, the package 'time' can be installed to supply this command.
 
 [ "$__time_traced" ] ||
@@ -29,12 +34,6 @@ fi
 if [ -d "$config_dir/grub-theme" ]; then
   rm -rf "$config_dir/grub-theme"
 fi
-
-
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
-
-source "$config_dir/scripts/others/apt-funcs"
 
 
 #	Build environment stuff.
