@@ -25,7 +25,7 @@ chmod 755 "$build_dir"
 config_dir=$PWD/configs
 
 
-#	Clean up build directories
+#	Clean up before starting.
 
 if [ -f "$config_dir/rootfs.tar.xz" ] || [ -f "$config_dir/rootfs.tar.gz" ]; then
   rm -f "$config_dir/rootfs.tar.xz" "$config_dir/rootfs.tar.gz"
