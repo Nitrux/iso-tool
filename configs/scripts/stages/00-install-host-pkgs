@@ -11,9 +11,9 @@ HOST_PKGS='
 	axel
 	dkms
 	mokutil
-	time
 	shim-signed
 	squashfs-tools
+	time
 '
 
 XORRISO_PKGS='
