@@ -21,7 +21,11 @@ DEFAULT_KERNEL_PKG='
 	libcrypt1/trixie
 '
 
-install_downgrades $DEFAULT_KERNEL_PKG
+DEBIAN_KERNEL_PKG='
+	linux-image-amd64
+'
+
+install_downgrades $DEFAULT_KERNEL_PKG $DEBIAN_KERNEL_PKG
 
 rm \
 	/etc/apt/sources.list.d/liquorix-repo.list
