@@ -40,8 +40,8 @@ if [ -d "$PWD/grub-theme" ]; then
   rm -rf "$PWD/grub-theme"
 fi
 
-if [ -f "$PWD/*.iso" ] || [ -f "$PWD/*.md5sum" ]; then
-  rm -f "$PWD/*.iso" "$PWD/*.md5sum"
+if [ -f "$PWD/nitrux-*.iso" ] || [ -f "$PWD/nitrux-*.md5sum" ]; then
+  rm -f "$PWD/nitrux-*.iso" "$PWD/nitrux-*.md5sum"
 fi
 
 
@@ -155,8 +155,4 @@ fi
 
 if [ -d "$PWD/grub-theme" ]; then
   rm -rf "$PWD/grub-theme"
-fi
-
-if [ -f "$PWD/*.iso" ] || [ -f "$PWD/*.md5sum" ]; then
-  rm -f "$PWD/*.iso" "$PWD/*.md5sum"
 fi
