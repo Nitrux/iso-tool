@@ -107,6 +107,11 @@ ln -svf /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64
 ln -svf /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_python310.so.1.74.0
 
 
+#	*And* create symlink for libtesseract.
+
+ln -svf /usr/lib/x86_64-linux-gnu/libtesseract.so.5.0.3 /usr/lib/x86_64-linux-gnu/libtesseract.so.4
+
+
 #	Move APT and dpkg out of the way, out of the way, move b...
 #	use undebianize from Calamares to delete these files from the root.
 
