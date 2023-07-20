@@ -6,7 +6,8 @@ set -e
 #	Remove kernel from boot.
 
 rm \
-	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} || true
+	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
+    /boot/{vmlinuz.old,initrd.img.old} || true
 
 
 #	Add Flathub.
@@ -127,12 +128,12 @@ chmod -x /opt/{1,2,3}
 
 PLASMA_LIB="5.27.6"
 
-ln -sv /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
+create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
 
 #	Add link for libappimage1.0.
 
-ln -sv /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux-gnu/libappimage.so.1.0
+create_symlink /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux-gnu/libappimage.so.1.0
 
 
 #	Enable ufw by default.
