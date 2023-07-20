@@ -9,6 +9,6 @@ source /configs/scripts/others/apt-funcs
 
 
 cp /configs/files/initramfs/crypttab-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
-cp /configs/files/initramfs/vfio-override-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
+cp /configs/files/initramfs/vfio-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
 
 update-initramfs -c -k all
