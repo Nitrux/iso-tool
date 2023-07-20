@@ -23,6 +23,7 @@ DEFAULT_KERNEL_PKG='
 
 DEBIAN_KERNEL_PKG='
 	linux-image-amd64/unstable
+	linux-headers-amd64/unstable
 '
 
 install_downgrades $DEFAULT_KERNEL_PKG $DEBIAN_KERNEL_PKG
