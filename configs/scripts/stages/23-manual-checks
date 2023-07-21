@@ -51,8 +51,25 @@ else
   echo "File $file_to_check does not exist."
 fi
 
-tree -L 2 \
-	/Applications \
-	/boot \
-	/kboot \
-	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit}
+echo -e "\nChecking existence of directories..."
+directories_to_check=(
+  "/Applications"
+  "/boot"
+  "/kboot"
+  "/etc/runlevels/boot"
+  "/etc/runlevels/default"
+  "/etc/runlevels/nonetwork"
+  "/etc/runlevels/off"
+  "/etc/runlevels/recovery"
+  "/etc/runlevels/shutdown"
+  "/etc/runlevels/sysinit"
+)
+
+for directory in "${directories_to_check[@]}"; do
+  if [ -d "$directory" ]; then
+    echo "Directory $directory exists. Contents:"
+    tree -L 2 "$directory"
+  else
+    echo "Directory $directory does not exist."
+  fi
+done
