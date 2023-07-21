@@ -18,7 +18,8 @@ ls -lh \
 	/installed_pkgs*.txt
 
 tree \
-	/Applications
+	/Applications \
+	/kboot
 
 stat \
 	/sbin/init \

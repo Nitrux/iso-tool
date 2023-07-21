@@ -3,25 +3,58 @@
 set -e
 
 
-#	Remove kernel from boot.
-
-rm \
-	/boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
-    /boot/{vmlinuz.old,initrd.img.old} || true
-
-
-#	Add Flathub.
-
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
-
 # Function to create symlinks
+
 create_symlink() {
     local source="$1"
     local destination="$2"
 
     ln -svf "$source" "$destination"
 }
+
+
+# Remove unwanted kernel and initrd links from /boot and /.
+
+rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
+      /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
+
+
+# Create necessary directories
+mkdir -p /kboot/{debian,liquorix}
+
+
+# Move and create soft links for liquorix kernel files
+for file in /boot/vmlinuz-*liquorix-amd64; do
+    filename=$(basename "$file")
+    create_symlink "$file" "/kboot/liquorix/vmlinuz"
+done
+
+for file in /boot/initrd.img-*liquorix-amd64; do
+    filename=$(basename "$file")
+    create_symlink "$file" "/kboot/liquorix/initrd.img"
+done
+
+# Move and create soft links for debian kernel files
+for file in /boot/vmlinuz-*amd64; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/debian/${filename}"
+        create_symlink "/kboot/debian/${filename}" "/kboot/debian/vmlinuz"
+    fi
+done
+
+for file in /boot/initrd.img-*amd64; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/debian/initrd-${filename#*-}"
+        create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
+    fi
+done
+
+
+# Add Flathub.
+
+flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
 # Create symlinks for MauiKit FileBrowsing 3.0.0
