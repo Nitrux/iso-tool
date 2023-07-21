@@ -20,10 +20,12 @@ rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
 
 
 # Create necessary directories
+
 mkdir -p /kboot/{debian,liquorix}
 
 
 # Move and create soft links for liquorix kernel files
+
 for file in /boot/vmlinuz-*liquorix-amd64; do
     filename=$(basename "$file")
     create_symlink "$file" "/kboot/liquorix/vmlinuz"
