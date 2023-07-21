@@ -28,6 +28,8 @@ echo -e "\nChecking symbolic link targets..."
 links_to_check=(
   "/vmlinuz"
   "/initrd.img"
+  "/sbin/init"
+  "/bin/sh"
 )
 
 for link in "${links_to_check[@]}"; do
@@ -48,3 +50,9 @@ if [ -e "$file_to_check" ]; then
 else
   echo "File $file_to_check does not exist."
 fi
+
+tree -L 2 \
+	/Applications \
+	/boot \
+	/kboot \
+	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit}
