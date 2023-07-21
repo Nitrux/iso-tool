@@ -342,6 +342,10 @@ Package: libprocessui9
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
+Package: libudev-dev
+Pin: release o=Debian,a=unstable,n=sid
+Pin-Priority: -1
+
 Package: libqt5*
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
