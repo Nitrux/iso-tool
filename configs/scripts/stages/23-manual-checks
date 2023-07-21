@@ -8,20 +8,43 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
-ls -lh \
-	/boot \
-	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
-	/etc/rc.local \
-	/{vmlinuz,initrd.img} \
-	/etc/{init.d,sddm.conf.d} \
-	/usr/lib/dbus-1.0/dbus-daemon-launch-helper \
-	/installed_pkgs*.txt
+echo "Checking existence of files..."
+files_to_check=(
+  "/etc/rc.local"
+  "/etc/init.d"
+  "/etc/sddm.conf.d"
+  "/installed_pkgs*.txt"
+)
 
-tree \
-	/Applications \
-	/kboot
+for file in "${files_to_check[@]}"; do
+  if ls "$file" &> /dev/null; then
+    echo "File $file exists."
+  else
+    echo "File $file does not exist."
+  fi
+done
 
-stat \
-	/sbin/init \
-	/bin/sh
+echo -e "\nChecking symbolic link targets..."
+links_to_check=(
+  "/vmlinuz"
+  "/initrd.img"
+)
 
+for link in "${links_to_check[@]}"; do
+  target=$(readlink -f "$link")
+  if [ -n "$target" ]; then
+    echo "Link $link points to: $target"
+  else
+    echo "Link $link does not exist or is not a symbolic link."
+  fi
+done
+
+echo -e "\nChecking ownership of /usr/lib/dbus-1.0/dbus-daemon-launch-helper..."
+file_to_check="/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
+
+if [ -e "$file_to_check" ]; then
+  owner=$(stat -c "%U" "$file_to_check")
+  echo "The file is owned by: $owner"
+else
+  echo "File $file_to_check does not exist."
+fi
