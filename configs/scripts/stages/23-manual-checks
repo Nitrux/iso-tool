@@ -47,7 +47,8 @@ file_to_check="/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
 
 if [ -e "$file_to_check" ]; then
   owner=$(stat -c "%U" "$file_to_check")
-  echo "The file is owned by: $owner"
+  group=$(stat -c "%G" "$file_to_check")
+  echo "The file is owned by: $owner (Group: $group)"
 else
   echo "File $file_to_check does not exist."
 fi
