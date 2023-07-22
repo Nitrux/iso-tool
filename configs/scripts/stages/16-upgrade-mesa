@@ -33,7 +33,7 @@ MESA_LIBS_PKGS='
 	mesa-vulkan-drivers
 '
 
-only_upgrade_force_overwrite $MESA_LIBS_PKGS
+# only_upgrade_force_overwrite $MESA_LIBS_PKGS
 
 rm \
 	/etc/apt/sources.list.d/mesa-git-ppa.list
