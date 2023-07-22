@@ -13,7 +13,8 @@ files_to_check=(
   "/etc/rc.local"
   "/etc/init.d"
   "/etc/sddm.conf.d"
-  "/installed_pkgs*.txt"
+  "installed_pkgs_end.txt"
+  "installed_pkgs_start.txt"
 )
 
 for file in "${files_to_check[@]}"; do
