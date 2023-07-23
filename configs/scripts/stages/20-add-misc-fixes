@@ -54,6 +54,22 @@ for file in /boot/initrd.img-*amd64; do
     fi
 done
 
+for file in /boot/System.map-*amd64; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/debian/initrd-${filename#*-}"
+        create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
+    fi
+done
+
+for file in /boot/config-*amd64; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/debian/initrd-${filename#*-}"
+        create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
+    fi
+done
+
 
 # Add Flathub.
 
