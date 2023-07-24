@@ -9,8 +9,9 @@ export PATH=$PATH:/tmp/scripts
 
 puts () { printf "\n\n --- %s\n" "$*"; }
 
+BOOTSTRAP_LOG="/var/log/iso-tool-bootstrap.log"
 
-puts "HELLO. STARTING BOOTSTRAP."
+( puts "HELLO. STARTING BOOTSTRAP."
 
 
 #	Source APT commands as functions.
@@ -240,4 +241,4 @@ puts "PERFORM MANUAL CHECKS."
 23-manual-checks
 
 
-puts "EXITING BOOTSTRAP."
+puts "EXITING BOOTSTRAP."  ) 2>&1 | tee -a "$BOOTSTRAP_LOG"
