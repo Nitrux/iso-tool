@@ -57,16 +57,14 @@ done
 for file in /boot/System.map-*amd64; do
     filename=$(basename "$file")
     if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/initrd-${filename#*-}"
-        create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
+        mv "$file" "/kboot/debian/System.map-${filename#*-}"
     fi
 done
 
 for file in /boot/config-*amd64; do
     filename=$(basename "$file")
     if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/initrd-${filename#*-}"
-        create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
+        mv "$file" "/kboot/debian/config-${filename#*-}"
     fi
 done
 
