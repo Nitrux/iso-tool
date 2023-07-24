@@ -11,8 +11,6 @@ source /configs/scripts/others/apt-funcs
 echo "Checking existence of files..."
 files_to_check=(
   "/etc/rc.local"
-  "/etc/init.d"
-  "/etc/sddm.conf.d"
   "/installed_pkgs_end.txt"
   "/installed_pkgs_start.txt"
 )
@@ -65,6 +63,7 @@ directories_to_check=(
   "/etc/runlevels/recovery"
   "/etc/runlevels/shutdown"
   "/etc/runlevels/sysinit"
+  "/etc/sddm.conf.d"
 )
 
 for directory in "${directories_to_check[@]}"; do
@@ -75,3 +74,17 @@ for directory in "${directories_to_check[@]}"; do
     echo "Directory $directory does not exist."
   fi
 done
+
+check_file_contents() {
+    if [ -f "$1" ]; then
+        echo "Contents of $1:"
+        echo "=========================="
+        tail -n +1 "$1"
+        echo "=========================="
+    else
+        echo "Error: File '$1' not found."
+    fi
+}
+
+check_file_contents "/etc/sddm.conf.d/kde_settings.conf"
+check_file_contents "/etc/sddm.conf"
