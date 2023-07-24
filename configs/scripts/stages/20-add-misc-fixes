@@ -208,7 +208,7 @@ ufw allow 1714:1764/tcp
 
 #	Force SDDM to use Wayland session.
 
-mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.bak
+# mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.bak
 
 
 #	Enable SELinux and set enforcing mode.
