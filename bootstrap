@@ -241,4 +241,4 @@ puts "PERFORM MANUAL CHECKS."
 23-manual-checks
 
 
-puts "EXITING BOOTSTRAP."  ) 2>&1 | tee -a "$BOOTSTRAP_LOG"
+puts "EXITING BOOTSTRAP." ) 2>&1 | tee -a "$BOOTSTRAP_LOG"
