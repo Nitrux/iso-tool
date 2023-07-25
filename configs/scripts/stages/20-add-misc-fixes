@@ -19,7 +19,31 @@ rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
       /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
 
 
-# Create necessary directories.
+# Ensure the links in / point to the files in /boot.
+
+boot_dir="/boot"
+vmlinuz_pattern="vmlinuz-*liquorix-*"
+initrd_pattern="initrd.img-*liquorix-*"
+
+vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$vmlinuz_pattern" | head -1)
+initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$initrd_pattern" | head -1)
+
+if [ -n "$vmlinuz_file" ]; then
+    echo "Creating/updating symlink for /vmlinuz"
+    create_symlink "$vmlinuz_file" "/vmlinuz"
+else
+    echo "Error: No matching vmlinuz file found in $boot_dir."
+fi
+
+if [ -n "$initrd_file" ]; then
+    echo "Creating/updating symlink for /initrd.img"
+    create_symlink "$initrd_file" "/initrd.img"
+else
+    echo "Error: No matching initrd.img file found in $boot_dir."
+fi
+
+
+# Create necessary directories to put files for kboot.
 
 mkdir -p /kboot/{debian,liquorix}
 

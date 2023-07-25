@@ -222,9 +222,7 @@ puts "UPDATING THE INITRAMFS."
 22-update-initramfs
 
 
-#	Check installed packages at end.
-
-puts "SHOW LARGEST INSTALLED PACKAGES."
+#	Create a list of installed packages at end.
 
 list_installed_text_end
 
