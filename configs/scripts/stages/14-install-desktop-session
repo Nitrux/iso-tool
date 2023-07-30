@@ -39,7 +39,7 @@ UNISON_DESKTOP_PKGS='
 	openresolv/trixie
 	plasma-gamemode/trixie
 	poppler-utils/jammy
-	python3-pyqt5.sip/unstable
+	python3-pyqt5.sip/testing
 	sddm/trixie
 	wireguard/trixie
 	wireplumber/trixie

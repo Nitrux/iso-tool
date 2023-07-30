@@ -17,13 +17,13 @@ update
 
 DEFAULT_KERNEL_PKG='
 	linux-image-liquorix
-	libcrypt-dev/trixie
-	libcrypt1/trixie
+	libcrypt-dev=1:4.4.18-4
+	libcrypt1=1:4.4.18-4
 '
 
 DEBIAN_KERNEL_PKG='
-	linux-image-amd64/unstable
-	linux-headers-amd64/unstable
+	linux-image-amd64/testing
+	linux-headers-amd64/testing
 '
 
 install_downgrades $DEFAULT_KERNEL_PKG $DEBIAN_KERNEL_PKG

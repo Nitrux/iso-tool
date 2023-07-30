@@ -16,7 +16,7 @@ add_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.beowulf /etc/apt/sources.list.d/devuan-beowulf-repo.list
+cp /configs/files/sources/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
 
 update
 
@@ -41,7 +41,7 @@ autoremove
 install $SYSTEMCTL_STANDALONE_PKG
 
 rm \
-	/etc/apt/sources.list.d/devuan-beowulf-repo.list
+	/etc/apt/sources.list.d/devuan-chimaera-repo.list
 
 remove_repo_keys \
 	541922FB \
