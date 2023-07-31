@@ -35,6 +35,8 @@ UNISON_DESKTOP_PKGS='
 	wireplumber=0.4.14-2
 	plasma-firewall/jammy
 	fcitx5-frontend-qt6/jammy
+	libblockdev-crypto2=2.28-2
+	libmysqlclient21=8.0.34-1
 '
 
 install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS
