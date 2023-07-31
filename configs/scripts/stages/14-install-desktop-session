@@ -28,10 +28,6 @@ NX_DESKTOP_PKG='
 UNISON_DESKTOP_PKGS='
 	kde-config-fcitx5=5.0.11-1
 	libjpeg-turbo8=2.1.5-2ubuntu1
-	libkf5akonadilibs
-	libkf5akonadicore5abi2=22.12.3-1
-	libkf5akonadi-data=22.12.3-1
-	libkf5pimlibs
 	libwireplumber-0.4-0=0.4.14-2
 	openresolv=3.13.1-2
 	plasma-gamemode=0.0~git20220224.3adea2bd-2
