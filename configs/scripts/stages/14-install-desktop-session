@@ -33,6 +33,8 @@ UNISON_DESKTOP_PKGS='
 	plasma-gamemode=0.0~git20220224.3adea2bd-2
 	wireguard=1.0.20210914-1ubuntu3
 	wireplumber=0.4.14-2
+	plasma-firewall/jammy
+	fcitx5-frontend-qt6/jammy
 '
 
 install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS
