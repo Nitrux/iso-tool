@@ -45,7 +45,7 @@ fi
 
 # Create necessary directories to put files for kboot.
 
-mkdir -p /kboot/{debian,liquorix}
+mkdir -p /kboot/{debian,mainline,liquorix}
 
 
 # Move and create soft links for liquorix kernel files.
@@ -89,6 +89,39 @@ for file in /boot/config-*amd64; do
     filename=$(basename "$file")
     if ! [[ $filename =~ "liquorix" ]]; then
         mv "$file" "/kboot/debian/config-${filename#*-}"
+    fi
+done
+
+
+# Move and create soft links for mainline kernel files.
+
+for file in /boot/vmlinuz-*generic; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/debian/${filename}"
+        create_symlink "/kboot/mainline/${filename}" "/kboot/mainline/vmlinuz"
+    fi
+done
+
+for file in /boot/initrd.img-*generic; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/debian/initrd-${filename#*-}"
+        create_symlink "/kboot/mainline/initrd-${filename#*-}" "/kboot/mainline/initrd.img"
+    fi
+done
+
+for file in /boot/System.map-*generic; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/mainline/System.map-${filename#*-}"
+    fi
+done
+
+for file in /boot/config-*generic; do
+    filename=$(basename "$file")
+    if ! [[ $filename =~ "liquorix" ]]; then
+        mv "$file" "/kboot/mainline/config-${filename#*-}"
     fi
 done
 
@@ -174,8 +207,8 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCore
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 #	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
-KDEPIM_LIB="5.23.2"
-KF5_LIB="5.107.0"
+KDEPIM_LIB="5.23.3"
+KF5_LIB="5.108.0"
 
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
@@ -244,3 +277,14 @@ mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.
 #   Change icon for 0install launcher.
 
 sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
+
+
+#   Build Nvidia driver with dkms for other kernels.
+
+DRIVER="nvidia"
+VERSION="535.86.05"
+KERNELS=("5.4.20-050420-generic" "6.4.0-1-amd64")
+
+for KERNEL in "${KERNELS[@]}"; do
+    dkms install "$DRIVER/$VERSION" -k "$KERNEL"
+done
