@@ -281,10 +281,10 @@ sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
 
 #   Build Nvidia driver with dkms for other kernels.
 
-DRIVER="nvidia"
-VERSION="535.86.05"
-KERNELS=("5.4.20-050420-generic" "6.4.0-1-amd64")
+# DRIVER="nvidia"
+# VERSION="535.86.05"
+# KERNELS=("5.4.20-050420-generic" "6.4.0-1-amd64")
 
-for KERNEL in "${KERNELS[@]}"; do
-    dkms install "$DRIVER/$VERSION" -k "$KERNEL"
-done
+# for KERNEL in "${KERNELS[@]}"; do
+#     dkms install "$DRIVER/$VERSION" -k "$KERNEL"
+# done
