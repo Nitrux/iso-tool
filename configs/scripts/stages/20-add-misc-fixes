@@ -98,7 +98,7 @@ done
 for file in /boot/vmlinuz-*generic; do
     filename=$(basename "$file")
     if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/${filename}"
+        mv "$file" "/kboot/mainline/${filename}"
         create_symlink "/kboot/mainline/${filename}" "/kboot/mainline/vmlinuz"
     fi
 done
@@ -106,7 +106,7 @@ done
 for file in /boot/initrd.img-*generic; do
     filename=$(basename "$file")
     if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/initrd-${filename#*-}"
+        mv "$file" "/kboot/mainline/initrd-${filename#*-}"
         create_symlink "/kboot/mainline/initrd-${filename#*-}" "/kboot/mainline/initrd.img"
     fi
 done
