@@ -17,7 +17,6 @@ update
 
 DEFAULT_KERNEL_PKG='
 	linux-image-liquorix
-	linux-image-mainline-vfio
 	libcrypt-dev=1:4.4.18-4
 	libcrypt1=1:4.4.18-4
 '
