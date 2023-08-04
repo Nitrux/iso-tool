@@ -62,68 +62,68 @@ done
 
 # Move and create soft links for debian kernel files.
 
-for file in /boot/vmlinuz-*amd64; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/${filename}"
-        create_symlink "/kboot/debian/${filename}" "/kboot/debian/vmlinuz"
-    fi
-done
+# for file in /boot/vmlinuz-*amd64; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/debian/${filename}"
+#         create_symlink "/kboot/debian/${filename}" "/kboot/debian/vmlinuz"
+#     fi
+# done
 
-for file in /boot/initrd.img-*amd64; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/initrd-${filename#*-}"
-        create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
-    fi
-done
+# for file in /boot/initrd.img-*amd64; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/debian/initrd-${filename#*-}"
+#         create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
+#     fi
+# done
 
-for file in /boot/System.map-*amd64; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/System.map-${filename#*-}"
-    fi
-done
+# for file in /boot/System.map-*amd64; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/debian/System.map-${filename#*-}"
+#     fi
+# done
 
-for file in /boot/config-*amd64; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/debian/config-${filename#*-}"
-    fi
-done
+# for file in /boot/config-*amd64; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/debian/config-${filename#*-}"
+#     fi
+# done
 
 
 # Move and create soft links for mainline kernel files.
 
-for file in /boot/vmlinuz-*generic; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/mainline/${filename}"
-        create_symlink "/kboot/mainline/${filename}" "/kboot/mainline/vmlinuz"
-    fi
-done
+# for file in /boot/vmlinuz-*generic; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/mainline/${filename}"
+#         create_symlink "/kboot/mainline/${filename}" "/kboot/mainline/vmlinuz"
+#     fi
+# done
 
-for file in /boot/initrd.img-*generic; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/mainline/initrd-${filename#*-}"
-        create_symlink "/kboot/mainline/initrd-${filename#*-}" "/kboot/mainline/initrd.img"
-    fi
-done
+# for file in /boot/initrd.img-*generic; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/mainline/initrd-${filename#*-}"
+#         create_symlink "/kboot/mainline/initrd-${filename#*-}" "/kboot/mainline/initrd.img"
+#     fi
+# done
 
-for file in /boot/System.map-*generic; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/mainline/System.map-${filename#*-}"
-    fi
-done
+# for file in /boot/System.map-*generic; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/mainline/System.map-${filename#*-}"
+#     fi
+# done
 
-for file in /boot/config-*generic; do
-    filename=$(basename "$file")
-    if ! [[ $filename =~ "liquorix" ]]; then
-        mv "$file" "/kboot/mainline/config-${filename#*-}"
-    fi
-done
+# for file in /boot/config-*generic; do
+#     filename=$(basename "$file")
+#     if ! [[ $filename =~ "liquorix" ]]; then
+#         mv "$file" "/kboot/mainline/config-${filename#*-}"
+#     fi
+# done
 
 
 # Add Flathub.
