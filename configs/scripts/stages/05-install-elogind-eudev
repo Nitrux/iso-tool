@@ -16,7 +16,7 @@ add_repo_keys \
 	541922FB \
 	61FC752C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.chimaera /etc/apt/sources.list.d/devuan-chimaera-repo.list
+cp /configs/files/sources/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
 
 update
 
