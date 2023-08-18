@@ -286,3 +286,8 @@ sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
 # for KERNEL in "${KERNELS[@]}"; do
 #     dkms install "$DRIVER/$VERSION" -k "$KERNEL"
 # done
+
+
+#   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
+
+cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
