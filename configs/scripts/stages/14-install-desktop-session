@@ -27,6 +27,7 @@ NX_DESKTOP_PKG='
 
 UNISON_DESKTOP_PKGS='
 	kde-config-fcitx5=5.0.11-1
+	kgpg/jammy
 	kwalletmanager/jammy
 	kwallet-pam/jammy
 	libjpeg-turbo8=2.1.5-2ubuntu1
