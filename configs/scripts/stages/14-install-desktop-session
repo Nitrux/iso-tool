@@ -29,7 +29,7 @@ UNISON_DESKTOP_PKGS='
 	kde-config-fcitx5=5.0.11-1
 	kgpg/jammy
 	kwalletmanager/jammy
-	kwallet-pam/jammy
+	libpam-kwallet5/jammy
 	libjpeg-turbo8=2.1.5-2ubuntu1
 	libwireplumber-0.4-0=0.4.14-2
 	openresolv=3.13.1-2
