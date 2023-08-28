@@ -7,4 +7,4 @@
 # MESA Git #
 ############
 
-deb [arch=amd64] http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu mantic main
+deb [arch=amd64] http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu jammy main
