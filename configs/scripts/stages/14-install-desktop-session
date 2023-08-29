@@ -26,21 +26,21 @@ NX_DESKTOP_PKG='
 '
 
 UNISON_DESKTOP_PKGS='
+	fcitx5-frontend-qt6/jammy
 	kde-config-fcitx5=5.0.11-1
 	kgpg/jammy
 	kwalletmanager/jammy
-	libpam-kwallet5/jammy
+	libblockdev-crypto2=2.28-2
+	libblockdev-utils2=2.28-2
 	libjpeg-turbo8=2.1.5-2ubuntu1
+	libmysqlclient21=8.0.34-1
+	libpam-kwallet5/jammy
 	libwireplumber-0.4-0=0.4.14-2
 	openresolv=3.13.1-2
+	plasma-firewall/jammy
 	plasma-gamemode=0.0~git20220224.3adea2bd-2
 	wireguard=1.0.20210914-1ubuntu3
 	wireplumber=0.4.14-2
-	plasma-firewall/jammy
-	fcitx5-frontend-qt6/jammy
-	libblockdev-crypto2=2.28-2
-	libblockdev-utils2=2.28-2
-	libmysqlclient21=8.0.34-1
 '
 
 install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS
