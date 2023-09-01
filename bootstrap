@@ -145,53 +145,60 @@ puts "ADDING NITRUX BASE."
 12-install-nitrux-packages
 
 
+#	Add Misc. drivers.
+
+puts "ADDING MISC. DRIVERS."
+
+13-install-misc-hw-packages
+
+
 #	Add Nvidia drivers or Nouveau.
 
 puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
 
-13-install-nvidia-drivers
+14-install-nvidia-drivers
 
 
 #	Add NX Desktop meta-package.
 
 puts "ADDING NX DESKTOP."
 
-14-install-desktop-session
+15-install-desktop-session
 
 
 #	Add Calamares.
 
 puts "ADDING CALAMARES INSTALLER."
 
-15-install-calamares
+16-install-calamares
 
 
 #	Upgrade MESA packages.
 
 puts "UPGRADE MESA."
 
-16-upgrade-mesa
+17-upgrade-mesa
 
 
 #	Add OpenRC configuration.
 
 puts "ADDING OPENRC CONFIG."
 
-17-install-init-config
+18-install-init-config
 
 
 #	Add Live user configuration.
 
 puts "ADDING LIVE USER CONFIG."
 
-18-install-live-config
+19-install-live-config
 
 
 #	Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
 
-19-remove-build-sources
+20-remove-build-sources
 
 
 ####################################
@@ -205,7 +212,7 @@ puts "REMOVE BUILD SOURCES."
 
 puts "ADDING MISC. FIXES."
 
-20-add-misc-fixes
+21-add-misc-fixes
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
@@ -213,14 +220,14 @@ puts "ADDING MISC. FIXES."
 
 puts "EDITING CONF. FILES."
 
-21-edit-conf-files
+22-edit-conf-files
 
 
 #	Generate initramfs.
 
 puts "UPDATING THE INITRAMFS."
 
-22-update-initramfs
+23-update-initramfs
 
 
 #	Create a list of installed packages at end.
@@ -236,7 +243,7 @@ list_installed_text_end
 
 puts "PERFORM MANUAL CHECKS."
 
-23-manual-checks
+24-manual-checks
 
 
 puts "EXITING BOOTSTRAP."
