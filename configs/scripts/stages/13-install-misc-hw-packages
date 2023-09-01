@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -xe
+set -e
 
 #	Source APT commands as functions.
 #	shellcheck source=/dev/null
@@ -8,29 +8,13 @@ set -xe
 source /configs/scripts/others/apt-funcs
 
 
-#	Download the goddamn package, extract it, and then use the package manager to "install" the package. FFS.
-#	Also, WHY IN THE F DOES THE PACKAGE FAIL TO INSTALL IN THE FIRST PLACE?!.
+#	Create this directory otherwise the package displaylink-driver just fkn dies.
+
+mkdir -p /lib/systemd/system-sleep
 
 MISC_HW_PKGS='
+	broadcom-sta-dkms
 	displaylink-driver
 '
 
-download $MISC_HW_PKGS
-
-driver_package="displaylink-driver_5.8.0-33_amd64.deb"
-temp_dir=$(mktemp -d)
-
-if [ -e "$driver_package" ]; then
-    if dpkg-deb -xv "$driver_package" "$temp_dir"; then
-        cp -r "$temp_dir"/opt/* /opt
-        mkdir -p /lib/systemd/system-sleep
-        rm -r "$temp_dir"
-		install_force_overwrite $MISC_HW_PKGS
-    else
-        echo "Error: Failed to extract the DisplayLink driver package."
-        exit 1
-    fi
-else
-    echo "Error: DisplayLink driver package not found."
-    exit 1
-fi
+install $MISC_HW_PKGS
