@@ -43,6 +43,10 @@ UNISON_DESKTOP_PKGS='
 	wireplumber=0.4.14-2
 '
 
+MISC_PKGS='
+	input-remapper
+'
+
 install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS
 
 

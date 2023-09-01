@@ -8,6 +8,14 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
+add_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+cp /configs/files/sources/sources.list.synaptics /etc/apt/sources.list.d/synaptics-repo.list
+
+update
+
 NITRUX_BASE_PKGS='
 	base-files=2023.8.27+nitrux-legacy
 	nitrux-minimal-legacy
@@ -17,6 +25,16 @@ NITRUX_BASE_PKGS='
 NITRUX_HW_PKGS='
 	nitrux-hardware-drivers-legacy
 	broadcom-sta-dkms
+	displaylink-driver
 '
 
 install_downgrades $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
+
+rm \
+	/etc/apt/sources.list.d/synaptics-repo.list
+
+remove_repo_keys \
+	541922FB \
+	61FC752C > /dev/null
+
+update
