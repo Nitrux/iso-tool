@@ -47,7 +47,7 @@ MISC_PKGS='
 	input-remapper
 '
 
-install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS
+install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
 
 
 rm \
