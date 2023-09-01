@@ -131,58 +131,37 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 # Create symlinks for MauiKit FileBrowsing 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so"
 
 
 # Create symlinks for MauiKit TextEditor 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so"
 
 
 # Create symlinks for MauiKit ImageTools 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
 
 
 # Create symlinks for MauiKit Accounts 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so.3"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
 
 
 # Create symlinks for MauiKit Documents 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so.1"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so.1"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
 
 
 # Create symlinks for MauiKit Calendar 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so.1"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitCalendar.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so.1"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
 
 
 # Create symlinks for MauiKit Terminal 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so.1"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so.1"
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so"
 
 
 # Create symlinks for Maui Core Libraries 0.6.0.
