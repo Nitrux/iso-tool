@@ -18,6 +18,16 @@ cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid
 update
 
 
+#	Install these packages first because now libappimageupdate and zsync2 provide files found in other packages.
+
+ZSYNC_LIBAIU_PKGS='
+	libappimageupdate
+	zlib1g-dev
+	zsync2
+'
+
+install_force_overwrite $ZSYNC_LIBAIU_PKGS
+
 NX_DESKTOP_PKG='
 	nx-desktop-legacy
 	nx-desktop-wayland-legacy
@@ -43,16 +53,11 @@ UNISON_DESKTOP_PKGS='
 	wireplumber=0.4.14-2
 '
 
-install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS 
-
 MISC_PKGS='
 	input-remapper
-	libappimageupdate
-	zsync2
 '
 
-install_force_overwrite $MISC_PKGS
-
+install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list \
