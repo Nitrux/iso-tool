@@ -24,6 +24,7 @@ if [ -e "$driver_package" ]; then
     if dpkg-deb -xv "$driver_package" "$temp_dir"; then
         cp -r "$temp_dir"/opt/* /opt
 		ls -l /opt
+        touch /lib/systemd/system-sleep/displaylink.sh
         rm -r "$temp_dir"
 		install_force_overwrite $MISC_HW_PKGS
     else
