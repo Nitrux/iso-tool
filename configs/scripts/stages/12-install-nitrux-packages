@@ -9,7 +9,7 @@ source /configs/scripts/others/apt-funcs
 
 
 add_repo_keys \
-	A892E5A5 > /dev/null
+	3ACFAA65A892E5A5 > /dev/null
 
 cp /configs/files/sources/sources.list.synaptics /etc/apt/sources.list.d/synaptics-repo.list
 
@@ -33,6 +33,6 @@ rm \
 	/etc/apt/sources.list.d/synaptics-repo.list
 
 remove_repo_keys \
-	A892E5A5 > /dev/null
+	3ACFAA65A892E5A5 > /dev/null
 
 update
