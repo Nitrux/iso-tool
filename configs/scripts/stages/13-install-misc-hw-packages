@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -e
+set -xe
 
 #	Source APT commands as functions.
 #	shellcheck source=/dev/null
