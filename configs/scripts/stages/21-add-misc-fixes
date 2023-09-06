@@ -270,3 +270,13 @@ sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
 #   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
 
 cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+
+
+#   Check if the root account is disabled, if not, disable it by locking it.
+
+if [[ $(passwd -S root | awk '{print $2}') == "L" ]]; then
+   echo "Root account is already disabled"
+else
+   passwd -l root
+   echo "Root account has been disabled"
+fi
