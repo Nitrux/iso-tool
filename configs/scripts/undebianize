@@ -69,6 +69,6 @@ DEST="/var/lib/NetworkManager/system-connections"
 mkdir -p "$DEST"
 mv "$SRC"/* "$DEST"/
 rmdir "$SRC"
-ln -s "$DEST" "$SRC"
+ln -sv "$DEST" "$SRC"
 
 exit 0
