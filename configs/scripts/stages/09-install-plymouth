@@ -20,6 +20,8 @@ DEVUAN_PLYMOUTH_PKGS='
 	plymouth/daedalus
 	plymouth-label/daedalus
 	plymouth-x11/daedalus
+	libcairo2/daedalus
+	libcairo-gobject2/daedalus
 '
 
 install $DEVUAN_PLYMOUTH_PKGS

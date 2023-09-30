@@ -59,4 +59,16 @@ find /usr/share/locale/ -name 'libapt-pkg6.0.mo' -exec rm -f {} \;
 
 deluser --remove-home nitrux
 
+
+#   "Fix" for https://github.com/Nitrux/nitrux-bug-tracker/issues/124
+
+
+SRC="/etc/NetworkManager/system-connections"
+DEST="/var/lib/NetworkManager/system-connections"
+
+mkdir -p "$DEST"
+mv "$SRC"/* "$DEST"/
+rmdir "$SRC"
+ln -s "$DEST" "$SRC"
+
 exit 0
