@@ -63,12 +63,12 @@ deluser --remove-home nitrux
 #   "Fix" for https://github.com/Nitrux/nitrux-bug-tracker/issues/124
 
 
-SRC="/etc/NetworkManager/system-connections"
-DEST="/var/lib/NetworkManager/system-connections"
+# SRC="/etc/NetworkManager/system-connections"
+# DEST="/var/lib/NetworkManager/system-connections"
 
-mkdir -p "$DEST"
-mv "$SRC"/* "$DEST"/
-rmdir "$SRC"
-ln -sv "$DEST" "$SRC"
+# mkdir -p "$DEST"
+# mv "$SRC"/* "$DEST"/
+# rmdir "$SRC"
+# ln -sv "$DEST" "$SRC"
 
 exit 0
