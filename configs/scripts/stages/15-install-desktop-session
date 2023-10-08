@@ -10,7 +10,8 @@ source /configs/scripts/others/apt-funcs
 
 add_repo_keys \
 	55751E5D \
-	90E51522 > /dev/null
+	90E51522 \
+	1DCEE19C > /dev/null
 
 cp /configs/files/sources/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
 cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
@@ -65,6 +66,7 @@ rm \
 
 remove_repo_keys \
 	55751E5D \
-	90E51522 > /dev/null
+	90E51522 \
+	1DCEE19C > /dev/null
 
 update
