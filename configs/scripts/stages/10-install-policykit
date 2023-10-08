@@ -10,29 +10,31 @@ source /configs/scripts/others/apt-funcs
 
 add_repo_keys \
 	541922FB \
-	61FC752C > /dev/null
+	61FC752C \
+	D104092C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
+cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 update
 
 DEVUAN_POLKIT_PKGS='
-	libpam-elogind/daedalus
-	libpolkit-agent-1-0/daedalus
-	libpolkit-gobject-1-0/daedalus
-	libpolkit-gobject-elogind-1-0/daedalus
-	policykit-1/daedalus
-	pkexec/daedalus
-	polkitd/daedalus
+	libpam-elogind/excalibur
+	libpolkit-agent-1-0/excalibur
+	libpolkit-gobject-1-0/excalibur
+	libpolkit-gobject-elogind-1-0/excalibur
+	policykit-1/excalibur
+	pkexec/excalibur
+	polkitd/excalibur
 '
 
 install_downgrades $DEVUAN_POLKIT_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-daedalus-repo.list
+	/etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 remove_repo_keys \
 	541922FB \
-	61FC752C > /dev/null
+	61FC752C \
+	D104092C > /dev/null
 
 update

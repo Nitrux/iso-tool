@@ -77,9 +77,9 @@ puts "ADDING BUILD SOURCES."
 
 #	Upgrade dpkg for zstd support.
 
-puts "ADDING UPGRADED DPKG."
+puts "ADDING UPGRADED PKGMAN."
 
-03-upgrade-dpkg
+03-upgrade-pkgman
 
 
 #	Add bootloader.

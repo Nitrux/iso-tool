@@ -3,8 +3,14 @@
 #   Your changes will be overwritten   #
 ########################################
 
+################
+# Devuan Repos #
+################
+
+deb [arch=amd64] http://deb.devuan.org/devuan excalibur main
+
 #######################
-# Proprietary GPU PPA #
+# Devuan Merged Repos #
 #######################
 
-deb [arch=amd64] http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu mantic main
+deb [arch=amd64] http://deb.devuan.org/merged excalibur main

@@ -7,7 +7,6 @@ set -e
 
 source /configs/scripts/others/apt-funcs
 
-
 add_repo_keys \
 	541922FB \
 	61FC752C \
@@ -17,15 +16,14 @@ cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/
 
 update
 
-DEVUAN_PLYMOUTH_PKGS='
-	plymouth/excalibur
-	plymouth-label/excalibur
-	plymouth-x11/excalibur
-	libcairo-gobject2/excalibur
-	libcairo2/excalibur
+DEVUAN_PKGMAN_PKGS='
+	apt/excalibur
+	libapt-pkg6.0/excalibur
+	dpkg/excalibur
 '
 
-install $DEVUAN_PLYMOUTH_PKGS
+install_downgrades $DEVUAN_PKGMAN_PKGS
+hold $DEVUAN_PKGMAN_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-excalibur-repo.list

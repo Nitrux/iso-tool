@@ -10,23 +10,25 @@ source /configs/scripts/others/apt-funcs
 
 add_repo_keys \
 	541922FB \
-	61FC752C > /dev/null
+	61FC752C \
+	D104092C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
+cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 update
 
 DEVUAN_NM_PKGS='
-	network-manager/daedalus
+	network-manager/excalibur
 '
 
 install $DEVUAN_NM_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-daedalus-repo.list
+	/etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 remove_repo_keys \
 	541922FB \
-	61FC752C > /dev/null
+	61FC752C \
+	D104092C > /dev/null
 
 update
