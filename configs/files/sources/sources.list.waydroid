@@ -7,4 +7,4 @@
 # Waydroid Repo #
 #################
 
-deb [arch=amd64] https://repo.waydro.id/ trixie main
+deb [arch=amd64 trusted=yes] https://repo.waydro.id/ trixie main
