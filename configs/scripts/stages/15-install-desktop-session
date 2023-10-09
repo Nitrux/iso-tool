@@ -38,11 +38,16 @@ NX_DESKTOP_PKG='
 
 UNISON_DESKTOP_PKGS='
 	fcitx5-frontend-qt6/jammy
+	fcitx5-module-lua-common=5.0.10-1
+	fcitx5-module-lua=5.0.10-1
 	kde-config-fcitx5=5.0.11-1
 	kgpg/jammy
 	kwalletmanager/jammy
 	libblockdev-crypto2=2.28-2
 	libblockdev-utils2=2.28-2
+	libfcitx5config6/jammy
+	libfcitx5core7/jammy
+	libfcitx5utils2/jammy
 	libjpeg-turbo8=2.1.5-2ubuntu1
 	libmysqlclient21=8.0.34-1
 	libpam-kwallet5/jammy
