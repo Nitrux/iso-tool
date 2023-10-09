@@ -38,6 +38,7 @@ NX_DESKTOP_PKG='
 
 UNISON_DESKTOP_PKGS='
 	fcitx5-frontend-qt6/jammy
+	fcitx5-module-lua/jammy
 	kde-config-fcitx5=5.0.11-1
 	kgpg/jammy
 	kwalletmanager/jammy
