@@ -11,6 +11,7 @@ source /configs/scripts/others/apt-funcs
 #	Install basic packages.
 
 update
+upgrade
 
 CHROOT_BASIC_PKGS='
 	apt-transport-https

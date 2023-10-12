@@ -20,6 +20,8 @@ GRUB2_PKGS='
 	grub-pc-bin/any
 	grub2-common/any
 '
+pkg_policy grub-efi-amd64-signed
+exit 1
 
 install $GRUB2_PKGS
 
