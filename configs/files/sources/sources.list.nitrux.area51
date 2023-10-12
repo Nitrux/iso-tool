@@ -1,0 +1,5 @@
+################
+# Nitrux Repos #
+################
+
+deb https://packagecloud.io/nitrux/area51/debian/ trixie main

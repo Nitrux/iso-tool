@@ -1,5 +1,0 @@
-################
-# Nitrux Repos #
-################
-
-deb https://packagecloud.io/nitrux/experimental/debian/ etch main
