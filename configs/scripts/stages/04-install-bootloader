@@ -13,12 +13,12 @@ source /configs/scripts/others/apt-funcs
 #	The GRUB2 packages from Debian do not work correctly with EFI.
 
 GRUB2_PKGS='
-	grub-common/trixie
-	grub-efi-amd64/trixie
-	grub-efi-amd64-bin/trixie
-	grub-efi-amd64-signed/trixie
-	grub-pc-bin/trixie
-	grub2-common/trixie
+	grub-common/any
+	grub-efi-amd64/any
+	grub-efi-amd64-bin/any
+	grub-efi-amd64-signed/any
+	grub-pc-bin/any
+	grub2-common/any
 '
 
 install $GRUB2_PKGS
@@ -27,9 +27,9 @@ install $GRUB2_PKGS
 #	Add packages for secure boot compatibility.
 
 SB_SHIM_PKGS='
-	sbsigntool/trixie
-	shim-signed/trixie
-	mokutil/trixie
+	sbsigntool/any
+	shim-signed/any
+	mokutil/any
 '
 
 install $SB_SHIM_PKGS
