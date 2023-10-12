@@ -27,7 +27,7 @@ DEVUAN_POLKIT_PKGS='
 	polkitd/ceres
 '
 
-install_downgrades $DEVUAN_POLKIT_PKGS
+install $DEVUAN_POLKIT_PKGS
 
 rm \
 	/etc/apt/sources.list.d/devuan-ceres-repo.list

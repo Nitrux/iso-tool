@@ -13,12 +13,15 @@ source /configs/scripts/others/apt-funcs
 add_nitrux_key_depot
 add_nitrux_key_unison
 add_nitrux_key_testing
+add_nitrux_key_experimental
 
 
 #	Add repository sources.
 
 cp /configs/files/sources/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
+cp /configs/files/sources/sources.list.nitrux.experimental /etc/apt/sources.list.d/nitrux-experimental-repo.list
 cp /configs/files/sources/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
+
 
 update

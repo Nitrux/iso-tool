@@ -27,19 +27,21 @@ DEVUAN_EUDEV_ELOGIND_PKGS='
 	libelogind0-compat
 '
 
+install $DEVUAN_EUDEV_ELOGIND_PKGS
+
 REMOVE_SYSTEMD_PKGS='
 	systemd
 	systemd-sysv
 	libsystemd0
 '
 
+purge $REMOVE_SYSTEMD_PKGS
+autoremove
+
 SYSTEMCTL_STANDALONE_PKG='
 	systemctl
 '
 
-install $DEVUAN_EUDEV_ELOGIND_PKGS
-purge $REMOVE_SYSTEMD_PKGS
-autoremove
 install $SYSTEMCTL_STANDALONE_PKG
 
 rm \

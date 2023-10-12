@@ -9,15 +9,6 @@ source /configs/scripts/others/apt-funcs
 
 
 #	Install basic packages.
-#
-#	SYSTEMD_RDEP_PKGS are packages that for one reason or the other do not get pulled when
-#	the metapackages are installed, or, that require systemd to be present and can't be installed
-#	from Devuan repositories, i.e., bluez, rng-tools so they have to be installed *before* installing
-#	the rest of the packages.
-#
-#   DUMB_DEPS_PKGS are packages that make APT implode in a million pieces as it is unable to
-#   correctly resolve these dependencies in later stages, so they have to be installed *before* installing
-#   the rest of the packages... and hope for the best.
 
 update
 

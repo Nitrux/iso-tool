@@ -7,6 +7,11 @@ set -e
 
 source "$PWD"/configs/scripts/others/apt-funcs
 
+
+#	Install packages for host.
+
+update
+
 HOST_PKGS='
 	axel
 	dkms
@@ -32,5 +37,4 @@ GRUB_PKGS='
 	grub-pc-bin
 '
 
-update
 install $HOST_PKGS $XORRISO_PKGS $GRUB_PKGS
