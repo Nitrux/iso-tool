@@ -2,4 +2,4 @@
 # Nitrux Repos #
 ################
 
-deb https://packagecloud.io/nitrux/experimental/any/ any main
+deb https://packagecloud.io/nitrux/experimental/debian/ etch main

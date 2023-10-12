@@ -13,15 +13,13 @@ source /configs/scripts/others/apt-funcs
 #	The GRUB2 packages from Debian do not work correctly with EFI.
 
 GRUB2_PKGS='
-	grub-common/any
-	grub-efi-amd64/any
-	grub-efi-amd64-bin/any
-	grub-efi-amd64-signed/any
-	grub-pc-bin/any
-	grub2-common/any
+	grub-common/etch
+	grub-efi-amd64/etch
+	grub-efi-amd64-bin/etch
+	grub-efi-amd64-signed/etch
+	grub-pc-bin/etch
+	grub2-common/etch
 '
-pkg_policy grub-efi-amd64-signed
-exit 1
 
 install $GRUB2_PKGS
 
@@ -29,9 +27,9 @@ install $GRUB2_PKGS
 #	Add packages for secure boot compatibility.
 
 SB_SHIM_PKGS='
-	sbsigntool/any
-	shim-signed/any
-	mokutil/any
+	sbsigntool/etch
+	shim-signed/etch
+	mokutil/etch
 '
 
 install $SB_SHIM_PKGS
