@@ -13,24 +13,24 @@ add_repo_keys \
 	61FC752C \
 	D104092C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
+cp /configs/files/sources/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
 
 update
 
 DEVUAN_POLKIT_PKGS='
-	libpam-elogind/excalibur
-	libpolkit-agent-1-0/excalibur
-	libpolkit-gobject-1-0/excalibur
-	libpolkit-gobject-elogind-1-0/excalibur
-	policykit-1/excalibur
-	pkexec/excalibur
-	polkitd/excalibur
+	libpam-elogind/ceres
+	libpolkit-agent-1-0/ceres
+	libpolkit-gobject-1-0/ceres
+	libpolkit-gobject-elogind-1-0/ceres
+	policykit-1/ceres
+	pkexec/ceres
+	polkitd/ceres
 '
 
 install_downgrades $DEVUAN_POLKIT_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-excalibur-repo.list
+	/etc/apt/sources.list.d/devuan-ceres-repo.list
 
 remove_repo_keys \
 	541922FB \

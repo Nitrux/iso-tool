@@ -7,4 +7,4 @@
 # Liquorix Repo #
 #################
 
-deb [arch=amd64] https://liquorix.net/debian testing main
+deb [arch=amd64] https://liquorix.net/debian unstable main

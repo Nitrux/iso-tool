@@ -52,7 +52,7 @@ bash "$config_dir/scripts/stages/00-install-host-pkgs"
 
 #	base image URL.
 
-base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Testing/rootfs.tar.xz
+base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Unstable/rootfs.tar.xz
 
 
 #	The name of the ISO image.
