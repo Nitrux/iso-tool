@@ -21,6 +21,7 @@ DEVUAN_PKGMAN_PKGS='
 	libapt-pkg6.0/ceres
 	dpkg/ceres
 	dpkg-dev/ceres
+	libdpkg-perl/ceres
 '
 
 install_downgrades $DEVUAN_PKGMAN_PKGS
