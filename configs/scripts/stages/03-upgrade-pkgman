@@ -20,6 +20,7 @@ DEVUAN_PKGMAN_PKGS='
 	apt/ceres
 	libapt-pkg6.0/ceres
 	dpkg/ceres
+	dpkg-dev/ceres
 '
 
 install_downgrades $DEVUAN_PKGMAN_PKGS
