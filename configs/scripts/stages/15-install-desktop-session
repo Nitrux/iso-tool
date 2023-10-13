@@ -48,10 +48,10 @@ MISC_PKGS='
 	phonon4qt5
 	phonon4qt5-backend-vlc
 	qt5-image-formats-plugins
-	kde-config-flatpak
-	kde-config-gtk-style
-	kio-extras
-	kwin-bismuth
+	kde-config-flatpak/trixie
+	kde-config-gtk-style/jammy
+	kio-extras/jammy
+	kwin-bismuth/sid
 	plasma-desktop
 	plasma-widgets-addons
 	kaccounts-integration
@@ -65,11 +65,8 @@ MISC_PKGS='
 	fcitx5-frontend-gtk3
 	fcitx5-frontend-gtk4
 	fcitx5-frontend-qt6
-	fcitx5-module-dbus
-	fcitx5-module-ibus
+	fcitx5-modules/jammy
 	fcitx5-module-lua
-	fcitx5-module-wayland
-	fcitx5-module-xorg
 	fcitx5-mozc
 	maliit-inputcontext-gtk2
 	maliit-inputcontext-gtk3
