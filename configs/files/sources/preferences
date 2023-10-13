@@ -50,7 +50,7 @@ Package: frameworkintegration
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
-Package: gir1.2-freedesktop
+Package: fcitx5-module-lua
 Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
@@ -471,10 +471,6 @@ Package: libtss2-esys0
 Pin: release *
 Pin-Priority: -1
 
-Package: libtag1v5-vanilla
-Pin: release *
-Pin-Priority: -1
-
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
@@ -608,10 +604,6 @@ Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 Package: pipewire-*
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: sddm
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 

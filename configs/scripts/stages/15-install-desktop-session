@@ -41,10 +41,12 @@ UNISON_DESKTOP_PKGS='
 '
 
 MISC_PKGS='
+	fcitx5-module-lua/trixie
 	kde-config-flatpak/trixie
 	kde-config-gtk-style/jammy
 	kio-extras/jammy
 	kwin-bismuth/trixie
+	libjpeg-turbo8/trixie
 '
 
 install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
