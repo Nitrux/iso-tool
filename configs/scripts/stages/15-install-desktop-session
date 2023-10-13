@@ -44,7 +44,7 @@ MISC_PKGS='
 	kde-config-flatpak/trixie
 	kde-config-gtk-style/jammy
 	kio-extras/jammy
-	kwin-bismuth/jammy
+	kwin-bismuth/trixie
 '
 
 install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
