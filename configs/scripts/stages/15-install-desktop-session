@@ -49,7 +49,7 @@ MISC_PKGS='
 	libjpeg-turbo8/trixie
 '
 
-install $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
+install_downgrades $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list \
