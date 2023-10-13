@@ -22,6 +22,7 @@ update
 #	Install these packages first because now libappimageupdate and zsync2 provide files found in other packages.
 
 ZSYNC_LIBAIU_PKGS='
+	libappimage1.0/trixie
 	libappimageupdate
 	zlib1g-dev
 	zsync2
@@ -41,7 +42,6 @@ UNISON_DESKTOP_PKGS='
 	kde-config-flatpak/trixie
 	kwin-bismuth/trixie
 	libjpeg-turbo8/trixie
-	libappimage1.0/trixie
 '
 
 NEON_PKGS='
