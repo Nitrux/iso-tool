@@ -3,455 +3,455 @@
 ############################
 
 Package: akonadi-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: baloo-kf5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: base-files
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: bluedevil
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: breeze
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: breeze-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: calamares
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: debianutils
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: dpkg
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: dpkg-dev
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: drkonqi
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: frameworkintegration
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: gir1.2-glib-2.0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: gir1.2-freedesktop
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: gutenprint-locales
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub-common
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub-efi-amd64
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub-efi-amd64-bin
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub-efi-amd64-signed
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub-pc-bin
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: grub2-common
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: gtk3-engines-breeze
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: gstreamer1.0-pipewire
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
 
 Package: kactivitymanagerd
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kaccounts-providers
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kcalc
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kde-cli-tools
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kde-cli-tools-data
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kde-config-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kded5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kdeplasma-addons-data
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kde-style-breeze
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kinit
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kio
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kio-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kinfocenter
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kmenuedit
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: khotkeys*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kross
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kscreen
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: ksystemstats
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: ktexteditor-data
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kpackagetool5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kwayland-data
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: kwin-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: latte-dock
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libboost-python1.71.0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libweather-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libcrypt1
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libcrypt-dev
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libcolorcorrect5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libdpkg-perl
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libgutenprint9
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libgutenprint-common
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkcolorpicker0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkdeco*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkf5*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkfont*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkimageannotator0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkimageannotator-common
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapicore5abi1
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapi-data
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpimgapidrive5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpm*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkpipewire*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkscreenlocker5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libksgrd9
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libksysguard*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkuserfeedbackcore1
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkwalletbackend5-5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkwin*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libkwork*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: liblayershellqtinterface5
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libnm0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libnotificationmanager1
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpam-elogind
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libplasma-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpipewire-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
 
 Package: libspa-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
 
 Package: libpinyin*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpolkit-agent-1-0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpolkit-gobject-1-0
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libpowerdevil*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libprocesscore9
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libprocessui9
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libudev-dev
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: libqt5*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: milou
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: network-manager
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: nvidia-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: oxygen-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: openresolv
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: passwd
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: packagekit
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: packagekit-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: partitionmanager
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: pipewire
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
 
 Package: pipewire-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: 700
 
 Package: plasma-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: polkitd
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: policykit-1
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: polkit-kde-agent-1
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: powerdevil*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: plymouth
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: plymouth-label
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: printer-driver-gutenprint
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: sddm
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: sbsigntool
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: systemsettings
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: qml-module-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: qml-module-org-kde-*
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: rng-tools
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 Package: xdg-desktop-portal-kde
-Pin: release o=Debian,a=testing,n=trixie
+Pin: release o=Debian,a=unstable,n=sid
 Pin-Priority: -1
 
 ###########################
