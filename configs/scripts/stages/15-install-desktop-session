@@ -37,19 +37,18 @@ NX_DESKTOP_PKG='
 '
 
 UNISON_DESKTOP_PKGS='
-
-'
-
-MISC_PKGS='
 	fcitx5-module-lua/trixie
 	kde-config-flatpak/trixie
-	kde-config-gtk-style/jammy
-	kio-extras/jammy
 	kwin-bismuth/trixie
 	libjpeg-turbo8/trixie
 '
 
-install_downgrades $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $MISC_PKGS
+NEON_PKGS='
+	kde-config-gtk-style/jammy
+	kio-extras/jammy
+'
+
+install_downgrades $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $NEON_PKGS
 
 rm \
 	/etc/apt/sources.list.d/neon-user-repo.list \
