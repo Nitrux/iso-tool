@@ -41,6 +41,56 @@ UNISON_DESKTOP_PKGS='
 '
 
 MISC_PKGS='
+	nitrux-hardware-drivers-legacy
+	gstreamer1.0-libav
+	gstreamer1.0-plugins-good
+	gstreamer1.0-pulseaudio
+	phonon4qt5
+	phonon4qt5-backend-vlc
+	qt5-image-formats-plugins
+	kde-config-flatpak
+	kde-config-gtk-style
+	kio-extras
+	kwin-bismuth but it is not installable
+	plasma-desktop
+	plasma-widgets-addons
+	kaccounts-integration
+	kio-gdrive
+	nx-clock-applet
+	nx-desktop-apps-legacy
+	nx-notifications-applet
+	nx-simplemenu-applet
+	nx-systemtray-applet
+	fcitx5-frontend-gtk2
+	fcitx5-frontend-gtk3
+	fcitx5-frontend-gtk4
+	fcitx5-frontend-qt6
+	fcitx5-module-dbus
+	fcitx5-module-ibus
+	fcitx5-module-lua
+	fcitx5-module-wayland
+	fcitx5-module-xorg
+	fcitx5-mozc
+	maliit-inputcontext-gtk2
+	maliit-inputcontext-gtk3
+	0install
+	ghostscript-x
+	gir1.2-gtk-3.0
+	gnome-keyring
+	graphviz
+	gtk2-engines-murrine
+	gtk3-engines-breeze
+	open-vm-tools-desktop
+	pulseaudio-module-bluetooth
+	qt5-gtk-platformtheme
+	rofi
+	waydroid
+	waydroid-openrc
+	zenity
+	libdbusmenu-gtk3-4
+	libgtk2.0-0
+	libnotify-bin
+	plasma-workspace-wayland
 
 '
 
