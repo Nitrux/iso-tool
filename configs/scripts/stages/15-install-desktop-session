@@ -41,6 +41,7 @@ UNISON_DESKTOP_PKGS='
 	kde-config-flatpak/trixie
 	kwin-bismuth/trixie
 	libjpeg-turbo8/trixie
+	libappimage1.0/trixie
 '
 
 NEON_PKGS='
