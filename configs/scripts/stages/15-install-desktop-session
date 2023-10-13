@@ -51,7 +51,7 @@ MISC_PKGS='
 	kde-config-flatpak
 	kde-config-gtk-style
 	kio-extras
-	kwin-bismuth but it is not installable
+	kwin-bismuth
 	plasma-desktop
 	plasma-widgets-addons
 	kaccounts-integration
