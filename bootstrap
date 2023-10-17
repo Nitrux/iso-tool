@@ -22,8 +22,8 @@ source /configs/scripts/others/apt-funcs
 
 #	Block installation of some packages.
 
-cp -r /configs/files/sources/package_preferences /etc/apt/preferences.d/package_preferences
-cp -r /configs/files/sources/repository_preferences /etc/apt/preferences.d/repository_preferences
+cp -r /configs/files/apt_preferences/package_preferences /etc/apt/preferences.d/package_preferences
+cp -r /configs/files/apt_preferences/repository_preferences /etc/apt/preferences.d/repository_preferences
 
 
 #	Make directories in /tmp.
@@ -92,14 +92,14 @@ puts "ADDING BOOTLOADER AND SECURE BOOT."
 
 #	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
 
-puts "INSTALLING EUDEV AND ELOGIND."
+puts "ADDING EUDEV AND ELOGIND."
 
 05-install-elogind-eudev
 
 
 #	Add OpenRC as init.
 
-puts "ADDING OPENRC AS INIT."
+puts "ADDING OPENRC."
 
 06-install-openrc
 
@@ -127,21 +127,21 @@ puts "ADDING PLYMOUTH."
 
 #	Adding PolicyKit packages from Devuan.
 
-puts "ADDING POLICYKIT ELOGIND."
+puts "ADDING POLICYKIT."
 
 10-install-policykit
 
 
 #	Adding NetworkManager
 
-puts "ADDING DEVUAN NM PACKAGE."
+puts "ADDING NETWORKmANAGER."
 
 11-install-networkmanager
 
 
 #	Add Nitrux meta-packages.
 
-puts "ADDING NITRUX BASE."
+puts "ADDING NITRUX BASE PACKAGES."
 
 12-install-nitrux-packages
 
@@ -226,7 +226,7 @@ puts "EDITING CONF. FILES."
 
 #	Generate initramfs.
 
-puts "UPDATING THE INITRAMFS."
+puts "UPDATING INITRAMFS."
 
 23-update-initramfs
 

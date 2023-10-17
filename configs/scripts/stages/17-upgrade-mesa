@@ -8,6 +8,8 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
+echo "Skip this step; MESA from Git is broken"
+
 # add_repo_keys \
 # 	A03A4626 > /dev/null
 
