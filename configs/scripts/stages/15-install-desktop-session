@@ -19,7 +19,7 @@ cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid
 update
 
 
-#	Install these packages first because now libappimageupdate and zsync2 provide files found in other packages.
+#	Install these packages first because libappimageupdate and zsync2 provide files found in other packages.
 
 ZSYNC_LIBAIU_PKGS='
 	libappimage1.0/trixie
@@ -42,6 +42,7 @@ UNISON_DESKTOP_PKGS='
 	kde-config-flatpak/trixie
 	kwin-bismuth/trixie
 	libjpeg-turbo8/trixie
+	kde-config-fcitx5=5.0.11-1
 '
 
 NEON_PKGS='
@@ -60,4 +61,4 @@ remove_repo_keys \
 	90E51522 \
 	1DCEE19C > /dev/null
 
-update
+# update

@@ -17,7 +17,7 @@ add_repo_keys \
 	61FC752C \
 	D104092C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
+cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 update
 
@@ -45,7 +45,7 @@ SYSTEMCTL_STANDALONE_PKG='
 install $SYSTEMCTL_STANDALONE_PKG
 
 rm \
-	/etc/apt/sources.list.d/devuan-ceres-repo.list
+	/etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 remove_repo_keys \
 	541922FB \

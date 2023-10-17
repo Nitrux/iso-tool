@@ -3,8 +3,8 @@
 #   Your changes will be overwritten   #
 ########################################
 
-#################
-# Liquorix Repo #
-#################
+################
+# Debian Repos #
+################
 
-deb [arch=amd64] https://liquorix.net/debian testing main
+deb [arch=amd64] http://deb.debian.org/debian trixie main non-free non-free-firmware contrib

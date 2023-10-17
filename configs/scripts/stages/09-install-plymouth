@@ -13,22 +13,22 @@ add_repo_keys \
 	61FC752C \
 	D104092C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.ceres /etc/apt/sources.list.d/devuan-ceres-repo.list
+cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 update
 
 DEVUAN_PLYMOUTH_PKGS='
-	plymouth/ceres
-	plymouth-label/ceres
-	plymouth-x11/ceres
-	libcairo-gobject2/ceres
-	libcairo2/ceres
+	plymouth/excalibur
+	plymouth-label/excalibur
+	plymouth-x11/excalibur
+	libcairo-gobject2/excalibur
+	libcairo2/excalibur
 '
 
 install $DEVUAN_PLYMOUTH_PKGS
 
 rm \
-	/etc/apt/sources.list.d/devuan-ceres-repo.list
+	/etc/apt/sources.list.d/devuan-excalibur-repo.list
 
 remove_repo_keys \
 	541922FB \

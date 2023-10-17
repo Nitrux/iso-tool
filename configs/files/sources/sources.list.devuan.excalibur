@@ -7,10 +7,10 @@
 # Devuan Repos #
 ################
 
-deb [arch=amd64] http://deb.devuan.org/devuan ceres main non-free contrib
+deb [arch=amd64] http://deb.devuan.org/devuan excalibur main non-free contrib
 
 #######################
 # Devuan Merged Repos #
 #######################
 
-deb [arch=amd64] http://deb.devuan.org/merged ceres main non-free non-free-firmware contrib
+deb [arch=amd64] http://deb.devuan.org/merged excalibur main non-free non-free-firmware contrib

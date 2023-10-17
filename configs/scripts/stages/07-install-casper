@@ -12,10 +12,10 @@ source /configs/scripts/others/apt-funcs
 #	Remove bionic repo, we don't need it after.
 
 CASPER_DEPS_PKGS='
-	casper/trixie
-	initramfs-tools/trixie
-	initramfs-tools-bin/trixie
-	initramfs-tools-core/trixie
+	casper=1.480
+	initramfs-tools=0.142ubuntu2.2
+	initramfs-tools-bin=0.142ubuntu2.2
+	initramfs-tools-core=0.142ubuntu2.2
 '
 
 install $CASPER_DEPS_PKGS

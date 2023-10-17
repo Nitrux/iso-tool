@@ -1,0 +1,108 @@
+############################
+#  Debian Package Priority #
+############################
+
+Package: base-files
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libfcitx5-qt1
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libfcitx5-qt-data
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libkf5*
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libpinyin*
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libqt5*
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: linux-image-rt-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-cloud-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: nvidia-*
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+############################
+#  Devuan Package Priority #
+############################
+
+Package: base-files
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libavahi-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+##########################
+#  Neon Package Priority #
+##########################
+
+Package: base-files
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
+#########################
+#  Any Package Priority #
+#########################
+
+Package: desktop-base
+Pin: release *
+Pin-Priority: -1
+
+Package: dbus-user-session
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b
+Package: k3b
+Pin: release *
+Pin-Priority: -1
+
+Package: k3b-i18n
+Pin: release *
+Pin-Priority: -1
+
+Package: libsystemd*
+Pin: release *
+Pin-Priority: -1
+
+Package: libtss2-esys0
+Pin: release *
+Pin-Priority: -1
+
+Package: plymouth-theme-spinner
+Pin: release *
+Pin-Priority: -1
+
+Package: systemd
+Pin: release *
+Pin-Priority: -1
+
+Package: systemd-sysv
+Pin: release *
+Pin-Priority: -1
+
+Package: xterm
+Pin: release *
+Pin-Priority: -1

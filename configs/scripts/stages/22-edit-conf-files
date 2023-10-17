@@ -37,10 +37,10 @@ cat /configs/files/conf/adduser.conf > /etc/adduser.conf
 #	Disable Prelink dpkg database timestamp.
 #	Run prelink.
 
-sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
-sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
+# sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
+# sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
 
-prelink -amR
+# prelink -amR
 
 
 #	Add variable to PAM for Firefox to work with touchscreens in Wayland.

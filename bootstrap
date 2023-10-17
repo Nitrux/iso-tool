@@ -22,7 +22,8 @@ source /configs/scripts/others/apt-funcs
 
 #	Block installation of some packages.
 
-cp -r /configs/files/sources/preferences /etc/apt/preferences
+cp -r /configs/files/sources/package_preferences /etc/apt/preferences.d/package_preferences
+cp -r /configs/files/sources/repository_preferences /etc/apt/preferences.d/repository_preferences
 
 
 #	Make directories in /tmp.

@@ -16,7 +16,6 @@ upgrade
 CHROOT_BASIC_PKGS='
 	apt-transport-https
 	apt-utils
-	appstream
 	axel
 	curl
 	dirmngr
