@@ -2,7 +2,7 @@
 
 set -xe
 
-dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path $@; }
+dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path "$@"; }
 
 
 #	Remove Debian bits.
