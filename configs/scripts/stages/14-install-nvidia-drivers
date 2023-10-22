@@ -16,7 +16,7 @@ cp /configs/files/sources/sources.list.gpu.ppa /etc/apt/sources.list.d/gpu-ppa-r
 update
 
 NVIDIA_DRV_PKGS='
-	nvidia-driver-535
+	nvidia-driver-545
 	nvidia-settings
 	nvidia-prime
 '
