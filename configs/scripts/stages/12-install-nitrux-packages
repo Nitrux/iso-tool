@@ -16,6 +16,8 @@ NITRUX_BASE_PKGS='
 
 NITRUX_HW_PKGS='
 	nitrux-hardware-drivers-legacy
+	hplip
+	dkms
 '
 
-install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS hplip dkms
+install $NITRUX_BASE_PKGS $NITRUX_HW_PKGS
