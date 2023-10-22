@@ -14,7 +14,9 @@ mkdir -p /lib/systemd/system-sleep
 
 MISC_HW_PKGS='
 	broadcom-sta-dkms
+	hplip
 	displaylink-driver
+	dkms
 '
 
 install $MISC_HW_PKGS
