@@ -9,8 +9,12 @@ source /configs/scripts/others/apt-funcs
 
 
 #	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
+#
 #	To remove systemd, we have to replace libsystemd0, udev, elogind and provide systemctl. However, neither of them
 #	are available to install from other sources than Devuan except for systemctl.
+#
+#   In Devuan Daedalus and newer, libelogind0 does not declare to provide libsystemd0 as previously. So, we need to use an empty package to
+#   make dpkg stfu.
 
 add_repo_keys \
 	541922FB \
