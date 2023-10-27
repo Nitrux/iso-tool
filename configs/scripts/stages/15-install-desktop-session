@@ -46,6 +46,7 @@ UNISON_DESKTOP_PKGS='
 '
 
 NEON_PKGS='
+	fcitx5/jammy
 	kde-config-gtk-style/jammy
 	kio-extras/jammy
 '
