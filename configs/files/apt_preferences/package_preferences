@@ -6,6 +6,18 @@ Package: base-files
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
+Package: libfcitx5config6
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libfcitx5core7
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: libfcitx5utils2
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
 Package: libfcitx5-qt1
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
