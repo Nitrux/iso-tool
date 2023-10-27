@@ -38,6 +38,7 @@ NX_DESKTOP_PKG='
 '
 
 UNISON_DESKTOP_PKGS='
+	fcitx5/trixie
 	fcitx5-module-lua/trixie
 	kde-config-flatpak/trixie
 	kwin-bismuth/trixie
@@ -46,7 +47,6 @@ UNISON_DESKTOP_PKGS='
 '
 
 NEON_PKGS='
-	fcitx5/jammy
 	kde-config-gtk-style/jammy
 	kio-extras/jammy
 '
