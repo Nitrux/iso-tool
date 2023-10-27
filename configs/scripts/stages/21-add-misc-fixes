@@ -184,8 +184,8 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKi
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 #	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
-KDEPIM_LIB="5.24.1"
-KF5_LIB="5.110.0"
+KDEPIM_LIB="5.24.2"
+KF5_LIB="5.111.0"
 
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
@@ -218,7 +218,7 @@ chmod -x /opt/{1,2,3}
 #	Add link for applet window buttons.
 #	NOTE: Update the link on every new release of Plasma.
 
-PLASMA_LIB="5.27.8"
+PLASMA_LIB="5.27.9"
 
 create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
