@@ -12,7 +12,7 @@ source /configs/scripts/others/apt-funcs
 
 CALAMARES_PKGS='
 	efibootmgr
-	calamares
+	calamares/jammy
 	calamares-qml-settings-nitrux
 	dosfstools
 	squashfs-tools
