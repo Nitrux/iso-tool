@@ -20,7 +20,7 @@ update
 
 CALAMARES_PKGS='
 	efibootmgr
-	calamares/jammy
+	calamares=3.2.62-0xneon+22.04+jammy+release+build15+nitrux
 	calamares-qml-settings-nitrux
 	dosfstools
 	squashfs-tools
