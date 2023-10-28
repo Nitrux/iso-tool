@@ -196,8 +196,11 @@ create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib
 
 
 #	*And* create symlink for libboost-python for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
+#   *AND* create symlink for libpython3.11 for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
 
 create_symlink /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_python310.so.1.74.0
+create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1.0 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1.0
+create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1
 
 
 #	*And* create symlink for libtesseract for Pix.
