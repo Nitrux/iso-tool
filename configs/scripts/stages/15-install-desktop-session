@@ -44,6 +44,7 @@ UNISON_DESKTOP_PKGS='
 	kwin-bismuth/trixie
 	libjpeg-turbo8/trixie
 	kde-config-fcitx5=5.0.11-1
+	overlayroot=0.47ubuntu1
 '
 
 NEON_PKGS='
