@@ -34,10 +34,6 @@ Package: linux-image-cloud-amd64
 Pin: release *
 Pin-Priority: -1
 
-Package: linux-image-amd64
-Pin: release *
-Pin-Priority: -1
-
 Package: nvidia-*
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
