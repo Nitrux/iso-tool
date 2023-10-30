@@ -16,47 +16,8 @@ cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix
 update
 
 DEFAULT_KERNEL_PKG='
-	linux-image-liquorix
-	linux-headers-6.4.14-1-liquorix-amd64
-	linux-headers-6.4.15-1-liquorix-amd64
 	linux-headers-6.4.15-2-liquorix-amd64
-	linux-headers-6.4.2-1-liquorix-amd64
-	linux-headers-6.4.3-1-liquorix-amd64
-	linux-headers-6.4.4-1-liquorix-amd64
-	linux-headers-6.4.5-1-liquorix-amd64
-	linux-headers-6.4.6-1-liquorix-amd64
-	linux-headers-6.4.7-1-liquorix-amd64
-	linux-headers-6.4.8-1-liquorix-amd64
-	linux-headers-6.4.9-1-liquorix-amd64
-	linux-headers-6.5.3-2-liquorix-amd64
-	linux-headers-6.5.4-1-liquorix-amd64
-	linux-headers-6.5.4-2-liquorix-amd64
-	linux-headers-6.5.5-1-liquorix-amd64
-	linux-headers-6.5.5-2-liquorix-amd64
-	linux-headers-6.5.6-1-liquorix-amd64
-	linux-headers-6.5.7-1-liquorix-amd64
-	linux-headers-6.5.8-1-liquorix-amd64
-	linux-headers-6.5.9-1-liquorix-amd64
-	linux-image-6.4.14-1-liquorix-amd64
-	linux-image-6.4.15-1-liquorix-amd64
 	linux-image-6.4.15-2-liquorix-amd64
-	linux-image-6.4.2-1-liquorix-amd64
-	linux-image-6.4.3-1-liquorix-amd64
-	linux-image-6.4.4-1-liquorix-amd64
-	linux-image-6.4.5-1-liquorix-amd64
-	linux-image-6.4.6-1-liquorix-amd64
-	linux-image-6.4.7-1-liquorix-amd64
-	linux-image-6.4.8-1-liquorix-amd64
-	linux-image-6.4.9-1-liquorix-amd64
-	linux-image-6.5.3-2-liquorix-amd64
-	linux-image-6.5.4-1-liquorix-amd64
-	linux-image-6.5.4-2-liquorix-amd64
-	linux-image-6.5.5-1-liquorix-amd64
-	linux-image-6.5.5-2-liquorix-amd64
-	linux-image-6.5.6-1-liquorix-amd64
-	linux-image-6.5.7-1-liquorix-amd64
-	linux-image-6.5.8-1-liquorix-amd64
-	linux-image-6.5.9-1-liquorix-amd64
 '
 
 install $DEFAULT_KERNEL_PKG
