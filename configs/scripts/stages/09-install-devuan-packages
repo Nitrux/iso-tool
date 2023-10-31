@@ -17,6 +17,16 @@ cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/
 
 update
 
+DEVUAN_PLYMOUTH_PKGS='
+	plymouth/excalibur
+	plymouth-label/excalibur
+	plymouth-x11/excalibur
+	libcairo-gobject2/excalibur
+	libcairo2/excalibur
+'
+
+install $DEVUAN_PLYMOUTH_PKGS
+
 DEVUAN_POLKIT_PKGS='
 	libpam-elogind/excalibur
 	libpolkit-agent-1-0/excalibur
@@ -28,6 +38,13 @@ DEVUAN_POLKIT_PKGS='
 '
 
 install $DEVUAN_POLKIT_PKGS
+
+DEVUAN_NM_PKGS='
+	network-manager/excalibur
+'
+
+install $DEVUAN_NM_PKGS
+
 
 rm \
 	/etc/apt/sources.list.d/devuan-excalibur-repo.list
