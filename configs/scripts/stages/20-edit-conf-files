@@ -18,16 +18,6 @@ cat /configs/files/conf/casper.conf > /etc/casper.conf
 cat /configs/files/other/motd > /etc/motd
 
 
-#	Add modules to load at boot time.
-
-printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules
-
-
-#	Add modules to initramfs.
-
-printf '%s\n' hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
-
-
 #	Use our configuration for adduser because Debian's broken for some reason.
 
 cat /configs/files/conf/adduser.conf > /etc/adduser.conf

@@ -34,4 +34,20 @@ install $OPENRC_CONFIG
 cp /configs/files/initramfs/crypttab-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
 cp /configs/files/initramfs/vfio-initramfs-hook.sh /usr/share/initramfs-tools/hooks/
 
+
+#   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
+
+cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+
+
+#	Add modules to initramfs.
+
+printf '%s\n' hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
+
+
+#	Add modules to load at boot time.
+
+printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules
+
+
 update-initramfs -c -k all
