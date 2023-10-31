@@ -16,8 +16,7 @@ cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix
 update
 
 DEFAULT_KERNEL_PKG='
-	linux-headers-6.4.15-2-liquorix-amd64
-	linux-image-6.4.15-2-liquorix-amd64
+	linux-image-liquorix
 '
 
 install $DEFAULT_KERNEL_PKG

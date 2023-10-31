@@ -13,9 +13,9 @@ source /configs/scripts/others/apt-funcs
 
 CASPER_DEPS_PKGS='
 	casper=1.486
-	initramfs-tools=0.142ubuntu2
-	initramfs-tools-bin=0.142ubuntu2
-	initramfs-tools-core=0.142ubuntu2
+	initramfs-tools=0.142ubuntu15
+	initramfs-tools-bin=0.142ubuntu15
+	initramfs-tools-core=0.142ubuntu15
 '
 
 install $CASPER_DEPS_PKGS
