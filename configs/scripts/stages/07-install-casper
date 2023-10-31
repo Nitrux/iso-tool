@@ -8,8 +8,7 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
-#	Add casper packages from bionic.
-#	Remove bionic repo, we don't need it after.
+#	Add casper.
 
 CASPER_DEPS_PKGS='
 	casper=1.486
