@@ -122,7 +122,7 @@ puts "ADDING KERNEL."
 
 puts "ADDING PACKAGES FROM DEVUAN."
 
-09-install-devuan packages
+09-install-devuan-packages
 
 
 #	Add Nitrux meta-packages.
