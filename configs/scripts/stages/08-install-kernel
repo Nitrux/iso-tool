@@ -9,14 +9,16 @@ source /configs/scripts/others/apt-funcs
 
 
 add_repo_keys \
-	9AE4078033F8024D > /dev/null
+	9AE4078033F8024D \
+	9352A0B69B72E6DF > /dev/null
 
 cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix-repo.list
 
 update
 
 DEFAULT_KERNEL_PKG='
-	linux-image-liquorix
+	linux-headers-6.4.15-2-liquorix-amd64
+	linux-image-6.4.15-2-liquorix-amd64
 '
 
 install $DEFAULT_KERNEL_PKG
@@ -25,6 +27,7 @@ rm \
 	/etc/apt/sources.list.d/liquorix-repo.list
 
 remove_repo_keys \
-	9AE4078033F8024D > /dev/null
+	9AE4078033F8024D \
+	9352A0B69B72E6DF > /dev/null
 
 update
