@@ -9,7 +9,7 @@ source /configs/scripts/others/apt-funcs
 
 
 rm \
-	/etc/apt/preferences \
+	/etc/apt/preferences.d/* \
 	/etc/apt/sources.list \
 	/etc/apt/sources.list.d/* \
 	/usr/share/keyrings/* || true
