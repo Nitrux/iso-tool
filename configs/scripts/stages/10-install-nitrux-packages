@@ -9,7 +9,7 @@ source /configs/scripts/others/apt-funcs
 
 
 NITRUX_BASE_PKGS='
-	base-files=2023.10.17+nitrux-legacy
+	base-files=2023.10.31+nitrux-legacy
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
