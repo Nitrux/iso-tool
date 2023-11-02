@@ -116,4 +116,4 @@ check_initramfs_contents() {
 
 # Search for multiple files or directories in the following way: "item_1" "item_2" "item_3"
 
-check_initramfs_contents "overlayroot" "overlay"
+check_initramfs_contents "overlay"
