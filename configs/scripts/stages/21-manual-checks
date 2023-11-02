@@ -98,7 +98,7 @@ check_initramfs_contents() {
         for filename in "${filenames[@]}"; do
             echo "Checking for $filename in initramfs $initramfs_file..."
             local file_exists
-            file_exists=$(lsinitramfs "$initramfs_file" | grep "$filename")
+            file_exists=$(lsinitramfs "$initramfs_file" | grep -w "$filename")
             if [ -n "$file_exists" ]; then
                 echo "$filename exists in initramfs $initramfs_file."
                 echo "Paths containing $filename:"
@@ -116,4 +116,4 @@ check_initramfs_contents() {
 
 # Search for multiple files or directories in the following way: "item_1" "item_2" "item_3"
 
-check_initramfs_contents "overlay"
+check_initramfs_contents "overlayroot" "overlay"
