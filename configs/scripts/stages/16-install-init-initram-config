@@ -31,8 +31,8 @@ install $OPENRC_CONFIG
 
 #	Add hook scripts for initram generation.
 
-cp /configs/files/initramfs/crypttab-initramfs-hook /usr/share/initramfs-tools/hooks/
-cp /configs/files/initramfs/vfio-initramfs-hook /usr/share/initramfs-tools/hooks/
+cp /configs/files/initramfs-tools/hooks/crypttab-initramfs-hook /usr/share/initramfs-tools/hooks/
+cp /configs/files/initramfs-tools/hooks/vfio-initramfs-hook /usr/share/initramfs-tools/hooks/
 
 
 #   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
