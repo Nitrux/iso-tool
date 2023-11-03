@@ -19,5 +19,5 @@ esac
 # shellcheck source=/dev/null
 . /usr/share/initramfs-tools/hook-functions
 
-# Copy the file
+# Copy the file to the initramfs
 copy_file /etc/crypttab /etc
