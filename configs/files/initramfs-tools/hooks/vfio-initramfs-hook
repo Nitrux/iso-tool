@@ -20,4 +20,4 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 
 # Copy the script to the initramfs
-copy_exec /usr/bin/vfio-override "${DESTDIR}/usr/bin/vfio-override"
+copy_exec /usr/bin/vfio-override /bin/

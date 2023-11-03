@@ -20,4 +20,4 @@ esac
 . /usr/share/initramfs-tools/hook-functions
 
 # Copy the file
-copy_file /etc/crypttab "${DESTDIR}/cryptroot/crypttab"
+copy_file /etc/crypttab /etc
