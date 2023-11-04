@@ -1,0 +1,15 @@
+#!/bin/sh
+
+PREREQS=""
+case $1 in
+        prereqs) echo "${PREREQS}"; exit 0;;
+esac
+
+# shellcheck source=/dev/null
+. /scripts/functions
+
+# Assuming the real root filesystem is mounted under /root.
+# And the upper and work directories are /overlay/upper and /overlay/work on the real root filesystem.
+
+# Mount the overlay filesystem
+mount -t overlay overlay -o lowerdir=/root,upperdir=/root/overlay/upper,workdir=/root/overlay/work /root/overlay/merge
