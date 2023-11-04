@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+PREREQ=""
+
+prereqs()
+{
+        echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+# shellcheck source=/dev/null
+. /usr/share/initramfs-tools/hook-functions
+
+# Copy the file to the initramfs
+copy_file /etc/crypttab "${DESTDIR}/cryptroot/crypttab"

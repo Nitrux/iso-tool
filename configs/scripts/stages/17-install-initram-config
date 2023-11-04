@@ -8,6 +8,11 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
+#	Add hook scripts for initramfs.
+
+cp -r /configs/files/initramfs-tools/hooks/* /usr/share/initramfs-tools/hooks/
+
+
 #   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
 
 cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
