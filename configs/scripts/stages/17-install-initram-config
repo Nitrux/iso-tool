@@ -1,0 +1,32 @@
+#! /bin/bash
+
+set -e
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Add hook scripts for initramfs.
+
+cp -r /configs/files/initramfs-tools/hooks/* /usr/share/initramfs-tools/hooks/
+cp -r /configs/files/initramfs-tools/scripts/* /usr/share/initramfs-tools/scripts/
+
+
+#   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
+
+cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+
+
+#	Add modules to initramfs.
+
+printf '%s\n' hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
+
+
+#	Add modules to load at boot time.
+
+printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules
+
+
+update-initramfs -c -k all
