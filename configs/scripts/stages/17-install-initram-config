@@ -21,7 +21,7 @@ cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scri
 
 #	Add modules to initramfs.
 
-printf '%s\n' hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
+printf '%s\n' hv_utils hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
 
 
 #	Add modules to load at boot time.
