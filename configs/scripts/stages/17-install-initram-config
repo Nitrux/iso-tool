@@ -26,7 +26,7 @@ printf '%s\n' hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-to
 
 #	Add modules to load at boot time.
 
-printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules
+printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules-load.d/modules-boot-time.conf
 
 
 update-initramfs -c -k all
