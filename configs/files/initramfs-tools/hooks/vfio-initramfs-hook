@@ -1,20 +1,11 @@
 #!/bin/sh
 set -e
 
-PREREQ=""
-
-prereqs()
-{
-        echo "$PREREQ"
-}
-
+PREREQS=""
 case $1 in
-# get pre-requisites
-prereqs)
-        prereqs
-        exit 0
-        ;;
+        prereqs) echo "${PREREQS}"; exit 0;;
 esac
+
 
 # shellcheck source=/dev/null
 . /usr/share/initramfs-tools/hook-functions
