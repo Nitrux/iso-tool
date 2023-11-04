@@ -1,9 +1,19 @@
 #!/bin/sh
 set -e
 
-PREREQS=""
+PREREQ=""
+
+prereqs()
+{
+        echo "$PREREQ"
+}
+
 case $1 in
-        prereqs) echo "${PREREQS}"; exit 0;;
+# get pre-requisites
+prereqs)
+        prereqs
+        exit 0
+        ;;
 esac
 
 # shellcheck source=/dev/null

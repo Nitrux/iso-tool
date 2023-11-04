@@ -1,8 +1,19 @@
 #!/bin/sh
+set -e
 
-PREREQS=""
+PREREQ=""
+
+prereqs()
+{
+        echo "$PREREQ"
+}
+
 case $1 in
-        prereqs) echo "${PREREQS}"; exit 0;;
+# get pre-requisites
+prereqs)
+        prereqs
+        exit 0
+        ;;
 esac
 
 #   Use findfs to find the device name of the root partition based on its label.
