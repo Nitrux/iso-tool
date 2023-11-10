@@ -278,3 +278,8 @@ else
    passwd -l root
    echo "Root account has been disabled"
 fi
+
+
+#   Create directories to mount the overlay.
+
+mkdir -p /overlay/{upper,work,merge}

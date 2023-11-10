@@ -88,3 +88,32 @@ check_file_contents() {
 
 check_file_contents "/etc/sddm.conf.d/kde_settings.conf"
 check_file_contents "/etc/sddm.conf"
+
+check_initramfs_contents() {
+    local filenames=("$@")
+    local initramfs_file
+    initramfs_file="/boot/initrd.img-$(uname -r)"
+
+    if [ -f "$initramfs_file" ]; then
+        for filename in "${filenames[@]}"; do
+            echo "Checking for $filename in initramfs $initramfs_file..."
+            local file_exists
+            file_exists=$(lsinitramfs "$initramfs_file" | grep -w "$filename")
+            if [ -n "$file_exists" ]; then
+                echo "$filename exists in initramfs $initramfs_file."
+                echo "Paths containing $filename:"
+                echo "=========================="
+                echo "$file_exists"
+                echo "=========================="
+            else
+                echo "$filename does not exist in initramfs $initramfs_file."
+            fi
+        done
+    else
+        echo "Error: Initramfs file '$initramfs_file' not found."
+    fi
+}
+
+# Search for multiple files or directories in the following way: "item_1" "item_2" "item_3"
+
+check_initramfs_contents "overlay"

@@ -42,11 +42,11 @@ Package: nvidia-*
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: overlayroot
+Package: rsyslog
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: rsyslog
+Package: xfsprogs
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 

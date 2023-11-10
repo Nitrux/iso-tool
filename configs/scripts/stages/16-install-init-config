@@ -1,0 +1,29 @@
+#! /bin/bash
+
+set -e
+
+#	Source APT commands as functions.
+#	shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
+
+#	Check currently installed services.
+
+ls -lh \
+	/etc/runlevels/{boot,default,nonetwork,off,recovery,shutdown,sysinit} \
+	/etc/init.d
+
+
+#	Add OpenRC configuration.
+#
+#	Due to how the upstream openrc package "works," we need to put this package at the end of the build process.
+#	Otherwise, we end up with an unbootable system.
+#
+#	See https://github.com/Nitrux/openrc-config/issues/1
+
+OPENRC_CONFIG='
+	openrc-config
+'
+
+install $OPENRC_CONFIG

@@ -167,25 +167,32 @@ puts "UPGRADE MESA."
 15-upgrade-mesa
 
 
-#	Add OpenRC configuration and generate initramfs.
+#	Add OpenRC configuration.
 
-puts "ADDING OPENRC CONFIG. AND GENERATE INITRAM"
+puts "ADDING OPENRC CONFIG."
 
-16-install-init-initram-config
+16-install-init-config
+
+
+#	Add initramfs scripts.
+
+puts "ADDING INITRAM SCRIPTS"
+
+17-install-initram-config
 
 
 #	Add Live user configuration.
 
 puts "ADDING LIVE USER CONFIG."
 
-17-install-live-config
+18-install-live-config
 
 
 #	Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
 
-18-remove-build-sources
+19-remove-build-sources
 
 
 ####################################
@@ -199,7 +206,7 @@ puts "REMOVE BUILD SOURCES."
 
 puts "ADDING MISC. FIXES."
 
-19-add-misc-fixes
+20-add-misc-fixes
 
 
 #	Changes specific to this image. If they can be put in a package, do so.
@@ -207,7 +214,7 @@ puts "ADDING MISC. FIXES."
 
 puts "EDITING CONF. FILES."
 
-20-edit-conf-files
+21-edit-conf-files
 
 
 #	Create a list of installed packages at end.
@@ -223,7 +230,7 @@ list_installed_text_end
 
 puts "PERFORM MANUAL CHECKS."
 
-21-manual-checks
+22-manual-checks
 
 
 puts "EXITING BOOTSTRAP."
