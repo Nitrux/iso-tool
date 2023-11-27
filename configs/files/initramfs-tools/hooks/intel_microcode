@@ -1,0 +1,161 @@
+#!/bin/sh
+# intel-microcode initramfs-tools hook script version 3
+# Copyright (C) 2012-2016 Henrique de Moraes Holschuh <hmh@debian.org>
+# Released under the GNU GPL v2 or later license
+#
+# Generates a copy of the Intel microcode (by default tailored to the
+# running system), and installs it in the early initramfs.
+#
+# iucode_tool v1.0 or later is required.
+#
+
+PREREQ=""
+IUCODE_CONFIG=/etc/default/intel-microcode
+
+prereqs()
+{
+   echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+   prereqs
+   exit 0
+   ;;
+esac
+
+. /usr/share/initramfs-tools/hook-functions
+
+verbose()
+{
+	if [ "${verbose}" = "y" ] ; then
+		echo "intel-microcode: $*"
+	fi
+	:
+}
+
+if [ "${verbose}" = "y" ] ; then
+	IUCODE_TOOL_OPTIONS="-l"
+else
+	IUCODE_TOOL_OPTIONS="-q"
+fi
+
+IUCODE_TOOL=$(command -v iucode_tool)
+if [ -z "${IUCODE_TOOL}" ] && [ -x /usr/sbin/iucode_tool ] ; then
+	IUCODE_TOOL=/usr/sbin/iucode_tool
+fi
+
+IUCODE_FW_DIR=/lib/firmware/intel-ucode
+if [ "$MODULES" = "most" ]; then
+	IUCODE_TOOL_INITRAMFS=early
+	IUCODE_TOOL_SCANCPUS=no
+else
+	IUCODE_TOOL_INITRAMFS=auto
+	IUCODE_TOOL_SCANCPUS=yes
+fi
+IUCODE_TOOL_EXTRA_OPTIONS=
+
+[ -r ${IUCODE_CONFIG} ] && . ${IUCODE_CONFIG}
+
+[ -z "${IUCODE_TOOL_INITRAMFS}" ] && IUCODE_TOOL_INITRAMFS=no
+
+case "${IUCODE_TOOL_INITRAMFS}" in
+    no|0)
+	verbose "intel-microcode: disabled by ${IUCODE_CONFIG}"
+	exit 0
+	;;
+    auto|early)
+	;;
+    yes|1)
+	IUCODE_TOOL_INITRAMFS=early
+	echo "W: intel-microcode: initramfs mode not supported, using early initramfs mode" >&2
+	;;
+    *)
+	echo "E: intel-microcode: invalid IUCODE_TOOL_INITRAMFS, using automatic mode" >&2
+	IUCODE_TOOL_INITRAMFS=auto
+esac
+
+# don't do anything unless there's an Intel processor in the system in auto mode
+if [ "${IUCODE_TOOL_INITRAMFS}" = "auto" ] ; then
+	grep -q "^vendor_id[[:blank:]]*:[[:blank:]]*.*GenuineIntel" /proc/cpuinfo || {
+		verbose "no Intel processors detected, nothing to do"
+		exit 0
+	}
+fi
+
+# we require iucode_tool, but something is broken
+if [ ! -x "${IUCODE_TOOL}" ] ; then
+	echo "E: intel-microcode: cannot run iucode_tool!" >&2
+	exit 0
+fi
+
+if [ "${IUCODE_TOOL_SCANCPUS}" != "yes" ] ; then
+	verbose "adding microcode for either all or selected Intel processor models"
+else
+	verbose "adding microcode for currently online and selected Intel processors"
+	grep -q cpu/cpuid /proc/devices || modprobe -q cpuid
+	IUCODE_TOOL_OPTIONS="${IUCODE_TOOL_OPTIONS} --scan-system"
+fi
+
+# paranoia
+[ -z "${DESTDIR}" ] && {
+	echo "E: intel-microcode: DESTDIR empty!" >&2
+	exit 1
+}
+[ -z "${IUCODE_FW_DIR}" ] && {
+	echo "E: intel-microcode: IUCODE_FW_DIR empty!" >&2
+	exit 1
+}
+
+# include the microcode module in the initramfs for logging purposes, but
+# ensure it will have no microcode data files to load.  This is also a safety
+# net: we don't want it to be acidentally loaded outside the initramfs.
+#
+# This shouldn't be expensive, as the in-kernel firmware loader is quite
+# fast at detecting missing data files and doesn't wait for them.
+#
+# note: force_load will load a blacklisted module. We depend on that behavior.
+#
+# For 4.4 and later kernels, the microcode driver cannot be a module and will
+# be built-in.
+# Manual kernel version check without dpkg
+kernel_version=$(uname -r | cut -d. -f1,2)
+min_version="4.4"
+
+if [ "$(printf '%s\n' "$min_version" "$kernel_version" | sort -V | head -n1)" != "$min_version" ]; then
+    [ -d "${DESTDIR}${IUCODE_FW_DIR}" ] && rm -fr "${DESTDIR}${IUCODE_FW_DIR}"
+
+    manual_add_modules microcode && {
+        # force_load has broken semantics when the .ko file is missing
+        find "${DESTDIR}/${MODULESDIR}" -type f -print | grep -qc '/microcode\.ko$' && {
+            verbose "modular microcode driver detected"
+            force_load microcode
+        }
+    }
+fi
+
+# generate early initramfs image and prepend
+verbose "using early initramfs microcode update mode..."
+EFW=$(mktemp "${TMPDIR:-/var/tmp}/mkinitramfs-EFW_XXXXXXXXXX") || {
+	echo "E: intel-microcode: cannot create temporary file" >&2
+	exit 1
+    }
+( find /usr/share/misc -maxdepth 1 -type f -name 'intel-microcode*' -print0 ;
+  find "${IUCODE_FW_DIR}" -maxdepth 0 -type d -print0 ) 2>/dev/null \
+| xargs -0 -r -x ${IUCODE_TOOL} ${IUCODE_TOOL_OPTIONS} \
+		--write-earlyfw="${EFW}" --overwrite \
+		${IUCODE_TOOL_EXTRA_OPTIONS} \
+&& prepend_earlyinitramfs "${EFW}" && {
+	rm "${EFW}"
+	exit 0
+}
+
+# usually we get here when initramfs-tools is missing prepend_earlyinitramfs()
+# or when iucode_tool does not support --write-earlyfw, i.e. when old versions
+# of these tools are installed.
+
+rm "${EFW}" || true
+
+echo "E: intel-microcode: failed to create or prepend the early initramfs to the initramfs" >&2
+
+:

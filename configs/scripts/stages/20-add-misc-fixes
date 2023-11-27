@@ -1,9 +1,9 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 set -e
 
 
-# Function to create symlinks.
+#   Function to create symlinks.
 
 create_symlink() {
     local source="$1"
@@ -13,13 +13,13 @@ create_symlink() {
 }
 
 
-# Remove unwanted kernel and initrd links from /boot and /.
+#   Remove unwanted kernel and initrd links from /boot and /.
 
 rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
       /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
 
 
-# Ensure the links in / point to the files in /boot.
+#   Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
 vmlinuz_pattern="vmlinuz-*liquorix-*"
@@ -43,12 +43,12 @@ else
 fi
 
 
-# Create necessary directories to put files for kboot.
+#   Create necessary directories to put files for kboot.
 
 mkdir -p /kboot/{debian,mainline,liquorix}
 
 
-# Move and create soft links for liquorix kernel files.
+#   Move and create soft links for liquorix kernel files.
 
 for file in /boot/vmlinuz-*liquorix-amd64; do
     create_symlink "$file" "/kboot/liquorix/vmlinuz"
@@ -58,7 +58,7 @@ for file in /boot/initrd.img-*liquorix-amd64; do
     create_symlink "$file" "/kboot/liquorix/initrd.img"
 done
 
-# Move and create soft links for debian kernel files.
+#   Move and create soft links for debian kernel files.
 
 # for file in /boot/vmlinuz-*amd64; do
 #     filename=$(basename "$file")
@@ -91,7 +91,7 @@ done
 # done
 
 
-# Move and create soft links for mainline kernel files.
+#   Move and create soft links for mainline kernel files.
 
 # for file in /boot/vmlinuz-*generic; do
 #     filename=$(basename "$file")
@@ -124,47 +124,47 @@ done
 # done
 
 
-# Add Flathub.
+#   Add Flathub.
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
-# Create symlinks for MauiKit FileBrowsing 3.0.1.
+#   Create symlinks for MauiKit FileBrowsing 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so"
 
 
-# Create symlinks for MauiKit TextEditor 3.0.1.
+#   Create symlinks for MauiKit TextEditor 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so"
 
 
-# Create symlinks for MauiKit ImageTools 3.0.1.
+#   Create symlinks for MauiKit ImageTools 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
 
 
-# Create symlinks for MauiKit Accounts 3.0.1.
+#   Create symlinks for MauiKit Accounts 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
 
 
-# Create symlinks for MauiKit Documents 3.0.1.
+#   Create symlinks for MauiKit Documents 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
 
 
-# Create symlinks for MauiKit Calendar 3.0.1.
+#   Create symlinks for MauiKit Calendar 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
 
 
-# Create symlinks for MauiKit Terminal 3.0.1.
+#   Create symlinks for MauiKit Terminal 3.0.1.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so"
 
 
-# Create symlinks for Maui Core Libraries 0.6.0.
+#   Create symlinks for Maui Core Libraries 0.6.0.
 
 # create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0"
 # create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so"
@@ -280,6 +280,56 @@ else
 fi
 
 
-#   Create directories to mount the overlay.
+#   Replace /usr/lib/grub/grub-sort-version with a version that doesn't use apt.pkg won't complain about it and will generate a usable boot menu.
 
-mkdir -p /overlay/{upper,work,merge}
+$(which cp) /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
+
+
+#   Create directories for aesthethic FHS.
+
+BASE_DIR="/System"
+
+declare -a DIRS=(
+    "${BASE_DIR}/Boot"
+    "${BASE_DIR}/Binaries/Administrative"
+    "${BASE_DIR}/Binaries/Standard"
+    "${BASE_DIR}/Binaries/Optional"
+    "${BASE_DIR}/Configuration"
+    "${BASE_DIR}/Devices"
+    "${BASE_DIR}/Filesystems/External"
+    "${BASE_DIR}/Filesystems/Internal"
+    "${BASE_DIR}/Libraries"
+    "${BASE_DIR}/Shareable"
+    "${BASE_DIR}/Variable"
+    "/Users"
+)
+
+for dir in "${DIRS[@]}"; do
+    echo "Creating directory: $dir"
+    mkdir -p "$dir" || echo "Failed to create $dir"
+done
+
+
+#   Hide original FHS directories.
+
+$(which cp) /configs/files/other/hidden /.hidden
+
+
+#   Replace update-grub with our version that doesn't break OUR stuff.
+
+$(which cp) /configs/scripts/others/update-grub /usr/sbin/update-grub
+
+
+#   Replace this line in mkinitramfs so it shuts up about dpkg.
+
+sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
+
+
+#   Replace user-setup-apply so that it shuts up about dpkg.
+
+$(which cp) /configs/scripts/others/user-setup-apply /usr/lib/user-setup/user-setup-apply
+
+
+#   Change path where NetworkManager saves wireless connections.
+
+echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf

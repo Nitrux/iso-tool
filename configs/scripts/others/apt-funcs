@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 #	Wrap APT commands in functions.
 

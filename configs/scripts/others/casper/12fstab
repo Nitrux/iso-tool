@@ -1,0 +1,43 @@
+#!/bin/sh
+
+PREREQ=""
+DESCRIPTION="Configuring fstab..."
+FSTAB=/root/etc/fstab
+
+prereqs()
+{
+       echo "$PREREQ"
+}
+
+case $1 in
+# get pre-requisites
+prereqs)
+       prereqs
+       exit 0
+       ;;
+esac
+
+. /scripts/casper-functions
+
+log_begin_msg "$DESCRIPTION"
+
+cat > $FSTAB <<EOF
+/dev /System/Devices none defaults,bind 0 0
+/boot /System/Boot none defaults,bind 0 0
+/etc /System/Configuration none defaults,bind 0 0
+/home /Users none defaults,bind 0 0
+/media /System/Filesystems/External none defaults,bind 0 0
+/mnt /System/Filesystems/Internal none defaults,bind 0 0
+/opt /System/Binaries/Optional none defaults,bind 0 0
+/usr/bin  /System/Binaries/Standard none defaults,bind 0 0
+/usr/sbin  /System/Binaries/Administrative none defaults,bind 0 0
+/usr/lib  /System/Libraries none defaults,bind 0 0
+/usr/share  /System/Shareable none defaults,bind 0 0
+/var  /System/Variable none defaults,bind 0 0
+overlay / overlay rw 0 0
+tmpfs /tmp tmpfs nosuid,nodev 0 0
+EOF
+
+rm -f /root/etc/rcS.d/S*checkroot.sh
+
+log_end_msg

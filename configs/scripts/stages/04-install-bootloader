@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -13,12 +13,12 @@ source /configs/scripts/others/apt-funcs
 #	The GRUB2 packages from Debian do not work correctly with EFI.
 
 GRUB2_PKGS='
-	grub-common=2.12~rc1-10ubuntu4
-	grub-efi-amd64=2.12~rc1-10ubuntu4
-	grub-efi-amd64-bin=2.12~rc1-10ubuntu4
-	grub-efi-amd64-signed=1.197+2.12~rc1-10ubuntu4
-	grub-pc-bin=2.12~rc1-10ubuntu4
-	grub2-common=2.12~rc1-10ubuntu4
+	grub-common=2.12~rc1-12ubuntu2
+	grub-efi-amd64=2.12~rc1-12ubuntu2
+	grub-efi-amd64-bin=2.12~rc1-12ubuntu2
+	grub-efi-amd64-signed=1.199+2.12~rc1-12ubuntu2
+	grub-pc-bin=2.12~rc1-12ubuntu2
+	grub2-common=2.12~rc1-12ubuntu2
 '
 
 install $GRUB2_PKGS

@@ -26,19 +26,11 @@ Package: libqt5*
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: linux-image-rt-amd64
-Pin: release *
-Pin-Priority: -1
-
-Package: linux-image-cloud-amd64
-Pin: release *
-Pin-Priority: -1
-
-Package: linux-image-amd64
-Pin: release *
-Pin-Priority: -1
-
 Package: nvidia-*
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: overlayroot
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
@@ -70,6 +62,10 @@ Package: base-files
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: distrobox
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 #########################
 #  Any Package Priority #
 #########################
@@ -96,6 +92,18 @@ Pin: release *
 Pin-Priority: -1
 
 Package: libtss2-esys0
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-rt-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-cloud-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-amd64
 Pin: release *
 Pin-Priority: -1
 

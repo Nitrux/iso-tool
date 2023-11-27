@@ -1,11 +1,6 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 set -e
-
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
-
-source /configs/scripts/others/apt-funcs
 
 
 echo "Checking existence of files..."
@@ -64,6 +59,19 @@ directories_to_check=(
   "/etc/runlevels/shutdown"
   "/etc/runlevels/sysinit"
   "/etc/sddm.conf.d"
+  "/System"
+  "/System/Devices"
+  "/System/Boot"
+  "/System/Binaries"
+  "/System/Binaries/Administrative"
+  "/System/Binaries/Standard"
+  "/System/Binaries/Optional"
+  "/System/Filesystems/External"
+  "/System/Filesystems/Internal"
+  "/System/Libraries"
+  "/System/Shareable"
+  "/System/Variable"
+  "/Users"
 )
 
 for directory in "${directories_to_check[@]}"; do
@@ -88,6 +96,7 @@ check_file_contents() {
 
 check_file_contents "/etc/sddm.conf.d/kde_settings.conf"
 check_file_contents "/etc/sddm.conf"
+check_file_contents "/etc/NetworkManager/NetworkManager.conf"
 
 check_initramfs_contents() {
     local filenames=("$@")

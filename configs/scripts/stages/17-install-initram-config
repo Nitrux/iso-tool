@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -16,16 +16,24 @@ cp -r /configs/files/initramfs-tools/hooks/* /usr/share/initramfs-tools/hooks/
 #   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
 
 cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+cat /configs/scripts/others/casper/12fstab > /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 
-#	Add modules to initramfs.
+#	Add hyper-v modules to initramfs.
 
 printf '%s\n' hv_utils hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
 
 
-#	Add modules to load at boot time.
+#	Add gpu modules to load at boot time.
 
 printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules-load.d/modules-boot-time.conf
 
+
+#   Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're relevant in Ubuntu but not here.
+
+sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
+
+
+#   Generate the intiramfs.
 
 update-initramfs -c -k all
