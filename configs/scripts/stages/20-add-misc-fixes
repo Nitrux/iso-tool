@@ -279,7 +279,7 @@ else
 fi
 
 
-#   Replace /usr/lib/grub/grub-sort-version with a version that doesn't use apt.pkg won't complain about it and will generate a usable boot menu.
+#   Replace /usr/lib/grub/grub-sort-version with a version that doesn't use apt.pkg do it can generate a usable boot menu.
 
 $(which cp) /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
