@@ -180,12 +180,11 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKi
 # create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so"
 
 
-#	FIXME
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 #	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
-KDEPIM_LIB="5.24.2"
-KF5_LIB="5.111.0"
+KDEPIM_LIB="5.24.3"
+KF5_LIB="5.113.0"
 
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
@@ -193,6 +192,14 @@ create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.$KDEPIM_LIB 
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
 create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
 create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
+
+
+#	Add link for applet window buttons.
+#	NOTE: Update the link on every new release of Plasma.
+
+PLASMA_LIB="5.27.10"
+
+create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
 
 #	*And* create symlink for libboost-python for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
@@ -216,14 +223,6 @@ mv /usr/bin/apt-get /opt/2
 mv /usr/bin/dpkg /opt/3
 
 chmod -x /opt/{1,2,3}
-
-
-#	Add link for applet window buttons.
-#	NOTE: Update the link on every new release of Plasma.
-
-PLASMA_LIB="5.27.9"
-
-create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
 
 #	Add link for libappimage1.0.

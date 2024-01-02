@@ -66,6 +66,10 @@ Package: distrobox
 Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
+Package: libfcitx5utils2
+Pin: origin archive.neon.kde.org
+Pin-Priority: -1
+
 #########################
 #  Any Package Priority #
 #########################

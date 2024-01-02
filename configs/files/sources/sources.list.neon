@@ -7,4 +7,4 @@
 # KDE Neon Repos #
 ##################
 
-deb [arch=amd64] http://archive.neon.kde.org/user jammy main
+deb [arch=amd64] http://archive.neon.kde.org/testing jammy main

@@ -69,16 +69,18 @@ tar xf "$config_dir/rootfs.tar.xz" -C "$build_dir"
 
 #	Populate $build_dir.
 
+iso_tool_bootstrap_log="$PWD/$image.bstlog"
+
 rm -r /bin/runch || true 
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
 
-< bootstrap runch \
+( < bootstrap runch \
 	-m configs:/configs \
 	-r /configs \
 	"$build_dir" \
 	bash || :
-
+) 2>&1 | tee -a "$iso_tool_bootstrap_log"
 
 #	Check filesystem size.
 
@@ -139,15 +141,20 @@ mkiso \
 
 #	Calculate the checksum.
 
-md5sum "$output_dir"/"$image" > "$output_dir"/"${image%.iso}".md5sum
+sha512sum "$output_dir/$image" | sed "s|$output_dir/||" > "$output_dir/${image%.iso}.sha512"
 
 
-#	Move files to current directory
+#	Get package list from build directory.
+
+mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
+
+
+#	Move files to current directory.
 
 mv "$output_dir"/* "$PWD"
 
 
-#	Clean up build directories
+#	Clean up build directories.
 
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
   rm -rf /tmp/tmp.*

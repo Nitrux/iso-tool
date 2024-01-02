@@ -13,7 +13,7 @@ add_repo_keys \
 	90E51522 \
 	1DCEE19C > /dev/null
 
-cp /configs/files/sources/sources.list.neon.user /etc/apt/sources.list.d/neon-user-repo.list
+cp /configs/files/sources/sources.list.neon /etc/apt/sources.list.d/kde-neon-repo.list
 cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
 
 update
@@ -38,26 +38,28 @@ NX_DESKTOP_PKG='
 '
 
 UNISON_DESKTOP_PKGS='
-	fcitx5/trixie
 	fcitx5-module-lua/trixie
+	fcitx5/trixie
+	kde-config-fcitx5=5.0.11-1
 	kde-config-flatpak/trixie
 	kwin-bismuth/trixie
 	libjpeg-turbo8/trixie
-	kde-config-fcitx5=5.0.11-1
+	lvm2/trixie
 	overlayroot=0.47ubuntu1
 	rsyslog=8.2310.0-2devuan1
-	lvm2/trixie
 '
 
 NEON_PKGS='
 	kde-config-gtk-style/jammy
+	kde-config-tablet/jammy
 	kio-extras/jammy
+	sonnet-plugins/jammy
 '
 
 install_downgrades $NX_DESKTOP_PKG $UNISON_DESKTOP_PKGS $NEON_PKGS
 
 rm \
-	/etc/apt/sources.list.d/neon-user-repo.list \
+	/etc/apt/sources.list.d/kde-neon-repo.list \
 	/etc/apt/sources.list.d/waydroid-repo.list
 
 remove_repo_keys \
