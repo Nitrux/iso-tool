@@ -98,6 +98,7 @@ check_file_contents "/etc/sddm.conf.d/kde_settings.conf"
 check_file_contents "/etc/sddm.conf"
 check_file_contents "/etc/NetworkManager/NetworkManager.conf"
 check_file_contents "/etc/rc.conf"
+check_file_contents "/usr/share/initramfs-tools/scripts/casper"
 
 check_initramfs_contents() {
     local filenames=("$@")

@@ -82,6 +82,7 @@ chmod +x /bin/runch
 	bash || :
 ) 2>&1 | tee -a "$iso_tool_bootstrap_log"
 
+
 #	Check filesystem size.
 
 du -hs "$build_dir"
