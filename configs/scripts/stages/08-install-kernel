@@ -8,6 +8,8 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
+#	Install the kernel.
+
 add_repo_keys \
 	9AE4078033F8024D > /dev/null
 

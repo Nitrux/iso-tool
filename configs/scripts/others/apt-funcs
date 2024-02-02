@@ -12,6 +12,7 @@ autoremove () { apt -yy autoremove "$@"; }
 clean_all () { apt clean && apt autoclean; }
 dist_upgrade () { apt -yy dist-upgrade "$@"; }
 download () { apt download "$@"; }
+dpkg_conf () { dpkg --configure -a; }
 dpkg_force_install () { dpkg --force-all -i "$@"; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path "$@"; }
 dpkg_install () { dpkg -i "$@"; }

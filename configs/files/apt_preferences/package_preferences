@@ -22,11 +22,15 @@ Package: libpinyin*
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: libqt5*
+Package: libproc2-0
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
 Package: nvidia-*
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: procps
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 

@@ -3,8 +3,8 @@
 #   Your changes will be overwritten   #
 ########################################
 
-############
-# MESA Git #
-############
+################
+# Debian Repos #
+################
 
-deb [arch=amd64] http://ppa.launchpad.net/oibaf/graphics-drivers/ubuntu noble main
+deb [arch=amd64] http://deb.debian.org/debian sid main non-free non-free-firmware contrib

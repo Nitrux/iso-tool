@@ -3,7 +3,7 @@
 set -e
 
 
-#	Prepare the directories for the build.
+#	Prepare the directories for the build. Cleanup previously created build directories.
 
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
   rm -rf /tmp/tmp.*
@@ -95,12 +95,6 @@ mkdir -p "$iso_dir"/boot
 
 cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/kernel
 cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
-
-
-#	WARNING FIXME BUG: This file isn't copied during the chroot.
-
-mkdir -p "$iso_dir"/boot/grub/x86_64-efi
-cp /usr/lib/grub/x86_64-efi/linuxefi.mod "$iso_dir"/boot/grub/x86_64-efi
 
 
 #	Copy EFI folder to ISO

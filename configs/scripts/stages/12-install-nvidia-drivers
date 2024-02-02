@@ -15,8 +15,12 @@ cp /configs/files/sources/sources.list.gpu.ppa /etc/apt/sources.list.d/gpu-ppa-r
 
 update
 
+
+#	Install the NVIDIA driver.
+
 NVIDIA_DRV_PKGS='
-	nvidia-driver-545
+	nvidia-driver-550
+	nvidia-kernel-source-550/trixie
 	nvidia-settings
 	nvidia-prime
 '
@@ -26,6 +30,7 @@ NVIDIA_SUPPORTING_LIBS='
 '
 
 install $NVIDIA_DRV_PKGS $NVIDIA_SUPPORTING_LIBS
+
 
 rm \
 	/etc/apt/sources.list.d/gpu-ppa-repo.list

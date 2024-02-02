@@ -23,6 +23,7 @@ DEVUAN_PLYMOUTH_PKGS='
 	plymouth-x11/excalibur
 	libcairo-gobject2/excalibur
 	libcairo2/excalibur
+	libplymouth5/excalibur
 '
 
 DEVUAN_POLKIT_PKGS='
@@ -39,7 +40,7 @@ DEVUAN_NM_PKGS='
 	network-manager/excalibur
 '
 
-install $DEVUAN_PLYMOUTH_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
+install_downgrades $DEVUAN_PLYMOUTH_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
 
 
 rm \

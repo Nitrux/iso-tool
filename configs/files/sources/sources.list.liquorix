@@ -3,8 +3,8 @@
 #   Your changes will be overwritten   #
 ########################################
 
-#################
-# Liquorix Repo #
-#################
+########################
+# Liquorix Debian Repo #
+########################
 
 deb [arch=amd64] https://liquorix.net/debian testing main
