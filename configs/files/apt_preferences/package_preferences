@@ -2,6 +2,10 @@
 #  Debian Package Priority #
 ############################
 
+Package: apt-utils
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: base-files
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1

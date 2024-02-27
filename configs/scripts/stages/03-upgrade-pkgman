@@ -18,7 +18,6 @@ update
 
 DEVUAN_PKGMAN_PKGS='
 	apt/excalibur
-	apt-utils/excalibur
 	dpkg/excalibur
 	dpkg-dev/excalibur
 	libdpkg-perl/excalibur
