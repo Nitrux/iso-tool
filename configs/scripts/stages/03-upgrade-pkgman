@@ -25,6 +25,8 @@ DEVUAN_PKGMAN_PKGS='
 '
 
 pkg_policy apt apt-utils libapt-pkg6.0 python3-apt
+exit
+
 install_downgrades $DEVUAN_PKGMAN_PKGS
 hold $DEVUAN_PKGMAN_PKGS
 
