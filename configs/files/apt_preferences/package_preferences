@@ -34,6 +34,10 @@ Package: procps
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
+Package: python3-apt
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
 Package: overlayroot
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
