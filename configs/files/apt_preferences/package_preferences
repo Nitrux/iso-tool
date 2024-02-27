@@ -2,16 +2,8 @@
 #  Debian Package Priority #
 ############################
 
-Package: apt-utils
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: base-files
 Pin: release o=Debian,a=testing,n=trixie
-Pin-Priority: -1
-
-Package: libapt-pkg6.0
-Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libfcitx5-qt1
@@ -40,10 +32,6 @@ Pin-Priority: -1
 
 Package: procps
 Pin: release o=Debian,a=testing,n=trixie
-Pin-Priority: -1
-
-Package: python3-apt
-Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: overlayroot
