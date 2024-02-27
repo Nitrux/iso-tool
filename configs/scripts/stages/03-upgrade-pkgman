@@ -21,6 +21,7 @@ DEVUAN_PKGMAN_PKGS='
 	dpkg/excalibur
 	dpkg-dev/excalibur
 	libdpkg-perl/excalibur
+	libapt-pkg6.0/excalibur
 '
 
 pkg_policy apt apt-utils libapt-pkg6.0 python3-apt
