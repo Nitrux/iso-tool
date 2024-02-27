@@ -35,7 +35,7 @@ Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
 Package: python3-apt
-Pin: release o=Debian,a=testing,n=trixie
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: overlayroot
