@@ -6,6 +6,10 @@ Package: base-files
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
+Package: libapt-pkg6.0
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
 Package: libfcitx5-qt1
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
