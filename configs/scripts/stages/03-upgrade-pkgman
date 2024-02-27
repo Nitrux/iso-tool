@@ -23,7 +23,7 @@ DEVUAN_PKGMAN_PKGS='
 	libdpkg-perl/excalibur
 '
 
-install_downgrades $DEVUAN_PKGMAN_PKGS
+install $DEVUAN_PKGMAN_PKGS
 hold $DEVUAN_PKGMAN_PKGS
 
 rm \
