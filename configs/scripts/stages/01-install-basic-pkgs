@@ -24,6 +24,7 @@ CHROOT_BASIC_PKGS='
 	less
 	lz4
 	perl-modules-5.38
+	python3-apt
 	zstd
 '
 
