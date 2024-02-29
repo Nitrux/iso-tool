@@ -58,22 +58,6 @@ Package: libavahi-*
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
-##########################
-#  Neon Package Priority #
-##########################
-
-Package: base-files
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: distrobox
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: libfcitx5utils2
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
 #########################
 #  Any Package Priority #
 #########################

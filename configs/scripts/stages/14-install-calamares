@@ -8,14 +8,6 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
-add_repo_keys \
-	55751E5D > /dev/null
-
-cp /configs/files/sources/sources.list.neon /etc/apt/sources.list.d/kde-neon-repo.list
-
-update
-
-
 #   Add Calamares.
 
 CALAMARES_PKGS='
@@ -27,12 +19,3 @@ CALAMARES_PKGS='
 '
 
 install $CALAMARES_PKGS
-
-
-rm \
-	/etc/apt/sources.list.d/kde-neon-repo.list
-
-remove_repo_keys \
-	55751E5D > /dev/null
-
-update
