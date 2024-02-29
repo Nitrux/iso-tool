@@ -20,7 +20,7 @@ update
 
 NVIDIA_DRV_PKGS='
 	nvidia-driver-550
-	nvidia-kernel-source-550/trixie
+	nvidia-kernel-source-550
 	nvidia-settings
 	nvidia-prime
 '
