@@ -33,6 +33,9 @@ NX_DESKTOP_PKG='
 	nx-desktop-wayland-legacy
 	nx-desktop-appimages-vfio
 	nx-desktop-apps-vfio
+	libkf5windowsystem5
+	libkf5waylandclient5
+	kwin-wayland
 '
 
 install $NX_DESKTOP_PKG
