@@ -6,6 +6,10 @@ Package: base-files
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
+Package: broadcom-sta-dkms
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
 Package: nvidia-*
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
