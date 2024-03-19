@@ -33,6 +33,7 @@ NX_DESKTOP_PKG='
 	nx-desktop-wayland-legacy
 	nx-desktop-appimages-vfio
 	nx-desktop-apps-vfio
+	xterm=390-1
 '
 
 install $NX_DESKTOP_PKG
