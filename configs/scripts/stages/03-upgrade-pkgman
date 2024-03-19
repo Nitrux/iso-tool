@@ -22,6 +22,7 @@ DEVUAN_PKGMAN_PKGS='
 	dpkg-dev/ceres
 	libdpkg-perl/ceres
 	libapt-pkg6.0/ceres
+	python3-apt/ceres
 '
 
 install_downgrades $DEVUAN_PKGMAN_PKGS
