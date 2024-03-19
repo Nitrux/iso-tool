@@ -22,6 +22,7 @@ DEVUAN_PKGMAN_PKGS='
 	dpkg-dev/excalibur
 	libdpkg-perl/excalibur
 	libapt-pkg6.0/excalibur
+	python3-apt/excalibur
 '
 
 install_downgrades $DEVUAN_PKGMAN_PKGS
