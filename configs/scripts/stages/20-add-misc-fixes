@@ -156,7 +156,7 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiK
 
 #   Create symlinks for MauiKit Calendar 3.0.1.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
 
 
 #   Create symlinks for MauiKit Terminal 3.0.1.
@@ -183,15 +183,15 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKi
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 #	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
-KDEPIM_LIB="5.24.5"
-KF5_LIB="5.114.0"
+# KDEPIM_LIB="5.24.5"
+# KF5_LIB="5.114.0"
 
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
-create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
+# create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
 
 
 #	Add link for applet window buttons.
