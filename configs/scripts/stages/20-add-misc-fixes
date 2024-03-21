@@ -344,3 +344,8 @@ $(which cp) /configs/scripts/others/user-setup-apply /usr/lib/user-setup/user-se
 #   Change path where NetworkManager saves wireless connections.
 
 echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf
+
+
+#   Fix Tor init script.
+
+sed -i "s/^AA_EXEC_ARGS=\"--profile=system_tor -- \$DAEMON\"$/AA_EXEC_ARGS=\"-f system_tor -- \$DAEMON\"/" /etc/init.d/tor
