@@ -18,10 +18,11 @@ update
 
 DEVUAN_PKGMAN_PKGS='
 	apt/excalibur
-	libapt-pkg6.0/excalibur
 	dpkg/excalibur
 	dpkg-dev/excalibur
 	libdpkg-perl/excalibur
+	libapt-pkg6.0/trixie
+	python3-apt/excalibur
 '
 
 install_downgrades $DEVUAN_PKGMAN_PKGS

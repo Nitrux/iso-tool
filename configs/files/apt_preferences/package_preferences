@@ -6,23 +6,7 @@ Package: base-files
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: libfcitx5-qt1
-Pin: release o=Debian,a=testing,n=trixie
-Pin-Priority: -1
-
-Package: libfcitx5-qt-data
-Pin: release o=Debian,a=testing,n=trixie
-Pin-Priority: -1
-
-Package: libkf5*
-Pin: release o=Debian,a=testing,n=trixie
-Pin-Priority: -1
-
-Package: libpinyin*
-Pin: release o=Debian,a=testing,n=trixie
-Pin-Priority: -1
-
-Package: libproc2-0
+Package: broadcom-sta-dkms
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
@@ -31,6 +15,10 @@ Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
 Package: procps
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: python3-apt
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
@@ -56,22 +44,6 @@ Pin-Priority: -1
 
 Package: libavahi-*
 Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-##########################
-#  Neon Package Priority #
-##########################
-
-Package: base-files
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: distrobox
-Pin: origin archive.neon.kde.org
-Pin-Priority: -1
-
-Package: libfcitx5utils2
-Pin: origin archive.neon.kde.org
 Pin-Priority: -1
 
 #########################

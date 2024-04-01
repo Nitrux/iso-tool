@@ -129,39 +129,53 @@ done
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
-#   Create symlinks for MauiKit FileBrowsing 3.0.1.
+#   Create symlinks for MauiKit.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so"
+MAUIKIT_VERSION="3.1.0"
 
-
-#   Create symlinks for MauiKit TextEditor 3.0.1.
-
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit3.so"
 
 
-#   Create symlinks for MauiKit ImageTools 3.0.1.
+#   Create symlinks for MauiKit FileBrowsing.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
-
-
-#   Create symlinks for MauiKit Accounts 3.0.1.
-
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing3.so"
 
 
-#   Create symlinks for MauiKit Documents 3.0.1.
+#   Create symlinks for MauiKit TextEditor.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
-
-
-#   Create symlinks for MauiKit Calendar 3.0.1.
-
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so"
 
 
-#   Create symlinks for MauiKit Terminal 3.0.1.
+#   Create symlinks for MauiKit ImageTools.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.3.0.1" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so"
+
+
+#   Create symlinks for MauiKit Accounts.
+
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so"
+
+
+#   Create symlinks for MauiKit Documents.
+
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
+
+
+#   Create symlinks for MauiKit Calendar.
+
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
+
+
+#   Create symlinks for MauiKit Terminal.
+
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so"
 
 
 #   Create symlinks for Maui Core Libraries 0.6.0.
@@ -183,15 +197,15 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKi
 #	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
 #	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
-KDEPIM_LIB="5.24.5"
-KF5_LIB="5.114.0"
+# KDEPIM_LIB="5.24.5"
+# KF5_LIB="5.114.0"
 
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
-create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
-create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5EventViews.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5EventViews.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5CalendarSupport.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarSupport.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCalendar.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCalendar.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiWidgets.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiWidgets.so.5abi1
+# create_symlink /usr/lib/x86_64-linux-gnu/libKPim5AkonadiCore.so.$KDEPIM_LIB /usr/lib/x86_64-linux-gnu/libKF5AkonadiCore.so.5abi2
+# create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
 
 
 #	Add link for applet window buttons.
@@ -205,14 +219,9 @@ create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB 
 #	*And* create symlink for libboost-python for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
 #   *AND* create symlink for libpython3.11 for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
 
-create_symlink /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_python310.so.1.74.0
-create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1.0 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1.0
-create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1
-
-
-#	*And* create symlink for libtesseract for Pix.
-
-create_symlink /usr/lib/x86_64-linux-gnu/libtesseract.so.5.0.3 /usr/lib/x86_64-linux-gnu/libtesseract.so.4
+# create_symlink /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_python310.so.1.74.0
+# create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1.0 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1.0
+# create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1
 
 
 #	Move APT and dpkg out of the way, out of the way, move b...
@@ -332,3 +341,8 @@ $(which cp) /configs/scripts/others/user-setup-apply /usr/lib/user-setup/user-se
 #   Change path where NetworkManager saves wireless connections.
 
 echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf
+
+
+#   Fix Tor init script to properly load the AppArmor profile.
+
+sed -i "s|AA_EXEC_ARGS=\"--profile=system_tor -- \$DAEMON\"|AA_EXEC_ARGS=\"-f system_tor -- \$DAEMON\"|" /etc/init.d/tor

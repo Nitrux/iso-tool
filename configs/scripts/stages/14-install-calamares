@@ -8,31 +8,14 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
-add_repo_keys \
-	55751E5D > /dev/null
-
-cp /configs/files/sources/sources.list.neon /etc/apt/sources.list.d/kde-neon-repo.list
-
-update
-
-
 #   Add Calamares.
 
 CALAMARES_PKGS='
 	efibootmgr
-	calamares=3.2.62-0xneon+22.04+jammy+release+build15+nitrux
+	calamares
 	calamares-qml-settings-nitrux
 	dosfstools
 	squashfs-tools
 '
 
 install $CALAMARES_PKGS
-
-
-rm \
-	/etc/apt/sources.list.d/kde-neon-repo.list
-
-remove_repo_keys \
-	55751E5D > /dev/null
-
-update
