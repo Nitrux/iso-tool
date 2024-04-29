@@ -14,11 +14,15 @@ Package: nvidia-*
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: procps
+Package: python3-apt
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
-Package: python3-apt
+Package: polkit-kde-agent-1
+Pin: release o=Debian,a=testing,n=trixie
+Pin-Priority: -1
+
+Package: procps
 Pin: release o=Debian,a=testing,n=trixie
 Pin-Priority: -1
 
@@ -42,7 +46,51 @@ Package: base-files
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 
+Package: dbus
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: dbus-bin
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: dbus-daemon
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: dbus-x11
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
 Package: libavahi-*
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libblkid1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libblkid-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libdbus-1-3
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libmount1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libmount-dev
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: libuuid1
+Pin: origin deb.devuan.org
+Pin-Priority: -1
+
+Package: uuid-dev
 Pin: origin deb.devuan.org
 Pin-Priority: -1
 

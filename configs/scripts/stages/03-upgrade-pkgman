@@ -21,7 +21,7 @@ DEVUAN_PKGMAN_PKGS='
 	dpkg/excalibur
 	dpkg-dev/excalibur
 	libdpkg-perl/excalibur
-	libapt-pkg6.0/trixie
+	libapt-pkg6.0t64/excalibur
 	python3-apt/excalibur
 '
 

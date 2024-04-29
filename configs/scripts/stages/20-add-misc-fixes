@@ -343,6 +343,6 @@ $(which cp) /configs/scripts/others/user-setup-apply /usr/lib/user-setup/user-se
 echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf
 
 
-#   Fix Tor init script to properly load the AppArmor profile.
+#   Create directory for os-prober.
 
-sed -i "s|AA_EXEC_ARGS=\"--profile=system_tor -- \$DAEMON\"|AA_EXEC_ARGS=\"-f system_tor -- \$DAEMON\"|" /etc/init.d/tor
+mkdir -p /var/lib/os-prober/mount

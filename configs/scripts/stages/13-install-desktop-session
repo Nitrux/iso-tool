@@ -35,7 +35,11 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps-vfio
 '
 
-install $NX_DESKTOP_PKG
+SIGH_PKGS='
+	polkit-kde-agent-1=4:5.27.10-1
+'
+
+install $NX_DESKTOP_PKG $SIGH_PKGS
 
 rm /etc/apt/sources.list.d/waydroid-repo.list
 
