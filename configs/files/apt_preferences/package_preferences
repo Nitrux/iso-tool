@@ -2,111 +2,182 @@
 #  Debian Package Priority #
 ############################
 
+Package: apt
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: base-files
-Pin: release o=Debian,a=testing,n=trixie
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: broadcom-sta-dkms
-Pin: release o=Debian,a=testing,n=trixie
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: nvidia-*
-Pin: release o=Debian,a=testing,n=trixie
+Package: bsdextrautils
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: python3-apt
-Pin: release o=Debian,a=testing,n=trixie
+Package: bsdutils
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: polkit-kde-agent-1
-Pin: release o=Debian,a=testing,n=trixie
+Package: calamares
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: procps
-Pin: release o=Debian,a=testing,n=trixie
+Package: dpkg
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: overlayroot
-Pin: release o=Debian,a=testing,n=trixie
+Package: eject
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: rsyslog
-Pin: release o=Debian,a=testing,n=trixie
+Package: elogind
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: xfsprogs
-Pin: release o=Debian,a=testing,n=trixie
+Package: eudev
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-############################
-#  Devuan Package Priority #
-############################
-
-Package: base-files
-Pin: origin deb.devuan.org
+Package: fdisk
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: dbus
-Pin: origin deb.devuan.org
+Package: initramfs-tools
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: dbus-bin
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: dbus-daemon
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: dbus-x11
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libavahi-*
-Pin: origin deb.devuan.org
-Pin-Priority: -1
-
-Package: libblkid1
-Pin: origin deb.devuan.org
+Package: initramfs-tools-core
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libblkid-dev
-Pin: origin deb.devuan.org
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: libdbus-1-3
-Pin: origin deb.devuan.org
+Package: libblkid1
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: libmount1
-Pin: origin deb.devuan.org
+Package: libelogind0
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libfdisk1
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libmount-dev
-Pin: origin deb.devuan.org
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libmount1
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libnm0
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libpam-elogind
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libpam-modules
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libpam-modules-bin
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libpam0g
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libsmartcols1
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libuuid1
-Pin: origin deb.devuan.org
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: network-manager
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: nvidia-*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: overlayroot
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: plymouth
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: plymouth-label
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: plymouth-x11
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: polkit-kde-agent-1
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: procps
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: rfkill
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: rsyslog
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: udev
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: util-linux
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: util-linux-extra
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: uuid-dev
-Pin: origin deb.devuan.org
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: xfsprogs
+Pin: origin deb.debian.org
 Pin-Priority: -1
 
 #########################
 #  Any Package Priority #
 #########################
 
-Package: desktop-base
-Pin: release *
-Pin-Priority: -1
-
 Package: dbus-user-session
 Pin: release *
 Pin-Priority: -1
 
-Package: k3b
+Package: desktop-base
+Pin: release *
+Pin-Priority: -1
+
 Package: k3b
 Pin: release *
 Pin-Priority: -1
@@ -123,7 +194,7 @@ Package: libtss2-esys0
 Pin: release *
 Pin-Priority: -1
 
-Package: linux-image-rt-amd64
+Package: linux-image-amd64
 Pin: release *
 Pin-Priority: -1
 
@@ -131,7 +202,7 @@ Package: linux-image-cloud-amd64
 Pin: release *
 Pin-Priority: -1
 
-Package: linux-image-amd64
+Package: linux-image-rt-amd64
 Pin: release *
 Pin-Priority: -1
 

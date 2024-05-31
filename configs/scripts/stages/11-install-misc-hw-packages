@@ -20,3 +20,21 @@ MISC_HW_PKGS='
 '
 
 install $MISC_HW_PKGS
+
+
+#   Install xpadneo and xone drivers using their installer scripts.
+#	FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+
+ORIGINAL_DIR=$(pwd)
+
+TEMP_DIR1=$(mktemp -d)
+git clone https://github.com/medusalix/xone "$TEMP_DIR1"
+cd "$TEMP_DIR1"
+sh install.sh
+cd "$ORIGINAL_DIR"
+
+TEMP_DIR2=$(mktemp -d)
+git clone https://github.com/atar-axis/xpadneo "$TEMP_DIR2"
+cd "$TEMP_DIR2"
+bash install.sh
+cd "$ORIGINAL_DIR"

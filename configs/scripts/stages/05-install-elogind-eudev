@@ -16,15 +16,6 @@ source /configs/scripts/others/apt-funcs
 #   In Devuan Daedalus and newer, libelogind0 does not declare to provide libsystemd0 as previously. So, we need to use an empty package to
 #   make dpkg stfu.
 
-add_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
-
-update
-
 DEVUAN_EUDEV_ELOGIND_PKGS='
 	eudev
 	elogind
@@ -39,21 +30,10 @@ REMOVE_SYSTEMD_PKGS='
 	libsystemd0
 '
 
-purge $REMOVE_SYSTEMD_PKGS
-autoremove
+purge_autoremove $REMOVE_SYSTEMD_PKGS
 
 SYSTEMCTL_STANDALONE_PKG='
 	systemctl
 '
 
 install $SYSTEMCTL_STANDALONE_PKG
-
-rm \
-	/etc/apt/sources.list.d/devuan-excalibur-repo.list
-
-remove_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-update

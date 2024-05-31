@@ -23,6 +23,7 @@ proc
 rofs
 root
 run
+run-0
 sbin
 srv
 sys

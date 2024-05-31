@@ -151,20 +151,20 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so.$MAUIKIT_VERS
 
 #   Create symlinks for MauiKit ImageTools.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so"
 
 
 #   Create symlinks for MauiKit Accounts.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so"
 
 
 #   Create symlinks for MauiKit Documents.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
 
 
 #   Create symlinks for MauiKit Calendar.
@@ -211,7 +211,7 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.$MAUIKIT_VERSIO
 #	Add link for applet window buttons.
 #	NOTE: Update the link on every new release of Plasma.
 
-PLASMA_LIB="5.27.10"
+PLASMA_LIB="5.27.11"
 
 create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
@@ -262,9 +262,10 @@ mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.
 # selinux-config-enforcing
 
 
-#   Change icon for 0install launcher.
+#   Edit 0install launcher.
 
 sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
+sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
 
 
 #   Build Nvidia driver with dkms for other kernels.
@@ -346,3 +347,18 @@ echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager
 #   Create directory for os-prober.
 
 mkdir -p /var/lib/os-prober/mount
+
+
+#   Edit NVIDIA X Settings launcher.
+
+sed -i 's+Categories=System;Settings;+Categories=Settings;+g' /usr/share/applications/nvidia-settings.desktop
+
+
+#   Edit CoreCtrl launcher.
+
+sed -i 's+Categories=System;Settings;Utility;+Categories=Utility;+g' /usr/share/applications/org.corectrl.CoreCtrl.desktop
+
+
+#   Create link for gamescope to work.
+
+create_symlink /usr/lib/x86_64-linux-gnu/libwlroots.so.12 /usr/lib/x86_64-linux-gnu/libwlroots.so.11

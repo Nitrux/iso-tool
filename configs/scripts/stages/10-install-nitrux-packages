@@ -9,10 +9,9 @@ source /configs/scripts/others/apt-funcs
 
 
 NITRUX_BASE_PKGS='
-	base-files=2024.04.30+nitrux-legacy
+	base-files
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
-	xfsprogs=6.3.0-1ubuntu1
 '
 
 NITRUX_HW_PKGS='

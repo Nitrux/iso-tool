@@ -20,7 +20,7 @@ update
 #	Install these packages first because libappimageupdate and zsync2 provide files found in other packages.
 
 ZSYNC_LIBAIU_PKGS='
-	libappimage1.0/trixie
+	libappimage1.0
 	libappimageupdate
 	zlib1g-dev
 	zsync2
@@ -35,11 +35,11 @@ NX_DESKTOP_PKG='
 	nx-desktop-apps-vfio
 '
 
-SIGH_PKGS='
-	polkit-kde-agent-1=4:5.27.10-1
+FH_SIGH_PKGS='
+	polkit-kde-agent-1=4:5.27.11-1
 '
 
-install $NX_DESKTOP_PKG $SIGH_PKGS
+install $NX_DESKTOP_PKG $FH_SIGH_PKGS
 
 rm /etc/apt/sources.list.d/waydroid-repo.list
 

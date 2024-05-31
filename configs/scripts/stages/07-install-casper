@@ -9,24 +9,13 @@ source /configs/scripts/others/apt-funcs
 
 
 #	Add casper.
+#
+#	We have to specify to APT the "udev" package to use; otherwise, it just uses whatever the fuck it wants, even if the package is from a repository with
+#	a higher priority and we blocked the origin of the version we don't want.
 
 CASPER_DEPS_PKGS='
-	casper=1.486
-	initramfs-tools=0.142ubuntu15.1
-	initramfs-tools-bin=0.142ubuntu15.1
-	initramfs-tools-core=0.142ubuntu15.1
-'
-
-install $CASPER_DEPS_PKGS
-
-
-#	Hold initramfs and casper packages.
-
-INITRAMFS_CASPER_PKGS='
 	casper
-	initramfs-tools
-	initramfs-tools-core
-	initramfs-tools-bin
+	udev/forky
 '
 
-hold $INITRAMFS_CASPER_PKGS
+install_hold $CASPER_DEPS_PKGS

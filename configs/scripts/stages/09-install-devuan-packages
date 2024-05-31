@@ -8,73 +8,26 @@ set -e
 source /configs/scripts/others/apt-funcs
 
 
-add_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-cp /configs/files/sources/sources.list.devuan.daedalus /etc/apt/sources.list.d/devuan-daedalus-repo.list
-
-update
-
 DEVUAN_PLYMOUTH_PKGS='
-	plymouth/daedalus
-	plymouth-label/daedalus
-	plymouth-x11/daedalus
-	libcairo-gobject2/daedalus
-	libcairo2/daedalus
-	libplymouth5/daedalus
+	plymouth
+	plymouth-label
+	plymouth-x11
 '
 
 install_downgrades $DEVUAN_PLYMOUTH_PKGS
 
-rm \
-	/etc/apt/sources.list.d/devuan-daedalus-repo.list
-
-remove_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-update
-
-add_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
-
-update
-
 DEVUAN_POLKIT_PKGS='
-	libpam-elogind/excalibur
-	libpolkit-agent-1-0/excalibur
-	libpolkit-gobject-1-0/excalibur
-	libpolkit-gobject-elogind-1-0/excalibur
-	policykit-1/excalibur
-	pkexec/excalibur
-	polkitd/excalibur
+	libpam-elogind
+	libpolkit-agent-1-0
+	libpolkit-gobject-1-0
+	libpolkit-gobject-elogind-1-0
+	policykit-1
+	pkexec
+	polkitd
 '
 
 DEVUAN_NM_PKGS='
-	network-manager/excalibur
+	network-manager
 '
 
-DEVUAN_MISC_PKGS='
-	bsdutils/excalibur
-	util-linux/excalibur
-	uuid-runtime/excalibur
-'
-
-install_downgrades $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS $DEVUAN_MISC_PKGS
-
-rm \
-	/etc/apt/sources.list.d/devuan-excalibur-repo.list
-
-remove_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-update
+install_downgrades $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS

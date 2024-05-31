@@ -26,7 +26,12 @@ printf '%s\n' hv_utils hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/ini
 
 #	Add gpu modules to load at boot time.
 
-printf '%s\n' fuse nvidia nvidia_drm nvidia_modeset amdgpu i915 exfat loop >> /etc/modules-load.d/modules-boot-time.conf
+printf '%s\n' nvidia nvidia_drm nvidia_modeset amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
+
+
+#   Add other modules to load at boot time.
+
+printf '%s\n' fuse exfat loop >> /etc/modules-load.d/additional-modules-boot-time.conf
 
 
 #   Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're relevant in Ubuntu but not here.

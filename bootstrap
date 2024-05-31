@@ -141,7 +141,7 @@ puts "ADDING MISC. DRIVERS."
 
 #	Add Nvidia drivers or Nouveau.
 
-puts "ADDING NVIDIA DRIVERS/NOUVEAU FIRMWARE."
+puts "ADDING NVIDIA DRIVERS."
 
 12-install-nvidia-drivers
 

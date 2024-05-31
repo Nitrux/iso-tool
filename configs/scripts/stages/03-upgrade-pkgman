@@ -7,33 +7,12 @@ set -e
 
 source /configs/scripts/others/apt-funcs
 
-add_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
 
-cp /configs/files/sources/sources.list.devuan.excalibur /etc/apt/sources.list.d/devuan-excalibur-repo.list
-
-update
+#	Upgrade package manager.
 
 DEVUAN_PKGMAN_PKGS='
-	apt/excalibur
-	dpkg/excalibur
-	dpkg-dev/excalibur
-	libdpkg-perl/excalibur
-	libapt-pkg6.0t64/excalibur
-	python3-apt/excalibur
+	apt
+	dpkg
 '
 
-install_downgrades $DEVUAN_PKGMAN_PKGS
-hold $DEVUAN_PKGMAN_PKGS
-
-rm \
-	/etc/apt/sources.list.d/devuan-excalibur-repo.list
-
-remove_repo_keys \
-	541922FB \
-	61FC752C \
-	D104092C > /dev/null
-
-update
+install_hold $DEVUAN_PKGMAN_PKGS

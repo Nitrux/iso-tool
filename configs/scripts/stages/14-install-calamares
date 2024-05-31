@@ -16,6 +16,7 @@ CALAMARES_PKGS='
 	calamares-qml-settings-nitrux
 	dosfstools
 	squashfs-tools
+	mauikit-git
 '
 
 install $CALAMARES_PKGS

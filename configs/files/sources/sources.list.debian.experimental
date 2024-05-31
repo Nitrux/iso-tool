@@ -3,8 +3,8 @@
 #   Your changes will be overwritten   #
 ########################################
 
-#######################
-# Proprietary GPU PPA #
-#######################
+################
+# Debian Repos #
+################
 
-deb [arch=amd64] http://ppa.launchpad.net/graphics-drivers/ppa/ubuntu noble main
+deb [arch=amd64] http://deb.debian.org/debian experimental main non-free non-free-firmware contrib

@@ -1,0 +1,5 @@
+################
+# Nitrux Repos #
+################
+
+deb https://packagecloud.io/nitrux/skidrow/debian/ forky main

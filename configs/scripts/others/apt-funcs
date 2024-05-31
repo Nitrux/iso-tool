@@ -6,6 +6,7 @@ add_nitrux_key_depot () { curl -L https://packagecloud.io/nitrux/depot/gpgkey | 
 add_nitrux_key_unison () { curl -L https://packagecloud.io/nitrux/unison/gpgkey | apt-key add -; }
 add_nitrux_key_testing () { curl -L https://packagecloud.io/nitrux/testing/gpgkey | apt-key add -; }
 add_nitrux_key_area51 () { curl -L https://packagecloud.io/nitrux/area51/gpgkey | apt-key add -; }
+add_nitrux_key_skidrow () { curl -L https://packagecloud.io/nitrux/skidrow/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$@"; }
 appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove "$@"; }
@@ -36,6 +37,8 @@ only_upgrade_force_overwrite () { apt -yy install --no-install-recommends --only
 pkg_policy () { apt-cache policy "$@"; }
 pkg_search () { apt-cache search "$@"; }
 purge () { apt -yy purge --remove "$@"; }
+purge_autoremove () { apt -yy purge --remove "$@" && apt -yy autoremove "$@"; }
+remove () { apt -yy remove "$@"; }
 remove_repo_keys () { apt-key del "$@"; }
 unhold () { apt-mark unhold "$@"; }
 update () { apt update; }

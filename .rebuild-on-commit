@@ -1,0 +1,7 @@
+# -- We modify this file to avoid creating ISO files with the same commit sequence.
+# -- New ISO files only changed the commit sequence if there were changes to this repository.
+# -- However, that wasn't always the case, and we don't want ISO files with package changes to have the same commit sequence.
+
+# -- Change the value below to keep changing the commit sequence.
+
+REBUILD_ON_COMMIT=5
