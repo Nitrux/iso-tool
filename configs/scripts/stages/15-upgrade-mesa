@@ -10,25 +10,25 @@ source /configs/scripts/others/apt-funcs
 
 #   Upgrade the MESA packages.
 
-cp /configs/files/sources/sources.list.debian.experimental /etc/apt/sources.list.d/debian-experimental-repo.list
+cp /configs/files/sources/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
 
 update
 
 MESA_LIBS_PKGS='
-    libegl-mesa0/experimental
-    libgbm1/experimental
-    libgl1-mesa-dri/experimental
-    libglapi-mesa/experimental
-    libglx-mesa0/experimental
-    libxatracker2/experimental
-    mesa-va-drivers/experimental
-    mesa-vdpau-drivers/experimental
-    mesa-vulkan-drivers/experimental
+    libegl-mesa0/unstable
+    libgbm1/unstable
+    libgl1-mesa-dri/unstable
+    libglapi-mesa/unstable
+    libglx-mesa0/unstable
+    libxatracker2/unstable
+    mesa-va-drivers/unstable
+    mesa-vdpau-drivers/unstable
+    mesa-vulkan-drivers/unstable
 '
 
 only_upgrade $MESA_LIBS_PKGS
 
 rm \
-	/etc/apt/sources.list.d/debian-experimental-repo.list
+	/etc/apt/sources.list.d/debian-unstable-repo.list
 
 update

@@ -7,4 +7,4 @@
 # Debian Repos #
 ################
 
-deb [arch=amd64] http://deb.debian.org/debian experimental main non-free non-free-firmware contrib
+deb [arch=amd64] http://deb.debian.org/debian unstable main non-free non-free-firmware contrib
