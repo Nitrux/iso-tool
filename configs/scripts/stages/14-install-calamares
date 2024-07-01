@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#   Add Calamares.
+# -- Add Calamares.
 
 CALAMARES_PKGS='
 	efibootmgr
@@ -16,7 +16,6 @@ CALAMARES_PKGS='
 	calamares-qml-settings-nitrux
 	dosfstools
 	squashfs-tools
-	mauikit-git
 '
 
 install $CALAMARES_PKGS

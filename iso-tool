@@ -3,7 +3,7 @@
 set -e
 
 
-#	Prepare the directories for the build. Cleanup previously created build directories.
+# -- Prepare the directories for the build. Cleanup previously created build directories.
 
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
   rm -rf /tmp/tmp.*
@@ -18,19 +18,19 @@ chmod 755 "$build_dir"
 config_dir=$PWD/configs
 
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source "$config_dir/scripts/others/apt-funcs"
 
 
-#	The command "time" is a Bash built-in. However, the package 'time' can be installed to supply this command.
+# -- The command "time" is a Bash built-in. However, the package 'time' can be installed to supply this command.
 
 [ "$__time_traced" ] ||
 	__time_traced=yes exec time "$0" "$@"
 
 
-#	Clean up before starting.
+# -- Clean up before starting.
 
 if [ -f "$config_dir/rootfs.tar.xz" ] || [ -f "$config_dir/rootfs.tar.gz" ]; then
   rm -f "$config_dir/rootfs.tar.xz" "$config_dir/rootfs.tar.gz"
@@ -45,29 +45,29 @@ if [ -f "$PWD/nitrux-*.iso" ] || [ -f "$PWD/nitrux-*.md5sum" ]; then
 fi
 
 
-#	Build environment stuff.
+# -- Build environment stuff.
 
 bash "$config_dir/scripts/stages/00-install-host-pkgs"
 
 
-#	base image URL.
+# -- base image URL.
 
 base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Testing/rootfs.tar.xz
 
 
-#	The name of the ISO image.
+# -- The name of the ISO image.
 
 image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop-plasma/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
 
 
-#	Prepare the directory where the filesystem will be created.
+# -- Prepare the directory where the filesystem will be created.
 
 rm -r "$config_dir/rootfs.tar.xz" || true 
 axel -o "$config_dir" -c -n 10 $base_img_url
 tar xf "$config_dir/rootfs.tar.xz" -C "$build_dir"
 
 
-#	Populate $build_dir.
+# -- Populate $build_dir.
 
 iso_tool_bootstrap_log="$PWD/$image.bstlog"
 
@@ -83,13 +83,13 @@ chmod +x /bin/runch
 ) 2>&1 | tee -a "$iso_tool_bootstrap_log"
 
 
-#	Check filesystem size.
+# -- Check filesystem size.
 
 du -hs "$build_dir"
 
 
-#	Copy the kernel and initramfs to $iso_dir.
-#	BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
+# -- Copy the kernel and initramfs to $iso_dir.
+# -- BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
 mkdir -p "$iso_dir"/boot
 
@@ -97,17 +97,17 @@ cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_d
 cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
 
 
-#	Copy EFI folder to ISO
+# -- Copy EFI folder to ISO
 
 cp -r EFI/ "$iso_dir"/
 
 
-#	Copy ucode to ISO
+# -- Copy ucode to ISO
 
 cp -r ucode/ "$iso_dir"/boot/
 
 
-#	Compress the root filesystem.
+# -- Compress the root filesystem.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
 
@@ -115,7 +115,7 @@ mkdir -p "$iso_dir"/casper
 mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576
 
 
-#	Generate the ISO image.
+# -- Generate the ISO image.
 
 rm -r /bin/mkiso || true 
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/mkiso
@@ -134,22 +134,22 @@ mkiso \
 	"$iso_dir" "$output_dir"/"$image"
 
 
-#	Calculate the checksum.
+# -- Calculate the checksum.
 
 sha512sum "$output_dir/$image" | sed "s|$output_dir/||" > "$output_dir/${image%.iso}.sha512"
 
 
-#	Get package list from build directory.
+# -- Get package list from build directory.
 
 mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 
-#	Move files to current directory.
+# -- Move files to current directory.
 
 mv "$output_dir"/* "$PWD"
 
 
-#	Clean up build directories.
+# -- Clean up build directories.
 
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
   rm -rf /tmp/tmp.*

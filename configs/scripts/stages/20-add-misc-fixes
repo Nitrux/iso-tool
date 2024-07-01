@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
+
+#
+#
+#
+#
 
 
-#   Function to create symlinks.
+# -- Function to create symlinks.
 
 create_symlink() {
     local source="$1"
@@ -13,13 +18,27 @@ create_symlink() {
 }
 
 
-#   Remove unwanted kernel and initrd links from /boot and /.
+# -- Function to download Appimage files.
+
+user_agent="BrightSign/8.2.55.5 (XT1144) Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.12.3 Chrome/69.0.3497.128 Safari/537.36"
+
+download_appimage() {
+    local name="$1"
+    local url="$2"
+    local destination="/Applications/$name"
+
+    axel -a -q -k -U "$user_agent" -n 8 "$url" -o "$destination"
+    chmod +x "$destination"
+}
+
+
+# -- Remove unwanted kernel and initrd links from /boot and /.
 
 rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
       /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
 
 
-#   Ensure the links in / point to the files in /boot.
+# -- Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
 vmlinuz_pattern="vmlinuz-*liquorix-*"
@@ -43,12 +62,12 @@ else
 fi
 
 
-#   Create necessary directories to put files for kboot.
+# -- Create necessary directories to put files for kboot.
 
 mkdir -p /kboot/{debian,mainline,liquorix}
 
 
-#   Move and create soft links for liquorix kernel files.
+# -- Move and create soft links for liquorix kernel files.
 
 for file in /boot/vmlinuz-*liquorix-amd64; do
     create_symlink "$file" "/kboot/liquorix/vmlinuz"
@@ -58,78 +77,13 @@ for file in /boot/initrd.img-*liquorix-amd64; do
     create_symlink "$file" "/kboot/liquorix/initrd.img"
 done
 
-#   Move and create soft links for debian kernel files.
 
-# for file in /boot/vmlinuz-*amd64; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/debian/${filename}"
-#         create_symlink "/kboot/debian/${filename}" "/kboot/debian/vmlinuz"
-#     fi
-# done
-
-# for file in /boot/initrd.img-*amd64; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/debian/initrd-${filename#*-}"
-#         create_symlink "/kboot/debian/initrd-${filename#*-}" "/kboot/debian/initrd.img"
-#     fi
-# done
-
-# for file in /boot/System.map-*amd64; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/debian/System.map-${filename#*-}"
-#     fi
-# done
-
-# for file in /boot/config-*amd64; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/debian/config-${filename#*-}"
-#     fi
-# done
-
-
-#   Move and create soft links for mainline kernel files.
-
-# for file in /boot/vmlinuz-*generic; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/mainline/${filename}"
-#         create_symlink "/kboot/mainline/${filename}" "/kboot/mainline/vmlinuz"
-#     fi
-# done
-
-# for file in /boot/initrd.img-*generic; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/mainline/initrd-${filename#*-}"
-#         create_symlink "/kboot/mainline/initrd-${filename#*-}" "/kboot/mainline/initrd.img"
-#     fi
-# done
-
-# for file in /boot/System.map-*generic; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/mainline/System.map-${filename#*-}"
-#     fi
-# done
-
-# for file in /boot/config-*generic; do
-#     filename=$(basename "$file")
-#     if ! [[ $filename =~ "liquorix" ]]; then
-#         mv "$file" "/kboot/mainline/config-${filename#*-}"
-#     fi
-# done
-
-
-#   Add Flathub.
+# -- Add Flathub.
 
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
-#   Create symlinks for MauiKit.
+# -- Create symlinks for MauiKit.
 
 MAUIKIT_VERSION="3.1.0"
 
@@ -137,48 +91,48 @@ create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKi
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit3.so"
 
 
-#   Create symlinks for MauiKit FileBrowsing.
+# -- Create symlinks for MauiKit FileBrowsing.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/filebrowsing/libMauiKitFileBrowsing3.so"
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitFileBrowsing3.so"
 
 
-#   Create symlinks for MauiKit TextEditor.
+# -- Create symlinks for MauiKit TextEditor.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/texteditor/libMauiKitTextEditor3.so"
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so"
 
 
-#   Create symlinks for MauiKit ImageTools.
+# -- Create symlinks for MauiKit ImageTools.
 
-# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
-# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so"
-
-
-#   Create symlinks for MauiKit Accounts.
-
-# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
-# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/imagetools/libMauiKitImageTools3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitImageTools3.so"
 
 
-#   Create symlinks for MauiKit Documents.
+# -- Create symlinks for MauiKit Accounts.
 
-# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
-# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/accounts/libMauiKitAccounts3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so"
 
 
-#   Create symlinks for MauiKit Calendar.
+# -- Create symlinks for MauiKit Documents.
+
+create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
+create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
+
+
+# -- Create symlinks for MauiKit Calendar.
 
 # create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/calendar/libMauiKitCalendar3.so"
 
 
-#   Create symlinks for MauiKit Terminal.
+# -- Create symlinks for MauiKit Terminal.
 
 create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/terminal/libMauiKitTerminal3.so"
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so"
 
 
-#   Create symlinks for Maui Core Libraries 0.6.0.
+# -- Create symlinks for Maui Core Libraries 0.6.0.
 
 # create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0"
 # create_symlink "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so.0.6.0" "/usr/lib/x86_64-linux-gnu/libMauiCoreAudio.so"
@@ -194,8 +148,8 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.$MAUIKIT_VERSIO
 # create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so.0.6.0" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauicore/power/libMauiCorePower.so"
 
 
-#	Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
-#	KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
+# -- Also link the library files for cask to launch because maui-shell and cask-server used Jammy for compilation, and the frameworks used Debian.
+# -- KDE PIM libraries were renamed to different SO names because of course they were. Update the links on every new KF5 release.
 
 # KDEPIM_LIB="5.24.5"
 # KF5_LIB="5.114.0"
@@ -208,24 +162,16 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTerminal3.so.$MAUIKIT_VERSIO
 # create_symlink /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.$KF5_LIB /usr/lib/x86_64-linux-gnu/libKF5CalendarCore.so.5abi2
 
 
-#	Add link for applet window buttons.
-#	NOTE: Update the link on every new release of Plasma.
+# -- Add link for applet window buttons.
+# -- NOTE: Update the link on every new release of Plasma.
 
 PLASMA_LIB="5.27.11"
 
 create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
 
 
-#	*And* create symlink for libboost-python for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
-#   *AND* create symlink for libpython3.11 for Calamares (from Neon) because it was compiled using Python 3.10 and we're using Python 3.11.
-
-# create_symlink /usr/lib/x86_64-linux-gnu/libboost_python311.so.1.74.0 /usr/lib/x86_64-linux-gnu/libboost_python310.so.1.74.0
-# create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1.0 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1.0
-# create_symlink /usr/lib/x86_64-linux-gnu/libpython3.11.so.1 /usr/lib/x86_64-linux-gnu/libpython3.10.so.1
-
-
-#	Move APT and dpkg out of the way, out of the way, move b...
-#	use undebianize from Calamares to delete these files from the root.
+# -- Move APT and dpkg out of the way, out of the way, move b...
+# -- Use undebianize from Calamares to delete these files from the root.
 
 mv /usr/bin/apt /opt/1
 mv /usr/bin/apt-get /opt/2
@@ -234,14 +180,14 @@ mv /usr/bin/dpkg /opt/3
 chmod -x /opt/{1,2,3}
 
 
-#	Add link for libappimage1.0.
+# -- Add link for libappimage1.0.
 
 create_symlink /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux-gnu/libappimage.so.1.0
 
 
-#	Enable ufw by default.
-#	Add rules for ports so Waydroid to access the Internet.
-#	Add rules for KDE Connect.
+# -- Enable ufw by default.
+# -- Add rules for ports so Waydroid to access the Internet.
+# -- Add rules for KDE Connect.
 
 ufw enable
 ufw allow 53
@@ -251,35 +197,24 @@ ufw allow 1714:1764/udp
 ufw allow 1714:1764/tcp
 
 
-#	Force SDDM to use Wayland session.
+# -- Force SDDM to use Wayland session.
 
 mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.bak
 
 
-#	Enable SELinux and set enforcing mode.
+# -- Enable SELinux and set enforcing mode.
 
 # selinux-activate
 # selinux-config-enforcing
 
 
-#   Edit 0install launcher.
+# -- Edit 0install launcher.
 
 sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
 sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
 
 
-#   Build Nvidia driver with dkms for other kernels.
-
-# DRIVER="nvidia"
-# VERSION="535.86.05"
-# KERNELS=("5.4.20-050420-generic" "6.4.0-1-amd64")
-
-# for KERNEL in "${KERNELS[@]}"; do
-#     dkms install "$DRIVER/$VERSION" -k "$KERNEL"
-# done
-
-
-#   Check if the root account is disabled, if not, disable it by locking it.
+# -- Check if the root account is disabled, if not, disable it by locking it.
 
 if [[ $(passwd -S root | awk '{print $2}') == "L" ]]; then
    echo "Root account is already disabled"
@@ -289,12 +224,12 @@ else
 fi
 
 
-#   Replace /usr/lib/grub/grub-sort-version with a version that doesn't use apt.pkg do it can generate a usable boot menu.
+# -- Replace /usr/lib/grub/grub-sort-version with a version that doesn't use apt.pkg so it can generate a usable boot menu.
 
 $(which cp) /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
 
-#   Create directories for aesthethic FHS.
+# -- Create directories for aesthethic FHS.
 
 BASE_DIR="/System"
 
@@ -319,46 +254,77 @@ for dir in "${DIRS[@]}"; do
 done
 
 
-#   Hide original FHS directories.
+# -- Hide original FHS directories.
 
 $(which cp) /configs/files/other/hidden /.hidden
 
 
-#   Replace update-grub with our version that doesn't break OUR stuff.
+# -- Replace update-grub with our version that doesn't break OUR stuff.
 
 $(which cp) /configs/scripts/others/update-grub /usr/sbin/update-grub
 
 
-#   Replace this line in mkinitramfs so it shuts up about dpkg.
+# -- Replace this line in mkinitramfs so it shuts up about dpkg.
 
 sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
 
 
-#   Replace user-setup-apply so that it shuts up about dpkg.
+# -- Replace user-setup-apply so that it shuts up about dpkg.
 
 $(which cp) /configs/scripts/others/user-setup-apply /usr/lib/user-setup/user-setup-apply
 
 
-#   Change path where NetworkManager saves wireless connections.
+# -- Change path where NetworkManager saves wireless connections.
 
 echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf
 
 
-#   Create directory for os-prober.
+# -- Create directory for os-prober.
 
 mkdir -p /var/lib/os-prober/mount
 
 
-#   Edit NVIDIA X Settings launcher.
+# -- Edit NVIDIA X Settings launcher.
 
 sed -i 's+Categories=System;Settings;+Categories=Settings;+g' /usr/share/applications/nvidia-settings.desktop
 
 
-#   Edit CoreCtrl launcher.
+# -- Edit CoreCtrl launcher.
 
 sed -i 's+Categories=System;Settings;Utility;+Categories=Utility;+g' /usr/share/applications/org.corectrl.CoreCtrl.desktop
 
 
-#   Create link for gamescope to work.
+# -- Only download NXSC AppImage.
 
-create_symlink /usr/lib/x86_64-linux-gnu/libwlroots.so.12 /usr/lib/x86_64-linux-gnu/libwlroots.so.11
+download_appimage "nx-software-center" "https://github.com/Nitrux/nx-software-center/releases/download/latest/nx-software-center-latest-x86_64.AppImage"
+
+DESKTOP_FILE="/usr/share/applications/org.nx.softwarecenter.desktop"
+
+cat << EOF > "$DESKTOP_FILE"
+[Desktop Entry]
+Name=NX Software Center
+Comment=Software store for AppImages
+TryExec=/Applications/nx-software-center
+Exec=/Applications/nx-software-center %U
+Keywords=program;software;repository;package;install;remove;update;apps;applications;appimage;
+Terminal=false
+Type=Application
+GenericName=Software Center
+Categories=Qt;KDE;System;
+StartupNotify=true
+Icon=nx-software-center
+MimeType=application/vnd.appimage;application/x-executable;
+
+SingleMainWindow=true
+
+[Desktop Action FirejailProfile]
+Exec=firejail --env=DESKTOPINTEGRATION=appimaged --private --appimage /Applications/nx-software-center
+Name=Run without sandbox profile
+TryExec=firejail
+EOF
+
+
+# -- Create links for dbab lists in /etc/NetworkManager/dnsmasq.d.
+
+ln -sv /etc/dnsmasq.d/dbab-map.adblock.conf /etc/NetworkManager/dnsmasq.d/dbab-map.adblock.conf
+ln -sv /etc/dnsmasq.d/dbab-map.trashsites.conf /etc/NetworkManager/dnsmasq.d/dbab-map.trashsites.conf

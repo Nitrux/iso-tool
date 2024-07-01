@@ -46,7 +46,6 @@ cp "$GRUB_CFG" "$GRUB_CFG.bak"
 
 # -- Edit GRUB menu file and remove "ro" parameter.
 
-sed -i 's/ ro  quiet/  quiet/g' "$GRUB_CFG"
-sed -i 's/ ro single/  single/g' "$GRUB_CFG"
+sed -i 's/\bro\b//g' "$GRUB_CFG"
 
 #   ====== END ======

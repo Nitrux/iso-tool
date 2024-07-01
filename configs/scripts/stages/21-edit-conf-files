@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
+
+#
+#
+#
+#
 
 
-#	Add GRUB and casper configuration.
+# -- Add GRUB and casper configuration.
 
 rm \
 	/etc/default/grub \
@@ -13,34 +18,24 @@ cat /configs/files/grub_files/grub > /etc/default/grub
 cat /configs/files/conf/casper.conf > /etc/casper.conf
 
 
-#	Add motd.
+# -- Add motd.
 
 cat /configs/files/other/motd > /etc/motd
 
 
-#	Use our configuration for adduser because Debian's broken for some reason.
+# -- Use our configuration for adduser because Debian's broken for some reason.
 
 cat /configs/files/conf/adduser.conf > /etc/adduser.conf
 
 
-#	Enable Prelink.
-#	Disable Prelink dpkg database timestamp.
-#	Run prelink.
-
-# sed -i 's+PRELINKING=unknown+PRELINKING=yes+g' /etc/default/prelink
-# sed -i 's+PRELINK_NONRPM_CHECK_INTERVAL=7+PRELINK_NONRPM_CHECK_INTERVAL=0+g' /etc/default/prelink
-
-# prelink -amR
-
-
-#	Add variable to PAM for Firefox to work with touchscreens in Wayland.
+# -- Add variable to PAM for Firefox to work with touchscreens in Wayland.
 
 sed -i "$ a \  " /etc/security/pam_env.conf
 sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
 sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
 
 
-#	Replace dnscrypt-proxy default configuration.
+# -- Replace dnscrypt-proxy default configuration.
 
 cat /configs/files/other/dnscrypt-proxy-settings/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
 
@@ -48,19 +43,19 @@ $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /va
 $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
 
 
-#	Replace common-password.
-#	Increase size of hashing rounds in /etc/pam.d/common-password. See https://cisofy.com/lynis/controls/AUTH-9230/
+# -- Replace common-password.
+# -- Increase size of hashing rounds in /etc/pam.d/common-password. See https://cisofy.com/lynis/controls/AUTH-9230/
 
 $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 
 
-#	Add pwquality.conf (which is missing for some reason!).
+# -- Add pwquality.conf (which is missing for some reason!).
 
 $(which cp) /configs/files/conf/pwquality.conf /etc/security/pwquality.conf
 
 
-#	Add user for AIDE (which is missing for some reason!).
-#	Replace aide.conf and 10_aide_hostname.
+# -- Add user for AIDE (which is missing for some reason!).
+# -- Replace aide.conf and 10_aide_hostname.
 
 if id -u _aide >/dev/null 2>&1; then
     echo "User _aide already exists."
@@ -75,12 +70,12 @@ $(which cp) /configs/files/conf/aide.conf /etc/aide/aide.conf
 $(which cp) /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
 
 
-#   Enable using a fingerprint sensor in SDDM.
+# -- Enable using a fingerprint sensor in SDDM.
 
 sed -i '/#%PAM-1.0/a \\n# Use either a password or a fingerprint\nauth \t\t[success=1 new_authtok_reqd=1 default=ignore]  \tpam_unix.so try_first_pass likeauth nullok\nauth \t\tsufficient  \tpam_fprintd.so' /etc/pam.d/sddm
 
 
-#	Add user for OpenRazer (which is missing for some reason!).
+# -- Add user for OpenRazer (which is missing for some reason!).
 
 if id -u razer >/dev/null 2>&1; then
     echo "User razer already exists."

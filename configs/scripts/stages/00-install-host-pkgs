@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source "$PWD"/configs/scripts/others/apt-funcs
 
 
-#	Install packages for host.
+# -- Install packages for host.
 
 update
 

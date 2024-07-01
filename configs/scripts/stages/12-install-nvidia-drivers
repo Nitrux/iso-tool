@@ -1,35 +1,31 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#	Install the *LATEST* NVIDIA proprietary driver using the official installer.
-#	Trying to add the PPA now causes the package manager to do nothing when building the ISO, so thank you, APT! /s.
+# -- Install the NVIDIA proprietary driver using the official installer.
+# -- Trying to add the PPA now causes the package manager to do nothing when building the ISO, so thank you, APT! /s.
 
-#	Download the driver directly from NVIDIA.
+# -- Download the driver directly from NVIDIA.
 
 BASE_URL="http://download.nvidia.com/XFree86/Linux-x86_64/"
-LATEST_URL="${BASE_URL}latest.txt"
 USER_AGENT="BrightSign/8.2.55.5 (XT1144) Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.12.3 Chrome/69.0.3497.128 Safari/537.36"
 DESTINATION="$(mktemp -d)"
+NV_INST_VER="555.58"
 
-axel -a -q -k -U "$USER_AGENT" -n 8 "$LATEST_URL" -o "${DESTINATION}/latest.txt"
-
-LATEST_FILE="$(cat "${DESTINATION}/latest.txt")"
+LATEST_FILE="$NV_INST_VER $NV_INST_VER/NVIDIA-Linux-x86_64-$NV_INST_VER.run"
 FILE_PATH="$(echo "$LATEST_FILE" | awk '{print $2}')"
 FULL_URL="${BASE_URL}${FILE_PATH}"
 
 axel -a -q -k -U "$USER_AGENT" -n 8 "$FULL_URL" -o "${DESTINATION}/$(basename "$FILE_PATH")"
 
-rm -f "${DESTINATION}/latest.txt"
 
-
-#	Install the build depsendencies.
+# -- Install the build dependencies.
 
 NVIDIA_DRV_DEPS_PKGS='
 	acpid
@@ -42,7 +38,7 @@ NVIDIA_DRV_DEPS_PKGS='
 install $NVIDIA_DRV_DEPS_PKGS
 
 
-#	Execute the installer.
+# -- Execute the installer.
 
 chmod +x "$DESTINATION"/*
 for NV_DRV_RUN in "$DESTINATION"/*; do
@@ -52,8 +48,28 @@ for NV_DRV_RUN in "$DESTINATION"/*; do
 done
 
 
-#	Blacklist the Nouveau driver if not already blacklisted.
+# -- Blacklist the Nouveau driver if not already blacklisted.
 
 if ! grep -q "^blacklist nouveau$" /etc/modprobe.d/blacklist.conf; then
     printf '%s\n' "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf
 fi
+
+
+# -- Remove build dependencies.
+
+NVIDIA_DRV_DEV_PKGS='
+	libglvnd-core-dev
+	libglvnd-dev
+'
+
+purge_autoremove $NVIDIA_DRV_DEV_PKGS
+
+
+# -- Install additional packages for NVIDIA. nvidia-settings is added by the installer.
+
+NVIDIA_ADD_PKGS='
+	nvidia-prime
+	screen-resolution-extra
+'
+
+install $NVIDIA_ADD_PKGS

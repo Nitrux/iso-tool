@@ -1,44 +1,59 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#	Add hook scripts for initramfs.
+# -- Add hook scripts for initramfs.
 
 cp -r /configs/files/initramfs-tools/hooks/* /usr/share/initramfs-tools/hooks/
 
 
-#   Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
+# -- Overwrite 15autologin to enable autologin for Plasma Wayland in casper for Live session.
 
 cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
 cat /configs/scripts/others/casper/12fstab > /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
 
 
-#	Add hyper-v modules to initramfs.
+# -- Add modules to initramfs.
 
-printf '%s\n' hv_utils hv_vmbus hv_storvsc hv_blkvsc hv_netvsc exfat >> /etc/initramfs-tools/modules
-
-
-#	Add gpu modules to load at boot time.
-
-printf '%s\n' nvidia nvidia_drm nvidia_modeset amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
+printf '%s\n' exfat >> /etc/initramfs-tools/modules
 
 
-#   Add other modules to load at boot time.
+# -- Add gpu modules to load at boot time.
+
+printf '%s\n' amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
+
+
+# -- Add other modules to load at boot time.
 
 printf '%s\n' fuse exfat loop >> /etc/modules-load.d/additional-modules-boot-time.conf
 
 
-#   Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're relevant in Ubuntu but not here.
+# -- Add Hyper-V modules to load at boot time.
+
+printf '%s\n' hv_utils hv_vmbus hv_storvsc hv_blkvsc hv_netvsc >> /etc/modules-load.d/hyperv-modules-boot-time.conf
+
+
+# -- Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're relevant in Ubuntu but not here.
 
 sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
 
 
-#   Generate the intiramfs.
+# -- Remove these scripts from casper as we don't use them.
+
+rm /usr/share/initramfs-tools/scripts/casper-bottom/{31disable_update_notifier,33enable_apport_crashes,52gnome_initial_setup,59disable_mozc_autosetup}
+
+
+# -- Compress the initramfs using the highest value for Zstd.
+
+cp -r /configs/files/initramfs-tools/conf.d/* /etc/initramfs-tools/conf.d/
+
+
+# -- Generate the intiramfs.
 
 update-initramfs -c -k all

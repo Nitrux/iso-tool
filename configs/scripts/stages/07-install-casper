@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#	Add casper.
+# -- Add casper.
 #
-#	We have to specify to APT the "udev" package to use; otherwise, it just uses whatever the fuck it wants, even if the package is from a repository with
-#	a higher priority and we blocked the origin of the version we don't want.
+# -- We have to specify to APT the "udev" package to use; otherwise, it just uses whatever the fck it wants, even if the package is from a repository with
+# -- a higher priority and we blocked the origin of the version we don't want.
 
 CASPER_DEPS_PKGS='
-	casper
 	udev/forky
 '
 
-install_hold $CASPER_DEPS_PKGS
+CASPER_PKGS='
+	casper
+'
+
+install $CASPER_DEPS_PKGS && install_hold $CASPER_PKGS

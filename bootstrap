@@ -7,230 +7,230 @@ export LC_ALL=C
 export DEBIAN_FRONTEND=noninteractive
 export PATH=$PATH:/tmp/scripts
 
+
+# -- Functions.
+
 puts () { printf "\n\n --- %s\n" "$*"; }
+
 
 #====================	START
 
-puts "HELLO. STARTING BOOTSTRAP."
+puts "STARTING BOOTSTRAP."
 
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#	Block installation of some packages.
+# -- Block installation of some packages.
 
 cp -r /configs/files/apt_preferences/package_preferences /etc/apt/preferences.d/package_preferences
 cp -r /configs/files/apt_preferences/repository_preferences /etc/apt/preferences.d/repository_preferences
 
 
-#	Make directories in /tmp.
+# -- Make directories in /tmp.
 
 mkdir -p /tmp/{kernel,casper,scripts,pkg-origin}
 
 
-#	Copy build scripts.
+# -- Copy build scripts.
 
 cp -r /configs/scripts/stages/* /tmp/scripts
 
 
-#	Copy pkg-origin to $PATH
+# -- Copy pkg-origin to $PATH
 
 cp -r /configs/files/other/pkg-origin /tmp/pkg-origin
 
 
-#	Copy apt_config.
+# -- Copy apt_config.
 
 cp -r /configs/files/apt_conf/skip_waydroid.conf /etc/apt/apt.conf.d/
 
 
-puts "---------------------------"
-puts "POPULATING ROOT DIRECTORY."
+###############################
+# INFORMATION:                #
+# Root content starts here    #
+###############################
 
 
-############################
-#	INFORMATION:			#
-#	Root content goes here	#
-############################
-
-
-#	Install basic packages.
+# -- Install basic packages.
 
 puts "ADDING BASIC PACKAGES."
 
 01-install-basic-pkgs
 
 
-#	Check installed packages at start.
+# -- Check installed packages at start.
 
-list_number_pkgs
 list_installed_text_start
 
 
-#	Add repositories to build root.
+# -- Add repositories to build root.
 
 puts "ADDING BUILD SOURCES."
 
 02-add-build-sources
 
 
-#	Upgrade dpkg for zstd support.
+# -- Upgrade dpkg for zstd support.
 
 puts "ADDING UPGRADED PKGMAN."
 
 03-upgrade-pkgman
 
 
-#	Add bootloader.
+# -- Add bootloader.
 
 puts "ADDING BOOTLOADER AND SECURE BOOT."
 
 04-install-bootloader
 
 
-#	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
+# -- Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
 
 puts "ADDING EUDEV AND ELOGIND."
 
 05-install-elogind-eudev
 
 
-#	Add OpenRC as init.
+# -- Add OpenRC as init.
 
 puts "ADDING OPENRC."
 
 06-install-openrc
 
 
-#	Add casper.
+# -- Add casper.
 
 puts "ADDING CASPER."
 
 07-install-casper
 
 
-#	Add kernel.
+# -- Add kernel.
 
 puts "ADDING KERNEL."
 
 08-install-kernel
 
 
-#	Add packages from Devuan.
+# -- Add packages from Devuan.
 
 puts "ADDING PACKAGES FROM DEVUAN."
 
 09-install-devuan-packages
 
 
-#	Add Nitrux meta-packages.
+# -- Add Nitrux meta-packages.
 
 puts "ADDING NITRUX BASE PACKAGES."
 
 10-install-nitrux-packages
 
 
-#	Add Misc. drivers.
+# -- Add Misc. drivers.
 
 puts "ADDING MISC. DRIVERS."
 
-11-install-misc-hw-packages
+11-install-hw-packages
 
 
-#	Add Nvidia drivers or Nouveau.
+# -- Add Nvidia drivers or Nouveau.
 
 puts "ADDING NVIDIA DRIVERS."
 
 12-install-nvidia-drivers
 
 
-#	Add NX Desktop meta-package.
+# -- Add NX Desktop meta-package.
 
 puts "ADDING NX DESKTOP."
 
 13-install-desktop-session
 
 
-#	Add Calamares.
+# -- Add Calamares.
 
 puts "ADDING CALAMARES INSTALLER."
 
 14-install-calamares
 
 
-#	Upgrade MESA packages.
+# -- Upgrade MESA packages.
 
 puts "UPGRADE MESA."
 
 15-upgrade-mesa
 
 
-#	Add OpenRC configuration.
+# -- Add OpenRC configuration.
 
 puts "ADDING OPENRC CONFIG."
 
 16-install-init-config
 
 
-#	Add initramfs scripts.
+# -- Add initramfs scripts.
 
 puts "ADDING INITRAM SCRIPTS"
 
 17-install-initram-config
 
 
-#	Add Live user configuration.
+# -- Add Live user configuration.
 
 puts "ADDING LIVE USER CONFIG."
 
 18-install-live-config
 
 
-#	Remove sources used to build the root.
+# -- Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
 
 19-remove-build-sources
 
 
-####################################
-#	WARNING:						#
-#	No apt usage past this point.	#
-####################################
+#################################
+# WARNING:                      #
+# No apt usage past this point. #
+#################################
 
 
-#	Changes specific to this image. If they can be put in a package, do so.
-#	FIXME: These fixes should be included in a package.
+# -- Changes specific to this image. If they can be put in a package, do so.
+# -- FIXME: These fixes should be included in a package.
 
 puts "ADDING MISC. FIXES."
 
 20-add-misc-fixes
 
 
-#	Changes specific to this image. If they can be put in a package, do so.
-#	FIXME: These fixes should be included in a package.
+# -- Changes specific to this image. If they can be put in a package, do so.
+# -- FIXME: These fixes should be included in a package.
 
 puts "EDITING CONF. FILES."
 
 21-edit-conf-files
 
 
-#	Create a list of installed packages at end.
-
-list_installed_text_end
-
-
-####################################
-#	WARNING:						#
-#	No dpkg usage past this point.	#
-####################################
-
+#############################
+# INFORMATION:              #
+# Root content ends here    #
+#############################
 
 puts "PERFORM MANUAL CHECKS."
 
 22-manual-checks
 
 
+# -- Create a list of installed packages at end.
+
+list_installed_text_end
+
+
 puts "EXITING BOOTSTRAP."
+
+#====================	END

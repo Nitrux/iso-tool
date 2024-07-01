@@ -1,24 +1,110 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
+
+#
+#
+#
+#
 
 
-echo "Checking existence of files..."
+# -- Functions.
+
+check_ownership() {
+  local file_to_check=$1
+  echo -e "\nChecking ownership of $file_to_check..."
+
+  if [ -e "$file_to_check" ]; then
+    local owner
+    local group
+    owner=$(stat -c "%U" "$file_to_check")
+    group=$(stat -c "%G" "$file_to_check")
+    echo "The file is owned by: $owner (Group: $group)"
+  else
+    echo "File $file_to_check does not exist."
+  fi
+}
+
+check_file_contents() {
+  local file=$1
+  if [ -f "$file" ]; then
+    echo "Contents of $file:"
+    echo "=========================="
+    cat "$file"
+    echo "=========================="
+  else
+    echo "Error: File '$file' not found."
+  fi
+}
+
+check_initramfs_size() {
+  local initramfs_file
+  initramfs_file="/boot/initrd.img-$(uname -r)"
+
+  if [ -f "$initramfs_file" ]; then
+    echo "Initramfs file: $initramfs_file"
+    echo "Initramfs size:"
+    du -h --apparent-size "$initramfs_file" | awk '{printf "%.1fM\n", $1}'
+
+    echo "15 largest files in initramfs:"
+    lsinitramfs -l "$initramfs_file" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'
+  else
+    echo "Error: Initramfs file '$initramfs_file' not found."
+  fi
+}
+
+check_files() {
+  local files=("$@")
+  echo "Checking existence of files..."
+  for file in "${files[@]}"; do
+    if [ -e "$file" ]; then
+      echo "File $file exists."
+    else
+      echo "File $file does not exist."
+    fi
+  done
+}
+
+check_symlinks() {
+  local links=("$@")
+  echo -e "\nChecking symbolic link targets..."
+  for link in "${links[@]}"; do
+    local target
+    target=$(readlink -f "$link" || true)
+    if [ -n "$target" ]; then
+      echo "Link $link points to: $target"
+    else
+      echo "Link $link does not exist or is not a symbolic link."
+    fi
+  done
+}
+
+check_directories() {
+  local directories=("$@")
+  echo -e "\nChecking existence of directories..."
+  if ! command -v tree &> /dev/null; then
+    echo "Error: 'tree' command not found. Please install 'tree' to list directory contents."
+    return 1
+  fi
+  for directory in "${directories[@]}"; do
+    if [ -d "$directory" ]; then
+      echo "Directory $directory exists. Contents:"
+      tree -L 2 "$directory"
+    else
+      echo "Directory $directory does not exist."
+    fi
+  done
+}
+
+
+# -- Perform manual checks.
+
 files_to_check=(
   "/etc/rc.local"
   "/installed_pkgs_end.txt"
   "/installed_pkgs_start.txt"
 )
 
-for file in "${files_to_check[@]}"; do
-  if ls "$file" &> /dev/null; then
-    echo "File $file exists."
-  else
-    echo "File $file does not exist."
-  fi
-done
-
-echo -e "\nChecking symbolic link targets..."
 links_to_check=(
   "/vmlinuz"
   "/initrd.img"
@@ -26,30 +112,12 @@ links_to_check=(
   "/bin/sh"
 )
 
-for link in "${links_to_check[@]}"; do
-  target=$(readlink -f "$link")
-  if [ -n "$target" ]; then
-    echo "Link $link points to: $target"
-  else
-    echo "Link $link does not exist or is not a symbolic link."
-  fi
-done
+check_files "${files_to_check[@]}"
+check_symlinks "${links_to_check[@]}"
 
-echo -e "\nChecking ownership of /usr/lib/dbus-1.0/dbus-daemon-launch-helper..."
-file_to_check="/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
+check_ownership "/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
+check_ownership "/var/log/ntpsec"
 
-echo -e "\nChecking ownership of /var/log/ntpsec..."
-file_to_check="/var/log/ntpsec"
-
-if [ -e "$file_to_check" ]; then
-  owner=$(stat -c "%U" "$file_to_check")
-  group=$(stat -c "%G" "$file_to_check")
-  echo "The file is owned by: $owner (Group: $group)"
-else
-  echo "File $file_to_check does not exist."
-fi
-
-echo -e "\nChecking existence of directories..."
 directories_to_check=(
   "/Applications"
   "/boot"
@@ -79,57 +147,13 @@ directories_to_check=(
   "/Users"
 )
 
-for directory in "${directories_to_check[@]}"; do
-  if [ -d "$directory" ]; then
-    echo "Directory $directory exists. Contents:"
-    tree -L 2 "$directory"
-  else
-    echo "Directory $directory does not exist."
-  fi
-done
-
-check_file_contents() {
-    if [ -f "$1" ]; then
-        echo "Contents of $1:"
-        echo "=========================="
-        tail -n +1 "$1"
-        echo "=========================="
-    else
-        echo "Error: File '$1' not found."
-    fi
-}
+check_directories "${directories_to_check[@]}"
 
 check_file_contents "/etc/sddm.conf.d/kde_settings.conf"
 check_file_contents "/etc/sddm.conf"
 check_file_contents "/etc/NetworkManager/NetworkManager.conf"
+check_file_contents "/etc/resolv.conf"
 # check_file_contents "/etc/rc.conf"
 # check_file_contents "/usr/share/initramfs-tools/scripts/casper"
 
-check_initramfs_contents() {
-    local filenames=("$@")
-    local initramfs_file
-    initramfs_file="/boot/initrd.img-$(uname -r)"
-
-    if [ -f "$initramfs_file" ]; then
-        for filename in "${filenames[@]}"; do
-            echo "Checking for $filename in initramfs $initramfs_file..."
-            local file_exists
-            file_exists=$(lsinitramfs "$initramfs_file" | grep -w "$filename")
-            if [ -n "$file_exists" ]; then
-                echo "$filename exists in initramfs $initramfs_file."
-                echo "Paths containing $filename:"
-                echo "=========================="
-                echo "$file_exists"
-                echo "=========================="
-            else
-                echo "$filename does not exist in initramfs $initramfs_file."
-            fi
-        done
-    else
-        echo "Error: Initramfs file '$initramfs_file' not found."
-    fi
-}
-
-# Search for multiple files or directories in the following way: "item_1" "item_2" "item_3"
-
-check_initramfs_contents "overlay"
+check_initramfs_size

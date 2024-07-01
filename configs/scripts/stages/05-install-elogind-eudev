@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#	Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
+# -- Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
 #
-#	To remove systemd, we have to replace libsystemd0, udev, elogind and provide systemctl. However, neither of them
-#	are available to install from other sources than Devuan except for systemctl.
+# -- To remove systemd, we have to replace libsystemd0, udev, elogind and provide systemctl. However, neither of them
+# -- are available to install from other sources than Devuan except for systemctl.
 #
-#   In Devuan Daedalus and newer, libelogind0 does not declare to provide libsystemd0 as previously. So, we need to use an empty package to
-#   make dpkg stfu.
+# -- In Devuan Daedalus and newer, libelogind0 does not declare to provide libsystemd0 as it used to. So, we need to use an empty package to
+# -- make dpkg stfu.
 
 DEVUAN_EUDEV_ELOGIND_PKGS='
 	eudev

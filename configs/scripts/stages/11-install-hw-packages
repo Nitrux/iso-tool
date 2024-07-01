@@ -1,29 +1,55 @@
 #!/usr/bin/env bash
 
-set -e
+set -eu
 
-#	Source APT commands as functions.
-#	shellcheck source=/dev/null
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
 
 source /configs/scripts/others/apt-funcs
 
 
-#	Create this directory otherwise the package displaylink-driver just fkn dies.
+# -- Install our hardware meta package.
+
+NITRUX_HW_PKGS='
+	nitrux-hardware-drivers-legacy
+'
+
+install  $NITRUX_HW_PKGS
+
+
+# -- Create this directory otherwise the package displaylink-driver just fkn dies.
 
 mkdir -p /lib/systemd/system-sleep
 
 MISC_HW_PKGS='
 	broadcom-sta-dkms
 	displaylink-driver
-	dkms
-	hplip
 '
 
-install $MISC_HW_PKGS
+DEB_FW_PKGS='
+	firmware-ath9k-htc
+	firmware-atheros
+	firmware-bnx2
+	firmware-bnx2x
+	firmware-brcm80211
+	firmware-carl9170
+	firmware-cavium
+	firmware-intel-sound
+	firmware-iwlwifi
+	firmware-misc-nonfree
+	firmware-qcom-soc
+	firmware-qlogic
+	firmware-realtek
+	firmware-realtek-rtl8723cs-bt
+	firmware-samsung
+	firmware-zd1211
+'
+
+install $MISC_HW_PKGS $DEB_FW_PKGS
 
 
-#   Install xpadneo and xone drivers using their installer scripts.
-#	FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+# -- Install xpadneo and xone drivers using their installer scripts.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
 
 ORIGINAL_DIR=$(pwd)
 
@@ -40,7 +66,7 @@ bash install.sh
 cd "$ORIGINAL_DIR"
 
 
-#	Install the firmware that the xone script downloads.
+# -- Install the firmware that the xone script downloads.
 
 XONE_FW_PKGS='
 	cabextract
