@@ -14,7 +14,7 @@ NITRUX_HW_PKGS='
 	nitrux-hardware-drivers-legacy
 '
 
-install  $NITRUX_HW_PKGS
+install $NITRUX_HW_PKGS
 
 
 # -- Create this directory otherwise the package displaylink-driver just fkn dies.
