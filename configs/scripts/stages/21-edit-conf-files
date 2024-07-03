@@ -85,3 +85,10 @@ else
 fi
 
 usermod -L razer
+
+
+# -- Replace elogind default configuration.
+
+$(which cp) /configs/files/other/elogind/logind.conf /etc/elogind/logind.conf
+$(which cp) /configs/files/other/elogind/sleep.conf /etc/elogind/sleep.conf
+$(which cp) /configs/files/other/elogind/sleep.conf.d/10-elogind.conf /etc/elogind/sleep.conf.d/10-elogind.conf
