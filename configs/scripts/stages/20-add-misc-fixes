@@ -115,10 +115,10 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitTextEditor3.so.$MAUIKIT_VERS
 # create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitAccounts3.so"
 
 
-# -- Create symlinks for MauiKit Documents.
+# # -- Create symlinks for MauiKit Documents.
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/documents/libMauiKitDocuments3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKitDocuments3.so"
 
 
 # -- Create symlinks for MauiKit Calendar.
