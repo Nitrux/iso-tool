@@ -88,6 +88,7 @@ DIET_DESK_PKGS='
 	sddm-config
 	station-git
 	systemsettings
+	tree
 	ufw
 '
 
