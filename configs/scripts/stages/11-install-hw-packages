@@ -8,6 +8,15 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
+# -- Create this directory otherwise the package displaylink-driver just fkn dies.
+
+DIR="/lib/systemd/system-sleep"
+
+if [ ! -d "$DIR" ]; then
+    mkdir -p "$DIR"
+fi
+
+
 # -- Install our hardware meta package.
 
 NITRUX_HW_PKGS='
@@ -15,37 +24,6 @@ NITRUX_HW_PKGS='
 '
 
 install $NITRUX_HW_PKGS
-
-
-# -- Create this directory otherwise the package displaylink-driver just fkn dies.
-
-mkdir -p /lib/systemd/system-sleep
-
-MISC_HW_PKGS='
-	broadcom-sta-dkms
-	displaylink-driver
-'
-
-DEB_FW_PKGS='
-	firmware-ath9k-htc
-	firmware-atheros
-	firmware-bnx2
-	firmware-bnx2x
-	firmware-brcm80211
-	firmware-carl9170
-	firmware-cavium
-	firmware-intel-sound
-	firmware-iwlwifi
-	firmware-misc-nonfree
-	firmware-qcom-soc
-	firmware-qlogic
-	firmware-realtek
-	firmware-realtek-rtl8723cs-bt
-	firmware-samsung
-	firmware-zd1211
-'
-
-install $MISC_HW_PKGS $DEB_FW_PKGS
 
 
 # -- Install xpadneo and xone drivers using their installer scripts.
@@ -67,12 +45,6 @@ cd "$ORIGINAL_DIR"
 
 
 # -- Install the firmware that the xone script downloads.
-
-XONE_FW_PKGS='
-	cabextract
-'
-
-install $XONE_FW_PKGS
 
 DRIVER_URL='http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab'
 FIRMWARE_HASH='48084d9fa53b9bb04358f3bb127b7495dc8f7bb0b3ca1437bd24ef2b6eabdf66'

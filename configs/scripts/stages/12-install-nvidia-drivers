@@ -27,15 +27,14 @@ axel -a -q -k -U "$USER_AGENT" -n 8 "$FULL_URL" -o "${DESTINATION}/$(basename "$
 
 # -- Install the build dependencies.
 
-NVIDIA_DRV_DEPS_PKGS='
-	acpid
+NVIDIA_DRV_BUILD_PKGS='
 	build-essential
 	libglvnd-core-dev
 	libglvnd-dev
-	pkg-config
+	pkgconf
 '
 
-install $NVIDIA_DRV_DEPS_PKGS
+install $NVIDIA_DRV_BUILD_PKGS
 
 
 # -- Execute the installer.
@@ -57,19 +56,21 @@ fi
 
 # -- Remove build dependencies.
 
-NVIDIA_DRV_DEV_PKGS='
+NVIDIA_DRV_DEL_PKGS='
 	libglvnd-core-dev
 	libglvnd-dev
+	pkgconf
+	pkgconf-bin
 '
 
-purge_autoremove $NVIDIA_DRV_DEV_PKGS
+purge_autoremove $NVIDIA_DRV_DEL_PKGS
 
 
-# -- Install additional packages for NVIDIA. nvidia-settings is added by the installer.
+# -- Install additional packages for the NVIDIA proprietary driver which are not part of the installer.
 
-NVIDIA_ADD_PKGS='
+NVIDIA_EXTRA_PKGS='
 	nvidia-prime
 	screen-resolution-extra
 '
 
-install $NVIDIA_ADD_PKGS
+install $NVIDIA_EXTRA_PKGS
