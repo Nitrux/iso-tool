@@ -54,20 +54,20 @@ $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 $(which cp) /configs/files/conf/pwquality.conf /etc/security/pwquality.conf
 
 
-# -- Add user for AIDE (which is missing for some reason!).
-# -- Replace aide.conf and 10_aide_hostname.
+# # -- Add user for AIDE (which is missing for some reason!).
+# # -- Replace aide.conf and 10_aide_hostname.
 
-if id -u _aide >/dev/null 2>&1; then
-    echo "User _aide already exists."
-else
-    useradd -r -s /bin/false -M _aide
-    echo "User _aide created successfully."
-fi
+# if id -u _aide >/dev/null 2>&1; then
+#     echo "User _aide already exists."
+# else
+#     useradd -r -s /bin/false -M _aide
+#     echo "User _aide created successfully."
+# fi
 
-usermod -L _aide
+# usermod -L _aide
 
-$(which cp) /configs/files/conf/aide.conf /etc/aide/aide.conf
-$(which cp) /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
+# $(which cp) /configs/files/conf/aide.conf /etc/aide/aide.conf
+# $(which cp) /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
 
 
 # -- Enable using a fingerprint sensor in SDDM.
@@ -75,16 +75,16 @@ $(which cp) /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_
 sed -i '/#%PAM-1.0/a \\n# Use either a password or a fingerprint\nauth \t\t[success=1 new_authtok_reqd=1 default=ignore]  \tpam_unix.so try_first_pass likeauth nullok\nauth \t\tsufficient  \tpam_fprintd.so' /etc/pam.d/sddm
 
 
-# -- Add user for OpenRazer (which is missing for some reason!).
+# # -- Add user for OpenRazer (which is missing for some reason!).
 
-if id -u razer >/dev/null 2>&1; then
-    echo "User razer already exists."
-else
-    useradd -r -s /bin/false -M razer
-    echo "User razer created successfully."
-fi
+# if id -u razer >/dev/null 2>&1; then
+#     echo "User razer already exists."
+# else
+#     useradd -r -s /bin/false -M razer
+#     echo "User razer created successfully."
+# fi
 
-usermod -L razer
+# usermod -L razer
 
 
 # -- Replace elogind default configuration.
