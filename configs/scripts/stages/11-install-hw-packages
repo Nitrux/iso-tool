@@ -8,49 +8,61 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Create this directory otherwise the package displaylink-driver just fkn dies.
+# # -- Create this directory otherwise the package displaylink-driver just fkn dies.
 
-DIR="/lib/systemd/system-sleep"
+# DIR="/lib/systemd/system-sleep"
 
-if [ ! -d "$DIR" ]; then
-    mkdir -p "$DIR"
-fi
+# if [ ! -d "$DIR" ]; then
+#     mkdir -p "$DIR"
+# fi
 
 
-# -- Install our hardware meta package.
+# # -- Install our hardware meta package.
 
-NITRUX_HW_PKGS='
-	nitrux-hardware-drivers-legacy
+# NITRUX_HW_PKGS='
+# 	nitrux-hardware-drivers-legacy
+# '
+
+# install $NITRUX_HW_PKGS
+
+
+# # -- Install xpadneo and xone drivers using their installer scripts.
+# # -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+
+# ORIGINAL_DIR=$(pwd)
+
+# TEMP_DIR1=$(mktemp -d)
+# git clone https://github.com/medusalix/xone "$TEMP_DIR1"
+# cd "$TEMP_DIR1"
+# sh install.sh
+# cd "$ORIGINAL_DIR"
+
+# TEMP_DIR2=$(mktemp -d)
+# git clone https://github.com/atar-axis/xpadneo "$TEMP_DIR2"
+# cd "$TEMP_DIR2"
+# bash install.sh
+# cd "$ORIGINAL_DIR"
+
+
+# # -- Install the firmware that the xone script downloads.
+
+# DRIVER_URL='http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab'
+# FIRMWARE_HASH='48084d9fa53b9bb04358f3bb127b7495dc8f7bb0b3ca1437bd24ef2b6eabdf66'
+
+# curl -L -o driver.cab "$DRIVER_URL"
+# cabextract -F FW_ACC_00U.bin driver.cab
+# echo "$FIRMWARE_HASH  FW_ACC_00U.bin" | sha256sum -c
+# mv FW_ACC_00U.bin /lib/firmware/xow_dongle.bin
+# rm driver.cab
+
+
+# -- Install few firmware packages.
+
+DIET_FW_PKGS='
+    firmware-amd-nitrux
+    libdrm-amdgpu1
+    libdrm-radeon1
+    libdrm-intel1
 '
 
-install $NITRUX_HW_PKGS
-
-
-# -- Install xpadneo and xone drivers using their installer scripts.
-# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
-
-ORIGINAL_DIR=$(pwd)
-
-TEMP_DIR1=$(mktemp -d)
-git clone https://github.com/medusalix/xone "$TEMP_DIR1"
-cd "$TEMP_DIR1"
-sh install.sh
-cd "$ORIGINAL_DIR"
-
-TEMP_DIR2=$(mktemp -d)
-git clone https://github.com/atar-axis/xpadneo "$TEMP_DIR2"
-cd "$TEMP_DIR2"
-bash install.sh
-cd "$ORIGINAL_DIR"
-
-
-# -- Install the firmware that the xone script downloads.
-
-DRIVER_URL='http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab'
-FIRMWARE_HASH='48084d9fa53b9bb04358f3bb127b7495dc8f7bb0b3ca1437bd24ef2b6eabdf66'
-
-curl -L -o driver.cab "$DRIVER_URL"
-cabextract -F FW_ACC_00U.bin driver.cab
-echo "$FIRMWARE_HASH  FW_ACC_00U.bin" | sha256sum -c
-mv FW_ACC_00U.bin /lib/firmware/xow_dongle.bin
-rm driver.cab
+install $DIET_FW_PKGS

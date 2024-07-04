@@ -8,45 +8,94 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Add Waydroid repository.
+# # -- Add Waydroid repository.
 
-add_repo_keys \
-	90E51522 \
-	1DCEE19C > /dev/null
+# add_repo_keys \
+# 	90E51522 \
+# 	1DCEE19C > /dev/null
 
-cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
+# cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
 
-update
+# update
 
 
-# -- Install these packages first because libappimageupdate and zsync2 provide files found in other packages.
+# # -- Install these packages first because libappimageupdate and zsync2 provide files found in other packages.
 
-ZSYNC_LIBAIU_PKGS='
-	libappimage1.0
-	libappimageupdate
-	zlib1g-dev
-	zsync2
-'
+# ZSYNC_LIBAIU_PKGS='
+# 	libappimage1.0
+# 	libappimageupdate
+# 	zlib1g-dev
+# 	zsync2
+# '
 
-install_force_overwrite $ZSYNC_LIBAIU_PKGS
+# install_force_overwrite $ZSYNC_LIBAIU_PKGS
 
-NX_DESKTOP_PKG='
-	nx-desktop-legacy
+# NX_DESKTOP_PKG='
+# 	nx-desktop-legacy
+# 	nx-desktop-wayland-legacy
+# 	nx-desktop-appimages-vfio
+# 	nx-desktop-apps-vfio
+# '
+
+# FH_SIGH_PKGS='
+# 	polkit-kde-agent-1=4:5.27.11-1
+# '
+
+# install $NX_DESKTOP_PKG $FH_SIGH_PKGS
+
+# rm /etc/apt/sources.list.d/waydroid-repo.list
+
+# remove_repo_keys \
+# 	90E51522 \
+# 	1DCEE19C > /dev/null
+
+# update
+
+
+# -- Install few desktop packages.
+
+DIET_DESK_PKGS='
+	applet-window-buttons
+	bluedevil
+	cryptsetup
+	cryptsetup-initramfs
+	cups-daemon
+	flatpak
+	fonts-nx-desktop
+	grub2-theme-nitrux
+	index-git
+	kboot
+	libpipewire-0.3-modules
+	luv-icon-theme
+	mauikit-texteditor-git
+	micro
+	nitrux-wallpapers-free
+	nota-git
+	nuts
+	nx-desktop-appimages-legacy
+	nx-desktop-settings-legacy
 	nx-desktop-wayland-legacy
-	nx-desktop-appimages-vfio
-	nx-desktop-apps-vfio
-'
-
-FH_SIGH_PKGS='
+	nx-gtk-themes
+	nx-kstyle-theme
+	nx-networkmanagement-applet
+	nx-plasma-look-and-feel
+	nx-window-deco
+	overlayroot
+	pipewire
+	pipewire-bin
+	plasma-desktop
+	plasma-nm
+	plasma-pa
+	plymouth-theme-nitrux
 	polkit-kde-agent-1=4:5.27.11-1
+	powerdevil
+	rsyslog
+	rsyslog-openrc
+	sddm
+	sddm-config
+	station-git
+	systemsettings
+	ufw
 '
 
-install $NX_DESKTOP_PKG $FH_SIGH_PKGS
-
-rm /etc/apt/sources.list.d/waydroid-repo.list
-
-remove_repo_keys \
-	90E51522 \
-	1DCEE19C > /dev/null
-
-update
+install $DIET_DESK_PKGS
