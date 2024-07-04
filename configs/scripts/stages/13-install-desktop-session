@@ -19,14 +19,7 @@ source /configs/scripts/others/apt-funcs
 # update
 
 
-# # -- Install these packages first because libappimageupdate and zsync2 provide files found in other packages.
-
-# ZSYNC_LIBAIU_PKGS='
-# 	libappimage1.0
-# 	libappimageupdate
-# 	zlib1g-dev
-# 	zsync2
-# '
+# # -- Install NX Desktop packages.
 
 # install_force_overwrite $ZSYNC_LIBAIU_PKGS
 
