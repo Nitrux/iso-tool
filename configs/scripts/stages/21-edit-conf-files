@@ -35,12 +35,12 @@ sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam
 sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
 
 
-# -- Replace dnscrypt-proxy default configuration.
+# # -- Replace dnscrypt-proxy default configuration.
 
-cat /configs/files/other/dnscrypt-proxy-settings/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+# cat /configs/files/other/dnscrypt-proxy-settings/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
 
-$(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
-$(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
+# $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
+# $(which cp) /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
 
 
 # -- Replace common-password.
