@@ -11,6 +11,7 @@ source /configs/scripts/others/apt-funcs
 # -- Install Nitrux base.
 
 NITRUX_BASE_PKGS='
+	base-files
 	nitrux-minimal-legacy
 	nitrux-standard-legacy
 '
