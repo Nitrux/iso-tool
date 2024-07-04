@@ -60,6 +60,8 @@ DIET_DESK_PKGS='
 	kboot
 	libpipewire-0.3-modules
 	luv-icon-theme
+	mauikit-filebrowsing-git
+	mauikit-terminal-git
 	mauikit-texteditor-git
 	micro
 	nitrux-wallpapers-free
@@ -76,9 +78,9 @@ DIET_DESK_PKGS='
 	overlayroot
 	pipewire
 	pipewire-bin
-	plasma-desktop
 	plasma-nm
 	plasma-pa
+	plasma-workspace-wayland
 	plymouth-theme-nitrux
 	polkit-kde-agent-1=4:5.27.11-1
 	powerdevil
@@ -90,6 +92,7 @@ DIET_DESK_PKGS='
 	systemsettings
 	tree
 	ufw
+	wayland-utils
 '
 
 install $DIET_DESK_PKGS
