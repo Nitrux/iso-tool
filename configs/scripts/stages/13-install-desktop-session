@@ -78,6 +78,7 @@ DIET_DESK_PKGS='
 	overlayroot
 	pipewire
 	pipewire-bin
+	plasma-desktop
 	plasma-nm
 	plasma-pa
 	plasma-workspace-wayland
