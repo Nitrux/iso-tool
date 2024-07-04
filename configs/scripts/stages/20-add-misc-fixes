@@ -210,8 +210,8 @@ mv /usr/share/xsessions/plasma.desktop /usr/share/xsessions/orig.plasma.desktop.
 
 # -- Edit 0install launcher.
 
-sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
-sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
+# sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
+# sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
 
 
 # -- Check if the root account is disabled, if not, disable it by locking it.
@@ -286,12 +286,12 @@ mkdir -p /var/lib/os-prober/mount
 
 # -- Edit NVIDIA X Settings launcher.
 
-sed -i 's+Categories=System;Settings;+Categories=Settings;+g' /usr/share/applications/nvidia-settings.desktop
+# sed -i 's+Categories=System;Settings;+Categories=Settings;+g' /usr/share/applications/nvidia-settings.desktop
 
 
 # -- Edit CoreCtrl launcher.
 
-sed -i 's+Categories=System;Settings;Utility;+Categories=Utility;+g' /usr/share/applications/org.corectrl.CoreCtrl.desktop
+# sed -i 's+Categories=System;Settings;Utility;+Categories=Utility;+g' /usr/share/applications/org.corectrl.CoreCtrl.desktop
 
 
 # -- Only download NXSC AppImage.
@@ -326,5 +326,5 @@ EOF
 
 # -- Create links for dbab lists in /etc/NetworkManager/dnsmasq.d.
 
-ln -sv /etc/dnsmasq.d/dbab-map.adblock.conf /etc/NetworkManager/dnsmasq.d/dbab-map.adblock.conf
-ln -sv /etc/dnsmasq.d/dbab-map.trashsites.conf /etc/NetworkManager/dnsmasq.d/dbab-map.trashsites.conf
+# ln -sv /etc/dnsmasq.d/dbab-map.adblock.conf /etc/NetworkManager/dnsmasq.d/dbab-map.adblock.conf
+# ln -sv /etc/dnsmasq.d/dbab-map.trashsites.conf /etc/NetworkManager/dnsmasq.d/dbab-map.trashsites.conf
