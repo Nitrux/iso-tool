@@ -94,6 +94,7 @@ DIET_DESK_PKGS='
 	tree
 	ufw
 	wayland-utils
+	qml-module-org-kde-activities
 '
 
 install $DIET_DESK_PKGS
