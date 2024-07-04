@@ -81,7 +81,6 @@ source /configs/scripts/others/apt-funcs
 DIET_NV_DRV_PKGS='
 	libdrm-nouveau2
 	nouveau-firmware
-	xserver-xorg-video-nouveau
 '
 
 install $DIET_NV_DRV_PKGS
