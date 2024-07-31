@@ -1,11 +1,28 @@
 #!/usr/bin/env bash
 
-set -eu
+#############################################################################################################################################################################
+#   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
+#                                                                                                                                                                           #
+#   Copyright <2023-2024> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#                                                                                                                                                                           #
+#   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
+#                                                                                                                                                                           #
+#    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.                                        #
+#                                                                                                                                                                           #
+#    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer                                      #
+#       in the documentation and/or other materials provided with the distribution.                                                                                         #
+#                                                                                                                                                                           #
+#    3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software                    #
+#       without specific prior written permission.                                                                                                                          #
+#                                                                                                                                                                           #
+#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,                      #
+#    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS                  #
+#    BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE                 #
+#    GOODS OR SERVICES; LOSS OF USE, DATA,   OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,                      #
+#    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
+#############################################################################################################################################################################
 
-#
-#
-#
-#
+set -eu
 
 
 # -- Function to create symlinks.
@@ -328,3 +345,36 @@ EOF
 
 ln -sv /etc/dnsmasq.d/dbab-map.adblock.conf /etc/NetworkManager/dnsmasq.d/dbab-map.adblock.conf
 ln -sv /etc/dnsmasq.d/dbab-map.trashsites.conf /etc/NetworkManager/dnsmasq.d/dbab-map.trashsites.conf
+
+
+# -- Disable AppArmor profile for bubblewrap that breaks Flatpak, see https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2072811
+
+ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
+
+
+# -- Disable DrKonqi as we do not include debug symbols and it's useless otherwise.
+
+chmod a-x /usr/lib/x86_64-linux-gnu/libexec/drkonqi 
+
+
+# -- Add tutorials to /etc/skel so they're added to the Desktop directory.
+
+ORIGINAL_DIR=$(pwd)
+
+TEMP_DIR1=$(mktemp -d)
+git clone --depth=1 https://github.com/Nitrux/storage.git "$TEMP_DIR1"
+cd "$TEMP_DIR1"
+cp -R Other/Documentation /etc/skel/Desktop
+cd "$ORIGINAL_DIR"
+
+
+# -- Add nvidia_oc binary to overclock NVIDIA GPUs on Wayland.
+
+FILE_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.11/nvidia_oc"
+DEST_DIR="/usr/bin"
+DEST_FILE="$DEST_DIR/nvidia-oc"
+if curl -L -o "$DEST_FILE" "$FILE_URL"; then
+    chmod +x "$DEST_FILE"
+else
+    exit 1
+fi

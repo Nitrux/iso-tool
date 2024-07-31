@@ -1,5 +1,28 @@
 #!/usr/bin/env bash
 
+#############################################################################################################################################################################
+#   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
+#                                                                                                                                                                           #
+#   Copyright <2018-2024> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2017-2018> <Luis Lavaire <luis_lavaire@nxos.org>>                                                                                                            #
+#                                                                                                                                                                           #
+#   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
+#                                                                                                                                                                           #
+#    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.                                        #
+#                                                                                                                                                                           #
+#    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer                                      #
+#       in the documentation and/or other materials provided with the distribution.                                                                                         #
+#                                                                                                                                                                           #
+#    3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software                    #
+#       without specific prior written permission.                                                                                                                          #
+#                                                                                                                                                                           #
+#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,                      #
+#    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS                  #
+#    BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE                 #
+#    GOODS OR SERVICES; LOSS OF USE, DATA,   OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,                      #
+#    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
+#############################################################################################################################################################################
+
 set -e
 
 
@@ -69,11 +92,16 @@ tar xf "$config_dir/rootfs.tar.xz" -C "$build_dir"
 
 # -- Populate $build_dir.
 
-iso_tool_bootstrap_log="$PWD/$image.bstlog"
+iso_tool_bootstrap_log="$PWD/${image%.iso}.bstlog"
 
 rm -r /bin/runch || true 
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/runch
 chmod +x /bin/runch
+
+
+# -- WARNING: Copy resolv.conf from root to chroot otherwise chroot fails to resolve DNS queries when chroot starts.
+cp "/etc/resolv.conf"  "$build_dir/etc/resolv.conf"
+
 
 ( < bootstrap runch \
 	-m configs:/configs \
@@ -86,6 +114,17 @@ chmod +x /bin/runch
 # -- Check filesystem size.
 
 du -hs "$build_dir"
+
+
+# -- Get package lists from build directory.
+
+mv "$build_dir"/installed_pkgs_start.txt "$output_dir"/"${image%.iso}.rootfs.buildlist"
+mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
+
+
+# -- Get data archive from build directory.
+
+mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
 
 
 # -- Copy the kernel and initramfs to $iso_dir.
@@ -137,11 +176,6 @@ mkiso \
 # -- Calculate the checksum.
 
 sha512sum "$output_dir/$image" | sed "s|$output_dir/||" > "$output_dir/${image%.iso}.sha512"
-
-
-# -- Get package list from build directory.
-
-mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 
 # -- Move files to current directory.

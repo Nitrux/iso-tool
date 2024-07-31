@@ -50,14 +50,6 @@ Package: firmware-amd-graphics
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: initramfs-tools
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
-Package: initramfs-tools-core
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: libblkid-dev
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -107,6 +99,14 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libuuid1
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: login
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: multipath-tools
 Pin: origin deb.debian.org
 Pin-Priority: -1
 

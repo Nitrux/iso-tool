@@ -1,5 +1,28 @@
 #!/usr/bin/env bash
 
+#############################################################################################################################################################################
+#   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
+#                                                                                                                                                                           #
+#   Copyright <2018-2024> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2017-2018> <Luis Lavaire <luis_lavaire@nxos.org>>                                                                                                            #
+#                                                                                                                                                                           #
+#   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
+#                                                                                                                                                                           #
+#    1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.                                        #
+#                                                                                                                                                                           #
+#    2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer                                      #
+#       in the documentation and/or other materials provided with the distribution.                                                                                         #
+#                                                                                                                                                                           #
+#    3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software                    #
+#       without specific prior written permission.                                                                                                                          #
+#                                                                                                                                                                           #
+#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,                      #
+#    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS                  #
+#    BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE                 #
+#    GOODS OR SERVICES; LOSS OF USE, DATA,   OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,                      #
+#    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
+#############################################################################################################################################################################
+
 set -eu
 
 export LANG=C
@@ -55,143 +78,128 @@ cp -r /configs/files/apt_conf/skip_waydroid.conf /etc/apt/apt.conf.d/
 # Root content starts here    #
 ###############################
 
-
-# -- Install basic packages.
-
-puts "ADDING BASIC PACKAGES."
-
-01-install-basic-pkgs
-
-
-# -- Check installed packages at start.
+# -- Check installed packages after adding basic packages to chroot.
 
 list_installed_text_start
 
 
 # -- Add repositories to build root.
 
-puts "ADDING BUILD SOURCES."
+puts "ADDING NITRUX SOURCES."
 
-02-add-build-sources
-
-
-# -- Upgrade dpkg for zstd support.
-
-puts "ADDING UPGRADED PKGMAN."
-
-03-upgrade-pkgman
+01-add-nitrux-sources
 
 
 # -- Add bootloader.
 
 puts "ADDING BOOTLOADER AND SECURE BOOT."
 
-04-install-bootloader
+02-install-bootloader
 
 
-# -- Add eudev, elogind, and systemctl to replace systemd and utilize other inits.
+# -- Remove systemd packages.
 
-puts "ADDING EUDEV AND ELOGIND."
+puts "REMOVE SYSTEMD PACKAGES."
 
-05-install-elogind-eudev
+03-remove-systemd-packages
 
 
 # -- Add OpenRC as init.
 
 puts "ADDING OPENRC."
 
-06-install-openrc
+04-install-openrc
 
 
 # -- Add casper.
 
 puts "ADDING CASPER."
 
-07-install-casper
+05-install-casper
 
 
 # -- Add kernel.
 
 puts "ADDING KERNEL."
 
-08-install-kernel
+06-install-kernel
 
 
 # -- Add packages from Devuan.
 
 puts "ADDING PACKAGES FROM DEVUAN."
 
-09-install-devuan-packages
+07-install-devuan-packages
 
 
 # -- Add Nitrux meta-packages.
 
 puts "ADDING NITRUX BASE PACKAGES."
 
-10-install-nitrux-packages
+08-install-nitrux-packages
 
 
 # -- Add Misc. drivers.
 
 puts "ADDING MISC. DRIVERS."
 
-11-install-hw-packages
+09-install-hw-packages
 
 
-# -- Add Nvidia drivers or Nouveau.
+# -- Add NVIDIA drivers.
 
 puts "ADDING NVIDIA DRIVERS."
 
-12-install-nvidia-drivers
+10-install-nvidia-drivers
 
 
 # -- Add NX Desktop meta-package.
 
 puts "ADDING NX DESKTOP."
 
-13-install-desktop-session
+11-install-desktop-session
 
 
 # -- Add Calamares.
 
 puts "ADDING CALAMARES INSTALLER."
 
-14-install-calamares
+12-install-calamares
 
 
 # -- Upgrade MESA packages.
 
 puts "UPGRADE MESA."
 
-15-upgrade-mesa
+13-upgrade-mesa
 
 
 # -- Add OpenRC configuration.
 
 puts "ADDING OPENRC CONFIG."
 
-16-install-init-config
-
-
-# -- Add initramfs scripts.
-
-puts "ADDING INITRAM SCRIPTS"
-
-17-install-initram-config
+14-install-init-config
 
 
 # -- Add Live user configuration.
 
 puts "ADDING LIVE USER CONFIG."
 
-18-install-live-config
+15-add-live-user
+
+
+# -- Add initramfs scripts.
+
+puts "ADDING INITRAM SCRIPTS"
+
+16-update-initram-config
 
 
 # -- Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
 
-19-remove-build-sources
+17-remove-build-sources
 
 
 #################################
@@ -205,7 +213,7 @@ puts "REMOVE BUILD SOURCES."
 
 puts "ADDING MISC. FIXES."
 
-20-add-misc-fixes
+18-add-misc-fixes
 
 
 # -- Changes specific to this image. If they can be put in a package, do so.
@@ -213,7 +221,7 @@ puts "ADDING MISC. FIXES."
 
 puts "EDITING CONF. FILES."
 
-21-edit-conf-files
+19-edit-conf-files
 
 
 #############################
@@ -223,7 +231,7 @@ puts "EDITING CONF. FILES."
 
 puts "PERFORM MANUAL CHECKS."
 
-22-manual-checks
+20-manual-checks
 
 
 # -- Create a list of installed packages at end.

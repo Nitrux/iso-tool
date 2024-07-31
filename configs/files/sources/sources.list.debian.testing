@@ -7,4 +7,4 @@
 # Debian Repos #
 ################
 
-deb [arch=amd64] http://deb.debian.org/debian trixie main non-free non-free-firmware contrib
+deb [arch=amd64] http://deb.debian.org/debian testing main non-free non-free-firmware contrib
