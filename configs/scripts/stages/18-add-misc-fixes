@@ -378,3 +378,18 @@ if curl -L -o "$DEST_FILE" "$FILE_URL"; then
 else
     exit 1
 fi
+
+
+# -- Add gpu modules to load at boot time.
+
+printf '%s\n' amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
+
+
+# -- Add other modules to load at boot time.
+
+printf '%s\n' fuse exfat loop >> /etc/modules-load.d/additional-modules-boot-time.conf
+
+
+# -- Add Hyper-V modules to load at boot time.
+
+printf '%s\n' hv_utils hv_vmbus hv_storvsc hv_blkvsc hv_netvsc >> /etc/modules-load.d/hyperv-modules-boot-time.conf
