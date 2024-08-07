@@ -7,11 +7,12 @@ crypto_keyfile.bin
 dev
 etc
 home
-kboot
 initrd.img
+initrd.img.old
 installed_pkgs_end.txt
 installed_pkgs_start.txt
 isodevice
+kboot
 lib
 lib32
 lib64
@@ -31,3 +32,4 @@ tmp
 usr
 var
 vmlinuz
+vmlinuz.old
