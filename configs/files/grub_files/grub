@@ -30,7 +30,19 @@ GRUB_THEME="/usr/share/grub/themes/nitrux/theme.txt"
 #GRUB_DISABLE_LINUX_UUID=true
 
 # Uncomment to disable generation of recovery mode menu entries
-#GRUB_DISABLE_RECOVERY="true"
+GRUB_DISABLE_RECOVERY="true"
 
 # Uncomment to get a beep at grub start
 #GRUB_INIT_TUNE="480 440 1"
+
+# Enable os-prober
+GRUB_DISABLE_OS_PROBER=false
+
+# Disable submenus
+#GRUB_DISABLE_SUBMENU=y
+
+# Boot regardless of previous booting failure
+GRUB_RECORDFAIL_TIMEOUT=0
+
+# Initialize the GRUB graphical terminal
+#GRUB_TERMINAL_OUTPUT="gfxterm"
