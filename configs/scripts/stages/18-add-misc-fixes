@@ -393,3 +393,16 @@ if curl -L -o "$DEST_FILE" "$FILE_URL"; then
 else
     exit 1
 fi
+
+
+# -- Add install scripts here.
+
+DEST_DIR="/usr/bin"
+LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
+UNDEBIANIZE_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/undebianize"
+
+wget -P "$DEST_DIR" "$LINKER_URL"
+wget -P "$DEST_DIR" "$UNDEBIANIZE_URL"
+
+chmod +x "$DEST_DIR/linker"
+chmod +x "$DEST_DIR/undebianize"
