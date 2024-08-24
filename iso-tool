@@ -49,8 +49,7 @@ source "$config_dir/scripts/others/apt-funcs"
 
 # -- The command "time" is a Bash built-in. However, the package 'time' can be installed to supply this command.
 
-[ "$__time_traced" ] ||
-	__time_traced=yes exec time "$0" "$@"
+[ "$__time_traced" ] || { __time_traced=yes; exec /usr/bin/time -f "\nReal Time: %E\nUser Time: %U seconds\nSystem Time: %S seconds\nCPU Usage: %P\nMax Resident Memory: %M KB" "$0" "$@"; }
 
 
 # -- Clean up before starting.
