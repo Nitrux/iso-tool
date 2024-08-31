@@ -70,7 +70,7 @@ cp -r /configs/files/other/pkg-origin /tmp/pkg-origin
 
 # -- Copy apt_config.
 
-cp -r /configs/files/apt_conf/skip_waydroid.conf /etc/apt/apt.conf.d/
+cp -r /configs/files/apt_conf/* /etc/apt/apt.conf.d/
 
 
 ###############################

@@ -70,6 +70,6 @@ purge_autoremove () { apt -yy purge --remove "$@" && apt -yy autoremove "$@"; }
 remove () { apt -yy remove "$@"; }
 remove_repo_keys () { apt-key del "$@"; }
 unhold () { apt-mark unhold "$@"; }
-update () { apt -o Acquire::Check-Valid-Until=false -o Acquire::Check-Date=false update; }
+update () { apt update; }
 upgrade () { apt -yy upgrade "$@"; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades "$@"; }
