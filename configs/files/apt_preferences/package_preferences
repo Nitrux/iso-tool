@@ -210,6 +210,10 @@ Package: linux-image-rt-amd64
 Pin: release *
 Pin-Priority: -1
 
+Package: maui-appimages-git
+Pin: release *
+Pin-Priority: -1
+
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1

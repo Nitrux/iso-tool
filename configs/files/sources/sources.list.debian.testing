@@ -7,5 +7,5 @@
 # Debian Repos #
 ################
 
-#deb [arch=amd64] http://deb.debian.org/debian testing main non-free non-free-firmware contrib
-deb [arch=amd64] https://snapshot.debian.org/archive/debian/20240822T210525Z/ testing main non-free non-free-firmware contrib
+# deb [arch=amd64] http://deb.debian.org/debian testing main non-free non-free-firmware contrib
+deb [arch=amd64] https://snapshot.debian.org/archive/debian/20240901T024950Z/ testing main non-free non-free-firmware contrib
