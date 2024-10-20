@@ -57,7 +57,7 @@ install $NITRUX_HW_PKGS
 ORIGINAL_DIR=$(pwd)
 
 TEMP_DIR1=$(mktemp -d)
-git clone https://github.com/medusalix/xone "$TEMP_DIR1"
+git clone https://github.com/tskaar/xone.git "$TEMP_DIR1"
 cd "$TEMP_DIR1"
 sh install.sh
 cd "$ORIGINAL_DIR"
