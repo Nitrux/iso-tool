@@ -45,6 +45,7 @@ NITRUX_HW_PKGS='
     nitrux-hardware-drivers-legacy
     nitrux-xserver-drivers
     nitrux-printer-drivers
+    firmware-b43legacy-installer
 '
 
 install $NITRUX_HW_PKGS
