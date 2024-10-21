@@ -45,6 +45,8 @@ NITRUX_HW_PKGS='
     nitrux-hardware-drivers-legacy
     nitrux-xserver-drivers
     nitrux-printer-drivers
+    facetime-dkms
+    facetime-firmware 
 '
 
 install $NITRUX_HW_PKGS
