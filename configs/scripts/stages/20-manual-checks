@@ -122,7 +122,6 @@ files_to_check=(
   "/installed_pkgs_start.txt"
   "/usr/lib/os-release"
   "/etc/lsb-release"
-  "/var-lib-dpkg-*.tar.xz"
 )
 
 links_to_check=(
