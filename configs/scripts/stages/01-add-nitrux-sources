@@ -37,6 +37,17 @@ add_nitrux_key_unison
 add_nitrux_key_testing
 add_nitrux_key_area51
 add_nitrux_key_skidrow
+add_nitrux_key_qt6
+add_nitrux_key_kf6
+add_nitrux_key_mauikit
+
+
+# -- Add third-party repository keys.
+
+add_repo_keys \
+	9AE4078033F8024D \
+	90E51522 \
+	1DCEE19C > /dev/null
 
 
 # -- Add Nitrux repositories.
@@ -45,6 +56,9 @@ cp /configs/files/sources/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
 cp /configs/files/sources/sources.list.nitrux.area51 /etc/apt/sources.list.d/nitrux-area51-repo.list
 cp /configs/files/sources/sources.list.nitrux.skidrow /etc/apt/sources.list.d/nitrux-skidrow-repo.list
+cp /configs/files/sources/sources.list.nitrux.qt6 /etc/apt/sources.list.d/nitrux-qt6-repo.list
+cp /configs/files/sources/sources.list.nitrux.kf6 /etc/apt/sources.list.d/nitrux-kf6-repo.list
+cp /configs/files/sources/sources.list.nitrux.mauikit /etc/apt/sources.list.d/nitrux-mauikit-repo.list
 
 
 # -- Add Debian repository.
@@ -52,14 +66,40 @@ cp /configs/files/sources/sources.list.nitrux.skidrow /etc/apt/sources.list.d/ni
 cp /configs/files/sources/sources.list.debian.testing /etc/apt/sources.list.d/debian-testing-repo.list
 
 
+# -- Add third-party repositories.
+
+cp /configs/files/sources/sources.list.liquorix /etc/apt/sources.list.d/liquorix-repo.list
+cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
+
+
 update
 
 
-# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a fkn dpenedency of the package because why tf not, right?
+# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a fkn dependency because why tf not, right?
 
 DEVUAN_PKGMAN_PKGS='
 	apt/forky
-	libapt-pkg6.0t64/forky
+	libapt-pkg7.0/forky
 '
 
-install_downgrades $DEVUAN_PKGMAN_PKGS
+
+install $DEVUAN_PKGMAN_PKGS
+
+
+# -- Remove the leftover library from the APT package of Debian.
+
+DEBIAN_PKGMAN_PKGS='
+	libapt-pkg6.0t64
+'
+
+remove $DEBIAN_PKGMAN_PKGS
+
+
+# -- Update Git.
+
+UPDATE_GIT_PKGS='
+	git
+	git-man
+'
+
+only_upgrade $UPDATE_GIT_PKGS

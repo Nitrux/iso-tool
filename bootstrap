@@ -153,25 +153,25 @@ puts "ADDING NVIDIA DRIVERS."
 10-install-nvidia-drivers
 
 
+# -- Add AMD ROCm packages.
+
+puts "ADDING AMD ROCM PACKAGES."
+
+11-install-amd-rocm-packages
+
+
 # -- Add NX Desktop meta-package.
 
 puts "ADDING NX DESKTOP."
 
-11-install-desktop-session
+12-install-desktop-session
 
 
 # -- Add Calamares.
 
 puts "ADDING CALAMARES INSTALLER."
 
-12-install-calamares
-
-
-# -- Upgrade MESA packages.
-
-puts "UPGRADE MULTIMEDIA STACK."
-
-13-upgrade-multimedia-stack
+13-install-calamares
 
 
 # -- Add OpenRC configuration.

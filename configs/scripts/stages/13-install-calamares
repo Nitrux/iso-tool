@@ -30,35 +30,15 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install NX Desktop packages.
-# -- Add Waydroid repository.
+# -- Add Calamares.
 
-add_repo_keys \
-	90E51522 \
-	1DCEE19C > /dev/null
-
-cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
-
-update
-
-NX_DESKTOP_PKG='
-	nx-desktop-legacy
-	nx-desktop-wayland-legacy
-	nx-desktop-appimages-vfio
-	nx-desktop-apps-vfio
+CALAMARES_PKGS='
+	calamares
+	calamares-qml-settings-nitrux
+	dosfstools
+	efibootmgr
+	mauikit3-git
+	squashfs-tools
 '
 
-FH_SIGH_PKGS='
-	polkit-kde-agent-1=4:5.27.11-1
-	ppp=2.5.1-1+1
-'
-
-install $NX_DESKTOP_PKG $FH_SIGH_PKGS
-
-rm /etc/apt/sources.list.d/waydroid-repo.list
-
-remove_repo_keys \
-	90E51522 \
-	1DCEE19C > /dev/null
-
-update
+install $CALAMARES_PKGS

@@ -30,14 +30,19 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Add Calamares.
+# -- Install NX Desktop packages.
 
-CALAMARES_PKGS='
-	efibootmgr
-	calamares
-	calamares-qml-settings-nitrux
-	dosfstools
-	squashfs-tools
+NX_DESKTOP_PKG='
+	nx-desktop-legacy
+	nx-desktop-wayland-legacy
+	nx-desktop-appimages-vfio
+	nx-desktop-apps-vfio
 '
 
-install $CALAMARES_PKGS
+FH_SIGH_PKGS='
+	polkit-kde-agent-1=4:5.27.11-1
+	ppp=2.5.2-1+1
+	libexiv2-28
+'
+
+install $NX_DESKTOP_PKG $FH_SIGH_PKGS

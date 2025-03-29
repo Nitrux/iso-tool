@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 #############################################################################################################################################################################
 #   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
 #                                                                                                                                                                           #
-#   Copyright <2023-2024> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                                   #
 #                                                                                                                                                                           #
 #   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
 #                                                                                                                                                                           #
@@ -22,62 +22,19 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -eu
-
-# -- Source APT commands as functions.
-# shellcheck source=/dev/null
-
-source /configs/scripts/others/apt-funcs
+set -e
 
 
-# -- Upgrade the entire multimedia stack using packages from Debian unstable.
+# -- Enable NVIDIA Power Management Services.
 
-cp /configs/files/sources/sources.list.debian.unstable /etc/apt/sources.list.d/debian-unstable-repo.list
+LOGFILE="/var/log/nvidia-sleep.log"
+echo "$(date) - $1" >> "$LOGFILE"
 
-update
-
-MESA_PKGS='
-    libegl-mesa0/unstable
-    libgbm1/unstable
-    libgl1-mesa-dri/unstable
-    libglapi-mesa/unstable
-    libglx-mesa0/unstable
-    libxatracker2/unstable
-    mesa-va-drivers/unstable
-    mesa-vdpau-drivers/unstable
-    mesa-vulkan-drivers/unstable
-'
-
-only_upgrade $MESA_PKGS
-
-ALSA_PKGS='
-    alsa-tools/unstable
-    alsa-ucm-conf/unstable
-    alsa-utils/unstable
-    libasound2-data/unstable
-    libasound2-plugins/unstable
-    libasound2t64/unstable
-    libatopology2t64/unstable
-'
-
-only_upgrade $ALSA_PKGS
-
-PULSE_PKGS='
-    gstreamer1.0-pulseaudio/unstable
-    libcanberra-pulse/unstable
-    libpulse-mainloop-glib0/unstable
-    libpulse0/unstable
-    libpulsedsp/unstable
-    pulseaudio/unstable
-    pulseaudio-module-bluetooth/unstable
-    pulseaudio-utils/unstable
-'
-
-only_upgrade $PULSE_PKGS
-
-autoremove
-
-rm \
-	/etc/apt/sources.list.d/debian-unstable-repo.list
-
-update
+case "$1" in
+    pre)
+        /usr/bin/nvidia-sleep.sh suspend >> "$LOGFILE" 2>&1
+        ;;
+    post)
+        /usr/bin/nvidia-sleep.sh resume >> "$LOGFILE" 2>&1
+        ;;
+esac

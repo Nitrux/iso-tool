@@ -1,0 +1,5 @@
+################
+# Nitrux Repos #
+################
+
+deb https://packagecloud.io/nitrux/qt6/debian/ forky main

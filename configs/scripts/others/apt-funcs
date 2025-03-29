@@ -35,6 +35,9 @@ add_nitrux_key_unison () { curl -L https://packagecloud.io/nitrux/unison/gpgkey 
 add_nitrux_key_testing () { curl -L https://packagecloud.io/nitrux/testing/gpgkey | apt-key add -; }
 add_nitrux_key_area51 () { curl -L https://packagecloud.io/nitrux/area51/gpgkey | apt-key add -; }
 add_nitrux_key_skidrow () { curl -L https://packagecloud.io/nitrux/skidrow/gpgkey | apt-key add -; }
+add_nitrux_key_qt6() { curl -L https://packagecloud.io/nitrux/qt6/gpgkey | apt-key add -; }
+add_nitrux_key_kf6() { curl -L https://packagecloud.io/nitrux/kf6/gpgkey | apt-key add -; }
+add_nitrux_key_mauikit() { curl -L https://packagecloud.io/nitrux/mauikit/gpgkey | apt-key add -; }
 add_repo_keys () { apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$@"; }
 appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove "$@"; }
