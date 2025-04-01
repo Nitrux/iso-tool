@@ -27,14 +27,16 @@ set -e
 
 # -- Restart NetworkManager only after resuming from suspend and only if a wireless interface is in use.
 
+sleep 2
+
 case "$1" in
   post)
     IFACES=$(nmcli -t -f DEVICE,TYPE,STATE dev | awk -F: '$2=="wifi" && $3=="connected" { print $1 }')
     if [ -n "$IFACES" ]; then
-      logger -t [nm-hook] "Wireless interface(s) detected: $IFACES — restarting NetworkManager"
+      logger -t nm-hook "Wireless interface(s) detected: $IFACES — restarting NetworkManager"
       rc-service network-manager restart
     else
-      logger -t [nm-hook] "No connected wireless interfaces — NetworkManager not restarted"
+      logger -t nm-hook "No connected wireless interfaces — NetworkManager not restarted"
     fi
     ;;
 esac
