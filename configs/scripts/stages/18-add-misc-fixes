@@ -379,3 +379,8 @@ $(which cp) /configs/files/other/elogind/system-sleep/* /etc/elogind/system-slee
 # -- Edit Pix launcher.
 
 sed -i '/^MimeType=/ s/inode\/directory;//' /usr/share/applications/org.kde.pix.desktop
+
+
+# -- Link the existing AppArmor profile for Firejail so it actually works.
+
+ln -s /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
