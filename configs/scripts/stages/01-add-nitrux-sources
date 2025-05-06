@@ -56,8 +56,8 @@ cp /configs/files/sources/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
 cp /configs/files/sources/sources.list.nitrux.area51 /etc/apt/sources.list.d/nitrux-area51-repo.list
 cp /configs/files/sources/sources.list.nitrux.skidrow /etc/apt/sources.list.d/nitrux-skidrow-repo.list
-cp /configs/files/sources/sources.list.nitrux.qt6 /etc/apt/sources.list.d/nitrux-qt6-repo.list
-cp /configs/files/sources/sources.list.nitrux.kf6 /etc/apt/sources.list.d/nitrux-kf6-repo.list
+#cp /configs/files/sources/sources.list.nitrux.qt6 /etc/apt/sources.list.d/nitrux-qt6-repo.list
+#cp /configs/files/sources/sources.list.nitrux.kf6 /etc/apt/sources.list.d/nitrux-kf6-repo.list
 cp /configs/files/sources/sources.list.nitrux.mauikit /etc/apt/sources.list.d/nitrux-mauikit-repo.list
 
 
