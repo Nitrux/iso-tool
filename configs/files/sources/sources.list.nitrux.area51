@@ -2,4 +2,4 @@
 # Nitrux Repos #
 ################
 
-deb https://packagecloud.io/nitrux/area51/debian/ trixie main
+deb [signed-by=/etc/apt/keyrings/nitrux-area51.gpg] https://packagecloud.io/nitrux/area51/debian/ trixie main

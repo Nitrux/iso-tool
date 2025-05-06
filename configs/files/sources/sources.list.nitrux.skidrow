@@ -2,4 +2,4 @@
 # Nitrux Repos #
 ################
 
-deb https://packagecloud.io/nitrux/skidrow/debian/ forky main
+deb [signed-by=/etc/apt/keyrings/nitrux-skidrow.gpg] https://packagecloud.io/nitrux/skidrow/debian/ forky main

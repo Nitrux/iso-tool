@@ -36,35 +36,21 @@ mkdir -p "${KEYRING_DIR}"
 
 # -- Add our repository keys.
 
-add_nitrux_key_depot () {
-  curl -fsSL https://packagecloud.io/nitrux/depot/gpgkey -o ${KEYRING_DIR}/nitrux-depot.gpg
-}
-add_nitrux_key_unison () {
-  curl -fsSL https://packagecloud.io/nitrux/unison/gpgkey -o ${KEYRING_DIR}/nitrux-unison.gpg
-}
-add_nitrux_key_testing () {
-  curl -fsSL https://packagecloud.io/nitrux/testing/gpgkey -o ${KEYRING_DIR}/nitrux-testing.gpg
-}
-add_nitrux_key_area51 () {
-  curl -fsSL https://packagecloud.io/nitrux/area51/gpgkey -o ${KEYRING_DIR}/nitrux-area51.gpg
-}
-add_nitrux_key_skidrow () {
-  curl -fsSL https://packagecloud.io/nitrux/skidrow/gpgkey -o ${KEYRING_DIR}/nitrux-skidrow.gpg
-}
-add_nitrux_key_qt6 () {
-  curl -fsSL https://packagecloud.io/nitrux/qt6/gpgkey -o ${KEYRING_DIR}/nitrux-qt6.gpg
-}
-add_nitrux_key_kf6 () {
-  curl -fsSL https://packagecloud.io/nitrux/kf6/gpgkey -o ${KEYRING_DIR}/nitrux-kf6.gpg
-}
-add_nitrux_key_mauikit () {
-  curl -fsSL https://packagecloud.io/nitrux/mauikit/gpgkey -o ${KEYRING_DIR}/nitrux-mauikit.gpg
+add_nitrux_key () {
+    KEYRING_DIR="/etc/apt/keyrings"
+    mkdir -p "$KEYRING_DIR"
+
+    local repo="$1"
+    local url="https://packagecloud.io/nitrux/${repo}/gpgkey"
+    local dest="${KEYRING_DIR}/nitrux-${repo}.gpg"
+
+    curl -fsSL "$url" -o "$dest"
 }
 
 
 # -- Retrieve the key using GPG.
 
-add_repo_keys () {
+add_third_party_repo_keys () {
     for key in "$@"; do
         gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key"
         gpg --batch --yes --output "${KEYRING_DIR}/${key}.gpg" --export "$key"

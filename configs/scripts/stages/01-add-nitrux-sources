@@ -22,7 +22,7 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -eu
+set -e
 
 # -- Source APT commands as functions.
 # shellcheck source=/dev/null
@@ -44,10 +44,9 @@ add_nitrux_key_mauikit
 
 # -- Add third-party repository keys.
 
-add_repo_keys \
+add_third_party_repo_keys \
 	9AE4078033F8024D \
-	90E51522 \
-	1DCEE19C > /dev/null
+	7CE0331F71E0A238BB1002D70E406D181DCEE19C > /dev/null
 
 
 # -- Add Nitrux repositories.
@@ -56,8 +55,6 @@ cp /configs/files/sources/sources.list.nitrux /etc/apt/sources.list
 cp /configs/files/sources/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
 cp /configs/files/sources/sources.list.nitrux.area51 /etc/apt/sources.list.d/nitrux-area51-repo.list
 cp /configs/files/sources/sources.list.nitrux.skidrow /etc/apt/sources.list.d/nitrux-skidrow-repo.list
-#cp /configs/files/sources/sources.list.nitrux.qt6 /etc/apt/sources.list.d/nitrux-qt6-repo.list
-#cp /configs/files/sources/sources.list.nitrux.kf6 /etc/apt/sources.list.d/nitrux-kf6-repo.list
 cp /configs/files/sources/sources.list.nitrux.mauikit /etc/apt/sources.list.d/nitrux-mauikit-repo.list
 
 

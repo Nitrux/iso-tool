@@ -7,4 +7,4 @@
 # Liquorix Debian Repo #
 ########################
 
-deb [arch=amd64] https://liquorix.net/debian testing main
+deb [signed-by=/etc/apt/keyrings/C5ADB4F3FEBBCE27A3E54D7D9AE4078033F8024D.gpg] https://liquorix.net/debian testing main

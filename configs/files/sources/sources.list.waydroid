@@ -7,4 +7,4 @@
 # Waydroid Repo #
 #################
 
-deb [arch=amd64 trusted=yes] https://repo.waydro.id/ trixie main
+deb [arch=amd64 signed-by=/etc/apt/keyrings/7CE0331F71E0A238BB1002D70E406D181DCEE19C.gpg trusted=yes] https://repo.waydro.id/ trixie main
