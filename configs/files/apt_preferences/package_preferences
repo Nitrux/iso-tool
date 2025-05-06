@@ -42,10 +42,6 @@ Package: eudev
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: grub*
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: fdisk
 Pin: origin deb.debian.org
 Pin-Priority: -1
