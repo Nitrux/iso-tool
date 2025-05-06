@@ -42,6 +42,8 @@ GRUB2_PKGS='
 	grub2-common
 '
 
+pkg_policy $GRUB2_PKGS
+exit 1
 install $GRUB2_PKGS
 
 
