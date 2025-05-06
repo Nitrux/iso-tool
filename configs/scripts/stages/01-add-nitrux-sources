@@ -81,15 +81,6 @@ DEVUAN_PKGMAN_PKGS='
 install $DEVUAN_PKGMAN_PKGS
 
 
-# -- Remove the leftover library from the APT package of Debian.
-
-DEBIAN_PKGMAN_PKGS='
-	libapt-pkg6.0t64
-'
-
-remove $DEBIAN_PKGMAN_PKGS
-
-
 # -- Update Git.
 
 UPDATE_GIT_PKGS='
