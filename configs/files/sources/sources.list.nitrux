@@ -2,5 +2,6 @@
 # Nitrux Repos #
 ################
 
-deb https://packagecloud.io/nitrux/depot/debian/ trixie main
-deb https://packagecloud.io/nitrux/unison/debian/ trixie main
+deb [signed-by=/etc/apt/keyrings/nitrux-depot.gpg] https://packagecloud.io/nitrux/depot/debian/ trixie main
+deb [signed-by=/etc/apt/keyrings/nitrux-unison.gpg] https://packagecloud.io/nitrux/unison/debian/ trixie main
+
