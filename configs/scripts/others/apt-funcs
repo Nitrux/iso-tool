@@ -25,7 +25,7 @@
 
 # -- Exit on errors.
 
-set -x
+set -e
 
 
 # -- Create directory to stare repository keys..

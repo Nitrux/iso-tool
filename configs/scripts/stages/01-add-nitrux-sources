@@ -22,7 +22,7 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -e
+set -eu
 
 # -- Source APT commands as functions.
 # shellcheck source=/dev/null
@@ -32,14 +32,14 @@ source /configs/scripts/others/apt-funcs
 
 # -- Add Nitrux repository keys.
 
-add_nitrux_key_depot
-add_nitrux_key_unison
-add_nitrux_key_testing
-add_nitrux_key_area51
-add_nitrux_key_skidrow
-add_nitrux_key_qt6
-add_nitrux_key_kf6
-add_nitrux_key_mauikit
+add_nitrux_key depot
+add_nitrux_key unison
+add_nitrux_key testing
+add_nitrux_key area51
+add_nitrux_key skidrow
+add_nitrux_key qt6
+add_nitrux_key kf6
+add_nitrux_key mauikit
 
 
 # -- Add third-party repository keys.
