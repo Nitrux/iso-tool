@@ -43,10 +43,11 @@ install_downgrades_hold $DOWNGRADE_PAM_PKGS
 
 
 # -- Add eudev and mount from Devuan.
-# -- Specify our packages because Debian decided to make libsystemd mandatory for PAM and login for no reason since neither requires it. Also, mount is broken or something? *sigh*
+# -- Specify our packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
 
 DEVUAN_EUDEV_PKGS='
 	bsdutils/forky
+	coreutils/forky
 	eudev
 	login/forky
 	mount/forky
