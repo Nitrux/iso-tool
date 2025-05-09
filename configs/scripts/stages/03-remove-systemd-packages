@@ -48,8 +48,7 @@ install_downgrades_hold $DOWNGRADE_PAM_PKGS
 DEVUAN_EUDEV_PKGS='
 	bsdutils/forky
 	eudev
-	libstdc++6=14.2.0-6
-	login=1:4.15.2-4+nitrux
+	login/forky
 	mount/forky
 	udev/forky
 	util-linux/forky
