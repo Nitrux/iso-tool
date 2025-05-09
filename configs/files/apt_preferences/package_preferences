@@ -166,10 +166,6 @@ Package: uuid-dev
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: xfsprogs
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 #########################
 #  Any Package Priority #
 #########################
