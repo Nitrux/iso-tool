@@ -122,6 +122,10 @@ Package: overlayroot
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: openrazer-*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: plymouth
 Pin: origin deb.debian.org
 Pin-Priority: -1
