@@ -40,9 +40,7 @@ NX_DESKTOP_PKG='
 '
 
 FH_SIGH_PKGS='
-	polkit-kde-agent-1
 	ppp=2.5.2-1+1
-	libexiv2-28
 '
 
 install $NX_DESKTOP_PKG $FH_SIGH_PKGS

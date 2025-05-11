@@ -138,10 +138,6 @@ Package: plymouth-x11
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: polkit-kde-agent-1
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: procps
 Pin: origin deb.debian.org
 Pin-Priority: -1
