@@ -43,7 +43,7 @@ add_nitrux_key mauikit
 # -- Add third-party repository keys.
 
 add_third_party_repo_keys \
-	C5ADB4F3FEBBCE27A3E54D7D9AE4078033F8024D \
+	8BC44DF02642485FF1F3CC04AB78C60DFB581603 \
 	7CE0331F71E0A238BB1002D70E406D181DCEE19C > /dev/null
 
 
