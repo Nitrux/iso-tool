@@ -7,4 +7,4 @@
 # PikaOS Repo #
 ###############
 
-deb [signed-by=/etc/apt/keyrings/8BC44DF02642485FF1F3CC04AB78C60DFB581603.gpg] https://ppa.pika-os.com pika main
+deb [signed-by=/etc/apt/keyrings/8BC44DF02642485FF1F3CC04AB78C60DFB581603.gpg] https://ppa.pika-os.com pika nest raven parrot cockatiel pigeon
