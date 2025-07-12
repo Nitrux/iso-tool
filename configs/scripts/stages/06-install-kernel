@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Install the kernel.
 
 DEFAULT_KERNEL_PKG='
-	linux-image-liquorix
+	kernel-pika
 '
 
 install $DEFAULT_KERNEL_PKG

@@ -67,6 +67,7 @@ cp /configs/files/sources/sources.list.pika-os /etc/apt/sources.list.d/pika-os-r
 cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
 
 
+clean_all
 update
 
 

@@ -60,15 +60,10 @@ add_third_party_repo_keys () {
 
 # -- Wrap APT commands in functions.
 
-appstream_refresh_force () { appstreamcli refresh --force; }
 autoremove () { apt -yy autoremove "$@"; }
 clean_all () { apt clean && apt autoclean; }
 dist_upgrade () { apt -yy dist-upgrade "$@"; }
 download () { apt download "$@"; }
-dpkg_conf () { dpkg --configure -a; }
-dpkg_force_install () { dpkg --force-all -i "$@"; }
-dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path "$@"; }
-dpkg_install () { dpkg -i "$@"; }
 fix_install () { apt -yy --fix-broken install "$@"; }
 fix_install_no_recommends () { apt -yy --fix-broken install --no-install-recommends "$@"; }
 hold () { apt-mark hold "$@"; }
@@ -79,11 +74,6 @@ install_downgrades_hold () { apt -yy install --no-install-recommends --allow-dow
 install_force_overwrite () { apt -yy install --no-install-recommends -o Dpkg::Options::="--force-overwrite" "$@"; }
 install_hold () { apt -yy install --no-install-recommends "$@" && apt-mark hold "$@"; }
 list_installed_apt () { apt list --installed; }
-list_installed_dpkg () { dpkg --list '*'; }
-list_installed_text_start () { dpkg-query -l | less > installed_pkgs_start.txt; }
-list_installed_text_end () { dpkg-query -l | less > installed_pkgs_end.txt; }
-list_number_pkgs () { dpkg-query -f '${binary:Package}\n' -W | wc -l; }
-list_pkgs_size () { dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'; }
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade "$@"; }
 only_upgrade_force_overwrite () { apt -yy install --no-install-recommends --only-upgrade -o Dpkg::Options::="--force-overwrite" "$@"; }
@@ -92,8 +82,20 @@ pkg_search () { apt-cache search "$@"; }
 purge () { apt -yy purge --remove "$@"; }
 purge_autoremove () { apt -yy purge --remove "$@" && apt -yy autoremove "$@"; }
 remove () { apt -yy remove "$@"; }
-remove_repo_keys () { apt-key del "$@"; }
 unhold () { apt-mark unhold "$@"; }
 update () { apt update; }
 upgrade () { apt -yy upgrade "$@"; }
 upgrade_downgrades () { apt -yy upgrade --allow-downgrades "$@"; }
+
+
+# -- Wrap dpkg commands in functions.
+
+dpkg_conf () { dpkg --configure -a; }
+dpkg_force_install () { dpkg --force-all -i "$@"; }
+dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path "$@"; }
+dpkg_install () { dpkg -i "$@"; }
+list_installed_dpkg () { dpkg --list '*'; }
+list_installed_text_start () { dpkg-query -l | less > installed_pkgs_start.txt; }
+list_installed_text_end () { dpkg-query -l | less > installed_pkgs_end.txt; }
+list_number_pkgs () { dpkg-query -f '${binary:Package}\n' -W | wc -l; }
+list_pkgs_size () { dpkg-query --show --showformat='${Installed-Size}\t${Package}\n' | sort -rh | head -25 | awk '{print $1/1024, $2}'; }
