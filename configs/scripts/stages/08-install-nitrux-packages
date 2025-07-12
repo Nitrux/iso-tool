@@ -34,8 +34,8 @@ source /configs/scripts/others/apt-funcs
 
 NITRUX_BASE_PKGS='
 	base-files
-	nitrux-minimal-legacy
-	nitrux-standard-legacy
+	nitrux-minimal
+	nitrux-standard
 '
 
 install_downgrades $NITRUX_BASE_PKGS

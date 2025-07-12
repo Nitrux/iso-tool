@@ -42,7 +42,7 @@ fi
 # -- Install our hardware meta package(s).
 
 NITRUX_HW_PKGS='
-    nitrux-hardware-drivers-legacy
+    nitrux-hardware-drivers
     nitrux-xserver-drivers
     nitrux-printer-drivers
 '
