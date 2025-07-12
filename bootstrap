@@ -85,9 +85,9 @@ list_installed_text_start
 
 # -- Add repositories to build root.
 
-puts "ADDING NITRUX SOURCES."
+puts "ADDING BUILD SOURCES."
 
-01-add-nitrux-sources
+01-add-build-sources
 
 
 # -- Add bootloader.
