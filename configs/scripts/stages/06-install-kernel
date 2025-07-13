@@ -36,6 +36,7 @@ DEFAULT_KERNEL_PKG='
 	linux-image-6.14.7-pikaos
 	linux-headers-6.14.7-pikaos
 	clang
+	lld
 '
 
 install $DEFAULT_KERNEL_PKG
