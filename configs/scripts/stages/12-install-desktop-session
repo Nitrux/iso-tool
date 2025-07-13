@@ -33,10 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Install NX Desktop packages.
 
 NX_DESKTOP_PKG='
-	nx-desktop-legacy
-	nx-desktop-wayland-legacy
-	nx-desktop-appimages-vfio
-	nx-desktop-apps-vfio
+	nitrux-desktop
 '
 
 FH_SIGH_PKGS='
