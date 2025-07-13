@@ -34,8 +34,11 @@ source /configs/scripts/others/apt-funcs
 
 DEFAULT_KERNEL_PKG='
 	kernel-pika
+'
+
+CACHY_KERNEL_DEPS='
 	clang
 	lld
 '
 
-install $DEFAULT_KERNEL_PKG
+install $DEFAULT_KERNEL_PKG $CACHY_KERNEL_DEPS
