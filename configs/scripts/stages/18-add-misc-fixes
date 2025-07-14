@@ -234,22 +234,6 @@ ln -sv /etc/dnsmasq.d/dbab-map.trashsites.conf /etc/NetworkManager/dnsmasq.d/dba
 ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
 
 
-# -- Disable DrKonqi as we do not include debug symbols and it's useless otherwise.
-
-chmod a-x /usr/lib/x86_64-linux-gnu/libexec/drkonqi 
-
-
-# -- Add tutorials to /etc/skel so they're added to the Desktop directory.
-
-ORIGINAL_DIR=$(pwd)
-
-TEMP_DIR1=$(mktemp -d)
-git clone --depth=1 https://github.com/Nitrux/storage.git "$TEMP_DIR1"
-cd "$TEMP_DIR1"
-cp -R Other/Documentation /etc/skel/Desktop
-cd "$ORIGINAL_DIR"
-
-
 # -- Add nvidia_oc binary to overclock NVIDIA GPUs on Wayland.
 
 FILE_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.11/nvidia_oc"
