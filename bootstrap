@@ -85,46 +85,46 @@ puts "ADDING BUILD SOURCES."
 01-add-build-sources
 
 
-# -- Add bootloader.
-
-puts "ADDING BOOTLOADER AND SECURE BOOT."
-
-02-install-bootloader
-
-
 # -- Remove systemd packages.
 
 puts "REMOVE SYSTEMD PACKAGES."
 
-03-remove-systemd-packages
+02-remove-systemd-packages
 
 
-# -- Add OpenRC as init.
+# -- Add bootloader.
 
-puts "ADDING OPENRC."
+puts "ADDING BOOTLOADER AND SECURE BOOT."
 
-04-install-openrc
-
-
-# -- Add casper.
-
-puts "ADDING CASPER."
-
-05-install-casper
+03-install-bootloader
 
 
 # -- Add kernel.
 
 puts "ADDING KERNEL."
 
-06-install-kernel
+04-install-kernel
 
 
-# -- Add packages from Devuan.
+# -- Add OpenRC as init.
 
-puts "ADDING PACKAGES FROM DEVUAN."
+puts "ADDING OPENRC."
 
-07-install-devuan-packages
+05-install-openrc
+
+
+# -- Add casper.
+
+puts "ADDING CASPER."
+
+06-install-casper
+
+
+# -- Add Plymouth from Devuan.
+
+puts "ADDING PLYMOUTH FROM DEVUAN."
+
+07-install-bootsplash
 
 
 # -- Add Nitrux meta-packages.
@@ -134,11 +134,11 @@ puts "ADDING NITRUX BASE PACKAGES."
 08-install-nitrux-packages
 
 
-# -- Add Misc. drivers.
+# -- Add hardware support.
 
-puts "ADDING MISC. DRIVERS."
+puts "ADDING HARDWARE SUPPORT."
 
-09-install-hw-packages
+09-install-hardware-support
 
 
 # -- Add NVIDIA drivers.
@@ -155,9 +155,9 @@ puts "ADDING AMD ROCM PACKAGES."
 11-install-amd-rocm-packages
 
 
-# -- Add NX Desktop meta-package.
+# -- Add Nitrux Desktop meta-package.
 
-puts "ADDING NX DESKTOP."
+puts "ADDING NITRUX DESKTOP."
 
 12-install-desktop-session
 

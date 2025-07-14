@@ -39,7 +39,22 @@ NX_DESKTOP_PKGS='
 '
 
 FH_SIGH_PKGS='
-	ppp=2.5.2-1+1
+
 '
 
-install $NX_DESKTOP_PKGS $FH_SIGH_PKGS
+DEVUAN_POLKIT_PKGS='
+	libpam-elogind/forky
+	libpolkit-agent-1-0/forky
+	libpolkit-gobject-1-0/forky
+	libpolkit-gobject-elogind-1-0/forky
+	policykit-1/forky
+	pkexec/forky
+	polkitd/forky
+'
+
+DEVUAN_NM_PKGS='
+	network-manager/forky
+'
+
+
+install $NX_DESKTOP_PKGS $FH_SIGH_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS

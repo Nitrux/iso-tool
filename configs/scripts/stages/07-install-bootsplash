@@ -33,26 +33,10 @@ source /configs/scripts/others/apt-funcs
 # -- Use the packages for Plymouth, NetworkManager, PolicyKit and elogind from Devuan because these don't require Systemd.
 
 DEVUAN_PLYMOUTH_PKGS='
-	plymouth
-	plymouth-label
+	plymouth/forky
+	plymouth-label/forky
 '
 
-DEVUAN_POLKIT_PKGS='
-	libpam-elogind
-	libpolkit-agent-1-0
-	libpolkit-gobject-1-0
-	libpolkit-gobject-elogind-1-0
-	policykit-1
-	pkexec
-	polkitd
-'
 
-DEVUAN_NM_PKGS='
-	network-manager
-'
+install_downgrades $DEVUAN_PLYMOUTH_PKGS 
 
-DEVUAN_ELOGIND_PKGS='
-	elogind
-'
-
-install_downgrades $DEVUAN_PLYMOUTH_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS $DEVUAN_ELOGIND_PKGS

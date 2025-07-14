@@ -30,49 +30,94 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Downgrade PAM packages because 1) Newer packages depend on libsystemd0 (why?) and 2) Newer packages (>=1.5.3-7) break something that causes kscreenlocker not to accept the password to unlock the session.
+# -- Install our hardware meta package(s).
 
-DOWNGRADE_PAM_PKGS='
-	libpam-modules=1.5.2-6+deb12u1
-	libpam-modules-bin=1.5.2-6+deb12u1
-	libpam-runtime=1.5.2-6+deb12u1
-	libpam0g=1.5.2-6+deb12u1
+NITRUX_HW_PKGS='
+    nitrux-hardware-drivers
+    linux-firmware
 '
 
-install_downgrades_hold $DOWNGRADE_PAM_PKGS
+install $NITRUX_HW_PKGS
 
 
-# -- Add eudev and mount from Devuan.
-# -- Specify our packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
+# -- Install xpadneo and xone drivers using their installer scripts.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
 
-DEVUAN_EUDEV_PKGS='
-	bsdutils/forky
-	coreutils/forky
-	eudev
-	login/forky
-	mount/forky
-	udev/forky
-	util-linux/forky
-'
+ORIGINAL_DIR=$(pwd)
 
-install_downgrades $DEVUAN_EUDEV_PKGS
+TEMP_DIR1=$(mktemp -d)
+git clone --single-branch https://github.com/dlundqvist/xone.git "$TEMP_DIR1"
+cd "$TEMP_DIR1"
+sh install.sh
+cd "$ORIGINAL_DIR"
 
 
-# -- Remove libsystemd0.
+# -- Install the firmware archive that the xone script downloads.
 
-REMOVE_SYSTEMD_PKGS='
-	systemd
-	systemd-sysv
-	libsystemd0
-'
+DRIVER_URL='http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab'
+FIRMWARE_HASH='48084d9fa53b9bb04358f3bb127b7495dc8f7bb0b3ca1437bd24ef2b6eabdf66'
 
-dpkg_force_remove $REMOVE_SYSTEMD_PKGS
+curl -L -o driver.cab "$DRIVER_URL"
+cabextract -F FW_ACC_00U.bin driver.cab
+echo "$FIRMWARE_HASH  FW_ACC_00U.bin" | sha256sum -c
+mv FW_ACC_00U.bin /lib/firmware/xow_dongle.bin
+rm driver.cab
 
 
-# -- Add standalone systemctl to make most of the maintainer scripts in the packages stfu about it.
+# -- The developer of xpadneo updated the install script on 19/12/24 (commit 875d5aa6) to exit on errors with the comment, "Fixes a problem where the installer would not exit if the git clone is not properly set up." However, the script was working fine, installing the driver with DKMS. While now, it simply quits. Thus, we must revert this change so the script builds the driver.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
 
-SYSTEMCTL_STANDALONE_PKG='
-	systemctl
-'
+TEMP_DIR2=$(mktemp -d)
+git clone https://github.com/atar-axis/xpadneo.git "$TEMP_DIR2"
+cd "$TEMP_DIR2"
+sed -i '/^\s*set\s\+-e\s*$/d' install.sh
+bash install.sh
+cd "$ORIGINAL_DIR"
 
-install $SYSTEMCTL_STANDALONE_PKG
+
+# -- Install zenergy to display power consumption for AMD Zen processors.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+
+TEMP_DIR3=$(mktemp -d)
+git clone https://github.com/Nitrux/zenergy.git "$TEMP_DIR3"
+cp -r "$TEMP_DIR3" /usr/src/zenergy-1.0
+dkms add -m zenergy -v 1.0
+dkms build -m zenergy -v 1.0
+dkms install --force -m zenergy -v 1.0
+echo "zenergy" | tee /etc/modules-load.d/zenergy.conf
+cd "$ORIGINAL_DIR"
+
+
+# -- Install XR Linux Driver to automatically recognize supported XR glasses.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+
+ARCH=$(uname -m)
+REPO="wheaney/XRLinuxDriver"
+API_URL="https://api.github.com/repos/${REPO}/releases/latest"
+TMP_DIR=$(mktemp -d)
+ARCHIVE_NAME="xrDriver-${ARCH}.tar.gz"
+
+response=$(curl -sL "${API_URL}")
+download_url=$(echo "${response}" | grep -oP "https://github.com/${REPO}/releases/download/.*/xrDriver-${ARCH}.tar.gz")
+
+curl -L -o "${ARCHIVE_NAME}" "${download_url}"
+tar -xzf "${ARCHIVE_NAME}" -C "${TMP_DIR}"
+
+mv "${TMP_DIR}/xr_driver/bin/"* /usr/bin/
+mv "${TMP_DIR}/xr_driver/lib/"* /usr/lib/x86_64-linux-gnu/
+mv "${TMP_DIR}/xr_driver/udev/"* /etc/udev/rules.d/
+
+rm -f "${ARCHIVE_NAME}"
+
+
+# -- Install AX88179_178A Linux driver for AX88179 USB 3.0 Ethernet adapters.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+
+TEMP_DIR4=$(mktemp -d)
+git clone https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR4"
+cp -r "$TEMP_DIR4" /usr/src/asix-ax88179-dkms-3.4.0
+dkms add -m asix-ax88179-dkms -v 3.4.0
+dkms build -m asix-ax88179-dkms -v 3.4.0
+dkms install --force -m asix-ax88179-dkms -v 3.4.0
+mv /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
+cd "$ORIGINAL_DIR"
