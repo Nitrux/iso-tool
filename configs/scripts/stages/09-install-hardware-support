@@ -34,7 +34,7 @@ source /configs/scripts/others/apt-funcs
 
 NITRUX_HW_PKGS='
     nitrux-hardware-drivers
-    linux-firmware
+    linux-firmware/forky
 '
 
 install $NITRUX_HW_PKGS

@@ -32,6 +32,11 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install the kernel.
 
+cp /configs/files/sources/sources.list.pika-os /etc/apt/sources.list.d/pika-os-repo.list
+
+update
+
+
 DEFAULT_KERNEL_PKG='
 	kernel-pika
 '
@@ -42,3 +47,8 @@ CACHY_KERNEL_PKGS='
 '
 
 install $DEFAULT_KERNEL_PKG $CACHY_KERNEL_PKGS
+
+
+rm -f /etc/apt/sources.list.d/pika-os-repo.list
+
+update
