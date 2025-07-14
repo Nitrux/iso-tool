@@ -114,7 +114,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 # -- Create symlinks for MauiKit 4 and MauiKit Frameworks 4.
 
-MAUIKIT_VERSION="4.0.1"
+MAUIKIT_VERSION="4.0.2"
 MAUIKIT_SO_VERSION="4"
 
 create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit$MAUIKIT_SO_VERSION.so.$MAUIKIT_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit$MAUIKIT_SO_VERSION.so$MAUIKIT_SO_VERSION"
@@ -129,18 +129,10 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiMan$MAUIKIT_SO_VERSION.so.$MAUI
 
 # -- Create symlinks for Mauikit 3 because Calamares uses it.
 
-MAUIKIT3_VERSION="3.1.0"
+# MAUIKIT3_VERSION="3.1.0"
 
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit3.so"
-
-
-# -- Add link for applet window buttons.
-# -- NOTE: Update the link on every new release of Plasma.
-
-PLASMA_LIB="5.27.11"
-
-create_symlink /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.$PLASMA_LIB /usr/lib/x86_64-linux-gnu/libkdecorations2private.so.9
+# create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so"
+# create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit3.so"
 
 
 # -- Move APT and dpkg out of the way, out of the way, move b...
