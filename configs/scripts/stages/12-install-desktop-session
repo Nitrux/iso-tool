@@ -32,12 +32,14 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install NX Desktop packages.
 
-NX_DESKTOP_PKG='
+NX_DESKTOP_PKGS='
 	nitrux-desktop
+	nitrux-desktop-apps
+	nitrux-desktop-settings
 '
 
 FH_SIGH_PKGS='
 	ppp=2.5.2-1+1
 '
 
-install $NX_DESKTOP_PKG $FH_SIGH_PKGS
+install $NX_DESKTOP_PKGS $FH_SIGH_PKGS
