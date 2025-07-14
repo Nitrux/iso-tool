@@ -55,17 +55,12 @@ cp -r /configs/files/apt_preferences/repository_preferences /etc/apt/preferences
 
 # -- Make directories in /tmp.
 
-mkdir -p /tmp/{kernel,casper,scripts,pkg-origin}
+mkdir -p /tmp/{kernel,casper,scripts}
 
 
 # -- Copy build scripts.
 
 cp -r /configs/scripts/stages/* /tmp/scripts
-
-
-# -- Copy pkg-origin to $PATH
-
-cp -r /configs/files/other/pkg-origin /tmp/pkg-origin
 
 
 # -- Copy apt_config.
