@@ -34,10 +34,8 @@ source /configs/scripts/others/apt-funcs
 
 CALAMARES_PKGS='
 	calamares
-	calamares-qml-settings-nitrux
 	dosfstools
 	efibootmgr
-	mauikit3-git
 	squashfs-tools
 '
 
