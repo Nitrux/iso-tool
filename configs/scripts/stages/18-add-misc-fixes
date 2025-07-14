@@ -35,20 +35,6 @@ create_symlink() {
 }
 
 
-# -- Function to download Appimage files.
-
-user_agent="BrightSign/8.2.55.5 (XT1144) Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.12.3 Chrome/69.0.3497.128 Safari/537.36"
-
-download_appimage() {
-    local name="$1"
-    local url="$2"
-    local destination="/Applications/$name"
-
-    axel -a -q -k -U "$user_agent" -n 8 "$url" -o "$destination"
-    chmod +x "$destination"
-}
-
-
 # -- Add gpu modules to load at boot time.
 
 printf '%s\n' amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
@@ -145,11 +131,6 @@ mv /usr/bin/dpkg /opt/3
 chmod -x /opt/{1,2,3}
 
 
-# -- Add link for libappimage1.0.
-
-create_symlink /usr/lib/x86_64-linux-gnu/libappimage.so.1.0.3.abi1 /usr/lib/x86_64-linux-gnu/libappimage.so.1.0
-
-
 # -- Enable ufw by default.
 # -- Add rules for ports so Waydroid to access the Internet.
 # -- Add rules for KDE Connect.
@@ -160,18 +141,6 @@ ufw allow 67
 ufw default allow FORWARD
 ufw allow 1714:1764/udp
 ufw allow 1714:1764/tcp
-
-
-# -- Enable SELinux and set enforcing mode.
-
-# selinux-activate
-# selinux-config-enforcing
-
-
-# -- Edit 0install launcher.
-
-# sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
-# sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
 
 
 # -- Check if the root account is disabled, if not, disable it by locking it.

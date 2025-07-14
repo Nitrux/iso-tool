@@ -117,8 +117,8 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install NVIDIA packages from PikaOS repository because the driver requires the same compiler as the kernel.
 
-NV_PIKA_PKGS='
-	nvidia-driver-575
-'
+# NV_PIKA_PKGS='
+# 	nvidia-driver-575
+# '
 
-install $NV_PIKA_PKGS
+# install $NV_PIKA_PKGS
