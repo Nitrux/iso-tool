@@ -131,7 +131,7 @@ puts "ADDING PLYMOUTH FROM DEVUAN."
 
 puts "ADDING NITRUX BASE PACKAGES."
 
-08-install-nitrux-packages
+08-install-nitrux-base
 
 
 # -- Add hardware support.
