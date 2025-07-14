@@ -34,7 +34,6 @@ source /configs/scripts/others/apt-funcs
 # -- FIXME: Replace initscripts with either A) OpenRC upstream service scripts or B) Made-from-scratch OpenRC service scripts.
 
 OPENRC_INIT_PKGS='
-	initscripts
 	openrc
 '
 
