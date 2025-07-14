@@ -75,7 +75,7 @@ DEVUAN_ELOGIND_PKGS='
 	elogind/forky
 '
 
-$DEVUAN_ELOGIND_PKGS
+install $DEVUAN_ELOGIND_PKGS
 
 
 # -- Add standalone systemctl to make most of the maintainer scripts in the packages stfu about it.
