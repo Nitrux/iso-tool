@@ -170,8 +170,8 @@ ufw allow 1714:1764/tcp
 
 # -- Edit 0install launcher.
 
-sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
-sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
+# sed -i 's+Icon=zeroinstall+Icon=muon+g' /usr/share/applications/0install.desktop
+# sed -i 's+Categories=Utility;Settings;PackageManager;GTK;+Categories=System;PackageManager;GTK;+g' /usr/share/applications/0install.desktop
 
 
 # -- Check if the root account is disabled, if not, disable it by locking it.
