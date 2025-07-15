@@ -34,22 +34,10 @@ source /configs/scripts/others/apt-funcs
 
 NITRUX_HW_PKGS='
     nitrux-hardware-drivers
+    linux-firmware-nitrux
 '
 
 install $NITRUX_HW_PKGS
-
-
-# -- Install linxu-firmware package.
-
-LINUX_FW_PKG='
-    linux-firmware
-'
-
-pkg_policy $LINUX_FW_PKG
-
-exit 1
-
-install 
 
 
 # -- Install xpadneo and xone drivers using their installer scripts.
