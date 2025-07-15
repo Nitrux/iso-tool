@@ -45,7 +45,7 @@ LINUX_FW_PKG='
     linux-firmware
 '
 
-policy $LINUX_FW_PKG
+pkg_policy $LINUX_FW_PKG
 
 exit 1
 
