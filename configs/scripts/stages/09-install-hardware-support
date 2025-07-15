@@ -84,7 +84,7 @@ cp -r "$TEMP_DIR3" /usr/src/zenergy-1.0
 dkms add -m zenergy -v 1.0
 dkms build -m zenergy -v 1.0
 dkms install --force -m zenergy -v 1.0
-echo "zenergy" | tee /etc/modules-load.d/zenergy.conf
+mkdir -p /etc/modules-load.d && echo "zenergy" | tee /etc/modules-load.d/zenergy.conf
 cd "$ORIGINAL_DIR"
 
 
