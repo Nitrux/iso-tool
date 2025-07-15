@@ -63,6 +63,7 @@ cp /configs/files/sources/sources.list.debian.testing /etc/apt/sources.list.d/de
 
 # -- Add third-party repositories.
 
+cp /configs/files/sources/sources.list.pika-os /etc/apt/sources.list.d/pika-os-repo.list
 cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
 
 
