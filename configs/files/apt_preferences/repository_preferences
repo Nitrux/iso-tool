@@ -5,7 +5,3 @@
 Package: *
 Pin: origin packagecloud.io
 Pin-Priority: 600
-
-Package: *
-Pin: origin ppa.pika-os.com
-Pin-Priority: 400
