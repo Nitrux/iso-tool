@@ -39,8 +39,8 @@ NX_DESKTOP_PKGS='
 '
 
 FH_SIGH_PKGS='
-	hyprland/nest
-	libstdc++6/nest
+	hyprland/cockatiel
+	libstdc++6/cockatiel
 '
 
 DEVUAN_POLKIT_PKGS='
