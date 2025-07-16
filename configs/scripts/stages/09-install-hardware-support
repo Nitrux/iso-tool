@@ -34,7 +34,6 @@ source /configs/scripts/others/apt-funcs
 
 NITRUX_HW_PKGS='
     nitrux-hardware-drivers
-    linux-firmware-nitrux
 '
 
 install $NITRUX_HW_PKGS
