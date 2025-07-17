@@ -267,6 +267,7 @@ sed -i '/^\[defaults\]/a\vfat_defaults=sync' /etc/udisks2/udisks2.conf
 # -- Disable the virtualization extensions (like Intel VT-x or AMD-V) from loading automatically when the KVM module is loaded into the kernel.
 # -- INFO: This is to make VirtualBox work.
 
+touch /etc/modprobe.d/kvm.conf
 sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
 
 
