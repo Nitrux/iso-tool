@@ -80,7 +80,7 @@ CHK_PKGS='
 	sudo-openrc
 	usbmuxd-openrc
 	waydroid-openrc
-	nitrux-desktop-settings
+	nitrux-system-settings
 	greetd-qtgreet-settings
 '
 
