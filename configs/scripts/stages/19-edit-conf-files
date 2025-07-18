@@ -87,7 +87,6 @@ $(which cp) /configs/files/conf/aide.conf /etc/aide/aide.conf
 $(which cp) /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
 
 
-
 # -- Add user for OpenRazer (which is missing for some reason!).
 
 if id -u razer >/dev/null 2>&1; then

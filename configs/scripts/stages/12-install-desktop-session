@@ -42,6 +42,8 @@ FH_SIGH_PKGS='
 
 '
 
+# -- Use the packages for PolicyKit from Devuan because these don't require libsystemd0.
+
 DEVUAN_POLKIT_PKGS='
 	libpam-elogind/forky
 	libpolkit-agent-1-0/forky
@@ -51,6 +53,8 @@ DEVUAN_POLKIT_PKGS='
 	pkexec/forky
 	polkitd/forky
 '
+
+# -- Use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 DEVUAN_NM_PKGS='
 	network-manager/forky

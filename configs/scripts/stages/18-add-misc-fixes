@@ -45,11 +45,6 @@ printf '%s\n' amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
 printf '%s\n' fuse exfat loop >> /etc/modules-load.d/additional-modules-boot-time.conf
 
 
-# -- Add Hyper-V modules to load at boot time.
-
-printf '%s\n' hv_balloon hv_netvsc hv_storvsc hv_utils hv_vmbus hv_sock >> /etc/modules-load.d/hyperv-modules-boot-time.conf
-
-
 # -- Remove unwanted kernel and initrd links from /boot and /.
 
 rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
@@ -121,8 +116,8 @@ create_symlink "/usr/lib/x86_64-linux-gnu/libMauiMan$MAUIKIT_SO_VERSION.so.$MAUI
 # create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit3.so"
 
 
-# -- Move APT and dpkg out of the way, out of the way, move b...
-# -- Use undebianize from Calamares to delete these files from the root.
+# -- Move APT and dpkg out of the way.
+# -- Use undebianize to delete these files from the root.
 
 mv /usr/bin/apt /opt/1
 mv /usr/bin/apt-get /opt/2
@@ -188,7 +183,7 @@ done
 $(which cp) /configs/files/other/hidden /.hidden
 
 
-# -- Replace update-grub with our version that doesn't break OUR stuff.
+# -- Replace update-grub with our version that doesn't break Nitrux.
 
 $(which cp) /configs/scripts/others/update-grub /usr/sbin/update-grub
 
@@ -223,12 +218,6 @@ mkdir -p /var/lib/os-prober/mount
 sed -i '/^Categories=/ s/\bSystem;//; s/\bSettings;//' /usr/share/applications/org.corectrl.CoreCtrl.desktop
 
 
-# -- Create links for dbab lists in /etc/NetworkManager/dnsmasq.d.
-
-ln -sv /etc/dnsmasq.d/dbab-map.adblock.conf /etc/NetworkManager/dnsmasq.d/dbab-map.adblock.conf
-ln -sv /etc/dnsmasq.d/dbab-map.trashsites.conf /etc/NetworkManager/dnsmasq.d/dbab-map.trashsites.conf
-
-
 # -- Disable AppArmor profile for bubblewrap that breaks Flatpak, see https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2072811
 
 ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
@@ -246,7 +235,7 @@ else
 fi
 
 
-# -- Add install scripts here.
+# -- Add undebianize and linker scripts.
 
 DEST_DIR="/usr/bin"
 LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
@@ -259,7 +248,7 @@ chmod +x "$DEST_DIR/linker"
 chmod +x "$DEST_DIR/undebianize"
 
 
-# -- Enforce sync only for specific filesystems, like vfat.
+# -- Enforce sync for specific filesystems, like vfat.
 
 sed -i '/^\[defaults\]/a\vfat_defaults=sync' /etc/udisks2/udisks2.conf
 
@@ -302,13 +291,9 @@ sed -i 's|@{HOMEDIRS}/\*\* .*|@{HOMEDIRS}/** rwk,|' "$APPARMOR_PROFILE"
 sed -i '/^Categories=/ s/\bGraphics;//' /usr/share/applications/org.kde.shelf.desktop
 
 
-# -- Create directory for elogind sleep hooks.
+# -- Create directory for elogind sleep hooks and add elogind sleep hook scripts.
 
 mkdir -p /etc/elogind/system-sleep/
-
-
-# -- Add elogind sleep hook scripts.
-
 $(which cp) /configs/files/other/elogind/system-sleep/* /etc/elogind/system-sleep/
 
 
@@ -317,6 +302,6 @@ $(which cp) /configs/files/other/elogind/system-sleep/* /etc/elogind/system-slee
 sed -i '/^MimeType=/ s/inode\/directory;//' /usr/share/applications/org.kde.pix.desktop
 
 
-# -- Link the existing AppArmor profile for Firejail so it actually works.
+# -- Link the existing AppArmor profile for Firejail so it actually is used.
 
 ln -s /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail

@@ -71,7 +71,7 @@ clean_all
 update
 
 
-# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a fkn dependency because why tf not, right?
+# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a dependency because why not, right?
 
 DEVUAN_PKGMAN_PKGS='
 	apt/forky

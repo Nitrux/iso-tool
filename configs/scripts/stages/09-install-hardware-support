@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install our hardware meta package(s).
+# -- Install Nitrux hardware meta package(s).
 
 NITRUX_HW_PKGS='
     nitrux-hardware-drivers

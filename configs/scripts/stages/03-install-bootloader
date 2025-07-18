@@ -31,7 +31,6 @@ source /configs/scripts/others/apt-funcs
 
 
 # -- Add bootloader.
-# -- The GRUB2 packages from Debian do not work correctly with EFI.
 
 GRUB2_PKGS='
 	grub-efi-amd64
@@ -46,10 +45,10 @@ install $GRUB2_PKGS
 
 # -- Add packages for secure boot compatibility.
 
-SB_SHIM_PKGS='
+SECURE_BOOT_SHIM_PKGS='
 	mokutil
 	sbsigntool
 	shim-signed
 '
 
-install $SB_SHIM_PKGS
+install $SECURE_BOOT_SHIM_PKGS

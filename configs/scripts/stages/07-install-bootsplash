@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Use the packages for Plymouth, NetworkManager, PolicyKit and elogind from Devuan because these don't require Systemd.
+# -- Use the packages for Plymouth from Devuan because these don't require libsystemd0.
 
 DEVUAN_PLYMOUTH_PKGS='
 	plymouth/forky

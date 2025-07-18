@@ -43,7 +43,7 @@ install_downgrades_hold $DOWNGRADE_PAM_PKGS
 
 
 # -- Add eudev and mount from Devuan.
-# -- Specify our packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
+# -- Specify these packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
 
 DEVUAN_EUDEV_PKGS='
 	bsdutils/forky
@@ -69,7 +69,7 @@ REMOVE_SYSTEMD_PKGS='
 dpkg_force_remove $REMOVE_SYSTEMD_PKGS
 
 
-# -- Add eudev and mount from Devuan.
+# -- Add elogind from Devuan.
 
 DEVUAN_ELOGIND_PKGS='
 	elogind/forky
@@ -78,7 +78,7 @@ DEVUAN_ELOGIND_PKGS='
 install $DEVUAN_ELOGIND_PKGS
 
 
-# -- Add standalone systemctl to make most of the maintainer scripts in the packages stfu about it.
+# -- Add standalone systemctl to make maintainer scripts stfu about it.
 
 SYSTEMCTL_STANDALONE_PKG='
 	systemctl
