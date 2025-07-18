@@ -38,10 +38,6 @@ NX_DESKTOP_PKGS='
 	nitrux-desktop-settings
 '
 
-FH_SIGH_PKGS='
-
-'
-
 # -- Use the packages for PolicyKit from Devuan because these don't require libsystemd0.
 
 DEVUAN_POLKIT_PKGS='
@@ -61,4 +57,4 @@ DEVUAN_NM_PKGS='
 '
 
 
-install_force_overwrite $NX_DESKTOP_PKGS $FH_SIGH_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
+install_force_overwrite $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
