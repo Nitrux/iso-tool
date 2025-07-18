@@ -149,6 +149,7 @@ directories_to_check=(
   "/Users"
   "/boot"
   "/etc/elogind/system-sleep"
+  "/etc/init.d"
   "/etc/runlevels/async"
   "/etc/runlevels/boot"
   "/etc/runlevels/default"
