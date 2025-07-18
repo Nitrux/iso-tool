@@ -48,3 +48,8 @@ INITRAMFS_CASPER_PKGS='
 '
 
 unhold $INITRAMFS_CASPER_PKGS
+
+
+# -- Remove letover packages
+
+autoremove
