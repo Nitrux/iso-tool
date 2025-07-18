@@ -30,7 +30,10 @@ set -xeu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Delete these Sysv scripts, otherwise they cause conflicts when updating the service dependencies.
+# -- Delete these SysV scripts, otherwise they cause conflicts when updating the service dependencies.
+# -- OpenRC explicitly disallows a service from being both:
+#    -- A real service (defined by /etc/init.d/<name>)
+#    -- And providing a virtual service of the same name (via provide <name>)
 
 rm -f /etc/init.d/{acpi-support,acpid,apparmor,cron,cryptdisks,cryptdisks-early,dbus,elogind,eudev,greetd,plymouth,plymouth-log,procps,rsyslog,sudo,uuidd}
 
@@ -44,6 +47,3 @@ OPENRC_CONFIG='
 '
 
 install $OPENRC_CONFIG
-
-
-exit 1

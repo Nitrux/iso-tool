@@ -131,14 +131,14 @@ puts "ADDING PLYMOUTH FROM DEVUAN."
 
 puts "ADDING NITRUX BASE PACKAGES."
 
-# 08-install-nitrux-base
+08-install-nitrux-base
 
 
 # -- Add hardware support.
 
 puts "ADDING HARDWARE SUPPORT."
 
-# 09-install-hardware-support
+09-install-hardware-support
 
 
 # -- Add NVIDIA drivers.
@@ -166,7 +166,7 @@ puts "ADDING NITRUX DESKTOP."
 
 puts "ADDING CALAMARES INSTALLER."
 
-# 13-install-calamares
+13-install-calamares
 
 
 # -- Add OpenRC configuration.
