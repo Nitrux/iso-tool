@@ -80,6 +80,8 @@ CHK_PKGS='
 	sudo-openrc
 	usbmuxd-openrc
 	waydroid-openrc
+	nitrux-desktop-settings
+	greetd-qtgreet-settings
 '
 
 install $CHK_PKGS
