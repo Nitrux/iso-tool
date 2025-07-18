@@ -22,7 +22,7 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -eu
+set -xeu
 
 # -- Source APT commands as functions.
 # shellcheck source=/dev/null
@@ -32,7 +32,11 @@ source /configs/scripts/others/apt-funcs
 
 # -- Delete these Sysv scripts, otherwise they cause conflicts when updating the service dependencies.
 
-$(which rm) -f "/etc/init.d/{cryptdisks,cryptdisks-early,eudev,procps,rsyslog}"
+ls -ltah /ec/init.d
+
+rm -f /etc/init.d/{acpid,acpi-support,plymouth,plymouth-log,apparmor,dbus,cryptdisks,cryptdisks-early,eudev,elogind,greetd,procps,rsyslog,uuidd}
+
+ls -ltah /ec/init.d
 
 
 # -- Add OpenRC configuration. We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
@@ -43,4 +47,4 @@ OPENRC_CONFIG='
 	openrc-config
 '
 
-install_force_overwrite $OPENRC_CONFIG
+install $OPENRC_CONFIG
