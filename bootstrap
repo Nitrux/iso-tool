@@ -159,7 +159,7 @@ puts "ADDING AMD ROCM PACKAGES."
 
 puts "ADDING NITRUX DESKTOP."
 
-# 12-install-desktop-session
+12-install-desktop-session
 
 
 # -- Add Calamares.

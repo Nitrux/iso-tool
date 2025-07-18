@@ -32,29 +32,54 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install NX Desktop packages.
 
-NX_DESKTOP_PKGS='
-	nitrux-desktop
-	nitrux-desktop-apps
-	nitrux-desktop-settings
-'
+# NX_DESKTOP_PKGS='
+# 	nitrux-desktop
+# 	nitrux-desktop-apps
+# 	nitrux-desktop-settings
+# '
 
 # -- Use the packages for PolicyKit from Devuan because these don't require libsystemd0.
 
-DEVUAN_POLKIT_PKGS='
-	libpam-elogind/forky
-	libpolkit-agent-1-0/forky
-	libpolkit-gobject-1-0/forky
-	libpolkit-gobject-elogind-1-0/forky
-	policykit-1/forky
-	pkexec/forky
-	polkitd/forky
-'
+# DEVUAN_POLKIT_PKGS='
+# 	libpam-elogind/forky
+# 	libpolkit-agent-1-0/forky
+# 	libpolkit-gobject-1-0/forky
+# 	libpolkit-gobject-elogind-1-0/forky
+# 	policykit-1/forky
+# 	pkexec/forky
+# 	polkitd/forky
+# '
 
 # -- Use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
-DEVUAN_NM_PKGS='
-	network-manager/forky
+# DEVUAN_NM_PKGS='
+# 	network-manager/forky
+# '
+
+
+# install_force_overwrite $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
+
+CHK_PKGS='
+	acpi-openrc
+	apparmor-openrc
+	bluetooth-openrc
+	cron-openrc
+	dbus-openrc
+	debugfs-openrc
+	dmcrypt-openrc
+	dnscrypt-openrc
+	elogind-openrc
+	network-manager-openrc
+	nohang-openrc
+	ntpsec-openrc
+	nvidia-openrc
+	plymouth-openrc
+	power-profiles-daemon-openrc
+	powertop-openrc
+	rsyslog-openrc
+	sudo-openrc
+	usbmuxd-openrc
+	waydroid-openrc
 '
 
-
-install_force_overwrite $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
+install $CHK_PKGS
