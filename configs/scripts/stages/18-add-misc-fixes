@@ -304,4 +304,4 @@ sed -i '/^MimeType=/ s/inode\/directory;//' /usr/share/applications/org.kde.pix.
 
 # -- Link the existing AppArmor profile for Firejail so it actually is used.
 
-ln -s /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
+mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
