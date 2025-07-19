@@ -35,7 +35,7 @@ source /configs/scripts/others/apt-funcs
 #    -- A real service (defined by /etc/init.d/<name>)
 #    -- And providing a virtual service of the same name (via provide <name>)
 
-rm -f /etc/init.d/{acpi-support,acpid,apparmor,cron,cryptdisks,cryptdisks-early,dbus,elogind,eudev,greetd,plymouth,plymouth-log,procps,rsyslog,sudo,udev,uuidd}
+rm -f /etc/init.d/{acpi-support,acpid,apparmor,bluetooth,cron,cryptdisks,cryptdisks-early,dbus,elogind,eudev,greetd,keyboard-setup.sh,plymouth,plymouth-log,procps,rsyslog,sudo,udev,uuidd}
 
 
 # -- Add OpenRC configuration. We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
