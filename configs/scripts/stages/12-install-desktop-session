@@ -56,4 +56,4 @@ source /configs/scripts/others/apt-funcs
 
 # install $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
 
-install nitrux-desktop bluez bluez-meshd bluez-obexd
+install nitrux-desktop nitrux-desktop-apps bluez bluez-meshd bluez-obexd
