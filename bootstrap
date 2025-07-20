@@ -138,7 +138,7 @@ puts "ADDING NITRUX BASE PACKAGES."
 
 puts "ADDING HARDWARE SUPPORT."
 
-# 09-install-hardware-support
+09-install-hardware-support
 
 
 # -- Add NVIDIA drivers.

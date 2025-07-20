@@ -47,6 +47,11 @@ config_dir=$PWD/configs
 source "$config_dir/scripts/others/apt-funcs"
 
 
+# -- Build environment stuff.
+
+bash "$config_dir/scripts/stages/00-install-host-packages"
+
+
 # -- The command "time" is a Bash built-in. However, the package 'time' can be installed to supply this command.
 
 [ "$__time_traced" ] || {
@@ -69,11 +74,6 @@ fi
 if [ -f "$PWD/nitrux-*.iso" ] || [ -f "$PWD/nitrux-*.md5sum" ]; then
   rm -f "$PWD/nitrux-*.iso" "$PWD/nitrux-*.md5sum"
 fi
-
-
-# -- Build environment stuff.
-
-bash "$config_dir/scripts/stages/00-install-host-packages"
 
 
 # -- base image URL.
