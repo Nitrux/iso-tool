@@ -9,7 +9,6 @@ prereqs()
 }
 
 case $1 in
-# get pre-requisites
 prereqs)
        prereqs
        exit 0
@@ -21,12 +20,14 @@ esac
 
 log_begin_msg "$DESCRIPTION"
 
-if [ -f /root/usr/bin/sddm ]; then
-    sddm_session=plasma.desktop
-    cat >>/root/etc/sddm.conf <<EOF
-[Autologin]
-User=$USERNAME
-Session=$sddm_session
+GREETD_CONFIG="/root/etc/greetd/config.toml"
+
+if [ -f "$GREETD_CONFIG" ]; then
+    cat >> "$GREETD_CONFIG" <<EOF
+
+[initial_session]
+command = "dbus-run-session Hyprland"
+user = "$USERNAME"
 EOF
 fi
 
