@@ -17,6 +17,7 @@ prereqs)
        ;;
 esac
 
+# shellcheck source=/dev/null
 . /scripts/casper-functions
 
 log_begin_msg "$DESCRIPTION"
