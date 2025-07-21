@@ -35,11 +35,6 @@ create_symlink() {
 }
 
 
-# -- Add gpu modules to load at boot time.
-
-printf '%s\n' amdgpu i915 >> /etc/modules-load.d/gpu-modules-boot-time.conf
-
-
 # -- Add other modules to load at boot time.
 
 printf '%s\n' fuse exfat loop >> /etc/modules-load.d/additional-modules-boot-time.conf
@@ -49,48 +44,6 @@ printf '%s\n' fuse exfat loop >> /etc/modules-load.d/additional-modules-boot-tim
 
 rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
       /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
-
-
-# -- Ensure the links in / point to the files in /boot.
-
-boot_dir="/boot"
-vmlinuz_pattern="vmlinuz-*liquorix-*"
-initrd_pattern="initrd.img-*liquorix-*"
-
-vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$vmlinuz_pattern" | head -1)
-initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$initrd_pattern" | head -1)
-
-if [ -n "$vmlinuz_file" ]; then
-    echo "Creating/updating symlink for /vmlinuz"
-    create_symlink "$vmlinuz_file" "/vmlinuz"
-else
-    echo "Error: No matching vmlinuz file found in $boot_dir."
-fi
-
-if [ -n "$initrd_file" ]; then
-    echo "Creating/updating symlink for /initrd.img"
-    create_symlink "$initrd_file" "/initrd.img"
-else
-    echo "Error: No matching initrd.img file found in $boot_dir."
-fi
-
-
-# -- Create necessary directories to put files for kboot and create soft links for liquorix kernel files.
-
-mkdir -p /kboot/{debian,mainline,liquorix}
-
-for file in /boot/vmlinuz-*liquorix-amd64; do
-    create_symlink "$file" "/kboot/liquorix/vmlinuz"
-done
-
-for file in /boot/initrd.img-*liquorix-amd64; do
-    create_symlink "$file" "/kboot/liquorix/initrd.img"
-done
-
-
-# -- Add Flathub; this will add it as a system remote though since the script runs as root.
-
-flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 
 # -- Create symlinks for MauiKit 4 and MauiKit Frameworks 4.
