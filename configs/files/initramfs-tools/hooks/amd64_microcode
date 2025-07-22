@@ -20,7 +20,7 @@ prereqs)
    exit 0
    ;;
 esac
-
+# shellcheck source=/dev/null
 . /usr/share/initramfs-tools/hook-functions
 
 verbose()
@@ -33,6 +33,7 @@ verbose()
 
 AUCODE_FW_DIR=/lib/firmware/amd-ucode
 AMD64UCODE_INITRAMFS=auto
+# shellcheck source=/dev/null
 [ -r ${AMD64UCODE_CONFIG} ] && . ${AMD64UCODE_CONFIG}
 
 [ -z "${AMD64UCODE_INITRAMFS}" ] && AMD64UCODE_INITRAMFS=no
