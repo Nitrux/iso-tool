@@ -113,3 +113,30 @@ $(which cp) /configs/files/other/elogind/sleep.conf.d/10-elogind.conf /etc/elogi
 DISTRIB_RELEASE=$(grep 'DISTRIB_RELEASE' /etc/lsb-release | cut -d'=' -f2)
 
 tar -cJf "var-lib-dpkg-$DISTRIB_RELEASE.tar.xz" -P /var/lib/dpkg/
+
+
+# -- Add user for greetd (which is missing for some reason!).
+
+GREETD_USER="_greetd"
+GREETD_GROUP="_greetd"
+GREETD_HOME="/var/lib/greetd"
+
+if ! getent group "$GREETD_GROUP" >/dev/null 2>&1; then
+    echo "Group '$GREETD_GROUP' not found. Creating..."
+    groupadd --system "$GREETD_GROUP"
+else
+    echo "Group '$GREETD_GROUP' already exists."
+fi
+
+if ! id -u "$GREETD_USER" >/dev/null 2>&1; then
+    echo "User '$GREETD_USER' not found. Creating..."
+    useradd --system \
+            --gid "$GREETD_GROUP" \
+            --home-dir "$GREETD_HOME" \
+            --create-home \
+            --shell /bin/false \
+            --comment "greetd daemon user" \
+            "$GREETD_USER"
+else
+    echo "User '$GREETD_USER' already exists."
+fi
