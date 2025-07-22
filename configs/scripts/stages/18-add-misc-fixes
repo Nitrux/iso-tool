@@ -178,11 +178,11 @@ ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
 
 # -- Add nvidia_oc binary to overclock NVIDIA GPUs on Wayland.
 
-FILE_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.11/nvidia_oc"
-DEST_DIR="/usr/bin"
-DEST_FILE="$DEST_DIR/nvidia-oc"
-if curl -L -o "$DEST_FILE" "$FILE_URL"; then
-    chmod +x "$DEST_FILE"
+NV_OC_FILE_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.11/nvidia_oc"
+NV_OC_DEST_DIR="/usr/bin"
+NV_OC_DEST_FILE="$NV_OC_DEST_DIR/nvidia-oc"
+if curl -L -o "$NV_OC_DEST_FILE" "$NV_OC_FILE_URL"; then
+    chmod +x "$NV_OC_DEST_FILE"
 else
     exit 1
 fi
@@ -190,15 +190,15 @@ fi
 
 # -- Add undebianize and linker scripts.
 
-DEST_DIR="/usr/bin"
+SCRIPTS_DEST_DIR="/usr/bin"
 LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
 UNDEBIANIZE_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/undebianize"
 
-wget -P "$DEST_DIR" "$LINKER_URL"
-wget -P "$DEST_DIR" "$UNDEBIANIZE_URL"
+wget -P "$SCRIPTS_DEST_DIR" "$LINKER_URL"
+wget -P "$SCRIPTS_DEST_DIR" "$UNDEBIANIZE_URL"
 
-chmod +x "$DEST_DIR/linker"
-chmod +x "$DEST_DIR/undebianize"
+chmod +x "$SCRIPTS_DEST_DIR/linker"
+chmod +x "$SCRIPTS_DEST_DIR/undebianize"
 
 
 # -- Enforce sync for specific filesystems, like vfat.
@@ -258,3 +258,13 @@ sed -i '/^MimeType=/ s/inode\/directory;//' /usr/share/applications/org.kde.pix.
 # -- Rename the existing AppArmor profile for Firejail so it actually is used.
 
 mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
+
+
+# -- Add undebianize and linker scripts.
+
+GTTY_URL_DEST_DIR="/usr/bin"
+GTTY_URL="https://github.com/pkgforge-dev/ghostty-appimage/releases/download/v1.1.3%2B3/Ghostty-1.1.3-x86_64.AppImage"
+
+wget -P "$GTTY_URL_DEST_DIR" "$GTTY_URL"
+
+chmod +x "$GTTY_URL_DEST_DIR/ghostty"

@@ -36,7 +36,6 @@ NX_DESKTOP_PKGS='
 	nitrux-desktop
 	nitrux-desktop-apps
 	nitrux-desktop-settings
-	xterm=398-1
 '
 
 # -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
