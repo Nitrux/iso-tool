@@ -113,15 +113,3 @@ $(which cp) /configs/files/other/elogind/sleep.conf.d/10-elogind.conf /etc/elogi
 DISTRIB_RELEASE=$(grep 'DISTRIB_RELEASE' /etc/lsb-release | cut -d'=' -f2)
 
 tar -cJf "var-lib-dpkg-$DISTRIB_RELEASE.tar.xz" -P /var/lib/dpkg/
-
-
-# -- Add user for greetd (which is missing for some reason!).
-
-if id -u greeter >/dev/null 2>&1; then
-    echo "User greeter already exists."
-else
-    useradd -r -s /bin/false -M greeter
-    echo "User greeter created successfully."
-fi
-
-usermod -L greeter
