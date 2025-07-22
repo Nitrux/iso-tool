@@ -36,9 +36,7 @@ NX_DESKTOP_PKGS='
 	nitrux-desktop
 	nitrux-desktop-apps
 	nitrux-desktop-settings
-	dolphin
-	konsole
-	kwrite
+	xterm
 '
 
 # -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
