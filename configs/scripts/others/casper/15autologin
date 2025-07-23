@@ -28,7 +28,7 @@ if ! grep -q '^\[initial_session\]' "$GREETD_CONFIG"; then
 # Enabling autologin
 
 [initial_session]
-command = "Hyprland"
+command = "dbus-run-session Hyprland"
 user = "$USERNAME"
 EOF
 fi
