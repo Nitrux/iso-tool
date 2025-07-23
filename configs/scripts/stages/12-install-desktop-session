@@ -55,8 +55,8 @@ NX_DESKTOP_PKGS='
 	sqv
 	tcpdump
 	traceroute
-	vte-common
-	vte-2.91-common
+	libvte-common
+	libvte-2.91-common
 	xauth
 '
 
