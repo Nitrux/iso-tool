@@ -38,6 +38,26 @@ NX_DESKTOP_PKGS='
 	nitrux-desktop-settings
 	tuigreet
 	sway
+	at-spi2-core
+	bash-completion
+	bc
+	gpg-wks-client
+	iputils-ping
+	libpam-cap
+	linux-sysctl-defaults
+	manpages
+	mtr
+	openssh-client
+	perl-base
+	pigz
+	publicsuffix
+	rsync
+	sqv
+	tcpdump
+	traceroute
+	vte-common
+	vte-2.91-common
+	xauth
 '
 
 # -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
