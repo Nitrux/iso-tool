@@ -284,6 +284,8 @@ fi
 update_setting() {
     local key="$1"
     local value="$2"
+
+    CONFIG_FILE="/etc/default/console-setup"
     
     if grep -qE "^#? *${key}=" "${CONFIG_FILE}" 2>/dev/null; then
         sed -i "s|^#? *${key}=.*|${key}=${value}|" "${CONFIG_FILE}"
@@ -299,3 +301,5 @@ update_setting 'FONT' '"Uni2-Terminus16.psf.gz"'
 update_setting 'CODESET' '"Uni2"'
 update_setting 'FONTFACE' '"Terminus"'
 update_setting 'FONTSIZE' '"16"'
+
+setupcon
