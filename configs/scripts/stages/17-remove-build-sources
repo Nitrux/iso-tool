@@ -41,7 +41,7 @@ rm \
 update
 
 
-# -- Unhold initramfs and casper packages.
+# -- Unhold casper packages.
 
 INITRAMFS_CASPER_PKGS='
 	casper

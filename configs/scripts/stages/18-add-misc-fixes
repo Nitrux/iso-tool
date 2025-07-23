@@ -268,3 +268,12 @@ GTTY_URL="https://github.com/pkgforge-dev/ghostty-appimage/releases/download/v1.
 wget -P "$GTTY_URL_DEST_DIR" "$GTTY_URL"
 mv $GTTY_URL_DEST_DIR/Ghostty-1.1.3-x86_64.AppImage $GTTY_URL_DEST_DIR/ghostty
 chmod +x "$GTTY_URL_DEST_DIR/ghostty"
+
+
+# -- Hyprland session with D-Bus (OpenRC), according to Gentoo: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
+
+DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
+
+if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=dbus-run-session Hyprland" "$DESKTOP_FILE"; then
+    sed -i 's|^Exec=Hyprland|Exec=dbus-run-session Hyprland|' "$DESKTOP_FILE"
+fi

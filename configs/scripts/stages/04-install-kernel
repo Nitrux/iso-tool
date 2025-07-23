@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install the kernel.
+# -- Install a kernel.
 
 DEFAULT_KERNEL_PKG='
 	kernel-pika
