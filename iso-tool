@@ -101,7 +101,7 @@ iso_tool_bootstrap_log="$build_artifacts_dir/${image%.iso}.bstlog"
 mkdir -p "$build_artifacts_dir"
 
 rm -r /bin/runch || true 
-axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/master/runch
+axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/runch
 chmod +x /bin/runch
 
 
