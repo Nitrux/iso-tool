@@ -265,7 +265,7 @@ mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
 GTTY_URL_DEST_DIR="/usr/bin"
 GTTY_URL="https://github.com/pkgforge-dev/ghostty-appimage/releases/download/v1.1.3%2B3/Ghostty-1.1.3-x86_64.AppImage"
 
-wget -P "$GTTY_URL_DEST_DIR" "$GTTY_URL"
+wget -P -q "$GTTY_URL_DEST_DIR" "$GTTY_URL"
 mv $GTTY_URL_DEST_DIR/Ghostty-1.1.3-x86_64.AppImage $GTTY_URL_DEST_DIR/ghostty
 chmod +x "$GTTY_URL_DEST_DIR/ghostty"
 
