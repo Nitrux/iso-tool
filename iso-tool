@@ -134,7 +134,7 @@ mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 # -- Get data archive from build directory.
 
-mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
+mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir" || true
 
 
 # -- Copy the kernel and initramfs to $iso_dir.
