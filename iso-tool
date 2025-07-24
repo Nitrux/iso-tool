@@ -104,8 +104,8 @@ mkdir -p "$build_artifacts_dir"
 # -- Build the root.
 # -- Wrap runch and its mount namespace in a subshell.
 
-rm -r /bin/runch || true 
-axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/runch
+rm -r /usr/bin/runch || true 
+axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/runch
 chmod +x /bin/runch
 
 ( < bootstrap \
@@ -157,9 +157,9 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 
 # -- Generate the ISO image.
 
-rm -r /bin/mkiso || true 
-axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
-chmod +x /bin/mkiso
+rm -r /usr/bin/mkiso || true 
+axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
+chmod +x /usr/bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
 
