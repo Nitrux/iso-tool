@@ -231,7 +231,3 @@ mv "$output_dir"/* "$build_artifacts_dir"
 if ls /tmp/tmp.* 1> /dev/null 2>&1; then
   rm -rf /tmp/tmp.*
 fi
-
-if [ -d "$PWD/grub-theme" ]; then
-  rm -rf "$PWD/grub-theme"
-fi
