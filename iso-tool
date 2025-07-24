@@ -104,8 +104,8 @@ mkdir -p "$build_artifacts_dir"
 # -- Build the root.
 # -- Wrap runch and its mount namespace in a subshell.
 
-axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/runch
-chmod +x /bin/runch
+curl -Lo /usr/bin/runch https://raw.githubusercontent.com/Nitrux/tools/main/runch
+chmod +x /usr/bin/runch
 
 ( < bootstrap \
   unshare --mount -- bash -c 'exec runch "$@"' _ \
@@ -158,10 +158,14 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 check_usqsroot_size() {
     local squash="$1"
     local temp_dir
+
     temp_dir=$(mktemp -d)
 
     unsquashfs -d "$temp_dir" "$squash" >/dev/null 2>&1
-    du -hsx "$temp_dir"
+
+    size=$(du -hsx /tmp/unsquashed-root | cut -f1)
+    echo "Uncompressed size: $size"
+
     rm -rf "$temp_dir"
 }
 
@@ -170,7 +174,7 @@ check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
 
 # -- Generate the ISO image.
 
-axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
+curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
 chmod +x /usr/bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
