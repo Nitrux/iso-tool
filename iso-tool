@@ -117,7 +117,11 @@ chmod +x /bin/runch
 ) 2>&1 | tee -a "$iso_tool_bootstrap_log"
 
 
-# -- Check filesystem size.
+# -- Check root directory size.
+
+for m in dev/pts dev proc sys run; do
+    umount -l "$build_dir/$m" 2>/dev/null || true
+done
 
 du -hsx "$build_dir"
 
