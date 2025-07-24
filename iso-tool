@@ -100,21 +100,20 @@ iso_tool_bootstrap_log="$build_artifacts_dir/${image%.iso}.bstlog"
 
 mkdir -p "$build_artifacts_dir"
 
+
+# -- Build the root.
+# -- Wrap runch and its mount namespace in a subshell.
+
 rm -r /bin/runch || true 
 axel -o /bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/runch
 chmod +x /bin/runch
 
-
-# -- WARNING: Copy resolv.conf from root to chroot otherwise chroot fails to resolve DNS queries when chroot starts.
-
-cp "/etc/resolv.conf"  "$build_dir/etc/resolv.conf"
-
-
-( < bootstrap runch \
-	-m configs:/configs \
-	-r configs \
-	"$build_dir" \
-	bash || :
+( < bootstrap \
+  unshare --mount -- bash -c 'exec runch "$@"' _ \
+    -m configs:/configs \
+    -r configs \
+    "$build_dir" \
+    bash || :
 ) 2>&1 | tee -a "$iso_tool_bootstrap_log"
 
 
