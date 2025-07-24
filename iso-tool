@@ -23,8 +23,6 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -e
-
 
 # -- Prepare the directories for the build. Cleanup previously created build directories.
 
@@ -119,12 +117,14 @@ chmod +x /bin/runch
 
 # -- Check root directory size.
 
-set -x 
+set -x
 
 mount | grep "$build_dir"
 lsof +L1 | grep "$build_dir"
 du -hx --max-depth=2 "$build_dir" | sort -hr | less
 find "$build_dir" -xdev -type f -size +100M -exec ls -lh {} +
+
+exit 1
 
 
 # -- Get package lists from build directory.
