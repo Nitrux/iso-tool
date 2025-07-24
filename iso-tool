@@ -111,7 +111,7 @@ cp "/etc/resolv.conf"  "$build_dir/etc/resolv.conf"
 
 ( < bootstrap runch \
 	-m configs:/configs \
-	-r /configs \
+	-r configs \
 	"$build_dir" \
 	bash || :
 ) 2>&1 | tee -a "$iso_tool_bootstrap_log"
@@ -167,7 +167,6 @@ mkiso \
 	-V "NITRUX" \
 	-b \
 	-e \
-	-r "$(git rev-parse --short=8 HEAD)" \
 	-g "$config_dir"/files/grub_files/grub.cfg \
 	-g "$config_dir"/files/grub_files/loopback.cfg \
 	-t grub-theme/nitrux \
