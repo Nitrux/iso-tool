@@ -119,13 +119,20 @@ chmod +x /bin/runch
 
 # -- Check root directory size.
 
-find "$build_dir" -xdev \
-  -not -path "$build_dir/dev/*" \
-  -not -path "$build_dir/proc/*" \
-  -not -path "$build_dir/sys/*" \
-  -not -name '*.img' \
-  -not -name '*.squashfs' \
-  -type f -exec du -ch {} + | tail -n1
+get_chroot_size() {
+    local path="$1"
+    find "$path" -xdev \
+      -not -path "$path/dev/*" \
+      -not -path "$path/proc/*" \
+      -not -path "$path/sys/*" \
+      -not -path "$path/run/*" \
+      -not -name '*.img' \
+      -not -name '*.squashfs' \
+      -not -name '*.tar.xz' \
+      -type f -exec du -b {} + | awk '{sum+=$1} END {printf "%.1fG\n", sum/1024/1024/1024}'
+}
+
+get_chroot_size "$build_dir"
 
 
 # -- Get package lists from build directory.
