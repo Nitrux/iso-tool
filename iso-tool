@@ -155,8 +155,6 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 
 # -- Determine the size of the squashfs contents.
 
-set -x
-
 check_usqsroot_size() {
     local squash="$1"
     local temp_dir
@@ -178,6 +176,8 @@ check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
 
 
 # -- Generate the ISO image.
+
+set -x
 
 curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
 chmod +x /usr/bin/mkiso
