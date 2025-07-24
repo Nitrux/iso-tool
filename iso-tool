@@ -106,6 +106,7 @@ chmod +x /bin/runch
 
 
 # -- WARNING: Copy resolv.conf from root to chroot otherwise chroot fails to resolve DNS queries when chroot starts.
+
 cp "/etc/resolv.conf"  "$build_dir/etc/resolv.conf"
 
 
