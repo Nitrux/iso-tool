@@ -182,18 +182,35 @@ check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
 curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
 chmod +x /usr/bin/mkiso
 
-mkdir -p "$PWD"/grub-theme
+grub_theme_root="$PWD/grub-theme"
+mkdir -p "$grub_theme_root"
+git clone --depth=1 https://github.com/Nitrux/nitrux-grub-theme "$grub_theme_root"
 
-git clone --depth=1 https://github.com/Nitrux/nitrux-grub-theme "$PWD"/grub-theme
+if [ ! -d "$grub_theme_root/nitrux" ]; then
+    echo "Error: GRUB theme directory '$grub_theme_root/nitrux' not found."
+    echo "Did the repository layout change? Aborting."
+    exit 1
+fi
+
+if [ ! -f "$config_dir/files/grub_files/grub.cfg" ]; then
+    echo "Missing grub.cfg"
+    exit 1
+fi
+
+if [ ! -f "$config_dir/files/grub_files/loopback.cfg" ]; then
+    echo "Missing loopback.cfg"
+    exit 1
+fi
+
 
 mkiso \
-	-V "NITRUX" \
-	-b \
-	-e \
-	-g "$config_dir"/files/grub_files/grub.cfg \
-	-g "$config_dir"/files/grub_files/loopback.cfg \
-	-t "$PWD"/grub-theme/nitrux \
-	"$iso_dir" "$output_dir"/"$image"
+    -V "NITRUX" \
+    -b \
+    -e \
+    -g "$config_dir/files/grub_files/grub.cfg" \
+    -g "$config_dir/files/grub_files/loopback.cfg" \
+    -t "$grub_theme_root"/nitrux \
+    "$iso_dir" "$output_dir/$image"
 
 
 rm -f /usr/bin/mkiso || true 
