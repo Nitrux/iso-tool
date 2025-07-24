@@ -119,11 +119,10 @@ chmod +x /bin/runch
 
 # -- Check root directory size.
 
-for m in dev/pts dev proc sys run; do
-    umount -l "$build_dir/$m" 2>/dev/null || true
-done
-
-du -hsx "$build_dir"
+mount | grep "$build_dir"
+lsof +L1 | grep "$build_dir"
+du -hx --max-depth=2 "$build_dir" | sort -hr | less
+find "$build_dir" -xdev -type f -size +100M -exec ls -lh {} +
 
 
 # -- Get package lists from build directory.
@@ -166,6 +165,8 @@ axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/mkis
 chmod +x /usr/bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
+
+
 
 mkiso \
 	-V "NITRUX" \
