@@ -165,10 +165,13 @@ directories_to_check=(
 )
 
 check_files "${files_to_check[@]}"
+
 check_symlinks "${links_to_check[@]}"
 
 check_ownership "/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
 check_ownership "/var/log/ntpsec"
+
+check_file_contents "/etc/default/console-setup"
 
 check_directories "${directories_to_check[@]}"
 

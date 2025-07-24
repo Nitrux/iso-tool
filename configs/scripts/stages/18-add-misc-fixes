@@ -194,8 +194,8 @@ SCRIPTS_DEST_DIR="/usr/bin"
 LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
 UNDEBIANIZE_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/undebianize"
 
-wget -P "$SCRIPTS_DEST_DIR" "$LINKER_URL"
-wget -P "$SCRIPTS_DEST_DIR" "$UNDEBIANIZE_URL"
+wget -q -P "$SCRIPTS_DEST_DIR" "$LINKER_URL"
+wget -q -P "$SCRIPTS_DEST_DIR" "$UNDEBIANIZE_URL"
 
 chmod +x "$SCRIPTS_DEST_DIR/linker"
 chmod +x "$SCRIPTS_DEST_DIR/undebianize"
@@ -284,22 +284,21 @@ fi
 update_setting() {
     local key="$1"
     local value="$2"
+    local config_file="/etc/default/console-setup"
 
-    CONFIG_FILE="/etc/default/console-setup"
-    
-    if grep -qE "^#? *${key}=" "${CONFIG_FILE}" 2>/dev/null; then
-        sed -i "s|^#? *${key}=.*|${key}=${value}|" "${CONFIG_FILE}"
+    value_escaped=$(printf '%s\n' "$value" | sed 's/[\/&]/\\&/g')
+
+    if grep -qE "^#?\s*${key}=" "$config_file" 2>/dev/null; then
+        sed -i "s|^#\?\s*${key}=.*|${key}=\"${value_escaped}\"|" "$config_file"
     else
-        echo "${key}=${value}" >> "${CONFIG_FILE}"
+        echo "${key}=\"${value}\"" >> "$config_file"
     fi
 }
 
-update_setting 'ACTIVE_CONSOLES' '"/dev/tty[1-6]"'
-update_setting 'CHARMAP' '"UTF-8"'
-update_setting 'VIDEOMODE' ''
-update_setting 'FONT' '"Uni2-Terminus16.psf.gz"'
-update_setting 'CODESET' '"Uni2"'
-update_setting 'FONTFACE' '"Terminus"'
-update_setting 'FONTSIZE' '"16"'
-
-setupcon
+update_setting ACTIVE_CONSOLES '/dev/tty[1-6]'
+update_setting CHARMAP 'UTF-8'
+update_setting VIDEOMODE ''
+update_setting FONT 'Uni2-Terminus16.psf.gz'
+update_setting CODESET 'Uni2'
+update_setting FONTFACE ''
+update_setting FONTSIZE ''
