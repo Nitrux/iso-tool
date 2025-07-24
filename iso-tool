@@ -119,7 +119,7 @@ chmod +x /bin/runch
 
 # -- Check filesystem size.
 
-du -hs "$build_dir"
+du -hsx "$build_dir"
 
 
 # -- Get package lists from build directory.
