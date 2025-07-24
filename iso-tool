@@ -119,13 +119,13 @@ chmod +x /bin/runch
 
 # -- Check root directory size.
 
-for m in dev/pts dev proc sys run; do
-    mountpoint -q "$build_dir/$m" && umount -l "$build_dir/$m"
-done
-
-fuser -k "$build_dir" 2>/dev/null || true
-
-du -hsx "$build_dir"
+find "$build_dir" -xdev \
+  -not -path "$build_dir/dev/*" \
+  -not -path "$build_dir/proc/*" \
+  -not -path "$build_dir/sys/*" \
+  -not -name '*.img' \
+  -not -name '*.squashfs' \
+  -type f -exec du -ch {} + | tail -n1
 
 
 # -- Get package lists from build directory.
