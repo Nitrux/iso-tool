@@ -119,6 +119,8 @@ chmod +x /bin/runch
 
 # -- Check root directory size.
 
+set -x 
+
 mount | grep "$build_dir"
 lsof +L1 | grep "$build_dir"
 du -hx --max-depth=2 "$build_dir" | sort -hr | less
