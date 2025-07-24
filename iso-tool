@@ -104,7 +104,6 @@ mkdir -p "$build_artifacts_dir"
 # -- Build the root.
 # -- Wrap runch and its mount namespace in a subshell.
 
-rm -r /usr/bin/runch || true 
 axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/runch
 chmod +x /bin/runch
 
@@ -116,24 +115,9 @@ chmod +x /bin/runch
     bash || :
 ) 2>&1 | tee -a "$iso_tool_bootstrap_log"
 
+sync
 
-# -- Check root directory size.
-
-get_chroot_size() {
-    local path="$1"
-    find "$path" -xdev \
-      -not -path "$path/dev/*" \
-      -not -path "$path/proc/*" \
-      -not -path "$path/sys/*" \
-      -not -path "$path/run/*" \
-      -not -name '*.img' \
-      -not -name '*.squashfs' \
-      -not -name '*.tar.xz' \
-      -type f -exec du -b {} + | awk '{sum+=$1} END {printf "%.1fG\n", sum/1024/1024/1024}'
-}
-
-get_chroot_size "$build_dir"
-
+rm -f /usr/bin/runch || true 
 
 # -- Get package lists from build directory.
 
@@ -143,16 +127,16 @@ mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 # -- Get data archive from build directory.
 
-mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir" || true
+mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
 
 
 # -- Copy the kernel and initramfs to $iso_dir.
 # -- BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
-# mkdir -p "$iso_dir"/boot
+mkdir -p "$iso_dir"/boot
 
-# cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/kernel
-# cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
+cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/kernel
+cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
 
 
 # -- Copy EFI folder to ISO
@@ -165,18 +149,31 @@ cp -r EFI/ "$iso_dir"/
 ( while :; do sleep 300; printf ".\n"; done ) &
 
 mkdir -p "$iso_dir"/casper
-mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576
+
+mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576 -quiet -mem 4G
+
+
+# -- Determine the size of the squashfs contents.
+
+check_usqsroot_size() {
+    local squash="$1"
+    local temp_dir
+    temp_dir=$(mktemp -d)
+
+    unsquashfs -d "$temp_dir" "$squash" >/dev/null 2>&1
+    du -hsx "$temp_dir"
+    rm -rf "$temp_dir"
+}
+
+check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
 
 
 # -- Generate the ISO image.
 
-rm -r /usr/bin/mkiso || true 
 axel -o /usr/bin/ -n 10 https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
 chmod +x /usr/bin/mkiso
 
 git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
-
-
 
 mkiso \
 	-V "NITRUX" \
@@ -186,6 +183,9 @@ mkiso \
 	-g "$config_dir"/files/grub_files/loopback.cfg \
 	-t grub-theme/nitrux \
 	"$iso_dir" "$output_dir"/"$image"
+
+
+rm -f /usr/bin/mkiso || true 
 
 
 # -- Calculate the checksum.
