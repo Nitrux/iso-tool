@@ -163,10 +163,13 @@ check_usqsroot_size() {
 
     temp_dir=$(mktemp -d)
 
-    unsquashfs -d "$temp_dir" "$squash" >/dev/null 2>&1
-
-    size=$(du -hsx /tmp/unsquashed-root | cut -f1)
-    echo "Uncompressed size: $size"
+    if unsquashfs -d "$temp_dir" "$squash" >/dev/null 2>&1; then
+        local size
+        size=$(du -hsx "$temp_dir" | cut -f1)
+        echo "Uncompressed size: $size"
+    else
+        echo "Failed to unsquash $squash"
+    fi
 
     rm -rf "$temp_dir"
 }
@@ -179,7 +182,9 @@ check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
 curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
 chmod +x /usr/bin/mkiso
 
-git clone https://github.com/Nitrux/nitrux-grub-theme grub-theme
+mkdir -p "$PWD"/grub-theme
+
+git clone --depth=1 https://github.com/Nitrux/nitrux-grub-theme "$PWD"/grub-theme
 
 mkiso \
 	-V "NITRUX" \
@@ -187,7 +192,7 @@ mkiso \
 	-e \
 	-g "$config_dir"/files/grub_files/grub.cfg \
 	-g "$config_dir"/files/grub_files/loopback.cfg \
-	-t grub-theme/nitrux \
+	-t "$PWD"/grub-theme/nitrux \
 	"$iso_dir" "$output_dir"/"$image"
 
 
