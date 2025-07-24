@@ -119,6 +119,7 @@ sync
 
 rm -f /usr/bin/runch || true 
 
+
 # -- Get package lists from build directory.
 
 mv "$build_dir"/installed_pkgs_start.txt "$output_dir"/"${image%.iso}.rootfs.buildlist"
@@ -127,16 +128,16 @@ mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 # -- Get data archive from build directory.
 
-mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir" || true
+mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
 
 
 # -- Copy the kernel and initramfs to $iso_dir.
 # -- BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
-# mkdir -p "$iso_dir"/boot
+mkdir -p "$iso_dir"/boot
 
-# cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/kernel
-# cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
+cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/kernel
+cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
 
 
 # -- Copy EFI folder to ISO
@@ -144,7 +145,7 @@ mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir" || true
 cp -r EFI/ "$iso_dir"/
 
 
-# -- Compress the root filesystem.
+# -- Create SqushFS of the root directory.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
 
@@ -176,8 +177,6 @@ check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
 
 
 # -- Generate the ISO image.
-
-set -x
 
 curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
 chmod +x /usr/bin/mkiso

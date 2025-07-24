@@ -124,21 +124,21 @@ puts "ADDING CASPER."
 
 puts "ADDING PLYMOUTH FROM DEVUAN."
 
-# 07-install-bootsplash
+07-install-bootsplash
 
 
 # -- Add Nitrux meta-packages.
 
 puts "ADDING NITRUX BASE PACKAGES."
 
-# 08-install-nitrux-base
+08-install-nitrux-base
 
 
 # -- Add hardware support.
 
 puts "ADDING HARDWARE SUPPORT."
 
-# 09-install-hardware-support
+09-install-hardware-support
 
 
 # -- Add NVIDIA drivers.
@@ -159,7 +159,7 @@ puts "ADDING AMD ROCM PACKAGES."
 
 puts "ADDING NITRUX DESKTOP."
 
-# 12-install-desktop-session
+12-install-desktop-session
 
 
 # -- Add Calamares.
@@ -173,28 +173,28 @@ puts "ADDING CALAMARES INSTALLER."
 
 puts "ADDING OPENRC CONFIG."
 
-# 14-install-init-config
+14-install-init-config
 
 
 # -- Add Live user configuration.
 
 puts "ADDING LIVE USER CONFIG."
 
-# 15-add-live-user
+15-add-live-user
 
 
 # -- Add initramfs scripts.
 
 puts "ADDING INITRAM SCRIPTS"
 
-# 16-update-initram-config
+16-update-initram-config
 
 
 # -- Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
 
-# 17-remove-build-sources
+17-remove-build-sources
 
 
 #################################
@@ -208,7 +208,7 @@ puts "REMOVE BUILD SOURCES."
 
 puts "ADDING MISC. FIXES."
 
-# 18-add-misc-fixes
+18-add-misc-fixes
 
 
 # -- Changes specific to this image. If they can be put in a package, do so.
@@ -216,7 +216,7 @@ puts "ADDING MISC. FIXES."
 
 puts "EDITING CONF. FILES."
 
-# 19-edit-conf-files
+19-edit-conf-files
 
 
 #############################
@@ -234,7 +234,7 @@ list_installed_text_end
 
 puts "PERFORM MANUAL CHECKS."
 
-# 20-manual-checks
+20-manual-checks
 
 puts "EXITING BOOTSTRAP."
 
