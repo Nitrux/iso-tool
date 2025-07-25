@@ -38,6 +38,7 @@ NX_DESKTOP_PKGS='
 	nitrux-desktop-settings
 	sddm-theme-breeze
 	plasma-workspace
+	plasma-desktop
 	kwin-wayland
 '
 

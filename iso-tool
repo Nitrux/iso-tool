@@ -155,30 +155,6 @@ mkdir -p "$iso_dir"/casper
 mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576 -quiet -mem 1G
 
 
-# -- Determine the size of the squashfs contents.
-
-set -x
-
-check_usqsroot_size() {
-    local squash="$1"
-    local temp_dir
-
-    temp_dir=$(mktemp -d)
-
-    if unsquashfs -d "$temp_dir" "$squash" >/dev/null 2>&1; then
-        local size
-        size=$(du -hsx "$temp_dir" | cut -f1)
-        echo "Uncompressed size: $size"
-    else
-        echo "Failed to unsquash $squash"
-    fi
-
-    rm -rf "$temp_dir"
-}
-
-check_usqsroot_size "$iso_dir/casper/filesystem.squashfs"
-
-
 # -- Generate the ISO image.
 
 curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
