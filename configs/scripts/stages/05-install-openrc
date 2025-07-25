@@ -30,6 +30,14 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
+# -- Delete these SysV scripts, otherwise they cause conflicts when updating the service dependencies.
+# -- OpenRC explicitly disallows a service from being both:
+#    -- A real service (defined by /etc/init.d/<name>)
+#    -- And providing a virtual service of the same name (via provide <name>)
+
+rm -f /etc/init.d/{acpi-support,acpid,apparmor,bluetooth,console-setup.sh,cron,cryptdisks,cryptdisks-early,dbus,elogind,eudev,greetd,keyboard-setup.sh,plymouth,plymouth-log,procps,rsyslog,sudo,udev,uuidd}
+
+
 # -- Add Debian-flavored OpenRC to use it as init.
 
 OPENRC_INIT_PKGS='
