@@ -113,7 +113,7 @@ chmod +x /usr/bin/runch
     -r configs \
     "$build_dir" \
     bash || :
-) 2>&1 | tee -a "$iso_tool_bootstrap_log"
+) >> "$iso_tool_bootstrap_log" 2>&1
 
 sync
 
