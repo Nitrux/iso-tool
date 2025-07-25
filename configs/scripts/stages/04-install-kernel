@@ -41,6 +41,7 @@ EXTRA_KERNEL_PKGS='
 	binutils
 	binutils-common
 	binutils-x86-64-linux-gnu
+	clang
 	clang-19
 	gcc-15-base
 	kernel-pika-config
@@ -96,6 +97,7 @@ EXTRA_KERNEL_PKGS='
 	linux-cpupower
 	linux-libc-dev
 	linux-perf
+	lld
 	lld-19
 	llvm
 	llvm-19
