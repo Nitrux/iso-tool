@@ -70,10 +70,8 @@ CHK_PKGS='
 	criu
 	crun
 	dbus-broker
-	dbus-user-session
 	ddcutil
 	debconf-i18n
-	desktop-base
 	dh-elpa-helper
 	dictionaries-common
 	distro-info-data
@@ -278,7 +276,6 @@ CHK_PKGS='
 	libdnnl3.6:amd64
 	libdrm-amdgpu-amdgpu1:amd64
 	libdrm-amdgpu-common
-	libdrm-amdgpu-radeon1:amd64
 	libdrm-nouveau2:amd64
 	libdrm2-amdgpu:amd64
 	libecryptfs1:amd64
@@ -544,7 +541,6 @@ CHK_PKGS='
 	nfs-common
 	nftables
 	nm-connection-editor
-	nody-greeter
 	nwg-look
 	open-vm-tools
 	open-vm-tools-desktop
@@ -684,7 +680,6 @@ CHK_PKGS='
 	xserver-xorg-video-radeon
 	xserver-xorg-video-vesa
 	xserver-xorg-video-vmware
-	xterm
 	xtrans-dev
 	xxd
 	yelp
