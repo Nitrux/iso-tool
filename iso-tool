@@ -151,7 +151,7 @@ cp -r EFI/ "$iso_dir"/
 
 mkdir -p "$iso_dir"/casper
 
-mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576 -quiet -mem 4G
+mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576 -quiet -mem 1G
 
 
 # -- Determine the size of the squashfs contents.
