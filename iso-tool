@@ -157,6 +157,8 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 
 # -- Determine the size of the squashfs contents.
 
+set -x
+
 check_usqsroot_size() {
     local squash="$1"
     local temp_dir
