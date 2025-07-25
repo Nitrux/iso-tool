@@ -523,7 +523,6 @@ CHK_PKGS='
 	passt
 	pcmciautils
 	perl-openssl-defaults:amd64
-	pipewire-alsa:amd64
 	pipewire-libcamera
 	plasma-desktoptheme
 	playerctl
@@ -677,5 +676,3 @@ DEVUAN_NM_PKGS='
 '
 
 install $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS $CHK_PKGS
-
-install nitrux-hardware-drivers pulseaudio pulseaudio-module-bluetooth
