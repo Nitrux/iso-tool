@@ -109,3 +109,8 @@ NV_DRV_OPEN_PKGS='
 '
 
 install $NV_DRV_OPEN_PKGS
+
+
+# -- Edit NVIDIA X Settings launcher.
+
+sed -i '/^Categories=/ s/\bSystem;//' /usr/share/applications/nvidia-settings.desktop

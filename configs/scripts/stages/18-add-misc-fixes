@@ -161,11 +161,6 @@ echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager
 mkdir -p /var/lib/os-prober/mount
 
 
-# -- Edit NVIDIA X Settings launcher.
-
-# sed -i '/^Categories=/ s/\bSystem;//' /usr/share/applications/nvidia-settings.desktop
-
-
 # -- Edit CoreCtrl launcher.
 
 sed -i '/^Categories=/ s/\bSystem;//; s/\bSettings;//' /usr/share/applications/org.corectrl.CoreCtrl.desktop
@@ -239,34 +234,15 @@ sed -i '/capability setuid,/a\  capability sys_ptrace,' "$APPARMOR_PROFILE"
 sed -i 's|@{HOMEDIRS}/\*\* .*|@{HOMEDIRS}/** rwk,|' "$APPARMOR_PROFILE"
 
 
-# -- Edit Shelf launcher.
-
-sed -i '/^Categories=/ s/\bGraphics;//' /usr/share/applications/org.kde.shelf.desktop
-
-
 # -- Create directory for elogind sleep hooks and add elogind sleep hook scripts.
 
 mkdir -p /etc/elogind/system-sleep/
 $(which cp) /configs/files/other/elogind/system-sleep/* /etc/elogind/system-sleep/
 
 
-# -- Edit Pix launcher.
-
-sed -i '/^MimeType=/ s/inode\/directory;//' /usr/share/applications/org.kde.pix.desktop
-
-
 # -- Rename the existing AppArmor profile for Firejail so it actually is used.
 
 mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
-
-
-# -- Hyprland session with D-Bus (OpenRC), according to Gentoo: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
-
-DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
-
-if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=dbus-run-session Hyprland" "$DESKTOP_FILE"; then
-    sed -i 's|^Exec=Hyprland|Exec=dbus-run-session Hyprland|' "$DESKTOP_FILE"
-fi
 
 
 # -- Edit console-setup.
