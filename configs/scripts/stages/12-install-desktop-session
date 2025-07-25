@@ -58,8 +58,6 @@ CHK_PKGS='
 	bind9-libs:amd64
 	bluedevil
 	bolt
-	booster
-	booster-placeholder
 	brightnessctl
 	buildah
 	catatonit
@@ -418,8 +416,6 @@ CHK_PKGS='
 	libonig5:amd64
 	libonnx1t64:amd64
 	libonnxruntime1.21:amd64
-	libopenaptx0:amd64
-	libopencsd1:amd64
 	liboxygenstyle6-6:amd64
 	liboxygenstyleconfig6-6:amd64
 	libpangomm-1.4-1v5:amd64
@@ -510,9 +506,6 @@ CHK_PKGS='
 	mailutils
 	mailutils-common
 	mariadb-common
-	mate-polkit
-	mate-polkit-bin
-	mate-polkit-common
 	mdadm
 	mesa-common-dev:amd64
 	modemmanager
