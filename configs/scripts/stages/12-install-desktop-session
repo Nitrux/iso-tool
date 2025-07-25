@@ -499,7 +499,6 @@ CHK_PKGS='
 	libyuv0:amd64
 	libzbar0t64:amd64
 	libzxing3:amd64
-	linux-firmware
 	locales-all
 	logrotate
 	luit
