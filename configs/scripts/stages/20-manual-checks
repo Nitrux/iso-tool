@@ -176,3 +176,10 @@ check_file_contents "/etc/default/console-setup"
 check_directories "${directories_to_check[@]}"
 
 check_initramfs_size
+
+
+# -- Create var data archive for NUTS.
+
+DISTRIB_RELEASE=$(grep 'DISTRIB_RELEASE' /etc/lsb-release | cut -d'=' -f2)
+
+tar -cJf "var-lib-dpkg-$DISTRIB_RELEASE.tar.xz" -P /var/lib/dpkg/

@@ -30,10 +30,83 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install NVIDIA packages from PikaOS repository because the driver requires the same compiler as the kernel.
+# -- Install NVIDIA packages from PikaOS repository because the driver requires the same compiler as the kernel and that kernel uses LLVM and CLang.
 
 NV_PIKA_PKGS='
-	pika-nvidia-open-driver
+	autoconf
+	automake
+	autopoint
+	autotools-dev
+	debhelper
+	dh-autoreconf
+	dh-strip-nondeterminism
+	dwz
+	firmware-nvidia-gsp-570
+	gettext
+	glx-alternative-mesa
+	glx-alternative-nvidia
+	glx-diversions
+	intltool-debian
+	libarchive-zip-perl
+	libcuda1-570
+	libcudadebugger1-570
+	libdebhelper-perl
+	libegl-nvidia0-570
+	libfile-stripnondeterminism-perl
+	libgl1-nvidia-glvnd-glx-570
+	libgles-nvidia1-570
+	libgles-nvidia2-570
+	libgles1
+	libglx-nvidia0-570
+	libnvcuvid1-570
+	libnvidia-allocator1-570
+	libnvidia-api1-570
+	libnvidia-cfg1-570
+	libnvidia-egl-gbm1
+	libnvidia-eglcore-570
+	libnvidia-encode1-570
+	libnvidia-fbc1-570
+	libnvidia-glcore-570
+	libnvidia-glvkspirv-570
+	libnvidia-gpucomp-570
+	libnvidia-ml1-570
+	libnvidia-ngx1-570
+	libnvidia-nvvm4-570
+	libnvidia-opticalflow1-570
+	libnvidia-pkcs11-openssl3-570
+	libnvidia-ptxjitcompiler1-570
+	libnvidia-rtcore-570
+	libnvidia-vksc-core-570
+	libnvoptix1-570
+	libtool
+	m4
+	module-assistant
+	nvidia-alternative-570
+	nvidia-cuda-mps-570
+	nvidia-driver-bin-570
+	nvidia-driver-libs-570
+	nvidia-egl-common-570
+	nvidia-egl-icd-570
+	nvidia-kernel-support-570
+	nvidia-modprobe-570
+	nvidia-open-driver-570
+	nvidia-open-kernel-common-570
+	nvidia-open-kernel-dkms-570
+	nvidia-open-kernel-source-570
+	nvidia-opencl-common-570
+	nvidia-opencl-icd-570
+	nvidia-persitenced-570
+	nvidia-powerd-570
+	nvidia-settings-570
+	nvidia-smi-570
+	nvidia-support-570
+	nvidia-suspend-common-570
+	nvidia-vdpau-driver-570
+	nvidia-vulkan-common-570
+	nvidia-vulkan-icd-570
+	nvidia-xconfig-570
+	po-debconf
+	update-glx
 '
 
 install $NV_PIKA_PKGS

@@ -73,17 +73,7 @@ $(which cp) /configs/files/other/common-password /etc/pam.d/common-password
 $(which cp) /configs/files/conf/pwquality.conf /etc/security/pwquality.conf
 
 
-# -- Add user for AIDE (which is missing for some reason!).
 # -- Replace aide.conf and 10_aide_hostname.
-
-if id -u _aide >/dev/null 2>&1; then
-    echo "User _aide already exists."
-else
-    useradd -r -s /bin/false -M _aide
-    echo "User _aide created successfully."
-fi
-
-usermod -L _aide
 
 $(which cp) /configs/files/conf/aide.conf /etc/aide/aide.conf
 $(which cp) /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
@@ -106,37 +96,3 @@ usermod -L razer
 $(which cp) /configs/files/other/elogind/logind.conf /etc/elogind/logind.conf
 $(which cp) /configs/files/other/elogind/sleep.conf /etc/elogind/sleep.conf
 $(which cp) /configs/files/other/elogind/sleep.conf.d/10-elogind.conf /etc/elogind/sleep.conf.d/10-elogind.conf
-
-
-# -- Create var data archive for NUTS.
-
-DISTRIB_RELEASE=$(grep 'DISTRIB_RELEASE' /etc/lsb-release | cut -d'=' -f2)
-
-tar -cJf "var-lib-dpkg-$DISTRIB_RELEASE.tar.xz" -P /var/lib/dpkg/
-
-
-# -- Add user for greetd (which is missing for some reason!).
-
-# GREETD_USER="_greetd"
-# GREETD_GROUP="_greetd"
-# GREETD_HOME="/var/lib/greetd"
-
-# if ! getent group "$GREETD_GROUP" >/dev/null 2>&1; then
-#     echo "Group '$GREETD_GROUP' not found. Creating..."
-#     groupadd --system "$GREETD_GROUP"
-# else
-#     echo "Group '$GREETD_GROUP' already exists."
-# fi
-
-# if ! id -u "$GREETD_USER" >/dev/null 2>&1; then
-#     echo "User '$GREETD_USER' not found. Creating..."
-#     useradd --system \
-#             --gid "$GREETD_GROUP" \
-#             --home-dir "$GREETD_HOME" \
-#             --create-home \
-#             --shell /bin/false \
-#             --comment "greetd daemon user" \
-#             "$GREETD_USER"
-# else
-#     echo "User '$GREETD_USER' already exists."
-# fi
