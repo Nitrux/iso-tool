@@ -677,3 +677,5 @@ DEVUAN_NM_PKGS='
 '
 
 install $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS $CHK_PKGS
+
+purge sysvinit-core
