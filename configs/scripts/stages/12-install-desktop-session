@@ -247,7 +247,6 @@ CHK_PKGS='
 	libayatana-appindicator3-1
 	libayatana-ido3-0.4-0:amd64
 	libayatana-indicator3-7:amd64
-	libbabeltrace1:amd64
 	libbrotli-dev:amd64
 	libbz2-dev:amd64
 	libcairo-gobject-perl
@@ -265,11 +264,8 @@ CHK_PKGS='
 	libdata-dump-perl
 	libdbusmenu-glib4:amd64
 	libdbusmenu-gtk3-4:amd64
-	libdebuginfod-common
-	libdebuginfod1t64:amd64
 	libdecor-0-plugin-1-gtk:amd64
 	libdee-1.0-4:amd64
-	libdevmapper-dev:amd64
 	libdjvulibre-text
 	libdjvulibre21:amd64
 	libdnnl3.6:amd64
@@ -428,14 +424,12 @@ CHK_PKGS='
 	liboxygenstyleconfig6-6:amd64
 	libpangomm-1.4-1v5:amd64
 	libpciaccess-dev:amd64
-	libpfm4:amd64
 	libpipewire-0.3-common
 	libpixman-1-dev:amd64
 	libplasma6:amd64
 	libplasmaquick6:amd64
 	libplayerctl2:amd64
 	libpng-dev:amd64
-	libpolkit-gobject-1-0:amd64
 	libpq5:amd64
 	libproxy1-plugin-gsettings:amd64
 	libproxy1-plugin-networkmanager:amd64
@@ -459,13 +453,11 @@ CHK_PKGS='
 	libtext-iconv-perl:amd64
 	libtie-ixhash-perl
 	libtimedate-perl
-	libtraceevent1:amd64
 	libtry-tiny-perl
 	libunbound8:amd64
 	libunity-protocol-private0:amd64
 	libunity-scopes-json-def-desktop
 	libunity9
-	libunwind8:amd64
 	liburi-perl
 	libutempter0:amd64
 	libvo-aacenc0:amd64
@@ -512,11 +504,6 @@ CHK_PKGS='
 	libzbar0t64:amd64
 	libzxing3:amd64
 	linux-firmware
-	linux-perf
-	llvm
-	llvm-19
-	llvm-19-runtime
-	llvm-runtime:amd64
 	locales-all
 	logrotate
 	luit
@@ -617,7 +604,6 @@ CHK_PKGS='
 	rtkit
 	samba-common
 	samba-common-bin
-	scx
 	setserial
 	sgml-data
 	slirp4netns
