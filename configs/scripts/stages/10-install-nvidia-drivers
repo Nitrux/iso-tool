@@ -32,11 +32,10 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install NVIDIA packages from PikaOS repository because the driver requires the same compiler as the kernel and that kernel uses LLVM and CLang.
 
-NV_PIKA_PKGS='
+NV_DRV_OPEN_PKGS='
 	autoconf
 	automake
 	autopoint
-	autotools-dev
 	debhelper
 	dh-autoreconf
 	dh-strip-nondeterminism
@@ -109,4 +108,4 @@ NV_PIKA_PKGS='
 	update-glx
 '
 
-install $NV_PIKA_PKGS
+install $NV_DRV_OPEN_PKGS

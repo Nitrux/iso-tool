@@ -43,7 +43,7 @@ HOST_PKGS='
 	time
 '
 
-XORRISO_PKGS='
+HOST_XORRISO_PKGS='
 	libburn4
 	libisoburn1
 	libisofs6
@@ -53,10 +53,10 @@ XORRISO_PKGS='
 	xorriso
 '
 
-GRUB_PKGS='
+HOST_GRUB_PKGS='
 	grub-efi-amd64
 	grub-efi-amd64-signed
 	grub-pc-bin
 '
 
-install $HOST_PKGS $XORRISO_PKGS $GRUB_PKGS
+install $HOST_PKGS $HOST_XORRISO_PKGS $HOST_GRUB_PKGS

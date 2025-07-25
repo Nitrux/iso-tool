@@ -32,14 +32,20 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install NX Desktop packages.
 
-NX_DESKTOP_PKGS='
+NITRUX_DESKTOP_PKGS='
 	nitrux-desktop
 	nitrux-desktop-apps
 	nitrux-desktop-settings
-	sddm-theme-breeze
-	plasma-workspace
-	plasma-desktop
+'
+
+EXTRA_DESKTOP_PKGS='
+	greetd-qtgreet
+	hyprland-core
 	kwin-wayland
+	plasma-desktop
+	plasma-workspace
+	quickshell
+	sddm-theme-breeze
 '
 
 # -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
@@ -58,4 +64,4 @@ DEVUAN_NM_PKGS='
 	network-manager/forky
 '
 
-install $NX_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS
+install $NITRUX_DESKTOP_PKGS $EXTRA_DESKTOP_PKGS $DEVUAN_POLKIT_PKGS $DEVUAN_NM_PKGS

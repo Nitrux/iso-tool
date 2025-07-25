@@ -21,7 +21,7 @@ esac
 log_begin_msg "$DESCRIPTION"
 
 if [ -f /root/usr/bin/sddm ]; then
-    SDDM_SESSION=hyprland.desktop
+    SDDM_SESSION=plasma.desktop
     cat >>/root/etc/sddm.conf <<EOF
 [Autologin]
 User=$USERNAME

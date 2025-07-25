@@ -34,6 +34,7 @@ source /configs/scripts/others/apt-funcs
 
 NITRUX_HW_PKGS='
     nitrux-hardware-drivers
+    nitrux-xserver-drivers
 '
 
 install $NITRUX_HW_PKGS

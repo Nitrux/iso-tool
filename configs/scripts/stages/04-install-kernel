@@ -51,7 +51,6 @@ EXTRA_KERNEL_PKGS='
 	libbinutils
 	libc-dev-bin
 	libc6-dev
-	libclang-common-19-dev
 	libclang-cpp19
 	libclang1-19
 	libcpupower1
@@ -65,7 +64,6 @@ EXTRA_KERNEL_PKGS='
 	libedit2
 	libelf1t64
 	libgc1
-	libgcc-14-dev
 	libglib2.0-0t64
 	libgomp1
 	libgprofng0
@@ -87,7 +85,6 @@ EXTRA_KERNEL_PKGS='
 	libquadmath0
 	libsframe1
 	libslang2
-	libstdc++-14-dev
 	libtraceevent1
 	libtsan2
 	libubsan1
