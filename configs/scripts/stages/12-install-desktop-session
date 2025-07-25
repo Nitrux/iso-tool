@@ -187,7 +187,6 @@ CHK_PKGS='
 	fonts-ubuntu
 	fonts-yrsa-rasa
 	fwupd-amd64-signed
-	gcc-15-base:i386
 	gdisk
 	gir1.2-adw-1:amd64
 	gir1.2-dbusmenu-glib-0.4:amd64
@@ -245,7 +244,6 @@ CHK_PKGS='
 	libaspell15:amd64
 	libatk-adaptor:amd64
 	libatkmm-1.6-1v5:amd64
-	libatomic1:i386
 	libauthen-sasl-perl
 	libavif16:amd64
 	libavtp0:amd64
@@ -254,9 +252,7 @@ CHK_PKGS='
 	libayatana-indicator3-7:amd64
 	libbabeltrace1:amd64
 	libbrotli-dev:amd64
-	libbsd0:i386
 	libbz2-dev:amd64
-	libc6:i386
 	libcairo-gobject-perl
 	libcairo-perl
 	libcairo2-dev:amd64
@@ -266,10 +262,8 @@ CHK_PKGS='
 	libcanberra-gtk3-0:amd64
 	libcanberra-gtk3-module:amd64
 	libcap-dev:amd64
-	libcap2:i386
 	libclone-perl:amd64
 	libd3dadapter9-mesa:amd64
-	libd3dadapter9-mesa:i386
 	libdaemon0:amd64
 	libdata-dump-perl
 	libdbusmenu-glib4:amd64
@@ -285,30 +279,17 @@ CHK_PKGS='
 	libdrm-amdgpu-amdgpu1:amd64
 	libdrm-amdgpu-common
 	libdrm-amdgpu-radeon1:amd64
-	libdrm-amdgpu1:i386
-	libdrm-dev:amd64
-	libdrm-dev:i386
-	libdrm-intel1:i386
 	libdrm-nouveau2:amd64
-	libdrm-nouveau2:i386
-	libdrm-radeon1:i386
 	libdrm2-amdgpu:amd64
-	libdrm2:i386
 	libecryptfs1:amd64
-	libedit2:i386
-	libegl-mesa0:i386
-	libelf1t64:i386
 	libenchant-2-2:amd64
 	libencode-locale-perl
 	libevent-core-2.1-7t64:amd64
 	libexempi8:amd64
 	libexpat1-dev:amd64
-	libexpat1:i386
 	libextest1:amd64
-	libextest1:i386
 	libextutils-depends-perl
 	libfaac0:amd64
-	libffi8:i386
 	libfile-basedir-perl
 	libfile-desktopentry-perl
 	libfile-fcntllock-perl
@@ -326,9 +307,6 @@ CHK_PKGS='
 	libgail-3-0t64:amd64
 	libgav1-1:amd64
 	libgbm-dev:amd64
-	libgbm-dev:i386
-	libgbm1:i386
-	libgcc-s1:i386
 	libgd3:amd64
 	libgdata-common
 	libgdata22:amd64
@@ -336,17 +314,9 @@ CHK_PKGS='
 	libgirepository-1.0-dev:amd64
 	libgirepository1.0-dev
 	libgl-dev:amd64
-	libgl-dev:i386
-	libgl1-mesa-dri:i386
-	libgl1:i386
 	libglib-object-introspection-perl
 	libglib-perl:amd64
 	libglu1-mesa:amd64
-	libglvnd0:i386
-	libglx-dev:amd64
-	libglx-dev:i386
-	libglx-mesa0:i386
-	libglx0:i386
 	libgnutls-dane0t64:amd64
 	libgoa-1.0-0b:amd64
 	libgoa-1.0-common
@@ -392,7 +362,6 @@ CHK_PKGS='
 	libi2c0:amd64
 	libice-dev:amd64
 	libicu72:amd64
-	libidn2-0:i386
 	libiniparser4:amd64
 	libinstpatch-1.0-2:amd64
 	libio-compress-brotli-perl
@@ -417,14 +386,12 @@ CHK_PKGS='
 	libldacbt-abr2:amd64
 	libldacbt-enc2:amd64
 	libldap-common
-	libllvm19:i386
 	libltc11:amd64
 	liblttng-ust-common1t64:amd64
 	liblttng-ust-ctl5t64:amd64
 	liblttng-ust1t64:amd64
 	liblwp-mediatypes-perl
 	liblwp-protocol-https-perl
-	liblzma5:i386
 	libmagickcore-7.q16-10-extra:amd64
 	libmagickwand-7.q16-10:amd64
 	libmailtools-perl
@@ -433,8 +400,6 @@ CHK_PKGS='
 	libmariadb3:amd64
 	libmaxminddb0:amd64
 	libmbim-utils
-	libmd0:i386
-	libmesa-stable:i386
 	libmjpegutils-2.2-0t64:amd64
 	libmodplug1:amd64
 	libmpeg2encpp-2.2-0t64:amd64
@@ -467,8 +432,6 @@ CHK_PKGS='
 	liboxygenstyleconfig6-6:amd64
 	libpangomm-1.4-1v5:amd64
 	libpciaccess-dev:amd64
-	libpciaccess-dev:i386
-	libpciaccess0:i386
 	libpfm4:amd64
 	libpipewire-0.3-common
 	libpixman-1-dev:amd64
@@ -487,7 +450,6 @@ CHK_PKGS='
 	librav1e0.7:amd64
 	librsvg2-common:amd64
 	libsasl2-modules:amd64
-	libsensors5:i386
 	libslirp0:amd64
 	libsm-dev:amd64
 	libsoundtouch1:amd64
@@ -498,31 +460,23 @@ CHK_PKGS='
 	libspa-0.2-libcamera:amd64
 	libspandsp2t64:amd64
 	libsrtp2-1:amd64
-	libstdc++6:i386
 	libtext-iconv-perl:amd64
 	libtie-ixhash-perl
 	libtimedate-perl
-	libtinfo6:i386
 	libtraceevent1:amd64
 	libtry-tiny-perl
 	libudev-dev:amd64
 	libudev1:amd64
-	libudev1:i386
 	libunbound8:amd64
-	libunistring5:i386
 	libunity-protocol-private0:amd64
 	libunity-scopes-json-def-desktop
 	libunity9
 	libunwind8:amd64
 	liburi-perl
 	libutempter0:amd64
-	libvdpau1:i386
 	libvo-aacenc0:amd64
 	libvte-2.91-0:amd64
 	libvte-2.91-gtk4-0:amd64
-	libvulkan1:i386
-	libwayland-client0:i386
-	libwayland-server0:i386
 	libwebkit2gtk-4.1-0:amd64
 	libwildmidi2:amd64
 	libwireplumber-0.4-0:amd64
@@ -531,60 +485,37 @@ CHK_PKGS='
 	libwtmpdb0:amd64
 	libwww-perl
 	libwww-robotrules-perl
-	libx11-6:i386
 	libx11-dev:amd64
-	libx11-dev:i386
 	libx11-protocol-perl
-	libx11-xcb1:i386
 	libx86-1:amd64
 	libxapian30:amd64
 	libxapp1:amd64
 	libxatracker2:amd64
-	libxatracker2:i386
 	libxau-dev:amd64
-	libxau-dev:i386
-	libxau6:i386
 	libxcb-damage0:amd64
 	libxcb-dri2-0:amd64
-	libxcb-dri3-0:i386
-	libxcb-glx0:i386
-	libxcb-present0:i386
-	libxcb-randr0:i386
 	libxcb-render0-dev:amd64
 	libxcb-shm0-dev:amd64
-	libxcb-shm0:i386
-	libxcb-sync1:i386
-	libxcb-xfixes0:i386
 	libxcb-xinerama0:amd64
 	libxcb1-dev:amd64
-	libxcb1-dev:i386
-	libxcb1:i386
 	libxdmcp-dev:amd64
-	libxdmcp-dev:i386
-	libxdmcp6:i386
 	libxext-dev:amd64
-	libxext6:i386
 	libxklavier-dev:amd64
 	libxklavier16:amd64
 	libxml-parser-perl
 	libxml-twig-perl
 	libxml-xpathengine-perl
 	libxml2-dev:amd64
-	libxml2:i386
 	libxmlsec1t64-openssl:amd64
 	libxmlsec1t64:amd64
 	libxnnpack0.20241108:amd64
 	libxnvctrl0:amd64
 	libxrender-dev:amd64
-	libxshmfence1:i386
 	libxvmc1:amd64
 	libxxf86dga1:amd64
-	libxxf86vm1:i386
 	libyelp0:amd64
 	libyuv0:amd64
-	libz3-4:i386
 	libzbar0t64:amd64
-	libzstd1:i386
 	libzxing3:amd64
 	linux-firmware
 	linux-perf
@@ -603,13 +534,6 @@ CHK_PKGS='
 	mate-polkit-common
 	mdadm
 	mesa-common-dev:amd64
-	mesa-common-dev:i386
-	mesa-libgallium:i386
-	mesa-stable:amd64
-	mesa-stable:i386
-	mesa-va-drivers:i386
-	mesa-vdpau-drivers:i386
-	mesa-vulkan-drivers:i386
 	modemmanager
 	mousetweaks
 	mpv
@@ -765,7 +689,6 @@ CHK_PKGS='
 	xxd
 	yelp
 	yelp-xsl
-	zlib1g:i386
 	zram-tools
 '
 
