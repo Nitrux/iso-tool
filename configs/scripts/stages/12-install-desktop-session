@@ -37,6 +37,8 @@ NX_DESKTOP_PKGS='
 	nitrux-desktop-apps
 	nitrux-desktop-settings
 	sddm-theme-breeze
+	plasma-workspace
+	kwin-wayland
 '
 
 # -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
