@@ -221,7 +221,6 @@ CHK_PKGS='
 	hunspell-en-us
 	i2c-tools
 	ifupdown
-	init
 	inputattach
 	iwd
 	jq

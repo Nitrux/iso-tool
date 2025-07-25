@@ -182,6 +182,10 @@ Package: k3b-i18n
 Pin: release *
 Pin-Priority: -1
 
+Package: initscripts
+Pin: release *
+Pin-Priority: -1
+
 Package: libsystemd*
 Pin: release *
 Pin-Priority: -1
@@ -215,6 +219,10 @@ Pin: release *
 Pin-Priority: -1
 
 Package: systemd-sysv
+Pin: release *
+Pin-Priority: -1
+
+Package: sysvinit-core
 Pin: release *
 Pin-Priority: -1
 
