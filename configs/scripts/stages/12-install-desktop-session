@@ -69,7 +69,6 @@ CHK_PKGS='
 	containers-storage
 	criu
 	crun
-	dbus-broker
 	ddcutil
 	debconf-i18n
 	dh-elpa-helper
@@ -462,8 +461,6 @@ CHK_PKGS='
 	libtimedate-perl
 	libtraceevent1:amd64
 	libtry-tiny-perl
-	libudev-dev:amd64
-	libudev1:amd64
 	libunbound8:amd64
 	libunity-protocol-private0:amd64
 	libunity-scopes-json-def-desktop
@@ -552,7 +549,6 @@ CHK_PKGS='
 	pipewire-libcamera
 	plasma-desktoptheme
 	playerctl
-	plymouth-themes
 	ppp
 	psmisc
 	pwvucontrol
