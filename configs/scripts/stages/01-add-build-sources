@@ -32,28 +32,14 @@ source /configs/scripts/others/apt-funcs
 
 # -- Add Nitrux repository keys.
 
-add_nitrux_key depot
-add_nitrux_key unison
 add_nitrux_key testing
 add_nitrux_key area51
 add_nitrux_key skidrow
-add_nitrux_key mauikit
-
-
-# -- Add third-party repository keys.
-
-add_third_party_repo_keys \
-	8BC44DF02642485FF1F3CC04AB78C60DFB581603 \
-	7CE0331F71E0A238BB1002D70E406D181DCEE19C > /dev/null
 
 
 # -- Add Nitrux repositories.
 
 cp /configs/files/sources/sources.list.nitrux /etc/apt/sources.list
-cp /configs/files/sources/sources.list.nitrux.testing /etc/apt/sources.list.d/nitrux-testing-repo.list
-cp /configs/files/sources/sources.list.nitrux.area51 /etc/apt/sources.list.d/nitrux-area51-repo.list
-cp /configs/files/sources/sources.list.nitrux.skidrow /etc/apt/sources.list.d/nitrux-skidrow-repo.list
-cp /configs/files/sources/sources.list.nitrux.mauikit /etc/apt/sources.list.d/nitrux-mauikit-repo.list
 
 
 # -- Add Debian repository.
@@ -61,32 +47,6 @@ cp /configs/files/sources/sources.list.nitrux.mauikit /etc/apt/sources.list.d/ni
 cp /configs/files/sources/sources.list.debian.testing /etc/apt/sources.list.d/debian-testing-repo.list
 
 
-# -- Add third-party repositories.
+# -- Updated package index.
 
-cp /configs/files/sources/sources.list.pika-os /etc/apt/sources.list.d/pika-os-repo.list
-cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid-repo.list
-
-
-clean_all
 update
-
-
-# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a dependency because why not, right?
-
-DEVUAN_PKGMAN_PKGS='
-	apt/forky
-	libapt-pkg7.0/forky
-'
-
-
-install $DEVUAN_PKGMAN_PKGS
-
-
-# -- Update Git.
-
-UPDATE_GIT_PKGS='
-	git
-	git-man
-'
-
-only_upgrade $UPDATE_GIT_PKGS

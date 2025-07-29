@@ -29,22 +29,4 @@ set -eu
 
 source /configs/scripts/others/apt-funcs
 
-
-# -- Install AMD ROCm packages.
-
-AMD_ROCM_PKGS='
-	amdgpu-core
-	comgr
-	hsa-rocr
-	libdrm-amdgpu-amdgpu1
-	libdrm-amdgpu-common
-	libdrm2-amdgpu
-	openmp-extras-runtime
-	rocm-core
-	rocm-language-runtime
-	rocm-opencl
-	rocm-opencl-runtime
-	rocprofiler-register
-'
-
-install $AMD_ROCM_PKGS
+exit 0

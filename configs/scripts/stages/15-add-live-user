@@ -32,8 +32,8 @@ source /configs/scripts/others/apt-funcs
 
 # -- Add Live user. We do this at the end otherwise it fails because there are gorups that don't exist.
 
-NX_LIVE_USER='
+INSTALL_LIVE_USER=(
     nitrux-live-user
-'
+)
 
-install $NX_LIVE_USER
+install "${INSTALL_LIVE_USER[@]}" 

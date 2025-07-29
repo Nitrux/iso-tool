@@ -1,5 +1,0 @@
-################
-# Nitrux Repos #
-################
-
-deb [signed-by=/etc/apt/keyrings/nitrux-testing.gpg] https://packagecloud.io/nitrux/testing/debian/ forky main

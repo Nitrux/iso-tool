@@ -1,5 +1,0 @@
-################
-# Nitrux Repos #
-################
-
-deb [signed-by=/etc/apt/keyrings/nitrux-mauikit.gpg] https://packagecloud.io/nitrux/mauikit/debian/ forky main

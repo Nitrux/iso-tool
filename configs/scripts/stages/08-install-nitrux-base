@@ -32,10 +32,10 @@ source /configs/scripts/others/apt-funcs
 
 # -- Install Nitrux base.
 
-NITRUX_BASE_PKGS='
+INSTALL_NITRUX_BASE_PKGS=(
 	base-files
 	nitrux-minimal
 	nitrux-standard
-'
+)
 
-install_downgrades $NITRUX_BASE_PKGS
+install "${INSTALL_NITRUX_BASE_PKGS[@]}"

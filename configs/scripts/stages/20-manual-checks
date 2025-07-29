@@ -28,158 +28,107 @@ set -eu
 # -- Functions.
 
 check_ownership() {
-  local file_to_check=$1
-  echo -e "\nChecking ownership of $file_to_check..."
+  local FILE_TO_CHECK=$1
+  echo -e "\nChecking ownership of $FILE_TO_CHECK..."
 
-  if [ -e "$file_to_check" ]; then
+  if [ -e "$FILE_TO_CHECK" ]; then
     local owner
     local group
-    owner=$(stat -c "%U" "$file_to_check")
-    group=$(stat -c "%G" "$file_to_check")
+    owner=$(stat -c "%U" "$FILE_TO_CHECK")
+    group=$(stat -c "%G" "$FILE_TO_CHECK")
     echo "The file is owned by: $owner (Group: $group)"
   else
-    echo "File $file_to_check does not exist."
+    echo "File $FILE_TO_CHECK does not exist."
   fi
 }
 
 check_file_contents() {
-  local file=$1
-  if [ -f "$file" ]; then
-    echo "Contents of $file:"
+  local FILE=$1
+  if [ -f "$FILE" ]; then
+    echo "Contents of $FILE:"
     echo "=========================="
-    cat "$file"
+    cat "$FILE"
     echo "=========================="
   else
-    echo "Error: File '$file' not found."
+    echo "Error: File '$FILE' not found."
   fi
 }
 
 check_initramfs_size() {
-  local initramfs_file
-  initramfs_file="/boot/initrd.img-$(uname -r)"
+  local INITRAMFS_FILE
+  INITRAMFS_FILE="/boot/initrd.img-$(uname -r)"
 
-  if [ -f "$initramfs_file" ]; then
-    echo "Initramfs file: $initramfs_file"
+  if [ -f "$INITRAMFS_FILE" ]; then
+    echo "Initramfs file: $INITRAMFS_FILE"
     echo "Initramfs size:"
-    du -h --apparent-size "$initramfs_file" | awk '{printf "%.1fM\n", $1}'
+    du -h --apparent-size "$INITRAMFS_FILE" | awk '{printf "%.1fM\n", $1}'
 
     echo "15 largest files in initramfs:"
-    lsinitramfs -l "$initramfs_file" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'
+    lsinitramfs -l "$INITRAMFS_FILE" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'
   else
-    echo "Error: Initramfs file '$initramfs_file' not found."
+    echo "Error: Initramfs file '$INITRAMFS_FILE' not found."
   fi
 }
 
 check_files() {
-  local files=("$@")
+  local FILES=("$@")
   echo "Checking existence of files..."
-  for file in "${files[@]}"; do
-    if [ -e "$file" ]; then
-      echo "File $file exists."
+  for FILE in "${FILES[@]}"; do
+    if [ -e "$FILE" ]; then
+      echo "File $FILE exists."
     else
-      echo "File $file does not exist."
+      echo "File $FILE does not exist."
     fi
   done
 }
 
 check_symlinks() {
-  local links=("$@")
+  local LINKS=("$@")
   echo -e "\nChecking symbolic link targets..."
-  for link in "${links[@]}"; do
-    local target
-    target=$(readlink -f "$link" || true)
-    if [ -n "$target" ]; then
-      echo "Link $link points to: $target"
+  for LINK in "${LINKS[@]}"; do
+    local TARGET
+    TARGET=$(readlink -f "$LINK" || true)
+    if [ -n "$TARGET" ]; then
+      echo "Link $LINK points to: $TARGET"
     else
-      echo "Link $link does not exist or is not a symbolic link."
+      echo "Link $LINK does not exist or is not a symbolic link."
     fi
   done
 }
 
 check_directories() {
-  local directories=("$@")
+  local DIRECTORIES=("$@")
   echo -e "\nChecking existence of directories..."
   if ! command -v tree &> /dev/null; then
     echo "Error: 'tree' command not found. Please install 'tree' to list directory contents."
     return 1
   fi
-  for directory in "${directories[@]}"; do
-    if [ -d "$directory" ]; then
-      echo "Directory $directory exists. Contents:"
-      tree -L 2 "$directory"
+  for DIRECTORY in "${DIRECTORIES[@]}"; do
+    if [ -d "$DIRECTORY" ]; then
+      echo "Directory $DIRECTORY exists. Contents:"
+      tree -L 2 "$DIRECTORY"
     else
-      echo "Directory $directory does not exist."
+      echo "Directory $DIRECTORY does not exist."
     fi
   done
 }
 
 
-# -- Perform manual checks.
+# -- Manually check the existence of files, links and directories using arrays.
 
-files_to_check=(
-  "/etc/rc.local"
-  "/installed_pkgs_end.txt"
-  "/installed_pkgs_start.txt"
-  "/usr/lib/os-release"
-  "/etc/lsb-release"
-)
+FILE_TO_CHECK=()
 
-links_to_check=(
-  "/vmlinuz"
-  "/initrd.img"
-  "/sbin/init"
-  "/bin/sh"
-  "/etc/os-release"
-)
+check_files "${FILE_TO_CHECK[@]}"
 
-directories_to_check=(
-  "/Applications"
-  "/System"
-  "/System/Binaries"
-  "/System/Binaries/Administrative"
-  "/System/Binaries/Optional"
-  "/System/Binaries/Standard"
-  "/System/Boot"
-  "/System/Devices"
-  "/System/Filesystems/External"
-  "/System/Filesystems/Internal"
-  "/System/Libraries"
-  "/System/Shareable"
-  "/System/Variable"
-  "/Users"
-  "/boot"
-  "/etc/elogind/system-sleep"
-  "/etc/init.d"
-  "/etc/runlevels/async"
-  "/etc/runlevels/boot"
-  "/etc/runlevels/default"
-  "/etc/runlevels/nonetwork"
-  "/etc/runlevels/off"
-  "/etc/runlevels/recovery"
-  "/etc/runlevels/shutdown"
-  "/etc/runlevels/sysinit"
-  "/etc/sddm.conf.d"
-  "/etc/skel/Desktop/Documentation"
-  "/etc/udev/rules.d"
-  "/kboot"
-)
+LINKS_TO_CHECK=()
 
-check_files "${files_to_check[@]}"
+check_symlinks "${LINKS_TO_CHECK[@]}"
 
-check_symlinks "${links_to_check[@]}"
+DIRECTORIES_TO_CHECK=()
 
-check_ownership "/usr/lib/dbus-1.0/dbus-daemon-launch-helper"
-check_ownership "/var/log/ntpsec"
+check_directories "${DIRECTORIES_TO_CHECK[@]}"
 
-check_file_contents "/etc/default/console-setup"
 
-check_directories "${directories_to_check[@]}"
+# -- Check the size of the initramfs.
 
 check_initramfs_size
-
-
-# -- Create var data archive for NUTS.
-
-DISTRIB_RELEASE=$(grep 'DISTRIB_RELEASE' /etc/lsb-release | cut -d'=' -f2)
-
-tar -cJf "var-lib-dpkg-$DISTRIB_RELEASE.tar.xz" -P /var/lib/dpkg/

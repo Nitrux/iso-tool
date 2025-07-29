@@ -30,61 +30,22 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Downgrade PAM packages because 1) Newer packages depend on libsystemd0 (why?) and 2) Newer packages (>=1.5.3-7) break something that causes kscreenlocker not to accept the password to unlock the session.
-
-DOWNGRADE_PAM_PKGS='
-	libpam-modules=1.5.2-6+deb12u1
-	libpam-modules-bin=1.5.2-6+deb12u1
-	libpam-runtime=1.5.2-6+deb12u1
-	libpam0g=1.5.2-6+deb12u1
-'
-
-install_downgrades_hold $DOWNGRADE_PAM_PKGS
-
-
-# -- Add eudev and mount from Devuan.
-# -- Specify these packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
-
-DEVUAN_EUDEV_PKGS='
-	bsdutils/forky
-	coreutils/forky
-	eudev
-	login/forky
-	mount/forky
-	udev/forky
-	util-linux/forky
-'
-
-install_downgrades $DEVUAN_EUDEV_PKGS
-
-
 # -- Remove libsystemd0.
 
-REMOVE_SYSTEMD_PKGS='
-	systemd
-	systemd-sysv
+REMOVE_SYSTEMD_PKGS=(
 	libsystemd0
-'
+)
 
-dpkg_force_remove $REMOVE_SYSTEMD_PKGS
-
-
-# -- Add elogind from Devuan.
-
-DEVUAN_ELOGIND_PKGS='
-	elogind/forky
-'
-
-install $DEVUAN_ELOGIND_PKGS
+remove "${REMOVE_SYSTEMD_PKGS[@]}"
 
 
-# -- Add standalone systemctl to make maintainer scripts stfu about it.
+# -- Add docker-systemctl-replacement to make maintainer scripts shut up about it.
 
-SYSTEMCTL_STANDALONE_PKG='
+INSTALL_DOCKER_SYSTEMCTL_PKG='
 	systemctl
 '
 
-install $SYSTEMCTL_STANDALONE_PKG
+install "${INSTALL_DOCKER_SYSTEMCTL_PKG[@]}"
 
 
 # -- Fix the warnings (SyntaxWarning: invalid escape sequence '\w') in https://github.com/gdraheim/docker-systemctl-replacement due to unescaped regex backslashes in normal string literals in Python.

@@ -24,19 +24,4 @@
 
 set -eu
 
-# -- Source APT commands as functions.
-# shellcheck source=/dev/null
-
-source /configs/scripts/others/apt-funcs
-
-
-# -- Add Calamares.
-
-CALAMARES_PKGS='
-	calamares
-	dosfstools
-	efibootmgr
-	squashfs-tools
-'
-
-install $CALAMARES_PKGS
+exit 0

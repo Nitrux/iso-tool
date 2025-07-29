@@ -23,7 +23,7 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -e
+set -eu
 
 
 # -- Prepare the directories for the build. Cleanup previously created build directories.
@@ -69,10 +69,6 @@ fi
 
 if [ -d "$PWD/grub-theme" ]; then
   rm -rf "$PWD/grub-theme"
-fi
-
-if [ -f "$PWD/nitrux-*.iso" ] || [ -f "$PWD/nitrux-*.md5sum" ]; then
-  rm -f "$PWD/nitrux-*.iso" "$PWD/nitrux-*.md5sum"
 fi
 
 
@@ -127,23 +123,13 @@ mv "$build_dir"/installed_pkgs_start.txt "$output_dir"/"${image%.iso}.rootfs.bui
 mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 
-# -- Get data archive from build directory.
-
-mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
-
-
 # -- Copy the kernel and initramfs to $iso_dir.
-# -- BUG: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
+# -- NOTE: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
 mkdir -p "$iso_dir"/boot
 
 cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/kernel
 cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
-
-
-# -- Copy EFI folder to ISO
-
-cp -r EFI/ "$iso_dir"/
 
 
 # -- Create SqushFS of the root directory.

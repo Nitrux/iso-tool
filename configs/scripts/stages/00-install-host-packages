@@ -30,33 +30,21 @@ set -eu
 source "$PWD"/configs/scripts/others/apt-funcs
 
 
-# -- Install packages for host.
+# -- Update host(s package index.
 
 update
 
-HOST_PKGS='
-	axel
-	dkms
-	mokutil
-	shim-signed
-	squashfs-tools
-	time
-'
 
-HOST_XORRISO_PKGS='
-	libburn4
-	libisoburn1
-	libisofs6
-	libjte2
-	mtools
-	sshpass
-	xorriso
-'
+# -- Define an array of packages for the host.
 
-HOST_GRUB_PKGS='
-	grub-efi-amd64
-	grub-efi-amd64-signed
-	grub-pc-bin
-'
+INSTALL_HOST_PKGS=(
+    axel
+    squashfs-tools
+    time
+    xorriso
+    grub-efi-amd64
+)
 
-install $HOST_PKGS $HOST_XORRISO_PKGS $HOST_GRUB_PKGS
+# -- Install packages for host.
+
+install "${INSTALL_HOST_PKGS[@]}"

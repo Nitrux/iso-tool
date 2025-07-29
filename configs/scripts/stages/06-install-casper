@@ -32,8 +32,8 @@ source /configs/scripts/others/apt-funcs
 
 # -- Add casper for the Live session.
 
-CASPER_PKGS='
+INSTALL_CASPER_PKGS=(
 	casper
-'
+)
 
-install_hold $CASPER_PKGS
+install "${INSTALL_CASPER_PKGS[@]}" 
