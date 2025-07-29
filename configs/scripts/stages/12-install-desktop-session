@@ -46,6 +46,8 @@ EXTRA_DESKTOP_PKGS='
 	plasma-workspace
 	quickshell
 	sddm-theme-breeze
+	dolphin
+	konsole
 '
 
 # -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
