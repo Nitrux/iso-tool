@@ -104,11 +104,11 @@ curl -Lo /usr/bin/runch https://raw.githubusercontent.com/Nitrux/tools/main/runc
 chmod +x /usr/bin/runch
 
 ( < bootstrap \
-  unshare --mount -- bash -c 'exec runch "$@"' _ \
+  unshare --mount -- bash -c 'printf "\n>--- Starting Runch ---\n"; exec runch "$@"' _ \
     -m configs:/configs \
     -r configs \
     "$build_dir" \
-    bash ) 2>&1 | sed -E 's/\x1b\[[0-9;]*[a-zA-Z]//g' | tee -a "$iso_tool_bootstrap_log"
+    bash ) 2>&1 | sed -E 's/\x1b\[[0-9;]*[a-zA-Z]//g' | tee "$iso_tool_bootstrap_log"
 
 stty sane
 
