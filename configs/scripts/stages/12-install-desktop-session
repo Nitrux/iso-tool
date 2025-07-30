@@ -37,11 +37,14 @@ INSTALL_DESKTOP_PKGS=(
 	sddm
     blackbox
     xterm
-
+    pipewire
+    bluez
+    wireplumber
+    pipewire-pulse
 )
 
-DEVUAN_POLKIT_PKGS=()
+INSTALL_DEVUAN_NM_PKGS=(
+    network-manager/duke
+)
 
-DEVUAN_NM_PKGS=()
-
-install "${INSTALL_DESKTOP_PKGS[@]}" "${DEVUAN_POLKIT_PKGS[@]}" "${DEVUAN_NM_PKGS[@]}" 
+install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 

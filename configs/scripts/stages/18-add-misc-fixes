@@ -24,4 +24,7 @@
 
 set -eu
 
-exit 0
+
+# -- Misc. Fix: Since we're using Blackbox to test, we need to create a link so that the default config of Casper for SDDM uses the session.
+
+ln -sv /usr/share/xsessions/blackbox.desktop /usr/share/xsessions/plasmax11.desktop
