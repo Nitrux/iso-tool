@@ -24,4 +24,66 @@
 
 set -eu
 
-exit 0
+
+# -- Edit 15autologin to enable autologin for Plasma Wayland in casper for Live session.
+
+SDDM_DESKTOP_SESSION="blackbox.desktop" 
+
+REPLACE_CASPER_AUTOLOGIN_SCRIPT="/usr/share/initramfs-tools/scripts/casper-bottom/15autologin"
+
+mkdir -p "$(dirname "$REPLACE_CASPER_AUTOLOGIN_SCRIPT")"
+
+cat > "$REPLACE_CASPER_AUTOLOGIN_SCRIPT" << EOF_AUTOLOGIN_SCRIPT
+#!/bin/sh
+
+PREREQ=""
+DESCRIPTION="Setting up automatic login..."
+
+prereqs()
+{
+       echo "$PREREQ"
+}
+
+case \$1 in # \$1 is escaped so it's not expanded by the outer shell
+prereqs)
+       prereqs
+       exit 0
+       ;;
+esac
+
+# shellcheck source=/dev/null
+. /scripts/casper-functions
+
+log_begin_msg "$DESCRIPTION"
+
+if [ -f /root/usr/bin/sddm ]; then
+    SDDM_SESSION="${SDDM_DESKTOP_SESSION}"
+
+    if ! [ -f "/root/usr/share/xsessions/\$SDDM_SESSION" ] && \
+       ! [ -f "/root/usr/share/wayland-sessions/\$SDDM_SESSION" ]; then
+        log_warning_msg "SDDM session file \$SDDM_SESSION not found in /root/usr/share/xsessions/ or /root/usr/share/wayland-sessions/. Autologin might fail."
+        # You might want to default to something else or exit here if critical
+    fi
+
+    AUTOLOGIN_CONF="/root/etc/sddm.conf.d/autologin.conf"
+    mkdir -p "\$(dirname "\$AUTOLOGIN_CONF")" # Escaped \$ for dirname, \$( for command substitution
+    
+    cat >"\$AUTOLOGIN_CONF" << 'EOF_SDDM_CONF_INNER'
+[Autologin]
+User=$USERNAME
+Session=$SDDM_SESSION
+EOF_SDDM_CONF_INNER
+
+    log_end_msg "SDDM autologin configured for user \$USERNAME with session \$SDDM_SESSION in \$AUTOLOGIN_CONF"
+
+else
+    log_end_msg "SDDM not found at /root/usr/bin/sddm. Skipping SDDM autologin setup."
+fi
+
+log_end_msg
+EOF_AUTOLOGIN_SCRIPT
+
+
+# -- Always update initramfs after adding, removing or editing hook scripts.
+
+update-initramfs -u -k all

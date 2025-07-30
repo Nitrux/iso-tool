@@ -54,22 +54,6 @@ check_file_contents() {
   fi
 }
 
-check_initramfs_size() {
-  local INITRAMFS_FILE
-  INITRAMFS_FILE="/boot/initrd.img-$(uname -r)"
-
-  if [ -f "$INITRAMFS_FILE" ]; then
-    echo "Initramfs file: $INITRAMFS_FILE"
-    echo "Initramfs size:"
-    du -h --apparent-size "$INITRAMFS_FILE" | awk '{printf "%.1fM\n", $1}'
-
-    echo "15 largest files in initramfs:"
-    lsinitramfs -l "$INITRAMFS_FILE" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'
-  else
-    echo "Error: Initramfs file '$INITRAMFS_FILE' not found."
-  fi
-}
-
 check_files() {
   local FILES=("$@")
   echo "Checking existence of files..."
@@ -113,8 +97,37 @@ check_directories() {
   done
 }
 
+check_initramfs_size() {
+  local INITRAMFS_FILE
+  INITRAMFS_FILE="/boot/initrd.img-$(uname -r)"
+
+  if [ -f "$INITRAMFS_FILE" ]; then
+    echo "Initramfs file: $INITRAMFS_FILE"
+    echo "Initramfs size (actual disk usage):"
+    
+    du -h --apparent-size "$INITRAMFS_FILE" | awk '{printf "%.1fM\n", $1}'
+
+    echo "15 largest files in initramfs:"
+    lsinitramfs -l "$INITRAMFS_FILE" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'
+  else
+    echo "Error: Initramfs file '$INITRAMFS_FILE' not found inside chroot."
+    echo "Available initramfs images in /boot:"
+    ls -lh /boot/initrd.img-* 2>/dev/null || echo "No initramfs images found."
+  fi
+}
+
 
 # -- Manually check the existence of files, links and directories using arrays.
+
+FILE_ONWERSHIP_TO_CHECK=()
+
+check_ownership "${FILE_ONWERSHIP_TO_CHECK[@]}"
+
+FILE_CONTENT_TO_CHECK=(
+  /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+)
+
+check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
 
 FILE_TO_CHECK=()
 
