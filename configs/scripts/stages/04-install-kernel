@@ -29,8 +29,8 @@ set -eu
 
 source /configs/scripts/others/apt-funcs
 
-INSTALL_KERNEL_PKGS='
+INSTALL_KERNEL_PKGS=(
 	linux-image-amd64
-'
+)
 
 install "${INSTALL_KERNEL_PKGS[@]}"

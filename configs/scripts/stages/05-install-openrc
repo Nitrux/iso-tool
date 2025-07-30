@@ -64,8 +64,8 @@ rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}"
 
 # -- Add Debian-flavored OpenRC to use it as init.
 
-INSTALL_OPENRC_PKGS='
+INSTALL_OPENRC_PKGS=(
 	openrc
-'
+)
 
 install "${INSTALL_OPENRC_PKGS[@]}"

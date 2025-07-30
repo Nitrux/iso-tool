@@ -31,23 +31,17 @@ source /configs/scripts/others/apt-funcs
 
 
 # -- Install desktop packages.
+# -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
 
-INSTALL_DESKTOP_PKGS='
+INSTALL_DESKTOP_PKGS=(
 	sddm
     blackbox
     xterm
-'
 
+)
 
+DEVUAN_POLKIT_PKGS=()
 
-# -- Use the packages for PolicyKit and NetworkManager from Devuan because these don't require libsystemd0.
-
-DEVUAN_POLKIT_PKGS='
-
-'
-
-DEVUAN_NM_PKGS='
-
-'
+DEVUAN_NM_PKGS=()
 
 install "${INSTALL_DESKTOP_PKGS[@]}" "${DEVUAN_POLKIT_PKGS[@]}" "${DEVUAN_NM_PKGS[@]}" 

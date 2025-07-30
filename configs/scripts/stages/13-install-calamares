@@ -24,4 +24,9 @@
 
 set -eu
 
+# -- Source APT commands as functions.
+# shellcheck source=/dev/null
+
+source /configs/scripts/others/apt-funcs
+
 exit 0
