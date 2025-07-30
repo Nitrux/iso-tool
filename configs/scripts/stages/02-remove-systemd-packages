@@ -43,6 +43,7 @@ INSTALL_DEVUAN_UTILS_PKGS=(
 	login/duke
 	mount/duke
 	util-linux/duke
+	procps/duke
 )
 
 INSTALL_DEVUAN_UDEV_PKGS=(
