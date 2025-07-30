@@ -3,7 +3,7 @@
 #############################################################################################################################################################################
 #   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
 #                                                                                                                                                                           #
-#   Copyright <2023-2024> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2023-2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
 #                                                                                                                                                                           #
 #   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
 #                                                                                                                                                                           #
@@ -30,6 +30,25 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
+# -- Add eudev and mount from Devuan.
+# -- Specify these packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
+
+INSTALL_DEVUAN_UTILS_PKGS=(
+	bsdutils/duke
+	coreutils/duke
+	login/duke
+	mount/duke
+	util-linux/duke
+)
+
+INSTALL_DEVUAN_UDEV_PKGS=(
+	eudev/duke
+	udev/duke
+)
+
+install "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}"
+
+
 # -- Remove libsystemd0.
 
 REMOVE_SYSTEMD_PKGS=(
@@ -37,6 +56,15 @@ REMOVE_SYSTEMD_PKGS=(
 )
 
 remove "${REMOVE_SYSTEMD_PKGS[@]}"
+
+
+# -- Add elogind from Devuan.
+
+INSTALL_DEVUAN_ELOGIND_PKGS='
+	elogind/duke
+'
+
+install "${INSTALL_DEVUAN_ELOGIND_PKGS[@]}"
 
 
 # -- Add docker-systemctl-replacement to make maintainer scripts shut up about it.
