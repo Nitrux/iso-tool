@@ -94,6 +94,10 @@ Package: libsmartcols1
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: libudisks2-0
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: libuuid1
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -147,6 +151,10 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: udev
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: udisks2
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
