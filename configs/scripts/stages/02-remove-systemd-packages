@@ -30,19 +30,12 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a dependency because why not, right?
+# -- Specify these packages because Debian made libsystemd0 mandatory for APT, PAM, login, bsdutils, and coreutils for no reason since neither requires it (because why not, right?).
 
 INSTALL_DEVUAN_APT_PKGS=(
 	apt/duke
 	libapt-pkg7.0/duke
 )
-
-
-install "${INSTALL_DEVUAN_APT_PKGS[@]}"
-
-
-# -- Add eudev and mount from Devuan.
-# -- Specify these packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
 
 INSTALL_DEVUAN_UTILS_PKGS=(
 	bsdutils/duke
@@ -64,7 +57,11 @@ INSTALL_DEVUAN_PAM_PKGS=(
 	libpam0g/duke
 )
 
-install "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}" "${INSTALL_DEVUAN_PAM_PKGS[@]}"
+INSTALL_DEVUAN_ELOGIND_PKGS='
+	elogind/duke
+'
+
+install "${INSTALL_DEVUAN_APT_PKGS[@]}" "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}" "${INSTALL_DEVUAN_PAM_PKGS[@]}" "${INSTALL_DEVUAN_ELOGIND_PKGS[@]}"
 
 
 # -- Remove libsystemd0.
@@ -74,16 +71,6 @@ REMOVE_SYSTEMD_PKGS=(
 )
 
 remove "${REMOVE_SYSTEMD_PKGS[@]}"
-
-
-# -- Add elogind from Devuan.
-
-INSTALL_DEVUAN_ELOGIND_PKGS='
-	elogind/duke
-'
-
-install "${INSTALL_DEVUAN_ELOGIND_PKGS[@]}"
-
 
 # -- Add docker-systemctl-replacement to make maintainer scripts shut up about it.
 
