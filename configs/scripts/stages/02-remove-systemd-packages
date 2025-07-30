@@ -46,7 +46,11 @@ INSTALL_DEVUAN_UDEV_PKGS=(
 	udev/duke
 )
 
-install "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}"
+INSTALL_DEVUAN_PAM_PKGS=(
+	libpam-modules/duke
+)
+
+install "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}" "${INSTALL_DEVUAN_PAM_PKGS[@]}"
 
 
 # -- Remove libsystemd0.

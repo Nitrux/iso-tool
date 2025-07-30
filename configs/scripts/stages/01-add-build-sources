@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Add Nitrux repository keys.
 
 add_nitrux_key testing
-# add_nitrux_key area51
+add_nitrux_key area51
 add_nitrux_key skidrow
 
 
