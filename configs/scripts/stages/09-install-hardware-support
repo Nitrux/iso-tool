@@ -37,4 +37,9 @@ INSTALL_NITRUX_HW_SUPPORT_PKGS=(
     nitrux-xserver-drivers
 )
 
-install "${INSTALL_NITRUX_HW_SUPPORT_PKGS[@]}"
+INSTALL_ADDITIONAL_HW_SUPPORT_PKGS=(
+    broadcom-sta-dkms/duke
+    multipath-tools/duke
+)
+
+install "${INSTALL_NITRUX_HW_SUPPORT_PKGS[@]}" "${INSTALL_ADDITIONAL_HW_SUPPORT_PKGS[@]}"

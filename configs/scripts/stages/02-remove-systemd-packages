@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Specify these packages because Debian made libsystemd0 mandatory for APT, PAM, login, bsdutils, and coreutils for no reason since neither requires it (because why not, right?).
+# -- Specify these packages because Debian made libsystemd0 mandatory for APT, PAM, login, bsdutils, coreutils, and procps for no reason since neither truly requires it (because why not, right?).
 
 INSTALL_DEVUAN_APT_PKGS=(
 	apt/duke
@@ -71,7 +71,7 @@ INSTALL_DEVUAN_DBUS_PKGS=(
 install "${INSTALL_DEVUAN_APT_PKGS[@]}" "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}" "${INSTALL_DEVUAN_PAM_PKGS[@]}" "${INSTALL_DEVUAN_ELOGIND_PKGS[@]}" "${INSTALL_DEVUAN_DBUS_PKGS[@]}"
 
 
-# -- Remove libsystemd0.
+# -- Remove libsystemd0 from the rootfs.
 
 REMOVE_SYSTEMD_PKGS=(
 	libsystemd0

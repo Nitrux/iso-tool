@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Add Live user. We do this at the end otherwise it fails because there are gorups that don't exist.
+# -- Add Live user.
 
 INSTALL_LIVE_USER=(
     nitrux-live-user
