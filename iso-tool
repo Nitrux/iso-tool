@@ -103,14 +103,12 @@ mkdir -p "$build_artifacts_dir"
 curl -Lo /usr/bin/runch https://raw.githubusercontent.com/Nitrux/tools/main/runch
 chmod +x /usr/bin/runch
 
-script -q -c \
-"( < bootstrap \
-   unshare --mount -- bash -c 'exec runch \"\$@\"' _ \
-     -m configs:/configs \
-     -r configs \
-     \"$build_dir\" \
-     bash )" \
-"$iso_tool_bootstrap_log"
+( < bootstrap \
+  unshare --mount -- bash -c 'exec runch "$@"' _ \
+    -m configs:/configs \
+    -r configs \
+    "$build_dir" \
+    bash ) > "$iso_tool_bootstrap_log" 2>&1
 
 stty sane
 
