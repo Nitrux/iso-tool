@@ -33,8 +33,8 @@ source /configs/scripts/others/apt-funcs
 # -- Use the packages for Plymouth from Devuan because these don't require libsystemd0.
 
 INSTALL_DEVUAN_PLYMOUTH_PKGS=(
-	plymouth
-	plymouth-label
+	plymouth/duke
+	plymouth-label/duke
 )
 
 install "${INSTALL_DEVUAN_PLYMOUTH_PKGS[@]}"
