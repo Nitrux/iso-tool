@@ -48,6 +48,9 @@ INSTALL_DEVUAN_UDEV_PKGS=(
 
 INSTALL_DEVUAN_PAM_PKGS=(
 	libpam-modules/duke
+	libpam-modules-bin/duke
+	libpam-runtime/duke
+	libpam0g/duke
 )
 
 install "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}" "${INSTALL_DEVUAN_PAM_PKGS[@]}"
