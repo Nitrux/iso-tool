@@ -73,6 +73,7 @@ install_downgrades () { apt -yy install --no-install-recommends --allow-downgrad
 install_downgrades_hold () { apt -yy install --no-install-recommends --allow-downgrades --allow-change-held-packages "$@"; }
 install_force_overwrite () { apt -yy install --no-install-recommends -o Dpkg::Options::="--force-overwrite" "$@"; }
 install_hold () { apt -yy install --no-install-recommends "$@" && apt-mark hold "$@"; }
+install_reinstall () { apt -yy install --reinstall "$@"; }
 list_installed_apt () { apt list --installed; }
 list_upgrade () { apt list --upgradable; }
 only_upgrade () { apt -yy install --no-install-recommends --only-upgrade "$@"; }

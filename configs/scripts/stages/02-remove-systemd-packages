@@ -49,6 +49,7 @@ INSTALL_DEVUAN_UTILS_PKGS=(
 INSTALL_DEVUAN_UDEV_PKGS=(
 	eudev/duke
 	udev/duke
+	libudev1/duke
 )
 
 INSTALL_DEVUAN_PAM_PKGS=(
