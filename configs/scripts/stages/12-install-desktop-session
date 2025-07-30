@@ -41,6 +41,11 @@ INSTALL_DESKTOP_PKGS=(
     bluez
     wireplumber
     pipewire-pulse
+    sddm-openrc
+    lspci
+    dbus-openrc
+    eudev-openrc
+    network-manager-openrc
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
