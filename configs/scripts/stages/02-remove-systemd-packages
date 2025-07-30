@@ -30,6 +30,17 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
+# -- Use the APT package from Devuan because Debian had the wisdom of adding libsystemd0 as a dependency because why not, right?
+
+INSTALL_DEVUAN_APT_PKGS=(
+	apt/duke
+	libapt-pkg7.0/duke
+)
+
+
+install "${INSTALL_DEVUAN_APT_PKGS[@]}"
+
+
 # -- Add eudev and mount from Devuan.
 # -- Specify these packages because Debian made libsystemd0 mandatory for PAM, login, bsdutils, and coreutils for no reason since neither requires it. Also, mount is broken or something? *sigh*
 

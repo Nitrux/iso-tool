@@ -18,6 +18,14 @@ Package: network-manager
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: libpam-*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libpam0g
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 #########################
 #  Any Package Priority #
 #########################
