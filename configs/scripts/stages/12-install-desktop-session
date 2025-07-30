@@ -42,7 +42,7 @@ INSTALL_DESKTOP_PKGS=(
     wireplumber
     pipewire-pulse
     sddm-openrc
-    lspci
+    pciutils
     dbus-openrc
     eudev-openrc
     network-manager-openrc
