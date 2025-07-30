@@ -112,6 +112,8 @@ script -q -c \
      bash )" \
 "$iso_tool_bootstrap_log"
 
+stty sane
+
 sync
 
 rm -f /usr/bin/runch || true 
