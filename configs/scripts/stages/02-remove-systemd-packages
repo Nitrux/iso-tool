@@ -72,7 +72,8 @@ REMOVE_SYSTEMD_PKGS=(
 	libsystemd0
 )
 
-remove "${REMOVE_SYSTEMD_PKGS[@]}"
+dpkg_force_remove "${REMOVE_SYSTEMD_PKGS[@]}"
+
 
 # -- Add docker-systemctl-replacement to make maintainer scripts shut up about it.
 
