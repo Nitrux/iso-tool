@@ -22,6 +22,14 @@ Package: bsdutils
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: dbus
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: dbus-*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: dpkg
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -51,6 +59,10 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libblkid1
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libdbus-*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
