@@ -29,4 +29,12 @@ set -eu
 
 source /configs/scripts/others/apt-funcs
 
-exit 0
+
+# -- Install Nitrux hardware support packages.
+
+INSTALL_NITRUX_HW_SUPPORT_PKGS=(
+    nitrux-hardware-drivers
+    nitrux-xserver-drivers
+)
+
+install "${INSTALL_NITRUX_HW_SUPPORT_PKGS[@]}"
