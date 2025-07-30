@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install Nitrux base.
+# -- Install Nitrux base packages and use the packages for PolicyKit from Devuan because these don't require libsystemd0.
 
 INSTALL_NITRUX_BASE_PKGS=(
 	base-files
@@ -38,4 +38,12 @@ INSTALL_NITRUX_BASE_PKGS=(
 	nitrux-standard
 )
 
-install "${INSTALL_NITRUX_BASE_PKGS[@]}"
+INSTALL_DEVUAN_POLICYKIT_PKGS=(
+	libpam-elogind/duke
+	libpolkit-agent-1-0/duke
+	libpolkit-gobject-elogind-1-0/duke
+	pkexec/duke
+	polkitd/duke
+)
+
+install "${INSTALL_NITRUX_BASE_PKGS[@]}" "${INSTALL_DEVUAN_POLICYKIT_PKGS[@]}"

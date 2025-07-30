@@ -90,6 +90,10 @@ Package: libpam0g
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: libpolkit-*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: libsmartcols1
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -126,6 +130,10 @@ Package: overlayroot
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: pkexec
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: plymouth
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -135,6 +143,14 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: plymouth-x11
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: polkitd
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: policykit-1
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
