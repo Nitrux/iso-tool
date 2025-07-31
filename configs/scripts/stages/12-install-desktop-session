@@ -47,6 +47,8 @@ INSTALL_DESKTOP_PKGS=(
     network-manager-openrc
     plymouth-openrc
     plymouth-theme-nitrux
+    zsh
+    nitrux-desktop-settings
 )
 
 INSTALL_DEVUAN_NM_PKGS=(

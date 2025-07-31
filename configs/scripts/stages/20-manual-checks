@@ -24,100 +24,10 @@
 
 set -eu
 
+# -- Source useful functions.
+# shellcheck source=/dev/null
 
-# -- Functions.
-
-check_ownership() {
-  echo -e "\nChecking ownership of files..."
-  for FILE_TO_CHECK in "$@"; do
-    if [ -e "$FILE_TO_CHECK" ]; then
-      local owner
-      local group
-      owner=$(stat -c "%U" "$FILE_TO_CHECK")
-      group=$(stat -c "%G" "$FILE_TO_CHECK")
-      echo "The file '$FILE_TO_CHECK' is owned by: $owner (Group: $group)"
-    else
-      echo "File '$FILE_TO_CHECK' does not exist."
-    fi
-  done
-}
-
-check_file_contents() {
-  echo -e "\nChecking contents of files:"
-  for FILE in "$@"; do
-    if [ -f "$FILE" ]; then
-      echo "Contents of $FILE:"
-      echo "=========================="
-      cat "$FILE"
-      echo "=========================="
-    else
-      echo "Error: File '$FILE' not found."
-    fi
-  done
-}
-
-check_files() {
-  local FILES=("$@")
-  echo "Checking existence of files..."
-  for FILE in "${FILES[@]}"; do
-    if [ -e "$FILE" ]; then
-      echo "File $FILE exists."
-    else
-      echo "File $FILE does not exist."
-    fi
-  done
-}
-
-check_symlinks() {
-  local LINKS=("$@")
-  echo -e "\nChecking symbolic link targets..."
-  for LINK in "${LINKS[@]}"; do
-    local TARGET
-    TARGET=$(readlink -f "$LINK" || true)
-    if [ -n "$TARGET" ]; then
-      echo "Link $LINK points to: $TARGET"
-    else
-      echo "Link $LINK does not exist or is not a symbolic link."
-    fi
-  done
-}
-
-check_directories() {
-  local DIRECTORIES=("$@")
-  echo -e "\nChecking existence of directories..."
-  if ! command -v tree &> /dev/null; then
-    echo "Error: 'tree' command not found. Please install 'tree' to list directory contents."
-    return 1
-  fi
-  for DIRECTORY in "${DIRECTORIES[@]}"; do
-    if [ -d "$DIRECTORY" ]; then
-      echo "Directory $DIRECTORY exists. Contents:"
-      tree -L 2 "$DIRECTORY"
-    else
-      echo "Directory $DIRECTORY does not exist."
-    fi
-  done
-}
-
-check_initramfs_size() {
-  local INITRAMFS_FILE
-
-  INITRAMFS_FILE=$(find /boot -maxdepth 1 -name "initrd.img-*" -printf "%T@ %p\n" 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-)
-
-  if [ -f "$INITRAMFS_FILE" ]; then
-    echo "Initramfs file: $INITRAMFS_FILE"
-    echo "Initramfs size (actual disk usage):"
-    
-    du -h --apparent-size "$INITRAMFS_FILE" | awk '{printf "%.1fM\n", $1}'
-
-    echo "15 largest files in initramfs:"
-    lsinitramfs -l "$INITRAMFS_FILE" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'
-  else
-    echo "Error: Initramfs file '$INITRAMFS_FILE' not found inside chroot."
-    echo "Available initramfs images in /boot:"
-    ls -lh /boot/initrd.img-* 2>/dev/null || echo "No initramfs images found."
-  fi
-}
+source /configs/scripts/others/misc-funcs
 
 
 # -- Manually check the existence of files, links and directories using arrays.
