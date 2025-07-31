@@ -25,64 +25,16 @@
 set -eu
 
 
-# -- Edit 15autologin to enable autologin in casper for the Live session.
+# -- Replace upstream 15autologin to enable autologin in casper for the Live session.
 
-# shellcheck disable=SC2034
+cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+
+
+# -- Define the desired SDDM desktop session here.
+
 SDDM_DESKTOP_SESSION="blackbox.desktop"
-REPLACE_CASPER_AUTOLOGIN_SCRIPT="/usr/share/initramfs-tools/scripts/casper-bottom/15autologin"
 
-mkdir -p "$(dirname "$REPLACE_CASPER_AUTOLOGIN_SCRIPT")"
-
-cat > "$REPLACE_CASPER_AUTOLOGIN_SCRIPT" << EOF_AUTOLOGIN_SCRIPT_QUOTED
-#!/bin/sh
-
-PREREQ=""
-DESCRIPTION="Setting up automatic login..."
-
-prereqs()
-{
-       echo "$PREREQ"
-}
-
-case $1 in
-prereqs)
-       prereqs
-       exit 0
-       ;;
-esac
-
-# shellcheck source=/dev/null
-. /scripts/casper-functions
-
-log_begin_msg "$DESCRIPTION"
-
-if [ -f /root/usr/bin/sddm ]; then
-    SDDM_SESSION_PLACEHOLDER
-    
-    if ! [ -f "/root/usr/share/xsessions/\$sddm_session" ] && \\
-       ! [ -f "/root/usr/share/wayland-sessions/\$sddm_session" ]; then
-        log_warning_msg "SDDM session file \$sddm_session not found in /root/usr/share/xsessions/ or /root/usr/share/wayland-sessions/. Autologin might fail."
-    fi
-
-    AUTOLOGIN_CONF="/root/etc/sddm.conf.d/live_autologin.conf"
-    mkdir -p "\$(dirname "\$AUTOLOGIN_CONF")"
-    
-    cat >"\$AUTOLOGIN_CONF" << EOF_SDDM_CONF_INNER
-[Autologin]
-User=\$USERNAME
-Session=\$sddm_session
-EOF_SDDM_CONF_INNER
-
-    log_end_msg "SDDM autologin configured for user \$USERNAME with session \$sddm_session in \$AUTOLOGIN_CONF"
-
-else
-    log_end_msg "SDDM not found at /root/usr/bin/sddm. Skipping SDDM autologin setup."
-fi
-
-log_end_msg
-EOF_AUTOLOGIN_SCRIPT_QUOTED
-
-sed -i "s|SDDM_SESSION_PLACEHOLDER|sddm_session=\"\${SDDM_DESKTOP_SESSION}\"|" "$REPLACE_CASPER_AUTOLOGIN_SCRIPT"
+sed -i "s|^sddm_session=.*$|sddm_session=${SDDM_DESKTOP_SESSION}|" /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
 
 
 # -- Always update initramfs after adding, removing or editing hook scripts.

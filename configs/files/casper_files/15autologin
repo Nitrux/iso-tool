@@ -1,0 +1,32 @@
+#!/bin/sh
+
+PREREQ=""
+DESCRIPTION="Setting up automatic login..."
+
+prereqs()
+{
+       echo "$PREREQ"
+}
+
+case $1 in
+prereqs)
+       prereqs
+       exit 0
+       ;;
+esac
+
+# shellcheck source=/dev/null
+. /scripts/casper-functions
+
+log_begin_msg "$DESCRIPTION"
+
+if [ -f /root/usr/bin/sddm ]; then
+    sddm_session=plasma.desktop
+    cat >>/root/etc/sddm.conf <<EOF
+[Autologin]
+User=$USERNAME
+Session=$sddm_session
+EOF
+fi
+
+log_end_msg
