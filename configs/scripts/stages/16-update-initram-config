@@ -27,7 +27,7 @@ set -eu
 
 # -- Replace upstream's 15autologin to enable autologin in casper for the Live session.
 
-cat /configs/scripts/others/casper/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+cat /configs/files/casper_files/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
 
 
 # -- Define the desired SDDM desktop session here.
