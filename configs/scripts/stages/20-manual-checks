@@ -126,6 +126,7 @@ check_ownership "${FILE_ONWERSHIP_TO_CHECK[@]}"
 
 FILE_CONTENT_TO_CHECK=(
   /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+  /etc/sddm.conf
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"

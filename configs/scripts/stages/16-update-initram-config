@@ -27,12 +27,13 @@ set -eu
 
 # -- Edit 15autologin to enable autologin in casper for the Live session.
 
+# shellcheck disable=SC2034
 SDDM_DESKTOP_SESSION="blackbox.desktop"
 REPLACE_CASPER_AUTOLOGIN_SCRIPT="/usr/share/initramfs-tools/scripts/casper-bottom/15autologin"
 
 mkdir -p "$(dirname "$REPLACE_CASPER_AUTOLOGIN_SCRIPT")"
 
-cat > "$REPLACE_CASPER_AUTOLOGIN_SCRIPT" << 'EOF_AUTOLOGIN_SCRIPT_QUOTED'
+cat > "$REPLACE_CASPER_AUTOLOGIN_SCRIPT" << EOF_AUTOLOGIN_SCRIPT_QUOTED
 #!/bin/sh
 
 PREREQ=""
@@ -58,21 +59,21 @@ log_begin_msg "$DESCRIPTION"
 if [ -f /root/usr/bin/sddm ]; then
     SDDM_SESSION_PLACEHOLDER
     
-    if ! [ -f "/root/usr/share/xsessions/$SDDM_SESSION" ] && \
-       ! [ -f "/root/usr/share/wayland-sessions/$SDDM_SESSION" ]; then
-        log_warning_msg "SDDM session file $SDDM_SESSION not found in /root/usr/share/xsessions/ or /root/usr/share/wayland-sessions/. Autologin might fail."
+    if ! [ -f "/root/usr/share/xsessions/\$sddm_session" ] && \\
+       ! [ -f "/root/usr/share/wayland-sessions/\$sddm_session" ]; then
+        log_warning_msg "SDDM session file \$sddm_session not found in /root/usr/share/xsessions/ or /root/usr/share/wayland-sessions/. Autologin might fail."
     fi
 
-    AUTOLOGIN_CONF="/root/etc/sddm.conf.d/autologin.conf"
-    mkdir -p "$(dirname "$AUTOLOGIN_CONF")"
+    AUTOLOGIN_CONF="/root/etc/sddm.conf.d/live_autologin.conf"
+    mkdir -p "\$(dirname "\$AUTOLOGIN_CONF")"
     
-    cat >"$AUTOLOGIN_CONF" << 'EOF_SDDM_CONF_INNER'
+    cat >"\$AUTOLOGIN_CONF" << EOF_SDDM_CONF_INNER
 [Autologin]
-User=$USERNAME
-Session=$SDDM_SESSION
+User=\$USERNAME
+Session=\$sddm_session
 EOF_SDDM_CONF_INNER
 
-    log_end_msg "SDDM autologin configured for user $USERNAME with session $SDDM_SESSION in $AUTOLOGIN_CONF"
+    log_end_msg "SDDM autologin configured for user \$USERNAME with session \$sddm_session in \$AUTOLOGIN_CONF"
 
 else
     log_end_msg "SDDM not found at /root/usr/bin/sddm. Skipping SDDM autologin setup."
@@ -81,7 +82,7 @@ fi
 log_end_msg
 EOF_AUTOLOGIN_SCRIPT_QUOTED
 
-sed -i "s|SDDM_SESSION_PLACEHOLDER|SDDM_SESSION=\"${SDDM_DESKTOP_SESSION}\"|" "$REPLACE_CASPER_AUTOLOGIN_SCRIPT"
+sed -i "s|SDDM_SESSION_PLACEHOLDER|sddm_session=\"\${SDDM_DESKTOP_SESSION}\"|" "$REPLACE_CASPER_AUTOLOGIN_SCRIPT"
 
 
 # -- Always update initramfs after adding, removing or editing hook scripts.
