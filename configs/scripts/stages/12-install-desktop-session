@@ -47,7 +47,6 @@ INSTALL_DESKTOP_PKGS=(
     network-manager-openrc
     plymouth-openrc
     plymouth-theme-nitrux
-    sddm-settings
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
