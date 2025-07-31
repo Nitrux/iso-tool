@@ -54,6 +54,10 @@ Package: firmware-amd-graphics
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: hypr*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: libblkid-dev
 Pin: origin deb.debian.org
 Pin-Priority: -1

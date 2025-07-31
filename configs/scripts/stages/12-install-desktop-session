@@ -49,6 +49,7 @@ INSTALL_DESKTOP_PKGS=(
     plymouth-theme-nitrux
     zsh
     nitrux-desktop-settings
+    quickshell
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
