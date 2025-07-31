@@ -99,7 +99,8 @@ check_directories() {
 
 check_initramfs_size() {
   local INITRAMFS_FILE
-  INITRAMFS_FILE="/boot/initrd.img-$(uname -r)"
+
+  INITRAMFS_FILE=$(find /boot -maxdepth 1 -name "initrd.img-*" -printf "%T@ %p\n" 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-)
 
   if [ -f "$INITRAMFS_FILE" ]; then
     echo "Initramfs file: $INITRAMFS_FILE"
