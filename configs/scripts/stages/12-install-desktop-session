@@ -50,6 +50,8 @@ INSTALL_DESKTOP_PKGS=(
     zsh
     nitrux-desktop-settings
     quickshell
+    rsyslog
+    rsyslog-openrc
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
