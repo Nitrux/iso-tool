@@ -43,15 +43,17 @@ check_ownership() {
 }
 
 check_file_contents() {
-  local FILE=$1
-  if [ -f "$FILE" ]; then
-    echo "Contents of $FILE:"
-    echo "=========================="
-    cat "$FILE"
-    echo "=========================="
-  else
-    echo "Error: File '$FILE' not found."
-  fi
+  echo -e "\nChecking contents of files:"
+  for FILE in "$@"; do
+    if [ -f "$FILE" ]; then
+      echo "Contents of $FILE:"
+      echo "=========================="
+      cat "$FILE"
+      echo "=========================="
+    else
+      echo "Error: File '$FILE' not found."
+    fi
+  done
 }
 
 check_files() {
