@@ -49,7 +49,7 @@ INSTALL_DESKTOP_PKGS=(
     plymouth-theme-nitrux
     zsh
     nitrux-desktop-settings
-    rsyslog
+    rsyslog/duke
     rsyslog-openrc
 )
 
