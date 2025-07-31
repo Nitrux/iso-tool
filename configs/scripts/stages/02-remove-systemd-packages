@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Specify these packages because Debian made libsystemd0 mandatory for APT, PAM, login, bsdutils, coreutils, and procps for no reason since neither truly requires it (because why not, right?).
+# -- Specify the packages from Devuan because Debian made libsystemd0 mandatory for APT, PAM, login, bsdutils, coreutils, and procps for no reason since neither truly requires it (because why not, right?).
 
 INSTALL_DEVUAN_APT_PKGS=(
 	apt/duke
