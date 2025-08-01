@@ -52,11 +52,14 @@ INSTALL_DESKTOP_PKGS=(
     rsyslog/duke
     rsyslog-openrc
     hyprland-core
-    lxqt-session
     xdg-utils
     xdg-user-dirs
     desktop-file-utils
     kf6-breeze-icon-theme
+    greetd-qtgreet
+    plasma-workspace
+    plasma-desktop
+    greetd-qtgreet
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
