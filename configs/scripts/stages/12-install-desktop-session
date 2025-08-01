@@ -51,7 +51,7 @@ INSTALL_DESKTOP_PKGS=(
     nitrux-desktop-settings
     rsyslog/duke
     rsyslog-openrc
-    hyperland-core
+    hyprland-core
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
