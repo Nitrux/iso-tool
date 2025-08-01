@@ -52,6 +52,7 @@ INSTALL_DESKTOP_PKGS=(
     rsyslog/duke
     rsyslog-openrc
     hyprland-core
+    lxqt-session
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
