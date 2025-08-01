@@ -60,6 +60,7 @@ INSTALL_DESKTOP_PKGS=(
     plasma-workspace
     plasma-desktop
     greetd-qtgreet
+    libpolkit-qt6-1-1/duke
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
