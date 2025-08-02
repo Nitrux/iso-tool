@@ -38,7 +38,11 @@ check_ownership "${FILE_ONWERSHIP_TO_CHECK[@]}"
 
 FILE_CONTENT_TO_CHECK=(
   /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
-  /etc/sddm.conf
+  /etc/casper.conf
+  /etc/adduser.conf
+  /etc/elogind/logind.conf
+  /etc/elogind/sleep.conf
+  /etc/elogind/10-elogind.conf
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"

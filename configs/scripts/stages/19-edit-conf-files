@@ -24,4 +24,27 @@
 
 set -eu
 
-exit 0
+# -- Source useful functions.
+# shellcheck source=/dev/null
+
+source /configs/scripts/others/misc-funcs
+
+
+# -- Add casper configuration.
+
+rm \
+	/etc/casper.conf
+
+cat /configs/files/conf/casper.conf > /etc/casper.conf
+
+
+# -- Use our configuration for adduser because Debian's broken for some reason.
+
+cat /configs/files/conf/adduser.conf > /etc/adduser.conf
+
+
+# -- Replace elogind default configuration.
+
+cat /configs/files/elogind/logind.conf > /etc/elogind/logind.conf
+cat /configs/files/elogind/sleep.conf > /etc/elogind/sleep.conf
+cat /configs/files/elogind/sleep.conf.d/10-elogind.conf > /etc/elogind/sleep.conf.d/10-elogind.conf

@@ -24,19 +24,10 @@
 
 set -eu
 
+# -- Source useful functions.
+# shellcheck source=/dev/null
 
-# -- Replace upstream's 15autologin to enable autologin in casper for the Live session.
-
-cat /configs/files/casper_files/15autologin > /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
-
-
-# -- Define the desired SDDM desktop session here.
-#    -- X11 sessions: /usr/share/xsessions
-#    -- Wayland sessions: /usr/share/wayland-sessions
-
-LIVE_SESSION="blackbox.desktop"
-
-sed -i "s/plasma.desktop/${LIVE_SESSION}/" /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+source /configs/scripts/others/misc-funcs
 
 
 # -- Always update initramfs after adding, removing or editing hook scripts.

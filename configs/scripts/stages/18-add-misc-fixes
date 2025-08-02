@@ -66,3 +66,8 @@ update_setting VIDEOMODE ''
 update_setting CODESET 'Uni2'
 update_setting FONTFACE 'Terminus'
 update_setting FONTSIZE '16'
+
+
+# -- Add motd.
+
+cat /configs/files/other/motd > /etc/motd
