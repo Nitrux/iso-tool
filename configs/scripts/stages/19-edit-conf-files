@@ -35,7 +35,7 @@ source /configs/scripts/others/misc-funcs
 rm \
 	/etc/casper.conf
 
-cat /configs/files/conf/casper.conf > /etc/casper.conf
+cat /configs/files/casper_files/casper.conf > /etc/casper.conf
 
 
 # -- Use our configuration for adduser because Debian's broken for some reason.
