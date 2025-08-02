@@ -34,13 +34,14 @@ source /configs/scripts/others/apt-funcs
 
 INSTALL_DESKTOP_PKGS=(
     blackbox
-    bluez
     dbus-openrc
     desktop-file-utils
+    elogind-openrc
     eudev-openrc
     kwin-wayland
     network-manager-openrc
     nitrux-desktop-settings
+    ntpsec-openrc
     pciutils
     pipewire
     pipewire-pulse
@@ -52,6 +53,7 @@ INSTALL_DESKTOP_PKGS=(
     sddm-openrc
     sddm-settings
     sddm-theme-breeze
+    sudo-openrc
     wireplumber
     xdg-user-dirs
     xdg-utils
