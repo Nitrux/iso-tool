@@ -143,7 +143,6 @@ grub_theme="$config_dir/files/grub_files/theme"
 
 if [ ! -d "$grub_theme/nitrux" ]; then
     echo "Error: GRUB theme directory '$grub_theme/nitrux' not found."
-    echo "Did the repository layout change? Aborting."
     exit 1
 fi
 
@@ -156,7 +155,6 @@ if [ ! -f "$config_dir/files/grub_files/loopback.cfg" ]; then
     echo "Missing loopback.cfg"
     exit 1
 fi
-
 
 mkiso \
     -V "NITRUX" \
