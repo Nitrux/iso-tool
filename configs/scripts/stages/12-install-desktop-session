@@ -38,6 +38,7 @@ INSTALL_DESKTOP_PKGS=(
     maui-apps
     plasma-desktop
     plasma-workspace
+    sddm-theme-breeze
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
