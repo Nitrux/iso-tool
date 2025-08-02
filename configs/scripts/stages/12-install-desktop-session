@@ -36,6 +36,7 @@ INSTALL_DESKTOP_PKGS=(
     kde-plasma-desktop
     nitrux-desktop
     nitrux-desktop-apps
+    nitrux-desktop-settings
     maui-apps
 )
 
