@@ -93,7 +93,7 @@ mkdir -p "$build_artifacts_dir"
 
 # -- Copy the tooling to a directory in the PATH.
 
-cp "$PWD/tooling/*" /usr/bin/
+cp "$PWD/tooling/"* /usr/bin/
 
 
 # -- Build the root.
