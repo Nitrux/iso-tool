@@ -59,7 +59,7 @@ INSTALL_DESKTOP_PKGS=(
     xdg-utils
     xterm
     zsh
-    )
+)
 
 INSTALL_DEVUAN_NM_PKGS=(
     network-manager/duke
