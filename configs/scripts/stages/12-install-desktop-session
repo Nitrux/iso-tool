@@ -33,11 +33,14 @@ source /configs/scripts/others/apt-funcs
 # -- Install desktop packages and use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 INSTALL_DESKTOP_PKGS=(
-    kde-plasma-desktop
     nitrux-desktop
     nitrux-desktop-apps
     nitrux-desktop-settings
     maui-apps
+    hyprland-core
+    kwin-wayland
+    sddm-theme-breeze
+    kitty
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
