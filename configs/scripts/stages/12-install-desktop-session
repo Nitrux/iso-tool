@@ -33,34 +33,11 @@ source /configs/scripts/others/apt-funcs
 # -- Install desktop packages and use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 INSTALL_DESKTOP_PKGS=(
-	sddm
-    blackbox
-    xterm
-    pipewire
-    bluez
-    wireplumber
-    pipewire-pulse
-    sddm-openrc
-    pciutils
-    dbus-openrc
-    eudev-openrc
-    network-manager-openrc
-    plymouth-openrc
-    plymouth-theme-nitrux
-    zsh
-    nitrux-desktop-settings
-    rsyslog/duke
-    rsyslog-openrc
-    hyprland-core
-    xdg-utils
-    xdg-user-dirs
-    desktop-file-utils
-    kf6-breeze-icon-theme
-    greetd-qtgreet
-    plasma-workspace
+    nitrux-desktop
+    nitrux-desktop-apps
+    maui-apps
     plasma-desktop
-    greetd-qtgreet
-    libpolkit-qt6-1-1/duke
+    plasma-workspace
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
