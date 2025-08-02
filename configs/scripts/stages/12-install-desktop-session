@@ -52,7 +52,7 @@ INSTALL_DESKTOP_PKGS=(
     sddm
     sddm-openrc
     sddm-settings
-    sddm-theme-breeze
+    sddm-theme-maldives
     sudo-openrc
     wireplumber
     xdg-user-dirs
