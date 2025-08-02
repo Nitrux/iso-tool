@@ -34,6 +34,9 @@ source /configs/scripts/others/apt-funcs
 
 INSTALL_DESKTOP_PKGS=(
     kde-plasma-desktop
+    nitrux-desktop
+    nitrux-desktop-apps
+    maui-apps
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
