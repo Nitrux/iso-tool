@@ -38,28 +38,25 @@ INSTALL_DESKTOP_PKGS=(
     dbus-openrc
     desktop-file-utils
     eudev-openrc
-    greetd-qtgreet
-    hyprland-core
-    kf6-breeze-icon-theme
+    kwin-wayland
     network-manager-openrc
     nitrux-desktop-settings
     pciutils
     pipewire
     pipewire-pulse
-    plasma-desktop
-    plasma-workspace
     plymouth-openrc
     plymouth-theme-nitrux
     rsyslog-openrc
     rsyslog/duke
     sddm
     sddm-openrc
+    sddm-settings
+    sddm-theme-breeze
     wireplumber
     xdg-user-dirs
     xdg-utils
     xterm
     zsh
-    waybar
     )
 
 INSTALL_DEVUAN_NM_PKGS=(
