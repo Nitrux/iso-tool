@@ -1,0 +1,161 @@
+#!/usr/bin/env sh
+
+
+put() { printf "%b\n" "$@"; }
+err() { put "runch: \033[31mError:\033[m $*" >&2; exit 1; }
+
+
+# -- Functions.
+
+clean() {
+    _fs_mounts="/proc /sys /dev/pts /dev/shm /dev /run /tmp \
+    /etc/hosts /etc/host.conf /etc/nsswitch.conf /etc/resolv.conf"
+
+    for p in $_fs_mounts; do
+
+        mp="$chroot_dir$p"
+        if mountpoint -q "$mp"; then
+            if lsof "$mp" > /dev/null 2>&1; then
+                fuser -k "$mp" > /dev/null 2>&1
+            fi
+            umount -lRf "$mp" 2>/dev/null
+        fi
+    done
+
+    for m in $_extra_mount_points; do
+        mp="$chroot_dir/${m##*:}"
+        if mountpoint -q "$mp"; then
+            if lsof "$mp" > /dev/null 2>&1; then
+                fuser -k "$mp" > /dev/null 2>&1
+            fi
+            umount -lRf "$mp" 2>/dev/null
+        fi
+    done
+
+    for d in $_rm_f; do
+        case "$d" in
+            ""|.|..|*/..|/*) err "FATAL: Unsafe path '$d' in -r option — only relative paths like 'some/dir' are allowed." ;;
+        esac
+        rm -rf -- "${chroot_dir:?FATAL: chroot_dir is unset or null}/${d:?FATAL: path to remove is unset or null}"
+    done
+}
+
+mnt() {
+    test -e "$1" || err "'$1' does not exist."
+    mkdir -p "${2%/*}"
+    test -f "$1" && : > "$2"
+    test -d "$1" && mkdir -p "$2"
+    mount -B "$1" "$2"
+}
+
+
+# -- Parse command-line options.
+
+while :; do
+    case "$1" in
+        -m) _extra_mount_points="$_extra_mount_points $2"; shift 2 ;;
+        -u)
+            case "$2" in
+                *[!a-zA-Z0-9:_-]*) err "Invalid user[:group] format: '$2'" ;;
+            esac
+            user_spec="--userspec=$2"
+            shift 2
+            ;;
+        -r) _rm_f="$_rm_f $2"; shift 2 ;;
+        -d|--debug) set -x; shift ;;
+        -h|--help)
+            put "runch: Run commands with chroot in a preconfigured directory.\n
+Usage:\n
+  runch opts dir cmd args\n
+Options:\n
+  -h, --help       Show this help.\n
+  -d, --debug      Enable debugging.\n
+  -m src:target    Bind mount src into chroot at target.\n
+  -u user[:group]  Run cmd as specified user/group.\n
+  -r path          Remove path from chroot after exit."
+            exit
+            ;;
+        -*)
+            err "Unknown option '$1'."
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+
+
+# --  Normalize whitespace in parsed arguments.
+
+_rm_f="$(echo "$_rm_f" | xargs)"
+_extra_mount_points="$(echo "$_extra_mount_points" | xargs)"
+
+
+# -- Pre-checks.
+
+[ "$(id -u)" -eq 0 ] || err "This program needs root privileges."
+[ -d "$1" ] || err "'$1' is not a directory."
+
+chroot_dir="$1"; shift
+command -v chroot >/dev/null || err "'chroot' not found."
+
+put "chroot_dir: $chroot_dir"
+put "cmd: $*"
+
+
+# -- Ensure cleanup on exit.
+
+trap clean EXIT HUP INT TERM
+
+
+# -- Setup essential filesystems.
+
+mkdir -p "$chroot_dir/proc" \
+         "$chroot_dir/sys" \
+         "$chroot_dir/dev/pts" \
+         "$chroot_dir/dev/shm" \
+         "$chroot_dir/dev" \
+         "$chroot_dir/run" \
+         "$chroot_dir/tmp"
+
+mount -t proc -o nosuid,noexec,nodev proc "$chroot_dir/proc"
+mount -t sysfs -o nosuid,noexec,nodev,ro sysfs "$chroot_dir/sys"
+mount -t devtmpfs -o mode=0755,nosuid devtmpfs "$chroot_dir/dev"
+mount -t devpts -o mode=0620,gid=5,nosuid,noexec devpts "$chroot_dir/dev/pts"
+mount -t tmpfs -o mode=1777,nosuid,nodev tmpfs "$chroot_dir/dev/shm"
+mount -t tmpfs -o mode=1777,strictatime,nodev,nosuid tmpfs "$chroot_dir/tmp"
+mount -B /run "$chroot_dir/run"
+
+
+# -- Copy necessary host networking config.
+
+mkdir -p "$chroot_dir/etc"
+
+for f in hosts host.conf nsswitch.conf resolv.conf; do
+    if [ ! -s "$chroot_dir/etc/$f" ]; then
+        cp -L "/etc/$f" "$chroot_dir/etc/$f"
+    else
+        case "$f" in
+            resolv.conf)
+                cp -L "/etc/resolv.conf" "$chroot_dir/etc/resolv.conf"
+                ;;
+        esac
+    fi
+done
+
+
+# -- Perform extra bind mounts.
+
+for dir in $_extra_mount_points; do
+    mnt "${dir%%:*}" "$chroot_dir/${dir##*:}"
+done
+
+
+# -- Enter chroot.
+
+if [ -n "$user_spec" ]; then
+    # shellcheck disable=SC2086
+    chroot $user_spec -- "$chroot_dir" "$@"
+else
+    chroot -- "$chroot_dir" "$@"
+fi

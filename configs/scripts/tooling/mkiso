@@ -1,0 +1,135 @@
+#!/usr/bin/env sh
+
+
+# -- Functions.
+
+put() { printf "%b\n" "$@"; }
+err() { put "runch: \033[31mError:\033[m $*" >&2; exit 1; }
+
+trap 'rm -f "$efi_img"' EXIT
+
+# -- Option parsing.
+
+while :; do
+    case "$1" in
+        -V )  label="$2"; shift 2;;
+        -g )  cfg_files="$cfg_files $2"; shift 2;;
+        -t ) themes="${themes:+$themes }$2"; shift 2;;
+        -b )  bios=y; shift;;
+        -e )  uefi=y; shift;;
+        -d | --debug ) set -x; shift;;
+        -h | --help )
+            put "mkiso: Generate bootable ISO images." \
+                "" \
+                "Usage:" \
+                "  mkiso [-h|--help]            Show this help." \
+                "  mkiso [options] <dir> <img>  Generate img with contents from dir." \
+                "" \
+                "Options:" \
+                "  -d, --debug    Enable debugging messages." \
+                "  -b             Enable BIOS support." \
+                "  -e             Enable UEFI support." \
+                "  -V label       Use label as filesystem label." \
+                "  -g file        Use file as a GRUB configuration file." \
+                "  -t path        Use path as a GRUB theme." \
+            exit;;
+        -* )  err "Unknown option '$1'.";;
+        * )   break;;
+    esac
+done
+
+
+# -- Check the command line.
+
+test $# -eq 2 || err "Bad command line. Wrong number of arguments."
+
+iso_dir=$(realpath "$1") || err "'$1' is not a valid directory."
+output=$2
+
+
+# -- Copy the configuration files.
+
+if [ -n "$cfg_files" ]; then
+    mkdir -p "$iso_dir/boot/grub"
+
+    # shellcheck disable=SC2086
+    cp -- $cfg_files "$iso_dir/boot/grub"
+fi
+
+
+# -- Copy the themes.
+
+if [ -n "$themes" ]; then
+    mkdir -p "$iso_dir/boot/grub/themes"
+    cp -r "$themes" "$iso_dir/boot/grub/themes"
+fi
+
+
+# -- Generate boot artifacts.
+
+if [ "$bios" = y ]; then
+    bios_img="bios.img"
+    grub-mkimage -O i386-pc-eltorito \
+                 -o "$iso_dir/$bios_img" \
+                 -p /boot/grub \
+                 biosdisk boot linux search normal configfile part_gpt btrfs ext2 fat iso9660 loopback test keystatus gfxmenu regexp probe all_video gfxterm font echo read ls cat png jpeg halt reboot
+
+    bios_opts="
+        -eltorito-alt-boot
+        -b bios.img
+        -no-emul-boot
+        -graft-points bios.img=$iso_dir/$bios_img
+        -boot-load-size 4
+        -boot-info-table
+        -c boot.cat
+        --grub2-boot-info
+        --grub2-mbr /usr/lib/grub/i386-pc/boot_hybrid.img
+    "
+fi
+
+if [ "$uefi" = y ]; then
+    efi_img=$(mktemp) || err "Failed to create temporary file for UEFI image."
+    grub-mkimage -O x86_64-efi \
+                 -o "$efi_img" \
+                 -p /boot/grub \
+                 efi_gop efi_uga boot linux search normal configfile part_gpt btrfs ext2 fat iso9660 loopback test keystatus gfxmenu regexp probe all_video gfxterm font echo read ls cat png jpeg halt reboot
+
+    export MTOOLS_SKIP_CHECK=1
+
+    mkfs.vfat -C "$iso_dir/efi.img" $(($(wc -c < "$efi_img") / 1024 + 511))
+    mmd -i "$iso_dir/efi.img" efi efi/boot
+    mcopy -i "$iso_dir/efi.img" "$efi_img" ::efi/boot/bootx64.efi
+
+    uefi_opts="
+        -eltorito-alt-boot
+        -no-emul-boot
+        -e efi.img
+        -graft-points efi.img="$iso_dir/efi.img"
+        -append_partition 1 0xef "$iso_dir/efi.img"
+    "
+fi
+
+
+# -- Check if at least one boot option is selected.
+
+if [ -z "$bios_opts" ] && [ -z "$uefi_opts" ]; then
+    err "Neither BIOS nor UEFI boot options selected."
+fi
+
+
+# -- Generate ISO image.
+
+# shellcheck disable=SC2086
+
+xorriso -as mkisofs \
+    -iso-level 3 \
+    -full-iso9660-filenames \
+    -volid "$label" \
+    -o "$output" \
+    "$iso_dir" \
+    $bios_opts \
+    $uefi_opts \
+    -hfsplus \
+    -hfsplus-serial-no fc4d1567781ece66 \
+    -hfsplus-block-size 512 \
+    -apm-block-size 512
