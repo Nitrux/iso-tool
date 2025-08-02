@@ -32,13 +32,13 @@ source /configs/scripts/others/apt-funcs
 
 # -- Remove build sources. 
 
-rm \
-	/etc/apt/preferences.d/* \
-	/etc/apt/sources.list \
-	/etc/apt/sources.list.d/* \
-	/usr/share/keyrings/* || true
+# rm \
+# 	/etc/apt/preferences.d/* \
+# 	/etc/apt/sources.list \
+# 	/etc/apt/sources.list.d/* \
+# 	/usr/share/keyrings/* || true
 
-update
+# update
 
 
 # -- Remove leftover packages.
