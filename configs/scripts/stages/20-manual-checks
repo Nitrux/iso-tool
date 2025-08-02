@@ -42,7 +42,7 @@ FILE_CONTENT_TO_CHECK=(
   /etc/adduser.conf
   /etc/elogind/logind.conf
   /etc/elogind/sleep.conf
-  /etc/elogind/10-elogind.conf
+  /etc/elogind/sleep.conf.d/10-elogind.conf
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
