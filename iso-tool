@@ -67,41 +67,37 @@ if [ -f "$config_dir/rootfs.tar.xz" ] || [ -f "$config_dir/rootfs.tar.gz" ]; the
   rm -f "$config_dir/rootfs.tar.xz" "$config_dir/rootfs.tar.gz"
 fi
 
-if [ -d "$PWD/grub-theme" ]; then
-  rm -rf "$PWD/grub-theme"
-fi
-
-
-# -- base image URL.
-
-base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Testing/rootfs.tar.xz
-
 
 # -- The name of the ISO image.
 
-image=nitrux-$(git branch --show-current | sed "s/legacy/nx-desktop-plasma/")-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
+image=nitrux-$(git branch --show-current)-$(git rev-parse --short=8 HEAD)-$(uname -m | sed "s/x86_64/amd64/").iso
 
 
-# -- Prepare the directory where the filesystem will be created.
+# -- Download the rootfs and prepare the directory where the filesystem will be created.
 
-rm -r "$config_dir/rootfs.tar.xz" || true 
+base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Testing/rootfs.tar.xz
+
 axel -o "$config_dir" -c -n 10 $base_img_url
+
 tar xf "$config_dir/rootfs.tar.xz" -C "$build_dir"
 
 
-# -- Populate $build_dir.
+# -- Create a directory to put the build log and the output files.
 
 build_artifacts_dir="$PWD/build-artifacts/${image%.iso}"
+
 iso_tool_bootstrap_log="$build_artifacts_dir/${image%.iso}.bstlog"
 
 mkdir -p "$build_artifacts_dir"
 
 
+# -- Copy the tooling to a directory in the PATH.
+
+cp "$PWD/tooling/*" /usr/bin/
+
+
 # -- Build the root.
 # -- Wrap runch and its mount namespace in a subshell.
-
-curl -Lo /usr/bin/runch https://raw.githubusercontent.com/Nitrux/tools/main/runch
-chmod +x /usr/bin/runch
 
 ( < bootstrap \
   unshare --mount -- bash -c 'printf "\n>--- Starting Runch ---\n"; exec runch "$@"' _ \
@@ -114,9 +110,8 @@ stty sane
 
 sync
 
-rm -f /usr/bin/runch || true 
-
 echo ""
+
 
 # -- Get package lists from build directory.
 
@@ -133,7 +128,7 @@ cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_d
 cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
 
 
-# -- Create SqushFS of the root directory.
+# -- Create SquashFS of the root directory.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
 
@@ -144,15 +139,10 @@ mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompr
 
 # -- Generate the ISO image.
 
-curl -Lo /usr/bin/mkiso https://raw.githubusercontent.com/Nitrux/tools/main/mkiso
-chmod +x /usr/bin/mkiso
+grub_theme="$config_dir/files/grub_files/theme"
 
-grub_theme_root="$PWD/grub-theme"
-mkdir -p "$grub_theme_root"
-git clone --depth=1 https://github.com/Nitrux/nitrux-grub-theme "$grub_theme_root"
-
-if [ ! -d "$grub_theme_root/nitrux" ]; then
-    echo "Error: GRUB theme directory '$grub_theme_root/nitrux' not found."
+if [ ! -d "$grub_theme/nitrux" ]; then
+    echo "Error: GRUB theme directory '$grub_theme/nitrux' not found."
     echo "Did the repository layout change? Aborting."
     exit 1
 fi
@@ -174,11 +164,8 @@ mkiso \
     -e \
     -g "$config_dir/files/grub_files/grub.cfg" \
     -g "$config_dir/files/grub_files/loopback.cfg" \
-    -t "$grub_theme_root"/nitrux \
+    -t "$grub_theme"/nitrux \
     "$iso_dir" "$output_dir/$image"
-
-
-rm -f /usr/bin/mkiso || true 
 
 
 # -- Calculate the checksum.
@@ -189,6 +176,11 @@ sha512sum "$output_dir/$image" | sed "s|$output_dir/||" > "$output_dir/${image%.
 # -- Move files to specific directory.
 
 mv "$output_dir"/* "$build_artifacts_dir"
+
+
+# -- Remove the tooling from the PATH.
+
+rm -f /usr/bin/{mkiso,runch} || true 
 
 
 # -- Clean up build directories.
