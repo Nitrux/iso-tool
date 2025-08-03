@@ -59,6 +59,7 @@ INSTALL_DESKTOP_PKGS=(
     xdg-utils
     xterm
     zsh
+    greetd-qtgreet
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
