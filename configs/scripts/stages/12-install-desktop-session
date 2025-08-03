@@ -65,4 +65,4 @@ INSTALL_DEVUAN_NM_PKGS=(
     network-manager/duke
 )
 
-install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 
+install_full "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 
