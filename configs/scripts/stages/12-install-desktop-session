@@ -59,11 +59,17 @@ INSTALL_DESKTOP_PKGS=(
     xdg-utils
     xterm
     zsh
-    greetd-qtgreet
+    qml6-module-org-kde-kirigami:amd64
+    qml6-module-qtquick-controls:amd64
+    qml6-module-qtquick-layouts:amd64
+    qml6-module-qtquick-shapes:amd64
+    qml6-module-qtquick-templates:amd64
+    qml6-module-qtquick-window:amd64
+    qt6-wayland:amd64
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
     network-manager/duke
 )
 
-install_full "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 
+install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 
