@@ -38,6 +38,8 @@ INSTALL_DESKTOP_PKGS=(
     desktop-file-utils
     elogind-openrc
     eudev-openrc
+    greetd-qtgreet
+    hyprland-core
     kwin-wayland
     layer-shell-qt
     libqt6quickcontrols2-6
@@ -79,8 +81,6 @@ INSTALL_DESKTOP_PKGS=(
     xterm
     xwaylandvideobridge
     zsh
-    greetd-qtgreet
-    hyprland-core
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
