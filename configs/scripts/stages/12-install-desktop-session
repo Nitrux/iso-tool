@@ -39,7 +39,9 @@ INSTALL_DESKTOP_PKGS=(
     elogind-openrc
     eudev-openrc
     foot
+    greetd-openrc
     greetd-qtgreet
+    greetd-qtgreet-settings
     hyprland-core
     kitty
     kwin-wayland
@@ -69,10 +71,6 @@ INSTALL_DESKTOP_PKGS=(
     qt6-wayland
     rsyslog-openrc
     rsyslog/duke
-    sddm
-    sddm-openrc
-    sddm-settings
-    sddm-theme-maldives
     sudo-openrc
     sway
     wireplumber
