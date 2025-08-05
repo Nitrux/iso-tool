@@ -79,6 +79,8 @@ INSTALL_DESKTOP_PKGS=(
     xterm
     xwaylandvideobridge
     zsh
+    greetd-qtgreet
+    hyprland-core
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
