@@ -33,15 +33,15 @@ source /configs/scripts/others/apt-funcs
 # -- Install desktop packages and use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 INSTALL_DESKTOP_PKGS=(
-    sway
-    dolphin
-    kitty
     dbus-openrc
     desktop-file-utils
+    dolphin
     elogind-openrc
     eudev-openrc
+    foot
     greetd-qtgreet
     hyprland-core
+    kitty
     kwin-wayland
     layer-shell-qt
     libqt6quickcontrols2-6
@@ -74,13 +74,13 @@ INSTALL_DESKTOP_PKGS=(
     sddm-settings
     sddm-theme-maldives
     sudo-openrc
+    sway
     wireplumber
     x11-utils
     x11-xserver-utils
     xdg-user-dirs
     xdg-utils
     xserver-xorg-legacy
-    xterm
     xwaylandvideobridge
     zsh
 )
