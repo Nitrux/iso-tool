@@ -48,6 +48,6 @@ cat /configs/files/casper_files/15autologin > /usr/share/initramfs-tools/scripts
 #    -- X11 sessions: /usr/share/xsessions
 #    -- Wayland sessions: /usr/share/wayland-sessions
 
-LIVE_SESSION="blackbox.desktop"
+LIVE_SESSION="sway.desktop"
 
 sed -i "s/plasma.desktop/${LIVE_SESSION}/" /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
