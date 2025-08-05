@@ -38,7 +38,6 @@ INSTALL_DESKTOP_PKGS=(
     dolphin
     elogind-openrc
     eudev-openrc
-    foot
     greetd-qtgreet
     greetd-qtgreet-settings
     hyprland-core
@@ -71,7 +70,6 @@ INSTALL_DESKTOP_PKGS=(
     rsyslog-openrc
     rsyslog/duke
     sudo-openrc
-    sway
     wireplumber
     x11-utils
     x11-xserver-utils
