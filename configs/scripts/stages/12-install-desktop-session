@@ -39,6 +39,15 @@ INSTALL_DESKTOP_PKGS=(
     elogind-openrc
     eudev-openrc
     kwin-wayland
+    layer-shell-qt
+    libqt6quickcontrols2-6
+    libqt6quickshapes6
+    libqt6quicktemplates2-6
+    libqt6quickwidgets6
+    libqt6sql6
+    libqt6sql6-sqlite
+    libqt6waylandcompositor6
+    libqt6wlshellintegration6
     network-manager-openrc
     nitrux-desktop-settings
     ntpsec-openrc
@@ -47,6 +56,13 @@ INSTALL_DESKTOP_PKGS=(
     pipewire-pulse
     plymouth-openrc
     plymouth-theme-nitrux
+    qml6-module-org-kde-kirigami
+    qml6-module-qtquick-controls
+    qml6-module-qtquick-layouts
+    qml6-module-qtquick-shapes
+    qml6-module-qtquick-templates
+    qml6-module-qtquick-window
+    qt6-wayland
     rsyslog-openrc
     rsyslog/duke
     sddm
@@ -55,30 +71,14 @@ INSTALL_DESKTOP_PKGS=(
     sddm-theme-maldives
     sudo-openrc
     wireplumber
-    xdg-user-dirs
-    xdg-utils
-    xterm
-    zsh
-    qml6-module-org-kde-kirigami:amd64
-    qml6-module-qtquick-controls:amd64
-    qml6-module-qtquick-layouts:amd64
-    qml6-module-qtquick-shapes:amd64
-    qml6-module-qtquick-templates:amd64
-    qml6-module-qtquick-window:amd64
-    qt6-wayland:amd64
     x11-utils
     x11-xserver-utils
+    xdg-user-dirs
+    xdg-utils
     xserver-xorg-legacy
+    xterm
     xwaylandvideobridge
-    libqt6quickcontrols2-6:amd64
-    libqt6quickshapes6:amd64
-    libqt6quicktemplates2-6:amd64
-    libqt6quickwidgets6:amd64
-    libqt6sql6-sqlite:amd64
-    libqt6sql6:amd64
-    libqt6waylandcompositor6:amd64
-    libqt6wlshellintegration6:amd64
-    layer-shell-qt
+    zsh
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
