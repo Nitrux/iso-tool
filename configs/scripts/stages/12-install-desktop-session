@@ -42,7 +42,6 @@ INSTALL_DESKTOP_PKGS=(
     greetd-qtgreet-settings
     hyprland-core
     kitty
-    kwin-wayland
     layer-shell-qt
     libqt6quickcontrols2-6
     libqt6quickshapes6
@@ -70,7 +69,9 @@ INSTALL_DESKTOP_PKGS=(
     rsyslog-openrc
     rsyslog/duke
     sudo-openrc
+    waybar
     wireplumber
+    wofi
     x11-utils
     x11-xserver-utils
     xdg-user-dirs
