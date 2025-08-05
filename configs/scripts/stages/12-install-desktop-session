@@ -39,7 +39,6 @@ INSTALL_DESKTOP_PKGS=(
     elogind-openrc
     eudev-openrc
     foot
-    greetd-openrc
     greetd-qtgreet
     greetd-qtgreet-settings
     hyprland-core
