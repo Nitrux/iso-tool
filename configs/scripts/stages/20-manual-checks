@@ -43,6 +43,7 @@ FILE_CONTENT_TO_CHECK=(
   /etc/elogind_files/logind.conf
   /etc/elogind_files/sleep.conf
   /etc/elogind_files/sleep.conf.d/10-elogind.conf
+  /etc/greetd/config.toml
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
