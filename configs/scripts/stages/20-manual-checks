@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/misc-funcs
 
 
-# -- Manually check the existence of files, links and directories using arrays.
+# -- Manually check the contents and existence of files, links and directories using arrays.
 
 FILE_ONWERSHIP_TO_CHECK=()
 

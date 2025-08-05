@@ -30,7 +30,7 @@ set -eu
 source "$PWD"/configs/scripts/others/apt-funcs
 
 
-# -- Update host(s package index.
+# -- Update hosts' package index.
 
 update
 
@@ -39,11 +39,12 @@ update
 
 INSTALL_HOST_PKGS=(
     axel
+    grub-efi-amd64
     squashfs-tools
     time
     xorriso
-    grub-efi-amd64
 )
+
 
 # -- Install packages for host.
 
