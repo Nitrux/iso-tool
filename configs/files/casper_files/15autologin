@@ -20,12 +20,25 @@ esac
 
 log_begin_msg "$DESCRIPTION"
 
-if [ -f /root/usr/bin/sddm ]; then
-    sddm_session=plasma.desktop
-    cat >>/root/etc/sddm.conf <<EOF
-[Autologin]
-User=$USERNAME
-Session=$sddm_session
+# if [ -f /root/usr/bin/sddm ]; then
+#     sddm_session=plasma.desktop
+#     cat >>/root/etc/sddm.conf <<EOF
+# [Autologin]
+# User=$USERNAME
+# Session=$sddm_session
+# EOF
+# fi
+
+GREETD_CONFIG="/root/etc/greetd/config.toml"
+
+if ! grep -q '^\[initial_session\]' "$GREETD_CONFIG"; then
+    cat >> "$GREETD_CONFIG" <<EOF
+
+# Enabling autologin
+
+[initial_session]
+command = "greetd-hyprland --config /etc/greetd/hyprland.conf
+user = "$USERNAME"
 EOF
 fi
 
