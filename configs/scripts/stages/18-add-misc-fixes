@@ -71,3 +71,13 @@ update_setting FONTSIZE '16'
 # -- Add motd.
 
 cat /configs/files/other/motd > /etc/motd
+
+
+# -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter.
+# -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
+
+DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
+
+if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=dbus-run-session Hyprland" "$DESKTOP_FILE"; then
+    sed -i 's|^Exec=Hyprland|Exec=dbus-run-session Hyprland|' "$DESKTOP_FILE"
+fi
