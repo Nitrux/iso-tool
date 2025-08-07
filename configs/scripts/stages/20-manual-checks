@@ -52,7 +52,11 @@ FILE_TO_CHECK=()
 
 check_files "${FILE_TO_CHECK[@]}"
 
-LINKS_TO_CHECK=()
+LINKS_TO_CHECK=(
+  /usr/share/plymouth/themes/default.plymouth
+  /usr/share/plymouth/themes/text.plymouth
+  /usr/share/plymouth/themes/bgrt.plymouth
+)
 
 check_symlinks "${LINKS_TO_CHECK[@]}"
 
