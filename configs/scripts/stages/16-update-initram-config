@@ -37,7 +37,7 @@ cp -r /configs/files/initramfs_files/hooks/* /usr/share/initramfs-tools/hooks/
 
 # -- Add initramfs configuration.
 
-cp -r /configs/files/initramfs-tools/conf.d/* /etc/initramfs-tools/conf.d/
+cp -r /configs/files/initramfs_files/conf.d/* /etc/initramfs-tools/conf.d/
 
 
 # -- Add modules to initramfs.
