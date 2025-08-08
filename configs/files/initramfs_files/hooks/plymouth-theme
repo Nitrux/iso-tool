@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 #############################################################################################################################################################################
 #   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
 #                                                                                                                                                                           #
-#   Copyright <2023-2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                                   #
 #                                                                                                                                                                           #
 #   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
 #                                                                                                                                                                           #
@@ -22,56 +22,26 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -eu
+PREREQ=""
 
-# -- Source useful functions.
+prereqs() {
+	echo "${PREREQ}"
+}
+
+case "$1" in
+	prereqs) prereqs; exit 0 ;;
+esac
+
 # shellcheck source=/dev/null
+. /usr/share/initramfs-tools/hook-functions
 
-source /configs/scripts/others/misc-funcs
+THEME_NAME="$(awk -F= '/^Theme=/ { gsub(/[[:space:]]/, "", $2); print $2 }' /etc/plymouth/plymouthd.conf)"
+THEME_DIR="/usr/share/plymouth/themes/${THEME_NAME}"
 
-
-# -- Manually check the contents and existence of files, links and directories using arrays.
-
-FILE_ONWERSHIP_TO_CHECK=()
-
-check_ownership "${FILE_ONWERSHIP_TO_CHECK[@]}"
-
-FILE_CONTENT_TO_CHECK=(
-  /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
-  /etc/casper.conf
-  /etc/adduser.conf
-  /etc/elogind_files/logind.conf
-  /etc/elogind_files/sleep.conf
-  /etc/elogind_files/sleep.conf.d/10-elogind.conf
-  /etc/greetd/config.toml
-  /etc/initramfs-tools/modules
-  /etc/plymouth/plymouthd.conf
-)
-
-check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
-
-FILE_TO_CHECK=()
-
-check_files "${FILE_TO_CHECK[@]}"
-
-LINKS_TO_CHECK=(
-  /usr/share/plymouth/themes/default.plymouth
-  /usr/share/plymouth/themes/text.plymouth
-  /usr/share/plymouth/themes/bgrt.plymouth
-)
-
-check_symlinks "${LINKS_TO_CHECK[@]}"
-
-DIRECTORIES_TO_CHECK=()
-
-check_directories "${DIRECTORIES_TO_CHECK[@]}"
-
-
-# -- Check the size of the initramfs.
-
-check_initramfs_size
-
-
-# -- Search the initramfs for something.
-
-search_initramfs_for plymouth
+if [ -n "$THEME_NAME" ] && [ -d "$THEME_DIR" ]; then
+  mkdir -p "${DESTDIR}/usr/share/plymouth/themes"
+  cp -a "$THEME_DIR" "${DESTDIR}/usr/share/plymouth/themes/"
+  echo "Included theme: $THEME_NAME" >&2
+else
+  echo "Theme not found or not set." >&2
+fi

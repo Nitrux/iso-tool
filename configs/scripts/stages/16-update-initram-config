@@ -32,7 +32,9 @@ source /configs/scripts/others/misc-funcs
 
 # -- Add or replace hook scripts for initramfs.
 
-cp -r /configs/files/initramfs_files/hooks/* /usr/share/initramfs-tools/hooks/
+cp -r /configs/files/initramfs_files/hooks/* /etc/initramfs-tools/hooks/
+
+chmod +x /etc/initramfs-tools/hooks/*
 
 
 # -- Add initramfs configuration.
