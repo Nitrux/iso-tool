@@ -40,9 +40,9 @@ FILE_CONTENT_TO_CHECK=(
   /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
   /etc/casper.conf
   /etc/adduser.conf
-  /etc/elogind_files/logind.conf
-  /etc/elogind_files/sleep.conf
-  /etc/elogind_files/sleep.conf.d/10-elogind.conf
+  /etc/elogind/logind.conf
+  /etc/elogind//sleep.conf
+  /etc/elogind/sleep.conf.d/10-elogind.conf
   /etc/greetd/config.toml
   /etc/initramfs-tools/modules
   /etc/plymouth/plymouthd.conf
