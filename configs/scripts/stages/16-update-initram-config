@@ -42,8 +42,8 @@ cp -r /configs/files/initramfs_files/conf.d/* /etc/initramfs-tools/conf.d/
 
 # -- Add modules to initramfs.
 
-for mod in exfat f2fs xfs i915 ahci nvme xhci_pci amdgpu; do
-  grep -qxF "$mod" /etc/initramfs-tools/modules || echo "$mod" >> /etc/initramfs-tools/modules
+for mod in exfat f2fs xfs ahci nvme xhci_pci iso9660 sr_mod cdrom i915 amdgpu drm drm_kms_helper framebuffer fbcon; do
+  grep -qFx "$mod" /etc/initramfs-tools/modules || echo "$mod" >> /etc/initramfs-tools/modules
 done
 
 
