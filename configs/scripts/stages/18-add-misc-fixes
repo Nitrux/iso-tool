@@ -65,6 +65,6 @@ cat /configs/files/other/motd > /etc/motd
 
 DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
 
-if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=dbus-run-session Hyprland" "$DESKTOP_FILE"; then
-    sed -i 's|^Exec=Hyprland|Exec=dbus-run-session Hyprland|' "$DESKTOP_FILE"
+if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=greetd-hyprland" "$DESKTOP_FILE"; then
+    sed -i 's|^Exec=Hyprland|Exec=greetd-hyprland|' "$DESKTOP_FILE"
 fi
