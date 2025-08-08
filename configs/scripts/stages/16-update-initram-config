@@ -30,6 +30,11 @@ set -eu
 source /configs/scripts/others/misc-funcs
 
 
+# -- Add hook scripts for initramfs.
+
+cp -r /configs/files/initramfs_files/hooks/* /usr/share/initramfs-tools/hooks/
+
+
 # -- Always update initramfs after adding, removing or editing hook scripts.
 
 update-initramfs -u -k all
