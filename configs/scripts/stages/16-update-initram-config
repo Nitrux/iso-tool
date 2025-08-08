@@ -42,14 +42,6 @@ chmod +x /etc/initramfs-tools/hooks/*
 cp -r /configs/files/initramfs_files/conf.d/* /etc/initramfs-tools/conf.d/
 
 
-# -- Add modules to initramfs.
-# -- Our initramfs configuration defaults to use /etc/initramfs-tools/modules for a minimal initrd. 
-
-for mod in exfat f2fs xfs ahci nvme xhci_pci iso9660 sr_mod cdrom i915 amdgpu nouveau radeon drm drm_kms_helper fbcon usb_storage uas vmd hid hid_generic usbhid; do
-  grep -qFx "$mod" /etc/initramfs-tools/modules || echo "$mod" >> /etc/initramfs-tools/modules
-done
-
-
 # -- Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're irrelevant here and remove these scripts from casper as we don't use them.
 
 sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
