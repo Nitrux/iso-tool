@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install a default kernel.
+# -- Add a default kernel.
 
 INSTALL_KERNEL_PKGS=(
 	linux-image-amd64

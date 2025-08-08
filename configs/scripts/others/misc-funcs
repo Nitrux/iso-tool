@@ -27,7 +27,7 @@ set -eu
 
 # -- Functions.
 
-update_setting() {
+update_console_settings() {
     local key="$1"
     local value="$2"
     local config_file="/etc/default/console-setup"

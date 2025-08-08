@@ -62,8 +62,9 @@ DELETE_SYSV_SCRIPTS=(
 rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}"
 
 
-# -- Add OpenRC configuration. We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
-# -- They purposely didn't add the upstream service scripts and instead made that package rely on initscripts to avoid causing a conflict with SysV. 
+# -- Add OpenRC configuration. 
+# -- We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
+# -- Debian purposely didn't add the upstream OpenRC service scripts and instead made their package rely on initscripts to avoid causing a conflict with SysV. 
 # -- However, doing this means that OpenRC is using scripts for SysV, which makes the boot process slower. Isn't that nice? /s.
 
 INSTALL_OPENRC_CONFIG_PKGS=(

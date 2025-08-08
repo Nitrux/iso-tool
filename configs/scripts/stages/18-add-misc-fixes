@@ -60,12 +60,12 @@ rm -f "${DELETE_CASPER_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bo
 
 # -- Edit console-setup to match the user settings.
 
-update_setting ACTIVE_CONSOLES '/dev/tty[1-6]'
-update_setting CHARMAP 'UTF-8'
-update_setting VIDEOMODE ''
-update_setting CODESET 'Uni2'
-update_setting FONTFACE 'Terminus'
-update_setting FONTSIZE '16'
+update_console_settings ACTIVE_CONSOLES '/dev/tty[1-6]'
+update_console_settings CHARMAP 'UTF-8'
+update_console_settings VIDEOMODE ''
+update_console_settings CODESET 'Uni2'
+update_console_settings FONTFACE 'Terminus'
+update_console_settings FONTSIZE '16'
 
 
 # -- Add motd.
@@ -73,7 +73,7 @@ update_setting FONTSIZE '16'
 cat /configs/files/other/motd > /etc/motd
 
 
-# -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter.
+# -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter when using greetd.
 # -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
 
 DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"

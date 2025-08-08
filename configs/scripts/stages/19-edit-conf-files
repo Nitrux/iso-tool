@@ -32,9 +32,6 @@ source /configs/scripts/others/misc-funcs
 
 # -- Add casper configuration.
 
-rm \
-	/etc/casper.conf
-
 cat /configs/files/casper_files/casper.conf > /etc/casper.conf
 
 
