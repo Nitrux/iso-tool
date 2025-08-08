@@ -69,3 +69,8 @@ check_directories "${DIRECTORIES_TO_CHECK[@]}"
 # -- Check the size of the initramfs.
 
 check_initramfs_size
+
+
+# -- Search the initramfs for something.
+
+search_initramfs_for plymouth

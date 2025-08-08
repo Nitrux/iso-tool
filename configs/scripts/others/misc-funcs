@@ -133,3 +133,27 @@ check_initramfs_size() {
     ls -lh /boot/initrd.img-* 2>/dev/null || echo "No initramfs images found."
   fi
 }
+
+search_initramfs_for() {
+  local PATTERN INITRAMFS_FILE
+
+  if [ -z "$1" ]; then
+    echo "Usage: search_initramfs_for <pattern>"
+    echo "Example: search_initramfs_for plymouth"
+    return 1
+  fi
+
+  PATTERN="$1"
+
+  INITRAMFS_FILE=$(find /boot -maxdepth 1 -name "initrd.img-*" -printf "%T@ %p\n" 2>/dev/null | sort -nr | head -n1 | cut -d' ' -f2-)
+
+  if [ ! -f "$INITRAMFS_FILE" ]; then
+    echo "Error: Could not find initramfs image in /boot."
+    return 1
+  fi
+
+  echo "Searching for '$PATTERN' in $INITRAMFS_FILE..."
+  echo
+
+  lsinitramfs "$INITRAMFS_FILE" | grep -Ei "$PATTERN" || echo "No matches found."
+}

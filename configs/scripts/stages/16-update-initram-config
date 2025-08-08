@@ -30,7 +30,7 @@ set -eu
 source /configs/scripts/others/misc-funcs
 
 
-# -- Add hook scripts for initramfs.
+# -- Add or replace hook scripts for initramfs.
 
 cp -r /configs/files/initramfs_files/hooks/* /usr/share/initramfs-tools/hooks/
 

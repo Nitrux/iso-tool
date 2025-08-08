@@ -60,9 +60,9 @@ MODULE="${PLYMOUTH_PLUGIN_PATH}/${MODULE_NAME}.so"
 [ ! -e "$MODULE" ] && { echo "W: plymouth module ($MODULE) missing, skipping."; exit 0; }
 
 copy_exec "${MODULE}"
-copy_exec /usr/bin/plymouth
-copy_exec /usr/sbin/plymouthd
-copy_exec /usr/libexec/plymouth/plymouthd-fd-escrow
+copy_exec /sbin/plymouthd
+copy_exec /bin/plymouth
+copy_exec /lib/plymouth/plymouthd-fd-escrow
 
 PLUGINS="text.so details.so"
 case "$THEME_NAME" in
