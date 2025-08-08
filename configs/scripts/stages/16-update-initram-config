@@ -35,6 +35,16 @@ source /configs/scripts/others/misc-funcs
 cp -r /configs/files/initramfs_files/hooks/* /usr/share/initramfs-tools/hooks/
 
 
+# -- Add initramfs configuration.
+
+cp -r /configs/files/initramfs-tools/conf.d/* /etc/initramfs-tools/conf.d/
+
+
+# -- Add modules to initramfs.
+
+printf '%s\n' exfat >> /etc/initramfs-tools/modules
+
+
 # -- Always update initramfs after adding, removing or editing hook scripts.
 
 update-initramfs -u -k all

@@ -44,6 +44,7 @@ FILE_CONTENT_TO_CHECK=(
   /etc/elogind_files/sleep.conf
   /etc/elogind_files/sleep.conf.d/10-elogind.conf
   /etc/greetd/config.toml
+  /etc/initramfs-tools/modules
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
