@@ -50,6 +50,21 @@ for mod in exfat f2fs xfs ahci nvme xhci_pci iso9660 sr_mod cdrom i915 amdgpu dr
 done
 
 
+# -- Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're irrelevant here and remove these scripts from casper as we don't use them.
+
+sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
+
+DELETE_CASPER_INITRD_SCRIPTS=(
+    31disable_update_notifier
+    33enable_apport_crashes
+    52gnome_initial_setup
+    53disable_unattended_upgrades
+    59disable_mozc_autosetup
+)
+
+rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bottom/}"
+
+
 # -- Always update initramfs after adding, removing or editing hook scripts.
 
 update-initramfs -u -k all

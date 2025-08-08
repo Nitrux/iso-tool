@@ -45,19 +45,6 @@ else
 fi
 
 
-# -- Remove these scripts from casper as we don't use them.
-
-DELETE_CASPER_SCRIPTS=(
-    31disable_update_notifier
-    33enable_apport_crashes
-    52gnome_initial_setup
-    53disable_unattended_upgrades
-    59disable_mozc_autosetup
-)
-
-rm -f "${DELETE_CASPER_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bottom/}"
-
-
 # -- Edit console-setup to match the user settings.
 
 update_console_settings ACTIVE_CONSOLES '/dev/tty[1-6]'
