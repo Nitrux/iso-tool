@@ -35,7 +35,7 @@ esac
 # shellcheck source=/dev/null
 . /usr/share/initramfs-tools/hook-functions
 
-THEME_NAME="$(awk -F= '/^Theme=/ { gsub(/[[:space:]]/, "", $2); print $2 }' /etc/plymouth/plymouthd.conf)"
+THEME_NAME="$(awk -F= '/^[[:space:]]*Theme=/ && $0 !~ /^#/ { gsub(/[[:space:]]/, "", $2); print $2 }' /etc/plymouth/plymouthd.conf)"
 THEME_DIR="/usr/share/plymouth/themes/${THEME_NAME}"
 
 if [ -n "$THEME_NAME" ] && [ -d "$THEME_DIR" ]; then
