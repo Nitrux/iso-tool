@@ -41,7 +41,7 @@ FILE_CONTENT_TO_CHECK=(
   /etc/casper.conf
   /etc/adduser.conf
   /etc/elogind/logind.conf
-  /etc/elogind//sleep.conf
+  /etc/elogind/sleep.conf
   /etc/elogind/sleep.conf.d/10-elogind.conf
   /etc/greetd/config.toml
   /etc/initramfs-tools/modules
