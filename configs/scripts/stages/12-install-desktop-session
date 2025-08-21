@@ -38,6 +38,7 @@ INSTALL_DESKTOP_PKGS=(
     dolphin
     elogind-openrc
     eudev-openrc
+    fonts-font-awesome
     greetd-qtgreet
     greetd-qtgreet-settings
     hyprland-core
