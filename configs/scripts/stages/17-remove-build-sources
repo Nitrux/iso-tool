@@ -32,7 +32,7 @@ source /configs/scripts/others/apt-funcs
 
 # -- Remove build sources. 
 
-rm -f /etc/apt/sources.list.d/* || true
+rm -f /etc/apt/sources.list || true
 
 
 # -- Remove leftover packages.
