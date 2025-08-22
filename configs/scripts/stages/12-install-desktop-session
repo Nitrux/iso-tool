@@ -62,6 +62,9 @@ INSTALL_DESKTOP_PKGS=(
     pipewire-pulse
     plymouth-openrc
     plymouth-theme-nitrux
+    psmisc
+    power-profiles-daemon
+    power-profiles-daemon-openrc
     qml6-module-org-kde-kirigami
     qml6-module-qtquick-controls
     qml6-module-qtquick-layouts
