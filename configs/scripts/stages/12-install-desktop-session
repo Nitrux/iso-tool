@@ -55,6 +55,7 @@ INSTALL_DESKTOP_PKGS=(
     micro
     network-manager-openrc
     nitrux-desktop-settings
+    nitrux-wallpapers
     ntpsec-openrc
     pavucontrol-qt
     pciutils
