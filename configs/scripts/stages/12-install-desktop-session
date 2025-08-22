@@ -42,7 +42,6 @@ INSTALL_DESKTOP_PKGS=(
     greetd-qtgreet
     greetd-qtgreet-settings
     hyprland-core
-    kitty
     layer-shell-qt
     libqt6quickcontrols2-6
     libqt6quickshapes6
@@ -56,6 +55,7 @@ INSTALL_DESKTOP_PKGS=(
     network-manager-openrc
     nitrux-desktop-settings
     ntpsec-openrc
+    pavucontrol-qt
     pciutils
     pipewire
     pipewire-pulse
@@ -70,6 +70,7 @@ INSTALL_DESKTOP_PKGS=(
     qt6-wayland
     rsyslog-openrc
     rsyslog/duke
+    station
     sudo-openrc
     waybar
     wireplumber
