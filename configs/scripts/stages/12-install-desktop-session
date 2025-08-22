@@ -81,6 +81,7 @@ INSTALL_DESKTOP_PKGS=(
     wofi
     x11-utils
     x11-xserver-utils
+    xdg-desktop-portal-hyprland
     xdg-user-dirs
     xdg-utils
     xserver-xorg-legacy
