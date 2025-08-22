@@ -35,13 +35,13 @@ source /configs/scripts/others/apt-funcs
 INSTALL_DESKTOP_PKGS=(
     dbus-openrc
     desktop-file-utils
-    dolphin
     elogind-openrc
     eudev-openrc
     fonts-nitrux-desktop
     greetd-qtgreet
     greetd-qtgreet-settings
     hyprland-core
+    index
     layer-shell-qt
     libqt6quickcontrols2-6
     libqt6quickshapes6
