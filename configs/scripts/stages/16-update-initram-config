@@ -47,11 +47,11 @@ cp -r /configs/files/initramfs_files/conf.d/* /etc/initramfs-tools/conf.d/
 sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
 
 DELETE_CASPER_INITRD_SCRIPTS=(
-    31disable_update_notifier
-    33enable_apport_crashes
-    52gnome_initial_setup
-    53disable_unattended_upgrades
-    59disable_mozc_autosetup
+	31disable_update_notifier
+	33enable_apport_crashes
+	52gnome_initial_setup
+	53disable_unattended_upgrades
+	59disable_mozc_autosetup
 )
 
 rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bottom/}"
