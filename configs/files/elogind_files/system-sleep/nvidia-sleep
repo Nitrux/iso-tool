@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 #############################################################################################################################################################################
 #   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
 #                                                                                                                                                                           #
-#   Copyright <2023-2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                                   #
 #                                                                                                                                                                           #
 #   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
 #                                                                                                                                                                           #
@@ -22,59 +22,19 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -eu
-
-# -- Source useful functions.
-# shellcheck source=/dev/null
-
-source /configs/scripts/others/misc-funcs
+set -e
 
 
-# -- Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're relevant in Ubuntu but not here.
+# -- Enable NVIDIA Power Management Services.
 
-sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
+LOGFILE="/var/log/nvidia-sleep.log"
+echo "$(date) - $1" >> "$LOGFILE"
 
-
-# -- Check if the root account is disabled, if not, disable it by locking it.
-
-if [[ $(passwd -S root | awk '{print $2}') == "L" ]]; then
-   echo "Root account is already disabled"
-else
-   passwd -l root
-   echo "Root account has been disabled"
-fi
-
-
-# -- Edit console-setup to match the user settings.
-
-update_console_settings ACTIVE_CONSOLES '/dev/tty[1-6]'
-update_console_settings CHARMAP 'UTF-8'
-update_console_settings VIDEOMODE ''
-update_console_settings CODESET 'Uni2'
-update_console_settings FONTFACE 'Terminus'
-update_console_settings FONTSIZE '16'
-
-
-# -- Add motd.
-
-cat /configs/files/other/motd > /etc/motd
-
-
-# -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter when using greetd.
-# -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
-
-DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
-
-if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=greetd-hyprland" "$DESKTOP_FILE"; then
-    sed -i 's|^Exec=Hyprland|Exec=greetd-hyprland|' "$DESKTOP_FILE"
-fi
-
-
-# -- Create directory for elogind sleep hooks.
-
-mkdir -p /etc/elogind/system-sleep/
-
-
-# -- Add elogind sleep hook scripts.
-
-cp  /configs/files/elogind_files/system-sleep/* /etc/elogind/system-sleep/
+case "$1" in
+    pre)
+        /usr/bin/nvidia-sleep.sh suspend >> "$LOGFILE" 2>&1
+        ;;
+    post)
+        /usr/bin/nvidia-sleep.sh resume >> "$LOGFILE" 2>&1
+        ;;
+esac
