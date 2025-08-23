@@ -55,4 +55,4 @@ cat /configs/files/other/common-password > /etc/pam.d/common-password
 
 # -- Replace pwquality.conf.
 
-cat /configs/files/conf/pwquality.conf > /etc/security/pwquality.conf
+cat /configs/files/other/pwquality.conf > /etc/security/pwquality.conf
