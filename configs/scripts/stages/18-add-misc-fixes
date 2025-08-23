@@ -78,3 +78,47 @@ mkdir -p /etc/elogind/system-sleep/
 # -- Add elogind sleep hook scripts.
 
 cp  /configs/files/elogind_files/system-sleep/* /etc/elogind/system-sleep/
+
+
+# -- Disable DrKonqi as we do not include debug symbols and it's useless otherwise.
+
+chmod a-x /usr/lib/x86_64-linux-gnu/libexec/drkonqi 
+
+
+# -- Disable plasmashell, kwin and the Plasma sessions.
+
+chmod a-x /usr/bin/{plasmashell,kwin_wayland,kwin_x11}
+
+rm -f /usr/share/xsessions/plasmax11.desktop
+rm -f /usr/share/wayland-sessions/plasma.desktop
+
+
+# -- Disable the KCMs that we don't use.
+
+DELETE_UNUSED_KCMS=(
+	kcm_autostart.desktop
+   kcm_breezedecoration.desktop
+   kcm_desktoptheme.desktop
+   kcm_feedback.desktop
+   kcm_fontinst.desktop
+   kcm_kwin_effects.desktop
+   kcm_kwin_scripts.desktop
+   kcm_kwin_virtualdesktops.desktop
+   kcm_kwindecoration.desktop
+   kcm_kwinoptions.desktop
+   kcm_kwinrules.desktop
+   kcm_kwintabbox.desktop
+   kcm_kwinxwayland.desktop
+   kcm_lookandfeel.desktop
+   kcm_netpref.desktop
+   kcm_nightlight.desktop
+   kcm_notifications.desktop
+   kcm_proxy.desktop
+   kcm_regionandlang.desktop
+   kcm_trash.desktop
+   kcm_virtualkeyboard.desktop
+   kcm_wallpaper.desktop
+   kcm_webshortcuts.desktop
+)
+
+rm -f "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications}"

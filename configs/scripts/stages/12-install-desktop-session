@@ -37,6 +37,7 @@ INSTALL_DESKTOP_PKGS=(
 	desktop-file-utils
 	elogind-openrc
 	eudev-openrc
+	fiery
 	fonts-nitrux-desktop
 	greetd-qtgreet
 	greetd-qtgreet-settings
@@ -58,11 +59,13 @@ INSTALL_DESKTOP_PKGS=(
 	network-manager-openrc
 	nitrux-desktop-settings
 	nitrux-wallpapers
+	nota
 	ntpsec-openrc
 	pavucontrol-qt
 	pciutils
 	pipewire
 	pipewire-pulse
+	plasma-workspace
 	plymouth-openrc
 	plymouth-theme-nitrux
 	power-profiles-daemon
@@ -83,6 +86,7 @@ INSTALL_DESKTOP_PKGS=(
 	station
 	sudo-openrc
 	sway-notification-center
+	systemsettings
 	waybar
 	wireplumber
 	wofi
