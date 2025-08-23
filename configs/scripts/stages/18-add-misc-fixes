@@ -87,7 +87,7 @@ chmod a-x /usr/lib/x86_64-linux-gnu/libexec/drkonqi
 
 # -- Disable plasmashell, kwin and the Plasma sessions.
 
-chmod a-x /usr/bin/{plasmashell,kwin_wayland,kwin_x11}
+chmod a-x /usr/bin/{plasmashell,kwin_wayland}
 
 rm -f /usr/share/xsessions/plasmax11.desktop
 rm -f /usr/share/wayland-sessions/plasma.desktop
