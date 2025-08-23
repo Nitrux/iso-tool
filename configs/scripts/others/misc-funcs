@@ -120,6 +120,7 @@ check_initramfs_size() {
   INITRAMFS_FILE=$(find /boot -maxdepth 1 -name "initrd.img-*" -printf "%T@ %p\n" 2>/dev/null | sort -nr | head -n 1 | cut -d' ' -f2-)
 
   if [ -f "$INITRAMFS_FILE" ]; then
+    echo -e "\n"
     echo "Initramfs file: $INITRAMFS_FILE"
     echo "Initramfs size (actual disk usage):"
     
@@ -152,7 +153,7 @@ search_initramfs_for() {
     return 1
   fi
 
-  echo "Searching for '$PATTERN' in $INITRAMFS_FILE..."
+  echo -e "\nSearching for '$PATTERN' in $INITRAMFS_FILE..."
   echo
 
   lsinitramfs "$INITRAMFS_FILE" | grep -Ei "$PATTERN" || echo "No matches found."

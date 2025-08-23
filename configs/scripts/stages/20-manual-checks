@@ -71,6 +71,7 @@ check_directories "${DIRECTORIES_TO_CHECK[@]}"
 
 check_initramfs_size
 
+echo ""
 
 # -- Search the initramfs for something.
 
