@@ -43,6 +43,7 @@ INSTALL_DESKTOP_PKGS=(
     hyprland-core
     index
     layer-shell-qt
+    libnotify-bin
     libqt6quickcontrols2-6
     libqt6quickshapes6
     libqt6quicktemplates2-6
@@ -77,12 +78,15 @@ INSTALL_DESKTOP_PKGS=(
     rsyslog/duke
     station
     sudo-openrc
+    sway-notification-center
     waybar
     wireplumber
     wofi
     x11-utils
     x11-xserver-utils
+    xdg-desktop-portal-gtk
     xdg-desktop-portal-hyprland
+    xdg-desktop-portal-kde
     xdg-user-dirs
     xdg-utils
     xserver-xorg-legacy
