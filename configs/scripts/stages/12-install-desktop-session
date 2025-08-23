@@ -44,6 +44,7 @@ INSTALL_DESKTOP_PKGS=(
     index
     layer-shell-qt
     libnotify-bin
+    libpam-pwquality
     libqt6quickcontrols2-6
     libqt6quickshapes6
     libqt6quicktemplates2-6
@@ -64,9 +65,9 @@ INSTALL_DESKTOP_PKGS=(
     pipewire-pulse
     plymouth-openrc
     plymouth-theme-nitrux
-    psmisc
     power-profiles-daemon
     power-profiles-daemon-openrc
+    psmisc
     qml6-module-org-kde-kirigami
     qml6-module-qtquick-controls
     qml6-module-qtquick-layouts
