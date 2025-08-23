@@ -58,10 +58,10 @@ check_ownership() {
 }
 
 check_file_contents() {
-  echo -e "\nChecking contents of files:"
+  echo -e "\nChecking contents of files..."
   for FILE in "$@"; do
     if [ -f "$FILE" ]; then
-      echo "Contents of $FILE:"
+      echo -e "\nContents of $FILE:"
       echo "=========================="
       cat "$FILE"
       echo "=========================="
@@ -73,7 +73,7 @@ check_file_contents() {
 
 check_files() {
   local FILES=("$@")
-  echo "Checking existence of files..."
+  echo -e "\nChecking existence of files..."
   for FILE in "${FILES[@]}"; do
     if [ -e "$FILE" ]; then
       echo "File $FILE exists."

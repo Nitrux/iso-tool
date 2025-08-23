@@ -41,6 +41,7 @@ THEME_DIR="/usr/share/plymouth/themes/${THEME_NAME}"
 if [ -n "$THEME_NAME" ] && [ -d "$THEME_DIR" ]; then
   mkdir -p "${DESTDIR}/usr/share/plymouth/themes"
   cp -a "$THEME_DIR" "${DESTDIR}/usr/share/plymouth/themes/"
+  echo ""
   echo "Included theme: $THEME_NAME" >&2
 else
   echo "Theme not found or not set." >&2
