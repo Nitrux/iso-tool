@@ -70,14 +70,11 @@ if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=greetd-hyprland" "$DESKTOP_FILE"; t
 fi
 
 
-# -- Create directory for elogind sleep hooks.
+# -- Create directory for elogind sleep hooks and add elogind sleep hook scripts.
 
-mkdir -p /etc/elogind/system-sleep/
+# mkdir -p /etc/elogind/system-sleep/
 
-
-# -- Add elogind sleep hook scripts.
-
-cp  /configs/files/elogind_files/system-sleep/* /etc/elogind/system-sleep/
+# cp  /configs/files/elogind_files/system-sleep/* /etc/elogind/system-sleep/
 
 
 # -- Disable DrKonqi as we do not include debug symbols and it's useless otherwise.
