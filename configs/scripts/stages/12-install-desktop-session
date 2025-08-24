@@ -89,6 +89,7 @@ INSTALL_DESKTOP_PKGS=(
 	systemsettings
 	waybar
 	wireplumber
+	wlogout
 	wofi
 	x11-utils
 	x11-xserver-utils
