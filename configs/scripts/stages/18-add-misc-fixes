@@ -122,3 +122,31 @@ DELETE_UNUSED_KCMS=(
 )
 
 rm -f "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}"
+
+
+DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
+   settings-applications-defaults.desktop
+   settings-applications-permissions.desktop
+   settings-applications.desktop
+   settings-hardware-display.desktop
+   settings-hardware-input-pointing-devices.desktop
+   settings-hardware-input-touchscreen.desktop
+   settings-hardware-input.desktop
+   settings-hardware-keyboard.desktop
+   settings-hardware-multimedia.desktop
+   settings-hardware-removable-storage.desktop
+   settings-hardware.desktop
+   settings-network-networksettings.desktop
+   settings-network.desktop
+   settings-personalization.desktop
+   settings-regionalsettings.desktop
+   settings-root-category.desktop
+   settings-security-privacy.desktop
+   settings-system-administration.desktop
+   settings-workspace-search.desktop
+   settings-workspace-session.desktop
+   settings-workspace-windowmanagement.desktop
+   settings-workspace.desktop
+)
+
+rm -f "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
