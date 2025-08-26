@@ -37,4 +37,73 @@ INSTALL_KERNEL_PKGS=(
 	linux-headers-6.16.3-pikaos
 )
 
-install "${INSTALL_KERNEL_PKGS[@]}"
+EXTRA_KERNEL_PKGS=(
+	binutils
+	binutils-common
+	binutils-x86-64-linux-gnu
+	clang
+	clang-19
+	gcc-15-base
+	kernel-pika-config
+	libasan8
+	libatomic1
+	libbabeltrace1
+	libbinutils
+	libc-dev-bin
+	libc6-dev
+	libclang-cpp19
+	libclang1-19
+	libcpupower1
+	libcrypt-dev
+	libctf-nobfd0
+	libctf0
+	libcurl4t64
+	libdebuginfod-common
+	libdebuginfod1t64
+	libdw1t64
+	libedit2
+	libelf1t64
+	libgc1
+	libglib2.0-0t64
+	libgomp1
+	libgprofng0
+	libhwasan0
+	libitm1
+	libjansson4
+	libjson-c5
+	libllvm19
+	liblsan0
+	libnl-3-200
+	libnl-genl-3-200
+	libnuma1
+	libobjc-14-dev
+	libobjc4
+	libopencsd1
+	libpci3
+	libpfm4
+	libpython3.13
+	libquadmath0
+	libsframe1
+	libslang2
+	libtraceevent1
+	libtsan2
+	libubsan1
+	libunwind8
+	libxml2
+	libz3-4
+	linux-cpupower
+	linux-libc-dev
+	linux-perf
+	lld
+	lld-19
+	llvm
+	llvm-19
+	llvm-19-linker-tools
+	llvm-19-runtime
+	llvm-runtime
+	pci.ids
+	rpcsvc-proto
+	scx
+)
+
+install "${INSTALL_KERNEL_PKGS[@]}" "${EXTRA_KERNEL_PKGS[@]}"
