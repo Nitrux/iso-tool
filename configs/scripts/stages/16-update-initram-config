@@ -59,4 +59,4 @@ rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/ca
 
 # -- Always update initramfs after adding, removing or editing hook scripts.
 
-update-initramfs -v -c -k all
+update-initramfs -c -k all
