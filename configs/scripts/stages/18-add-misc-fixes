@@ -118,9 +118,6 @@ DELETE_UNUSED_KCMS=(
    kcm_webshortcuts.desktop
 )
 
-rm -f "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}"
-
-
 DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
    settings-applications-defaults.desktop
    settings-applications-permissions.desktop
@@ -146,4 +143,4 @@ DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
    settings-workspace.desktop
 )
 
-rm -f "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
+rm -f  "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}" "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
