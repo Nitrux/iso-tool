@@ -144,3 +144,9 @@ DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
 )
 
 rm -f  "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}" "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
+
+
+# -- Remove Micro launcher
+# -- Why the hell does a CLI text editor have a god damn desktop launcher to begin with?!
+
+rm -f /usr/share/applications/micro.desktop

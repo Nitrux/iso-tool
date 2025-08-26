@@ -77,10 +77,8 @@ INSTALL_DESKTOP_PKGS=(
 	qml6-module-qtquick-shapes
 	qml6-module-qtquick-templates
 	qml6-module-qtquick-window
-	qt5ct
 	qt6-svg-plugins
 	qt6-wayland
-	qt6ct
 	rsyslog-openrc
 	rsyslog/duke
 	station
