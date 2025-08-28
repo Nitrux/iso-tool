@@ -33,6 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Install desktop packages and use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 INSTALL_DESKTOP_PKGS=(
+	crystal-dock
 	dbus-openrc
 	desktop-file-utils
 	elogind-openrc
