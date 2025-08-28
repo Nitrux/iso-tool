@@ -154,8 +154,8 @@ rm -f /usr/share/applications/micro.desktop
 
 # -- Set QtGreet theme.
 
-DESKTOP_FILE="/etc/qtgreet/config.ini"
+QTGREET_CONFIG="/etc/qtgreet/config.ini"
 
-if [ -f "$DESKTOP_FILE" ] && ! grep -q "Theme = default" "$DESKTOP_FILE"; then
-    sed -i 's|^Theme = default|Theme = nitrux|' "$DESKTOP_FILE"
+if [ -f "$QTGREET_CONFIG" ] && grep -q "Theme = default" "$QTGREET_CONFIG"; then
+    sed -i 's|^Theme = default|Theme = nitrux|' "$QTGREET_CONFIG"
 fi
