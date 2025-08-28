@@ -46,6 +46,7 @@ FILE_CONTENT_TO_CHECK=(
   /etc/greetd/config.toml
   /etc/initramfs-tools/modules
   /etc/plymouth/plymouthd.conf
+  /etc/qtgreet/config.ini
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"

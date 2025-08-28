@@ -150,3 +150,12 @@ rm -f  "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}" "${DELETE_UNUSED_SY
 # -- Why the hell does a CLI text editor have a god damn desktop launcher to begin with?!
 
 rm -f /usr/share/applications/micro.desktop
+
+
+# -- Set QtGreet theme.
+
+DESKTOP_FILE="/etc/qtgreet/config.ini"
+
+if [ -f "$DESKTOP_FILE" ] && ! grep -q "Theme = default" "$DESKTOP_FILE"; then
+    sed -i 's|^Theme = default|Theme = nitrux|' "$DESKTOP_FILE"
+fi
