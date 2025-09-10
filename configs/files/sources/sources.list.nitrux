@@ -11,3 +11,4 @@ deb [signed-by=/etc/apt/keyrings/nitrux-skidrow.gpg] https://packagecloud.io/nit
 deb [signed-by=/etc/apt/keyrings/nitrux-testing.gpg] https://packagecloud.io/nitrux/testing/debian/ duke main
 deb [signed-by=/etc/apt/keyrings/nitrux-area51.gpg] https://packagecloud.io/nitrux/area51/debian/ duke main
 deb [signed-by=/etc/apt/keyrings/nitrux-mauikit.gpg] https://packagecloud.io/nitrux/mauikit/debian/ forky main
+deb [signed-by=/etc/apt/keyrings/nitrux-nvidia.gpg] https://packagecloud.io/nitrux/nvidia/debian/ duke main
