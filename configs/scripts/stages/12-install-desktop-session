@@ -36,6 +36,7 @@ INSTALL_DESKTOP_PKGS=(
 	crystal-dock
 	dbus-openrc
 	desktop-file-utils
+	dnsmasq
 	elogind-openrc
 	eudev-openrc
 	fiery
