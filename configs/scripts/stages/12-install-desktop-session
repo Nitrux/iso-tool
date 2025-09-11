@@ -91,6 +91,7 @@ INSTALL_DESKTOP_PKGS=(
 	wireplumber
 	wlogout
 	wofi
+	wpasupplicant
 	x11-utils
 	x11-xserver-utils
 	xdg-desktop-portal-gtk
