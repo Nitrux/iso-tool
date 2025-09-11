@@ -33,6 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Install desktop packages and use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 INSTALL_DESKTOP_PKGS=(
+	ark
 	bluetooth-openrc
 	breeze-gtk-theme
 	crystal-dock
@@ -63,7 +64,6 @@ INSTALL_DESKTOP_PKGS=(
 	network-manager-openrc
 	nitrux-desktop-settings
 	nitrux-wallpapers
-	nm-connection-editor
 	nota
 	ntpsec-openrc
 	nwg-look
