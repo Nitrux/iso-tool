@@ -49,6 +49,7 @@ INSTALL_DESKTOP_PKGS=(
 	hyprland-core
 	index
 	layer-shell-qt
+	libkf6kcmutils-bin
 	libnotify-bin
 	libpam-pwquality
 	libqt6quickcontrols2-6
