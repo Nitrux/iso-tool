@@ -71,6 +71,7 @@ INSTALL_DESKTOP_PKGS=(
 	pciutils
 	pipewire
 	pipewire-pulse
+	plasma-nm
 	plasma-workspace
 	plymouth-openrc
 	plymouth-theme-nitrux
