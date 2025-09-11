@@ -34,7 +34,7 @@ case "$1" in
     IFACES=$(nmcli -t -f DEVICE,TYPE,STATE dev | awk -F: '$3=="connected" { print $1 }')
     if [ -n "$IFACES" ]; then
       logger -t nm-hook "Interface(s) detected: $IFACES — restarting NetworkManager"
-      rc-service network-manager restart
+      rc-service network-manager-openrc restart
     else
       logger -t nm-hook "No connected interfaces — NetworkManager not restarted"
     fi
