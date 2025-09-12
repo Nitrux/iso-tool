@@ -145,7 +145,7 @@ rm -f  "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}" "${DELETE_UNUSED_SY
 
 
 # -- Remove Micro launcher.
-# -- Why the hell does a CLI text editor have a god damn desktop launcher to begin with?!
+#    -- Why the hell does a CLI text editor have a god damn desktop launcher to begin with?!
 
 rm -f /usr/share/applications/micro.desktop
 
