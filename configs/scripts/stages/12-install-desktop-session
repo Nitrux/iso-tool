@@ -76,6 +76,8 @@ INSTALL_DESKTOP_PKGS=(
 	plasma-workspace
 	plymouth-openrc
 	plymouth-theme-nitrux
+	polkit-kde-agent-1
+	polkitd-openrc
 	power-profiles-daemon
 	power-profiles-daemon-openrc
 	psmisc
