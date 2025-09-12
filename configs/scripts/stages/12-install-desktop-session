@@ -34,6 +34,7 @@ source /configs/scripts/others/apt-funcs
 
 INSTALL_DESKTOP_PKGS=(
 	ark
+	bluedevil
 	bluetooth-openrc
 	breeze-gtk-theme
 	crystal-dock
@@ -68,11 +69,11 @@ INSTALL_DESKTOP_PKGS=(
 	nota
 	ntpsec-openrc
 	nwg-look
-	pavucontrol-qt
 	pciutils
 	pipewire
 	pipewire-pulse
 	plasma-nm
+	plasma-pa
 	plasma-workspace
 	plymouth-openrc
 	plymouth-theme-nitrux

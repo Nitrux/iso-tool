@@ -93,52 +93,52 @@ rm -f /usr/share/wayland-sessions/plasma.desktop
 # -- Disable the KCMs that we don't use.
 
 DELETE_UNUSED_KCMS=(
-	kcm_autostart.desktop
-   kcm_breezedecoration.desktop
-   kcm_desktoptheme.desktop
-   kcm_feedback.desktop
-   kcm_fontinst.desktop
-   kcm_kwin_effects.desktop
-   kcm_kwin_scripts.desktop
-   kcm_kwin_virtualdesktops.desktop
-   kcm_kwindecoration.desktop
-   kcm_kwinoptions.desktop
-   kcm_kwinrules.desktop
-   kcm_kwintabbox.desktop
-   kcm_kwinxwayland.desktop
-   kcm_lookandfeel.desktop
-   kcm_netpref.desktop
-   kcm_nightlight.desktop
-   kcm_notifications.desktop
-   kcm_proxy.desktop
-   kcm_regionandlang.desktop
-   kcm_trash.desktop
-   kcm_virtualkeyboard.desktop
-   kcm_wallpaper.desktop
-   kcm_webshortcuts.desktop
+    kcm_autostart.desktop
+    kcm_breezedecoration.desktop
+    kcm_desktoptheme.desktop
+    kcm_feedback.desktop
+    kcm_fontinst.desktop
+    kcm_kwin_effects.desktop
+    kcm_kwin_scripts.desktop
+    kcm_kwin_virtualdesktops.desktop
+    kcm_kwindecoration.desktop
+    kcm_kwinoptions.desktop
+    kcm_kwinrules.desktop
+    kcm_kwintabbox.desktop
+    kcm_kwinxwayland.desktop
+    kcm_lookandfeel.desktop
+    kcm_netpref.desktop
+    kcm_nightlight.desktop
+    kcm_notifications.desktop
+    kcm_proxy.desktop
+    kcm_regionandlang.desktop
+    kcm_trash.desktop
+    kcm_virtualkeyboard.desktop
+    kcm_wallpaper.desktop
+    kcm_webshortcuts.desktop
 )
 
 DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
-   settings-applications-defaults.desktop
-   settings-applications-permissions.desktop
-   settings-applications.desktop
-   settings-hardware-display.desktop
-   settings-hardware-input-pointing-devices.desktop
-   settings-hardware-input-touchscreen.desktop
-   settings-hardware-input.desktop
-   settings-hardware-keyboard.desktop
-   settings-hardware-multimedia.desktop
-   settings-hardware-removable-storage.desktop
-   settings-hardware.desktop
-   settings-personalization.desktop
-   settings-regionalsettings.desktop
-   settings-root-category.desktop
-   settings-security-privacy.desktop
-   settings-system-administration.desktop
-   settings-workspace-search.desktop
-   settings-workspace-session.desktop
-   settings-workspace-windowmanagement.desktop
-   settings-workspace.desktop
+    settings-applications-defaults.desktop
+    settings-applications-permissions.desktop
+    settings-applications.desktop
+    settings-hardware-display.desktop
+    settings-hardware-input-pointing-devices.desktop
+    settings-hardware-input-touchscreen.desktop
+    settings-hardware-input.desktop
+    settings-hardware-keyboard.desktop
+    settings-hardware-multimedia.desktop
+    settings-hardware-removable-storage.desktop
+    settings-hardware.desktop
+    settings-personalization.desktop
+    settings-regionalsettings.desktop
+    settings-root-category.desktop
+    settings-security-privacy.desktop
+    settings-system-administration.desktop
+    settings-workspace-search.desktop
+    settings-workspace-session.desktop
+    settings-workspace-windowmanagement.desktop
+    settings-workspace.desktop
 )
 
 rm -f  "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}" "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
