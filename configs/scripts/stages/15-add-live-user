@@ -50,3 +50,8 @@ cat /configs/files/casper_files/15autologin > /usr/share/initramfs-tools/scripts
 # LIVE_SESSION="Hyprland.desktop"
 
 # sed -i "s/plasma.desktop/${LIVE_SESSION}/" /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+
+
+# -- Replace upstream's 12fstab to enable aesthethic FHS for the Live user.
+
+cat /configs/files/casper_files/12fstab > /usr/share/initramfs-tools/scripts/casper-bottom/12fstab

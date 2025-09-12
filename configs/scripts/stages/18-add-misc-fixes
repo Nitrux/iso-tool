@@ -74,7 +74,7 @@ fi
 
 mkdir -p /etc/elogind/system-sleep/
 
-cp  /configs/files/elogind_files/system-sleep/* /etc/elogind/system-sleep/
+cp /configs/files/elogind_files/system-sleep/* /etc/elogind/system-sleep/
 
 
 # -- Disable DrKonqi as we do not include debug symbols and it's useless otherwise.
@@ -157,3 +157,33 @@ QTGREET_CONFIG="/etc/qtgreet/config.ini"
 if [ -f "$QTGREET_CONFIG" ] && grep -q "Theme = default" "$QTGREET_CONFIG"; then
     sed -i 's|^Theme = default|Theme = nitrux|' "$QTGREET_CONFIG"
 fi
+
+
+# -- Create directories for aesthethic FHS.
+
+BASE_DIR="/System"
+
+declare -a DIRS=(
+    "${BASE_DIR}/Boot"
+    "${BASE_DIR}/Binaries/Administrative"
+    "${BASE_DIR}/Binaries/Standard"
+    "${BASE_DIR}/Binaries/Optional"
+    "${BASE_DIR}/Configuration"
+    "${BASE_DIR}/Devices"
+    "${BASE_DIR}/Filesystems/External"
+    "${BASE_DIR}/Filesystems/Internal"
+    "${BASE_DIR}/Libraries"
+    "${BASE_DIR}/Shareable"
+    "${BASE_DIR}/Variable"
+    "/Users"
+)
+
+for dir in "${DIRS[@]}"; do
+    echo "Creating directory: $dir"
+    mkdir -p "$dir" || echo "Failed to create $dir"
+done
+
+
+# -- Hide original FHS directories.
+
+cp /configs/files/other/hidden /.hidden
