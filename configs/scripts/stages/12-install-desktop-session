@@ -49,6 +49,7 @@ INSTALL_DESKTOP_PKGS=(
 	greetd-qtgreet-settings
 	hyprland-core
 	index
+	kcmutils
 	layer-shell-qt
 	libkf6kcmutils-bin
 	libnotify-bin
