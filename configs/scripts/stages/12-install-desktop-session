@@ -61,6 +61,7 @@ INSTALL_DESKTOP_PKGS=(
 	libqt6sql6-sqlite
 	libqt6waylandcompositor6
 	libqt6wlshellintegration6
+	libspa-0.2-bluetooth
 	luv-icon-theme
 	micro
 	network-manager-openrc
