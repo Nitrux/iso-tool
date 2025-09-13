@@ -129,7 +129,6 @@ DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
     settings-hardware-keyboard.desktop
     settings-hardware-multimedia.desktop
     settings-hardware-removable-storage.desktop
-    settings-hardware.desktop
     settings-personalization.desktop
     settings-regionalsettings.desktop
     settings-root-category.desktop
