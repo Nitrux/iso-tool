@@ -186,3 +186,21 @@ done
 # -- Hide original FHS directories.
 
 cp /configs/files/other/hidden /.hidden
+
+
+# -- Mitigate Bluetooth devices disconnecting randomly.
+
+MAIN_CONF="/etc/bluetooth/main.conf"
+INPUT_CONF="/etc/bluetooth/input.conf"
+
+if [ -f "$MAIN_CONF" ]; then
+    sed -i \
+        -e 's/^#DiscoverableTimeout = 0/DiscoverableTimeout = 0/' \
+        -e 's/^#PairableTimeout = 0/PairableTimeout = 0/' \
+        -e 's/^#ControllerMode = dual/ControllerMode = bredr/' \
+        "$MAIN_CONF"
+fi
+
+if [ -f "$INPUT_CONF" ]; then
+    sed -i 's/^#IdleTimeout=0/IdleTimeout=0/' "$INPUT_CONF"
+fi
