@@ -70,6 +70,7 @@ INSTALL_DESKTOP_PKGS=(
 	nota
 	ntpsec-openrc
 	nwg-look
+	ocean-sound-theme
 	pciutils
 	pipewire
 	pipewire-pulse
@@ -110,6 +111,7 @@ INSTALL_DESKTOP_PKGS=(
 	xdg-user-dirs
 	xdg-utils
 	xserver-xorg-legacy
+	xsettingsd
 	xwaylandvideobridge
 	zsh
 )
