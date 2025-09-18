@@ -53,6 +53,7 @@ INSTALL_DESKTOP_PKGS=(
 	grim
 	hyprland-core
 	index
+	kgpg
 	layer-shell-qt
 	libkf6kcmutils-bin
 	libnotify-bin
