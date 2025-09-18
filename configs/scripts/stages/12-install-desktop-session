@@ -37,6 +37,8 @@ INSTALL_DESKTOP_PKGS=(
 	bluedevil
 	bluetooth-openrc
 	breeze-gtk-theme
+	buho
+	clip
 	copyq
 	crystal-dock
 	dbus-openrc
@@ -77,6 +79,7 @@ INSTALL_DESKTOP_PKGS=(
 	pciutils
 	pipewire
 	pipewire-pulse
+	pix
 	plasma-nm
 	plasma-pa
 	plasma-workspace
@@ -102,6 +105,7 @@ INSTALL_DESKTOP_PKGS=(
 	sudo-openrc
 	sway-notification-center
 	systemsettings
+	vvave
 	waybar
 	wireplumber
 	wl-clipboard
