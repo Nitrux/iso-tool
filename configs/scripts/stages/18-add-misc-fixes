@@ -204,3 +204,35 @@ fi
 if [ -f "$INPUT_CONF" ]; then
     sed -i 's/^#IdleTimeout=0/IdleTimeout=0/' "$INPUT_CONF"
 fi
+
+
+# -- Grab the latest clipvault release and drop it to a directory in PATH.
+
+arch="$(uname -m)"
+case "$arch" in
+  x86_64|amd64) target="x86_64-unknown-linux-gnu" ;;
+  aarch64|arm64) target="aarch64-unknown-linux-gnu" ;;
+  *) echo "unsupported architecture: $arch"; exit 1 ;;
+esac
+
+tag="${CLIPVAULT_TAG:-latest}"
+asset="clipvault-${target}.tar.gz"
+base="https://github.com/Rolv-Apneseth/clipvault/releases"
+url="$base/latest/download/$asset"
+[ "$tag" = "latest" ] || url="$base/download/$tag/$asset"
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+if command -v curl >/dev/null 2>&1; then
+  curl -fsSL "$url" -o "$tmp/$asset"
+else
+  wget -qO "$tmp/$asset" "$url"
+fi
+
+tar -C "$tmp" -xf "$tmp/$asset"
+
+binpath="$(find "$tmp" -type f -name clipvault -perm -u+x | head -n1)"
+[ -n "$binpath" ] || { echo "clipvault binary not found in archive"; exit 1; }
+
+install -m 0755 "$binpath" /usr/bin/clipvault

@@ -39,7 +39,6 @@ INSTALL_DESKTOP_PKGS=(
 	breeze-gtk-theme
 	buho
 	clip
-	copyq
 	crystal-dock
 	dbus-openrc
 	desktop-file-utils
