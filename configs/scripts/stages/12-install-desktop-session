@@ -38,10 +38,10 @@ INSTALL_DESKTOP_PKGS=(
 	bluetooth-openrc
 	breeze-gtk-theme
 	copyq
-	dialog
 	crystal-dock
 	dbus-openrc
 	desktop-file-utils
+	dialog
 	dnsmasq
 	elogind-openrc
 	eudev-openrc
