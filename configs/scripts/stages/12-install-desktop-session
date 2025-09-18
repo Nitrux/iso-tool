@@ -37,6 +37,8 @@ INSTALL_DESKTOP_PKGS=(
 	bluedevil
 	bluetooth-openrc
 	breeze-gtk-theme
+	copyq
+	dialog
 	crystal-dock
 	dbus-openrc
 	desktop-file-utils
@@ -47,6 +49,7 @@ INSTALL_DESKTOP_PKGS=(
 	fonts-nitrux-desktop
 	greetd-qtgreet
 	greetd-qtgreet-settings
+	grim
 	hyprland-core
 	index
 	layer-shell-qt
@@ -94,12 +97,14 @@ INSTALL_DESKTOP_PKGS=(
 	qt6-wayland
 	rsyslog-openrc
 	rsyslog/duke
+	slurp
 	station
 	sudo-openrc
 	sway-notification-center
 	systemsettings
 	waybar
 	wireplumber
+	wl-clipboard
 	wlogout
 	wofi
 	wpasupplicant
