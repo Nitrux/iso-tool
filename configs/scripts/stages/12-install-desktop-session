@@ -78,6 +78,7 @@ INSTALL_DESKTOP_PKGS=(
 	ocean-sound-theme
 	overlayroot
 	pciutils
+	pinentry-qt
 	pipewire
 	pipewire-pulse
 	pix
