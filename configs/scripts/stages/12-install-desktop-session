@@ -76,6 +76,7 @@ INSTALL_DESKTOP_PKGS=(
 	ntpsec-openrc
 	nwg-look
 	ocean-sound-theme
+	overlayroot
 	pciutils
 	pipewire
 	pipewire-pulse
