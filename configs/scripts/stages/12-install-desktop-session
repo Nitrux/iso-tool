@@ -33,27 +33,20 @@ source /configs/scripts/others/apt-funcs
 # -- Install desktop packages and use the packages for NetworkManager from Devuan because these don't require libsystemd0.
 
 INSTALL_DESKTOP_PKGS=(
-	ark
 	bluedevil
 	bluetooth-openrc
 	breeze-gtk-theme
-	buho
-	clip
-	crystal-dock
 	dbus-openrc
 	desktop-file-utils
 	dialog
 	dnsmasq
 	elogind-openrc
 	eudev-openrc
-	fiery
 	fonts-nitrux-desktop
 	greetd-qtgreet
 	greetd-qtgreet-settings
 	grim
 	hyprland-core
-	index
-	kgpg
 	layer-shell-qt
 	libkf6kcmutils-bin
 	libnotify-bin
@@ -72,16 +65,13 @@ INSTALL_DESKTOP_PKGS=(
 	network-manager-openrc
 	nitrux-desktop-settings
 	nitrux-wallpapers
-	nota
 	ntpsec-openrc
-	nwg-look
 	ocean-sound-theme
 	overlayroot
 	pciutils
 	pinentry-qt
 	pipewire
 	pipewire-pulse
-	pix
 	plasma-nm
 	plasma-pa
 	plasma-workspace
@@ -103,11 +93,9 @@ INSTALL_DESKTOP_PKGS=(
 	rsyslog-openrc
 	rsyslog/duke
 	slurp
-	station
 	sudo-openrc
 	sway-notification-center
 	systemsettings
-	vvave
 	waybar
 	wireplumber
 	wl-clipboard
@@ -127,8 +115,24 @@ INSTALL_DESKTOP_PKGS=(
 	zsh
 )
 
+INSTALL_DESKTOP_APPS=(
+	ark
+	buho
+	clip
+	crystal-dock
+	fiery
+	index
+	kgpg
+	nota
+	nwg-look
+	pix
+	station
+	systemsettings
+	vvave
+)
+
 INSTALL_DEVUAN_NM_PKGS=(
 	network-manager/duke
 )
 
-install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 
+install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DESKTOP_APPS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}" 
