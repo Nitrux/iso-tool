@@ -62,3 +62,8 @@ cp /configs/files/sources/sources.list.waydroid /etc/apt/sources.list.d/waydroid
 # -- Updated package index.
 
 update
+
+
+# -- Upgrade rootfs packages.
+
+upgrade
