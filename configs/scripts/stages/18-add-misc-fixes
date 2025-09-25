@@ -241,4 +241,4 @@ install -m 0755 "$binpath" /usr/bin/clipvault
 # -- Install NX AppHub and NX AppHub Daemon to a system-wide venv.
 
 pipx install --global git+https://github.com/Nitrux/nx-apphub.git
-pipx install --global git+https://github.com/Nitrux/nx-apphub-daemon.git
+pipx install --global git+https://github.com/Nitrux/nx-apphubd.git
