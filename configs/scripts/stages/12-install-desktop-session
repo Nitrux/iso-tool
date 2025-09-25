@@ -72,6 +72,7 @@ INSTALL_DESKTOP_PKGS=(
 	pinentry-qt
 	pipewire
 	pipewire-pulse
+	pipx
 	plasma-nm
 	plasma-pa
 	plasma-workspace
@@ -117,18 +118,14 @@ INSTALL_DESKTOP_PKGS=(
 
 INSTALL_DESKTOP_APPS=(
 	ark
-	buho
-	clip
 	crystal-dock
 	fiery
 	index
 	kgpg
 	nota
 	nwg-look
-	pix
 	station
 	systemsettings
-	vvave
 )
 
 INSTALL_DEVUAN_NM_PKGS=(

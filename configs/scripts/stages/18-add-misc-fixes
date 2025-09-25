@@ -236,3 +236,8 @@ binpath="$(find "$tmp" -type f -name clipvault -perm -u+x | head -n1)"
 [ -n "$binpath" ] || { echo "clipvault binary not found in archive"; exit 1; }
 
 install -m 0755 "$binpath" /usr/bin/clipvault
+
+
+# -- Install NX AppHub to a system-wide venv.
+
+pipx install --global git+https://github.com/Nitrux/nx-apphub.git
