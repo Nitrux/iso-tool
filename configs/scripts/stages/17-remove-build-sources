@@ -31,7 +31,7 @@ source /configs/scripts/others/apt-funcs
 
 
 # -- Remove build sources.
-#    -- Comment the command to debug packages in a Live session.
+#    -- Comment the command(s) to debug packages in a Live session.
 
 # find /etc/apt/sources.list.d/ -type f \( -name "*.list" -o -name "*.sources" \) -delete
 
@@ -42,7 +42,7 @@ autoremove
 
 
 # -- Move APT and dpkg out of the way.
-#    -- Comment the command to debug packages in a Live session.
+#    -- Comment the command(s) to debug packages in a Live session.
 
 # mv /usr/bin/apt /opt/1
 # mv /usr/bin/apt-get /opt/2
@@ -53,7 +53,7 @@ autoremove
 
 # -- Add install scripts here.
 #    -- Use undebianize from Calamares to delete these files from the root.
-#    -- Comment the command to debug packages in a Live session.
+#    -- Comment the command(s) to debug packages in a Live session.
 
 # DEST_DIR="/usr/bin"
 # LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
