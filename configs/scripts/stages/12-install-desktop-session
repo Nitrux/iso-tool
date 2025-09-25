@@ -126,7 +126,6 @@ INSTALL_DESKTOP_APPS=(
 	nota
 	nwg-look
 	station
-	systemsettings
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
