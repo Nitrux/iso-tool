@@ -68,6 +68,7 @@ INSTALL_DESKTOP_PKGS=(
 	ntpsec-openrc
 	ocean-sound-theme
 	overlayroot
+	patchelf
 	pciutils
 	pinentry-qt
 	pipewire
