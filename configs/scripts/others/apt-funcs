@@ -44,7 +44,9 @@ add_nitrux_key () {
     local url="https://packagecloud.io/nitrux/${repo}/gpgkey"
     local dest="${KEYRING_DIR}/nitrux-${repo}.gpg"
 
-    curl -fsSL "$url" -o "$dest"
+    curl -fsSL "$url" | gpg --dearmor -o "$dest"
+
+    chmod 644 "$dest"
 }
 
 
