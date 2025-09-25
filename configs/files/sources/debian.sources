@@ -3,8 +3,8 @@
 #   Your changes will be overwritten   #
 ########################################
 
-################
-# Debian Repos #
-################
-
-deb [arch=amd64] http://deb.debian.org/debian forky main non-free non-free-firmware contrib
+Types: deb
+URIs: http://deb.debian.org/debian
+Suites: forky
+Components: main non-free non-free-firmware contrib
+Architectures: amd64
