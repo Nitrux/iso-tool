@@ -30,7 +30,8 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Remove build sources. 
+# -- Remove build sources.
+#    -- Comment the command to debug packages in a Live session.
 
 find /etc/apt/sources.list.d/ -type f \( -name "*.list" -o -name "*.sources" \) -delete
 
