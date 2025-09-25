@@ -48,7 +48,7 @@ add_nitrux_key () {
 }
 
 
-# -- Retrieve the key using GPG.
+# -- Retrieve third-party repository keys using GPG.
 
 add_third_party_repo_keys () {
     for key in "$@"; do
