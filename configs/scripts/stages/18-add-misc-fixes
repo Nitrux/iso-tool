@@ -242,3 +242,34 @@ install -m 0755 "$binpath" /usr/bin/clipvault
 
 pipx install --global git+https://github.com/Nitrux/nx-apphub.git
 pipx install --global git+https://github.com/Nitrux/nx-apphubd.git
+
+
+# -- Add Maui AppBoxes to the root directory.
+
+SOURCE_DIR="/configs/files/appboxes"
+APP_DIR="/Applications"
+LINK_DIR="/usr/bin"
+LAUNCHER_DIR="/usr/share/applications"
+
+FILES=(
+    "fiery-2.0.1-1-x86_64.AppBox"
+    "vvave-4.0.2-1-x86_64.AppBox"
+    "nota-4.0.2-1-x86_64.AppBox"
+    "index-4.0.2-1-x86_64.AppBox"
+    "station-4.0.2-1-x86_64.AppBox"
+)
+
+mkdir -p "$APP_DIR"
+
+for file in "${FILES[@]}"; do
+    app_name=$(echo "$file" | cut -d'-' -f1)
+    
+    cp "$SOURCE_DIR/$file" "$APP_DIR/$file"
+    chmod +x "$APP_DIR/$file"
+    ln -sf "$APP_DIR/$file" "$LINK_DIR/$app_name"
+    
+    desktop_file="$SOURCE_DIR/org.kde.$app_name.desktop"
+    if [ -f "$desktop_file" ]; then
+        cp "$desktop_file" "$LAUNCHER_DIR/"
+    fi
+done
