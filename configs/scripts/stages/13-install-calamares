@@ -29,4 +29,16 @@ set -eu
 
 source /configs/scripts/others/apt-funcs
 
-exit 0
+
+# -- Install Calamares packages.
+
+CALAMARES_PKGS=(
+	calamares
+	calamares-qml-settings-nitrux
+	dosfstools
+	efibootmgr
+	mauikit3
+	squashfs-tools
+)
+
+install "${CALAMARES_PKGS[@]}"
