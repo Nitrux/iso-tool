@@ -253,7 +253,6 @@ LAUNCHER_DIR="/usr/share/applications"
 
 FILES=(
     "fiery-2.0.1-1-x86_64.AppBox"
-    "vvave-4.0.2-1-x86_64.AppBox"
     "nota-4.0.2-1-x86_64.AppBox"
     "index-4.0.2-1-x86_64.AppBox"
     "station-4.0.2-1-x86_64.AppBox"
