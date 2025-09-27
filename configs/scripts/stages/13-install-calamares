@@ -37,7 +37,6 @@ CALAMARES_PKGS=(
 	calamares-qml-settings-nitrux
 	dosfstools
 	efibootmgr
-	mauikit3
 	squashfs-tools
 )
 
