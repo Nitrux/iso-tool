@@ -158,3 +158,10 @@ search_initramfs_for() {
 
   lsinitramfs "$INITRAMFS_FILE" | grep -Ei "$PATTERN" || echo "No matches found."
 }
+
+create_symlink() {
+    local source="$1"
+    local destination="$2"
+
+    ln -svf "$source" "$destination"
+}
