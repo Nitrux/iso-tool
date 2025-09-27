@@ -22,7 +22,7 @@ Package: bsdutils
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: broadcom-sta-dkms
+Package: calamares
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
