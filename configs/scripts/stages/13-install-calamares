@@ -37,6 +37,8 @@ CALAMARES_PKGS=(
 	calamares-qml-settings-nitrux
 	dosfstools
 	efibootmgr
+	libqt6core5compat6
+	qml6-module-qt5compat-graphicaleffects
 	squashfs-tools
 )
 
