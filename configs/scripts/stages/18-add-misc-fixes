@@ -272,11 +272,3 @@ for file in "${FILES[@]}"; do
         cp "$desktop_file" "$LAUNCHER_DIR/"
     fi
 done
-
-
-# -- Create symlinks for Mauikit 3 because Calamares uses it.
-
-MAUIKIT3_VERSION="3.1.0"
-
-create_symlink "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/qt5/qml/org/mauikit/controls/libMauiKit3.so"
-create_symlink "/usr/lib/x86_64-linux-gnu/libMauiKit3.so.$MAUIKIT3_VERSION" "/usr/lib/x86_64-linux-gnu/libMauiKit3.so"
