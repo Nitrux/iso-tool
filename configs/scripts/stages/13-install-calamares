@@ -34,7 +34,7 @@ source /configs/scripts/others/apt-funcs
 
 CALAMARES_PKGS=(
 	calamares
-	calamares-qml-settings-nitrux
+	calamares-settings-nitrux
 	dosfstools
 	efibootmgr
 	libqt6core5compat6
