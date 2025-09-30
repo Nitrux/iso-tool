@@ -10,6 +10,11 @@
 # Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
 # Architectures: amd64
 
+##################################################################
+#   Debian Snapshots                                             #
+#   These repositories are much slower for downloading packages  #
+##################################################################
+
 Types: deb
 URIs: https://snapshot.debian.org/archive/debian/20250930T023023Z
 Suites: testing testing-updates
