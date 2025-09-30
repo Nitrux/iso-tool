@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Install Calamares packages.
 #    -- For whatever absurd reason, Calamares built against Qt6 (stable, testing, unstable) is unable to receive input on the text fields when using the QML modules, regardless of the QML files using vanilla QML or Kirigami, or MauiKit.
 #    -- With that said, there are only two options: 
-#    	-- a) Use the settings package using QWidgets for the UI (Calamares' default), or 
+#    	-- a) Use the settings package using QtWidgets for the UI (Calamares' default), or 
 #    	-- b) Use a Calamares package built with Qt5 up to 3.3.9 (which is what I tested) and continue using the QML settings package.
 
 CALAMARES_PKGS=(
