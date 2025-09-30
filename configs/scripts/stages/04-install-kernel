@@ -33,8 +33,8 @@ source /configs/scripts/others/apt-funcs
 # -- Add a default kernel.
 
 INSTALL_KERNEL_PKGS=(
-	linux-image-6.16.5-pikaos
-	linux-headers-6.16.5-pikaos
+	linux-image-6.16.9-pikaos
+	linux-headers-6.16.9-pikaos
 )
 
 EXTRA_KERNEL_PKGS=(
