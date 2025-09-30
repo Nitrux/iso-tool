@@ -36,14 +36,14 @@ source /configs/scripts/others/apt-funcs
 #    	-- a) Use the settings package using QWidgets for the UI (Calamares' default), or 
 #    	-- b) Use a Calamares package built with Qt5 up to 3.3.9 (which is what I tested) and continue using the QML settings package.
 
-CALAMARES_PKGS=(
-	calamares/duke
-	calamares-qml5-settings-nitrux
-	dosfstools
-	efibootmgr
-	libpolkit-qt5-1-1/duke
-	squashfs-tools
-	qtwayland5
-)
+# CALAMARES_PKGS=(
+# 	calamares/duke
+# 	calamares-qml5-settings-nitrux
+# 	dosfstools
+# 	efibootmgr
+# 	libpolkit-qt5-1-1/duke
+# 	squashfs-tools
+# 	qtwayland5
+# )
 
-install "${CALAMARES_PKGS[@]}"
+# install "${CALAMARES_PKGS[@]}"
