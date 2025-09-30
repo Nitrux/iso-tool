@@ -245,6 +245,7 @@ pipx install --global git+https://github.com/Nitrux/nx-apphubd.git
 
 
 # -- Add Maui AppBoxes to the root directory.
+#    -- Ensure these files exist because we don't download them, and we didn't design NX AppHub to create files in the root directory.
 
 SOURCE_DIR="/configs/files/appboxes"
 APP_DIR="/Applications"
