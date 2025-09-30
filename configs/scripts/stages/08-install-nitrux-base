@@ -42,7 +42,6 @@ INSTALL_DEVUAN_POLICYKIT_PKGS=(
 	libpam-elogind/duke
 	libpolkit-agent-1-0/duke
 	libpolkit-gobject-elogind-1-0/duke
-	libpolkit-qt5-1-1/duke
 	libpolkit-qt6-1-1/duke
 	pkexec/duke
 	polkitd/duke
