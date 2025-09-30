@@ -22,11 +22,7 @@ Package: bsdutils
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: dbus
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
-Package: dbus-*
+Package: calamares
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -54,7 +50,15 @@ Package: firmware-amd-graphics
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: hypr*
+Package: grub*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: kded5
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: kio
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -66,15 +70,15 @@ Package: libblkid1
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: libdbus-*
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: libelogind0
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libfdisk1
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libkf5*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -106,15 +110,11 @@ Package: libpam0g
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: libpolkit-*
+Package: libqt5*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libsmartcols1
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
-Package: libudisks2-0
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -138,15 +138,7 @@ Package: nvidia-*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: openrazer-*
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: overlayroot
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
-Package: pkexec
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -162,15 +154,15 @@ Package: plymouth-x11
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: polkitd
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
-Package: policykit-1
+Package: polkit-kde-agent-1
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: procps
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: qtwayland5
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -186,10 +178,6 @@ Package: udev
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
-Package: udisks2
-Pin: origin deb.debian.org
-Pin-Priority: -1
-
 Package: util-linux
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -202,6 +190,10 @@ Package: uuid-dev
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: xfsprogs
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 #########################
 #  Any Package Priority #
 #########################
@@ -211,10 +203,6 @@ Pin: release *
 Pin-Priority: -1
 
 Package: desktop-base
-Pin: release *
-Pin-Priority: -1
-
-Package: initscripts
 Pin: release *
 Pin-Priority: -1
 
@@ -234,6 +222,22 @@ Package: libtss2-esys0
 Pin: release *
 Pin-Priority: -1
 
+Package: linux-image-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-cloud-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: linux-image-rt-amd64
+Pin: release *
+Pin-Priority: -1
+
+Package: maui-appimages-git
+Pin: release *
+Pin-Priority: -1
+
 Package: plymouth-theme-spinner
 Pin: release *
 Pin-Priority: -1
@@ -246,6 +250,6 @@ Package: systemd-sysv
 Pin: release *
 Pin-Priority: -1
 
-Package: sysvinit-core
+Package: xterm
 Pin: release *
 Pin-Priority: -1
