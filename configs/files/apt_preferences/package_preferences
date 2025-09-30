@@ -58,6 +58,14 @@ Package: hypr*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: kded5
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: kio
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: libblkid-dev
 Pin: origin deb.debian.org
 Pin-Priority: -1
@@ -75,6 +83,10 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libfdisk1
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libkf5*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -107,6 +119,10 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: libpolkit-*
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: libqt5*
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
@@ -171,6 +187,10 @@ Pin: origin deb.debian.org
 Pin-Priority: -1
 
 Package: procps
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
+Package: qtwayland5
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
