@@ -42,3 +42,11 @@ Suites: duke
 Components: main
 Signed-By: /etc/apt/keyrings/nitrux-nvidia.gpg
 Enabled: yes
+
+Types: deb
+Description: Nitrux Calamares Qt5 Repo
+URIs: https://packagecloud.io/nitrux/calamares-qt5/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-calamares-qt5.gpg
+Enabled: yes
