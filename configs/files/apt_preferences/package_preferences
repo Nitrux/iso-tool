@@ -198,6 +198,10 @@ Package: procps
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: qttranslations5-l10n
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: qtwayland5
 Pin: origin deb.debian.org
 Pin-Priority: -1
