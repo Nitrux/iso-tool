@@ -22,6 +22,10 @@ Package: bsdutils
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: calamares
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: dbus
 Pin: origin deb.debian.org
 Pin-Priority: -1
