@@ -70,6 +70,10 @@ Package: kio
 Pin: origin deb.debian.org
 Pin-Priority: -1
 
+Package: kpackagetool5
+Pin: origin deb.debian.org
+Pin-Priority: -1
+
 Package: libblkid-dev
 Pin: origin deb.debian.org
 Pin-Priority: -1
