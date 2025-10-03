@@ -30,20 +30,18 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-# -- Install Calamares packages.
+# -- Install Calamares.
 #    -- For whatever absurd reason, Calamares built against Qt6 (stable, testing, unstable) is unable to receive input on the text fields when using the QML modules, regardless of the QML files using vanilla QML or Kirigami, or MauiKit.
 #    -- With that said, there are only two options: 
-#    	-- a) Use the settings package using QWidgets for the UI (Calamares' default), or 
-#    	-- b) Use a Calamares package built with Qt5 up to 3.3.9 (which is what I tested) and continue using the QML settings package.
+#       -- a) Use the settings package using QWidgets for the UI (Calamares' default; simpler setup, but barebones, no customization beyond changing some images and colors), or 
+#       -- b) Use a Calamares package built against Qt5 up to 3.3.9 (which is what I tested) and continue using the QML settings package (full module customization except for the partition module; requires Qt5 packages, which can—and will—cause a dependency conflict).
 
-# CALAMARES_PKGS=(
-# 	calamares/duke
-# 	calamares-qml5-settings-nitrux
-# 	dosfstools
-# 	efibootmgr
-# 	libpolkit-qt5-1-1/duke
-# 	squashfs-tools
-# 	qtwayland5
-# )
+CALAMARES_PKGS=(
+	calamares
+	calamares-settings-nitrux
+	dosfstools
+	efibootmgr
+	squashfs-tools
+)
 
-# install "${CALAMARES_PKGS[@]}"
+install "${CALAMARES_PKGS[@]}"
