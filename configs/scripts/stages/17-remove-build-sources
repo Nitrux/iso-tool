@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Remove build sources.
 #    -- Comment the command(s) to debug packages in a Live session.
 
-# find /etc/apt/sources.list.d/ -type f \( -name "*.list" -o -name "*.sources" \) -delete
+find /etc/apt/sources.list.d/ -type f \( -name "*.list" -o -name "*.sources" \) -delete
 
 
 # -- Remove leftover packages.
@@ -44,23 +44,23 @@ autoremove
 # -- Move APT and dpkg out of the way.
 #    -- Comment the command(s) to debug packages in a Live session.
 
-# mv /usr/bin/apt /opt/1
-# mv /usr/bin/apt-get /opt/2
-# mv /usr/bin/dpkg /opt/3
+mv /usr/bin/apt /opt/1
+mv /usr/bin/apt-get /opt/2
+mv /usr/bin/dpkg /opt/3
 
-# chmod -x /opt/{1,2,3}
+chmod -x /opt/{1,2,3}
 
 
 # -- Add install scripts here.
 #    -- Use undebianize from Calamares to delete these files from the root.
 #    -- Comment the command(s) to debug packages in a Live session.
 
-# DEST_DIR="/usr/bin"
-# LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
-# UNDEBIANIZE_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/undebianize"
+DEST_DIR="/usr/bin"
+LINKER_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/linker"
+UNDEBIANIZE_URL="https://raw.githubusercontent.com/Nitrux/storage/master/Scripts/undebianize"
 
-# wget -P "$DEST_DIR" "$LINKER_URL"
-# wget -P "$DEST_DIR" "$UNDEBIANIZE_URL"
+wget -P "$DEST_DIR" "$LINKER_URL"
+wget -P "$DEST_DIR" "$UNDEBIANIZE_URL"
 
-# chmod +x "$DEST_DIR/linker"
-# chmod +x "$DEST_DIR/undebianize"
+chmod +x "$DEST_DIR/linker"
+chmod +x "$DEST_DIR/undebianize"
