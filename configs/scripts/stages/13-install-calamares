@@ -41,6 +41,8 @@ CALAMARES_PKGS=(
 	calamares-settings-nitrux
 	dosfstools
 	efibootmgr
+	python3-toml
+	rsync
 	squashfs-tools
 )
 
