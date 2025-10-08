@@ -140,53 +140,46 @@ puts "ADDING NVIDIA DRIVERS."
 10-install-nvidia-drivers
 
 
-# -- Add AMD ROCm packages.
-
-puts "ADDING AMD ROCM PACKAGES."
-
-11-install-amd-rocm-packages
-
-
 # -- Add Nitrux Desktop meta-package.
 
 puts "ADDING NITRUX DESKTOP."
 
-12-install-desktop-session
+11-install-desktop-session
 
 
 # -- Add Calamares.
 
 puts "ADDING CALAMARES INSTALLER."
 
-13-install-calamares
+12-install-calamares
 
 
 # -- Add OpenRC configuration.
 
 puts "ADDING OPENRC CONFIG."
 
-14-install-init-config
+13-install-init-config
 
 
 # -- Add Live user configuration.
 
 puts "ADDING LIVE USER CONFIG."
 
-15-add-live-user
+14-add-live-user
 
 
 # -- Add initramfs scripts.
 
 puts "ADDING INITRAM SCRIPTS"
 
-16-update-initram-config
+15-update-initram-config
 
 
 # -- Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
 
-17-remove-build-sources
+16-remove-build-sources
 
 
 #################################
@@ -200,7 +193,7 @@ puts "REMOVE BUILD SOURCES."
 
 puts "ADDING MISC. FIXES."
 
-18-add-misc-fixes
+17-add-misc-fixes
 
 
 # -- Changes specific to this image. If they can be put in a package, do so.
@@ -208,7 +201,7 @@ puts "ADDING MISC. FIXES."
 
 puts "EDITING CONF. FILES."
 
-19-edit-conf-files
+18-edit-conf-files
 
 
 #############################
@@ -226,14 +219,14 @@ list_installed_text_end
 
 puts "PERFORM MANUAL CHECKS."
 
-20-manual-checks
+19-manual-checks
 
 
 # -- Create var data archive for NUTS.
 
 puts "CREATE VAR ARCHIVE."
 
-21-create-var-archive
+20-create-var-archive
 
 
 puts "EXITING BOOTSTRAP."
