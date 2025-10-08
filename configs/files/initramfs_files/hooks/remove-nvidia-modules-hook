@@ -37,7 +37,7 @@ esac
 
 # -- Begin real processing below this line
 
-OMIT_DRIVERS="nvidia.ko gsp-535.113.01.bin gsp_ga10x.bin gsp_tu10x.bin gsp-535.113.01.bin"
+OMIT_DRIVERS="nvidia.ko gsp_ga10x.bin gsp_tu10x.bin gsp-535.113.01.bin gsp-570.144.bin"
 for i in ${OMIT_DRIVERS}; do
    find "${DESTDIR}" -name "${i}" -delete
 done
