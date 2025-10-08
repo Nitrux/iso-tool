@@ -35,6 +35,8 @@ esac
 # shellcheck source=/dev/null
 . /usr/share/initramfs-tools/hook-functions
 
+# -- Begin real processing below this line
+
 THEME_NAME="$(awk -F= '/^[[:space:]]*Theme=/ && $0 !~ /^#/ { gsub(/[[:space:]]/, "", $2); print $2 }' /etc/plymouth/plymouthd.conf)"
 THEME_DIR="/usr/share/plymouth/themes/${THEME_NAME}"
 

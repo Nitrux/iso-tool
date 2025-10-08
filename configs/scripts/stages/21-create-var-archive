@@ -24,27 +24,14 @@
 
 set -eu
 
-# -- Source APT commands as functions.
+# -- Source useful functions.
 # shellcheck source=/dev/null
 
-source /configs/scripts/others/apt-funcs
+source /configs/scripts/others/misc-funcs
 
 
-# -- Install Nitrux base packages and use the packages for PolicyKit from Devuan because these don't require libsystemd0.
+# -- Create var data archive for NUTS.
 
-INSTALL_NITRUX_BASE_PKGS=(
-    base-files
-    nitrux-minimal
-    nitrux-standard
-)
+DISTRIB_RELEASE=$(grep 'DISTRIB_RELEASE' /etc/lsb-release | cut -d'=' -f2)
 
-INSTALL_DEVUAN_POLICYKIT_PKGS=(
-    libpam-elogind/duke
-    libpolkit-agent-1-0/duke
-    libpolkit-gobject-elogind-1-0/duke
-    libpolkit-qt6-1-1/duke
-    pkexec/duke
-    polkitd/duke
-)
-
-install "${INSTALL_NITRUX_BASE_PKGS[@]}" "${INSTALL_DEVUAN_POLICYKIT_PKGS[@]}"
+tar -cJf "var-lib-dpkg-$DISTRIB_RELEASE.tar.xz" -P /var/lib/dpkg/

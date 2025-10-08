@@ -36,27 +36,27 @@ source /configs/scripts/others/apt-funcs
 #    -- And providing a virtual service of the same name (via provide <name>)
 
 DELETE_SYSV_SCRIPTS=(
-	acpi-support
-	acpid
-	apparmor
-	bluetooth
-	console-setup.sh
-	cron
-	cryptdisks
-	cryptdisks-early
-	dbus
-	elogind
-	eudev
-	greetd
-	keyboard-setup.sh
-	plymouth
-	plymouth-log
-	procps
-	rsyslog
-	sddm
-	sudo
-	udev
-	uuidd
+    acpi-support
+    acpid
+    apparmor
+    bluetooth
+    console-setup.sh
+    cron
+    cryptdisks
+    cryptdisks-early
+    dbus
+    elogind
+    eudev
+    greetd
+    keyboard-setup.sh
+    plymouth
+    plymouth-log
+    procps
+    rsyslog
+    sddm
+    sudo
+    udev
+    uuidd
 )
 
 rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}"
@@ -68,7 +68,7 @@ rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}"
 # -- However, doing this means that OpenRC is using scripts for SysV, which makes the boot process slower. Isn't that nice? /s.
 
 INSTALL_OPENRC_CONFIG_PKGS=(
-	openrc-config
+    openrc-config
 )
 
 install "${INSTALL_OPENRC_CONFIG_PKGS[@]}"

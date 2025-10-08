@@ -228,6 +228,14 @@ puts "PERFORM MANUAL CHECKS."
 
 20-manual-checks
 
+
+# -- Create var data archive for NUTS.
+
+puts "CREATE VAR ARCHIVE."
+
+21-create-var-archive
+
+
 puts "EXITING BOOTSTRAP."
 
 puts ""

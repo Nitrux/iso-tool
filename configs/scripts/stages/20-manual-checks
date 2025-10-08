@@ -37,16 +37,16 @@ FILE_ONWERSHIP_TO_CHECK=()
 check_ownership "${FILE_ONWERSHIP_TO_CHECK[@]}"
 
 FILE_CONTENT_TO_CHECK=(
-  /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
-  /etc/casper.conf
-  /etc/adduser.conf
-  /etc/elogind/logind.conf
-  /etc/elogind/sleep.conf
-  /etc/elogind/sleep.conf.d/10-elogind.conf
-  /etc/greetd/config.toml
-  /etc/initramfs-tools/modules
-  /etc/plymouth/plymouthd.conf
-  /etc/qtgreet/config.ini
+    /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
+    /etc/casper.conf
+    /etc/adduser.conf
+    /etc/elogind/logind.conf
+    /etc/elogind/sleep.conf
+    /etc/elogind/sleep.conf.d/10-elogind.conf
+    /etc/greetd/config.toml
+    /etc/initramfs-tools/modules
+    /etc/plymouth/plymouthd.conf
+    /etc/qtgreet/config.ini
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
@@ -56,9 +56,9 @@ FILE_TO_CHECK=()
 check_files "${FILE_TO_CHECK[@]}"
 
 LINKS_TO_CHECK=(
-  /usr/share/plymouth/themes/default.plymouth
-  /usr/share/plymouth/themes/text.plymouth
-  /usr/share/plymouth/themes/bgrt.plymouth
+    /usr/share/plymouth/themes/default.plymouth
+    /usr/share/plymouth/themes/text.plymouth
+    /usr/share/plymouth/themes/bgrt.plymouth
 )
 
 check_symlinks "${LINKS_TO_CHECK[@]}"

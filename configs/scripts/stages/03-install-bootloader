@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Add bootloader.
 
 INSTALL_GRUB2_PKGS=(
-	grub-efi-amd64
+    grub-efi-amd64
 )
 
 install "${INSTALL_GRUB2_PKGS[@]}"
@@ -42,9 +42,9 @@ install "${INSTALL_GRUB2_PKGS[@]}"
 # -- Add packages for Secure Boot compatibility.
 
 INSTALL_SECURE_BOOT_SHIM_PKGS=(
-	mokutil
-	sbsigntool
-	shim-signed
+    mokutil
+    sbsigntool
+    shim-signed
 )
 
 install "${INSTALL_SECURE_BOOT_SHIM_PKGS[@]}"

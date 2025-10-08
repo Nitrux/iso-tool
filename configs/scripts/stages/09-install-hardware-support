@@ -33,13 +33,13 @@ source /configs/scripts/others/apt-funcs
 # -- Install Nitrux hardware support packages.
 
 INSTALL_NITRUX_HW_SUPPORT_PKGS=(
-	nitrux-hardware-drivers
-	nitrux-xserver-drivers
+    nitrux-hardware-drivers
+    nitrux-xserver-drivers
 )
 
 INSTALL_ADDITIONAL_HW_SUPPORT_PKGS=(
-	broadcom-sta-dkms/duke
-	multipath-tools/duke
+    broadcom-sta-dkms/duke
+    multipath-tools/duke
 )
 
 install "${INSTALL_NITRUX_HW_SUPPORT_PKGS[@]}" "${INSTALL_ADDITIONAL_HW_SUPPORT_PKGS[@]}"

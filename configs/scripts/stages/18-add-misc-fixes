@@ -55,11 +55,6 @@ update_console_settings FONTFACE 'Terminus'
 update_console_settings FONTSIZE '16'
 
 
-# -- Add motd.
-
-cat /configs/files/other/motd > /etc/motd
-
-
 # -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter when using greetd.
 # -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
 
@@ -272,4 +267,171 @@ for file in "${FILES[@]}"; do
     if [ -f "$desktop_file" ]; then
         cp "$desktop_file" "$LAUNCHER_DIR/"
     fi
+done
+
+
+# -- Replace user-setup-apply so that it shuts up about dpkg.
+
+mkdir -p /usr/lib/user-setup/
+
+cp /configs/files/other/user-setup-apply /usr/lib/user-setup/user-setup-apply
+
+
+# -- Replace update-grub with our version that doesn't break *OUR* distribution.
+
+cp /configs/files/grub_files/update-grub /usr/sbin/update-grub
+
+
+# -- Replace /usr/lib/grub/grub-sort-version with a version that doesn't use apt.pkg so it can generate a usable boot menu.
+
+cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
+
+
+# -- Add user for OpenRazer (which is missing for some reason!).
+
+# if id -u razer >/dev/null 2>&1; then
+#     echo "User razer already exists."
+# else
+#     useradd -r -s /bin/false -M razer
+#     echo "User razer created successfully."
+# fi
+
+# usermod -L razer
+
+
+# -- Add user for AIDE (which is missing for some reason!).
+
+
+# if id -u _aide >/dev/null 2>&1; then
+#     echo "User _aide already exists."
+# else
+#     useradd -r -s /bin/false -M _aide
+#     echo "User _aide created successfully."
+# fi
+
+# usermod -L _aide
+
+
+# -- Replace aide.conf and 10_aide_hostname.
+
+# cp /configs/files/conf/aide.conf /etc/aide/aide.conf
+# cp /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
+
+
+# -- Replace dnscrypt-proxy default configuration.
+
+# cat /configs/files/other/dnscrypt-proxy-settings/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+
+# cp /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
+# cp /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
+
+
+# -- Add variable to PAM for Firefox to work with touchscreens in Wayland.
+
+# sed -i "$ a \  " /etc/security/pam_env.conf
+# sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
+# sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
+
+
+# -- Fix issue with AppArmor profile for Samba that is too restrictive.
+
+# APPARMOR_PROFILE="/etc/apparmor.d/usr.sbin.smbd"
+
+# sed -i '/capability setuid,/a\  capability sys_ptrace,' "$APPARMOR_PROFILE"
+# sed -i 's|@{HOMEDIRS}/\*\* .*|@{HOMEDIRS}/** rwk,|' "$APPARMOR_PROFILE"
+
+
+# -- Disable the virtualization extensions (like Intel VT-x or AMD-V) from loading automatically when the KVM module is loaded into the kernel.
+#   -- NOTE: This is to make VirtualBox work.
+
+# sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
+
+
+# -- Enforce sync only for specific filesystems, like vfat.
+
+sed -i '/^\[defaults\]/a\vfat_defaults=sync' /etc/udisks2/udisks2.conf
+
+
+# -- Add nvidia_oc binary to overclock NVIDIA GPUs on Wayland.
+
+FILE_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.11/nvidia_oc"
+DEST_DIR="/usr/bin"
+DEST_FILE="$DEST_DIR/nvidia-oc"
+if curl -L -o "$DEST_FILE" "$FILE_URL"; then
+    chmod +x "$DEST_FILE"
+else
+    exit 1
+fi
+
+
+# -- Disable AppArmor profile for bubblewrap that breaks Flatpak, see https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2072811
+
+ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
+
+
+# -- Link the existing AppArmor profile for Firejail so it actually works.
+
+ln -s /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
+
+
+# -- Create directory for os-prober.
+
+mkdir -p /var/lib/os-prober/mount
+
+
+# -- Change path where NetworkManager saves wireless connections.
+
+echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf
+
+
+# -- Replace this line in mkinitramfs so it shuts up about dpkg.
+
+sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
+
+
+# -- Enable ufw by default.
+
+ufw enable
+
+
+# -- Remove unwanted kernel and initrd links from /boot and /.
+
+rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
+      /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
+
+
+# -- Ensure the links in / point to the files in /boot.
+
+boot_dir="/boot"
+vmlinuz_pattern="vmlinuz-*liquorix-*"
+initrd_pattern="initrd.img-*liquorix-*"
+
+vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$vmlinuz_pattern" | head -1)
+initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$initrd_pattern" | head -1)
+
+if [ -n "$vmlinuz_file" ]; then
+    echo "Creating/updating symlink for /vmlinuz"
+    create_symlink "$vmlinuz_file" "/vmlinuz"
+else
+    echo "Error: No matching vmlinuz file found in $boot_dir."
+fi
+
+if [ -n "$initrd_file" ]; then
+    echo "Creating/updating symlink for /initrd.img"
+    create_symlink "$initrd_file" "/initrd.img"
+else
+    echo "Error: No matching initrd.img file found in $boot_dir."
+fi
+
+
+# -- Create necessary directories to put files for kboot and create soft links for liquorix kernel files.
+
+mkdir -p /kboot/{debian,mainline,liquorix}
+
+for file in /boot/vmlinuz-*liquorix-amd64; do
+    create_symlink "$file" "/kboot/liquorix/vmlinuz"
+done
+
+for file in /boot/initrd.img-*liquorix-amd64; do
+    create_symlink "$file" "/kboot/liquorix/initrd.img"
 done

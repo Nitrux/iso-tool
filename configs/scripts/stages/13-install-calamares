@@ -37,13 +37,13 @@ source /configs/scripts/others/apt-funcs
 #       -- b) Use a Calamares package built against Qt5 up to 3.3.9 (which is what I tested) and continue using the QML settings package (full module customization except for the partition module; requires Qt5 packages, which can—and will—cause a dependency conflict).
 
 CALAMARES_PKGS=(
-	calamares
-	calamares-settings-nitrux
-	dosfstools
-	efibootmgr
-	python3-toml
-	rsync
-	squashfs-tools
+    calamares
+    calamares-settings-nitrux
+    dosfstools
+    efibootmgr
+    python3-toml
+    rsync
+    squashfs-tools
 )
 
 install "${CALAMARES_PKGS[@]}"

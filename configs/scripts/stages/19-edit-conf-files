@@ -37,7 +37,7 @@ cat /configs/files/casper_files/casper.conf > /etc/casper.conf
 
 # -- Use our configuration for adduser because Debian's broken for some reason.
 
-cat /configs/files/other_conf/adduser.conf > /etc/adduser.conf
+cat /configs/files/other/adduser.conf > /etc/adduser.conf
 
 
 # -- Replace elogind default configuration.
@@ -56,3 +56,13 @@ cat /configs/files/other/common-password > /etc/pam.d/common-password
 # -- Replace pwquality.conf.
 
 cat /configs/files/other/pwquality.conf > /etc/security/pwquality.conf
+
+
+# -- Add GRUB configuration.
+
+cat /configs/files/grub_files/grub > /etc/default/grub
+
+
+# -- Add motd.
+
+cat /configs/files/other/motd > /etc/motd

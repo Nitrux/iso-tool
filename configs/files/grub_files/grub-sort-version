@@ -1,0 +1,51 @@
+#!/usr/bin/python3
+#
+"""Script to sort kernel versions."""
+import argparse
+import re
+import sys
+import os
+import typing
+
+def order_index(order: list[re.Pattern[str]], abi: str) -> int:
+    """Return the index of abi in order"""
+    for i, entry in zip(range(len(order)), order):
+        if entry.match(abi):
+            return i
+    return len(order)
+
+class KernelABI:
+    """Orderable kernel ABI string."""
+
+    def __init__(self, abi: str, order: list[re.Pattern[str]]):
+        self.abi = abi
+        self._index = order_index(order, self.abi)
+
+    def __lt__(self, other: "KernelABI") -> bool:
+        if self._index != other._index:
+            # Ordering is reversed, what should be considered highest comes first.
+            return self._index > other._index
+        # Placeholder for version comparison logic
+        return False
+
+def main() -> None:
+    """Entry point."""
+
+    parser = argparse.ArgumentParser(
+        prog="grub-sort-version", description="sort kernel ABIs"
+    )
+    parser.add_argument("-r", "--reverse", action="store_true")
+    args = parser.parse_args()
+
+    order = []
+    for flavour in os.environ.get("GRUB_FLAVOUR_ORDER", "").split():
+        order.append(re.compile(f"[0-9]*-{flavour}$"))
+
+    versions = [KernelABI(line.rstrip(), order) for line in sys.stdin]
+    versions.sort(reverse=args.reverse)
+
+    for v in versions:
+        print(v.abi)
+
+if __name__ == "__main__":
+    main()

@@ -33,10 +33,10 @@ source /configs/scripts/others/apt-funcs
 # -- Add casper for the Live session.
 
 INSTALL_CASPER_PKGS=(
-	casper/duke
-	eject/duke
-	fdisk/duke
-	uuid-runtime/duke
+    casper/duke
+    eject/duke
+    fdisk/duke
+    uuid-runtime/duke
 )
 
 install "${INSTALL_CASPER_PKGS[@]}" 

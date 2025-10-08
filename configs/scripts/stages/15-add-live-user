@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Add Live user.
 
 INSTALL_LIVE_USER=(
-	nitrux-live-user
+    nitrux-live-user
 )
 
 install "${INSTALL_LIVE_USER[@]}" 

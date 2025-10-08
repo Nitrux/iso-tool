@@ -33,39 +33,39 @@ source /configs/scripts/others/apt-funcs
 # -- Specify the packages from Devuan because Debian made libsystemd0 mandatory for APT, PAM, login, bsdutils, coreutils, and procps for no reason since neither truly requires it (because why not, right?).
 
 INSTALL_DEVUAN_APT_PKGS=(
-	apt/duke
-	libapt-pkg7.0/duke
+    apt/duke
+    libapt-pkg7.0/duke
 )
 
 INSTALL_DEVUAN_UTILS_PKGS=(
-	bsdutils/duke
-	coreutils/duke
-	login/duke
-	mount/duke
-	util-linux/duke
-	procps/duke
+    bsdutils/duke
+    coreutils/duke
+    login/duke
+    mount/duke
+    util-linux/duke
+    procps/duke
 )
 
 INSTALL_DEVUAN_UDEV_PKGS=(
-	eudev/duke
-	udev/duke
-	libudev1/duke
+    eudev/duke
+    udev/duke
+    libudev1/duke
 )
 
 INSTALL_DEVUAN_PAM_PKGS=(
-	libpam-modules/duke
-	libpam-modules-bin/duke
-	libpam-runtime/duke
-	libpam0g/duke
+    libpam-modules/duke
+    libpam-modules-bin/duke
+    libpam-runtime/duke
+    libpam0g/duke
 )
 
 INSTALL_DEVUAN_ELOGIND_PKGS=(
-	elogind/duke
+    elogind/duke
 )
 
 INSTALL_DEVUAN_DBUS_PKGS=(
-	dbus/duke
-	dbus-daemon/duke
+    dbus/duke
+    dbus-daemon/duke
 )
 
 install_downgrades "${INSTALL_DEVUAN_APT_PKGS[@]}" "${INSTALL_DEVUAN_UTILS_PKGS[@]}" "${INSTALL_DEVUAN_UDEV_PKGS[@]}" "${INSTALL_DEVUAN_PAM_PKGS[@]}" "${INSTALL_DEVUAN_ELOGIND_PKGS[@]}" "${INSTALL_DEVUAN_DBUS_PKGS[@]}"
@@ -74,7 +74,7 @@ install_downgrades "${INSTALL_DEVUAN_APT_PKGS[@]}" "${INSTALL_DEVUAN_UTILS_PKGS[
 # -- Remove libsystemd0 from the rootfs.
 
 REMOVE_SYSTEMD_PKGS=(
-	libsystemd0
+    libsystemd0
 )
 
 dpkg_force_remove "${REMOVE_SYSTEMD_PKGS[@]}"
@@ -83,7 +83,7 @@ dpkg_force_remove "${REMOVE_SYSTEMD_PKGS[@]}"
 # -- Add docker-systemctl-replacement to make maintainer scripts shut up about it.
 
 INSTALL_DOCKER_SYSTEMCTL_PKG=(
-	systemctl
+    systemctl
 )
 
 install "${INSTALL_DOCKER_SYSTEMCTL_PKG[@]}"
