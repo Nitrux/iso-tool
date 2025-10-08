@@ -42,3 +42,19 @@ Suites: duke
 Components: main
 Signed-By: /etc/apt/keyrings/nitrux-nvidia.gpg
 Enabled: yes
+
+Types: deb
+Description: Nitrux AMD ROCm Repo
+URIs: https://packagecloud.io/nitrux/amd-rocm/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-amd-rocm.gpg
+Enabled: yes
+
+Types: deb
+Description: Nitrux Hyprland Repo
+URIs: https://packagecloud.io/nitrux/hyprland/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-hyprland.gpg
+Enabled: yes
