@@ -34,6 +34,7 @@ source /configs/scripts/others/apt-funcs
 
 INSTALL_NVIDIA_OPEN_PKGS=(
     nvidia-open-driver-580
+    nvidia-open-kernel-dkms-580
     nvidia-alternative-580
 )
 
