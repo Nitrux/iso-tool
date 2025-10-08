@@ -101,6 +101,7 @@ INSTALL_DESKTOP_PKGS=(
     sudo-openrc
     sway-notification-center
     systemsettings
+    ufw
     waybar
     wireplumber
     wl-clipboard
@@ -118,7 +119,6 @@ INSTALL_DESKTOP_PKGS=(
     xsettingsd
     xwaylandvideobridge
     zsh
-    ufw
 )
 
 INSTALL_DESKTOP_APPS=(
