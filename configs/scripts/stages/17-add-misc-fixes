@@ -313,7 +313,7 @@ cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 # -- Disable the virtualization extensions (like Intel VT-x or AMD-V) from loading automatically when the KVM module is loaded into the kernel.
 #   -- NOTE: This is to make VirtualBox work.
 
-sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
+# sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
 
 
 # -- Enforce sync only for specific filesystems, like vfat.
