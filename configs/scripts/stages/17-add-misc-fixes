@@ -56,7 +56,7 @@ update_console_settings FONTSIZE '16'
 
 
 # -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter when using greetd.
-# -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
+#    -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
 
 DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
 

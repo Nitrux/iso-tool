@@ -189,7 +189,7 @@ puts "REMOVE BUILD SOURCES."
 
 
 # -- Changes specific to this image. If they can be put in a package, do so.
-# -- FIXME: These fixes should be included in a package.
+#    -- Note: These fixes should be included in a package.
 
 puts "ADDING MISC. FIXES."
 
@@ -197,7 +197,7 @@ puts "ADDING MISC. FIXES."
 
 
 # -- Changes specific to this image. If they can be put in a package, do so.
-# -- FIXME: These fixes should be included in a package.
+#    -- Note: These fixes should be included in a package.
 
 puts "EDITING CONF. FILES."
 

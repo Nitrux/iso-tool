@@ -48,7 +48,7 @@ cat /configs/files/elogind_files/10-elogind.conf > /etc/elogind/sleep.conf.d/10-
 
 
 # -- Replace common-password.
-# -- Increase size of hashing rounds in /etc/pam.d/common-password. See https://cisofy.com/lynis/controls/AUTH-9230/
+#    -- Increase size of hashing rounds in /etc/pam.d/common-password. See https://cisofy.com/lynis/controls/AUTH-9230/
 
 cat /configs/files/other/common-password > /etc/pam.d/common-password
 

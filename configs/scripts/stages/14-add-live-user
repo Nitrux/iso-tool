@@ -45,7 +45,7 @@ cat /configs/files/casper_files/15autologin > /usr/share/initramfs-tools/scripts
 
 
 # -- Define the desired session in SDDM for the Live user. Since casper is an Ubuntu project, it caters to their flavors, which use Plasma.
-# -- This section is irrelevant if using greetd instead of SDDM.
+#    -- This section is irrelevant if using greetd instead of SDDM.
 
 # LIVE_SESSION="Hyprland.desktop"
 

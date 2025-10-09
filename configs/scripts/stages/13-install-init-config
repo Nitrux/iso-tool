@@ -31,9 +31,9 @@ source /configs/scripts/others/apt-funcs
 
 
 # -- Delete these SysV scripts, otherwise they cause conflicts when updating the service dependencies.
-# -- OpenRC explicitly disallows a service from being both:
-#    -- A real service (defined by /etc/init.d/<name>)
-#    -- And providing a virtual service of the same name (via provide <name>)
+#    -- OpenRC explicitly disallows a service from being both:
+#       -- A real service (defined by /etc/init.d/<name>)
+#       -- And providing a virtual service of the same name (via provide <name>)
 
 DELETE_SYSV_SCRIPTS=(
     acpi-support
@@ -63,9 +63,9 @@ rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}"
 
 
 # -- Add OpenRC configuration. 
-# -- We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
-# -- Debian purposely didn't add the upstream OpenRC service scripts and instead made their package rely on initscripts to avoid causing a conflict with SysV. 
-# -- However, doing this means that OpenRC is using scripts for SysV, which makes the boot process slower. Isn't that nice? /s.
+#    -- We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
+#    -- Debian purposely didn't add the upstream OpenRC service scripts and instead made their package rely on initscripts to avoid causing a conflict with SysV. 
+#    -- However, doing this means that OpenRC is using scripts for SysV, which makes the boot process slower. Isn't that nice? /s.
 
 INSTALL_OPENRC_CONFIG_PKGS=(
     openrc-config

@@ -97,7 +97,7 @@ cp "$PWD/tooling/"* /usr/bin/
 
 
 # -- Build the root.
-# -- Wrap runch and its mount namespace in a subshell.
+#    -- Wrap runch and its mount namespace in a subshell.
 
 ( < bootstrap \
   unshare --mount -- bash -c 'printf "\n>--- Starting Runch ---\n"; exec runch "$@"' _ \
@@ -125,7 +125,7 @@ mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
 
 
 # -- Copy the kernel and initramfs to $iso_dir.
-# -- NOTE: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
+#    -- Note: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
 mkdir -p "$iso_dir"/boot
 

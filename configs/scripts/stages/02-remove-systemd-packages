@@ -90,6 +90,6 @@ install "${INSTALL_DOCKER_SYSTEMCTL_PKG[@]}"
 
 
 # -- Fix the warnings (SyntaxWarning: invalid escape sequence '\w') in https://github.com/gdraheim/docker-systemctl-replacement due to unescaped regex backslashes in normal string literals in Python.
-# -- Python 3.12+ warns about these because "\w" is interpreted as a string escape (which is undefined), not a regex pattern.
+#    -- Python 3.12+ warns about these because "\w" is interpreted as a string escape (which is undefined), not a regex pattern.
 
 sed -i -E 's/re\.sub\("([^"]*\\w[^"]*)"/re.sub(r"\1"/g' /usr/bin/systemctl
