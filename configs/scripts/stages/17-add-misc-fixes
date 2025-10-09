@@ -409,3 +409,9 @@ done
 for file in /boot/initrd.img-*liquorix-amd64; do
     create_symlink "$file" "/kboot/liquorix/initrd.img"
 done
+
+
+# -- Remove Htop launcher.
+#    -- Why the hell does a CLI resource monitor have a god damn desktop launcher to begin with?!
+
+rm -f /usr/share/applications/htop.desktop
