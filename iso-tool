@@ -119,6 +119,11 @@ mv "$build_dir"/installed_pkgs_start.txt "$output_dir"/"${image%.iso}.rootfs.bui
 mv "$build_dir"/installed_pkgs_end.txt "$output_dir"/"${image%.iso}.buildlist"
 
 
+# -- Get data archive from build directory.
+
+mv "$build_dir"/var-lib-dpkg-*.tar.xz "$output_dir"
+
+
 # -- Copy the kernel and initramfs to $iso_dir.
 # -- NOTE: vmlinuz and initrd are not moved to $iso_dir/; they're left at $build_dir/boot
 
