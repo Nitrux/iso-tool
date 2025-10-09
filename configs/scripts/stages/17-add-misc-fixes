@@ -183,6 +183,11 @@ done
 cp /configs/files/other/hidden /.hidden
 
 
+# -- Create /Applications directory.
+
+mkdir -p /Applications
+
+
 # -- Mitigate Bluetooth devices disconnecting randomly.
 
 MAIN_CONF="/etc/bluetooth/main.conf"
