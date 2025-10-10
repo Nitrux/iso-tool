@@ -345,7 +345,7 @@ ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
 
 # -- Link the existing AppArmor profile for Firejail so it actually works.
 
-ln -s /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
+mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
 
 
 # -- Create directory for os-prober.

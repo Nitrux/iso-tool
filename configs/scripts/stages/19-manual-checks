@@ -76,3 +76,4 @@ check_initramfs_size
 # -- Search the initramfs for something.
 
 search_initramfs_for plymouth
+search_initramfs_for crypttab
