@@ -41,9 +41,7 @@ add_nitrux_key hyprland
 
 # -- Add third-party repository keys.
 
-add_third_party_repo_keys \
-    7CE0331F71E0A238BB1002D70E406D181DCEE19C \
-    9AE4078033F8024D > /dev/null
+add_third_party_repo_keys 9AE4078033F8024D > /dev/null
 
 
 # -- Add build sources.
