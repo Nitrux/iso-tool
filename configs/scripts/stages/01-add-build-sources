@@ -40,11 +40,6 @@ add_nitrux_key nvidia
 add_nitrux_key hyprland
 
 
-# -- Add third-party repository keys.
-
-add_third_party_repo_keys 7CE0331F71E0A238BB1002D70E406D181DCEE19C > /dev/null
-
-
 # -- Add build sources.
 
 cp /configs/files/sources/* /etc/apt/sources.list.d/
