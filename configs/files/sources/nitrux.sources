@@ -36,14 +36,6 @@ Signed-By: /etc/apt/keyrings/nitrux-mauikit.gpg
 Enabled: yes
 
 Types: deb
-Description: Nitrux NVIDIA Repo
-URIs: https://packagecloud.io/nitrux/nvidia/debian/
-Suites: duke
-Components: main
-Signed-By: /etc/apt/keyrings/nitrux-nvidia.gpg
-Enabled: yes
-
-Types: deb
 Description: Nitrux Hyprland Repo
 URIs: https://packagecloud.io/nitrux/hyprland/debian/
 Suites: duke
