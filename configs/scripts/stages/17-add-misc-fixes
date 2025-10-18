@@ -198,6 +198,7 @@ if [ -f "$MAIN_CONF" ]; then
         -e 's/^#DiscoverableTimeout = 0/DiscoverableTimeout = 0/' \
         -e 's/^#PairableTimeout = 0/PairableTimeout = 0/' \
         -e 's/^#ControllerMode = dual/ControllerMode = bredr/' \
+        -e 's/^#AutoEnable=true/AutoEnable=true/' \
         "$MAIN_CONF"
 fi
 
