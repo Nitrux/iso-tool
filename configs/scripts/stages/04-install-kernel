@@ -36,4 +36,4 @@ INSTALL_KERNEL_PKGS=(
     linux-liquorix-amd64
 )
 
-install "${INSTALL_KERNEL_PKGS[@]}" "${EXTRA_KERNEL_PKGS[@]}"
+install "${INSTALL_KERNEL_PKGS[@]}"
