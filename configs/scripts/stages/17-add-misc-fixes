@@ -327,18 +327,6 @@ cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 sed -i '/^\[defaults\]/a\vfat_defaults=sync' /etc/udisks2/udisks2.conf
 
 
-# -- Add nvidia_oc binary to overclock NVIDIA GPUs on Wayland.
-
-FILE_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.11/nvidia_oc"
-DEST_DIR="/usr/bin"
-DEST_FILE="$DEST_DIR/nvidia-oc"
-if curl -L -o "$DEST_FILE" "$FILE_URL"; then
-    chmod +x "$DEST_FILE"
-else
-    exit 1
-fi
-
-
 # -- Disable AppArmor profile for bubblewrap that breaks Flatpak, see https://bugs.launchpad.net/ubuntu/+source/apparmor/+bug/2072811
 
 ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
