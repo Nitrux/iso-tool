@@ -404,3 +404,8 @@ done
 #    -- Why the hell does a CLI resource monitor have a god damn desktop launcher to begin with?!
 
 rm -f /usr/share/applications/htop.desktop
+
+
+# -- Remove rootfs leftovers
+
+rm -f /var/log/bootstrap.log
