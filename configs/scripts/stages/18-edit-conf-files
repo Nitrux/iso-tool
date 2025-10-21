@@ -47,10 +47,10 @@ cat /configs/files/elogind_files/sleep.conf > /etc/elogind/sleep.conf
 cat /configs/files/elogind_files/10-elogind.conf > /etc/elogind/sleep.conf.d/10-elogind.conf
 
 
-# -- Replace common-password.
-#    -- Increase size of hashing rounds in /etc/pam.d/common-password. See https://cisofy.com/lynis/controls/AUTH-9230/
+# -- Replace pam.d files with our hardened files.
 
-cat /configs/files/other/common-password > /etc/pam.d/common-password
+cat /configs/files/other/pam.d/common-password > /etc/pam.d/common-password
+cat /configs/files/other/pam.d/common-auth > /etc/pam.d/common-auth
 
 
 # -- Replace pwquality.conf.
