@@ -28,12 +28,6 @@
 set -e
 
 
-# -- Create directory to stare repository keys.
-
-KEYRING_DIR="/etc/apt/keyrings"
-mkdir -p "${KEYRING_DIR}"
-
-
 # -- Add our repository keys.
 
 add_nitrux_key () {
