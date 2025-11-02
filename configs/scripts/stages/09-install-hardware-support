@@ -81,3 +81,16 @@ dkms build -m zenergy -v 1.0
 dkms install --force -m zenergy -v 1.0
 echo "zenergy" | tee /etc/modules-load.d/zenergy.conf
 cd "$ORIGINAL_DIR"
+
+
+# -- Install AX88179_178A Linux driver for AX88179 USB 3.0 Ethernet adapters.
+# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+
+TEMP_DIR4=$(mktemp -d)
+git clone https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR4"
+cp -r "$TEMP_DIR4" /usr/src/asix-ax88179-dkms-3.4.0
+dkms add -m asix-ax88179-dkms -v 3.4.0
+dkms build -m asix-ax88179-dkms -v 3.4.0
+dkms install --force -m asix-ax88179-dkms -v 3.4.0
+mv /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
+cd "$ORIGINAL_DIR"
