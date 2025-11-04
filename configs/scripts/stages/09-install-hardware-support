@@ -69,7 +69,8 @@ FIRMWARE_HASH='48084d9fa53b9bb04358f3bb127b7495dc8f7bb0b3ca1437bd24ef2b6eabdf66'
 curl -L -o driver.cab "$DRIVER_URL"
 cabextract -F FW_ACC_00U.bin driver.cab
 echo "$FIRMWARE_HASH  FW_ACC_00U.bin" | sha256sum -c
-mv FW_ACC_00U.bin /lib/firmware/xow_dongle.bin
+mv FW_ACC_00U.bin /usr/lib/firmware/xow_dongle.bin
+ln -sv /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xow_dongle_045e_02e6.bin
 rm driver.cab
 
 
