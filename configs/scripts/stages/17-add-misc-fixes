@@ -165,8 +165,8 @@ DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
 
 rm -f  \
     "${DELETE_UNUSED_KCMS_LAUNCHERS[@]/#//usr/share/applications/}" \
-    "${DELETE_UNUSED_KCMS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings}" \
-    "${DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings_qwidgets}" \
+    "${DELETE_UNUSED_KCMS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/}" \
+    "${DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings_qwidgets/}" \
     "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
 
 
