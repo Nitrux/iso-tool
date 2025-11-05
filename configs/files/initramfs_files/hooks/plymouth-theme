@@ -25,11 +25,11 @@
 PREREQ=""
 
 prereqs() {
-	echo "${PREREQ}"
+    echo "${PREREQ}"
 }
 
 case "$1" in
-	prereqs) prereqs; exit 0 ;;
+    prereqs) prereqs; exit 0 ;;
 esac
 
 # shellcheck source=/dev/null

@@ -22,14 +22,14 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-PREREQ=""
+PREREQ="firmware"
 
 prereqs() {
-	echo "${PREREQ}"
+    echo "${PREREQ}"
 }
 
 case "$1" in
-	prereqs) prereqs; exit 0 ;;
+    prereqs) prereqs; exit 0 ;;
 esac
 
 # shellcheck source=/dev/null
@@ -37,7 +37,12 @@ esac
 
 # -- Begin real processing below this line
 
-OMIT_DRIVERS="nvidia.ko gsp_ga10x.bin gsp_tu10x.bin gsp-535.113.01.bin gsp-570.144.bin"
-for i in ${OMIT_DRIVERS}; do
-   find "${DESTDIR}" -name "${i}" -delete
+PATTERNS="nvidia.ko nvidia.ko.* gsp*.bin"
+SEARCH_DIRS="${DESTDIR}/lib/firmware/nvidia ${DESTDIR}/lib/modules"
+
+for dir in ${SEARCH_DIRS}; do
+    [ -d "$dir" ] || continue
+    for pat in ${PATTERNS}; do
+        find "$dir" -type f -name "$pat" -delete 2>/dev/null || true
+    done
 done
