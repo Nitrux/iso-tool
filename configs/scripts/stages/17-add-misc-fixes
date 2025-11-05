@@ -182,6 +182,7 @@ DELETE_CLI_UTILS_LAUNCHERS=(
 rm -f  \
     "${DELETE_CLI_UTILS_LAUNCHERS[@]/#//usr/share/applications/}" \
 
+
 # -- Set QtGreet theme.
 
 QTGREET_CONFIG="/etc/qtgreet/config.ini"
@@ -446,3 +447,8 @@ rm -f /var/log/bootstrap.log
 # -- Add modules to load at boot time.
 
 printf '%s\n' amdgpu i915 fuse exfat loop  >> /etc/modules-load.d/load-modules-at-boot.conf
+
+
+# -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
+
+rm -f /usr/share/applications/org.kde.kwalletmanager.desktop
