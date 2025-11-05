@@ -453,3 +453,8 @@ rm -f /usr/share/applications/htop.desktop
 # -- Remove rootfs leftovers
 
 rm -f /var/log/bootstrap.log
+
+
+# -- Add modules to load at boot time.
+
+printf '%s\n' amdgpu i915 fuse exfat loop  >> /etc/modules-load.d/load-modules-at-boot.conf

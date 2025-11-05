@@ -77,3 +77,4 @@ check_initramfs_size
 
 search_initramfs_for plymouth
 search_initramfs_for crypttab
+search_initramfs_for nvidia
