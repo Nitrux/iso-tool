@@ -87,7 +87,7 @@ rm -f /usr/share/wayland-sessions/plasma.desktop
 
 # -- Disable the KCMs that we don't use.
 
-DELETE_UNUSED_KCMS=(
+DELETE_UNUSED_KCMS_LAUNCHERS=(
     kcm_autostart.desktop
     kcm_breezedecoration.desktop
     kcm_desktoptheme.desktop
@@ -113,29 +113,61 @@ DELETE_UNUSED_KCMS=(
     kcm_webshortcuts.desktop
 )
 
+DELETE_UNUSED_KCMS_LIBEXEC=(
+    kcm_autostart.so
+    kcm_breezedecoration.so
+    kcm_desktoptheme.so
+    kcm_feedback.so
+    kcm_fontinst.so
+    kcm_kwin_effects.so
+    kcm_kwin_scripts.so
+    kcm_kwin_virtualdesktops.so
+    kcm_kwindecoration.so
+    kcm_kwinoptions.so
+    kcm_kwinrules.so
+    kcm_kwintabbox.so
+    kcm_kwinxwayland.so
+    kcm_lookandfeel.so
+    kcm_netpref.so
+    kcm_nightlight.so
+    kcm_notifications.so
+    kcm_proxy.so
+    kcm_regionandlang.so
+    kcm_trash.so
+    kcm_virtualkeyboard.so
+    kcm_wallpaper.so
+    kcm_webshortcuts.so
+)
+
+
+DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC=(
+    kcm_kwinoptions.so
+    kcm_kwinscreenedges.so
+    kcm_kwintabbox.so
+    kcm_kwintouchscreen.so
+    kwincompositing.so
+)
+
+
 DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
-    settings-applications-defaults.desktop
     settings-applications-permissions.desktop
-    settings-applications.desktop
     settings-hardware-display.desktop
     settings-hardware-input-pointing-devices.desktop
     settings-hardware-input-touchscreen.desktop
-    settings-hardware-input.desktop
     settings-hardware-keyboard.desktop
-    settings-hardware-multimedia.desktop
-    settings-hardware-removable-storage.desktop
     settings-personalization.desktop
-    settings-regionalsettings.desktop
-    settings-root-category.desktop
-    settings-security-privacy.desktop
-    settings-system-administration.desktop
     settings-workspace-search.desktop
     settings-workspace-session.desktop
     settings-workspace-windowmanagement.desktop
     settings-workspace.desktop
+    settings-hardware-removable-storage.desktop
 )
 
-rm -f  "${DELETE_UNUSED_KCMS[@]/#//usr/share/applications/}" "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
+rm -f  \
+    "${DELETE_UNUSED_KCMS_LAUNCHERS[@]/#//usr/share/applications/}" \
+    "${DELETE_UNUSED_KCMS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings}" \
+    "${DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings_qwidgets}" \
+    "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
 
 
 # -- Remove Micro launcher.
