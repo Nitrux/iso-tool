@@ -239,6 +239,12 @@ if [ -f "$MAIN_CONF" ]; then
         -e 's/^#ControllerMode = dual/ControllerMode = bredr/' \
         -e 's/^#AutoEnable=true/AutoEnable=true/' \
         "$MAIN_CONF"
+
+    # -- Disable HFP/HSP (Headset profile).
+    if ! grep -q '^Disable=Headset$' "$MAIN_CONF"; then
+        br_line=$(awk 'f&&/^\[BR\]/{print NR; exit} /^\[General\]/{f=1}' "$MAIN_CONF")
+        [ -n "$br_line" ] && sed -i "${br_line}i Disable=Headset" "$MAIN_CONF"
+    fi
 fi
 
 if [ -f "$INPUT_CONF" ]; then
