@@ -83,4 +83,4 @@ rc-update add nvidia-powerd default
 # -- Add NVIDIA persistenced service.
 #   --  The NVIDIA powerd service is unnecessary if not using NVIDIA hardware.
 
-rc-update add nvidia-persistenced default
+rc-update add nvidia-persistenced-openrc default
