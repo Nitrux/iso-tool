@@ -49,6 +49,7 @@ DELETE_SYSV_SCRIPTS=(
     eudev
     greetd
     keyboard-setup.sh
+    nvidia-persistenced
     plymouth
     plymouth-log
     procps
@@ -78,3 +79,9 @@ install "${INSTALL_OPENRC_CONFIG_PKGS[@]}"
 #   --  The NVIDIA powerd service is unnecessary if not using NVIDIA hardware.
 
 rc-update add nvidia-powerd default
+
+
+# -- Add NVIDIA persistenced service.
+#   --  The NVIDIA powerd service is unnecessary if not using NVIDIA hardware.
+
+rc-update add nvidia-persistenced default
