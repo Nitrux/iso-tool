@@ -39,3 +39,10 @@ INSTALL_NVIDIA_OPEN_PKGS=(
 )
 
 install "${INSTALL_NVIDIA_OPEN_PKGS[@]}"
+
+
+DELETE_SYSV_SCRIPTS=(
+    nvidia-persistenced
+)
+
+rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}"

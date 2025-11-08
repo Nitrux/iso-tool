@@ -49,7 +49,6 @@ DELETE_SYSV_SCRIPTS=(
     eudev
     greetd
     keyboard-setup.sh
-    nvidia-persistenced
     plymouth
     plymouth-log
     procps
