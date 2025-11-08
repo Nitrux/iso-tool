@@ -308,18 +308,6 @@ cp /configs/files/grub_files/update-grub /usr/sbin/update-grub
 cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
 
-# -- Add user for OpenRazer (which is missing for some reason!).
-
-# if id -u razer >/dev/null 2>&1; then
-#     echo "User razer already exists."
-# else
-#     useradd -r -s /bin/false -M razer
-#     echo "User razer created successfully."
-# fi
-
-# usermod -L razer
-
-
 # -- Add user for AIDE (which is missing for some reason!).
 
 
