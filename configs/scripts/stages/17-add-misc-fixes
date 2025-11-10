@@ -150,7 +150,6 @@ DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC=(
 
 
 DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
-    settings-applications-permissions.desktop
     settings-hardware-display.desktop
     settings-hardware-input-pointing-devices.desktop
     settings-hardware-input-touchscreen.desktop
