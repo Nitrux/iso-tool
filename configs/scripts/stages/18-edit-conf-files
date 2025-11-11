@@ -51,6 +51,7 @@ cat /configs/files/elogind_files/10-elogind.conf > /etc/elogind/sleep.conf.d/10-
 
 cat /configs/files/other/pam.d/common-password > /etc/pam.d/common-password
 cat /configs/files/other/pam.d/common-auth > /etc/pam.d/common-auth
+cat /configs/files/other/pam.d/common-auth > /etc/pam.d/common-account
 
 
 # -- Replace pwquality.conf.
