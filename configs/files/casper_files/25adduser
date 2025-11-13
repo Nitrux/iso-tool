@@ -1,0 +1,141 @@
+#!/bin/sh
+
+set -eu
+
+PREREQ=""
+DESCRIPTION="Adding live session user..."
+
+prereqs() {
+    echo "$PREREQ"
+}
+
+case "$1" in
+    prereqs)
+        prereqs
+        exit 0
+        ;;
+esac
+
+# shellcheck source=/dev/null
+. /scripts/casper-functions
+load_confmodule
+
+log_begin_msg "$DESCRIPTION"
+
+debconf_backup() {
+    # shellcheck disable=SC3043
+    local question backup
+    for question in "$@"; do
+        backup="${question}-casper-backup"
+        db_register debian-installer/dummy "$backup"
+        db_get "$question"
+        db_set "$backup" "$RET"
+        db_fget "$question" seen
+        db_fset "$backup" seen "$RET"
+    done
+}
+
+debconf_restore() {
+    # shellcheck disable=SC3043
+    local question backup
+    for question in "$@"; do
+        backup="${question}-casper-backup"
+        db_get "$backup"
+        db_set "$question" "$RET"
+        db_fget "$backup" seen
+        db_fset "$question" seen "$RET"
+        db_unregister "$backup"
+    done
+}
+
+debconf_backup \
+    passwd/root-password-crypted \
+    passwd/root-password passwd/root-password-again \
+    passwd/user-password-crypted \
+    passwd/user-password passwd/user-password-again \
+    passwd/user-fullname passwd/username passwd/user-uid
+
+db_set passwd/root-password-crypted '*'
+db_set passwd/user-password-crypted U6aMy0wojraho
+db_set passwd/user-fullname "$USERFULLNAME"
+db_set passwd/username "$USERNAME"
+db_set passwd/user-uid 1000
+
+ROOT=/root
+
+chroot "$ROOT" /usr/lib/user-setup/user-setup-apply > /dev/null
+
+if [ ! -f "$ROOT/usr/bin/sddm" ]; then
+    :
+fi
+
+debconf_restore \
+    passwd/root-password-crypted \
+    passwd/root-password passwd/root-password-again \
+    passwd/user-password-crypted \
+    passwd/user-password passwd/user-password-again \
+    passwd/user-fullname passwd/username passwd/user-uid
+
+if [ -d "$ROOT/etc/sudoers.d" ]; then
+    printf '%s\n' "${USERNAME}  ALL=(ALL) NOPASSWD: ALL" > "$ROOT/etc/sudoers.d/casper"
+fi
+
+LTS="$(cut -d ' ' -f3 "$ROOT/cdrom/.disk/info" 2>/dev/null)" || LTS=
+RELEASE="$(cut -d ' ' -f1-2 "$ROOT/cdrom/.disk/info" 2>/dev/null | sed 's/-/ /')" || RELEASE=
+if [ "$LTS" = "LTS" ] && [ -n "$RELEASE" ]; then
+    RELEASE="$RELEASE LTS"
+fi
+
+for file in \
+    /usr/share/applications/ubiquity.desktop \
+    /usr/share/applications/kde/ubiquity-kdeui.desktop \
+    /usr/share/applications/lubuntu-calamares.desktop \
+    /usr/share/applications/kubuntu-calamares.desktop \
+    /usr/share/applications/ubuntu-unity-calamares.desktop \
+    /var/lib/snapd/desktop/applications/ubuntu-desktop-bootstrap_ubuntu-desktop-bootstrap.desktop
+do
+    if [ -f "$ROOT$file" ]; then
+        sed -i "s/RELEASE/$RELEASE/" "$ROOT$file"
+        chroot "$ROOT" install -d -o "$USERNAME" -g "$USERNAME" "/home/$USERNAME/Desktop"
+        chroot "$ROOT" install -D -o "$USERNAME" -g "$USERNAME" "$file" "/home/$USERNAME/Desktop/$(basename "$file")"
+        if [ -x "$ROOT/usr/bin/dbus-run-session" ] && [ -x "$ROOT/usr/bin/gio" ]; then
+            if [ -x "$ROOT/usr/bin/xfdesktop" ]; then
+                checksum="$(chroot "$ROOT" sha256sum "$file" | cut -d ' ' -f1)"
+                chroot "$ROOT" sudo -i -u "$USERNAME" dbus-run-session -- gio set "/home/$USERNAME/Desktop/$(basename "$file")" metadata::xfce-exe-checksum "$checksum"
+            else
+                chroot "$ROOT" sudo -i -u "$USERNAME" dbus-run-session -- gio set "/home/$USERNAME/Desktop/$(basename "$file")" metadata::trusted true
+            fi
+        fi
+        break
+    fi
+done
+
+if [ -f "$ROOT/usr/bin/plasma-desktop" ]; then
+    if [ -f "$ROOT/usr/share/kde4/apps/khelpcenter/plugins/kubuntu/a_welcome.desktop" ]; then
+        chroot "$ROOT" install -d -o "$USERNAME" -g "$USERNAME" "/home/$USERNAME/Desktop"
+        chroot "$ROOT" install -D -o "$USERNAME" -g "$USERNAME" /usr/share/kde4/apps/khelpcenter/plugins/kubuntu/a_welcome.desktop "/home/$USERNAME/Desktop/a_welcome.desktop"
+    fi
+fi
+
+if [ -f "$ROOT/usr/bin/plasmashell" ]; then
+    if [ -f "$ROOT/usr/share/kubuntu-default-settings/layout.js" ]; then
+        chroot "$ROOT" install -D -o "$USERNAME" -g "$USERNAME" /usr/share/kubuntu-default-settings/layout.js /usr/share/plasma/shells/org.kde.plasma.desktop/contents/layout.js
+    fi
+fi
+
+if [ -f "$ROOT/usr/bin/plasma-netbook" ]; then
+    config="$ROOT/usr/share/kubuntu-netbook-default-settings/share/apps/plasma/layout-templates/org.kde.plasma-netbook.defaultSal/contents/layout.js"
+    escaped_desktop="\/usr\/share\/applications\/kde4\/ubiquity-kdeui.desktop"
+    if [ -f "$config" ]; then
+        sed -i "s/\/\/__UBIQUITY_PLACEHOLDER__\/\//\"$escaped_desktop\"/" "$config"
+    fi
+fi
+
+if [ -f "$ROOT/usr/bin/startlxqt" ]; then
+    config="$ROOT/home/$USERNAME/.config/lxqt"
+    mkdir -p "$config"
+    printf '%s\n' "[General]" "enableIdlenessWatcher=false" "enableLidWatcher=false" "runCheckLevel=1" > "$config/lxqt-powermanagement.conf"
+    printf '%s\n' "[Screensaver]" "lock_command=/usr/bin/true" > "$config/lxqt.conf"
+fi
+
+log_end_msg
