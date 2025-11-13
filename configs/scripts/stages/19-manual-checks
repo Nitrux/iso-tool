@@ -78,3 +78,11 @@ check_initramfs_size
 search_initramfs_for plymouth
 search_initramfs_for crypttab
 search_initramfs_for nvidia
+
+
+# -- Check that the Live user password is not goddamn empty.
+
+if ! check_live_user_password; then
+    echo "Live user password is missing or blank"
+    exit 1
+fi
