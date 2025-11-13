@@ -170,7 +170,7 @@ create_symlink() {
 }
 
 check_live_user_password() {
-    entry="$(chroot "$ROOTFS" getent shadow nitrux || true)"
+    entry="$(getent shadow nitrux || true)"
     [ -z "$entry" ] && return 1
     hash_field="$(printf '%s\n' "$entry" | cut -d: -f2)"
     [ -z "$hash_field" ] && return 1
