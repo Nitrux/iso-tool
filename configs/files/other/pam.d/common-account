@@ -14,7 +14,8 @@
 # pam-auth-update(8) for details.
 #
 
-account [success=1 new_authtok_reqd=done default=ignore] pam_unix.so 
+account required pam_faillock.so
+account [success=1 new_authtok_reqd=done default=ignore] pam_unix.so
 account requisite pam_deny.so
 account required pam_permit.so
 
