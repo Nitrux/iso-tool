@@ -55,3 +55,8 @@ cat /configs/files/casper_files/15autologin > /usr/share/initramfs-tools/scripts
 # -- Replace upstream's 12fstab to enable aesthethic FHS for the Live user.
 
 cat /configs/files/casper_files/12fstab > /usr/share/initramfs-tools/scripts/casper-bottom/12fstab
+
+
+# -- Replace upstream's 25adduser so casper doesn't blank our damn password.
+
+cat /configs/files/casper_files/25adduser > /usr/share/initramfs-tools/scripts/casper-bottom/25adduser
