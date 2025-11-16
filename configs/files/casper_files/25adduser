@@ -20,10 +20,11 @@ esac
 
 log_begin_msg "$DESCRIPTION"
 
-if [ -n "$USERNAME" ] && [ -d /root/etc/sudoers.d ]; then
-	umask 077
-	printf '%s ALL=(ALL) NOPASSWD: /usr/bin/start-calamares\n' "$USERNAME" > /root/etc/sudoers.d/calamares
-	chmod 0440 /root/etc/sudoers.d/calamares
+if [ -d /root/etc/sudoers.d ]; then
+    umask 077
+    printf 'nitrux ALL=(ALL) NOPASSWD: ALL\n' \
+        > /root/etc/sudoers.d/calamares
+    chmod 0440 /root/etc/sudoers.d/calamares
 fi
 
 log_end_msg
