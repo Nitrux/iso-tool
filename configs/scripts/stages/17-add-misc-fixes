@@ -177,8 +177,7 @@ DELETE_CLI_UTILS_LAUNCHERS=(
     micro.desktop
 )
 
-rm -f  \
-    "${DELETE_CLI_UTILS_LAUNCHERS[@]/#//usr/share/applications/}" \
+rm -f "${DELETE_CLI_UTILS_LAUNCHERS[@]/#//usr/share/applications/}"
 
 
 # -- Set QtGreet theme.
