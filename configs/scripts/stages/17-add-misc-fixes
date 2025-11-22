@@ -362,7 +362,7 @@ sed -i '/^\[defaults\]/a\vfat_defaults=sync' /etc/udisks2/udisks2.conf
 ln -s /etc/apparmor.d/bwrap-userns-restrict /etc/apparmor.d/disable/
 
 
-# -- Link the existing AppArmor profile for Firejail so it actually works.
+# -- Rename the existing AppArmor profile for Firejail so it actually works.
 
 mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
 
