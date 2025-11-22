@@ -307,7 +307,6 @@ cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
 # -- Add user for AIDE (which is missing for some reason!).
 
-
 # if id -u _aide >/dev/null 2>&1; then
 #     echo "User _aide already exists."
 # else
