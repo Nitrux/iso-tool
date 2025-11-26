@@ -443,3 +443,16 @@ printf '%s\n' amdgpu i915 fuse exfat loop uinput >> /etc/modules-load.d/load-mod
 # -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
 
 rm -f /usr/share/applications/org.kde.kwalletmanager.desktop
+
+
+# -- Create marker file you set at build time to determine ISO branch.
+
+current_branch=$(git branch --show-current)
+
+if echo "$current_branch" | grep -qi "nvopen"; then
+    iso_flavor="ISO_BRANCH=nvopen"
+else
+    iso_flavor="ISO_BRANCH=mesa"
+fi
+
+echo "$iso_flavor" > "/etc/iso-release"
