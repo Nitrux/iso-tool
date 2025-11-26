@@ -133,6 +133,19 @@ cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_d
 cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
 
 
+# -- Create marker file you set at build time to determine ISO branch.
+
+current_branch=$(git branch --show-current)
+
+if echo "$current_branch" | grep -qi "nvopen"; then
+    iso_flavor="ISO_BRANCH=nvopen"
+else
+    iso_flavor="ISO_BRANCH=mesa"
+fi
+
+echo "$iso_flavor" > "$iso_dir"/etc/iso-release
+
+
 # -- Create SquashFS of the root directory.
 
 ( while :; do sleep 300; printf ".\n"; done ) &
