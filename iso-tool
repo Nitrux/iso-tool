@@ -143,7 +143,7 @@ else
     iso_flavor="ISO_BRANCH=mesa"
 fi
 
-echo "$iso_flavor" > "$iso_dir"/etc/iso-release
+echo "$iso_flavor" > "$build_dir"/etc/iso-release
 
 
 # -- Create SquashFS of the root directory.
