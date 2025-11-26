@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 #############################################################################################################################################################################
 #   The license used for this file and its contents is: BSD-3-Clause                                                                                                        #
 #                                                                                                                                                                           #
-#   Copyright <2023-2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                              #
+#   Copyright <2025> <Uri Herrera <uri_herrera@nxos.org>>                                                                                                                   #
 #                                                                                                                                                                           #
 #   Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:                          #
 #                                                                                                                                                                           #
@@ -22,48 +22,40 @@
 #    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.   #
 #############################################################################################################################################################################
 
-set -eu
+PREREQ=""
 
-# -- Source useful functions.
-# shellcheck source=/dev/null
+prereqs() {
+    echo "${PREREQ}"
+}
 
-source /configs/scripts/others/misc-funcs
+case "$1" in
+    prereqs) prereqs; exit 0 ;;
+esac
 
+# -- Begin real processing below this line
 
-# -- Add or replace hook scripts for initramfs.
+panic_halt() {
+    if command -v plymouth >/dev/null 2>&1; then
+        plymouth --quit
+    fi
 
-cp -r /configs/files/initramfs_files/hooks/* /etc/initramfs-tools/hooks/
+    printf '%s\n' "=================================================================" >/dev/console
+    printf '%s\n' "CRITICAL HARDWARE FAILURE: UNSUPPORTED CPU DETECTED" >/dev/console
+    printf '%s\n' "=================================================================" >/dev/console
+    printf '%s\n' "Nitrux requires a CPU with AVX2 instruction set support." >/dev/console
+    printf '%s\n' "Your processor does not meet the minimum requirements." >/dev/console
+    printf '%s\n' "The system will now halt." >/dev/console
+    printf '%s\n' "=================================================================" >/dev/console
 
-chmod +x /etc/initramfs-tools/hooks/*
+    sleep 10
 
+    if command -v poweroff >/dev/null 2>&1; then
+        poweroff -f
+    fi
 
-# -- Add or replace scripts for initramfs.
+    while :; do sleep 3600; done
+}
 
-cp -r /configs/files/initramfs_files/scripts/init_top* /etc/initramfs-tools/scripts/init_top/
-
-chmod +x /etc/initramfs-tools/scripts/init_top/*
-
-
-# -- Add initramfs configuration.
-
-cp -r /configs/files/initramfs_files/conf.d/* /etc/initramfs-tools/conf.d/
-
-
-# -- Remove these lines from /usr/share/initramfs-tools/scripts/casper because they're irrelevant here and remove these scripts from casper as we don't use them.
-
-sed -i '/touch \/root\/var\/crash\/crash.init/d; /rm \/root\/var\/crash\/crash.init/d' /usr/share/initramfs-tools/scripts/casper
-
-DELETE_CASPER_INITRD_SCRIPTS=(
-    31disable_update_notifier
-    33enable_apport_crashes
-    52gnome_initial_setup
-    53disable_unattended_upgrades
-    59disable_mozc_autosetup
-)
-
-rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bottom/}"
-
-
-# -- Always update initramfs after adding, removing or editing hook scripts.
-
-update-initramfs -c -k all
+if ! grep -q "avx2" /proc/cpuinfo 2>/dev/null; then
+    panic_halt
+fi
