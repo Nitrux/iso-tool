@@ -408,8 +408,8 @@ rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
 # -- Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
-vmlinuz_pattern="vmlinuz-*liquorix-*"
-initrd_pattern="initrd.img-*liquorix-*"
+vmlinuz_pattern="vmlinuz-*pika-*"
+initrd_pattern="initrd.img-*pika-*"
 
 vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$vmlinuz_pattern" | head -1)
 initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$initrd_pattern" | head -1)
@@ -429,16 +429,16 @@ else
 fi
 
 
-# -- Create necessary directories to put files for kboot and create soft links for liquorix kernel files.
+# -- Create necessary directories to put files for kboot and create soft links for pika kernel files.
 
-mkdir -p /kboot/{debian,mainline,liquorix}
+mkdir -p /kboot/{debian,mainline,pika}
 
-for file in /boot/vmlinuz-*liquorix-amd64; do
-    create_symlink "$file" "/kboot/liquorix/vmlinuz"
+for file in /boot/vmlinuz-*pika-amd64; do
+    create_symlink "$file" "/kboot/pika/vmlinuz"
 done
 
-for file in /boot/initrd.img-*liquorix-amd64; do
-    create_symlink "$file" "/kboot/liquorix/initrd.img"
+for file in /boot/initrd.img-*pika-amd64; do
+    create_symlink "$file" "/kboot/pika/initrd.img"
 done
 
 
@@ -449,7 +449,7 @@ rm -f /var/log/bootstrap.log
 
 # -- Add modules to load at boot time.
 
-printf '%s\n' amdgpu i915 fuse exfat loop uinput >> /etc/modules-load.d/load-modules-at-boot.conf
+printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync >> /etc/modules-load.d/load-modules-at-boot.conf
 
 
 # -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
