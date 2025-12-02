@@ -108,7 +108,7 @@ chmod +x "$DEST_DIR/undebianize"
 #    -- Comment the command(s) to debug packages in a Live session.
 
 for n in apt apt-cache apt-cdrom apt-config apt-get apt-mark; do
-    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
+    ln -sf /usr/bin/nx-pkgmgr-policy "/usr/bin/$n"
 done
 
 for n in \
@@ -120,5 +120,5 @@ for n in \
     dpkg-mergechangelogs dpkg-name dpkg-parsechangelog \
     dpkg-scanpackages dpkg-scansources dpkg-shlibdeps dpkg-source dpkg-vendor
 do
-    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
+    ln -sf /usr/bin/nx-pkgmgr-policy "/usr/bin/$n"
 done
