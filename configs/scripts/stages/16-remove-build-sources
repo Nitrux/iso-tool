@@ -41,14 +41,54 @@ find /etc/apt/sources.list.d/ -type f \( -name "*.list" -o -name "*.sources" \) 
 autoremove
 
 
-# -- Move APT and dpkg out of the way.
+# -- Move apt, apt-*, dpkg, and dpkg-* out of the way.
 #    -- Comment the command(s) to debug packages in a Live session.
 
-mv /usr/bin/apt /opt/1
-mv /usr/bin/apt-get /opt/2
-mv /usr/bin/dpkg /opt/3
+while read -r name idx; do
+    src="/usr/bin/$name"
+    [ -e "$src" ] || continue
+    mv "$src" "/opt/$idx"
+done <<'EOF'
+apt 1
+apt-cache 2
+apt-cdrom 3
+apt-config 4
+apt-get 5
+apt-mark 6
+dpkg 7
+dpkg-deb 8
+dpkg-divert 9
+dpkg-maintscript-helper 10
+dpkg-query 11
+dpkg-realpath 12
+dpkg-split 13
+dpkg-statoverride 14
+dpkg-trigger 15
+dpkg-architecture 16
+dpkg-buildapi 17
+dpkg-buildflags 18
+dpkg-buildpackage 19
+dpkg-buildtree 20
+dpkg-checkbuilddeps 21
+dpkg-distaddfile 22
+dpkg-genbuildinfo 23
+dpkg-genchanges 24
+dpkg-gencontrol 25
+dpkg-gensymbols 26
+dpkg-mergechangelogs 27
+dpkg-name 28
+dpkg-parsechangelog 29
+dpkg-scanpackages 30
+dpkg-scansources 31
+dpkg-shlibdeps 32
+dpkg-source 33
+dpkg-vendor 34
+dpkg-preconfigure 35
+dpkg-reconfigure 36
+EOF
 
-chmod -x /opt/{1,2,3}
+chmod -x /opt/{1..36}
+chmod -x /var/lib/dpkg
 
 
 # -- Add install scripts here.
@@ -64,3 +104,10 @@ wget -P "$DEST_DIR" "$UNDEBIANIZE_URL"
 
 chmod +x "$DEST_DIR/linker"
 chmod +x "$DEST_DIR/undebianize"
+
+
+# -- Display dialog to notify users of software management policy.
+
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/apt
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/{apt-cache,apt-cdrom,apt-config,apt-get,apt-mark}
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/{dpkg,dpkg-deb,dpkg-divert,dpkg-mainscript-helper,dpkg-query,dpkg-realpath,dpkg-split,spkg-statoverride,dpkg-trigger}
