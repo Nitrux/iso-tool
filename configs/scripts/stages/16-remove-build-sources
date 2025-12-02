@@ -107,6 +107,7 @@ chmod +x "$DEST_DIR/undebianize"
 
 
 # -- Display dialog to notify users of software management policy.
+#    -- Comment the command(s) to debug packages in a Live session.
 
 ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/apt
 ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/{apt-cache,apt-cdrom,apt-config,apt-get,apt-mark}
