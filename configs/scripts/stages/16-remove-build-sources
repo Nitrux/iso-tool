@@ -110,4 +110,16 @@ chmod +x "$DEST_DIR/undebianize"
 
 ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/apt
 ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/{apt-cache,apt-cdrom,apt-config,apt-get,apt-mark}
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/{dpkg,dpkg-deb,dpkg-divert,dpkg-mainscript-helper,dpkg-query,dpkg-realpath,dpkg-split,spkg-statoverride,dpkg-trigger}
+
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/dpkg
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
+{dpkg-deb,dpkg-divert,dpkg-maintscript-helper,dpkg-query,dpkg-realpath,dpkg-split,dpkg-statoverride,dpkg-trigger}
+
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
+{dpkg-architecture,dpkg-buildapi,dpkg-buildflags,dpkg-buildpackage,dpkg-buildtree,dpkg-checkbuilddeps,dpkg-distaddfile}
+
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
+{dpkg-genbuildinfo,dpkg-genchanges,dpkg-gencontrol,dpkg-gensymbols,dpkg-mergechangelogs,dpkg-name,dpkg-parsechangelog}
+
+ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
+{dpkg-scanpackages,dpkg-scansources,dpkg-shlibdeps,dpkg-source,dpkg-vendor,dpkg-preconfigure,dpkg-reconfigure}
