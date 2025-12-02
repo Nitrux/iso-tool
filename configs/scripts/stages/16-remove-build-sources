@@ -45,10 +45,48 @@ autoremove
 #    -- Comment the command(s) to debug packages in a Live session.
 
 mv /usr/bin/apt /opt/1
-mv /usr/bin/apt-get /opt/2
-mv /usr/bin/dpkg /opt/3
 
-chmod -x /opt/{1,2,3}
+mv /usr/bin/apt-cache /opt/2
+mv /usr/bin/apt-cdrom /opt/3
+mv /usr/bin/apt-config /opt/4
+mv /usr/bin/apt-get /opt/5
+mv /usr/bin/apt-mark /opt/6
+
+mv /usr/bin/dpkg /opt/7
+
+mv /usr/bin/dpkg-deb /opt/8
+mv /usr/bin/dpkg-divert /opt/9
+mv /usr/bin/dpkg-maintscript-helper /opt/10
+mv /usr/bin/dpkg-query /opt/11
+mv /usr/bin/dpkg-realpath /opt/12
+mv /usr/bin/dpkg-split /opt/13
+mv /usr/bin/dpkg-statoverride /opt/14
+mv /usr/bin/dpkg-trigger /opt/15
+mv /usr/bin/dpkg-architecture /opt/16
+mv /usr/bin/dpkg-buildapi /opt/17
+mv /usr/bin/dpkg-buildflags /opt/18
+mv /usr/bin/dpkg-buildpackage /opt/19
+mv /usr/bin/dpkg-buildtree /opt/20
+mv /usr/bin/dpkg-checkbuilddeps /opt/21
+mv /usr/bin/dpkg-distaddfile /opt/22
+mv /usr/bin/dpkg-genbuildinfo /opt/23
+mv /usr/bin/dpkg-genchanges /opt/24
+mv /usr/bin/dpkg-gencontrol /opt/25
+mv /usr/bin/dpkg-gensymbols /opt/26
+mv /usr/bin/dpkg-mergechangelogs /opt/27
+mv /usr/bin/dpkg-name /opt/28
+mv /usr/bin/dpkg-parsechangelog /opt/29
+mv /usr/bin/dpkg-scanpackages /opt/30
+mv /usr/bin/dpkg-scansources /opt/31
+mv /usr/bin/dpkg-shlibdeps /opt/32
+mv /usr/bin/dpkg-source /opt/33
+mv /usr/bin/dpkg-vendor /opt/34
+mv /usr/sbin/dpkg-preconfigure /opt/35
+mv /usr/sbin/dpkg-reconfigure /opt/36
+
+chmod -x /opt/{1..36}
+
+chmod -x /var/lib/dpkg
 
 
 # -- Add install scripts here.
@@ -64,3 +102,23 @@ wget -P "$DEST_DIR" "$UNDEBIANIZE_URL"
 
 chmod +x "$DEST_DIR/linker"
 chmod +x "$DEST_DIR/undebianize"
+
+
+# -- Display dialog to notify users of software management policy.
+#    -- Comment the command(s) to debug packages in a Live session.
+
+for n in apt apt-cache apt-cdrom apt-config apt-get apt-mark; do
+    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
+done
+
+for n in \
+    dpkg dpkg-deb dpkg-divert dpkg-maintscript-helper dpkg-query dpkg-realpath \
+    dpkg-split dpkg-statoverride dpkg-trigger \
+    dpkg-architecture dpkg-buildapi dpkg-buildflags dpkg-buildpackage \
+    dpkg-buildtree dpkg-checkbuilddeps dpkg-distaddfile \
+    dpkg-genbuildinfo dpkg-genchanges dpkg-gencontrol dpkg-gensymbols \
+    dpkg-mergechangelogs dpkg-name dpkg-parsechangelog \
+    dpkg-scanpackages dpkg-scansources dpkg-shlibdeps dpkg-source dpkg-vendor
+do
+    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
+done
