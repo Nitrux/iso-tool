@@ -109,20 +109,22 @@ chmod +x "$DEST_DIR/undebianize"
 # -- Display dialog to notify users of software management policy.
 #    -- Comment the command(s) to debug packages in a Live session.
 
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/apt
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/{apt-cache,apt-cdrom,apt-config,apt-get,apt-mark}
+for n in apt apt-cache apt-cdrom apt-config apt-get apt-mark; do
+    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
+done
 
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/dpkg
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
-{dpkg-deb,dpkg-divert,dpkg-maintscript-helper,dpkg-query,dpkg-realpath,dpkg-split,dpkg-statoverride,dpkg-trigger}
+for n in dpkg \
+         dpkg-deb dpkg-divert dpkg-maintscript-helper dpkg-query dpkg-realpath \
+         dpkg-split dpkg-statoverride dpkg-trigger \
+         dpkg-architecture dpkg-buildapi dpkg-buildflags dpkg-buildpackage \
+         dpkg-buildtree dpkg-checkbuilddeps dpkg-distaddfile \
+         dpkg-genbuildinfo dpkg-genchanges dpkg-gencontrol dpkg-gensymbols \
+         dpkg-mergechangelogs dpkg-name dpkg-parsechangelog \
+         dpkg-scanpackages dpkg-scansources dpkg-shlibdeps dpkg-source \
+         dpkg-vendor; do
+    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
+done
 
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
-{dpkg-architecture,dpkg-buildapi,dpkg-buildflags,dpkg-buildpackage,dpkg-buildtree,dpkg-checkbuilddeps,dpkg-distaddfile}
-
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
-{dpkg-genbuildinfo,dpkg-genchanges,dpkg-gencontrol,dpkg-gensymbols,dpkg-mergechangelogs,dpkg-name,dpkg-parsechangelog}
-
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/bin/\
-{dpkg-scanpackages,dpkg-scansources,dpkg-shlibdeps,dpkg-source,dpkg-vendor}
-
-ln -sf /usr/local/bin/nx-pkgmgr-policy /usr/sbin/{dpkg-preconfigure,dpkg-reconfigure}
+for n in dpkg-preconfigure dpkg-reconfigure; do
+    ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/sbin/$n"
+done
