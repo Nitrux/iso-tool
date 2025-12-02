@@ -41,53 +41,58 @@ find /etc/apt/sources.list.d/ -type f \( -name "*.list" -o -name "*.sources" \) 
 autoremove
 
 
-# -- Move apt, apt-*, dpkg, and dpkg-* out of the way.
+# -- Move APT and dpkg out of the way.
 #    -- Comment the command(s) to debug packages in a Live session.
 
-while read -r dir name idx; do
-    src="/usr/$dir/$name"
-    [ -e "$src" ] || continue
-    mv "$src" "/opt/$idx"
-done <<'EOF'
-bin apt 1
-bin apt-cache 2
-bin apt-cdrom 3
-bin apt-config 4
-bin apt-get 5
-bin apt-mark 6
-bin dpkg 7
-bin dpkg-deb 8
-bin dpkg-divert 9
-bin dpkg-maintscript-helper 10
-bin dpkg-query 11
-bin dpkg-realpath 12
-bin dpkg-split 13
-bin dpkg-statoverride 14
-bin dpkg-trigger 15
-bin dpkg-architecture 16
-bin dpkg-buildapi 17
-bin dpkg-buildflags 18
-bin dpkg-buildpackage 19
-bin dpkg-buildtree 20
-bin dpkg-checkbuilddeps 21
-bin dpkg-distaddfile 22
-bin dpkg-genbuildinfo 23
-bin dpkg-genchanges 24
-bin dpkg-gencontrol 25
-bin dpkg-gensymbols 26
-bin dpkg-mergechangelogs 27
-bin dpkg-name 28
-bin dpkg-parsechangelog 29
-bin dpkg-scanpackages 30
-bin dpkg-scansources 31
-bin dpkg-shlibdeps 32
-bin dpkg-source 33
-bin dpkg-vendor 34
-sbin dpkg-preconfigure 35
-sbin dpkg-reconfigure 36
-EOF
+for entry in \
+"bin apt 1" \
+"bin apt-cache 2" \
+"bin apt-cdrom 3" \
+"bin apt-config 4" \
+"bin apt-get 5" \
+"bin apt-mark 6" \
+"bin dpkg 7" \
+"bin dpkg-deb 8" \
+"bin dpkg-divert 9" \
+"bin dpkg-maintscript-helper 10" \
+"bin dpkg-query 11" \
+"bin dpkg-realpath 12" \
+"bin dpkg-split 13" \
+"bin dpkg-statoverride 14" \
+"bin dpkg-trigger 15" \
+"bin dpkg-architecture 16" \
+"bin dpkg-buildapi 17" \
+"bin dpkg-buildflags 18" \
+"bin dpkg-buildpackage 19" \
+"bin dpkg-buildtree 20" \
+"bin dpkg-checkbuilddeps 21" \
+"bin dpkg-distaddfile 22" \
+"bin dpkg-genbuildinfo 23" \
+"bin dpkg-genchanges 24" \
+"bin dpkg-gencontrol 25" \
+"bin dpkg-gensymbols 26" \
+"bin dpkg-mergechangelogs 27" \
+"bin dpkg-name 28" \
+"bin dpkg-parsechangelog 29" \
+"bin dpkg-scanpackages 30" \
+"bin dpkg-scansources 31" \
+"bin dpkg-shlibdeps 32" \
+"bin dpkg-source 33" \
+"bin dpkg-vendor 34" \
+"sbin dpkg-preconfigure 35" \
+"sbin dpkg-reconfigure 36"
+do
+    set -- "$entry"
+    dir="$1"
+    name="$2"
+    idx="$3"
+    if [ -e "/usr/$dir/$name" ]; then
+        mv "/usr/$dir/$name" "/opt/$idx"
+    fi
+done
 
-chmod -x /opt/{1..36}
+for n in $(seq 1 36); do chmod -x "/opt/$n"; done
+
 chmod -x /var/lib/dpkg
 
 
@@ -113,15 +118,15 @@ for n in apt apt-cache apt-cdrom apt-config apt-get apt-mark; do
     ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
 done
 
-for n in dpkg \
-         dpkg-deb dpkg-divert dpkg-maintscript-helper dpkg-query dpkg-realpath \
-         dpkg-split dpkg-statoverride dpkg-trigger \
-         dpkg-architecture dpkg-buildapi dpkg-buildflags dpkg-buildpackage \
-         dpkg-buildtree dpkg-checkbuilddeps dpkg-distaddfile \
-         dpkg-genbuildinfo dpkg-genchanges dpkg-gencontrol dpkg-gensymbols \
-         dpkg-mergechangelogs dpkg-name dpkg-parsechangelog \
-         dpkg-scanpackages dpkg-scansources dpkg-shlibdeps dpkg-source \
-         dpkg-vendor; do
+for n in \
+    dpkg dpkg-deb dpkg-divert dpkg-maintscript-helper dpkg-query dpkg-realpath \
+    dpkg-split dpkg-statoverride dpkg-trigger \
+    dpkg-architecture dpkg-buildapi dpkg-buildflags dpkg-buildpackage \
+    dpkg-buildtree dpkg-checkbuilddeps dpkg-distaddfile \
+    dpkg-genbuildinfo dpkg-genchanges dpkg-gencontrol dpkg-gensymbols \
+    dpkg-mergechangelogs dpkg-name dpkg-parsechangelog \
+    dpkg-scanpackages dpkg-scansources dpkg-shlibdeps dpkg-source dpkg-vendor
+do
     ln -sf /usr/local/bin/nx-pkgmgr-policy "/usr/bin/$n"
 done
 
