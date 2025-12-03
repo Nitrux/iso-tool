@@ -25,10 +25,6 @@ if [ -d /root/etc/sudoers.d ]; then
     printf 'nitrux ALL=(ALL) NOPASSWD: ALL\n' \
         > /root/etc/sudoers.d/calamares
     chmod 0440 /root/etc/sudoers.d/calamares
-
-    printf 'nitrux ALL=(ALL) NOPASSWD: ALL\n' \
-        > /root/etc/sudoers.d/kdialog
-    chmod 0440 /root/etc/sudoers.d/kdialog
 fi
 
 log_end_msg
