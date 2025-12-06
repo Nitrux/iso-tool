@@ -72,3 +72,11 @@ INSTALL_OPENRC_CONFIG_PKGS=(
 )
 
 install "${INSTALL_OPENRC_CONFIG_PKGS[@]}"
+
+
+# -- Add gpu-vendor-heck service.
+#   -- Delete this service during installation.
+
+cp /configs/files/openrc_services/gpu-vendor-check /etc/init.d/gpu-vendor-check
+
+rc-update add gpu-vendor-check default
