@@ -176,6 +176,17 @@ puts "ADDING INITRAM SCRIPTS"
 15-update-initram-config
 
 
+#############################
+# INFORMATION:              #
+# Root content ends here    #
+#############################
+
+
+# -- Create a list of installed packages at after modifying the rootfs.
+
+list_installed_text_end
+
+
 # -- Remove sources used to build the root.
 
 puts "REMOVE BUILD SOURCES."
@@ -203,17 +214,6 @@ puts "ADDING MISC. FIXES."
 puts "EDITING CONF. FILES."
 
 18-edit-conf-files
-
-
-#############################
-# INFORMATION:              #
-# Root content ends here    #
-#############################
-
-
-# -- Create a list of installed packages at after modifying the rootfs.
-
-list_installed_text_end
 
 
 # -- Check files and directories.
