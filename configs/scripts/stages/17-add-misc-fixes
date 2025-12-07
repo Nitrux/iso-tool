@@ -382,11 +382,6 @@ echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager
 sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
 
 
-# -- Enable ufw by default.
-
-ufw enable
-
-
 # -- Remove unwanted kernel and initrd links from /boot and /.
 
 rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
