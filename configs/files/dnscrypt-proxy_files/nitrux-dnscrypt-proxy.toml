@@ -22,8 +22,7 @@ require_nofilter = false
 # 4. SERVERS
 # We prioritize AdGuard for blocking, Quad9 for malware protection.
 server_names = [
-  'adguard-dns', 
-  'adguard-dns-ipv6', 
+  'adguard-dns-doh',
   'quad9-dnscrypt-ip4-filter-pri',
   'quad9-dnscrypt-ip6-filter-pri',
   'ahadns-doh-la'
@@ -38,6 +37,7 @@ minisign_key = 'RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3'
 refresh_delay = 72
 prefix = ''
 
+# BEGIN AUTO ANONYMIZED DNS
 [anonymized_dns]
 skip_incompatible = true
 
@@ -47,6 +47,7 @@ routes = [
     { server_name='adguard-dns', via=['anon-cs-fr', 'anon-cs-de'] },
     { server_name='quad9-dnscrypt-ip4-filter-pri', via=['anon-cs-fr', 'anon-cs-de'] }
 ]
+# END AUTO ANONYMIZED DNS
 
 # 6. REQUIRED SOURCES
 [sources.'public-resolvers']
