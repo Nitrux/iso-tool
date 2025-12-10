@@ -44,7 +44,7 @@ skip_incompatible = true
 # These routes relay traffic through France (fr) and Germany (de).
 # Change the country codes (e.g., 'anon-cs-nl' for the Netherlands) if you want different locations.
 routes = [
-    { server_name='adguard-dns', via=['anon-cs-fr', 'anon-cs-de'] },
+    { server_name='adguard-dns-doh', via=['anon-cs-fr', 'anon-cs-de'] },
     { server_name='quad9-dnscrypt-ip4-filter-pri', via=['anon-cs-fr', 'anon-cs-de'] }
 ]
 # END AUTO ANONYMIZED DNS
