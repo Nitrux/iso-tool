@@ -305,30 +305,9 @@ cp /configs/files/grub_files/update-grub /usr/sbin/update-grub
 cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
 
-# -- Add user for AIDE (which is missing for some reason!).
+# -- Add our dnscrypt-proxy configuration.
 
-# if id -u _aide >/dev/null 2>&1; then
-#     echo "User _aide already exists."
-# else
-#     useradd -r -s /bin/false -M _aide
-#     echo "User _aide created successfully."
-# fi
-
-# usermod -L _aide
-
-
-# -- Replace aide.conf and 10_aide_hostname.
-
-# cp /configs/files/conf/aide.conf /etc/aide/aide.conf
-# cp /configs/files/other/10_aide_hostname /etc/aide/aide.conf.d/10_aide_hostname
-
-
-# -- Replace dnscrypt-proxy default configuration.
-
-# cat /configs/files/other/dnscrypt-proxy-settings/dnscrypt-proxy.toml > /etc/dnscrypt-proxy/dnscrypt-proxy.toml
-
-# cp /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md /var/cache/dnscrypt-proxy/public-resolvers.md
-# cp /configs/files/other/dnscrypt-proxy-settings/public-resolvers.md.minisig /var/cache/dnscrypt-proxy/public-resolvers.md.minisig
+cp /configs/files//dnscrypt-proxy_files/* /etc/dnscrypt-proxy/
 
 
 # -- Add variable to PAM for Firefox to work with touchscreens in Wayland.
@@ -347,9 +326,15 @@ cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
 
 # -- Disable the virtualization extensions (like Intel VT-x or AMD-V) from loading automatically when the KVM module is loaded into the kernel.
-#   -- NOTE: This is to make VirtualBox work.
+#  -- NOTE: This is to make VirtualBox work, see: https://forums.virtualbox.org/viewtopic.php?t=112580
 
-# sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
+if [ ! -f /etc/modprobe.d/kvm.conf ]; then
+    touch /etc/modprobe.d/kvm.conf
+fi
+
+if ! grep -q "^options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf; then
+    sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
+fi
 
 
 # -- Enforce sync only for specific filesystems, like vfat.
