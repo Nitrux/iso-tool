@@ -2,7 +2,6 @@
 # dnscrypt-proxy.toml 2025 (c) Nitrux Latinoamericana S.C.
 
 # 1. BINDING
-# We use 127.0.2.1 to avoid conflict with dnsmasq on 127.0.0.1.
 listen_addresses = ['127.0.0.1:5353', '[::1]:5353']
 
 # 2. GENERAL SETTINGS
