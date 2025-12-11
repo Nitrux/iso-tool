@@ -33,7 +33,7 @@ source /configs/scripts/others/apt-funcs
 # -- Add a default kernel.
 
 INSTALL_KERNEL_PKGS=(
-    linux-liquorix-amd64
+    linux-psycachy-amd64
 )
 
 install "${INSTALL_KERNEL_PKGS[@]}"
