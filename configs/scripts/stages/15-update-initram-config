@@ -64,6 +64,6 @@ DELETE_CASPER_INITRD_SCRIPTS=(
 rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bottom/}"
 
 
-# -- Always update initramfs after adding, removing or editing hook scripts.
+# -- Always update initramfs after adding, removing or editing hooks or scripts.
 
 update-initramfs -c -k all
