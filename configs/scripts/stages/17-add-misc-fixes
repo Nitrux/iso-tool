@@ -357,11 +357,6 @@ mv /etc/apparmor.d/firejail-default /etc/apparmor.d/usr.bin.firejail
 mkdir -p /var/lib/os-prober/mount
 
 
-# -- Change path where NetworkManager saves wireless connections.
-
-echo -e "\n[keyfile]\npath=/var/lib/NetworkManager" | tee -a /etc/NetworkManager/NetworkManager.conf
-
-
 # -- Replace this line in mkinitramfs so it shuts up about dpkg.
 
 sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
