@@ -418,3 +418,8 @@ printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync >> /etc/modules-load.d/l
 # -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
 
 rm -f /usr/share/applications/org.kde.kwalletmanager.desktop
+
+
+# -- Add the path to the read-only mount point to safe-rm.
+
+echo "/media/root-ro" | tee -a /etc/safe-rm.conf > /dev/null
