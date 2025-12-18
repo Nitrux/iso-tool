@@ -3,21 +3,21 @@
 #   Your changes will be overwritten   #
 ########################################
 
-# Types: deb
-# URIs: http://deb.debian.org/debian
-# Suites: testing testing-updates
-# Components: main non-free non-free-firmware contrib
-# Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-# Architectures: amd64
+Types: deb
+URIs: http://deb.debian.org/debian
+Suites: testing testing-updates
+Components: main non-free non-free-firmware contrib
+Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+Architectures: amd64
 
 ##################################################################
 #   Debian Snapshots                                             #
 #   These repositories are much slower for downloading packages  #
 ##################################################################
 
-Types: deb
-URIs: https://snapshot.debian.org/archive/debian/20250930T023023Z
-Suites: testing testing-updates
-Components: main non-free non-free-firmware contrib
-Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
-Architectures: amd64
+# Types: deb
+# URIs: https://snapshot.debian.org/archive/debian/20250930T023023Z
+# Suites: testing testing-updates
+# Components: main non-free non-free-firmware contrib
+# Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
+# Architectures: amd64
