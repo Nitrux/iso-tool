@@ -1,6 +1,6 @@
-#####################
-#  Blocked Packages #
-#####################
+#########################
+#   Blocked Packages    #
+#########################
 
 Package: dbus-user-session
 Pin: release *
