@@ -288,7 +288,7 @@ cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 
 # -- Add our dnscrypt-proxy configuration.
 
-cp /configs/files//dnscrypt-proxy_files/* /etc/dnscrypt-proxy/
+cp /configs/files/dnscrypt-proxy_files/* /etc/dnscrypt-proxy/
 
 
 # -- Add variable to PAM for Firefox to work with touchscreens in Wayland.
