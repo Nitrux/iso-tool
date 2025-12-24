@@ -30,9 +30,12 @@ cat /configs/files/elogind_files/10-elogind.conf > /etc/elogind/sleep.conf.d/10-
 
 # -- Replace pam.d files with our hardened files.
 
-cat /configs/files/other/pam.d/common-password > /etc/pam.d/common-password
+cat /configs/files/other/pam.d/common-account > /etc/pam.d/common-password
 cat /configs/files/other/pam.d/common-auth > /etc/pam.d/common-auth
-cat /configs/files/other/pam.d/common-account > /etc/pam.d/common-account
+cat /configs/files/other/pam.d/common-password > /etc/pam.d/common-password
+cat /configs/files/other/pam.d/common-session > /etc/pam.d/common-session
+
+cat /configs/files/other/security/limits.conf > /etc/security/limits.conf
 
 
 # -- Replace pwquality.conf.

@@ -1,5 +1,6 @@
 #
 # /etc/pam.d/common-account - authorization settings common to all services
+# Nitrux Performance & Security Tuning
 # 2025 (c) Nitrux Latinoamericana S.C.
 #
 # This file is included from other service-specific PAM config files,

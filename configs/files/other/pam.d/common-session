@@ -1,0 +1,30 @@
+#
+# /etc/pam.d/common-session - session-related modules common to all services
+# Nitrux Performance & Security Tuning
+# 2025 (c) Nitrux Latinoamericana S.C.
+#
+# This file is included from other service-specific PAM config files,
+# and should contain a list of modules that define tasks to be performed
+# at the start and end of interactive sessions.
+#
+# As of pam 1.0.1-6, this file is managed by pam-auth-update by default.
+# To take advantage of this, it is recommended that you configure any
+# local modules either before or after the default block, and use
+# pam-auth-update to manage selection of other modules.  See
+# pam-auth-update(8) for details.
+
+# here are the per-package modules (the "Primary" block)
+session [default=1]         pam_permit.so
+session requisite           pam_deny.so
+session required            pam_permit.so
+session required            pam_limits.so
+session required            pam_loginuid.so
+session optional            pam_keyinit.so force_revoke
+session optional            pam_umask.so
+# and here are more per-package modules (the "Additional" block)
+session required    pam_unix.so 
+session optional    pam_tmpdir.so 
+session optional    pam_elogind.so
+# This ensures the wallet unlocks on login so the user isn't prompted twice.
+session optional    pam_kwallet5.so auto_start force_run
+# end of pam-auth-update config
