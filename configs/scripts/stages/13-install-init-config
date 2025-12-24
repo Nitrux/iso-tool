@@ -35,8 +35,6 @@ DELETE_SYSV_SCRIPTS=(
     network-manager
     nohang
     ntpsec
-    nvidia-persistenced-openrc
-    nvidia-powerd
     openvpn
     pulseaudio-enable-autospawn
     rc
