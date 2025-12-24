@@ -22,8 +22,6 @@ DELETE_SYSV_SCRIPTS=(
     apparmor
     blk-availability
     bluetooth
-    bluetooth-meshd-openrc
-    bluetooth-obexd-openrc
     cgroupfs-mount
     cron
     cryptdisks
