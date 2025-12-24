@@ -17,30 +17,44 @@ source /configs/scripts/others/apt-funcs
 #       -- And providing a virtual service of the same name (via provide <name>)
 
 DELETE_SYSV_SCRIPTS=(
+    acpid
     alsa-utils
+    apparmor
     blk-availability
+    bluetooth
     bluetooth-meshd-openrc
     bluetooth-obexd-openrc
     cgroupfs-mount
+    cron
+    cryptdisks
+    cryptdisks-early
+    dbus
     dnsmasq
     docker
+    elogind
+    eudev
     fprintd
+    greetd
+    keyboard-setup.sh
     lm-sensors
     lvm2-lockd
     lvm2-locks
     lvm2-lvmpolld
     lvm2-monitor
     multipath-tools
-    networking
     network-manager
+    networking
     nohang
     ntpsec
     openvpn
+    procps
     pulseaudio-enable-autospawn
     rc
     rcS
     rngd
+    rsyslog
     selinux-autorelabel
+    sudo
     user
     x11-common
 )
