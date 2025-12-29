@@ -14,7 +14,7 @@ source /configs/scripts/others/apt-funcs
 # -- Add a default kernel.
 
 INSTALL_KERNEL_PKGS=(
-    linux-psycachy-amd64
+    linux-pika-amd64
 )
 
 install "${INSTALL_KERNEL_PKGS[@]}"
