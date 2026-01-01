@@ -44,8 +44,9 @@ rm -rf "$TEMP_DIR1"
 
 BIN_URL='https://raw.githubusercontent.com/Nitrux/storage/master/Other/xone-dongle-fw/FW_ACC_00U.bin'
 
-install -D -m 0644 /dev/null /usr/lib/firmware/xow_dongle.bin
+mkdir -p /usr/lib/firmware
 curl -L "$BIN_URL" -o /usr/lib/firmware/xow_dongle.bin
+chmod 0644 /usr/lib/firmware/xow_dongle.bin
 
 ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xow_dongle_045e_02e6.bin
 ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xone_dongle_02e6.bin
@@ -54,30 +55,31 @@ ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xone_dongle_02e6.bin
 # -- Install zenergy to display power consumption for AMD Zen processors.
 # -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
-TEMP_DIR2="$(mktemp -d)"
-git clone --depth 1 https://github.com/Nitrux/zenergy.git "$TEMP_DIR2"
-install -d /usr/src/zenergy-1.0
-cp -a "$TEMP_DIR2"/. /usr/src/zenergy-1.0/
+TEMP_DIR3="$(mktemp -d)"
+git clone --depth 1 https://github.com/Nitrux/zenergy.git "$TEMP_DIR3"
+mkdir -p /usr/src/zenergy-1.0
+cp -R "$TEMP_DIR3"/. /usr/src/zenergy-1.0/
 dkms add -m zenergy -v 1.0
 dkms build -m zenergy -v 1.0
 dkms install --force -m zenergy -v 1.0
-install -d /etc/modules-load.d
-echo "zenergy" | tee /etc/modules-load.d/zenergy.conf >/dev/null
-rm -rf "$TEMP_DIR2"
+mkdir -p /etc/modules-load.d
+printf '%s\n' zenergy > /etc/modules-load.d/zenergy.conf
+rm -rf "$TEMP_DIR3"
 cd "$ORIGINAL_DIR"
 
 
 # -- Install AX88179_178A Linux driver for AX88179 USB 3.0 Ethernet adapters.
 # -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
-TEMP_DIR3="$(mktemp -d)"
-git clone --depth 1 https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR3"
-install -d /usr/src/asix-ax88179-dkms-3.4.0
-cp -a "$TEMP_DIR3"/. /usr/src/asix-ax88179-dkms-3.4.0/
+TEMP_DIR4="$(mktemp -d)"
+git clone --depth 1 https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR4"
+mkdir -p /usr/src/asix-ax88179-dkms-3.4.0
+cp -R "$TEMP_DIR4"/. /usr/src/asix-ax88179-dkms-3.4.0/
 dkms add -m asix-ax88179-dkms -v 3.4.0
 dkms build -m asix-ax88179-dkms -v 3.4.0
 dkms install --force -m asix-ax88179-dkms -v 3.4.0
-install -d /etc/modprobe.d
-install -m 0644 /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
-rm -rf "$TEMP_DIR3"
+mkdir -p /etc/modprobe.d
+cp /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
+chmod 0644 /etc/modprobe.d/asix-ax88179.conf
+rm -rf "$TEMP_DIR4"
 cd "$ORIGINAL_DIR"
