@@ -205,29 +205,34 @@ cp /configs/files/other/hidden /.hidden
 mkdir -p /Applications
 
 
-# -- Mitigate Bluetooth devices disconnecting randomly.
+# -- Configure Bluez for better security and connectivity.
 
 MAIN_CONF="/etc/bluetooth/main.conf"
-INPUT_CONF="/etc/bluetooth/input.conf"
 
 if [ -f "$MAIN_CONF" ]; then
     sed -i \
-        -e 's/^#DiscoverableTimeout = 0/DiscoverableTimeout = 0/' \
-        -e 's/^#PairableTimeout = 0/PairableTimeout = 0/' \
-        -e 's/^#ControllerMode = dual/ControllerMode = bredr/' \
+        -e 's/^#DiscoverableTimeout = 0/DiscoverableTimeout = 120/' \
+        -e 's/^#PairableTimeout = 0/PairableTimeout = 300/' \
+        -e 's/^#ControllerMode = dual/ControllerMode = dual/' \
         -e 's/^#AutoEnable=true/AutoEnable=true/' \
+        -e 's/^#Privacy = off/Privacy = network/' \
+        -e 's/^#JustWorksRepairing = never/JustWorksRepairing = confirm/' \
+        -e 's/^#SecureConnections = on/SecureConnections = only/' \
+        -e 's/^#FastConnectable = false/FastConnectable = true/' \
         "$MAIN_CONF"
 
-    # -- Disable HFP/HSP (Headset profile).
-
-    if ! grep -q '^Disable=Headset$' "$MAIN_CONF"; then
-        br_line=$(awk 'f&&/^\[BR\]/{print NR; exit} /^\[General\]/{f=1}' "$MAIN_CONF")
-        [ -n "$br_line" ] && sed -i "${br_line}i Disable=Headset" "$MAIN_CONF"
-    fi
+    sed -i '/^Disable=Headset$/d' "$MAIN_CONF"
 fi
 
+INPUT_CONF="/etc/bluetooth/input.conf"
+
 if [ -f "$INPUT_CONF" ]; then
-    sed -i 's/^#IdleTimeout=0/IdleTimeout=0/' "$INPUT_CONF"
+    sed -i \
+        -e 's/^#IdleTimeout=0/IdleTimeout=1800/' \
+        -e 's/^#UserspaceHID=true/UserspaceHID=true/' \
+        -e 's/^#ClassicBondedOnly=true/ClassicBondedOnly=true/' \
+        -e 's/^#LEAutoSecurity=true/LEAutoSecurity=true/' \
+        "$INPUT_CONF"
 fi
 
 
