@@ -50,6 +50,7 @@ curl -L "$BIN_URL" -o /usr/lib/firmware/xow_dongle.bin
 ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xow_dongle_045e_02e6.bin
 ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xone_dongle_02e6.bin
 
+
 # -- Install zenergy to display power consumption for AMD Zen processors.
 # -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
