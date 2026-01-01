@@ -32,47 +32,51 @@ ORIGINAL_DIR=$(pwd)
 
 
 # -- Install xone and the firmware.
-# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
-TEMP_DIR2=$(mktemp -d)
-git clone https://github.com/bazzite-org/xonedo "$TEMP_DIR2"
-cd "$TEMP_DIR2"
+TEMP_DIR1="$(mktemp -d)"
+git clone https://github.com/bazzite-org/xonedo "$TEMP_DIR1"
+cd "$TEMP_DIR1"
 sed -i '/^\s*set\s\+-e\s*$/d' install.sh
 bash install.sh
 cd "$ORIGINAL_DIR"
+rm -rf "$TEMP_DIR1"
 
-DRIVER_URL='http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab'
-FIRMWARE_HASH='48084d9fa53b9bb04358f3bb127b7495dc8f7bb0b3ca1437bd24ef2b6eabdf66'
+BIN_URL='https://raw.githubusercontent.com/Nitrux/storage/master/Other/xone-dongle-fw/FW_ACC_00U.bin'
 
-curl -L -o driver.cab "$DRIVER_URL"
-cabextract -F FW_ACC_00U.bin driver.cab
-echo "$FIRMWARE_HASH  FW_ACC_00U.bin" | sha256sum -c
-mv FW_ACC_00U.bin /usr/lib/firmware/xow_dongle.bin
-ln -sv /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xow_dongle_045e_02e6.bin
-rm driver.cab
+install -D -m 0644 /dev/null /usr/lib/firmware/xow_dongle.bin
+curl -L "$BIN_URL" -o /usr/lib/firmware/xow_dongle.bin
 
+ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xow_dongle_045e_02e6.bin
+ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xone_dongle_02e6.bin
 
 # -- Install zenergy to display power consumption for AMD Zen processors.
-# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
-TEMP_DIR3=$(mktemp -d)
-git clone https://github.com/Nitrux/zenergy.git "$TEMP_DIR3"
-cp -r "$TEMP_DIR3" /usr/src/zenergy-1.0
+TEMP_DIR2="$(mktemp -d)"
+git clone --depth 1 https://github.com/Nitrux/zenergy.git "$TEMP_DIR2"
+install -d /usr/src/zenergy-1.0
+cp -a "$TEMP_DIR2"/. /usr/src/zenergy-1.0/
 dkms add -m zenergy -v 1.0
 dkms build -m zenergy -v 1.0
 dkms install --force -m zenergy -v 1.0
-echo "zenergy" | tee /etc/modules-load.d/zenergy.conf
+install -d /etc/modules-load.d
+echo "zenergy" | tee /etc/modules-load.d/zenergy.conf >/dev/null
+rm -rf "$TEMP_DIR2"
 cd "$ORIGINAL_DIR"
 
 
 # -- Install AX88179_178A Linux driver for AX88179 USB 3.0 Ethernet adapters.
-# -- FIXME: There are no Debian packages available, if and when they are, switch to use them instead.
+# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
-TEMP_DIR4=$(mktemp -d)
-git clone https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR4"
-cp -r "$TEMP_DIR4" /usr/src/asix-ax88179-dkms-3.4.0
+TEMP_DIR3="$(mktemp -d)"
+git clone --depth 1 https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR3"
+install -d /usr/src/asix-ax88179-dkms-3.4.0
+cp -a "$TEMP_DIR3"/. /usr/src/asix-ax88179-dkms-3.4.0/
 dkms add -m asix-ax88179-dkms -v 3.4.0
 dkms build -m asix-ax88179-dkms -v 3.4.0
 dkms install --force -m asix-ax88179-dkms -v 3.4.0
-mv /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
+install -d /etc/modprobe.d
+install -m 0644 /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
+rm -rf "$TEMP_DIR3"
 cd "$ORIGINAL_DIR"
