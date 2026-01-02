@@ -206,6 +206,7 @@ mkdir -p /Applications
 
 
 # -- Configure Bluez for better security and connectivity.
+# -- Also, disable the god dammned Headset / Hands-Free HF role and Hands-Free Audio Gateway.
 
 MAIN_CONF="/etc/bluetooth/main.conf"
 INPUT_CONF="/etc/bluetooth/input.conf"
