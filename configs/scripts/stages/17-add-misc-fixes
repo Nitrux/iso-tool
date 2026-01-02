@@ -208,30 +208,49 @@ mkdir -p /Applications
 # -- Configure Bluez for better security and connectivity.
 
 MAIN_CONF="/etc/bluetooth/main.conf"
+INPUT_CONF="/etc/bluetooth/input.conf"
 
 if [ -f "$MAIN_CONF" ]; then
     sed -i \
-        -e 's/^#DiscoverableTimeout = 0/DiscoverableTimeout = 120/' \
-        -e 's/^#PairableTimeout = 0/PairableTimeout = 300/' \
-        -e 's/^#ControllerMode = dual/ControllerMode = dual/' \
-        -e 's/^#AutoEnable=true/AutoEnable=true/' \
-        -e 's/^#Privacy = off/Privacy = network/' \
-        -e 's/^#JustWorksRepairing = never/JustWorksRepairing = confirm/' \
-        -e 's/^#SecureConnections = on/SecureConnections = only/' \
-        -e 's/^#FastConnectable = false/FastConnectable = true/' \
+        -e 's/^[# ]*DiscoverableTimeout *=.*/DiscoverableTimeout = 120/' \
+        -e 's/^[# ]*PairableTimeout *=.*/PairableTimeout = 300/' \
+        -e 's/^[# ]*ControllerMode *=.*/ControllerMode = dual/' \
+        -e 's/^[# ]*AutoEnable *=.*/AutoEnable=true/' \
+        -e 's/^[# ]*Privacy *=.*/Privacy = network/' \
+        -e 's/^[# ]*JustWorksRepairing *=.*/JustWorksRepairing = confirm/' \
+        -e 's/^[# ]*SecureConnections *=.*/SecureConnections = on/' \
+        -e 's/^[# ]*FastConnectable *=.*/FastConnectable = true/' \
         "$MAIN_CONF"
 
-    sed -i '/^Disable=Headset$/d' "$MAIN_CONF"
-fi
+    sed -i \
+        -e '/^# Disable Headset \/ Hands-Free HF role\./d' \
+        -e '/^Disable=Headset$/d' \
+        -e '/^# Disable Hands-Free Audio Gateway\./d' \
+        -e '/^Disable=Gateway$/d' \
+        "$MAIN_CONF"
 
-INPUT_CONF="/etc/bluetooth/input.conf"
+    awk '
+        /#FilterDiscoverable = true/ && !inserted {
+            print
+            print ""
+            print "# Disable Headset / Hands-Free HF role."
+            print "Disable=Headset"
+            print ""
+            print "# Disable Hands-Free Audio Gateway."
+            print "Disable=Gateway"
+            inserted = 1
+            next
+        }
+        { print }
+    ' "$MAIN_CONF" > "${MAIN_CONF}.tmp" && mv "${MAIN_CONF}.tmp" "$MAIN_CONF"
+fi
 
 if [ -f "$INPUT_CONF" ]; then
     sed -i \
-        -e 's/^#IdleTimeout=0/IdleTimeout=1800/' \
-        -e 's/^#UserspaceHID=true/UserspaceHID=true/' \
-        -e 's/^#ClassicBondedOnly=true/ClassicBondedOnly=true/' \
-        -e 's/^#LEAutoSecurity=true/LEAutoSecurity=true/' \
+        -e 's/^[# ]*IdleTimeout *=.*/IdleTimeout=1800/' \
+        -e 's/^[# ]*UserspaceHID *=.*/UserspaceHID=true/' \
+        -e 's/^[# ]*ClassicBondedOnly *=.*/ClassicBondedOnly=true/' \
+        -e 's/^[# ]*LEAutoSecurity *=.*/LEAutoSecurity=true/' \
         "$INPUT_CONF"
 fi
 
