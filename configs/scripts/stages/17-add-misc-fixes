@@ -463,9 +463,19 @@ fi
 
 cat >"$MKFS_F2FS_BIN" <<EOF
 #!/usr/bin/env bash
+
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright 2025 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
+
+
+# -- Exit on errors.
+
 set -euo pipefail
+
+
+# -- Ensure compression is used when creating the filesystem.
+
 exec "$REAL_BIN" -O extra_attr,inode_checksum,sb_checksum,compression "\$@"
 EOF
 
 chmod 0755 "$MKFS_F2FS_BIN"
-
