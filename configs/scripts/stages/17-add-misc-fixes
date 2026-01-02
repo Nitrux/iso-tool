@@ -445,3 +445,27 @@ if [ -f "/usr/lib/firmware/rtw89/rtw8852c_fw.bin" ]; then
     ln -sv rtw8852c_fw.bin /usr/lib/firmware/rtw89/rtw8852c_fw-1.bin
     ln -sv rtw8852c_fw.bin /usr/lib/firmware/rtw89/rtw8852c_fw-2.bin
 fi
+
+
+# -- Use a wrapper script, so that any Calamares/KPMcore call to mkfs.f2fs will always have the compression feature enabled on the created filesystem.
+
+MKFS_F2FS_BIN="$(command -v mkfs.f2fs || echo /usr/sbin/mkfs.f2fs)"
+if [ ! -x "$MKFS_F2FS_BIN" ]; then
+    echo "mkfs.f2fs not found or not executable at $MKFS_F2FS_BIN" >&2
+    exit 1
+fi
+
+REAL_BIN="${MKFS_F2FS_BIN}.real"
+
+if [ ! -x "$REAL_BIN" ]; then
+    mv "$MKFS_F2FS_BIN" "$REAL_BIN"
+fi
+
+cat >"$MKFS_F2FS_BIN" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+exec "$REAL_BIN" -O extra_attr,inode_checksum,sb_checksum,compression "\$@"
+EOF
+
+chmod 0755 "$MKFS_F2FS_BIN"
+
