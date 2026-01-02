@@ -436,7 +436,7 @@ echo "/media/root-ro" | tee -a /etc/safe-rm.conf > /dev/null
 flatpak remote-add --system --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 
-# -- Remove borken firmware for the Realtek RTL8852CE.
+# -- Remove broken firmware for the Realtek RTL8852CE.
 # -- The firmware for this wireless chip is documented to be broken since version 0.27.122.0.
 #   -- See this Fedora forum thread: https://discussion.fedoraproject.org/t/bluetooth-audio-stuttering-during-wifi-activity-on-rtl8852ce/142165/24
 
