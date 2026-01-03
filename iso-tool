@@ -114,7 +114,7 @@ cp "$(echo "$build_dir"/boot/vmlinuz* | tr " " "\n" | sort | tail -n 1)" "$iso_d
 cp "$(echo "$build_dir"/boot/initrd*  | tr " " "\n" | sort | tail -n 1)" "$iso_dir"/boot/initramfs
 
 
-# -- Create marker file you set at build time to determine ISO branch.
+# -- Create marker file at build time to determine ISO branch.
 
 current_branch=$(git branch --show-current)
 
