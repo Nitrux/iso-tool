@@ -17,12 +17,14 @@ source /configs/scripts/others/apt-funcs
 #       -- And providing a virtual service of the same name (via provide <name>)
 
 DELETE_SYSV_SCRIPTS=(
+    acpi-support
     acpid
     alsa-utils
     apparmor
     blk-availability
     bluetooth
     cgroupfs-mount
+    console-setup.sh
     cron
     cryptdisks
     cryptdisks-early
@@ -45,6 +47,8 @@ DELETE_SYSV_SCRIPTS=(
     nohang
     ntpsec
     openvpn
+    plymouth
+    plymouth-log
     procps
     pulseaudio-enable-autospawn
     rc
@@ -54,6 +58,7 @@ DELETE_SYSV_SCRIPTS=(
     selinux-autorelabel
     sudo
     user
+    uuidd
     x11-common
 )
 
