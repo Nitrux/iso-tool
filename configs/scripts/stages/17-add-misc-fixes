@@ -231,15 +231,17 @@ if [ -f "$MAIN_CONF" ]; then
         "$MAIN_CONF"
 
     awk '
-        /#FilterDiscoverable = true/ && !inserted {
+        /^\[General\]/ {
             print
-            print ""
-            print "# Disable Headset / Hands-Free HF role."
-            print "Disable=Headset"
-            print ""
-            print "# Disable Hands-Free Audio Gateway."
-            print "Disable=Gateway"
-            inserted = 1
+            if (!inserted) {
+                print ""
+                print "# Disable Headset / Hands-Free HF role."
+                print "Disable=Headset"
+                print ""
+                print "# Disable Hands-Free Audio Gateway."
+                print "Disable=Gateway"
+                inserted = 1
+            }
             next
         }
         { print }
