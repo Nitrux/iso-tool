@@ -157,7 +157,6 @@ fi
 
 mkiso \
     -V "NITRUX" \
-    -b \
     -e \
     -g "$config_dir/files/grub_files/grub.cfg" \
     -g "$config_dir/files/grub_files/loopback.cfg" \
