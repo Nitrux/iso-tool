@@ -379,8 +379,8 @@ rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
 # -- Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
-vmlinuz_pattern="vmlinuz-*psycachy-*"
-initrd_pattern="initrd.img-*psycachy-*"
+vmlinuz_pattern="vmlinuz-*pikaos-*"
+initrd_pattern="initrd.img-*pikaos-*"
 
 vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$vmlinuz_pattern" | head -1)
 initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$initrd_pattern" | head -1)
@@ -400,16 +400,16 @@ else
 fi
 
 
-# -- Create necessary directories to put files for kboot and create soft links for psycachy kernel files.
+# -- Create necessary directories to put files for kboot and create soft links for pikaos kernel files.
 
-mkdir -p /kboot/{debian,mainline,psycachy}
+mkdir -p /kboot/{debian,mainline,pikaos}
 
-for file in /boot/vmlinuz-*psycachy-amd64; do
-    create_symlink "$file" "/kboot/psycachy/vmlinuz"
+for file in /boot/vmlinuz-*pikaos-amd64; do
+    create_symlink "$file" "/kboot/pikaos/vmlinuz"
 done
 
-for file in /boot/initrd.img-*psycachy-amd64; do
-    create_symlink "$file" "/kboot/psycachy/initrd.img"
+for file in /boot/initrd.img-*pikaos-amd64; do
+    create_symlink "$file" "/kboot/pikaos/initrd.img"
 done
 
 
