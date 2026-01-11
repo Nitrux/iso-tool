@@ -12,10 +12,6 @@
 
 `iso-tool` is a system for generating Nitrux ISO files. The code is very readable and so self-documented.
 
-This branch generates an ISO file with NX Desktop. The ISO image generated in this branch utilizes the [Calamares](https://calamares.io/) installer.
-
-Please refer to our tutorial ["How to install Nitrux"](https://nxos.org/tutorial/how-to-install-nitrux/) for more information about using this ISO and installing the distribution on a storage device.
-
 # Licensing
 
 The repository and its contents are licensed under **BSD-3-Clause**.
