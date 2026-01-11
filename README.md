@@ -10,7 +10,7 @@
 
 # Overview
 
-`iso-tool` is a shell script for generating Nitrux ISO files. The code is very readable and so self-documented.
+`iso-tool` is a system for generating Nitrux ISO files. The code is very readable and so self-documented.
 
 This branch generates an ISO file with NX Desktop. The ISO image generated in this branch utilizes the [Calamares](https://calamares.io/) installer.
 
