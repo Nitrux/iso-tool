@@ -117,6 +117,7 @@ DELETE_UNUSED_KCMS_LIBEXEC=(
     kcm_virtualkeyboard.so
     kcm_wallpaper.so
     kcm_webshortcuts.so
+    kcm_nighttime.so
 )
 
 
