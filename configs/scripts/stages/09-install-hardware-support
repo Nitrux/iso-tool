@@ -35,19 +35,16 @@ ORIGINAL_DIR=$(pwd)
 # -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
 TEMP_DIR1="$(mktemp -d)"
-cleanup_1() { rm -rf "$TEMP_DIR1"; }
-trap cleanup_1 EXIT INT TERM
-
 git clone https://github.com/bazzite-org/xonedo "$TEMP_DIR1"
-sed -i '/^\s*set\s\+-e\s*$/d' "$TEMP_DIR1/install.sh"
-( cd "$TEMP_DIR1" && bash install.sh )
-
-trap - EXIT INT TERM
-cleanup_1
+cd "$TEMP_DIR1"
+sed -i '/^\s*set\s\+-e\s*$/d' install.sh
+bash install.sh
+cd "$ORIGINAL_DIR"
+rm -rf "$TEMP_DIR1"
 
 BIN_URL='https://raw.githubusercontent.com/Nitrux/storage/master/Other/xone-dongle-fw/FW_ACC_00U.bin'
 
-install -d /usr/lib/firmware
+mkdir -p /usr/lib/firmware
 curl -L "$BIN_URL" -o /usr/lib/firmware/xow_dongle.bin
 chmod 0644 /usr/lib/firmware/xow_dongle.bin
 
@@ -59,24 +56,15 @@ ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xone_dongle_02e6.bin
 # -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
 TEMP_DIR3="$(mktemp -d)"
-cleanup_3() { rm -rf "$TEMP_DIR3"; }
-trap cleanup_3 EXIT INT TERM
-
 git clone --depth 1 https://github.com/Nitrux/zenergy.git "$TEMP_DIR3"
-
-install_dir="/usr/src/zenergy-1.0"
-install -d "$install_dir"
-cp -a "$TEMP_DIR3/." "$install_dir/"
-
+mkdir -p /usr/src/zenergy-1.0
+cp -R "$TEMP_DIR3"/. /usr/src/zenergy-1.0/
 dkms add -m zenergy -v 1.0
 dkms build -m zenergy -v 1.0
 dkms install --force -m zenergy -v 1.0
-
-install -d /etc/modules-load.d
+mkdir -p /etc/modules-load.d
 printf '%s\n' zenergy > /etc/modules-load.d/zenergy.conf
-
-trap - EXIT INT TERM
-cleanup_3
+rm -rf "$TEMP_DIR3"
 cd "$ORIGINAL_DIR"
 
 
@@ -84,24 +72,16 @@ cd "$ORIGINAL_DIR"
 # -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
 
 TEMP_DIR4="$(mktemp -d)"
-cleanup_4() { rm -rf "$TEMP_DIR4"; }
-trap cleanup_4 EXIT INT TERM
-
 git clone --depth 1 https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR4"
-
-install_dir="/usr/src/asix-ax88179-dkms-3.4.0"
-install -d "$install_dir"
-cp -a "$TEMP_DIR4/." "$install_dir/"
-
+mkdir -p /usr/src/asix-ax88179-dkms-3.4.0
+cp -R "$TEMP_DIR4"/. /usr/src/asix-ax88179-dkms-3.4.0/
 dkms add -m asix-ax88179-dkms -v 3.4.0
 dkms build -m asix-ax88179-dkms -v 3.4.0
 dkms install --force -m asix-ax88179-dkms -v 3.4.0
-
-install -d /etc/modprobe.d
-install -m 0644 "$install_dir/asix-ax88179.conf" /etc/modprobe.d/asix-ax88179.conf
-
-trap - EXIT INT TERM
-cleanup_4
+mkdir -p /etc/modprobe.d
+cp /usr/src/asix-ax88179-dkms-3.4.0/asix-ax88179.conf /etc/modprobe.d/asix-ax88179.conf
+chmod 0644 /etc/modprobe.d/asix-ax88179.conf
+rm -rf "$TEMP_DIR4"
 cd "$ORIGINAL_DIR"
 
 
@@ -110,30 +90,23 @@ cd "$ORIGINAL_DIR"
 
 VERSION="B7"
 TEMP_DIR5="$(mktemp -d)"
-cleanup_5() { rm -rf "$TEMP_DIR5"; }
-trap cleanup_5 EXIT INT TERM
+SRC_URL="https://github.com/gnif/LookingGlass.git"
+DST_DIR="/usr/src/looking-glass-$VERSION"
 
-git clone --depth 1 --branch "$VERSION" https://github.com/gnif/LookingGlass.git "$TEMP_DIR5"
+git clone --depth 1 --branch "$VERSION" "$SRC_URL" "$TEMP_DIR5"
 
-install_dir="/usr/src/looking-glass-$VERSION"
-install -d "$install_dir"
-cp -a "$TEMP_DIR5/module/." "$install_dir/"
+mkdir -p "$DST_DIR"
+cp -a "$TEMP_DIR5/module/." "$DST_DIR/"
 
-sed -i "s/^PACKAGE_VERSION=.*/PACKAGE_VERSION=\"$VERSION\"/" "$install_dir/dkms.conf"
+sed -i "s/^PACKAGE_VERSION=.*/PACKAGE_VERSION=\"$VERSION\"/" "$DST_DIR/dkms.conf"
 
 dkms add -m looking-glass -v "$VERSION"
 dkms build -m looking-glass -v "$VERSION"
 dkms install --force -m looking-glass -v "$VERSION"
 
-install -d /etc/udev/rules.d /etc/modules-load.d /etc/modprobe.d
-
-cat > /etc/udev/rules.d/99-kvmfr.rules <<'EOF'
-SUBSYSTEM=="kvmfr", OWNER="root", GROUP="kvm", MODE="0660"
-EOF
-
-printf '%s\n' kvmfr > /etc/modules-load.d/kvmfr.conf
+printf '%s\n' 'SUBSYSTEM=="kvmfr", OWNER="root", GROUP="kvm", MODE="0660"' > /etc/udev/rules.d/99-kvmfr.rules
+printf '%s\n' 'kvmfr' > /etc/modules-load.d/kvmfr.conf
 printf '%s\n' 'options kvmfr static_size_mb=32' > /etc/modprobe.d/kvmfr.conf
 
-trap - EXIT INT TERM
-cleanup_5
+rm -rf "$TEMP_DIR5"
 cd "$ORIGINAL_DIR"
