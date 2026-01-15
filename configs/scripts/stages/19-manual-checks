@@ -66,3 +66,8 @@ if ! check_live_user_password; then
     echo "Live user password is missing or blank"
     exit 1
 fi
+
+
+# -- Check dkms status
+
+dkms status
