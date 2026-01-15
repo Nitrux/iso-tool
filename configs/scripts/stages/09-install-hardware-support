@@ -37,8 +37,15 @@ ORIGINAL_DIR=$(pwd)
 TEMP_DIR1="$(mktemp -d)"
 git clone https://github.com/bazzite-org/xonedo "$TEMP_DIR1"
 cd "$TEMP_DIR1"
-sed -i '/^\s*set\s\+-e\s*$/d' install.sh
-bash install.sh
+VERSION=$(git describe --tags 2>/dev/null || echo "0.3")
+VERSION=${VERSION##v}
+mkdir -p "/usr/src/xone-$VERSION"
+cp -r . "/usr/src/xone-$VERSION"
+find "/usr/src/xone-$VERSION" -type f \( -name dkms.conf -o -name '*.c' \) -exec sed -i "s/#VERSION#/$VERSION/" {} +
+dkms add -m xone -v "$VERSION"
+dkms build -m xone -v "$VERSION"
+dkms install --force -m xone -v "$VERSION"
+install -D -m 644 install/modprobe.conf /etc/modprobe.d/xone-blacklist.conf
 cd "$ORIGINAL_DIR"
 rm -rf "$TEMP_DIR1"
 
