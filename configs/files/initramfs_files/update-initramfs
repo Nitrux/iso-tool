@@ -13,9 +13,9 @@ backup_initramfs=no
 set -e
 
 # shellcheck source=/dev/null
-[ -r ${CONF} ] && . ${CONF}
+[ -r "${CONF}" ] && . "${CONF}"
 
-if [ -n "$DPKG_MAINTSCRIPT_PACKAGE" ] && [ $# = 1 ] && [ "$1" = -u ]; then
+if [ -n "${DPKG_MAINTSCRIPT_PACKAGE:-}" ] && [ "$#" -eq 1 ] && [ "$1" = "-u" ]; then
    if dpkg-trigger --no-await update-initramfs; then
       echo "update-initramfs: deferring update (trigger activated)"
       exit 0
@@ -78,9 +78,8 @@ set_initramfs()
    initramfs="${BOOTDIR}/initrd.img-${version}"
 }
 
-
 # backup initramfs while running
-backup_initramfs()
+backup_current_initramfs()
 {
    [ ! -r "${initramfs}" ] && return 0
    initramfs_bak="${initramfs}.dpkg-bak"
@@ -115,7 +114,7 @@ backup_booted_initramfs()
    boot_initramfs=
    uptime_days=$(awk '{printf "%d", $1 / 3600 / 24}' /proc/uptime)
    if [ -n "$uptime_days" ]; then
-      boot_initramfs=$(find "${initramfs}.bak" -mtime "+${uptime_days}")
+      boot_initramfs=$(find "${initramfs}.bak" -mtime "+${uptime_days}" 2>/dev/null || true)
    fi
    if [ -n "${boot_initramfs}" ]; then
       mv -f "${initramfs_bak}" "${initramfs}.bak"
@@ -133,7 +132,6 @@ remove_initramfs_bak()
    rm -f "${initramfs_bak}"
    verbose "Removing ${initramfs_bak}"
 }
-
 
 generate_initramfs()
 {
@@ -157,27 +155,29 @@ generate_initramfs()
 }
 
 # Invoke bootloader
+should_run_update_grub()
+{
+   command -v update-grub >/dev/null 2>&1 || return 1
+   command -v ischroot >/dev/null 2>&1 && ischroot && return 1
+   [ -r /proc/mounts ] || return 1
+   [ -d /dev ] || return 1
+   [ -e /dev/null ] || return 1
+   return 0
+}
+
 run_bootloader()
 {
-    # 1. Support for custom hooks (if you ever create this directory)
-    if [ -d /etc/initramfs/post-update.d/ ]; then
-        run-parts --arg="${version}" --arg="${initramfs}" /etc/initramfs/post-update.d/
-    fi
+   if [ -d /etc/initramfs/post-update.d/ ]; then
+      run-parts --arg="${version}" --arg="${initramfs}" /etc/initramfs/post-update.d/
+      return 0
+   fi
 
-    # 2. Primary Method: Call update-grub directly
-    # Since you confirmed you replaced update-grub and it is safe.
-    if command -v update-grub >/dev/null 2>&1; then
-        verbose "Calling update-grub"
-        update-grub
-        return 0
-    fi
-    
-    # 3. Fallback: Call the script location directly if update-grub is not in PATH
-    if [ -x /etc/kernel/postinst.d/zz-update-grub ]; then
-        verbose "Calling /etc/kernel/postinst.d/zz-update-grub"
-        /etc/kernel/postinst.d/zz-update-grub "${version}" "${initramfs}"
-        return 0
-    fi
+   if should_run_update_grub; then
+      verbose "Calling update-grub"
+      update-grub
+   fi
+
+   return 0
 }
 
 # ro /boot is not modified
@@ -201,8 +201,8 @@ get_sorted_versions()
 {
    version_list="$(
       linux-version list |
-      while read -r version; do
-            test -e "${BOOTDIR}/initrd.img-$version" && echo "$version"
+      while read -r v; do
+            test -e "${BOOTDIR}/initrd.img-$v" && echo "$v"
       done |
       linux-version sort --reverse
       )"
@@ -249,9 +249,9 @@ set_highest_version()
 has_been_updated_since_timestamp()
 {
     timestamp="$1"
-    
+
     [ -e "${initramfs}" ] || return 1
-    
+
     initramfs_timestamp=$(stat -c %Y "${initramfs}")
     test "${initramfs_timestamp}" -gt "${timestamp}"
 }
@@ -302,7 +302,7 @@ update()
 
    ro_boot_check
 
-   backup_initramfs
+   backup_current_initramfs
 
    generate_initramfs
 
@@ -428,7 +428,6 @@ if [ "${version}" = "all" ] \
    done
    exit 0
 fi
-
 
 case "${mode}" in
    c)
