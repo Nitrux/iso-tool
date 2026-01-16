@@ -1,0 +1,443 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright 2026 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
+
+BOOTDIR=/boot
+CONF=/etc/initramfs-tools/update-initramfs.conf
+mode=""
+version=""
+update_initramfs=yes
+backup_initramfs=no
+
+set -e
+
+# shellcheck source=/dev/null
+[ -r ${CONF} ] && . ${CONF}
+
+if [ -n "$DPKG_MAINTSCRIPT_PACKAGE" ] && [ $# = 1 ] && [ "$1" = -u ]; then
+   if dpkg-trigger --no-await update-initramfs; then
+      echo "update-initramfs: deferring update (trigger activated)"
+      exit 0
+   fi
+fi
+
+usage()
+{
+   cat << EOF
+
+Usage: update-initramfs {-c|-d|-u} [-k version] [-v] [-b directory]
+
+Options:
+ -k version   Specify kernel version or 'all'
+ -c      Create a new initramfs
+ -u      Update an existing initramfs
+ -d      Remove an existing initramfs
+ -b directory   Set alternate boot directory
+ -v      Be verbose
+
+See update-initramfs(8) for further details.
+
+EOF
+}
+
+usage_error()
+{
+   if [ -n "${1:-}" ]; then
+      printf "%s\\n\\n" "${*}" >&2
+   fi
+   usage >&2
+   exit 2
+}
+
+mild_panic()
+{
+   if [ -n "${1:-}" ]; then
+      printf "%s\\n" "${*}" >&2
+   fi
+   exit 0
+}
+
+panic()
+{
+   if [ -n "${1:-}" ]; then
+      printf "%s\\n" "${*}" >&2
+   fi
+   exit 1
+}
+
+verbose()
+{
+   if [ "${verbose}" = 1 ]; then
+      printf "%s\\n" "${*}"
+   fi
+}
+
+set_initramfs()
+{
+   initramfs="${BOOTDIR}/initrd.img-${version}"
+}
+
+
+# backup initramfs while running
+backup_initramfs()
+{
+   [ ! -r "${initramfs}" ] && return 0
+   initramfs_bak="${initramfs}.dpkg-bak"
+   [ -r "${initramfs_bak}" ] && rm -f "${initramfs_bak}"
+   ln -f "${initramfs}" "${initramfs_bak}" 2>/dev/null \
+      || cp -a "${initramfs}" "${initramfs_bak}"
+   verbose "Keeping ${initramfs_bak}"
+}
+
+# keep booted initramfs
+backup_booted_initramfs()
+{
+   initramfs_bak="${initramfs}.dpkg-bak"
+
+   # first time run thus no backup
+   [ ! -r "${initramfs_bak}" ] && return 0
+
+   # chroot with no /proc
+   [ ! -r /proc/uptime ] && rm -f "${initramfs_bak}" && return 0
+
+   # no kept backup wanted
+   [ "${backup_initramfs}" = "no" ] && rm -f "${initramfs_bak}" && return 0
+
+   # no backup yet
+   if [ ! -r "${initramfs}.bak" ]; then
+      mv -f "${initramfs_bak}" "${initramfs}.bak"
+      verbose "Backup ${initramfs}.bak"
+      return 0
+   fi
+
+   # keep booted initramfs
+   boot_initramfs=
+   uptime_days=$(awk '{printf "%d", $1 / 3600 / 24}' /proc/uptime)
+   if [ -n "$uptime_days" ]; then
+      boot_initramfs=$(find "${initramfs}.bak" -mtime "+${uptime_days}")
+   fi
+   if [ -n "${boot_initramfs}" ]; then
+      mv -f "${initramfs_bak}" "${initramfs}.bak"
+      verbose "Backup ${initramfs}.bak"
+      return 0
+   fi
+   verbose "Removing current backup ${initramfs_bak}"
+   rm -f "${initramfs_bak}"
+}
+
+# nuke generated copy
+remove_initramfs_bak()
+{
+   [ -z "${initramfs_bak:-}" ] && return 0
+   rm -f "${initramfs_bak}"
+   verbose "Removing ${initramfs_bak}"
+}
+
+
+generate_initramfs()
+{
+   echo "update-initramfs: Generating ${initramfs}"
+   OPTS="-o"
+   if [ "${verbose}" = 1 ]; then
+      OPTS="-v ${OPTS}"
+   fi
+   # shellcheck disable=SC2086
+   if mkinitramfs ${OPTS} "${initramfs}.new" "${version}"; then
+      mv -f "${initramfs}.new" "${initramfs}"
+      # Guard against an unclean shutdown
+      sync -f "${initramfs}"
+   else
+      mkinitramfs_return="$?"
+      remove_initramfs_bak
+      rm -f "${initramfs}.new"
+      echo "update-initramfs: failed for ${initramfs} with $mkinitramfs_return." >&2
+      exit $mkinitramfs_return
+   fi
+}
+
+# Invoke bootloader
+run_bootloader()
+{
+    # 1. Support for custom hooks (if you ever create this directory)
+    if [ -d /etc/initramfs/post-update.d/ ]; then
+        run-parts --arg="${version}" --arg="${initramfs}" /etc/initramfs/post-update.d/
+    fi
+
+    # 2. Primary Method: Call update-grub directly
+    # Since you confirmed you replaced update-grub and it is safe.
+    if command -v update-grub >/dev/null 2>&1; then
+        verbose "Calling update-grub"
+        update-grub
+        return 0
+    fi
+    
+    # 3. Fallback: Call the script location directly if update-grub is not in PATH
+    if [ -x /etc/kernel/postinst.d/zz-update-grub ]; then
+        verbose "Calling /etc/kernel/postinst.d/zz-update-grub"
+        /etc/kernel/postinst.d/zz-update-grub "${version}" "${initramfs}"
+        return 0
+    fi
+}
+
+# ro /boot is not modified
+ro_boot_check()
+{
+   # check irrelevant inside of a chroot
+   if [ ! -r /proc/mounts ] || ischroot; then
+      return 0
+   fi
+
+   boot_opts=$(awk '/boot/{if ((match($4, /^ro/) || match($4, /,ro/)) \
+      && $2 == "/boot") print "ro"}' /proc/mounts)
+   if [ -n "${boot_opts}" ]; then
+      echo "W: /boot is ro mounted." >&2
+      echo "W: update-initramfs: Not updating ${initramfs}" >&2
+      exit 0
+   fi
+}
+
+get_sorted_versions()
+{
+   version_list="$(
+      linux-version list |
+      while read -r version; do
+            test -e "${BOOTDIR}/initrd.img-$version" && echo "$version"
+      done |
+      linux-version sort --reverse
+      )"
+   verbose "Available versions: ${version_list}"
+}
+
+set_current_version()
+{
+   if [ -f "/boot/initrd.img-$(uname -r)" ]; then
+      version=$(uname -r)
+   fi
+}
+
+set_linked_version()
+{
+   linktarget=
+   if [ -e /initrd.img ] && [ -L /initrd.img ]; then
+      linktarget="$(basename "$(readlink /initrd.img)")"
+   fi
+
+   if [ -e /boot/initrd.img ] && [ -L /boot/initrd.img ]; then
+      linktarget="$(basename "$(readlink /boot/initrd.img)")"
+   fi
+
+   if [ -z "${linktarget}" ]; then
+      return
+   fi
+
+   version="${linktarget##initrd.img-}"
+}
+
+set_highest_version()
+{
+   get_sorted_versions
+   if [ -z "${version_list}" ]; then
+      version=
+      return
+   fi
+   # shellcheck disable=SC2086
+   set -- ${version_list}
+   version=${1}
+}
+
+has_been_updated_since_timestamp()
+{
+    timestamp="$1"
+    
+    [ -e "${initramfs}" ] || return 1
+    
+    initramfs_timestamp=$(stat -c %Y "${initramfs}")
+    test "${initramfs_timestamp}" -gt "${timestamp}"
+}
+
+create()
+{
+   if [ -z "${version}" ]; then
+      usage_error "Create mode requires a version argument"
+   fi
+
+   set_initramfs
+
+   generate_initramfs
+
+   run_bootloader
+}
+
+update()
+{
+   if [ "${update_initramfs}" = "no" ]; then
+      echo "update-initramfs: Not updating initramfs."
+      exit 0
+   fi
+
+   if [ -z "${version}" ]; then
+      set_highest_version
+   fi
+
+   if [ -z "${version}" ]; then
+      set_linked_version
+   fi
+
+   if [ -z "${version}" ]; then
+      set_current_version
+   fi
+
+   if [ -z "${version}" ]; then
+      verbose "Nothing to do, exiting."
+      exit 0
+   fi
+
+   set_initramfs
+
+   if [ -n "${SINCE_TIMESTAMP-}" ] && has_been_updated_since_timestamp "$SINCE_TIMESTAMP"; then
+      echo "update-initramfs: ${initramfs} has already been updated since $(date -d "@$SINCE_TIMESTAMP" +%c)."
+      exit 0
+   fi
+
+   ro_boot_check
+
+   backup_initramfs
+
+   generate_initramfs
+
+   run_bootloader
+
+   backup_booted_initramfs
+}
+
+delete()
+{
+   if [ -z "${version}" ]; then
+      usage_error "Delete mode requires a version argument"
+   fi
+
+   set_initramfs
+
+   echo "update-initramfs: Deleting ${initramfs}"
+
+   rm -f "${initramfs}" "${initramfs}.bak"
+}
+
+# Defaults
+verbose=0
+
+##
+
+OPTIONS=$(getopt -o "k:cudvtb:s:h?" --long help,version -n "$0" -- "$@") || usage_error
+
+eval set -- "$OPTIONS"
+
+while true; do
+   case "$1" in
+   -k)
+      version="$2"
+      shift 2
+      ;;
+   -c)
+      mode="c"
+      shift
+      ;;
+   -d)
+      mode="d"
+      shift
+      ;;
+   -u)
+      mode="u"
+      shift
+      ;;
+   -v)
+      verbose="1"
+      shift
+      ;;
+   -t)
+      # accepted for compatibility, but ignored
+      shift
+      ;;
+   -b)
+      BOOTDIR="$2"
+      if [ ! -d "${BOOTDIR}" ]; then
+         echo "E: ${BOOTDIR} is not a directory." >&2
+         exit 1
+      fi
+      shift 2
+      ;;
+   -s)
+      SINCE_TIMESTAMP="$2"
+      case "$SINCE_TIMESTAMP" in
+      *[!0-9]*)
+         echo "E: '${SINCE_TIMESTAMP}' is not a Unix time (seconds since 1970)." >&2
+         exit 1
+         ;;
+      esac
+      shift 2
+      ;;
+   -h|-\?|--help)
+      usage
+      exit 0
+      ;;
+   --version)
+      mkinitramfs --version
+      exit 0
+      ;;
+   --)
+      shift
+      break
+      ;;
+   esac
+done
+
+if [ $# -ne 0 ]; then
+   printf "Extra argument '%s'\\n\\n" "$1" >&2
+   usage_error
+fi
+
+# Validate arguments
+if [ -z "${mode}" ]; then
+   usage_error "You must specify at least one of -c, -u, or -d."
+fi
+
+if [ "${version}" = "all" ] \
+   || { [ "${update_initramfs}" = "all" ] && [ -z "${version}" ]; }; then
+   case "${mode}" in
+   c)
+      version_list="$(linux-version list)"
+      ;;
+   d | u)
+      get_sorted_versions
+      ;;
+   esac
+   if [ -z "${version_list}" ]; then
+      verbose "Nothing to do, exiting."
+      exit 0
+   fi
+
+   OPTS="-b ${BOOTDIR}"
+   if [ "${verbose}" = "1" ]; then
+      OPTS="${OPTS} -v"
+   fi
+   for u_version in ${version_list}; do
+      verbose "Execute: ${0} -${mode} -k \"${u_version}\" ${OPTS}"
+      # shellcheck disable=SC2086
+      "${0}" -${mode} -k "${u_version}" ${OPTS}
+   done
+   exit 0
+fi
+
+
+case "${mode}" in
+   c)
+      create
+      ;;
+   d)
+      delete
+      ;;
+   u)
+      update
+      ;;
+esac
