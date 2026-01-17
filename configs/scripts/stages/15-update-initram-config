@@ -18,6 +18,14 @@ cp -r /configs/files/initramfs_files/hooks/* /etc/initramfs-tools/hooks/
 chmod +x /etc/initramfs-tools/hooks/*
 
 
+# -- Remove upstream's initramfs microcode hooks and replace them with ours.
+
+rm -f /usr/share/initramfs-tools/hooks/{amd,intel}_microcode
+
+cp /etc/initramfs-tools/hooks/amd64_microcode /usr/share/initramfs-tools/hooks/amd64_microcode
+cp /etc/initramfs-tools/hooks/intel_microcode /usr/share/initramfs-tools/hooks/intel_microcode
+
+
 # -- Add or replace scripts for initramfs.
 
 cp -r /configs/files/initramfs_files/scripts/init_top* /etc/initramfs-tools/scripts/init_top/
