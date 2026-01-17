@@ -15,15 +15,6 @@ set -e
 # shellcheck source=/dev/null
 [ -r "${CONF}" ] && . "${CONF}"
 
-if [ -n "${DPKG_MAINTSCRIPT_PACKAGE:-}" ] && [ "$#" -eq 1 ] && [ "$1" = "-u" ]; then
-   if command -v dpkg-trigger >/dev/null 2>&1; then
-      if dpkg-trigger --no-await update-initramfs; then
-         echo "update-initramfs: deferring update (trigger activated)"
-         exit 0
-      fi
-   fi
-fi
-
 usage()
 {
    cat << EOF
