@@ -25,6 +25,4 @@ session optional            pam_umask.so
 session required    pam_unix.so 
 session optional    pam_tmpdir.so 
 session optional    pam_elogind.so
-# This ensures the wallet unlocks on login so the user isn't prompted twice.
-session optional    pam_kwallet5.so auto_start force_run
 # end of pam-auth-update config

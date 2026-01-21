@@ -17,10 +17,9 @@
 
 # here are the per-package modules (the "Primary" block)
 auth required pam_faildelay.so delay=4000000
-auth required pam_faillock.so preauth silent audit deny=5 fail_interval=900 unlock_time=900
+auth required pam_faillock.so preauth silent audit deny=5 fail_interval=900 uOnlock_time=900
 auth [success=1 default=bad] pam_unix.so try_first_pass
 auth [default=die] pam_faillock.so authfail audit deny=5 fail_interval=900 unlock_time=900
-auth optional pam_kwallet5.so
 auth sufficient pam_faillock.so authsucc audit
 auth requisite pam_deny.so
 auth required pam_permit.so
