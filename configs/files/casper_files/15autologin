@@ -37,7 +37,7 @@ if ! grep -q '^\[initial_session\]' "$GREETD_CONFIG"; then
 # Enabling autologin
 
 [initial_session]
-command = "dbus-run-session Hyprland > /dev/null 2>&1"
+command = "gretd-hyprland --config /etc/greetd/hyprland.conf > /dev/null 2>&1"
 user = "$USERNAME"
 EOF
 fi
