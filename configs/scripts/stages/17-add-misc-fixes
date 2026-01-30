@@ -162,15 +162,6 @@ DELETE_CLI_UTILS_LAUNCHERS=(
 rm -f "${DELETE_CLI_UTILS_LAUNCHERS[@]/#//usr/share/applications/}"
 
 
-# -- Set QtGreet theme.
-
-QTGREET_CONFIG="/etc/qtgreet/config.ini"
-
-if [ -f "$QTGREET_CONFIG" ] && grep -q "Theme = default" "$QTGREET_CONFIG"; then
-    sed -i 's|^Theme = default|Theme = nitrux|' "$QTGREET_CONFIG"
-fi
-
-
 # -- Create directories for aesthethic FHS.
 
 BASE_DIR="/System"
