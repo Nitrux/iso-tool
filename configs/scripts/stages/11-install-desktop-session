@@ -21,7 +21,6 @@ INSTALL_DESKTOP_PKGS=(
 INSTALL_DESKTOP_APPS=(
     nitrux-desktop-apps
     maui-apps
-    vxm
 )
 
 INSTALL_DEVUAN_NM_PKGS=(
