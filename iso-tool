@@ -145,12 +145,12 @@ if [ ! -d "$grub_theme/nitrux" ]; then
     exit 1
 fi
 
-if [ ! -f "$config_dir/files/grub_files/live-grub.cfg" ]; then
+if [ ! -f "$config_dir/files/grub_files/live/grub.cfg" ]; then
     echo "Missing grub.cfg"
     exit 1
 fi
 
-if [ ! -f "$config_dir/files/grub_files/live-loopback.cfg" ]; then
+if [ ! -f "$config_dir/files/grub_files/live/loopback.cfg" ]; then
     echo "Missing loopback.cfg"
     exit 1
 fi
@@ -158,8 +158,8 @@ fi
 mkiso \
     -V "NITRUX" \
     -e \
-    -g "$config_dir/files/grub_files/live-grub.cfg" \
-    -g "$config_dir/files/grub_files/live-loopback.cfg" \
+    -g "$config_dir/files/grub_files/live/grub.cfg" \
+    -g "$config_dir/files/grub_files/live/loopback.cfg" \
     -t "$grub_theme"/nitrux \
     "$iso_dir" "$output_dir/$image"
 
