@@ -28,8 +28,8 @@ cp /etc/initramfs-tools/hooks/intel_microcode /usr/share/initramfs-tools/hooks/i
 
 # -- Add or replace scripts for initramfs.
 
-cp -r /configs/files/initramfs_files/scripts/init-top* /etc/initramfs-tools/scripts/init-top/
-cp -r /configs/files/initramfs_files/scripts/local-top* /etc/initramfs-tools/scripts/local-top/
+cp -r /configs/files/initramfs_files/scripts/init-top/* /etc/initramfs-tools/scripts/init-top/
+cp -r /configs/files/initramfs_files/scripts/local-top/* /etc/initramfs-tools/scripts/local-top/
 
 chmod +x /etc/initramfs-tools/scripts/init-top/* /etc/initramfs-tools/scripts/local-top/*
 

@@ -24,12 +24,12 @@ VMLINUX="${pair%%|*}"
 INITRD="${pair##*|}"
 
 cat <<EOF
-menuentry 'Rescue: Restore system from backup' --class nitrux --class gnu-linux --class gnu --class os {
+menuentry 'Enter Rescue Mode (Restore NUTS Backup)' --class nitrux --class gnu-linux --class gnu --class os {
     insmod part_gpt
     insmod xfs
     search --no-floppy --label --set=root NX_ROOT
     echo 'Loading Rescue Mode...'
-    linux $VMLINUX root=LABEL=NX_ROOT ro nuts_rescue=1
+    linux $VMLINUX root=LABEL=NX_ROOT ro nx_rescue=1
     initrd $INITRD
 }
 EOF

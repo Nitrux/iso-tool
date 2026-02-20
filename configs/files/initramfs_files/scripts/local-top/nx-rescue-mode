@@ -15,9 +15,9 @@ esac
 
 # -- Begin real processing below this line
 
-grep -q 'nuts_rescue=1' /proc/cmdline || exit 0
+grep -q 'nx_rescue=1' /proc/cmdline || exit 0
 
-log_begin_msg "NUTS Rescue: starting"
+log_begin_msg "NUTS Rescue: Starting"
 
 get_dev_by_label() {
   label="$1"
