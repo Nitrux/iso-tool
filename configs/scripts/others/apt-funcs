@@ -69,6 +69,7 @@ upgrade_downgrades () { apt -yy upgrade --allow-downgrades "$@"; }
 # -- Wrap dpkg commands in functions.
 
 dpkg_conf () { dpkg --configure -a; }
+dpkg_divert () { dpkg-divert --add --rename --divert "$2" "$1"; }
 dpkg_force_install () { dpkg --force-all -i "$@"; }
 dpkg_force_remove () { /usr/bin/dpkg --remove --no-triggers --force-remove-essential --force-bad-path "$@"; }
 dpkg_install () { dpkg -i "$@"; }
