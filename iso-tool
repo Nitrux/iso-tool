@@ -145,12 +145,12 @@ if [ ! -d "$grub_theme/nitrux" ]; then
     exit 1
 fi
 
-if [ ! -f "$config_dir/files/grub_files/grub.cfg" ]; then
+if [ ! -f "$config_dir/files/grub_files/live-grub.cfg" ]; then
     echo "Missing grub.cfg"
     exit 1
 fi
 
-if [ ! -f "$config_dir/files/grub_files/loopback.cfg" ]; then
+if [ ! -f "$config_dir/files/grub_files/live-loopback.cfg" ]; then
     echo "Missing loopback.cfg"
     exit 1
 fi

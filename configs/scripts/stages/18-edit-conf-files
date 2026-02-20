@@ -43,9 +43,12 @@ cat /configs/files/other/security/limits.conf > /etc/security/limits.conf
 cat /configs/files/other/pwquality.conf > /etc/security/pwquality.conf
 
 
-# -- Add GRUB configuration.
+# -- Add default GRUB configuration.
+#    -- Calamares replaces these values during installation.
+#       -- GRUB_DISTRIBUTOR
+#       -- GRUB_CMDLINE_LINUX_DEFAULT
 
-cat /configs/files/grub_files/grub > /etc/default/grub
+cat /configs/files/grub_files/default/grub > /etc/default/grub
 
 
 # -- Add motd.

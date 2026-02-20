@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright 2026 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
+
+PREREQ=""
+
+prereqs() {
+    echo "${PREREQ}"
+}
+
+case "$1" in
+    prereqs) prereqs; exit 0 ;;
+esac
+
+# shellcheck source=/dev/null
+. /usr/share/initramfs-tools/hook-functions
+
+# -- Begin real processing below this line
+
+copy_exec /sbin/findfs /sbin
+copy_exec /sbin/blkid /sbin
+copy_exec /sbin/wipefs /sbin
+copy_exec /sbin/mkfs.xfs /sbin
+copy_exec /sbin/xfsrestore /sbin
+copy_exec /usr/bin/zstd /bin
+copy_exec /usr/bin/md5sum /bin
+copy_exec /usr/bin/awk /bin
+
+manual_add_modules xfs
+manual_add_modules f2fs

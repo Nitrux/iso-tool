@@ -32,7 +32,7 @@ ORIGINAL_DIR=$(pwd)
 
 
 # -- Install xone and the firmware.
-# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
+# -- FIXME: There are no Debian packages available; if and when there are, switch to using them instead.
 
 TEMP_DIR1="$(mktemp -d)"
 git clone https://github.com/bazzite-org/xonedo "$TEMP_DIR1"
@@ -65,7 +65,7 @@ ln -sf /usr/lib/firmware/xow_dongle.bin /usr/lib/firmware/xone_dongle_02e6.bin
 
 
 # -- Install zenergy to display power consumption for AMD Zen processors.
-# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
+# -- FIXME: There are no Debian packages available; if and when there are, switch to using them instead.
 
 TEMP_DIR3="$(mktemp -d)"
 git clone --depth 1 https://github.com/Nitrux/zenergy.git "$TEMP_DIR3"
@@ -81,7 +81,7 @@ cd "$ORIGINAL_DIR"
 
 
 # -- Install AX88179_178A Linux driver for AX88179 USB 3.0 Ethernet adapters.
-# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
+# -- FIXME: There are no Debian packages available; if and when there are, switch to using them instead.
 
 TEMP_DIR4="$(mktemp -d)"
 git clone --depth 1 https://github.com/Nitrux/asix-ax88179-dkms.git "$TEMP_DIR4"
@@ -98,7 +98,7 @@ cd "$ORIGINAL_DIR"
 
 
 # -- Install Looking Glass (kvmfr) kernel module for low-latency VM windowing.
-# -- FIXME: There are no Debian packages available; if and when they are, switch to using them instead.
+# -- FIXME: There are no Debian packages available; if and when there are, switch to using them instead.
 
 VERSION="B7"
 TEMP_DIR5="$(mktemp -d)"

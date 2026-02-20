@@ -65,7 +65,7 @@ DELETE_SYSV_SCRIPTS=(
 rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}" || true
 
 
-# -- Add gpu-vendor-heck service.
+# -- Add gpu-vendor-check service.
 #   -- Delete this service during installation.
 
 cp /configs/files/openrc_services/gpu-vendor-check /etc/init.d/gpu-vendor-check
