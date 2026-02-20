@@ -4,7 +4,6 @@
 # Copyright 2023-2025 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
 
 
-
 # -- Exit on errors.
 
 set -eu

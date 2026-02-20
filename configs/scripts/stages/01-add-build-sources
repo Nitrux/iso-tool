@@ -20,11 +20,6 @@ add_nitrux_key mauikit
 add_nitrux_key hyprland
 
 
-# -- Add third-party repository keys.
-
-add_third_party_repo_keys 9AE4078033F8024D > /dev/null
-
-
 # -- Add build sources.
 
 cp /configs/files/sources/* /etc/apt/sources.list.d/
