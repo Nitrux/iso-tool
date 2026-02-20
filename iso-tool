@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # SPDX-License-Identifier: BSD-3-Clause
-# Copyright 2017-2025 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
+# Copyright 2017-2026 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
 
 
 set -eu
