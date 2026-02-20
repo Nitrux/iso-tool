@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
+# SPDX-License-Identifier: BSD-3-Clause
+# Copyright 2017-2026 <Nitrux Latinoamericana S.C. <hello@nxos.org>>
+
 
 # -- Functions.
 
