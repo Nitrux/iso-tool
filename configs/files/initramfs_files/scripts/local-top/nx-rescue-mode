@@ -62,8 +62,12 @@ ACTUAL_HASH="$(md5sum "xfs-backup.xfs.zst" | awk '{print $1}' 2>/dev/null || tru
 log_success_msg "NUTS Rescue: checksum ok"
 
 log_begin_msg "NUTS Rescue: formatting NX_ROOT ($ROOT_DEV)"
+
+OLD_UUID="$(blkid -s UUID -o value "$ROOT_DEV" 2>/dev/null || true)"
+[ -n "$OLD_UUID" ] || panic "NUTS Rescue: cannot read UUID from $ROOT_DEV"
+
 wipefs -a "$ROOT_DEV" || panic "NUTS Rescue: wipefs failed ($ROOT_DEV)"
-mkfs.xfs -f -L NX_ROOT "$ROOT_DEV" || panic "NUTS Rescue: mkfs.xfs failed ($ROOT_DEV)"
+mkfs.xfs -f -L NX_ROOT -m uuid="$OLD_UUID" "$ROOT_DEV" || panic "NUTS Rescue: mkfs.xfs failed ($ROOT_DEV)"
 log_success_msg "NUTS Rescue: format ok"
 
 mkdir -p /tmp/root
