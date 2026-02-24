@@ -28,7 +28,7 @@ cat >/dev/console <<'EOF'
 ║                          NUTS RESCUE MODE                                  ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║                                                                            ║
-║  Initializing system recovery...                                          ║
+║  Initializing system recovery...                                           ║
 ║                                                                            ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 
@@ -88,7 +88,7 @@ printf '  ➜ Mounting NX_HOME (%s)...\n' "$HOME_FS" >/dev/console
 mkdir -p /tmp/home
 
 # Unmount if already mounted (shouldn't happen in initramfs, but be safe)
-if mountpoint -q /tmp/home 2>/dev/null; then
+if grep -q "/tmp/home" /proc/mounts 2>/dev/null; then
   umount /tmp/home || panic "NUTS Rescue: failed to unmount /tmp/home"
 fi
 
@@ -136,14 +136,14 @@ printf '  ➜ Mounting NX_ROOT (read-write)...\n' >/dev/console
 mkdir -p /tmp/root
 
 # Unmount if already mounted (shouldn't happen in initramfs, but be safe)
-if mountpoint -q /tmp/root 2>/dev/null; then
+if grep -q "/tmp/root" /proc/mounts 2>/dev/null; then
   umount /tmp/root || panic "NUTS Rescue: failed to unmount /tmp/root"
 fi
 
 mount -t xfs "$ROOT_DEV" /tmp/root || panic "NUTS Rescue: mount NX_ROOT failed ($ROOT_DEV)"
 
 # Verify mount is successful before wiping
-if ! mountpoint -q /tmp/root; then
+if ! grep -q "/tmp/root" /proc/mounts 2>/dev/null; then
   panic "NUTS Rescue: NX_ROOT not mounted, cannot proceed safely"
 fi
 
@@ -174,8 +174,8 @@ cat >/dev/console <<'EOF'
 ║                     RESCUE COMPLETED SUCCESSFULLY                          ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║                                                                            ║
-║  Your system has been restored from the backup.                           ║
-║  The system will now reboot...                                            ║
+║  Your system has been restored from the backup.                            ║
+║  The system will now reboot...                                             ║
 ║                                                                            ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 

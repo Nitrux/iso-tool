@@ -480,6 +480,6 @@ chmod 0755 "$MKFS_F2FS_BIN"
 cp -r /configs/files/grub_files/grub.d/* /etc/grub.d/
 
 
-# -- Disable NetworkManager ifupdown dispatch script as we don't use it.
+# -- Remove NetworkManager ifupdown dispatch script as we don't use it; disabling it is not enough.
 
-chmod -x /etc/NetworkManager/dispatcher.d/01-ifupdown
+rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown
