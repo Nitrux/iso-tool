@@ -13,6 +13,10 @@ case "$1" in
     prereqs) prereqs; exit 0 ;;
 esac
 
+# -- Source initramfs functions for logging
+# shellcheck source=/dev/null
+. /scripts/functions
+
 # -- Begin real processing below this line
 
 grep -q 'nx_rescue=1' /proc/cmdline || exit 0
@@ -49,12 +53,10 @@ CHECKSUM_FILE="$BACKUP_DIR/xfs-backup.md5sum"
 [ -f "$BACKUP_FILE" ] || panic "NUTS Rescue: backup missing ($BACKUP_FILE)"
 [ -f "$CHECKSUM_FILE" ] || panic "NUTS Rescue: checksum missing ($CHECKSUM_FILE)"
 
-cd "$BACKUP_DIR" || panic "NUTS Rescue: cannot access backup dir"
-
-EXPECTED_HASH="$(awk 'NR==1 {print $1}' "xfs-backup.md5sum" 2>/dev/null || true)"
+EXPECTED_HASH="$(awk 'NR==1 {print $1}' "$CHECKSUM_FILE" 2>/dev/null || true)"
 [ -n "$EXPECTED_HASH" ] || panic "NUTS Rescue: invalid checksum file"
 
-ACTUAL_HASH="$(md5sum "xfs-backup.xfs.zst" | awk '{print $1}' 2>/dev/null || true)"
+ACTUAL_HASH="$(md5sum "$BACKUP_FILE" | awk '{print $1}' 2>/dev/null || true)"
 [ -n "$ACTUAL_HASH" ] || panic "NUTS Rescue: md5sum failed"
 
 [ "$EXPECTED_HASH" = "$ACTUAL_HASH" ] || panic "NUTS Rescue: integrity check failed"
@@ -74,7 +76,7 @@ mkdir -p /tmp/root
 mount -t xfs "$ROOT_DEV" /tmp/root || panic "NUTS Rescue: mount new NX_ROOT failed ($ROOT_DEV)"
 
 log_begin_msg "NUTS Rescue: restoring"
-zstd -d -c "xfs-backup.xfs.zst" | xfsrestore - /tmp/root || panic "NUTS Rescue: xfsrestore failed"
+zstd -d -c "$BACKUP_FILE" | xfsrestore - /tmp/root || panic "NUTS Rescue: xfsrestore failed"
 log_success_msg "NUTS Rescue: restore ok"
 
 sync
