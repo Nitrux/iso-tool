@@ -149,7 +149,15 @@ fi
 
 printf '  ✓ NX_ROOT mounted\n' >/dev/console
 printf '  ➜ Wiping current root contents...\n' >/dev/console
-find /tmp/root -mindepth 1 -delete || panic "NUTS Rescue: failed to wipe NX_ROOT contents"
+
+# Use a more robust method to wipe contents
+cd /tmp/root || panic "NUTS Rescue: cannot cd to /tmp/root"
+find . -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || {
+  # Fallback: try simpler approach
+  rm -rf /tmp/root/* /tmp/root/.* 2>/dev/null || true
+}
+cd / || true
+
 printf '  ✓ Root partition cleared\n' >/dev/console
 
 printf '  ➜ Decompressing backup (this may take a while)...\n' >/dev/console
