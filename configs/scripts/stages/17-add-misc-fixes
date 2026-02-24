@@ -478,3 +478,8 @@ chmod 0755 "$MKFS_F2FS_BIN"
 # -- Add GRUB menu entry generator to add Rescue entry.
 
 cp -r /configs/files/grub_files/grub.d/* /etc/grub.d/
+
+
+# -- Disable NetworkManager ifupdown dispatch script as we don't use it.
+
+chmod -x /etc/NetworkManager/dispatcher.d/01-ifupdown
