@@ -21,7 +21,18 @@ esac
 
 grep -q 'nx_rescue=1' /proc/cmdline || exit 0
 
-log_begin_msg "NUTS Rescue: Starting"
+# Display rescue mode banner
+cat >/dev/console <<'EOF'
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                          NUTS RESCUE MODE                                  ║
+╠════════════════════════════════════════════════════════════════════════════╣
+║                                                                            ║
+║  Initializing system recovery...                                          ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+EOF
 
 get_dev_by_label() {
   label="$1"
@@ -38,25 +49,30 @@ get_dev_by_label() {
   return 1
 }
 
+printf '  ➜ Locating NX_HOME partition...\n' >/dev/console
 HOME_DEV="$(get_dev_by_label NX_HOME)" || panic "NUTS Rescue: NX_HOME not found"
-ROOT_DEV="$(get_dev_by_label NX_ROOT)" || panic "NUTS Rescue: NX_ROOT not found"
+printf '  ✓ Found NX_HOME: %s\n' "$HOME_DEV" >/dev/console
 
-log_success_msg "NUTS Rescue: Found NX_HOME=$HOME_DEV NX_ROOT=$ROOT_DEV"
+printf '  ➜ Locating NX_ROOT partition...\n' >/dev/console
+ROOT_DEV="$(get_dev_by_label NX_ROOT)" || panic "NUTS Rescue: NX_ROOT not found"
+printf '  ✓ Found NX_ROOT: %s\n\n' "$ROOT_DEV" >/dev/console
 
 [ "$HOME_DEV" != "$ROOT_DEV" ] || panic "NUTS Rescue: NX_HOME equals NX_ROOT"
 
 # Verify NX_ROOT filesystem is XFS
+printf '  ➜ Verifying filesystem types...\n' >/dev/console
 ROOT_FS="$(blkid -s TYPE -o value "$ROOT_DEV" 2>/dev/null || echo "")"
 if [ "$ROOT_FS" != "xfs" ]; then
   panic "NUTS Rescue: NX_ROOT filesystem is not XFS (found: $ROOT_FS)"
 fi
-log_success_msg "NUTS Rescue: NX_ROOT filesystem verified as XFS"
+printf '  ✓ NX_ROOT is XFS\n' >/dev/console
 
 # Check for duplicate NX_ROOT labels to prevent restoring to the wrong drive
 LABEL_COUNT="$(blkid -o device -t LABEL=NX_ROOT 2>/dev/null | wc -l)"
 if [ "$LABEL_COUNT" -gt 1 ]; then
   panic "NUTS Rescue: Duplicate NX_ROOT labels detected ($LABEL_COUNT devices)"
 fi
+printf '  ✓ No duplicate labels detected\n\n' >/dev/console
 
 # Wait for udev to settle
 udevadm settle 2>/dev/null || sleep 2
@@ -67,13 +83,12 @@ modprobe f2fs 2>/dev/null || true
 
 # Detect filesystem type
 HOME_FS="$(blkid -s TYPE -o value "$HOME_DEV" 2>/dev/null || echo "f2fs")"
-log_success_msg "NUTS Rescue: NX_HOME filesystem is $HOME_FS"
+printf '  ➜ Mounting NX_HOME (%s)...\n' "$HOME_FS" >/dev/console
 
 mkdir -p /tmp/home
 
 # Unmount if already mounted (shouldn't happen in initramfs, but be safe)
 if mountpoint -q /tmp/home 2>/dev/null; then
-  log_success_msg "NUTS Rescue: /tmp/home already mounted, unmounting"
   umount /tmp/home || panic "NUTS Rescue: failed to unmount /tmp/home"
 fi
 
@@ -82,7 +97,7 @@ if ! mount -o ro -t "$HOME_FS" "$HOME_DEV" /tmp/home; then
   panic "NUTS Rescue: mount NX_HOME failed ($HOME_DEV as $HOME_FS)"
 fi
 
-log_success_msg "NUTS Rescue: NX_HOME mounted"
+printf '  ✓ NX_HOME mounted (read-only)\n\n' >/dev/console
 
 BACKUP_DIR="/tmp/home/.nuts/xfs"
 BACKUP_FILE="$BACKUP_DIR/xfs-backup.xfs.zst"
@@ -104,6 +119,8 @@ if [ ! -f "$CHECKSUM_FILE" ]; then
   reboot -f
 fi
 
+printf '  ➜ Verifying backup integrity...\n' >/dev/console
+
 EXPECTED_HASH="$(tail -n 1 "$CHECKSUM_FILE" 2>/dev/null | awk '{print $1}' || true)"
 [ -n "$EXPECTED_HASH" ] || panic "NUTS Rescue: invalid checksum file"
 
@@ -112,15 +129,14 @@ ACTUAL_HASH="$(md5sum "$BACKUP_FILE" | awk '{print $1}' 2>/dev/null || true)"
 
 [ "$EXPECTED_HASH" = "$ACTUAL_HASH" ] || panic "NUTS Rescue: integrity check failed"
 
-log_success_msg "NUTS Rescue: checksum ok"
+printf '  ✓ Backup integrity verified\n\n' >/dev/console
 
-log_begin_msg "NUTS Rescue: preparing NX_ROOT ($ROOT_DEV)"
+printf '  ➜ Mounting NX_ROOT (read-write)...\n' >/dev/console
 
 mkdir -p /tmp/root
 
 # Unmount if already mounted (shouldn't happen in initramfs, but be safe)
 if mountpoint -q /tmp/root 2>/dev/null; then
-  log_success_msg "NUTS Rescue: /tmp/root already mounted, unmounting"
   umount /tmp/root || panic "NUTS Rescue: failed to unmount /tmp/root"
 fi
 
@@ -131,26 +147,39 @@ if ! mountpoint -q /tmp/root; then
   panic "NUTS Rescue: NX_ROOT not mounted, cannot proceed safely"
 fi
 
-log_begin_msg "NUTS Rescue: wiping NX_ROOT contents"
+printf '  ✓ NX_ROOT mounted\n' >/dev/console
+printf '  ➜ Wiping current root contents...\n' >/dev/console
 find /tmp/root -mindepth 1 -delete || panic "NUTS Rescue: failed to wipe NX_ROOT contents"
-log_success_msg "NUTS Rescue: wipe ok"
+printf '  ✓ Root partition cleared\n' >/dev/console
 
-log_begin_msg "NUTS Rescue: decompressing backup"
+printf '  ➜ Decompressing backup (this may take a while)...\n' >/dev/console
 DECOMPRESSED_BACKUP="/tmp/home/.nuts/xfs/xfs-backup.xfs"
 zstd -d -f -o "$DECOMPRESSED_BACKUP" "$BACKUP_FILE" || panic "NUTS Rescue: decompression failed"
-log_success_msg "NUTS Rescue: decompression ok"
+printf '  ✓ Backup decompressed\n' >/dev/console
 
-log_begin_msg "NUTS Rescue: restoring"
+printf '  ➜ Restoring system (this may take a while)...\n' >/dev/console
 xfsrestore -f "$DECOMPRESSED_BACKUP" /tmp/root || panic "NUTS Rescue: xfsrestore failed"
 rm -f "$DECOMPRESSED_BACKUP"
-log_success_msg "NUTS Rescue: restore ok"
+printf '  ✓ System restored successfully\n\n' >/dev/console
 
+printf '  ➜ Syncing filesystems...\n' >/dev/console
 sync
 umount /tmp/root || panic "NUTS Rescue: umount root failed"
 umount /tmp/home || panic "NUTS Rescue: umount home failed"
 sync
+printf '  ✓ All changes saved\n\n' >/dev/console
 
-log_success_msg "NUTS Rescue: complete, rebooting"
+cat >/dev/console <<'EOF'
+╔════════════════════════════════════════════════════════════════════════════╗
+║                     RESCUE COMPLETED SUCCESSFULLY                          ║
+╠════════════════════════════════════════════════════════════════════════════╣
+║                                                                            ║
+║  Your system has been restored from the backup.                           ║
+║  The system will now reboot...                                            ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+EOF
 
 if [ -w /proc/sys/kernel/sysrq ]; then
   echo 1 > /proc/sys/kernel/sysrq 2>/dev/null || true
