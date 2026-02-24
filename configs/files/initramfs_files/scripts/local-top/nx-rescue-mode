@@ -88,8 +88,21 @@ BACKUP_DIR="/tmp/home/.nuts/xfs"
 BACKUP_FILE="$BACKUP_DIR/xfs-backup.xfs.zst"
 CHECKSUM_FILE="$BACKUP_DIR/xfs-backup.md5sum"
 
-[ -f "$BACKUP_FILE" ] || panic "NUTS Rescue: backup missing ($BACKUP_FILE)"
-[ -f "$CHECKSUM_FILE" ] || panic "NUTS Rescue: checksum missing ($CHECKSUM_FILE)"
+if [ ! -f "$BACKUP_FILE" ]; then
+  log_failure_msg "NUTS Rescue: backup file not found ($BACKUP_FILE)"
+  log_failure_msg "NUTS Rescue: cannot proceed without backup, rebooting in 10 seconds"
+  umount /tmp/home 2>/dev/null || true
+  sleep 10
+  reboot -f
+fi
+
+if [ ! -f "$CHECKSUM_FILE" ]; then
+  log_failure_msg "NUTS Rescue: checksum file not found ($CHECKSUM_FILE)"
+  log_failure_msg "NUTS Rescue: cannot proceed without checksum, rebooting in 10 seconds"
+  umount /tmp/home 2>/dev/null || true
+  sleep 10
+  reboot -f
+fi
 
 EXPECTED_HASH="$(tail -n 1 "$CHECKSUM_FILE" 2>/dev/null | awk '{print $1}' || true)"
 [ -n "$EXPECTED_HASH" ] || panic "NUTS Rescue: invalid checksum file"
