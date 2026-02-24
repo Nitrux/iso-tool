@@ -160,14 +160,14 @@ cd / || true
 
 printf '  ✓ Root partition cleared\n' >/dev/console
 
-printf '  ➜ Decompressing backup (this may take a while)...\n' >/dev/console
-DECOMPRESSED_BACKUP="/tmp/home/.nuts/xfs/xfs-backup.xfs"
-zstd -d -f -o "$DECOMPRESSED_BACKUP" "$BACKUP_FILE" || panic "NUTS Rescue: decompression failed"
-printf '  ✓ Backup decompressed\n' >/dev/console
+printf '  ➜ Decompressing and restoring system (this may take a while)...\n' >/dev/console
 
-printf '  ➜ Restoring system (this may take a while)...\n' >/dev/console
-xfsrestore -f "$DECOMPRESSED_BACKUP" /tmp/root || panic "NUTS Rescue: xfsrestore failed"
-rm -f "$DECOMPRESSED_BACKUP"
+# Stream decompression directly to xfsrestore to avoid RAM/disk space issues
+# xfsrestore reads from stdin when using '-' as the source
+if ! zstd -d -c "$BACKUP_FILE" | xfsrestore - /tmp/root; then
+  panic "NUTS Rescue: decompression or restore failed"
+fi
+
 printf '  ✓ System restored successfully\n\n' >/dev/console
 
 printf '  ➜ Syncing filesystems...\n' >/dev/console
