@@ -65,12 +65,6 @@ DELETE_SYSV_SCRIPTS=(
 rm -f "${DELETE_SYSV_SCRIPTS[@]/#//etc/init.d/}" || true
 
 
-# -- Add gpu-vendor-check service.
-#   -- Delete this service during installation.
-
-cp /configs/files/openrc_services/gpu-vendor-check /etc/init.d/gpu-vendor-check
-
-
 # -- Add OpenRC configuration. 
 #    -- We need to put this package at this stage. Otherwise, *WE* end up with an unbootable system because Debian decided to make their package unusable.
 #    -- Debian purposely didn't add the upstream OpenRC service scripts and instead made their package rely on initscripts to avoid causing a conflict with SysV. 
