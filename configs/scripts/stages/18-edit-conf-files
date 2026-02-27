@@ -21,13 +21,6 @@ cat /configs/files/casper_files/casper.conf > /etc/casper.conf
 cat /configs/files/other/adduser.conf > /etc/adduser.conf
 
 
-# -- Replace elogind default configuration.
-
-cat /configs/files/elogind_files/logind.conf > /etc/elogind/logind.conf
-cat /configs/files/elogind_files/sleep.conf > /etc/elogind/sleep.conf
-cat /configs/files/elogind_files/10-elogind.conf > /etc/elogind/sleep.conf.d/10-elogind.conf
-
-
 # -- Replace pam.d files with our hardened files.
 
 cat /configs/files/other/pam.d/common-account > /etc/pam.d/common-password
