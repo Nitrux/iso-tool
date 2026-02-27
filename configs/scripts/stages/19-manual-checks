@@ -18,15 +18,16 @@ FILE_ONWERSHIP_TO_CHECK=()
 check_ownership "${FILE_ONWERSHIP_TO_CHECK[@]}"
 
 FILE_CONTENT_TO_CHECK=(
-    /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
-    /etc/casper.conf
     /etc/adduser.conf
+    /etc/casper.conf
     /etc/elogind/logind.conf
+    /etc/elogind/logind.conf.d/10-nitrux-logind.conf
     /etc/elogind/sleep.conf
-    /etc/elogind/sleep.conf.d/10-elogind.conf
+    /etc/elogind/sleep.conf.d/10-nitrux-sleep.conf
     /etc/greetd/config.toml
     /etc/initramfs-tools/modules
     /etc/plymouth/plymouthd.conf
+    /usr/share/initramfs-tools/scripts/casper-bottom/15autologin
 )
 
 check_file_contents "${FILE_CONTENT_TO_CHECK[@]}"
