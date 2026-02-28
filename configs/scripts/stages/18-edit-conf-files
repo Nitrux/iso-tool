@@ -47,3 +47,10 @@ cat /configs/files/grub_files/default/grub > /etc/default/grub
 # -- Add motd.
 
 cat /configs/files/other/motd > /etc/motd
+
+
+# -- Configure elogind for suspend/hibernate.
+
+cat /configs/files/elogind_files/logind.conf > /etc/elogind/logind.conf
+cat /configs/files/elogind_files/sleep.conf > /etc/elogind/sleep.conf
+cat /configs/files/elogind_files/10-elogind.conf > /etc/elogind/sleep.conf.d/10-elogind.conf
