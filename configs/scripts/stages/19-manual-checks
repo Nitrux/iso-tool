@@ -21,9 +21,11 @@ FILE_CONTENT_TO_CHECK=(
     /etc/adduser.conf
     /etc/casper.conf
     /etc/elogind/logind.conf
-    /etc/elogind/logind.conf.d/10-nitrux-logind.conf
+    /etc/elogind/logind.conf.d/10-logind.conf
+    /etc/elogind/logind.conf.d/99-nitrux-logind.conf
     /etc/elogind/sleep.conf
-    /etc/elogind/sleep.conf.d/10-nitrux-sleep.conf
+    /etc/elogind/sleep.conf.d/10-sleep.conf
+    /etc/elogind/sleep.conf.d/99-nitrux-sleep.conf
     /etc/greetd/config.toml
     /etc/initramfs-tools/modules
     /etc/plymouth/plymouthd.conf
