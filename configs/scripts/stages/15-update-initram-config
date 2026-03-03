@@ -51,7 +51,11 @@ rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/ca
 cat /configs/files/initramfs_files/update-initramfs > /usr/sbin/update-initramfs
 
 
+# -- Add modules to initramfs.
+
+printf '%s\n' exfat >> /etc/initramfs-tools/modules
+
+
 # -- Always update initramfs after adding, removing or editing hooks or scripts.
 
 update-initramfs -c -k all
-
