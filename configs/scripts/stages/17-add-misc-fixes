@@ -473,81 +473,31 @@ chmod 0755 "$MKFS_F2FS_BIN"
 rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown
 
 
-# -- Add Vicinae. Vicinae is available as an AppImage, but it seems the official way to "install it" is to extract the AppImage.
+# -- Add Vicinae. Vicinae is available as an AppImage.
 
-repo="vicinaehq/vicinae"
-prefix="/usr/lib/vicinae"
-bin="/usr/bin/vicinae"
+REPO="vicinaehq/vicinae"
+APPDIR="/Applications"
 
-tmp="$(mktemp -d)"
-trap 'rm -rf "$tmp"' EXIT
+TMP="$(mktemp -d)"
+trap 'rm -rf "$TMP"' EXIT
 
-dl_url="$(
-  curl -fsSL "https://api.github.com/repos/${repo}/releases/latest" |
+read -r NAME URL < <(
+  curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" |
   jq -r '
     def appimg: select(.name | test("\\.AppImage$"; "i"));
     def arch:  select(.name | test("(x86_64|amd64)"; "i"));
 
-    ([ .assets[] | appimg | arch | .browser_download_url ][0]
-     // [ .assets[] | appimg | .browser_download_url ][0]
+    ([ .assets[] | appimg | arch | {name, url:.browser_download_url} ][0]
+     // [ .assets[] | appimg | {name, url:.browser_download_url} ][0]
      // empty)
+    | "\(.name) \(.url)"
   '
-)"
+)
 
-[ -n "$dl_url" ]
+[ -n "${URL:-}" ]
 
-curl -fsSL -L "$dl_url" -o "$tmp/vicinae.AppImage"
-chmod +x "$tmp/vicinae.AppImage"
+install -d "$APPDIR"
 
-cd "$tmp"
-"$tmp/vicinae.AppImage" --appimage-extract >/dev/null
-
-[ -n "${prefix:-}" ] && [ "$prefix" != "/" ]
-rm -rf "${prefix:?}"
-install -d "$prefix"
-
-rsync -a --delete "$tmp/squashfs-root/" "${prefix:?}/"
-
-ln -sfn "$prefix/AppRun" "$bin"
-
-if [ -d "$prefix/usr/share/applications" ]; then
-  install -d /usr/share/applications
-  for f in "$prefix"/usr/share/applications/vicinae*.desktop; do
-    [ -e "$f" ] || continue
-    out="/usr/share/applications/$(basename "$f")"
-    cp -f "$f" "$out"
-    awk -v exe="$bin" '
-      /^Exec=/{
-        p=index($0,"%")
-        if (p>0) $0="Exec="exe" "substr($0,p)
-        else $0="Exec="exe
-      }
-      {print}
-    ' "$out" > "$out.tmp" && mv "$out.tmp" "$out"
-  done
-fi
-
-if [ -d "$prefix/usr/share/vicinae" ]; then
-  install -d /usr/share/vicinae
-  rsync -a --delete "$prefix/usr/share/vicinae/" /usr/share/vicinae/
-fi
-
-if [ -d "$prefix/usr/share/vicinae/native-messaging-hosts" ]; then
-  chromium_in="$prefix/usr/share/vicinae/native-messaging-hosts/com.vicinae.vicinae.chromium.json.in"
-  firefox_in="$prefix/usr/share/vicinae/native-messaging-hosts/com.vicinae.vicinae.firefox.json.in"
-
-  if [ -f "$chromium_in" ]; then
-    install -d /etc/chromium/native-messaging-hosts
-    sed -e "s|@NATIVE_HOST_BIN@|$prefix/usr/libexec/vicinae/vicinae-browser-link|g" \
-        -e "s|@CHROME_EXTENSION_ID@|com.vicinae.vicinae|g" \
-        "$chromium_in" \
-        > /etc/chromium/native-messaging-hosts/com.vicinae.vicinae.json
-  fi
-
-  if [ -f "$firefox_in" ]; then
-    install -d /usr/lib/mozilla/native-messaging-hosts
-    sed -e "s|@NATIVE_HOST_BIN@|$prefix/usr/libexec/vicinae/vicinae-browser-link|g" \
-        "$firefox_in" \
-        > /usr/lib/mozilla/native-messaging-hosts/com.vicinae.vicinae.json
-  fi
-fi
+curl -fsSL -L "$URL" -o "$TMP/$NAME"
+mv -f "$TMP/$NAME" "$APPDIR/$NAME"
+chmod +x "$APPDIR/$NAME"
