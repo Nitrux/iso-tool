@@ -477,6 +477,7 @@ rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown
 
 REPO="vicinaehq/vicinae"
 APPDIR="/Applications"
+TARGET="vicinae"
 
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -499,5 +500,5 @@ read -r NAME URL < <(
 install -d "$APPDIR"
 
 curl -fsSL -L "$URL" -o "$TMP/$NAME"
-mv -f "$TMP/$NAME" "$APPDIR/$NAME"
-chmod +x "$APPDIR/$NAME"
+mv -f "$TMP/$NAME" "$APPDIR/$TARGET"
+chmod +x "$APPDIR/$TARGET"
