@@ -133,7 +133,15 @@ echo "$iso_flavor" > "$build_dir"/etc/iso-release
 
 mkdir -p "$iso_dir"/casper
 
-mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs -comp zstd -Xcompression-level 22 -no-progress -b 1048576 -quiet -mem 1G
+mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs \
+    -comp zstd \
+    -Xcompression-level 15 \
+    -Xdict-size 100% \
+    -b 1M \
+    -no-progress \
+    -quiet \
+    -noappend \
+    -mem 4G
 
 
 # -- Generate the ISO image.
