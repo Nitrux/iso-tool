@@ -135,7 +135,7 @@ mkdir -p "$iso_dir"/casper
 
 mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs \
     -comp zstd \
-    -Xcompression-level 12 \
+    -Xcompression-level 18 \
     -b 1M \
     -noappend \
     -quiet \
