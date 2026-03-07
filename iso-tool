@@ -135,12 +135,10 @@ mkdir -p "$iso_dir"/casper
 
 mksquashfs "$build_dir" "$iso_dir"/casper/filesystem.squashfs \
     -comp zstd \
-    -Xcompression-level 15 \
-    -Xdict-size 100% \
+    -Xcompression-level 12 \
     -b 1M \
-    -no-progress \
-    -quiet \
     -noappend \
+    -quiet \
     -mem 4G
 
 
