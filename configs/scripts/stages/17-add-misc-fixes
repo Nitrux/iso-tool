@@ -473,32 +473,7 @@ chmod 0755 "$MKFS_F2FS_BIN"
 rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown
 
 
-# -- Add Vicinae. Vicinae is available as an AppImage.
+# -- Add Vicinae to replace Wofi. 
+# -- Vicinae is available as an AppImage, but it seems the official way to "install it" is to use the install script, which extracts the AppImage(?).
 
-REPO="vicinaehq/vicinae"
-APPDIR="/Applications"
-TARGET="vicinae"
-
-TMP="$(mktemp -d)"
-trap 'rm -rf "$TMP"' EXIT
-
-read -r NAME URL < <(
-  curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" |
-  jq -r '
-    def appimg: select(.name | test("\\.AppImage$"; "i"));
-    def arch:  select(.name | test("(x86_64|amd64)"; "i"));
-
-    ([ .assets[] | appimg | arch | {name, url:.browser_download_url} ][0]
-     // [ .assets[] | appimg | {name, url:.browser_download_url} ][0]
-     // empty)
-    | "\(.name) \(.url)"
-  '
-)
-
-[ -n "${URL:-}" ]
-
-install -d "$APPDIR"
-
-curl -fsSL -L "$URL" -o "$TMP/$NAME"
-mv -f "$TMP/$NAME" "$APPDIR/$TARGET"
-chmod +x "$APPDIR/$TARGET"
+curl -fsSL https://vicinae.com/install.sh | bash
