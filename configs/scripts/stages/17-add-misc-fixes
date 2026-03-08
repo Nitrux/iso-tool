@@ -478,3 +478,8 @@ rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown
 # -- However, that will fail because the script is trying to execute the AppImage inside the chroot.
 
 install_vicinae_latest /usr/local
+
+
+# -- Pre-generate the fontconfig cache.
+
+fc-cache -f -v
