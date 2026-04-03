@@ -15,6 +15,7 @@ source /configs/scripts/others/apt-funcs
 
 INSTALL_CASPER_PKGS=(
     casper/duke
+    dracut-install/duke
     eject/duke
     fdisk/duke
     uuid-runtime/duke
