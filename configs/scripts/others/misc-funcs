@@ -108,7 +108,7 @@ check_initramfs_size() {
     echo "Initramfs file: $INITRAMFS_FILE"
     echo "Initramfs size (actual disk usage):"
     
-    du -h --apparent-size "$INITRAMFS_FILE" | awk '{printf "%.1fM\n", $1}'
+    du -h --apparent-size "$INITRAMFS_FILE" | awk '{print $1}'
 
     echo "15 largest files in initramfs:"
     lsinitramfs -l "$INITRAMFS_FILE" | sort -rh -k5 | head -n 15 | awk '{printf "%.1fM %s %s\n", $5/1024/1024, $3, $NF}'

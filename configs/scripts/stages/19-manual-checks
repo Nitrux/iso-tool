@@ -27,6 +27,11 @@ FILE_CONTENT_TO_CHECK=(
     /etc/elogind/sleep.conf.d/10-elogind.conf
     /etc/elogind/sleep.conf.d/99-nitrux-sleep.conf
     /etc/greetd/config.toml
+    /etc/pam.d/common-account
+    /etc/pam.d/common-password
+    /etc/pam.d/common-session
+    /etc/pam.d/common-session-noninteractive
+    /etc/security/limits.conf
     /etc/initramfs-tools/modules
     /etc/plymouth/plymouthd.conf
     /usr/share/initramfs-tools/scripts/casper-bottom/15autologin

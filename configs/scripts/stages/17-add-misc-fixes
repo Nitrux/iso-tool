@@ -318,15 +318,23 @@ cp /configs/files/dnscrypt-proxy_files/* /etc/dnscrypt-proxy/
 # sed -i 's|@{HOMEDIRS}/\*\* .*|@{HOMEDIRS}/** rwk,|' "$APPARMOR_PROFILE"
 
 
-# -- Disable the virtualization extensions (like Intel VT-x or AMD-V) from loading automatically when the KVM module is loaded into the kernel.
-#  -- NOTE: This is to make VirtualBox work, see: https://forums.virtualbox.org/viewtopic.php?t=112580
+# -- VirtualBox workaround for KVM.
+#    -- Keep this opt-in because disabling virtualization extensions at load
+#       time breaks KVM-first workloads such as GNOME Boxes/libvirt.
+#    -- Set ENABLE_VIRTUALBOX_KVM_WORKAROUND=1 at build time if needed.
 
-if [ ! -f /etc/modprobe.d/kvm.conf ]; then
-    touch /etc/modprobe.d/kvm.conf
-fi
+if [ "${ENABLE_VIRTUALBOX_KVM_WORKAROUND:-0}" = "1" ]; then
+    if [ ! -f /etc/modprobe.d/kvm.conf ]; then
+        touch /etc/modprobe.d/kvm.conf
+    fi
 
-if ! grep -q "^options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf; then
-    sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
+    if ! grep -q "^options kvm enable_virt_at_load=0$" /etc/modprobe.d/kvm.conf; then
+        if grep -q "^options kvm " /etc/modprobe.d/kvm.conf; then
+            sed -i "/^options kvm /a options kvm enable_virt_at_load=0" /etc/modprobe.d/kvm.conf
+        else
+            printf '%s\n' 'options kvm enable_virt_at_load=0' >> /etc/modprobe.d/kvm.conf
+        fi
+    fi
 fi
 
 
@@ -389,14 +397,20 @@ fi
 
 mkdir -p /kboot/{debian,mainline,pikaos}
 
-for file in /boot/vmlinuz-*pikaos-amd64; do
-    create_symlink "$file" "/kboot/pikaos/vmlinuz"
-done
+kboot_vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "vmlinuz-*pikaos-amd64" | head -1)
+kboot_initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "initrd.img-*pikaos-amd64" | head -1)
 
-for file in /boot/initrd.img-*pikaos-amd64; do
-    create_symlink "$file" "/kboot/pikaos/initrd.img"
-done
+if [ -n "$kboot_vmlinuz_file" ]; then
+    create_symlink "$kboot_vmlinuz_file" "/kboot/pikaos/vmlinuz"
+else
+    echo "Warning: No matching PikaOS vmlinuz file found in $boot_dir for /kboot/pikaos/vmlinuz."
+fi
 
+if [ -n "$kboot_initrd_file" ]; then
+    create_symlink "$kboot_initrd_file" "/kboot/pikaos/initrd.img"
+else
+    echo "Warning: No matching PikaOS initrd file found in $boot_dir for /kboot/pikaos/initrd.img."
+fi
 
 # -- Remove rootfs leftovers
 

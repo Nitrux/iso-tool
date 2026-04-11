@@ -28,9 +28,13 @@ add_nitrux_key () {
 # -- Retrieve third-party repository keys using GPG.
 
 add_third_party_repo_keys () {
+    local keyring_dir="/etc/apt/keyrings"
+    mkdir -p "$keyring_dir"
+
     for key in "$@"; do
         gpg --batch --keyserver hkps://keyserver.ubuntu.com --recv-keys "$key"
-        gpg --batch --yes --output "${KEYRING_DIR}/${key}.gpg" --export "$key"
+        gpg --batch --yes --output "${keyring_dir}/${key}.gpg" --export "$key"
+        chmod 644 "${keyring_dir}/${key}.gpg"
     done
 }
 
