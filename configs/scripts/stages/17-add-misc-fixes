@@ -63,6 +63,7 @@ rm -f /usr/share/wayland-sessions/plasma.desktop
 DELETE_UNUSED_KCMS_LAUNCHERS=(
     kcm_autostart.desktop
     kcm_breezedecoration.desktop
+    kcm_componentchooser.desktop
     kcm_desktoptheme.desktop
     kcm_feedback.desktop
     kcm_fontinst.desktop
@@ -89,6 +90,7 @@ DELETE_UNUSED_KCMS_LAUNCHERS=(
 DELETE_UNUSED_KCMS_LIBEXEC=(
     kcm_autostart.so
     kcm_breezedecoration.so
+    kcm_componentchooser.so
     kcm_desktoptheme.so
     kcm_feedback.so
     kcm_fontinst.so
@@ -103,6 +105,7 @@ DELETE_UNUSED_KCMS_LIBEXEC=(
     kcm_lookandfeel.so
     kcm_netpref.so
     kcm_nightlight.so
+    kcm_nighttime.so
     kcm_notifications.so
     kcm_proxy.so
     kcm_regionandlang.so
@@ -110,7 +113,6 @@ DELETE_UNUSED_KCMS_LIBEXEC=(
     kcm_virtualkeyboard.so
     kcm_wallpaper.so
     kcm_webshortcuts.so
-    kcm_nighttime.so
 )
 
 
