@@ -499,3 +499,8 @@ install_vicinae_latest /usr/local
 # -- Pre-generate the fontconfig cache.
 
 fc-cache -f -v
+
+
+# -- Create the generic XDG menu file name, so KApplicationTrader::queryByMimeType(...) finds it.
+
+ln -sv /etc/xdg/menus/plasma-applications.menu /etc/xdg/menus/applications.menu
