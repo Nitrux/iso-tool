@@ -16,7 +16,7 @@
 ##################################################################
 
 Types: deb
-URIs: https://snapshot.debian.org/archive/debian/20260331T202859Z
+URIs: https://snapshot.debian.org/archive/debian/20260514T142722Z
 Suites: testing testing-updates
 Components: main non-free non-free-firmware contrib
 Signed-By: /usr/share/keyrings/debian-archive-keyring.gpg
