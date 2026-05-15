@@ -46,7 +46,7 @@ DELETE_CASPER_INITRD_SCRIPTS=(
 rm -f "${DELETE_CASPER_INITRD_SCRIPTS[@]/#//usr/share/initramfs-tools/scripts/casper-bottom/}"
 
 
-# -- Replace upstream's update-initramfs with our improved, dpkg-less-non-dependent version
+# -- Replace upstream's update-initramfs with our improved, dpkg-less version
 
 cat /configs/files/initramfs_files/update-initramfs > /usr/sbin/update-initramfs
 
