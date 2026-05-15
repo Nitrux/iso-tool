@@ -66,7 +66,7 @@ install algif_rng /bin/false
 EOF
 
 
-# -- Manual mitigation for CVE-2026-43284 and CVE-2026-43500 (Dirty Frag).
+# -- Manual mitigation for CVE-2026-43284 and CVE-2026-43500 (Dirty Frag and Fragnesia).
 
 cat >/etc/modprobe.d/disable-esp-ipsec.conf <<EOF
 install esp4 /bin/false
