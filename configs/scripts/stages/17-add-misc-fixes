@@ -36,6 +36,13 @@ update_console_settings FONTFACE 'Terminus'
 update_console_settings FONTSIZE '16'
 
 
+# -- Regenerate console-setup cache after changing defaults so TTY settings are ready on first boot without running setupcon manually.
+
+if command -v setupcon >/dev/null 2>&1; then
+    setupcon --save-only || setupcon --save || true
+fi
+
+
 # -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter when using greetd.
 #    -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
 
