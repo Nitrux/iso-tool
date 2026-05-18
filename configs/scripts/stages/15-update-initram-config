@@ -56,25 +56,6 @@ cat /configs/files/initramfs_files/update-initramfs > /usr/sbin/update-initramfs
 printf '%s\n' exfat >> /etc/initramfs-tools/modules
 
 
-# -- Manual mitigation for CVE-2026-31431 (Copy Fail).
-
-cat >/etc/modprobe.d/disable-algif-aead.conf <<EOF
-install algif_aead /bin/false
-install algif_skcipher /bin/false
-install algif_hash /bin/false
-install algif_rng /bin/false
-EOF
-
-
-# -- Manual mitigation for CVE-2026-43284 and CVE-2026-43500 (Dirty Frag and Fragnesia).
-
-cat >/etc/modprobe.d/disable-esp-ipsec.conf <<EOF
-install esp4 /bin/false
-install esp6 /bin/false
-install rxrpc /bin/false
-EOF
-
-
 # -- Always update initramfs after adding, removing or editing hooks or scripts.
 
 update-initramfs -c -k all
