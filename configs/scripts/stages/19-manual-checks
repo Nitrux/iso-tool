@@ -75,6 +75,6 @@ if ! check_live_user_password; then
 fi
 
 
-# -- Check dkms status
+# -- Check dkms status.
 
 dkms status
