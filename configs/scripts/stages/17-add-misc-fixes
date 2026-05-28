@@ -518,3 +518,10 @@ if [ ! -f "$XDG_MENU_SRC" ]; then
 elif [ ! -e "$XDG_MENU_DEST" ] && [ ! -L "$XDG_MENU_DEST" ]; then
     ln -sv "$XDG_MENU_SRC" "$XDG_MENU_DEST"
 fi
+
+
+# -- Mitigation against CIFSwitch.
+
+cat >/etc/request-key.d/cifs.spnego.conf <<'EOF'
+create cifs.spnego * * /usr/sbin/keyctl negate %k 30 %S
+EOF
