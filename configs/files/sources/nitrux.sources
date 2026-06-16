@@ -20,6 +20,14 @@ Signed-By: /etc/apt/keyrings/nitrux-testing.gpg
 Enabled: yes
 
 Types: deb
+Description: Nitrux Testing Fresh Repo
+URIs: https://packagecloud.io/nitrux/testing-fresh/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-testing-fresh.gpg
+Enabled: yes
+
+Types: deb
 Description: Nitrux Area51 Repo
 URIs: https://packagecloud.io/nitrux/area51/debian/
 Suites: duke
@@ -27,12 +35,20 @@ Components: main
 Signed-By: /etc/apt/keyrings/nitrux-area51.gpg
 Enabled: yes
 
+# Types: deb
+# Description: Nitrux MauiKit Repo
+# URIs: https://packagecloud.io/nitrux/mauikit/debian/
+# Suites: duke
+# Components: main
+# Signed-By: /etc/apt/keyrings/nitrux-mauikit.gpg
+# Enabled: yes
+
 Types: deb
-Description: Nitrux MauiKit Repo
-URIs: https://packagecloud.io/nitrux/mauikit/debian/
+Description: Nitrux MauiKit Fresh Repo
+URIs: https://packagecloud.io/nitrux/mauikit-fresh/debian/
 Suites: duke
 Components: main
-Signed-By: /etc/apt/keyrings/nitrux-mauikit.gpg
+Signed-By: /etc/apt/keyrings/nitrux-mauikit-fresh.gpg
 Enabled: yes
 
 Types: deb
