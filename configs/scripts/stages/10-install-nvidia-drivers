@@ -11,4 +11,29 @@ set -eu
 source /configs/scripts/others/apt-funcs
 
 
-exit 0
+# -- Install NVIDIA "open" driver packages.
+
+INSTALL_NVIDIA_OPEN_PKGS=(
+    nvidia-open-driver-595
+    nvidia-open-kernel-dkms-595
+    nvidia-alternative-595
+)
+
+install "${INSTALL_NVIDIA_OPEN_PKGS[@]}"
+
+
+# -- Add ub-device-create binary to enable the creation of NVIDIA device nodes.
+
+FILE_URL="https://raw.githubusercontent.com/Nitrux/storage/refs/heads/master/Other/ub-device-create"
+DEST_DIR="/usr/sbin"
+DEST_FILE="$DEST_DIR/ub-device-create"
+if curl -L -o "$DEST_FILE" "$FILE_URL"; then
+    chmod +x "$DEST_FILE"
+else
+    exit 1
+fi
+
+
+# -- Add D-Bus configuration file for NVIDIA Dynamic Boost.
+
+cp /usr/share/dbus-1/system.d/nvidia-dbus.conf /etc/dbus-1/system.d/nvidia-dbus.conf

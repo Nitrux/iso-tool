@@ -50,3 +50,11 @@ Suites: duke
 Components: main
 Signed-By: /etc/apt/keyrings/nitrux-hyprland.gpg
 Enabled: yes
+
+Types: deb
+Description: Nitrux NVIDIA Repo
+URIs: https://packagecloud.io/nitrux/nvidia/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-nvidia.gpg
+Enabled: yes

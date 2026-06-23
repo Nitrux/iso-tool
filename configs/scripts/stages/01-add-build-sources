@@ -19,6 +19,7 @@ add_nitrux_key area51
 add_nitrux_key skidrow
 add_nitrux_key mauikit-fresh
 add_nitrux_key hyprland
+add_nitrux_key nvidia
 
 
 # -- Add build sources.

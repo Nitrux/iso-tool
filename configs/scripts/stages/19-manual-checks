@@ -65,6 +65,7 @@ check_initramfs_size
 
 search_initramfs_for plymouth
 search_initramfs_for crypttab
+search_initramfs_for nvidia
 
 
 # -- Check that the Live user password is not goddamn empty.

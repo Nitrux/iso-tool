@@ -21,6 +21,9 @@ INSTALL_NITRUX_HW_SUPPORT_PKGS=(
 INSTALL_ADDITIONAL_HW_SUPPORT_PKGS=(
     broadcom-sta-dkms/duke
     multipath-tools/duke
+    firmware-nvidia-graphics
+    firmware-nvidia-gsp
+    firmware-nvidia-tesla-550-gsp
 )
 
 install "${INSTALL_NITRUX_HW_SUPPORT_PKGS[@]}" "${INSTALL_ADDITIONAL_HW_SUPPORT_PKGS[@]}"

@@ -75,3 +75,10 @@ INSTALL_OPENRC_CONFIG_PKGS=(
 )
 
 install "${INSTALL_OPENRC_CONFIG_PKGS[@]}"
+
+
+# -- Add NVIDIA services.
+#   -- The NVIDIA services are unnecessary if not using NVIDIA hardware.
+
+rc-update add nvidia-powerd default
+rc-update add nvidia-persistenced-openrc default
