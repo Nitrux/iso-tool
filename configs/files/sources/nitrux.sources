@@ -43,18 +43,10 @@ Components: main
 Signed-By: /etc/apt/keyrings/nitrux-mauikit.gpg
 Enabled: yes
 
-# Types: deb
-# Description: Nitrux MauiKit Fresh Repo
-# URIs: https://packagecloud.io/nitrux/mauikit-fresh/debian/
-# Suites: duke
-# Components: main
-# Signed-By: /etc/apt/keyrings/nitrux-mauikit-fresh.gpg
-# Enabled: yes
-
-# Types: deb
-# Description: Nitrux Hyprland Repo
-# URIs: https://packagecloud.io/nitrux/hyprland/debian/
-# Suites: duke
-# Components: main
-# Signed-By: /etc/apt/keyrings/nitrux-hyprland.gpg
-# Enabled: yes
+Types: deb
+Description: Nitrux Hyprland Repo
+URIs: https://packagecloud.io/nitrux/hyprland/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-hyprland.gpg
+Enabled: yes
