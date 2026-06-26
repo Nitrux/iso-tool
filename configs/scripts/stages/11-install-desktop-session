@@ -28,3 +28,9 @@ INSTALL_DEVUAN_NM_PKGS=(
 )
 
 install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DESKTOP_APPS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}"
+
+
+# -- Divert Evolution files (Why are they even installed?)
+
+dpkg_divert /usr/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service.bak /usr/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service
+dpkg_divert /usr/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service.bak /usr/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service
