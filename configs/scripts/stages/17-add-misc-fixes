@@ -493,9 +493,3 @@ fi
 cat >/etc/request-key.d/cifs.spnego.conf <<'EOF'
 create cifs.spnego * * /usr/sbin/keyctl negate %k 30 %S
 EOF
-
-
-# -- Divert Evolution files (Why are they even installed?)
-
-dpkg_divert /usr/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service.bak /usr/share/dbus-1/services/org.gnome.evolution.dataserver.Sources5.service
-dpkg_divert /usr/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service.bak /usr/share/dbus-1/services/org.gnome.evolution.dataserver.AddressBook10.service
