@@ -175,6 +175,8 @@ install_vicinae_latest() {
     local api_url
     local response
     local version
+    local machine_arch
+    local appimage_count
     local asset
     local appimage_path
     local extract_dir
@@ -199,17 +201,40 @@ install_vicinae_latest() {
     response="$(curl -fsSL "$api_url")"
 
     version="$(printf '%s\n' "$response" | jq -r '.tag_name')"
-    asset="$(printf '%s\n' "$response" | jq -r '.assets[] | select(.name | contains("AppImage")) | .name' | head -n1)"
+    machine_arch="$(uname -m)"
+    appimage_count="$(printf '%s\n' "$response" | jq -r '.assets[].name | select(test("AppImage"; "i"))' | awk 'NF { count++ } END { print count + 0 }')"
 
     [[ -n "$version" && "$version" != "null" ]] || {
         echo "Failed to determine latest Vicinae version" >&2
         return 1
     }
 
-    [[ -n "$asset" && "$asset" != "null" ]] || {
-        echo "Failed to find Vicinae AppImage asset" >&2
-        return 1
-    }
+    case "$machine_arch" in
+        x86_64|amd64)
+            asset="$(printf '%s\n' "$response" | jq -r '.assets[].name | select(test("AppImage"; "i")) | select(test("(x86_64|amd64)"; "i"))' | head -n1)"
+            ;;
+        aarch64|arm64)
+            asset="$(printf '%s\n' "$response" | jq -r '.assets[].name | select(test("AppImage"; "i")) | select(test("(aarch64|arm64)"; "i"))' | head -n1)"
+            ;;
+        armv7l|armv7*)
+            asset="$(printf '%s\n' "$response" | jq -r '.assets[].name | select(test("AppImage"; "i")) | select(test("(armv7|armhf)"; "i"))' | head -n1)"
+            ;;
+        i386|i686)
+            asset="$(printf '%s\n' "$response" | jq -r '.assets[].name | select(test("AppImage"; "i")) | select(test("(i386|i686)"; "i"))' | head -n1)"
+            ;;
+        *)
+            asset=""
+            ;;
+    esac
+
+    if [[ -z "$asset" || "$asset" == "null" ]]; then
+        if [[ "$appimage_count" -eq 1 ]]; then
+            asset="$(printf '%s\n' "$response" | jq -r '.assets[].name | select(test("AppImage"; "i"))' | head -n1)"
+        else
+            echo "Failed to find Vicinae AppImage asset for architecture $machine_arch" >&2
+            return 1
+        fi
+    fi
 
     curl -fL "https://github.com/$repo/releases/download/$version/$asset" -o "$appimage_path"
     chmod 0755 "$appimage_path"
