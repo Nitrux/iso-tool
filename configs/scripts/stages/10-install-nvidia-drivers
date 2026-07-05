@@ -38,7 +38,7 @@ fi
 
 NVIDIA_OC_URL="https://github.com/Dreaming-Codes/nvidia_oc/releases/download/0.1.24/nvidia_oc"
 NVIDIA_OC_DEST_DIR="/usr/local/bin"
-NVIDIA_OC_DEST_FILE="$NVIDIA_OC_DEST_DIR/nvidia_oc"
+NVIDIA_OC_DEST_FILE="$NVIDIA_OC_DEST_DIR/nvoc"
 
 mkdir -p "$NVIDIA_OC_DEST_DIR"
 
