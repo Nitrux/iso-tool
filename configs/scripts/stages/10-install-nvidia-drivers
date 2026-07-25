@@ -14,9 +14,9 @@ source /configs/scripts/others/apt-funcs
 # -- Install NVIDIA "open" driver packages.
 
 INSTALL_NVIDIA_OPEN_PKGS=(
-    nvidia-open-driver-595
-    nvidia-open-kernel-dkms-595
-    nvidia-alternative-595
+    nvidia-open-driver-610
+    nvidia-open-kernel-dkms-610
+    nvidia-alternative-610
 )
 
 install "${INSTALL_NVIDIA_OPEN_PKGS[@]}"
