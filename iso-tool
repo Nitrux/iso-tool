@@ -56,7 +56,7 @@ image=nitrux-$(git branch --show-current)-$(git rev-parse --short=8 HEAD)-$(unam
 
 # -- Download the rootfs and prepare the directory where the filesystem will be created.
 
-base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Testing/Nitrux/20260514T142722Z/rootfs.tar.xz
+base_img_url=https://raw.githubusercontent.com/Nitrux/storage/master/RootFS/Debian/Testing/Nitrux/20260725T202958Z/rootfs.tar.xz
 
 axel -o "$config_dir" -c -n 10 $base_img_url
 
