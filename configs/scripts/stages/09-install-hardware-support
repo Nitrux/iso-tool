@@ -103,12 +103,13 @@ cd "$ORIGINAL_DIR"
 # -- Install Looking Glass (kvmfr) kernel module for low-latency VM windowing.
 # -- FIXME: There are no Debian packages available; if and when there are, switch to using them instead.
 
+BRANCH="Release/B7"
 VERSION="B7"
 TEMP_DIR5="$(mktemp -d)"
 SRC_URL="https://github.com/gnif/LookingGlass.git"
 DST_DIR="/usr/src/looking-glass-$VERSION"
 
-git clone --depth 1 --branch "$VERSION" "$SRC_URL" "$TEMP_DIR5"
+git clone --depth 1 --branch "$BRANCH" "$SRC_URL" "$TEMP_DIR5"
 
 mkdir -p "$DST_DIR"
 cp -a "$TEMP_DIR5/module/." "$DST_DIR/"
