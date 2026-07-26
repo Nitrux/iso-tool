@@ -14,7 +14,7 @@ source /configs/scripts/others/apt-funcs
 # -- Add a default kernel.
 
 INSTALL_KERNEL_PKGS=(
-    linux-pika-amd64
+    linux-nitrux-amd64
 )
 
 install "${INSTALL_KERNEL_PKGS[@]}"
