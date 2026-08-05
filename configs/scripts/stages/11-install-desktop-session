@@ -25,6 +25,7 @@ INSTALL_DESKTOP_APPS=(
 
 INSTALL_DEVUAN_NM_PKGS=(
     network-manager/duke
+    network-manager-tui/duke
 )
 
 install "${INSTALL_DESKTOP_PKGS[@]}" "${INSTALL_DESKTOP_APPS[@]}" "${INSTALL_DEVUAN_NM_PKGS[@]}"
