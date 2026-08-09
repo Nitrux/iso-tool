@@ -396,7 +396,7 @@ rm -f /var/log/bootstrap.log
 
 # -- Add modules to load at boot time.
 
-printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync >> /etc/modules-load.d/load-modules-at-boot.conf
+printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync uvcvideo >> /etc/modules-load.d/load-modules-at-boot.conf
 
 
 # -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
