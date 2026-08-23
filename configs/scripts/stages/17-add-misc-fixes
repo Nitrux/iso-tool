@@ -60,9 +60,9 @@ rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi
 
 # -- Remove plasmashell, kwin and the Plasma sessions.
 
-rm -f /usr/bin/{plasmashell,kwin_wayland}
-rm -f /usr/share/xsessions/plasmax11.desktop
-rm -f /usr/share/wayland-sessions/plasma.desktop
+rm -f /usr/bin/{plasmashell,kwin_wayland} || true
+rm -f /usr/share/xsessions/plasmax11.desktop || true
+rm -f /usr/share/wayland-sessions/plasma.desktop || true
 
 
 # -- Disable the KCMs that we don't use.
@@ -149,7 +149,7 @@ rm -f  \
     "${DELETE_UNUSED_KCMS_LAUNCHERS[@]/#//usr/share/applications/}" \
     "${DELETE_UNUSED_KCMS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/}" \
     "${DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings_qwidgets/}" \
-    "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"
+    "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"  || true
 
 
 # -- Remove CLI utilities launchers.
@@ -161,7 +161,7 @@ DELETE_CLI_UTILS_LAUNCHERS=(
     micro.desktop
 )
 
-rm -f "${DELETE_CLI_UTILS_LAUNCHERS[@]/#//usr/share/applications/}"
+rm -f "${DELETE_CLI_UTILS_LAUNCHERS[@]/#//usr/share/applications/}" || true
 
 
 # -- Create directories for aesthethic FHS.
@@ -391,7 +391,7 @@ fi
 
 # -- Remove rootfs leftovers
 
-rm -f /var/log/bootstrap.log
+rm -f /var/log/bootstrap.log || true
 
 
 # -- Add modules to load at boot time.
@@ -401,7 +401,7 @@ printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync nvidia nvidia_modeset nv
 
 # -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
 
-rm -f /usr/share/applications/org.kde.kwalletmanager.desktop
+rm -f /usr/share/applications/org.kde.kwalletmanager.desktop || true
 
 
 # -- Add the path to the read-only mount point to safe-rm.
@@ -461,7 +461,7 @@ chmod 0755 "$MKFS_F2FS_BIN"
 
 # -- Remove NetworkManager ifupdown dispatch script as we don't use it; disabling it is not enough.
 
-rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown
+rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown || true
 
 
 # -- Add Vicinae to replace Wofi. 
