@@ -43,19 +43,31 @@ if command -v setupcon >/dev/null 2>&1; then
 fi
 
 
-# -- Ensure Hyprland session is launched with D-Bus (OpenRC) from the greeter when using greetd.
+# -- Ensure the Hyprland *user* session is launched with D-Bus (OpenRC) from the greeter when using greetd.
 #    -- See: https://wiki.gentoo.org/wiki/Greetd#Hyprland_session_with_D-Bus_.28OpenRC.29
+# -- Use nwsm to launch the user session.
 
 DESKTOP_FILE="/usr/share/wayland-sessions/hyprland.desktop"
+NWSM_EXEC='Exec=/usr/bin/env NWSM_REQUIRED_VARS=HYPRLAND_INSTANCE_SIGNATURE /usr/bin/nwsm -- /usr/bin/start-hyprland'
 
-if [ -f "$DESKTOP_FILE" ] && ! grep -q "Exec=greetd-hyprland" "$DESKTOP_FILE"; then
-    sed -i 's|^Exec=/usr/bin/start-hyprland|Exec=greetd-hyprland|' "$DESKTOP_FILE"
+if [ -f "$DESKTOP_FILE" ] && ! grep -Fxq "$NWSM_EXEC" "$DESKTOP_FILE"; then
+    sed -i \
+        -e "s|^Exec=/usr/bin/start-hyprland$|$NWSM_EXEC|" \
+        -e "s|^Exec=greetd-hyprland.*$|$NWSM_EXEC|" \
+        -e "s|^Exec=start-hyprland$|$NWSM_EXEC|" \
+        -e "s|^Exec=Hyprland$|$NWSM_EXEC|" \
+        "$DESKTOP_FILE"
 fi
+
+
+# -- Remove the uwsm-managed Hyprland session because 1) we don't ship uwsm and 2) uwsm does not work without systemd.
+
+rm -f /usr/share/wayland-sessions/hyprland-uwsm.desktop
 
 
 # -- Remove DrKonqi as we do not include debug symbols and it's useless otherwise.
 
-rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi 
+rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi || true
 
 
 # -- Remove plasmashell, kwin and the Plasma sessions.
