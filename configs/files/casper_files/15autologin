@@ -37,7 +37,7 @@ if ! grep -q '^\[initial_session\]' "$GREETD_CONFIG"; then
 # Enabling autologin
 
 [initial_session]
-command = "greetd-hyprland > /dev/null 2>&1"
+command = "/usr/bin/env NWSM_REQUIRED_VARS=HYPRLAND_INSTANCE_SIGNATURE /usr/bin/nwsm -- /usr/bin/start-hyprland > /dev/null 2>&1"
 user = "$USERNAME"
 EOF
 fi

@@ -43,3 +43,11 @@ Suites: duke
 Components: main
 Signed-By: /etc/apt/keyrings/nitrux-hyprland.gpg
 Enabled: yes
+
+Types: deb
+Description: Nitrux Testing-fresh Repo
+URIs: https://packagecloud.io/nitrux/testing-fresh/debian/
+Suites: duke
+Components: main
+Signed-By: /etc/apt/keyrings/nitrux-testing-fresh.gpg
+Enabled: yes
