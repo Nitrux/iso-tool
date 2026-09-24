@@ -65,105 +65,6 @@ fi
 rm -f /usr/share/wayland-sessions/hyprland-uwsm.desktop
 
 
-# -- Remove DrKonqi as we do not include debug symbols and it's useless otherwise.
-
-rm -f /usr/lib/x86_64-linux-gnu/libexec/drkonqi || true
-
-
-# -- Remove plasmashell, kwin and the Plasma sessions.
-
-rm -f /usr/bin/{plasmashell,kwin_wayland} || true
-rm -f /usr/share/xsessions/plasmax11.desktop || true
-rm -f /usr/share/wayland-sessions/plasma.desktop || true
-
-
-# -- Disable the KCMs that we don't use.
-
-DELETE_UNUSED_KCMS_LAUNCHERS=(
-    kcm_autostart.desktop
-    kcm_breezedecoration.desktop
-    kcm_componentchooser.desktop
-    kcm_desktoptheme.desktop
-    kcm_feedback.desktop
-    kcm_fontinst.desktop
-    kcm_kwin_effects.desktop
-    kcm_kwin_scripts.desktop
-    kcm_kwin_virtualdesktops.desktop
-    kcm_kwindecoration.desktop
-    kcm_kwinoptions.desktop
-    kcm_kwinrules.desktop
-    kcm_kwintabbox.desktop
-    kcm_kwinxwayland.desktop
-    kcm_lookandfeel.desktop
-    kcm_netpref.desktop
-    kcm_nightlight.desktop
-    kcm_notifications.desktop
-    kcm_proxy.desktop
-    kcm_regionandlang.desktop
-    kcm_trash.desktop
-    kcm_virtualkeyboard.desktop
-    kcm_wallpaper.desktop
-    kcm_webshortcuts.desktop
-)
-
-DELETE_UNUSED_KCMS_LIBEXEC=(
-    kcm_autostart.so
-    kcm_breezedecoration.so
-    kcm_componentchooser.so
-    kcm_desktoptheme.so
-    kcm_feedback.so
-    kcm_fontinst.so
-    kcm_kwin_effects.so
-    kcm_kwin_scripts.so
-    kcm_kwin_virtualdesktops.so
-    kcm_kwindecoration.so
-    kcm_kwinoptions.so
-    kcm_kwinrules.so
-    kcm_kwintabbox.so
-    kcm_kwinxwayland.so
-    kcm_lookandfeel.so
-    kcm_netpref.so
-    kcm_nightlight.so
-    kcm_nighttime.so
-    kcm_notifications.so
-    kcm_proxy.so
-    kcm_regionandlang.so
-    kcm_trash.so
-    kcm_virtualkeyboard.so
-    kcm_wallpaper.so
-    kcm_webshortcuts.so
-)
-
-
-DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC=(
-    kcm_kwinoptions.so
-    kcm_kwinscreenedges.so
-    kcm_kwintabbox.so
-    kcm_kwintouchscreen.so
-    kwincompositing.so
-)
-
-
-DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES=(
-    settings-hardware-display.desktop
-    settings-hardware-input-pointing-devices.desktop
-    settings-hardware-input-touchscreen.desktop
-    settings-hardware-keyboard.desktop
-    settings-personalization.desktop
-    settings-workspace-search.desktop
-    settings-workspace-session.desktop
-    settings-workspace-windowmanagement.desktop
-    settings-workspace.desktop
-    settings-hardware-removable-storage.desktop
-)
-
-rm -f  \
-    "${DELETE_UNUSED_KCMS_LAUNCHERS[@]/#//usr/share/applications/}" \
-    "${DELETE_UNUSED_KCMS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings/}" \
-    "${DELETE_UNUSED_KCMS_QWIDGETS_LIBEXEC[@]/#//usr/lib/x86_64-linux-gnu/qt6/plugins/plasma/kcms/systemsettings_qwidgets/}" \
-    "${DELETE_UNUSED_SYSTEMSETTINGS_CATEGORIES[@]/#//usr/share/systemsettings/categories/}"  || true
-
-
 # -- Remove CLI utilities launchers.
 #    -- Why the hell do CLI utilities have a god damn desktop launcher to begin with?!
 
@@ -290,21 +191,6 @@ cp /configs/files/grub_files/grub-sort-version /usr/lib/grub/grub-sort-version
 # -- Add our dnscrypt-proxy configuration.
 
 cp /configs/files/dnscrypt-proxy_files/* /etc/dnscrypt-proxy/
-
-
-# -- Add variable to PAM for Firefox to work with touchscreens in Wayland.
-
-# sed -i "$ a \  " /etc/security/pam_env.conf
-# sed -i "$ a #  Make Firefox work with touchscreens in Wayland" /etc/security/pam_env.conf
-# sed -i "$ a MOZ_ENABLE_WAYLAND DEFAULT=0 OVERRIDE=1" /etc/security/pam_env.conf
-
-
-# -- Fix issue with AppArmor profile for Samba that is too restrictive.
-
-# APPARMOR_PROFILE="/etc/apparmor.d/usr.sbin.smbd"
-
-# sed -i '/capability setuid,/a\  capability sys_ptrace,' "$APPARMOR_PROFILE"
-# sed -i 's|@{HOMEDIRS}/\*\* .*|@{HOMEDIRS}/** rwk,|' "$APPARMOR_PROFILE"
 
 
 # -- VirtualBox workaround for KVM.
