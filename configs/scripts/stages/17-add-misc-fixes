@@ -323,7 +323,7 @@ if [ -f "/usr/lib/firmware/rtw89/rtw8852c_fw.bin" ]; then
 fi
 
 
-# -- Use a wrapper script, so that any Calamares/KPMcore call to mkfs.f2fs will always have the compression feature enabled on the created filesystem.
+# -- Use a wrapper script, so that any Calamares/KPMcore call to mkfs.f2fs will always have the compression and fscrypt features enabled on the created filesystem.
 
 MKFS_F2FS_BIN="$(command -v mkfs.f2fs || echo /usr/sbin/mkfs.f2fs)"
 if [ ! -x "$MKFS_F2FS_BIN" ]; then
@@ -349,9 +349,9 @@ cat >"$MKFS_F2FS_BIN" <<EOF
 set -euo pipefail
 
 
-# -- Ensure compression is used when creating the filesystem.
+# -- Ensure compression and fscrypt are used when creating the filesystem.
 
-exec "$REAL_BIN" -O extra_attr,inode_checksum,sb_checksum,compression "\$@"
+exec "$REAL_BIN" -O extra_attr,inode_checksum,sb_checksum,compression,encrypt "\$@"
 EOF
 
 chmod 0755 "$MKFS_F2FS_BIN"
