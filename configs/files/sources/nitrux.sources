@@ -3,7 +3,6 @@
 #   Your changes will be overwritten   #
 ########################################
 
-
 Types: deb
 Description: Nitrux Testing Repo
 URIs: https://packagecloud.io/nitrux/testing/debian/
