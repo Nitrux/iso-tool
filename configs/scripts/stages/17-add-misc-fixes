@@ -247,8 +247,8 @@ rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
 # -- Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
-vmlinuz_pattern="vmlinuz-*pikaos-*"
-initrd_pattern="initrd.img-*pikaos-*"
+vmlinuz_pattern="vmlinuz-*nitrux-*"
+initrd_pattern="initrd.img-*nitrux-*"
 
 vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$vmlinuz_pattern" | head -1)
 initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "$initrd_pattern" | head -1)
@@ -267,25 +267,6 @@ else
     echo "Error: No matching initrd.img file found in $boot_dir."
 fi
 
-
-# -- Create necessary directories to put files for kboot and create soft links for pikaos kernel files.
-
-mkdir -p /kboot/{debian,mainline,pikaos}
-
-kboot_vmlinuz_file=$(find "$boot_dir" -maxdepth 1 -type f -name "vmlinuz-*pikaos-amd64" | head -1)
-kboot_initrd_file=$(find "$boot_dir" -maxdepth 1 -type f -name "initrd.img-*pikaos-amd64" | head -1)
-
-if [ -n "$kboot_vmlinuz_file" ]; then
-    create_symlink "$kboot_vmlinuz_file" "/kboot/pikaos/vmlinuz"
-else
-    echo "Warning: No matching PikaOS vmlinuz file found in $boot_dir for /kboot/pikaos/vmlinuz."
-fi
-
-if [ -n "$kboot_initrd_file" ]; then
-    create_symlink "$kboot_initrd_file" "/kboot/pikaos/initrd.img"
-else
-    echo "Warning: No matching PikaOS initrd file found in $boot_dir for /kboot/pikaos/initrd.img."
-fi
 
 # -- Remove rootfs leftovers
 
