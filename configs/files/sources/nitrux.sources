@@ -42,13 +42,13 @@ Description: Nitrux Testing-fresh Repo
 URIs: https://packagecloud.io/nitrux/testing-fresh/debian/
 Suites: duke
 Components: main
-Signed-By: /etc/apt/keyrings/nitrux-testingfresh.gpg
+Signed-By: /etc/apt/keyrings/nitrux-testing-fresh.gpg
 Enabled: yes
 
 Types: deb
 Description: Nitrux MauiKit-fresh Repo
-URIs: https://packagecloud.io/nitrux/mauikitfresh/debian/
+URIs: https://packagecloud.io/nitrux/mauikit-fresh/debian/
 Suites: duke
 Components: main
-Signed-By: /etc/apt/keyrings/nitrux-mauikitfresh.gpg
+Signed-By: /etc/apt/keyrings/nitrux-mauikit-fresh.gpg
 Enabled: yes
