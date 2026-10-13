@@ -9,7 +9,6 @@
 put() { printf "%b\n" "$@"; }
 err() { put "runch: \033[31mError:\033[m $*" >&2; exit 1; }
 
-trap 'rm -f "$efi_img"' EXIT
 
 # -- Option parsing.
 
@@ -18,6 +17,9 @@ while :; do
         -V )  label="$2"; shift 2;;
         -g )  cfg_files="$cfg_files $2"; shift 2;;
         -t ) themes="${themes:+$themes }$2"; shift 2;;
+        --shim ) shim_img="$2"; shift 2;;
+        --grub-efi ) grub_efi_img="$2"; shift 2;;
+        --mok-manager ) mok_manager_img="$2"; shift 2;;
         -b )  bios=y; shift;;
         -e )  uefi=y; shift;;
         -d | --debug ) set -x; shift;;
@@ -35,6 +37,9 @@ while :; do
                 "  -V label       Use label as filesystem label." \
                 "  -g file        Use file as a GRUB configuration file." \
                 "  -t path        Use path as a GRUB theme." \
+                "  --shim file    Use the signed shim EFI binary." \
+                "  --grub-efi file Use the signed GRUB EFI binary." \
+                "  --mok-manager file Use the signed MOK manager EFI binary."
             exit;;
         -* )  err "Unknown option '$1'.";;
         * )   break;;
@@ -91,22 +96,44 @@ if [ "$bios" = y ]; then
 fi
 
 if [ "$uefi" = y ]; then
-    signed_efi_img=/usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed
-    if [ ! -r "$signed_efi_img" ]; then
-        err "Signed GRUB EFI image '$signed_efi_img' not found. Install grub-efi-amd64-signed."
+    : "${shim_img:=/usr/lib/shim/shimx64.efi.signed}"
+    : "${grub_efi_img:=/usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed}"
+    : "${mok_manager_img:=/usr/lib/shim/mmx64.efi.signed}"
+
+    for efi_file in "$shim_img" "$grub_efi_img" "$mok_manager_img"; do
+        if [ ! -r "$efi_file" ]; then
+            err "Signed EFI image '$efi_file' not found. Install the signed shim, GRUB, and MOK manager packages."
+        fi
+    done
+
+    if ! command -v sbverify >/dev/null 2>&1; then
+        err "The 'sbverify' command is required to validate Secure Boot EFI images. Install sbsigntool."
     fi
+
+    for efi_file in "$shim_img" "$grub_efi_img" "$mok_manager_img"; do
+        if ! sbverify --list "$efi_file" >/dev/null 2>&1; then
+            err "EFI image '$efi_file' is not signed or has an invalid signature."
+        fi
+    done
 
     mkdir -p "$iso_dir/.disk"
     : > "$iso_dir/.disk/info"
 
-    efi_img=$(mktemp) || err "Failed to create temporary file for UEFI image."
-    cp -- "$signed_efi_img" "$efi_img"
-
     export MTOOLS_SKIP_CHECK=1
 
-    mkfs.vfat -C "$iso_dir/efi.img" $(($(wc -c < "$efi_img") / 1024 + 511))
-    mmd -i "$iso_dir/efi.img" efi efi/boot
-    mcopy -i "$iso_dir/efi.img" "$efi_img" ::efi/boot/bootx64.efi
+    efi_size_kib=$(( (
+        $(wc -c < "$shim_img") +
+        $(wc -c < "$grub_efi_img") +
+        $(wc -c < "$mok_manager_img") +
+        1048575
+    ) / 1024 ))
+
+    mkfs.vfat -C "$iso_dir/efi.img" "$efi_size_kib"
+    mmd -i "$iso_dir/efi.img" ::EFI
+    mmd -i "$iso_dir/efi.img" ::EFI/BOOT
+    mcopy -i "$iso_dir/efi.img" "$shim_img" ::EFI/BOOT/BOOTX64.EFI
+    mcopy -i "$iso_dir/efi.img" "$grub_efi_img" ::EFI/BOOT/grubx64.efi
+    mcopy -i "$iso_dir/efi.img" "$mok_manager_img" ::EFI/BOOT/mmx64.efi
 
     uefi_opts="
         -eltorito-alt-boot

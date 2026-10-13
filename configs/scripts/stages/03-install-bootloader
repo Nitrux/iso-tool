@@ -15,6 +15,7 @@ source /configs/scripts/others/apt-funcs
 
 INSTALL_GRUB2_PKGS=(
     grub-efi-amd64
+    grub-efi-amd64-signed
 )
 
 install "${INSTALL_GRUB2_PKGS[@]}"
@@ -25,6 +26,7 @@ install "${INSTALL_GRUB2_PKGS[@]}"
 INSTALL_SECURE_BOOT_SHIM_PKGS=(
     mokutil
     sbsigntool
+    shim-helpers-amd64-signed
     shim-signed
 )
 
