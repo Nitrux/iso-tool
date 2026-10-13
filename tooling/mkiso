@@ -91,11 +91,16 @@ if [ "$bios" = y ]; then
 fi
 
 if [ "$uefi" = y ]; then
+    signed_efi_img=/usr/lib/grub/x86_64-efi-signed/gcdx64.efi.signed
+    if [ ! -r "$signed_efi_img" ]; then
+        err "Signed GRUB EFI image '$signed_efi_img' not found. Install grub-efi-amd64-signed."
+    fi
+
+    mkdir -p "$iso_dir/.disk"
+    : > "$iso_dir/.disk/info"
+
     efi_img=$(mktemp) || err "Failed to create temporary file for UEFI image."
-    grub-mkimage -O x86_64-efi \
-                 -o "$efi_img" \
-                 -p /boot/grub \
-                 efi_gop efi_uga boot linux search normal configfile part_gpt btrfs ext2 fat iso9660 loopback test keystatus gfxmenu regexp probe all_video gfxterm font echo read ls cat png jpeg halt reboot
+    cp -- "$signed_efi_img" "$efi_img"
 
     export MTOOLS_SKIP_CHECK=1
 
