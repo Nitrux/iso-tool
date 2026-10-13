@@ -19,6 +19,8 @@ add_nitrux_key skidrow
 add_nitrux_key mauikit
 add_nitrux_key nvidia
 
+add_nitrux_key testing-fresh
+add_nitrux_key mauikit-fresh
 
 # -- Add build sources.
 

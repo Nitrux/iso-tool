@@ -12,6 +12,7 @@ doh_servers = true
 ipv4_servers = true
 ipv6_servers = true
 log_level = 2
+use_syslog = true
 
 # 3. PRIVACY & SECURITY RULES
 require_dnssec = true
@@ -40,11 +41,10 @@ prefix = ''
 [anonymized_dns]
 skip_incompatible = true
 
-# These routes relay traffic through France (fr) and Germany (de).
-# Change the country codes (e.g., 'anon-cs-nl' for the Netherlands) if you want different locations.
+# Let dnscrypt-proxy choose current compatible relays from the signed relay source.
+# This avoids hard-coded relay names becoming stale and does not require restarting the proxy when NetworkManager reports a connection change.
 routes = [
-    { server_name='adguard-dns-doh', via=['anon-cs-fr', 'anon-cs-de'] },
-    { server_name='quad9-dnscrypt-ip4-filter-pri', via=['anon-cs-fr', 'anon-cs-de'] }
+    { server_name='quad9-dnscrypt-ip4-filter-pri', via=['*'] }
 ]
 # END AUTO ANONYMIZED DNS
 
