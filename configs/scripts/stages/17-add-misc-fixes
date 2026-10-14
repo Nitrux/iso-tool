@@ -355,18 +355,6 @@ install_vicinae_latest /usr/local
 fc-cache -f -v
 
 
-# -- Create the generic XDG menu file name, so KApplicationTrader::queryByMimeType(...) finds it.
-
-XDG_MENU_SRC="/etc/xdg/menus/plasma-applications.menu"
-XDG_MENU_DEST="/etc/xdg/menus/applications.menu"
-
-if [ ! -f "$XDG_MENU_SRC" ]; then
-    echo "Warning: Source file '$XDG_MENU_SRC' does not exist."
-elif [ ! -e "$XDG_MENU_DEST" ] && [ ! -L "$XDG_MENU_DEST" ]; then
-    ln -sv "$XDG_MENU_SRC" "$XDG_MENU_DEST"
-fi
-
-
 # -- Mitigation against CIFSwitch.
 
 cat >/etc/request-key.d/cifs.spnego.conf <<'EOF'
