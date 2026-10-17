@@ -338,8 +338,8 @@ rm -f /etc/NetworkManager/dispatcher.d/01-ifupdown || true
 
 
 # -- Add Vicinae to replace Wofi. 
-# -- Vicinae is available as an AppImage, but it seems the official way to "install it" is to use the install script, which extracts the AppImage(?).
-# -- However, that will fail because the script is trying to execute the AppImage inside the chroot.
+#   -- Vicinae is available as an AppImage, but it seems the official way to "install it" is to use the install script, which extracts the AppImage(?).
+#   -- However, that will fail because the script is trying to execute the AppImage inside the chroot.
 
 install_vicinae_latest /usr/local
 
