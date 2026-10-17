@@ -28,6 +28,7 @@ FILE_CONTENT_TO_CHECK=(
     /etc/pam.d/common-password
     /etc/pam.d/common-session
     /etc/pam.d/common-session-noninteractive
+    /etc/pam.d/greetd
     /etc/security/limits.conf
     /etc/initramfs-tools/modules
     /etc/plymouth/plymouthd.conf
