@@ -354,16 +354,3 @@ fc-cache -f -v
 cat >/etc/request-key.d/cifs.spnego.conf <<'EOF'
 create cifs.spnego * * /usr/sbin/keyctl negate %k 30 %S
 EOF
-
-
-# -- Restore the *functional* greetd PAM policy.
-#   -- Debian updated greetd's PAM policy in 0.10.3-6 because:
-#       -- A util-linux update moved /etc/pam.d/login to /usr/lib/pam.d/login.
-#       -- greetd's old configuration explicitly included /etc/pam.d/login, so PAM could no longer find it, and greetd failed to start.
-#       -- See: Debian bug #1140127 (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1140127)
-#       -- The problem is that those configurations are not behaviorally equivalent.
-#       -- Debian already received a separate regression report because this exact change stopped the keyring from opening automatically.
-#       -- See: Debian bug #1142693 (https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1142693)
-# -- Our override restores the previous Nitrux behavior while retaining the newer greetd binary.
-
-cat /configs/files/other/pam.d/greetd > /etc/pam.d/greetd
