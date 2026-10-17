@@ -238,12 +238,6 @@ mkdir -p /var/lib/os-prober/mount
 sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
 
 
-# -- Remove unwanted kernel and initrd links from /boot and /.
-
-rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
-      /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
-
-
 # -- Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
@@ -275,7 +269,7 @@ rm -f /var/log/bootstrap.log || true
 
 # -- Add modules to load at boot time.
 
-printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync nvidia nvidia_modeset nvidia_uvm nvidia_drm >> /etc/modules-load.d/load-modules-at-boot.conf
+printf '%s\n' amdgpu i915 fuse exfat loop uinput ntsync uvcvideo uhid nvidia nvidia_modeset nvidia_uvm nvidia_drm >> /etc/modules-load.d/load-modules-at-boot.conf
 
 
 # -- Remove KWallet Manager desktop launcher since the intention is to use the KCM.
@@ -353,18 +347,6 @@ install_vicinae_latest /usr/local
 # -- Pre-generate the fontconfig cache.
 
 fc-cache -f -v
-
-
-# -- Create the generic XDG menu file name, so KApplicationTrader::queryByMimeType(...) finds it.
-
-XDG_MENU_SRC="/etc/xdg/menus/plasma-applications.menu"
-XDG_MENU_DEST="/etc/xdg/menus/applications.menu"
-
-if [ ! -f "$XDG_MENU_SRC" ]; then
-    echo "Warning: Source file '$XDG_MENU_SRC' does not exist."
-elif [ ! -e "$XDG_MENU_DEST" ] && [ ! -L "$XDG_MENU_DEST" ]; then
-    ln -sv "$XDG_MENU_SRC" "$XDG_MENU_DEST"
-fi
 
 
 # -- Mitigation against CIFSwitch.

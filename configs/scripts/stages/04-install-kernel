@@ -18,3 +18,31 @@ INSTALL_KERNEL_PKGS=(
 )
 
 install "${INSTALL_KERNEL_PKGS[@]}"
+
+
+# -- Download the optional CPU-specific kernel packages.
+#    Calamares selects the appropriate package set for the installed system.
+
+KERNEL_VARIANT_META_PACKAGE="linux-nitrux-amd64-znver4"
+KERNEL_VARIANTS_DEST="/opt/nitrux/kernel-variants"
+
+mapfile -t KERNEL_VARIANT_PACKAGES < <(
+    {
+        printf '%s\n' "$KERNEL_VARIANT_META_PACKAGE"
+        apt-cache depends "$KERNEL_VARIANT_META_PACKAGE" |
+            sed -n -E 's/^[[:space:]]+Depends:[[:space:]]+(linux-(image|headers)-[^[:space:]]*).*/\1/p'
+    } |
+    sort -u
+)
+
+if [ "${#KERNEL_VARIANT_PACKAGES[@]}" -lt 3 ]; then
+    echo "Error: could not resolve the variant kernel package set for $KERNEL_VARIANT_META_PACKAGE." >&2
+    exit 1
+fi
+
+mkdir -p "$KERNEL_VARIANTS_DEST"
+
+(
+    cd "$KERNEL_VARIANTS_DEST"
+    download "${KERNEL_VARIANT_PACKAGES[@]}"
+)

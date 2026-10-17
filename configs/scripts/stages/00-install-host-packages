@@ -20,7 +20,10 @@ update
 
 INSTALL_HOST_PKGS=(
     axel
+    dosfstools
     grub-efi-amd64
+    mtools
+    sbsigntool
     squashfs-tools
     time
     xorriso
