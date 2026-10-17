@@ -238,12 +238,6 @@ mkdir -p /var/lib/os-prober/mount
 sed -i "s+DPKG_ARCH=\$(dpkg --print-architecture)+DPKG_ARCH=\$(uname -m | sed \"s/x86_64/amd64/\")+g" /usr/sbin/mkinitramfs
 
 
-# -- Remove unwanted kernel and initrd links from /boot and /.
-
-rm -f /boot/{vmlinuz,initrd.img,vmlinuz.old,initrd.img.old} \
-      /{vmlinuz.old,initrd.img.old} 2>/dev/null || true
-
-
 # -- Ensure the links in / point to the files in /boot.
 
 boot_dir="/boot"
