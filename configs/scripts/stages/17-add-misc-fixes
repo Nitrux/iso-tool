@@ -121,7 +121,7 @@ INPUT_CONF="/etc/bluetooth/input.conf"
 if [ -f "$MAIN_CONF" ]; then
     sed -i \
         -e 's/^[# ]*DiscoverableTimeout *=.*/DiscoverableTimeout = 120/' \
-        -e 's/^[# ]*PairableTimeout *=.*/PairableTimeout = 300/' \
+        -e 's/^[# ]*PairableTimeout *=.*/PairableTimeout = 0/' \
         -e 's/^[# ]*ControllerMode *=.*/ControllerMode = dual/' \
         -e 's/^[# ]*AutoEnable *=.*/AutoEnable=true/' \
         -e 's/^[# ]*Privacy *=.*/Privacy = network/' \
