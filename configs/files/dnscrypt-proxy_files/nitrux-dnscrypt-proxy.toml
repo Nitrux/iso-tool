@@ -6,7 +6,8 @@ listen_addresses = ['127.0.0.1:5353', '[::1]:5353']
 
 # 2. GENERAL SETTINGS
 # Bootstrap source lookups without querying NetworkManager's local DNS stub.
-bootstrap_resolvers = ['9.9.9.9:53', '1.1.1.1:53']
+# Include both address families for IPv4-only, dual-stack, and IPv6-only networks.
+bootstrap_resolvers = ['9.9.9.9:53', '1.1.1.1:53', '[2620:fe::fe]:53', '[2606:4700:4700::1111]:53']
 ignore_system_dns = true
 
 # Disable cache because NetworkManager(dnsmasq) is already doing it.
