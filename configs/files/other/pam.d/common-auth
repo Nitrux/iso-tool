@@ -18,9 +18,9 @@
 # here are the per-package modules (the "Primary" block)
 auth required pam_faildelay.so delay=4000000
 auth required pam_faillock.so preauth silent audit deny=5 fail_interval=900 unlock_time=900
-# Only graphical login and unlock use the enrolled fingerprint or TPM PIN.
+# Graphical login, unlock, and Polkit authorization can use the enrolled fingerprint or TPM PIN.
 # Each successful verifier skips the failure block and reaches authsucc.
-auth [success=ignore default=2] pam_succeed_if.so quiet service in desklock:greetd
+auth [success=ignore default=2] pam_succeed_if.so quiet service in desklock:greetd:polkit-1
 -auth [success=4 default=ignore] pam_fprintd.so max-tries=1 timeout=10
 -auth [success=3 default=ignore] libpinpam.so
 auth [success=2 default=ignore] pam_unix.so try_first_pass
