@@ -354,3 +354,12 @@ fc-cache -f -v
 cat >/etc/request-key.d/cifs.spnego.conf <<'EOF'
 create cifs.spnego * * /usr/sbin/keyctl negate %k 30 %S
 EOF
+
+
+# -- Debian broke locale loading in greetd 0.10.3-6 by dropping the login PAM include.
+#    -- https://bugs.debian.org/1152660
+
+GREETD_PAM="/etc/pam.d/greetd"
+if [ -f "$GREETD_PAM" ] && ! grep -Eq '^[[:space:]]*session[[:space:]].*pam_env[.]so[[:space:]].*envfile=/etc/default/locale([[:space:]]|$)' "$GREETD_PAM"; then
+    sed -i '/^@include[[:space:]]\+common-session[[:space:]]*$/a session required pam_env.so readenv=1 envfile=/etc/default/locale' "$GREETD_PAM"
+fi
